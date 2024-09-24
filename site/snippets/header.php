@@ -12,7 +12,7 @@
   ]) ?>
 
 </head>
-<body>
+<body class="<?= $page->slug() ?>">
   <header class="header">
 
   </header>

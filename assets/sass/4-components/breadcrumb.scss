@@ -1,0 +1,17 @@
+.breadcrumb{
+  a{
+    text-decoration:none;
+    color:var(--palette-ink);
+    font-size:var(--hed-tertiary);
+  }
+  
+  ol{
+    padding:var(--flow-space-10) 0 var(--flow-space-13) 0;
+    margin:0;
+    list-style-type:none;
+  }
+
+  [aria-current="page"]{
+    font-weight:var(--font-strong);
+  }
+}

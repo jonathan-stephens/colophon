@@ -1,0 +1,31 @@
+:root{
+  --palette-ink: oklch(12.43% 0.015 47.04 / 100);
+  --palette-ink-raw:12.43% 0.015 47.04;
+
+  --palette-paper: oklch(98.18% 0.001 106.42 / 100);
+  --palette-paper-raw: 98.18% 0.001 106.42;
+
+  --palette-shade-95:oklch(var(--palette-ink-raw) / .95);
+  --palette-shade-90:oklch(var(--palette-ink-raw) / .9);
+  --palette-shade-80:oklch(var(--palette-ink-raw) / .8);
+  --palette-shade-70:oklch(var(--palette-ink-raw) / .7);
+  --palette-shade-60:oklch(var(--palette-ink-raw) / .6);
+  --palette-shade-50:oklch(var(--palette-ink-raw) / .5);
+  --palette-shade-40:oklch(var(--palette-ink-raw) / .4);
+  --palette-shade-30:oklch(var(--palette-ink-raw) / .3);
+  --palette-shade-20:oklch(var(--palette-ink-raw) / .2);
+  --palette-shade-10:oklch(var(--palette-ink-raw) / .1);
+  --palette-shade-05:oklch(var(--palette-ink-raw) / .05);
+
+  --palette-tint-95:oklch(var(--palette-paper-raw) / .95);
+  --palette-tint-90:oklch(var(--palette-paper-raw) / .9);
+  --palette-tint-80:oklch(var(--palette-paper-raw) / .8);
+  --palette-tint-70:oklch(var(--palette-paper-raw) / .7);
+  --palette-tint-60:oklch(var(--palette-paper-raw) / .6);
+  --palette-tint-50:oklch(var(--palette-paper-raw) / .5);
+  --palette-tint-40:oklch(var(--palette-paper-raw) / .4);
+  --palette-tint-30:oklch(var(--palette-paper-raw) / .3);
+  --palette-tint-20:oklch(var(--palette-paper-raw) / .2);
+  --palette-tint-10:oklch(var(--palette-paper-raw) / .1);
+  --palette-tint-05:oklch(var(--palette-paper-raw) / .05);
+}

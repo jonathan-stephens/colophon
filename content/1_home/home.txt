@@ -1,23 +1,14 @@
-Title: Home
+Title: Jonathan Stephens
 
 ----
 
 Text:
 
-# This is the website of Jonathan Stephens.
----
-## New host
-My hosting's just migrated to new servers, located in the United States. I need to do some work to getting the site live again.
+## Product development, organizational design, inclusive leadership
 
-In the meantime, you can find me elsewhere on the interwebs:
-- (link: https://linkedin.com/in/elnatnal text: Connect on LinkedIn)
-- (link: https://jonathanstephens.substack.com/ text: Subscribe on Substack)
-- (link: https://cal.com/jonathanstephens/book text: Book time on my calendar)
-- (link: https://app.thestorygraph.com/currently-reading/elnatnal text: What I'm currently reading)
+👋 Hello, I'm Jonathan—a human from Earth. 
 
----
-Posted: 18 September 2024
-Updated: 24 September 2024
+I've spent over 15 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
 
 ----
 

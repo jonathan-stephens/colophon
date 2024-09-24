@@ -15,5 +15,5 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ftp.poetandscribe.com
-        username: ssh@jonathanstephens.us
-        password: ${{ mbp!hky*uba6FHM*vcv }}
+        username: ${{ secret.ftp_username }}
+        password: ${{ secret.ftp_password }}

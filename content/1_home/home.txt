@@ -1,0 +1,24 @@
+Title: Home
+
+----
+
+Text:
+
+# This is the website of Jonathan Stephens.
+---
+## New host
+My hosting's just migrated to new servers, located in the United States. I need to do some work to getting the site live again.
+
+In the meantime, you can find me elsewhere on the interwebs:
+- (link: https://linkedin.com/in/elnatnal text: Connect on LinkedIn)
+- (link: https://jonathanstephens.substack.com/ text: Subscribe on Substack)
+- (link: https://cal.com/jonathanstephens/book text: Book time on my calendar)
+- (link: https://app.thestorygraph.com/currently-reading/elnatnal text: What I'm currently reading)
+
+---
+Posted: 18 September 2024
+Updated: 19 September 2024
+
+----
+
+Uuid: 2pzguVg2cGwzWYL5

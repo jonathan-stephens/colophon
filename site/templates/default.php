@@ -1,6 +1,9 @@
 <?php snippet('header') ?>
+  <section class="wrapper">
+    <?php snippet('breadcrumb') ?>
 
-  <h1><?= $page->title() ?></h1>
-  <?= $page->text()->kirbytext() ?>
-
+    <div class="splash">
+      <?= $page->text()->kirbytext() ?>
+    </div>
+  </section>
 <?php snippet('footer') ?>

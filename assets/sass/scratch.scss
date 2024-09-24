@@ -1,0 +1,31 @@
+.home{
+  h2{
+    padding-bottom:var(--flow-space-10);
+  }
+
+  .splash{
+    p:first-of-type::first-line{
+      font-weight:bolder;
+      padding-bottom:var(--flow-space-8);
+    }
+    p{max-width:50ch;}
+  }
+
+  footer{
+    ul{
+      list-style-type:none;
+      display:flex;
+      flex-flow: column;
+      justify-content: space-between;
+      width:100%;
+
+      li{
+        margin:var(--flow-space-3) 0 var(--flow-space-3) calc(-1*var(--flow-space-5));
+      }
+    }
+
+    a{
+      font-size:var(--type-scale-18);
+    }
+  }
+}

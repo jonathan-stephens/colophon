@@ -12,6 +12,9 @@
   }
 
   footer{
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+
     ul{
       list-style-type:none;
       display:flex;

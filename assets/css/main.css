@@ -198,6 +198,10 @@ a:focus, a:visited:focus {
   color: rebeccapurple;
 }
 
+:root {
+  --gutter: var(--flow-space-5);
+}
+
 .wrapper {
   margin-inline: auto;
   max-width: clamp(16rem, var(--wrapper-max-width, 100vw), 80rem);
@@ -245,6 +249,10 @@ a:focus, a:visited:focus {
 }
 .home .splash p {
   max-width: 50ch;
+}
+.home footer {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 .home footer ul {
   list-style-type: none;

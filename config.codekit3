@@ -317,6 +317,39 @@
       "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/license.txt",
       "oF" : 0
     },
+    "\/assets\/js\/theme-picker-min.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/theme-picker-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/assets\/js\/theme-picker.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/theme-picker-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/assets\/js\/theme-selection-min.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/theme-selection-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/assets\/sass\/0-global\/fonts.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -422,6 +455,21 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/sass\/2-functional\/themes.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/themes.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
     "\/assets\/sass\/2-functional\/typography.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -462,6 +510,21 @@
       "ma" : 1,
       "oA" : 1,
       "oAP" : "\/assets\/sass\/css\/breadcrumb.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/4-components\/theme-picker.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/theme-picker.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
@@ -545,6 +608,46 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/radii.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/theme-picker.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/theme-picker-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/theme-picker.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/theme-picker.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/themes.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/themes-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/themes.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/themes.css.map",
       "oF" : 0
     },
     "\/assets\/sass\/css\/utility.css" : {
@@ -2666,7 +2769,7 @@
       "prP" : 0
     },
     "\/kirby\/panel\/dist\/js\/container-query-polyfill.modern.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2677,7 +2780,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/Docs.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2688,7 +2791,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/DocsView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2699,7 +2802,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/Highlight.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2710,7 +2813,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/index.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2721,7 +2824,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/IndexView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2732,7 +2835,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/PlaygroundView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2743,7 +2846,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/plugins.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2754,7 +2857,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/vendor.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2765,7 +2868,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/vue.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -2776,7 +2879,7 @@
       "tS" : 0
     },
     "\/kirby\/panel\/dist\/js\/vuedraggable.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -5781,7 +5884,7 @@
       "pg" : 0
     },
     "\/kirby\/vendor\/filp\/whoops\/src\/Whoops\/Resources\/js\/clipboard.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -5792,7 +5895,7 @@
       "tS" : 0
     },
     "\/kirby\/vendor\/filp\/whoops\/src\/Whoops\/Resources\/js\/prism.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -5803,7 +5906,7 @@
       "tS" : 0
     },
     "\/kirby\/vendor\/filp\/whoops\/src\/Whoops\/Resources\/js\/whoops.base.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -5814,7 +5917,7 @@
       "tS" : 0
     },
     "\/kirby\/vendor\/filp\/whoops\/src\/Whoops\/Resources\/js\/zepto.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7268,7 +7371,7 @@
       "prP" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/container-query-polyfill.modern.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7279,7 +7382,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/Docs.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7290,7 +7393,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/DocsView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7301,7 +7404,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/Highlight.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7312,7 +7415,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/index.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7323,7 +7426,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/IndexView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7334,7 +7437,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/PlaygroundView.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7345,7 +7448,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/plugins.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7356,7 +7459,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/vendor.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7367,7 +7470,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/vue.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7378,7 +7481,7 @@
       "tS" : 0
     },
     "\/media\/panel\/9b4bffa460105781f82b1d463bde8200\/js\/vuedraggable.min.js" : {
-      "bF" : 0,
+      "bF" : 3,
       "ft" : 64,
       "ma" : 0,
       "mi" : 1,
@@ -7477,60 +7580,20 @@
       "oAP" : "\/site\/config\/config.php",
       "oF" : 0
     },
-    "\/site\/sessions\/1727200656.0fe781e1d0d62f66c663.sess" : {
+    "\/site\/sessions\/1727277824.2438331a9f7791a9b232.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727200656.0fe781e1d0d62f66c663.sess",
+      "oAP" : "\/site\/sessions\/1727277824.2438331a9f7791a9b232.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1727204258.3048e55974621480c623.sess" : {
+    "\/site\/sessions\/1727281427.e544f378ad650b98f925.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727204258.3048e55974621480c623.sess",
-      "oF" : 0
-    },
-    "\/site\/sessions\/1727205543.f834e5bde88f3d095f37.sess" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727205543.f834e5bde88f3d095f37.sess",
-      "oF" : 0
-    },
-    "\/site\/sessions\/1727205547.e42d249fd6fce720cdd8.sess" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727205547.e42d249fd6fce720cdd8.sess",
-      "oF" : 0
-    },
-    "\/site\/sessions\/1727205692.28cb363ab0bde195ab26.sess" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727205692.28cb363ab0bde195ab26.sess",
-      "oF" : 0
-    },
-    "\/site\/sessions\/1727205692.d660b91b5eabb3c84931.sess" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727205692.d660b91b5eabb3c84931.sess",
-      "oF" : 0
-    },
-    "\/site\/sessions\/1727209296.4549b7d51cf2c4cdedbf.sess" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727209296.4549b7d51cf2c4cdedbf.sess",
+      "oAP" : "\/site\/sessions\/1727281427.e544f378ad650b98f925.sess",
       "oF" : 0
     },
     "\/site\/sessions\/index.html" : {
@@ -7541,12 +7604,20 @@
       "oAP" : "\/site\/sessions\/index.html",
       "oF" : 0
     },
-    "\/site\/snippets\/breadcrumb.php" : {
+    "\/site\/snippets\/components\/breadcrumb.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/snippets\/breadcrumb.php",
+      "oAP" : "\/site\/snippets\/components\/breadcrumb.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/components\/theme-picker.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/theme-picker.php",
       "oF" : 0
     },
     "\/site\/snippets\/footer.php" : {
@@ -8930,7 +9001,7 @@
       "autoOutputPathReplace1" : "",
       "autoOutputPathReplace2" : "",
       "autoOutputPathStyle" : 0,
-      "bundleFormat" : 0,
+      "bundleFormat" : 3,
       "minifierStyle" : 1,
       "sourceMapStyle" : 0,
       "syntaxCheckerStyle" : 3,

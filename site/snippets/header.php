@@ -11,7 +11,15 @@
     'assets/css/main.css',
   ]) ?>
 
+  <noscript>
+    <style>
+      #theme-picker {
+        display: none;
+      }
+    </style>
+  </noscript>
 </head>
+
 <body class="<?= $page->slug() ?>">
   <header class="header">
 

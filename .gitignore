@@ -9,6 +9,7 @@ Icon
 
 /media/*
 !/media/index.html
+assets/sass/css/*
 
 # Lock files
 # ---------------

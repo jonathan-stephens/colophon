@@ -23,10 +23,18 @@
       </a>
     </li>
   </ul>
+  <?php snippet('components/theme-picker') ?>
+
 </footer>
 
+<!-- Fathom - beautiful, simple website analytics -->
+<script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
+<!-- / Fathom -->
+
 <?= js([
+  'assets/js/theme-picker.js',
 ]) ?>
+
 
 </body>
 </html>

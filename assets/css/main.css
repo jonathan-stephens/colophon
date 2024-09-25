@@ -258,9 +258,9 @@ html:has(input[name=theme][value=light]:checked) {
 
 html:has(input[name=theme][value=dark]:checked) {
   color-scheme: dark;
-  --background-primary: var(--palette-ash-95);
-  --background-secondary: var(--palette-ash-90);
-  --background-tertiary: var(--palette-ash-80);
+  --background-primary: var(--palette-ash-100);
+  --background-secondary: var(--palette-ash-95);
+  --background-tertiary: var(--palette-ash-90);
   --color-subtle: var(--palette-ash-40);
   --color-nuance: var(--palette-ash-30);
   --color-distinct: var(--palette-ash-10);
@@ -276,9 +276,9 @@ html:has(input[name=theme][value=dark]:checked) {
 @media (prefers-color-scheme: dark) {
   html:has(input[name=theme][value=auto]:checked) {
     color-scheme: dark;
-    --background-primary: var(--palette-ash-95);
-    --background-secondary: var(--palette-ash-90);
-    --background-tertiary: var(--palette-ash-80);
+    --background-primary: var(--palette-ash-100);
+    --background-secondary: var(--palette-ash-95);
+    --background-tertiary: var(--palette-ash-90);
     --color-subtle: var(--palette-ash-40);
     --color-nuance: var(--palette-ash-30);
     --color-distinct: var(--palette-ash-10);

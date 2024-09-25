@@ -133,11 +133,24 @@ button, input, select, textarea {
   --palette-tint-20:oklch(var(--palette-paper-raw) / .2);
   --palette-tint-10:oklch(var(--palette-paper-raw) / .1);
   --palette-tint-05:oklch(var(--palette-paper-raw) / .05);
+  --palette-ash-100: var(--palette-ink);
+  --palette-ash-95: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 5%);
+  --palette-ash-90: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 10%);
+  --palette-ash-80: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 20%);
+  --palette-ash-70: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 30%);
+  --palette-ash-60: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 40%);
+  --palette-ash-50: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 50%);
+  --palette-ash-40: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 60%);
+  --palette-ash-30: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 70%);
+  --palette-ash-20: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 80%);
+  --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
+  --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
+  --palette-ash-00: var(--palette-paper);
 }
 
 body {
-  background: var(--palette-paper);
-  color: var(--palette-ink);
+  background: var(--background-primary);
+  color: var(--color-distinct);
   font-family: var(--font-sans);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -179,23 +192,23 @@ h4 {
 }
 
 a, a:visited {
-  color: var(--palette-shade-60);
+  color: var(--color-nuance);
   padding: var(--flow-space-3) var(--flow-space-5);
   text-decoration: none;
   border-radius: var(--radii-square);
 }
 a:hover, a:visited:hover {
-  color: var(--palette-shade-80);
-  background: var(--palette-shade-05);
+  color: var(--color-distinct);
+  background: var(--background-secondary);
 }
 a:active, a:visited:active {
-  color: var(--palette-shade-90);
+  color: var(--color-emphasis);
   position: relative;
   left: 1px;
   top: 1px;
 }
 a:focus, a:visited:focus {
-  color: rebeccapurple;
+  outline: rebeccapurple;
 }
 
 :root {
@@ -226,10 +239,63 @@ a:focus, a:visited:focus {
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
 }
 
+html:has(input[name=theme][value=light]:checked) {
+  color-scheme: light;
+  --background-primary: var(--palette-ash-00);
+  --background-secondary: var(--palette-ash-05);
+  --background-tertiary: var(--palette-ash-10);
+  --color-subtle: var(--palette-ash-60);
+  --color-nuance: var(--palette-ash-70);
+  --color-distinct: var(--palette-ash-80);
+  --color-prominent: var(--palette-ash-90);
+  --color-emphasis: var(--palette-ash-100);
+  --border-subtle: var(--palette-ash-10);
+  --border-nuance: var(--palette-ash-20);
+  --border-distinct: var(--palette-ash-40);
+  --border-prominent: var(--palette-ash-60);
+  --border-emphasis: var(--palette-ash-80);
+}
+
+html:has(input[name=theme][value=dark]:checked) {
+  color-scheme: dark;
+  --background-primary: var(--palette-ash-95);
+  --background-secondary: var(--palette-ash-90);
+  --background-tertiary: var(--palette-ash-80);
+  --color-subtle: var(--palette-ash-40);
+  --color-nuance: var(--palette-ash-30);
+  --color-distinct: var(--palette-ash-10);
+  --color-prominent: var(--palette-ash-05);
+  --color-emphasis: var(--palette-ash-00);
+  --border-subtle: var(--palette-ash-90);
+  --border-nuance: var(--palette-ash-80);
+  --border-distinct: var(--palette-ash-60);
+  --border-prominent: var(--palette-ash-40);
+  --border-emphasis: var(--palette-ash-20);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:has(input[name=theme][value=auto]:checked) {
+    color-scheme: dark;
+    --background-primary: var(--palette-ash-95);
+    --background-secondary: var(--palette-ash-90);
+    --background-tertiary: var(--palette-ash-80);
+    --color-subtle: var(--palette-ash-40);
+    --color-nuance: var(--palette-ash-30);
+    --color-distinct: var(--palette-ash-10);
+    --color-prominent: var(--palette-ash-05);
+    --color-emphasis: var(--palette-ash-00);
+    --border-subtle: var(--palette-ash-90);
+    --border-nuance: var(--palette-ash-80);
+    --border-distinct: var(--palette-ash-60);
+    --border-prominent: var(--palette-ash-40);
+    --border-emphasis: var(--palette-ash-20);
+  }
+}
 .breadcrumb a {
   text-decoration: none;
-  color: var(--palette-ink);
+  color: var(--color-distinct);
   font-size: var(--hed-tertiary);
+  margin-left: calc(-1 * var(--flow-space-5));
 }
 .breadcrumb ol {
   padding: var(--flow-space-10) 0 var(--flow-space-13) 0;
@@ -237,7 +303,53 @@ a:focus, a:visited:focus {
   list-style-type: none;
 }
 .breadcrumb [aria-current=page] {
+  color: var(--color-emphasis);
   font-weight: var(--font-strong);
+}
+
+#theme-picker {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--flow-space-5);
+  align-items: baseline;
+}
+#theme-picker .header {
+  font-weight: var(--font-medium);
+}
+#theme-picker .options {
+  display: flex;
+  flex-direction: row;
+  gap: var(--flow-space-5);
+  align-items: baseline;
+  box-sizing: content-box;
+}
+#theme-picker input[type=radio] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+#theme-picker label {
+  display: inline-block;
+  padding: var(--flow-space-2) var(--flow-space-5);
+  font-family: sans-serif, Arial;
+  font-size: var(--type-scale-16);
+  border: 1px solid var(--border-subtle);
+  color: var(--color-subtle);
+  border-radius: var(--radii-square);
+}
+#theme-picker label:hover {
+  background-color: var(--background-secondary);
+  color: var(--color-distinct);
+  border: 1px solid var(--border-distinct);
+  cursor: pointer;
+}
+#theme-picker input[type=radio]:focus + label {
+  border: 1px solid var(--border-prominent);
+}
+#theme-picker input[type=radio]:checked + label {
+  background-color: var(--background-tertiary);
+  color: var(--color-distinct);
+  border-color: var(--border-nuance);
 }
 
 .home h2 {

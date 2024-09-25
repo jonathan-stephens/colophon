@@ -1,10 +1,11 @@
 .breadcrumb{
   a{
     text-decoration:none;
-    color:var(--palette-ink);
+    color:var(--color-distinct);
     font-size:var(--hed-tertiary);
+    margin-left:calc(-1*var(--flow-space-5));
   }
-  
+
   ol{
     padding:var(--flow-space-10) 0 var(--flow-space-13) 0;
     margin:0;
@@ -12,6 +13,7 @@
   }
 
   [aria-current="page"]{
+    color:var(--color-emphasis);
     font-weight:var(--font-strong);
   }
 }

@@ -1,0 +1,50 @@
+@mixin theme-light() {
+  color-scheme: light;
+  --background-primary: var(--palette-ash-00);
+  --background-secondary: var(--palette-ash-05);
+  --background-tertiary: var(--palette-ash-10);
+
+  --color-subtle:    var(--palette-ash-60);
+  --color-nuance:    var(--palette-ash-70);
+  --color-distinct:  var(--palette-ash-80);
+  --color-prominent: var(--palette-ash-90);
+  --color-emphasis:  var(--palette-ash-100);
+
+  --border-subtle:    var(--palette-ash-10);
+  --border-nuance:    var(--palette-ash-20);
+  --border-distinct:  var(--palette-ash-40);
+  --border-prominent: var(--palette-ash-60);
+  --border-emphasis:  var(--palette-ash-80);
+
+}
+
+@mixin theme-dark() {
+  color-scheme: dark;
+  --background-primary: var(--palette-ash-95);
+  --background-secondary: var(--palette-ash-90);
+  --background-tertiary: var(--palette-ash-80);
+
+  --color-subtle:    var(--palette-ash-40);
+  --color-nuance:    var(--palette-ash-30);
+  --color-distinct:  var(--palette-ash-10);
+  --color-prominent: var(--palette-ash-05);
+  --color-emphasis:  var(--palette-ash-00);
+
+  --border-subtle:    var(--palette-ash-90);
+  --border-nuance:    var(--palette-ash-80);
+  --border-distinct:  var(--palette-ash-60);
+  --border-prominent: var(--palette-ash-40);
+  --border-emphasis:  var(--palette-ash-20);
+}
+
+html:has(input[name="theme"][value="light"]:checked) {
+  @include theme-light;
+}
+html:has(input[name="theme"][value="dark"]:checked) {
+  @include theme-dark;
+}
+@media (prefers-color-scheme: dark) {
+    html:has(input[name="theme"][value="auto"]:checked) {
+    @include theme-dark;
+  }
+}

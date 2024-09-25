@@ -1,8 +1,6 @@
-body{
-}
 body {
-  background:var(--palette-paper);
-  color:var(--palette-ink);
+  background:var(--background-primary);
+  color:var(--color-distinct);
   font-family: var(--font-sans);
 
   -moz-osx-font-smoothing: grayscale;
@@ -44,19 +42,18 @@ h4{
 }
 
 a, a:visited{
-  color:var(--palette-shade-60);
+  color:var(--color-nuance);
   padding:var(--flow-space-3) var(--flow-space-5);
   text-decoration:none;
   border-radius:var(--radii-square);
 
   &:hover{
-    color:var(--palette-shade-80);
-    background:var(--palette-shade-05);
-
+    color:var(--color-distinct);
+    background:var(--background-secondary);
   }
 
   &:active{
-    color:var(--palette-shade-90);
+    color:var(--color-emphasis);
     position:relative;
     left:1px;
     top:1px;
@@ -64,7 +61,7 @@ a, a:visited{
   }
 
   &:focus{
-    color:rebeccapurple;
+    outline:rebeccapurple;
 
   }
 }

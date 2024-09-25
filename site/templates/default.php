@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
   <section class="wrapper">
-    <?php snippet('breadcrumb') ?>
+    <?php snippet('components/breadcrumb') ?>
 
     <div class="splash">
       <?= $page->text()->kirbytext() ?>

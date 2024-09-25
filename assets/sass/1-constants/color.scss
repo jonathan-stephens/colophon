@@ -28,4 +28,18 @@
   --palette-tint-20:oklch(var(--palette-paper-raw) / .2);
   --palette-tint-10:oklch(var(--palette-paper-raw) / .1);
   --palette-tint-05:oklch(var(--palette-paper-raw) / .05);
+
+  --palette-ash-100: var(--palette-ink);
+  --palette-ash-95: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 5%);
+  --palette-ash-90: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 10%);
+  --palette-ash-80: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 20%);
+  --palette-ash-70: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 30%);
+  --palette-ash-60: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 40%);
+  --palette-ash-50: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 50%);
+  --palette-ash-40: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 60%);
+  --palette-ash-30: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 70%);
+  --palette-ash-20: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 80%);
+  --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
+  --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
+  --palette-ash-00: var(--palette-paper);
 }

@@ -380,6 +380,21 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/sass\/0-mixins\/palette-generator.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/palette-generator.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
     "\/assets\/sass\/1-constants\/color.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -550,6 +565,26 @@
       "oAP" : "\/assets\/sass\/css\/breadcrumbs.css.map",
       "oF" : 0
     },
+    "\/assets\/sass\/css\/color-palette-generator.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/color-palette-generator-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/color-palette-generator.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/color-palette-generator.css.map",
+      "oF" : 0
+    },
     "\/assets\/sass\/css\/flow.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -588,6 +623,46 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/global.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/mix-ins.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/mix-ins-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/mix-ins.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/mix-ins.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/palette-generator.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/palette-generator-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/palette-generator.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/palette-generator.css.map",
       "oF" : 0
     },
     "\/assets\/sass\/css\/radii.css" : {
@@ -7580,20 +7655,36 @@
       "oAP" : "\/site\/config\/config.php",
       "oF" : 0
     },
-    "\/site\/sessions\/1727281427.e544f378ad650b98f925.sess" : {
+    "\/site\/sessions\/1727364989.054bca168062a736773a.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727281427.e544f378ad650b98f925.sess",
+      "oAP" : "\/site\/sessions\/1727364989.054bca168062a736773a.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1727285029.f7eedfa537f74039a803.sess" : {
+    "\/site\/sessions\/1727364989.1358b8da663c972b2626.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1727285029.f7eedfa537f74039a803.sess",
+      "oAP" : "\/site\/sessions\/1727364989.1358b8da663c972b2626.sess",
+      "oF" : 0
+    },
+    "\/site\/sessions\/1727368703.3f7cde9ea62fd88efcb7.sess" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/sessions\/1727368703.3f7cde9ea62fd88efcb7.sess",
+      "oF" : 0
+    },
+    "\/site\/sessions\/1727368703.5fa55b4d0eec4d3e6abd.sess" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/sessions\/1727368703.5fa55b4d0eec4d3e6abd.sess",
       "oF" : 0
     },
     "\/site\/sessions\/index.html" : {

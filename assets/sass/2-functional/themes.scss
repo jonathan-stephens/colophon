@@ -21,8 +21,8 @@
 @mixin theme-dark() {
   color-scheme: dark;
   --background-primary: var(--palette-ash-100);
-  --background-secondary: var(--palette-ash-95);
-  --background-tertiary: var(--palette-ash-90);
+  --background-secondary: var(--palette-ash-90);
+  --background-tertiary: var(--palette-ash-80);
 
   --color-subtle:    var(--palette-ash-40);
   --color-nuance:    var(--palette-ash-30);

@@ -1,3 +1,5 @@
+@import '../0-mixins/palette-generator';
+
 :root{
   --palette-ink: oklch(12.43% 0.015 47.04 / 100);
   --palette-ink-raw:12.43% 0.015 47.04;
@@ -42,4 +44,8 @@
   --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
   --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
   --palette-ash-00: var(--palette-paper);
+
+  @include generate-palette("cyan", oklch(49.13% 0.084 222.18));
+  @include generate-palette("yellow", oklch(68.4% 0.146 67.27));
+  @include generate-palette("magenta", oklch(45.73% 0.158 4.61));
 }

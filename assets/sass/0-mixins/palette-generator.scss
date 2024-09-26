@@ -1,0 +1,45 @@
+@use "sass:map";
+@use "sass:meta";
+
+@function generate-color-scale($base) {
+  $scale: (
+    "05": color-mix(in oklab, $base, var(--palette-paper) 90%),
+    "10": color-mix(in oklab, $base, var(--palette-paper) 80%),
+    "20": color-mix(in oklab, $base, var(--palette-paper) 60%),
+    "30": color-mix(in oklab, $base, var(--palette-paper) 40%),
+    "40": color-mix(in oklab, $base, var(--palette-paper) 20%),
+    "50": $base,
+    "60": color-mix(in oklab, $base, var(--palette-ink) 20%),
+    "70": color-mix(in oklab, $base, var(--palette-ink) 40%),
+    "80": color-mix(in oklab, $base, var(--palette-ink) 60%),
+    "90": color-mix(in oklab, $base, var(--palette-ink) 80%),
+    "95": color-mix(in oklab, $base, var(--palette-ink) 90%)
+  );
+
+  @return $scale;
+}
+
+@mixin generate-palette($color-name, $base) {
+  $scale: generate-color-scale($base);
+
+  @each $grade, $value in $scale {
+    --palette-#{$color-name}-#{$grade}: #{$value};
+  }
+}
+
+
+/*
+$scale: (
+  "05": color-mix(in oklab, $base, var(--palette-tint-95)),
+  "10": color-mix(in oklab, $base, var(--palette-tint-80)),
+  "20": color-mix(in oklab, $base, var(--palette-tint-60)),
+  "30": color-mix(in oklab, $base, var(--palette-tint-40)),
+  "40": color-mix(in oklab, $base, var(--palette-tint-20)),
+  "50": $base,
+  "60": color-mix(in oklab, $base, var(--palette-shade-20)),
+  "70": color-mix(in oklab, $base, var(--palette-shade-40)),
+  "80": color-mix(in oklab, $base, var(--palette-shade-60)),
+  "90": color-mix(in oklab, $base, var(--palette-shade-80)),
+  "95": color-mix(in oklab, $base, var(--palette-shade-95))
+);
+*/

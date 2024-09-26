@@ -106,6 +106,21 @@ button, input, select, textarea {
   --radii-circle:var(--flow-space-12);
 }
 
+/*
+$scale: (
+  "05": color-mix(in oklab, $base, var(--palette-tint-95)),
+  "10": color-mix(in oklab, $base, var(--palette-tint-80)),
+  "20": color-mix(in oklab, $base, var(--palette-tint-60)),
+  "30": color-mix(in oklab, $base, var(--palette-tint-40)),
+  "40": color-mix(in oklab, $base, var(--palette-tint-20)),
+  "50": $base,
+  "60": color-mix(in oklab, $base, var(--palette-shade-20)),
+  "70": color-mix(in oklab, $base, var(--palette-shade-40)),
+  "80": color-mix(in oklab, $base, var(--palette-shade-60)),
+  "90": color-mix(in oklab, $base, var(--palette-shade-80)),
+  "95": color-mix(in oklab, $base, var(--palette-shade-95))
+);
+*/
 :root {
   --palette-ink: oklch(12.43% 0.015 47.04 / 100);
   --palette-ink-raw:12.43% 0.015 47.04;
@@ -146,6 +161,39 @@ button, input, select, textarea {
   --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
   --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
   --palette-ash-00: var(--palette-paper);
+  --palette-cyan-05: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-paper) 90%);
+  --palette-cyan-10: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-paper) 80%);
+  --palette-cyan-20: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-paper) 60%);
+  --palette-cyan-30: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-paper) 40%);
+  --palette-cyan-40: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-paper) 20%);
+  --palette-cyan-50: oklch(49.13% 0.084 222.18);
+  --palette-cyan-60: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-ink) 20%);
+  --palette-cyan-70: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-ink) 40%);
+  --palette-cyan-80: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-ink) 60%);
+  --palette-cyan-90: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-ink) 80%);
+  --palette-cyan-95: color-mix(in oklab, oklch(49.13% 0.084 222.18), var(--palette-ink) 90%);
+  --palette-yellow-05: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-paper) 90%);
+  --palette-yellow-10: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-paper) 80%);
+  --palette-yellow-20: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-paper) 60%);
+  --palette-yellow-30: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-paper) 40%);
+  --palette-yellow-40: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-paper) 20%);
+  --palette-yellow-50: oklch(68.4% 0.146 67.27);
+  --palette-yellow-60: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-ink) 20%);
+  --palette-yellow-70: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-ink) 40%);
+  --palette-yellow-80: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-ink) 60%);
+  --palette-yellow-90: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-ink) 80%);
+  --palette-yellow-95: color-mix(in oklab, oklch(68.4% 0.146 67.27), var(--palette-ink) 90%);
+  --palette-magenta-05: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-paper) 90%);
+  --palette-magenta-10: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-paper) 80%);
+  --palette-magenta-20: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-paper) 60%);
+  --palette-magenta-30: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-paper) 40%);
+  --palette-magenta-40: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-paper) 20%);
+  --palette-magenta-50: oklch(45.73% 0.158 4.61);
+  --palette-magenta-60: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-ink) 20%);
+  --palette-magenta-70: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-ink) 40%);
+  --palette-magenta-80: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-ink) 60%);
+  --palette-magenta-90: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-ink) 80%);
+  --palette-magenta-95: color-mix(in oklab, oklch(45.73% 0.158 4.61), var(--palette-ink) 90%);
 }
 
 body {
@@ -259,8 +307,8 @@ html:has(input[name=theme][value=light]:checked) {
 html:has(input[name=theme][value=dark]:checked) {
   color-scheme: dark;
   --background-primary: var(--palette-ash-100);
-  --background-secondary: var(--palette-ash-95);
-  --background-tertiary: var(--palette-ash-90);
+  --background-secondary: var(--palette-ash-90);
+  --background-tertiary: var(--palette-ash-80);
   --color-subtle: var(--palette-ash-40);
   --color-nuance: var(--palette-ash-30);
   --color-distinct: var(--palette-ash-10);
@@ -277,8 +325,8 @@ html:has(input[name=theme][value=dark]:checked) {
   html:has(input[name=theme][value=auto]:checked) {
     color-scheme: dark;
     --background-primary: var(--palette-ash-100);
-    --background-secondary: var(--palette-ash-95);
-    --background-tertiary: var(--palette-ash-90);
+    --background-secondary: var(--palette-ash-90);
+    --background-tertiary: var(--palette-ash-80);
     --color-subtle: var(--palette-ash-40);
     --color-nuance: var(--palette-ash-30);
     --color-distinct: var(--palette-ash-10);

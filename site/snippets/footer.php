@@ -2,24 +2,20 @@
 
 <footer class="footer">
   <ul class="wrapper">
-    <li>
+    <li class="connect-linkedin">
       <a href="https://linkedin.com/in/elnatnal">
         Connect on LinkedIn
+      </span>
       </a>
     </li>
-    <li>
+    <li class="subscribe-substack">
       <a href="https://jonathanstephens.substack.com/">
         Subscribe on Substack
       </a>
     </li>
-    <li>
+    <li class="book-calendar">
       <a href="https://cal.com/jonathanstephens/book">
         Book time on my calendar
-      </a>
-    </li>
-    <li>
-      <a href="https://linkedin.com/in/elnatnal">
-        Connect on LinkedIn
       </a>
     </li>
   </ul>

@@ -5,7 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-  <title><?= $site->title()->esc() ?> | <?= $page->title()->esc() ?></title>
+  <title>
+    <?= $site->title()->esc() ?> |
+    <?php if($page->isHomePage()): ?>
+      Home
+    <?php else: ?>
+     <?= $page->title()->esc() ?>
+   <?php endif ?>
+  </title>
 
   <?= css([
     'assets/css/main.css',

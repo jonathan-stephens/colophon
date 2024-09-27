@@ -26,20 +26,3 @@
     --palette-#{$color-name}-#{$grade}: #{$value};
   }
 }
-
-
-/*
-$scale: (
-  "05": color-mix(in oklab, $base, var(--palette-tint-95)),
-  "10": color-mix(in oklab, $base, var(--palette-tint-80)),
-  "20": color-mix(in oklab, $base, var(--palette-tint-60)),
-  "30": color-mix(in oklab, $base, var(--palette-tint-40)),
-  "40": color-mix(in oklab, $base, var(--palette-tint-20)),
-  "50": $base,
-  "60": color-mix(in oklab, $base, var(--palette-shade-20)),
-  "70": color-mix(in oklab, $base, var(--palette-shade-40)),
-  "80": color-mix(in oklab, $base, var(--palette-shade-60)),
-  "90": color-mix(in oklab, $base, var(--palette-shade-80)),
-  "95": color-mix(in oklab, $base, var(--palette-shade-95))
-);
-*/

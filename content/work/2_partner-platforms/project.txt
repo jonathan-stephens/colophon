@@ -1,0 +1,61 @@
+Title: Partner Platforms
+
+----
+
+Hed: Partner Platforms
+
+----
+
+Dek: Scaling Booking.com to 2.3 million global accommodation partners
+
+----
+
+Lede: Something something about managing XML/API's, Web, and Native App platforms. A brief summation about what that meant for each maybe, but keeping it to the 360 words here.
+
+----
+
+Nutgraf: 
+
+----
+
+Skills: People Management, Project Management, Performance Management, Change Management
+
+----
+
+Services: Process improvement
+
+----
+
+Tools: UX Writers, Developers, Designers, Product Owners, Core, Senior
+
+----
+
+Prose: This is a story. Not the full Pulse Story,  which I think could turn into a more essay side of things? But also a "focused portoflio piece" that could be a Call. to Action at the end of this. It's the one that has the most "meat" to it. But I was a tech/people manager throughout a lot of the time before focusing on pulse, where I become more involved in the product development & innovation.
+
+----
+
+Role: Director of Product Development
+
+----
+
+Date-start: 2016-10-01
+
+----
+
+Date-end: 2021-12-31
+
+----
+
+Company: companies/booking-com
+
+----
+
+Tags: 
+
+----
+
+Uuid: S6KnIgFH8lnjuJia
+
+----
+
+Header: zfgadsfasfgsdfgsdfg;slkdjfg;slfjh;slkjdfg;lsdjgf;lsjdfg;lskjdfg;lskjdfg;l

@@ -1,0 +1,44 @@
+title: Review
+
+columns:
+  main:
+    width: 2/3
+    sections:
+      fields:
+        type: fields
+        fields:
+          name:
+            label: Name
+            type: text
+            width: 1/3
+          role:
+            label: Role
+            type: text
+            width: 1/3
+          company:
+            label: Company
+            type: select
+            options:
+              type: query
+              query: page('companies').children
+            width: 1/3
+          lede:
+            label: Lede
+            type: textarea
+            maxlength: 360
+            width: 1/2
+          nutgraf:
+            label: Paraphrase
+            type: textarea
+            maxlength: 720
+            width: 1/2
+          verbatim:
+            label: Review
+            type: textarea
+            width: 1/1
+  sidebar:
+    width: 1/3
+    sections:
+      files:
+        label: Headshot
+        type: files

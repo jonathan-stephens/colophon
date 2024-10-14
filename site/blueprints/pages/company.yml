@@ -1,0 +1,43 @@
+title: Company
+
+columns:
+  main:
+    width: 2/3
+    sections:
+      fields:
+        type: fields
+        fields:
+          name:
+            label: Company Name
+            type: text
+            width: 1/2
+          location:
+            label: Location
+            type: text
+            width: 1/4
+          style:
+            label: Working Style
+            type: select
+            width: 1/4
+            options:
+              remote: Remote
+              hybrid: Hybrid
+              office: Office
+          date_start:
+            label: Start Date (yyyy)
+            type: number
+            width: 1/4
+          date_end:
+            label: End Date (yyyy)
+            type: number
+            width: 1/4
+          description:
+            label: Description
+            type: textarea
+            width: 1/1
+  sidebar:
+    width: 1/3
+    sections:
+      files:
+        label: Logo
+        type: files

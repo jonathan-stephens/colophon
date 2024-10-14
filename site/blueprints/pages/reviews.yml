@@ -1,0 +1,30 @@
+title: Reviews
+preset: pages
+icon: �🏢
+
+# Define the form layout with two columns
+# More about columns: https://getkirby.com/docs/guide/blueprints/layout#defining-columns
+
+columns:
+  - width: 1/3
+    sections:
+      drafts:
+        extends: sections/review
+        label: Drafts
+        status: draft
+
+      unlisted:
+        extends: sections/review
+        label: Private
+        status: unlisted
+
+  - width: 2/3
+    sections:
+      listed:
+        extends: sections/review
+        label: Public
+        status: listed
+        size: small
+        layout: cards
+
+# More about pages sections: https://getkirby.com/docs/reference/panel/sections/pages

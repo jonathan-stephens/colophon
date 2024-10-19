@@ -41,3 +41,4 @@ columns:
       files:
         label: Logo
         type: files
+        max: 1

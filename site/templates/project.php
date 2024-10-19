@@ -3,29 +3,38 @@
     <?php snippet('components/breadcrumb') ?>
 
 
-    <div class="splash">
-    </div>
+    <article>
+      <h1><?= $page->hed() ?></h1>
+      <p class="subtitle"><?= $page->dek() ?></p>
+      <p class="summary"><?= $page->lede() ?></p>
+      <p class="paraphrase"><?= $page->nutgraf() ?></p>
 
-      <article>
-        <h1 class="hed"><?= $page->hed()->kirbytext() ?></h1>
-        <div class="meta">
-          <p class="dek"><?= $page->dek()->kirbytext() ?></p>
-          <p class="role"><?= $page->role()->kirbytext() ?></p>
-          <p class="date-start"><?= $page->date_start()->kirbytext() ?></p>
-          <p class="date-end"><?= $page->date_end()->kirbytext() ?></p>
-          <p class="company"><?= $page->company()->name()->kirbytext() ?></p>
-          <p class="perspective"><?= $page->perspective()->kirbytext() ?></p>
+      <h2>Skills</h2>
+      <ul>
+        <?php foreach($page->skills()->split() as $skill): ?>
+          <li><?= $skill ?></li>
+        <?php endforeach ?>
+      </ul>
 
+      <h2>Services</h2>
+      <ul>
+        <?php foreach($page->services()->split() as $service): ?>
+          <li><?= $service ?></li>
+        <?php endforeach ?>
+      </ul>
 
-        <p class="lede"><?= $page->lede()->kirbytext() ?></p>
-        <p class="nutgraf"><?= $page->nutgraf()->kirbytext() ?></p>
-        <p class="skills"><?= $page->skills()->kirbytext() ?></p>
-        <p class="services"><?= $page->services()->kirbytext() ?></p>
-        <p class="tools"><?= $page->tools()->kirbytext() ?></p>
-        <div>
-          <?= $page->prose()->kirbytext() ?>
-        </div>
-      </article>
+      <h2>Organization</h2>
+      <?php foreach($page->organization()->toStructure() as $org): ?>
+        <h3><?= $org->team() ?></h3>
+        <p>People: <?= $org->people() ?></p>
+        <p>Roles: <?= $org->roles() ?></p>
+      <?php endforeach ?>
 
-  </section>
+      <h2>Description</h2>
+      <?= $page->prose()->kirbytext() ?>
+
+      <p>Duration: <?= $page->date_start() ?> to <?= $page->date_end() ?></p>
+
+      <p>Company: <a href="<?= $page->company()->toPage()->url() ?>"><?= $page->company()->toPage()->title() ?></a></p>
+    </article>
 <?php snippet('footer') ?>

@@ -10,6 +10,9 @@ columns:
     # In the first column, we reuse the `notes` section
     # (defined in `/site/blueprints/sections/notes.yml` twice with different page status and headline
     sections:
+      eras:
+        type: pages
+        template: era 
       drafts:
         extends: sections/project
         label: Drafts

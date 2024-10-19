@@ -1,4 +1,4 @@
-title: Project
+title: Era
 sections:
   info:
     type: fields
@@ -47,7 +47,6 @@ sections:
       date_end:
         type: date
         label: End Date
-      company:
-        type: select
-        options: query
-        query: site.find('work/companies').children
+  chapters:
+    type: pages
+    template: chapter

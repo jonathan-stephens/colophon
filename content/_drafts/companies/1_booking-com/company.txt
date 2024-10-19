@@ -1,0 +1,33 @@
+Title: Booking.com
+
+----
+
+Name: Booking.com
+
+----
+
+Location: Amsterdam, Netherlands
+
+----
+
+Style: hybrid
+
+----
+
+Date-start: 2013
+
+----
+
+Date-end: 2021
+
+----
+
+Description: One of world’s leading travel marketplaces with most downloaded app, connecting travelers across 220+ countries’ 28MM+ accommodation listings in 40+ languages, via technology investment. 20,000+ employees worldwide.
+
+----
+
+Text: 
+
+----
+
+Uuid: WxR2xldJ0kVqQMfv

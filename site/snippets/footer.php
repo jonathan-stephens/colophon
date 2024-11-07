@@ -2,25 +2,17 @@
 
 <footer class="footer">
   <ul class="wrapper">
-    <li class="connect-linkedin">
-      <a href="https://linkedin.com/in/elnatnal">
-        Connect on LinkedIn
-      </span>
-      </a>
-    </li>
-    <li class="subscribe-substack">
-      <a href="https://jonathanstephens.substack.com/">
-        Subscribe on Substack
-      </a>
-    </li>
-    <li class="book-calendar">
-      <a href="https://cal.com/jonathanstephens/book">
-        Book time on my calendar
+    <li class="on-github">
+      <a href="https://github.com/jonathan-stephens">
+        Check out my Github
       </a>
     </li>
   </ul>
   <?php snippet('components/theme-picker') ?>
 
+  <p class="h-card">
+    <a class="p-name u-url" href="https://jonathanstephens.us">Jonathan Stephens</a>
+  </p>
 </footer>
 
 <!-- Fathom - beautiful, simple website analytics -->

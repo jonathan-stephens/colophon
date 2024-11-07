@@ -14,6 +14,12 @@
    <?php endif ?>
   </title>
 
+  <!-- webmention -->
+<!--  <link rel="pingback" href="https://webmention.io/YOUR-ACCOUNT/xmlrpc" />
+  <link rel="webmention" href="https://webmention.io/YOUR-ACCOUNT/webmention" /> -->
+  <?php snippet('webmention-endpoint'); ?>
+
+
   <?= css([
     'assets/css/main.css',
   ]) ?>

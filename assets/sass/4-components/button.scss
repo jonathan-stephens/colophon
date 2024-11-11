@@ -1,19 +1,20 @@
 /* https://piccalil.li/blog/how-i-build-a-button-component/ */
 
 .button {
-  --button-bg: #342a21;
-  --button-color: #ffffff;
-  --button-hover-bg: #4b4b4a;
-  --button-hover-color: #ffffff;
-  --button-border-width: 3px;
+  --button-bg: var(--background-primary);
+  --button-color: var(--color-distinct);
+  --button-hover-bg: var(--background-secondary);
+  --button-hover-color: var(--color-distinct);
+  --button-border-width: 2px;
   --button-border-style: solid;
-  --button-border-color: var(--button-bg);
-  --button-radius: 0.5em;
+  --button-border-color: var(--border-nuance);
+  --button-hover-border-color: var(--border-distinct);
+  --button-radius: var(--radii-square);
 
   display: inline-flex;
   align-items: center;
-  gap: var(--button-gap, 0.5em);
-  padding: var(--button-padding, 0.7em 1.2em);
+  gap: var(--button-gap, var(--flow-space-5));
+  padding: var(--button-padding, var(--flow-space-3) var(--flow-space-5));
 
   background: var(--button-bg);
   color: var(--button-color);
@@ -24,11 +25,10 @@
   border-radius: var(--button-radius);
 
   text-decoration: none;
-  font-weight: var(--button-font-weight, 700);
-  font-size: var(--button-font-size, 1em);
+  font-weight: var(--button-font-weight, var(--font-medium));
+  font-size: var(--button-font-size, inherit);
   letter-spacing: 0.05ch;
-  font-family: sans-serif;
-  line-height: 1.1; /* Set or buttons will be different sizes (<a>/<button>) */
+  line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
 
   cursor: pointer;
 }
@@ -43,6 +43,7 @@
 .button:hover {
   background: var(--button-hover-bg);
   color: var(--button-hover-color);
+  border-color:var(--button-hover-border-color);
 }
 
 .button:focus {

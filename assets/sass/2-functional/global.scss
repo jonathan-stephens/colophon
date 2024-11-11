@@ -57,16 +57,13 @@ h4{
 
 a, a:visited{
   color:var(--color-subtle);
-  padding:var(--flow-space-3) var(--flow-space-5);
-  border-radius:var(--radii-square);
   text-decoration: underline;
   text-decoration-color: var(--color-quiet);
   text-underline-offset:var(--flow-space-1);
 
   &:hover{
     color:var(--color-distinct);
-    background:var(--background-secondary);
-    text-decoration-color: var(--color-disinct);
+    text-decoration:none;
   }
 
   &:active{
@@ -87,13 +84,9 @@ a, a:visited{
   width: 1cap;
   height: 0.75em;
   height: 1cap;
+  margin-inline-end: var(--flow-space-3);
 }
 
-.with-icon {
-  display: inline-flex;
-  align-items: baseline;
-
-  .icon {
-    margin-inline-end: var(--flow-space-5);
-  }
+footer{
+  background-color:rebeccapurple;
 }

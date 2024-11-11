@@ -1,54 +1,75 @@
-*, :after, :before {
+/* https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-blockquote, body, dd, dl, figure, h1, h2, h3, h4, p {
-  margin: 0;
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
-ol[role=list], ul[role=list] {
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role=list],
+ol[role=list] {
   list-style: none;
 }
 
-html {
-  text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-}
-
-html:focus-within {
-  scroll-behavior: smooth;
-}
-
+/* Set core body defaults */
 body {
-  line-height: 1.5;
   min-height: 100vh;
-  text-rendering: optimizeSpeed;
+  line-height: 1.5;
 }
 
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
+  color: currentColor;
 }
 
-img, picture {
-  display: block;
+/* Make images easier to work with */
+img,
+picture {
   max-width: 100%;
+  display: block;
 }
 
-button, input, select, textarea {
-  font: inherit;
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html:focus-within {
-    scroll-behavior: auto;
-  }
-  *, :after, :before {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
 }
+
+/* Anything that has been anchored to should have extra scroll margin */
+
 @font-face {
   font-display: swap;
   font-family: "IBM Plex Sans";
@@ -273,16 +294,13 @@ h4 {
 
 a, a:visited {
   color: var(--color-subtle);
-  padding: var(--flow-space-3) var(--flow-space-5);
-  border-radius: var(--radii-square);
   text-decoration: underline;
   text-decoration-color: var(--color-quiet);
   text-underline-offset: var(--flow-space-1);
 }
 a:hover, a:visited:hover {
   color: var(--color-distinct);
-  background: var(--background-secondary);
-  text-decoration-color: var(--color-disinct);
+  text-decoration: none;
 }
 a:active, a:visited:active {
   color: var(--color-emphasis);
@@ -300,6 +318,11 @@ a:focus, a:visited:focus {
   width: 1cap;
   height: 0.75em;
   height: 1cap;
+  margin-inline-end: var(--flow-space-3);
+}
+
+footer {
+  background-color: rebeccapurple;
 }
 
 :root {
@@ -312,6 +335,14 @@ a:focus, a:visited:focus {
   padding-left: var(--gutter);
   padding-right: var(--gutter);
   position: relative;
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space, var(--flow-space-5));
+  justify-content: flex-start;
+  align-items: center;
 }
 
 :root {
@@ -386,20 +417,42 @@ html:has(input[name=theme][value=dark]:checked) {
     --border-emphasis: var(--palette-ash-20);
   }
 }
-.breadcrumb a {
-  text-decoration: none;
-  color: var(--color-distinct);
-  font-size: var(--hed-tertiary);
-  margin-left: calc(-1 * var(--flow-space-5));
-}
 .breadcrumb ol {
   padding: var(--flow-space-10) 0 var(--flow-space-13) 0;
   margin: 0;
   list-style-type: none;
+  --space: 0;
+}
+.breadcrumb a {
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  color: var(--color-emphasis);
+  text-decoration: underline;
+}
+.breadcrumb li::after {
+  content: "/";
+  display: inline-block;
+  padding: 0 var(--flow-space-3);
+}
+.breadcrumb li:last-of-type::after {
+  content: "";
+}
+.breadcrumb li:nth-last-child(2) a {
+  color: var(--color-distinct);
+}
+.breadcrumb li:nth-last-child(3) a {
+  color: var(--color-nuance);
+}
+.breadcrumb li:nth-last-child(4) a {
+  color: var(--color-subtle);
 }
 .breadcrumb [aria-current=page] {
   color: var(--color-emphasis);
   font-weight: var(--font-strong);
+}
+.breadcrumb [aria-current=page]::after {
+  content: "";
 }
 
 #theme-picker {
@@ -447,6 +500,65 @@ html:has(input[name=theme][value=dark]:checked) {
   border-color: var(--border-nuance);
 }
 
+/* https://piccalil.li/blog/how-i-build-a-button-component/ */
+.button {
+  --button-bg: var(--background-primary);
+  --button-color: var(--color-distinct);
+  --button-hover-bg: var(--background-secondary);
+  --button-hover-color: var(--color-distinct);
+  --button-border-width: 2px;
+  --button-border-style: solid;
+  --button-border-color: var(--border-nuance);
+  --button-hover-border-color: var(--border-distinct);
+  --button-radius: var(--radii-square);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--button-gap, var(--flow-space-5));
+  padding: var(--button-padding, var(--flow-space-3) var(--flow-space-5));
+  background: var(--button-bg);
+  color: var(--button-color);
+  border-width: var(--button-border-width);
+  border-style: var(--button-border-style);
+  border-color: var(--button-border-color);
+  border-radius: var(--button-radius);
+  text-decoration: none;
+  font-weight: var(--button-font-weight, var(--font-medium));
+  font-size: var(--button-font-size, inherit);
+  letter-spacing: 0.05ch;
+  line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
+  cursor: pointer;
+}
+
+.button svg {
+  height: var(--button-icon-size, 1.2cap);
+  width: auto;
+  flex: none;
+}
+
+/* Hover/focus/active */
+.button:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-color);
+  border-color: var(--button-hover-border-color);
+}
+
+.button:focus {
+  outline-width: var(--button-outline-width, var(--button-border-width));
+  outline-style: var(--button-outline-style, var(--button-border-style));
+  outline-color: var(--button-outline-color, var(--button-border-color));
+  outline-offset: var(--button-outline-offset, calc(var(--button-border-width) * 2));
+}
+
+.button:active {
+  transform: scale(99%);
+}
+
+/* Variants */
+
+/* Ghost buttons */
+
+/* Radius variants */
+
 .home h2 {
   padding-bottom: var(--flow-space-10);
 }
@@ -456,23 +568,6 @@ html:has(input[name=theme][value=dark]:checked) {
 }
 .home .splash p {
   max-width: 50ch;
-}
-.home footer {
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-}
-.home footer ul {
-  list-style-type: none;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-  width: 100%;
-}
-.home footer ul li {
-  margin: var(--flow-space-3) 0 var(--flow-space-3) calc(-1 * var(--flow-space-5));
-}
-.home footer a {
-  font-size: var(--type-scale-18);
 }
 
 /*# sourceMappingURL=main.css.map */

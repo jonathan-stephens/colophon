@@ -9,26 +9,9 @@
       padding-bottom:var(--flow-space-8);
     }
     p{max-width:50ch;}
-
     .cta{
-      padding-left: var(--gutter);
-      padding-right: var(--gutter);
+      display:inline-grid;
+    }
 
-      ul{
-        list-style-type:none;
-        display:flex;
-        flex-flow: column;
-        justify-content: space-between;
-        width:100%;
-
-        li{
-          margin:var(--flow-space-3) 0 var(--flow-space-3) calc(-1*var(--flow-space-5));
-        }
-      }
-
-      a{
-        font-size:var(--type-scale-18);
-      }
     }
   }
-}

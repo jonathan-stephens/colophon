@@ -1,5 +1,5 @@
 <nav class="breadcrumb" aria-label="breadcrumb">
-  <ol>
+  <ol class="cluster">
     <?php foreach($site->breadcrumb() as $crumb): ?>
     <li>
       <a href="<?= $crumb->url() ?>" <?= e($crumb->isActive(), 'aria-current="page"') ?>>

@@ -4,7 +4,4 @@
       'install' => true
     ]
   ];
-  return [
-    'debug' => true
-  ];
 ?>

@@ -1,0 +1,45 @@
+title: Link
+preset: page
+num: date
+icon: link
+
+fields:
+  metadata:
+    label: Metadata
+    type: group
+    fields:
+      date:
+        label: Date
+        type: date
+        width: 1/3
+        default: now
+      time:
+        label: Time
+        type: time
+        width: 1/3
+        default: now
+      location:
+        label: Location
+        type: text
+        width: 1/3
+        default: "{{ site.default_location }}"
+
+  url:
+    label: URL
+    type: url
+    required: true
+    width: 1/2
+
+  content:
+    label: Content
+    type: group
+    fields:
+      description:
+        label: Description
+        type: markdown
+
+  tags:
+    label: Tags
+    type: tags
+    options: query
+    query: site.index.pluck("tags", ",", true)

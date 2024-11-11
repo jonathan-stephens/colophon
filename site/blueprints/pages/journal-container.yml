@@ -1,0 +1,27 @@
+title: Journal
+type: pages
+icon: text
+
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+tabs:
+  entries:
+    label: Entries
+    sections:
+      drafts:
+        headline: Draft Entries
+        type: pages
+        status: draft
+        templates: [journal]
+        sortBy: date desc
+
+      published:
+        headline: Published Entries
+        type: pages
+        status: published
+        templates: [journal]
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"

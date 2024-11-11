@@ -1,5 +1,126 @@
+# site/blueprints/site.yml
 title: Site
-
-sections:
+tabs:
   pages:
-    type: pages
+    label: pages
+    icon: page
+    columns:
+      - width: 2/3
+        sections:
+          published:
+            type: pages
+
+      - width: 1/3
+        sections:
+          personal:
+            type: areas
+            areas:
+              journal:
+                label: Journal
+                icon: text
+                link: /panel/pages/journal
+              notes:
+                label: Notes
+                icon: sticky-note
+                link: /panel/pages/notes
+              links:
+                label: Links
+                icon: link
+                link: /panel/pages/links
+
+  general:
+    label: General Settings
+    icon: settings
+    columns:
+      - width: 1/2
+        sections:
+          settings:
+            type: fields
+            fields:
+              site_title:
+                label: Site Title
+                type: text
+              site_description:
+                label: Site Description
+                type: textarea
+              default_location:
+                label: Default Location
+                type: text
+
+  header:
+    label: Header
+    icon: title
+    columns:
+      - width: 2/3
+        sections:
+          header_navigation:
+            type: pages
+            headline: Header Navigation
+            template: default
+            status: published
+            sortable: true
+            max: 5
+      - width: 1/3
+        sections:
+          header_settings:
+            type: fields
+            fields:
+              logo:
+                label: Logo
+                type: files
+                multiple: false
+              show_search:
+                label: Show Search
+                type: toggle
+
+  footer:
+    label: Footer
+    icon: download
+    columns:
+      - width: 1/3
+        sections:
+          footer_col1:
+            type: fields
+            fields:
+              footer_col1_title:
+                label: Footer Nav
+                type: text
+              footer_col1_pages:
+                label: Footer Nav
+                type: pages
+                multiple: true
+                status: published
+
+      - width: 1/3
+        sections:
+          footer_col2:
+            type: fields
+            fields:
+              footer_col2_title:
+                label: About Me
+                type: text
+              footer_col2_pages:
+                label: About me
+                type: pages
+                multiple: true
+                status: published
+
+      - width: 1/3
+        sections:
+          footer_col3:
+            type: fields
+            fields:
+              footer_social:
+                label: Social Links
+                type: structure
+                fields:
+                  platform:
+                    label: Platform
+                    type: text
+                  url:
+                    label: URL
+                    type: url
+                  icon:
+                    label: icon
+                    type: files
+                    multiple: false

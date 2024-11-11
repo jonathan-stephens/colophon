@@ -1,0 +1,26 @@
+title: Links
+icon: link
+
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+tabs:
+  entries:
+    label: Links
+    sections:
+      drafts:
+        headline: Draft Links
+        type: pages
+        status: draft
+        templates: [link]
+        sortBy: date desc
+
+      published:
+        headline: Published Links
+        type: pages
+        status: published
+        templates: [link]
+        sortBy: date desc
+        info: "{{ page.url }}"

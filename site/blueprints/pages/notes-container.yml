@@ -1,0 +1,26 @@
+title: Notes
+icon: sticky-note
+
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+tabs:
+  entries:
+    label: Notes
+    sections:
+      drafts:
+        headline: Draft Notes
+        type: pages
+        status: draft
+        templates: [note]
+        sortBy: date desc
+
+      published:
+        headline: Published Notes
+        type: pages
+        status: published
+        templates: [note]
+        sortBy: date desc
+        info: "{{ page.category }}"

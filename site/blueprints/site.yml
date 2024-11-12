@@ -13,8 +13,8 @@ tabs:
       - width: 1/3
         sections:
           personal:
-            type: areas
-            areas:
+            type: fields
+            fields:
               journal:
                 label: Journal
                 icon: text
@@ -29,7 +29,7 @@ tabs:
                 link: /panel/pages/links
 
   general:
-    label: General Settings
+    label: Settings
     icon: settings
     columns:
       - width: 1/2
@@ -72,7 +72,6 @@ tabs:
               show_search:
                 label: Show Search
                 type: toggle
-
   footer:
     label: Footer
     icon: download
@@ -106,21 +105,18 @@ tabs:
                 status: published
 
       - width: 1/3
-        sections:
-          footer_col3:
-            type: fields
-            fields:
-              footer_social:
-                label: Social Links
-                type: structure
-                fields:
-                  platform:
-                    label: Platform
-                    type: text
-                  url:
-                    label: URL
-                    type: url
-                  icon:
-                    label: icon
-                    type: files
-                    multiple: false
+          fields:
+            footer_social:
+              label: Social Links
+              type: structure
+              fields:
+                platform:
+                  label: Platform
+                  type: text
+                url:
+                  label: URL
+                  type: url
+                logo:
+                  label: Logo
+                  type: files
+                  multiple: false

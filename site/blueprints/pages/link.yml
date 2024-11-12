@@ -36,7 +36,7 @@ fields:
     fields:
       description:
         label: Description
-        type: markdown
+        type: textarea
 
   tags:
     label: Tags

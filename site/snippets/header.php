@@ -34,8 +34,8 @@
 </head>
 
 <body class="<?= $page->slug() ?>">
-  <header class="header">
+  <header>
 
   </header>
 
-  <main class="main">
+  <main>

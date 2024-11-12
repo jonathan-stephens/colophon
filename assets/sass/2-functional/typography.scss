@@ -16,4 +16,6 @@
 
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
   --measure:60ch;
+
+  --caption:clamp(var(--type-scale-12),100%, var(--type-scale-14))
 }

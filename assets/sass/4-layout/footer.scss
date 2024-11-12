@@ -1,0 +1,30 @@
+
+body > footer{
+  background:var(--background-secondary);
+  margin:var(--flow-space-10) 0 0 0;
+  padding:var(--flow-space-10) 0;
+
+  .wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .social-links{
+     grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #theme-picker{
+     grid-area: 1 / 2 / 2 / 3;
+  }
+
+  .h-card{
+    font-size:var(--caption);
+     grid-area: 2 / 1 / 3 / 3;
+
+    a{
+      text-decoration:none;
+      color:var(--color-distinct);
+    }
+  }
+}

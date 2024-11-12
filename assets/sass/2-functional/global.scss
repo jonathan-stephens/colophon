@@ -16,10 +16,15 @@ body {
   background:var(--background-primary);
   color:var(--color-distinct);
   font-family: var(--font-sans);
+  margin:0;
 
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+main{
+  min-height:100%;
 }
 
 p, li{
@@ -85,8 +90,4 @@ a, a:visited{
   height: 0.75em;
   height: 1cap;
   margin-inline-end: var(--flow-space-3);
-}
-
-footer{
-  background-color:rebeccapurple;
 }

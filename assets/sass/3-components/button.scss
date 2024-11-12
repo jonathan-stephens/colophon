@@ -82,10 +82,11 @@
 }
 
 /* Ghost buttons */
-.button[data-ghost-button] {
+.button[data-button-variant="ghost"] {
   --button-bg: transparent;
   --button-border-color: currentColor;
   --button-color: currentColor;
+  background:red!important;
 }
 
 /* Radius variants */

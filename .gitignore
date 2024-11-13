@@ -50,3 +50,4 @@ assets/sass/css/*
 
 /site/config/.license
 config.codekit3
+*.codekit3

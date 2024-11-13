@@ -1,7 +1,7 @@
 <?php
   return [
     'panel' =>[
-      'debug' => true
+      'debug' => false
     ]
   ];
 ?>

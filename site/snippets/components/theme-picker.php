@@ -1,13 +1,13 @@
-<div id="theme-picker" class="wrapper">
-  <div class="header">
-    Theme
-  </div>
-  <div class="options">
-    <input name="theme" type="radio" value="auto" id="theme-auto" checked>
-    <label for="theme-auto">Auto</label>
-    <input name="theme" type="radio" value="light" id="theme-light">
-    <label for="theme-light">Light</label>
-    <input name="theme" type="radio" value="dark" id="theme-dark">
-    <label for="theme-dark">Dark</label>
-  </div>
-</div>
+<div class="color-mode-toggle">
+        <div role="status" class="visually-hidden js-mode-status">Color mode is currently light</div>
+        <label>
+            <input
+                type="checkbox"
+                class="js-mode-toggle"
+                role="switch"
+                aria-label="Toggle dark mode"
+            >
+            <span class="slider" aria-hidden="true"></span>
+        </label>
+        <span class="visually-hidden js-mode-toggle-text">Enable dark mode</span>
+    </div>

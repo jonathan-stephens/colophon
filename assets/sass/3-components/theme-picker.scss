@@ -1,45 +1,58 @@
-#theme-picker {
-  display:flex;
-  justify-content: flex-end;
-  gap: var(--flow-space-5);
-  align-items:baseline;
+.color-mode-toggle {
+    position: relative;
+}
 
-  .header{
-    font-weight:var(--weight-medium);
-  }
-  .options{
-    display:flex;
-    flex-direction:row;
-    gap: var(--flow-space-5);
-    align-items:baseline;
-    box-sizing: content-box;
-  }
-  input[type="radio"] {
-    opacity: 0;
-    position: fixed;
-    width: 0;
-  }
-  label {
-    display: inline-block;
-    padding: var(--flow-space-2) var(--flow-space-5);
-    font-family: sans-serif, Arial;
-    font-size: var(--type-scale-16);
-    border: 1px solid var(--border-subtle);
-    color: var(--color-subtle);
-    border-radius: var(--radii-square);
-  }
-  label:hover {
-    background-color: var(--background-secondary);
-    color: var(--color-distinct);
-    border:1px solid var(--border-distinct);
+.color-mode-toggle label {
+    position: relative;
+    display: block;
+    width: 76px;
+    height: 36px;
+    background-color: var(--background-tertiary-inverse);
+    border-radius: 18px;
     cursor: pointer;
-  }
-  input[type="radio"]:focus + label {
-    border: 1px solid var(--border-prominent);
-  }
-  input[type="radio"]:checked + label {
+}
+
+.color-mode-toggle input {
+    position: absolute;
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--background-tertiary-inverse);
+    transition: 0.3s;
+}
+
+/* Light mode (unchecked) styles */
+.color-mode-toggle input:not(:checked) + .slider::before {
+    box-shadow: inset 11px -2px 0px 0px var(--background-tertiary);
+}
+
+/* Dark mode (checked) styles */
+.color-mode-toggle input:checked + .slider {
+    background-color: var(--background-tertiary-inverse);
+}
+
+.color-mode-toggle input:checked + .slider::before {
+    transform: translateX(40px);
     background-color: var(--background-tertiary);
-    color: var(--color-distinct);
-    border-color: var(--border-nuance);
-  }
+    box-shadow: none;
+}
+.color-mode-toggle label:focus-within {
+    outline: 2px solid blue;
+    outline-offset: 3px;
 }

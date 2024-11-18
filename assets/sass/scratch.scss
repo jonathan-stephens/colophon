@@ -13,5 +13,10 @@
       display:inline-grid;
     }
 
+    .cluster{
+      flex-direction:column;
+      align-items:flex-start;
+      padding-top:var(--flow-space-3);
+    }
     }
   }

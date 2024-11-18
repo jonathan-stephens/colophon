@@ -48,30 +48,34 @@ tabs:
                 type: text
 
   header:
-    label: Header
+    label: Navigation
     icon: title
     columns:
-      - width: 2/3
+      - width: 1/3
         sections:
-          header_navigation:
+          primary_navigation:
             type: pages
-            headline: Header Navigation
+            headline: Primary Navigation
             template: default
             status: published
             sortable: true
-            max: 5
       - width: 1/3
         sections:
-          header_settings:
-            type: fields
-            fields:
-              logo:
-                label: Logo
-                type: files
-                multiple: false
-              show_search:
-                label: Show Search
-                type: toggle
+          secondary_navigation:
+            type: pages
+            headline: Secondary Navigation
+            template: default
+            status: published
+            sortable: true
+      - width: 1/3
+        sections:
+          tertiary_navigation:
+            type: pages
+            headline: Tertiary Navigation
+            template: default
+            status: published
+            sortable: true
+
   footer:
     label: Footer
     icon: download
@@ -107,7 +111,7 @@ tabs:
       - width: 1/3
           fields:
             footer_social:
-              label: Social Links
+              label: Social Navigation
               type: structure
               fields:
                 platform:

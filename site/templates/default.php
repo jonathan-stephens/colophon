@@ -1,9 +1,9 @@
 <?php snippet('header') ?>
-  <section class="wrapper">
-    <?php snippet('components/breadcrumb') ?>
 
-    <div class="splash">
+  <?php if($page->isHomePage()): ?>
+    <section class="splash wrapper">
       <?= $page->text()->kirbytext() ?>
+
       <div class="cluster">
         <a class="button" href="https://linkedin.com/in/elnatnal">
           Connect on LinkedIn
@@ -15,6 +15,12 @@
           Book time on my calendar
         </a>
       <div>
-    </div>
-  </section>
+    </section>
+  <?php else: ?>
+
+    <?= $page->text()->kirbytext() ?>
+
+
+
+  <?php endif ?>
 <?php snippet('footer') ?>

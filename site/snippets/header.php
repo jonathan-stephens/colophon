@@ -6,17 +6,16 @@
 
 
   <title>
-    <?= $site->title()->esc() ?> |
-    <?php if($page->isHomePage()): ?>
-      Home
-    <?php else: ?>
-     <?= $page->title()->esc() ?>
-   <?php endif ?>
+    <?= $site->title()->esc() ?> | <?php if($page->isHomePage()): ?>Home<?php else: ?><?= $page->title()->esc() ?><?php endif ?>
+
   </title>
 
   <!-- webmention -->
-<!--  <link rel="pingback" href="https://webmention.io/YOUR-ACCOUNT/xmlrpc" />
-  <link rel="webmention" href="https://webmention.io/YOUR-ACCOUNT/webmention" /> -->
+  <link rel="pingback" href="https://webmention.io/jonathanstephens.us/xmlrpc" />
+  <link rel="webmention" href="https://webmention.io/jonathanstephens.us/webmention" />
+
+  <link rel="micropub" href="https://jonathanstephens.us/micropub">
+
   <?php snippet('webmention-endpoint'); ?>
 
 
@@ -31,11 +30,15 @@
       }
     </style>
   </noscript>
+  <?php
+    $period = TimeKeeper::getCurrentPeriod();
+    $season = TimeKeeper::getCurrentSeason();
+    ?>
 </head>
 
 <body class="<?= $page->slug() ?>">
   <header>
-
+    <?php snippet('components/breadcrumb') ?>
   </header>
 
   <main>

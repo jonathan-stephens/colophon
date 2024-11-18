@@ -45,12 +45,17 @@ h6{
   font-style: italic;
 }
 
-h1,h2{font-weight:var(--weight-bold);}
-h3,h4,h5{font-weight:var(--weight-medium);}
-
-h1,h2,h3,h4{line-height:var(--leading-loose);}
-h5,h6{line-height:var(--leading-standard);}
-
+h1,h2{
+  font-weight:var(--weight-bold);
+  line-height:var(--leading-flat);
+}
+h3,h4{
+  font-weight:var(--weight-medium);
+  line-height:var(--leading-fine);
+}
+h5, h6{
+  line-height:var(--leading-standard);
+}
 p, li{
   font-size:var(--prose);
   font-weight: var(--weight-text);

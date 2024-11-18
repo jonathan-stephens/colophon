@@ -4,7 +4,7 @@ icon: text
 
 options:
   changeSlug: false
-  changeStatus: false
+  changeStatus: true
   delete: false
 
 tabs:

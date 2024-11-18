@@ -10,7 +10,7 @@ Time: 23:15:00
 
 ----
 
-Location: {{ site.default_location }}
+Location: Raleigh, North Carolina
 
 ----
 

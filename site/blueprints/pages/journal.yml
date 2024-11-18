@@ -1,55 +1,50 @@
-title: Post
+title: Journal
 preset: page
-num: date
 icon: text
 
 fields:
-  metadata:
-    label: Metadata
-    type: group
-    fields:
-      date:
-        label: Date
-        type: date
-        width: 1/3
-        default: now
-      time:
-        label: Time
-        type: time
-        width: 1/3
-        default: now
-      location:
-        label: Location
-        type: text
-        width: 1/3
-        default: "{{ site.default_location }}"
-
-  content:
+  hed:
+    type: text
+    label: Header
+    default: "{{ page.title }}"
+    max: 36
+  dek:
+    type: text
+    label: Subtitle
+    max: 72
+  text:
     label: Content
-    type: group
-    fields:
-      text:
-        label: Content
-        type: textarea
-        buttons:
-          - headlines
-          - bold
-          - italic
-          - link
-          - email
-          - code
-          - ul
-          - ol
-
+    type: textarea
+    size: large
+    buttons:
+      - headlines
+      - bold
+      - italic
+      - link
+      - email
+      - code
+      - ul
+      - ol
+  tags:
+    label: Tags
+    type: tags
+    options: query
+    query: site.index.pluck("tags", ",", true)
+  date:
+    label: Date
+    type: date
+    default: now
+  time:
+    label: Time
+    type: time
+    default: now
+  location:
+    label: Location
+    type: text
+    default: "{{ site.default_location }}"
   images:
     label: Images
     type: files
     multiple: true
     layout: cards
     template: image
-
-  tags:
-    label: Tags
-    type: tags
-    options: query
-    query: site.index.pluck("tags", ",", true)

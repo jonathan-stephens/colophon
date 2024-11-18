@@ -14,11 +14,11 @@ sections:
       lede:
         type: text
         label: Summary
-        max: 360
+        max: 180
       nutgraf:
         type: text
         label: Paraphrase
-        max: 720
+        max: 270
       skills:
         type: tags
         label: Skills

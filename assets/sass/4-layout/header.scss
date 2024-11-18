@@ -1,0 +1,38 @@
+body > header{
+  padding:var(--flow-space-10) 0 var(--flow-space-15) 0;
+  container: site-header / inline-size;
+}
+header .wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+
+  .breadcrumb {
+    order: 0;
+    flex: 1 0 auto;
+    align-self: auto;
+  }
+
+  .color-mode-toggle{
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+  }
+}
+
+@container site-header (width < 700px) {
+  header .wrapper{
+    flex-wrap:wrap;
+    gap:var(--space-5);
+
+    .breadcrumb{
+      order:2;
+      width:100%;
+    }
+    .color-mode-toggle{
+      order:1;
+    }
+  }
+}

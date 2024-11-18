@@ -38,7 +38,10 @@
 
 <body class="<?= $page->slug() ?>">
   <header>
-    <?php snippet('components/breadcrumb') ?>
+    <div class="wrapper">
+      <?php snippet('components/breadcrumb') ?>
+      <?php snippet('components/theme-picker') ?>
+    </div>
   </header>
 
   <main>

@@ -2,16 +2,16 @@
 body > footer{
   background:var(--background-secondary);
   margin:var(--flow-space-10) 0 0 0;
-  padding:var(--flow-space-10) 0;
+  padding:var(--flow-space-10) var(--flow-space-3);
 
   .wrapper{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    flex-direction:column;
+    width:100%;
+    gap:var(--space-6);
   }
 
   .social-links{
-     grid-area: 1 / 1 / 2 / 2;
      max-inline-size:var(--measure);
 
      ul[role="list"]{
@@ -23,13 +23,13 @@ body > footer{
   }
 
   #theme-picker{
-     grid-area: 1 / 2 / 2 / 3;
      align-items:center;
   }
 
   .final-info{
-    grid-area: 3 / 1 / 4 / 3;
-    align-content:flex-end;
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-6);
     color:var(--color-nuance);
 
     a{

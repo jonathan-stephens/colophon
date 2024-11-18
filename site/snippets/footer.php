@@ -2,14 +2,13 @@
   </main>
 
   <footer>
-    <?php snippet('timekeeper/theme-switcher') ?>
-
     <?php
     // Using footer_social instead of social_links
     $socialLinks = $site->footer_social()->toStructure();
     ?><div class="wrapper">
       <div class="social-links">
         <ul role="list" class="cluster">
+          <li>Elsewhere</li>
         <?php foreach($socialLinks as $link): ?>
 <li>
   <a rel="me" href="<?= $link->url() ?>" title="<?= $link->platform() ?>" class=""> <?php if($link->icon()->isNotEmpty() && $link->icon()-toFile()): ?><img src="<?= $link->icon()->toFile()->url() ?>" alt="<?= $link->platform() ?> icon" class=""><?php else: ?><?= $link->platform() ?>
@@ -18,8 +17,6 @@
         <?php endforeach ?>
 
       </div>
-
-      <?php snippet('components/theme-picker') ?>
 
       <div class="final-info">
         <?php snippet('components/last-updated') ?>

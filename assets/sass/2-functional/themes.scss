@@ -4,6 +4,10 @@
   --background-secondary: var(--palette-ash-05);
   --background-tertiary: var(--palette-ash-10);
 
+  --background-primary-inverse:var(--palette-ash-100);
+  --background-secondary-inverse: var(--palette-ash-90);
+  --background-tertiary-inverse: var(--palette-ash-80);
+
   --color-quiet:    var(--palette-ash-40);
   --color-subtle:    var(--palette-ash-60);
   --color-nuance:    var(--palette-ash-70);
@@ -25,6 +29,10 @@
   --background-secondary: var(--palette-ash-90);
   --background-tertiary: var(--palette-ash-80);
 
+  --background-primary-inverse:var(--palette-ash-00);
+  --background-secondary-inverse: var(--palette-ash-05);
+  --background-tertiary-inverse: var(--palette-ash-10);
+
   --color-quiet:    var(--palette-ash-60);
   --color-subtle:    var(--palette-ash-40);
   --color-nuance:    var(--palette-ash-30);
@@ -39,14 +47,10 @@
   --border-emphasis:  var(--palette-ash-20);
 }
 
-html:has(input[name="theme"][value="light"]:checked) {
+:root{
   @include theme-light;
 }
-html:has(input[name="theme"][value="dark"]:checked) {
+
+html[data-theme='dark']{
   @include theme-dark;
-}
-@media (prefers-color-scheme: dark) {
-    html:has(input[name="theme"][value="auto"]:checked) {
-    @include theme-dark;
-  }
 }

@@ -1,0 +1,29 @@
+title: Template Rules
+type: fields
+fields:
+  template_override:
+    label: Override Template
+    type: select
+    options: query
+    query: site.templates.toTemplates
+    width: 1/2
+  template_conditions:
+    label: Additional Conditions
+    type: structure
+    fields:
+      condition_type:
+        label: Type
+        type: select
+        options:
+          url: URL Pattern
+          date: Date-based
+          role: User Role
+          language: Language
+      pattern:
+        label: Pattern/Value
+        type: text
+      template:
+        label: Template to Use
+        type: select
+        options: query
+        query: site.templates.toTemplates

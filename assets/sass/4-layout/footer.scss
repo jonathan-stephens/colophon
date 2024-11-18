@@ -7,24 +7,89 @@ body > footer{
   .wrapper{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
   }
 
   .social-links{
      grid-area: 1 / 1 / 2 / 2;
+     max-inline-size:var(--measure);
+
+     ul[role="list"]{
+       padding:0;
+     }
+     li{
+       font-size:var(--small);
+     }
   }
 
   #theme-picker{
      grid-area: 1 / 2 / 2 / 3;
+     align-items:center;
   }
 
-  .h-card{
-    font-size:var(--caption);
-     grid-area: 2 / 1 / 3 / 3;
+  .final-info{
+    grid-area: 3 / 1 / 4 / 3;
+    align-content:flex-end;
+    color:var(--color-nuance);
 
     a{
       text-decoration:none;
+      color:var(--color-nuance);
+    }
+    a:hover{
       color:var(--color-distinct);
+      text-decoration:underline;
+      text-decoration-color:var(--color-subtle);
+    }
+    a:active{
+      color:var(--color-emphasis);
+    }
+
+    .u-email:hover::before{
+      background:var(--color-distinct);
+    }
+    .u-email:active::before{
+      background:var(--color-emphasis);
     }
   }
+}
+
+.h-card{
+  margin:0;
+  color:var(--color-nuance);
+  a,a:visited,.u-email{color:var(--color-nuance);}
+}
+
+
+.h-entry, .h-card {font-size:var(--caption);}
+.dt-updated span{
+  align-items:baseline;
+  color:var(--color-nuance);
+}
+
+.last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before{
+  content: "";
+  position:relative;
+  background:var(--color-nuance);
+  display:inline-block;
+  height:var(--type-scale-16);
+  width:var(--type-scale-16);
+  margin:var(--space-2);
+
+  top:7px;
+
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-size: var(--type-scale-16);
+  mask-position: center;
+  margin-inline-end: var(--space-2);
+  margin-inline-start: 0;
+}
+
+.last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
+
+.last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
+.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0;}
+.h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
+.h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
 }

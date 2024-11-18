@@ -2,7 +2,7 @@ Title: Jonathan Stephens
 
 ----
 
-Site-title: 
+Site-title: Jonathan Stephens
 
 ----
 
@@ -11,14 +11,6 @@ Site-description:
 ----
 
 Default-location: Raleigh, NC
-
-----
-
-Logo: 
-
-----
-
-Show-search: false
 
 ----
 
@@ -34,23 +26,37 @@ Footer-col2-title: About Jonathan
 
 ----
 
-Footer-col2-pages: - page://zMGHT9LFDIpqmQMT
+Footer-col2-pages: 
 
 ----
 
 Footer-social:
 
 - 
-  platform: Substack
-  url: https://jonathanstephens.substack.com
-  logo: [ ]
-- 
   platform: LinkedIn
   url: https://linkedin.com/in/elnatnal
   logo: [ ]
 - 
-  platform: Dribbble
-  url: https://dribbble.com/jonathanstephens
+  platform: Bluesky
+  url: >
+    https://bsky.app/profile/jonathanstephens.bsky.social
+  logo: [ ]
+- 
+  platform: Substack
+  url: https://jonathanstephens.substack.com
+  logo: [ ]
+- 
+  platform: ADPList
+  url: >
+    https://adplist.org/mentors/jonathan-stephens
+  logo: [ ]
+- 
+  platform: Read.cv
+  url: https://read.cv/jonathanstephens
+  logo: [ ]
+- 
+  platform: Instagram
+  url: https://instagram.com/elnatnal
   logo: [ ]
 - 
   platform: StoryGraph
@@ -61,6 +67,18 @@ Footer-social:
   platform: Github
   url: https://github.com/jonathan-stephens
   logo: [ ]
+- 
+  platform: Dribbble
+  url: https://dribbble.com/jonathanstephens
+  logo: [ ]
+
+----
+
+Logo: 
+
+----
+
+Show-search: false
 
 ----
 

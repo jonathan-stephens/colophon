@@ -25,7 +25,7 @@
   border-radius: var(--button-radius);
 
   text-decoration: none;
-  font-weight: var(--button-font-weight, var(--font-medium));
+  font-weight: var(--button-font-weight, var(--weight-medium));
   font-size: var(--button-font-size, inherit);
   letter-spacing: 0.05ch;
   line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */

@@ -120,6 +120,8 @@ textarea:not([rows]) {
   --flow-space-11: 5rem;
   --flow-space-12: 6rem;
   --flow-space-13: 10rem;
+  --flow-space-14: 13rem;
+  --flow-space-15: 15rem;
   --space-1: 0.125em;
   --space-2: 0.25em;
   --space-3: 0.5em;
@@ -268,6 +270,7 @@ body {
   background: var(--background-primary);
   color: var(--color-distinct);
   font-family: var(--font-sans);
+  transition: background-color 0.3s, color 0.3s;
   margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -382,6 +385,17 @@ a:focus, a:visited:focus {
   height: 1cap;
 }
 
+/* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 :root {
   --weight-text:400;
   --weight-medium:500;
@@ -432,14 +446,12 @@ h6 {
 
 h1, h2 {
   font-weight: var(--weight-bold);
+  line-height: var(--leading-flat);
 }
 
-h3, h4, h5 {
+h3, h4 {
   font-weight: var(--weight-medium);
-}
-
-h1, h2, h3, h4 {
-  line-height: var(--leading-loose);
+  line-height: var(--leading-fine);
 }
 
 h5, h6 {
@@ -460,11 +472,14 @@ p + p {
   color: var(--color-prominent);
 }
 
-html:has(input[name=theme][value=light]:checked) {
+:root {
   color-scheme: light;
   --background-primary: var(--palette-ash-00);
   --background-secondary: var(--palette-ash-05);
   --background-tertiary: var(--palette-ash-10);
+  --background-primary-inverse:var(--palette-ash-100);
+  --background-secondary-inverse: var(--palette-ash-90);
+  --background-tertiary-inverse: var(--palette-ash-80);
   --color-quiet: var(--palette-ash-40);
   --color-subtle: var(--palette-ash-60);
   --color-nuance: var(--palette-ash-70);
@@ -478,11 +493,14 @@ html:has(input[name=theme][value=light]:checked) {
   --border-emphasis: var(--palette-ash-80);
 }
 
-html:has(input[name=theme][value=dark]:checked) {
+html[data-theme=dark] {
   color-scheme: dark;
   --background-primary: var(--palette-ash-100);
   --background-secondary: var(--palette-ash-90);
   --background-tertiary: var(--palette-ash-80);
+  --background-primary-inverse:var(--palette-ash-00);
+  --background-secondary-inverse: var(--palette-ash-05);
+  --background-tertiary-inverse: var(--palette-ash-10);
   --color-quiet: var(--palette-ash-60);
   --color-subtle: var(--palette-ash-40);
   --color-nuance: var(--palette-ash-30);
@@ -496,29 +514,10 @@ html:has(input[name=theme][value=dark]:checked) {
   --border-emphasis: var(--palette-ash-20);
 }
 
-@media (prefers-color-scheme: dark) {
-  html:has(input[name=theme][value=auto]:checked) {
-    color-scheme: dark;
-    --background-primary: var(--palette-ash-100);
-    --background-secondary: var(--palette-ash-90);
-    --background-tertiary: var(--palette-ash-80);
-    --color-quiet: var(--palette-ash-60);
-    --color-subtle: var(--palette-ash-40);
-    --color-nuance: var(--palette-ash-30);
-    --color-distinct: var(--palette-ash-10);
-    --color-prominent: var(--palette-ash-05);
-    --color-emphasis: var(--palette-ash-00);
-    --border-subtle: var(--palette-ash-90);
-    --border-nuance: var(--palette-ash-80);
-    --border-distinct: var(--palette-ash-60);
-    --border-prominent: var(--palette-ash-40);
-    --border-emphasis: var(--palette-ash-20);
-  }
-}
 .breadcrumb ol {
-  padding: var(--flow-space-10) 0 var(--flow-space-13) 0;
-  margin: 0;
   list-style-type: none;
+  margin: 0;
+  padding: 0;
   --space: 0;
   max-inline-size: none;
 }
@@ -573,49 +572,64 @@ html:has(input[name=theme][value=dark]:checked) {
   color: var(--color-distinct);
 }
 
-#theme-picker {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--flow-space-5);
-  align-items: baseline;
+.color-mode-toggle {
+  position: relative;
 }
-#theme-picker .header {
-  font-weight: var(--weight-medium);
-}
-#theme-picker .options {
-  display: flex;
-  flex-direction: row;
-  gap: var(--flow-space-5);
-  align-items: baseline;
-  box-sizing: content-box;
-}
-#theme-picker input[type=radio] {
-  opacity: 0;
-  position: fixed;
-  width: 0;
-}
-#theme-picker label {
-  display: inline-block;
-  padding: var(--flow-space-2) var(--flow-space-5);
-  font-family: sans-serif, Arial;
-  font-size: var(--type-scale-16);
-  border: 1px solid var(--border-subtle);
-  color: var(--color-subtle);
-  border-radius: var(--radii-square);
-}
-#theme-picker label:hover {
-  background-color: var(--background-secondary);
-  color: var(--color-distinct);
-  border: 1px solid var(--border-distinct);
+
+.color-mode-toggle label {
+  position: relative;
+  display: block;
+  width: 76px;
+  height: 36px;
+  background-color: var(--background-tertiary-inverse);
+  border-radius: 18px;
   cursor: pointer;
 }
-#theme-picker input[type=radio]:focus + label {
-  border: 1px solid var(--border-prominent);
+
+.color-mode-toggle input {
+  position: absolute;
+  display: none;
 }
-#theme-picker input[type=radio]:checked + label {
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--background-tertiary-inverse);
+  transition: 0.3s;
+}
+
+/* Light mode (unchecked) styles */
+.color-mode-toggle input:not(:checked) + .slider::before {
+  box-shadow: inset 11px -2px 0px 0px var(--background-tertiary);
+}
+
+/* Dark mode (checked) styles */
+.color-mode-toggle input:checked + .slider {
+  background-color: var(--background-tertiary-inverse);
+}
+
+.color-mode-toggle input:checked + .slider::before {
+  transform: translateX(40px);
   background-color: var(--background-tertiary);
-  color: var(--color-distinct);
-  border-color: var(--border-nuance);
+  box-shadow: none;
+}
+
+.color-mode-toggle label:focus-within {
+  outline: 2px solid blue;
+  outline-offset: 3px;
 }
 
 /* https://piccalil.li/blog/how-i-build-a-button-component/ */
@@ -677,18 +691,54 @@ html:has(input[name=theme][value=dark]:checked) {
 
 /* Radius variants */
 
+body > header {
+  padding: var(--flow-space-10) 0 var(--flow-space-15) 0;
+  container: site-header/inline-size;
+}
+
+header .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+header .wrapper .breadcrumb {
+  order: 0;
+  flex: 1 0 auto;
+  align-self: auto;
+}
+header .wrapper .color-mode-toggle {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}
+
+@container site-header (width < 700px) {
+  header .wrapper {
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+  header .wrapper .breadcrumb {
+    order: 2;
+    width: 100%;
+  }
+  header .wrapper .color-mode-toggle {
+    order: 1;
+  }
+}
 body > footer {
   background: var(--background-secondary);
   margin: var(--flow-space-10) 0 0 0;
-  padding: var(--flow-space-10) 0;
+  padding: var(--flow-space-10) var(--flow-space-3);
 }
 body > footer .wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--space-6);
 }
 body > footer .social-links {
-  grid-area: 1/1/2/2;
   max-inline-size: var(--measure);
 }
 body > footer .social-links ul[role=list] {
@@ -698,12 +748,12 @@ body > footer .social-links li {
   font-size: var(--small);
 }
 body > footer #theme-picker {
-  grid-area: 1/2/2/3;
   align-items: center;
 }
 body > footer .final-info {
-  grid-area: 3/1/4/3;
-  align-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
   color: var(--color-nuance);
 }
 body > footer .final-info a {

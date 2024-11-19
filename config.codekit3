@@ -7,7 +7,7 @@
       "uuidString" : "6AEFA3D2-D267-4AE3-9558-A439E5A68BC9"
     }
   ],
-  "creatorBuild" : "34564",
+  "creatorBuild" : "34576",
   "files" : {
     "\/.editorconfig" : {
       "cB" : 0,
@@ -59,6 +59,278 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/css\/main.css.map",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Bold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Bold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-BoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-BoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ExtraLight.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ExtraLight.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ExtraLightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ExtraLightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Italic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Italic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Light.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Light.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-LightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-LightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Medium.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Medium.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-MediumItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-MediumItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Regular.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Regular.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-SemiBold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-SemiBold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-SemiBoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-SemiBoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Text.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Text.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-TextItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-TextItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Thin.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-Thin.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ThinItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/IBMPlexMono-ThinItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff\/license.txt",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Bold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Bold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-BoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-BoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ExtraLight.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ExtraLight.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ExtraLightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ExtraLightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Italic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Italic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Light.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Light.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-LightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-LightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Medium.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Medium.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-MediumItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-MediumItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Regular.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Regular.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-SemiBold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-SemiBold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-SemiBoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-SemiBoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Text.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Text.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-TextItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-TextItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Thin.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-Thin.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ThinItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/IBMPlexMono-ThinItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-mono\/woff2\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/license.txt",
       "oF" : 0
     },
     "\/assets\/fonts\/ibm-plex-sans\/woff\/IBMPlexSans-Bold.woff" : {
@@ -317,6 +589,39 @@
       "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/license.txt",
       "oF" : 0
     },
+    "\/assets\/js\/box.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/box-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/assets\/js\/stack-min.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/stack-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/assets\/js\/stack.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/stack-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/assets\/js\/theme-picker-min.js" : {
       "bF" : 3,
       "ft" : 64,
@@ -335,17 +640,6 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/assets\/js\/theme-picker-min.js",
-      "oF" : 0,
-      "sC" : 3,
-      "tS" : 0
-    },
-    "\/assets\/js\/theme-selection-min.js" : {
-      "bF" : 3,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 1,
-      "oA" : 0,
-      "oAP" : "\/assets\/js\/theme-selection-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -470,6 +764,21 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/sass\/2-functional\/borders.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/borders.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
     "\/assets\/sass\/2-functional\/global.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -530,7 +839,7 @@
       "pg" : 2,
       "sct" : 0
     },
-    "\/assets\/sass\/4-components\/breadcrumb.scss" : {
+    "\/assets\/sass\/3-components\/breadcrumb.scss" : {
       "aP" : 0,
       "bl" : 0,
       "co" : 0,
@@ -538,14 +847,14 @@
       "ec" : 1,
       "ft" : 4,
       "ma" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/breadcrumb.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
       "sct" : 0
     },
-    "\/assets\/sass\/4-components\/button.scss" : {
+    "\/assets\/sass\/3-components\/button.scss" : {
       "aP" : 0,
       "bl" : 0,
       "co" : 0,
@@ -553,14 +862,44 @@
       "ec" : 1,
       "ft" : 4,
       "ma" : 1,
-      "oA" : 1,
+      "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/button.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
       "sct" : 0
     },
-    "\/assets\/sass\/4-components\/theme-picker.scss" : {
+    "\/assets\/sass\/3-components\/theme-picker.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/theme-picker.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/4-layout\/footer.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/footer.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/4-layout\/header.scss" : {
       "aP" : 0,
       "bl" : 0,
       "co" : 0,
@@ -569,11 +908,66 @@
       "ft" : 4,
       "ma" : 1,
       "oA" : 1,
-      "oAP" : "\/assets\/sass\/css\/theme-picker.css",
+      "oAP" : "\/assets\/sass\/css\/header.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
       "sct" : 0
+    },
+    "\/assets\/sass\/4-layout\/journal.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/journal.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/css\/borders.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/borders-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/borders.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/borders.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/breadcrumb.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/breadcrumb-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/breadcrumb.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/breadcrumb.css.map",
+      "oF" : 0
     },
     "\/assets\/sass\/css\/breadcrumbs.css" : {
       "aP" : 1,
@@ -615,6 +1009,26 @@
       "oAP" : "\/assets\/sass\/css\/button.css.map",
       "oF" : 0
     },
+    "\/assets\/sass\/css\/color-palette-generator.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/color-palette-generator-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/color-palette-generator.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/color-palette-generator.css.map",
+      "oF" : 0
+    },
     "\/assets\/sass\/css\/flow.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -633,6 +1047,26 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/flow.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/footer.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/footer-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/footer.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/footer.css.map",
       "oF" : 0
     },
     "\/assets\/sass\/css\/global.css" : {
@@ -655,6 +1089,86 @@
       "oAP" : "\/assets\/sass\/css\/global.css.map",
       "oF" : 0
     },
+    "\/assets\/sass\/css\/header.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/header-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/header.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/header.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/journal-container.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/journal-container-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/journal-container.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/journal-container.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/mix-ins.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/mix-ins-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/mix-ins.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/mix-ins.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/palette-generator.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/palette-generator-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/palette-generator.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/palette-generator.css.map",
+      "oF" : 0
+    },
     "\/assets\/sass\/css\/radii.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -673,6 +1187,46 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/radii.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/theme-picker.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/theme-picker-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/theme-picker.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/theme-picker.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/themes.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/themes-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/themes.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/themes.css.map",
       "oF" : 0
     },
     "\/assets\/sass\/css\/utility.css" : {
@@ -725,11 +1279,41 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/svg\/icons\/arrow-down.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/arrow-down.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/arrow-right.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/arrow-right.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
     "\/assets\/svg\/icons\/book-time.svg" : {
       "ft" : 2097152,
       "miP" : 0,
       "oA" : 2,
       "oAP" : "\/assets\/svg\/icons\/book-time.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/code-slash.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/code-slash.svg",
       "oF" : 0,
       "opt" : 0,
       "plM" : 52780316221407,
@@ -745,11 +1329,61 @@
       "plM" : 52780316221407,
       "prP" : 0
     },
+    "\/assets\/svg\/icons\/copyright.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/copyright.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/date.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/date.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/git-commit.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/git-commit.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/mail.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/mail.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
     "\/assets\/svg\/icons\/subscribe-substack.svg" : {
       "ft" : 2097152,
       "miP" : 0,
       "oA" : 2,
       "oAP" : "\/assets\/svg\/icons\/subscribe-substack.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/time.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/time.svg",
       "oF" : 0,
       "opt" : 0,
       "plM" : 52780316221407,
@@ -821,28 +1455,76 @@
       "oAP" : "\/content\/_drafts\/era\/era.txt",
       "oF" : 0
     },
-    "\/content\/_drafts\/journal\/20241111_hello-world\/indieConnector.json" : {
+    "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/indieConnector.json" : {
       "ft" : 524288,
       "oA" : 1,
-      "oAP" : "\/content\/_drafts\/journal\/20241111_hello-world\/indieConnector-min.json",
+      "oAP" : "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/indieConnector-min.json",
       "oF" : 0,
       "oO" : 1,
       "oS" : 1
     },
-    "\/content\/_drafts\/journal\/20241111_hello-world\/journal.txt" : {
+    "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/link.txt" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/content\/_drafts\/journal\/20241111_hello-world\/journal.txt",
+      "oAP" : "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/link.txt",
       "oF" : 0
     },
-    "\/content\/_drafts\/journal\/journal-container.txt" : {
+    "\/content\/_drafts\/link\/links-container.txt" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/content\/_drafts\/journal\/journal-container.txt",
+      "oAP" : "\/content\/_drafts\/link\/links-container.txt",
+      "oF" : 0
+    },
+    "\/content\/_drafts\/note\/20241112_magic-of-naming\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/_drafts\/note\/20241112_magic-of-naming\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/_drafts\/note\/20241112_magic-of-naming\/note.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/note\/20241112_magic-of-naming\/note.txt",
+      "oF" : 0
+    },
+    "\/content\/_drafts\/note\/20241112_slow-productivity\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/_drafts\/note\/20241112_slow-productivity\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/_drafts\/note\/20241112_slow-productivity\/note.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/note\/20241112_slow-productivity\/note.txt",
+      "oF" : 0
+    },
+    "\/content\/_drafts\/note\/notes-container.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/note\/notes-container.txt",
+      "oF" : 0
+    },
+    "\/content\/_drafts\/resume\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/resume\/.lock",
       "oF" : 0
     },
     "\/content\/_drafts\/resume\/resume.txt" : {
@@ -869,6 +1551,120 @@
       "oAP" : "\/content\/1_home\/home.txt",
       "oF" : 0
     },
+    "\/content\/1_home\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/1_home\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/_drafts\/hello-there\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/_drafts\/hello-there\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/1_neurodivergence-and-habit-building\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/1_neurodivergence-and-habit-building\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/1_neurodivergence-and-habit-building\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/1_neurodivergence-and-habit-building\/indieConnector.json.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/1_neurodivergence-and-habit-building\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/1_neurodivergence-and-habit-building\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-with-copy.jpg" : {
+      "ft" : 16384,
+      "iS" : 859315,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-with-copy.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-with-copy.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-with-copy.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-without-copy.png" : {
+      "ft" : 32768,
+      "iS" : 341707,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-without-copy.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-without-copy.png.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-without-copy.png.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/journal-container.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/journal-container.txt",
+      "oF" : 0
+    },
     "\/content\/codex\/codex.txt" : {
       "cB" : 0,
       "ft" : 8192,
@@ -883,38 +1679,6 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/content\/error\/error.txt",
-      "oF" : 0
-    },
-    "\/content\/links\/_links-container.yml" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 1,
-      "oAP" : "\/content\/links\/_links-container.yml",
-      "oF" : 0
-    },
-    "\/content\/links\/default.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/links\/default.txt",
-      "oF" : 0
-    },
-    "\/content\/notes\/_notes-container.yml" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 1,
-      "oAP" : "\/content\/notes\/_notes-container.yml",
-      "oF" : 0
-    },
-    "\/content\/notes\/default.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/notes\/default.txt",
       "oF" : 0
     },
     "\/content\/reviews\/1_helen-lovett\/review.txt" : {
@@ -957,6 +1721,14 @@
       "oAP" : "\/content\/work\/_drafts\/hello\/chapter.txt",
       "oF" : 0
     },
+    "\/content\/work\/1_growth-and-localization\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/work\/1_growth-and-localization\/.lock",
+      "oF" : 0
+    },
     "\/content\/work\/1_growth-and-localization\/project.txt" : {
       "cB" : 0,
       "ft" : 8192,
@@ -971,6 +1743,14 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/content\/work\/2_partner-platforms\/project.txt",
+      "oF" : 0
+    },
+    "\/content\/work\/3_director-of-product-development\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/work\/3_director-of-product-development\/.lock",
       "oF" : 0
     },
     "\/content\/work\/3_director-of-product-development\/1_growth-and-localization\/1_growth\/project.txt" : {
@@ -7537,6 +8317,239 @@
       "oAP" : "\/media\/index.html",
       "oF" : 0
     },
+    "\/media\/pages\/companies\/booking-com\/2cf48e8d0b-1728929993\/booking.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/media\/pages\/companies\/booking-com\/2cf48e8d0b-1728929993\/booking.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/media\/pages\/companies\/booking-com\/c87c95e958-1728929993\/booking.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/media\/pages\/companies\/booking-com\/c87c95e958-1728929993\/booking.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-352x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-352x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-864x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-864x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy-76x.jpg" : {
+      "ft" : 16384,
+      "iS" : 3854,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy-76x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy-1408x.jpg" : {
+      "ft" : 16384,
+      "iS" : 322867,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy-1408x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy.jpg" : {
+      "ft" : 16384,
+      "iS" : 859315,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/structural-sensemaking-booking-with-copy.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-352x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-352x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-864x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-864x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy-76x.jpg" : {
+      "ft" : 16384,
+      "iS" : 3854,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy-76x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy-1408x.jpg" : {
+      "ft" : 16384,
+      "iS" : 322867,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy-1408x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-38x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-38x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-352x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-352x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-864x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-864x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy-76x.png" : {
+      "ft" : 32768,
+      "iS" : 2689,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy-76x.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy-1408x.png" : {
+      "ft" : 32768,
+      "iS" : 368827,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy-1408x.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-38x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-38x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-352x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-352x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-864x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-864x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/structural-sensemaking-booking-without-copy-76x.png" : {
+      "ft" : 32768,
+      "iS" : 2689,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/structural-sensemaking-booking-without-copy-76x.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/structural-sensemaking-booking-without-copy-1408x.png" : {
+      "ft" : 32768,
+      "iS" : 368827,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/db9142a5cc-1731965503\/structural-sensemaking-booking-without-copy-1408x.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
     "\/media\/panel\/e46528792882c54882f660b60936a0fc\/apple-touch-icon-dark.png" : {
       "ft" : 32768,
       "iS" : 1148,
@@ -7761,36 +8774,28 @@
       "rFN" : 0,
       "uCM" : 0
     },
-    "\/site\/accounts\/.logins" : {
+    "\/site\/accounts\/UsjOoppK\/.htpasswd" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/accounts\/.logins",
+      "oAP" : "\/site\/accounts\/UsjOoppK\/.htpasswd",
       "oF" : 0
     },
-    "\/site\/accounts\/7Rnmwy3f\/.htpasswd" : {
+    "\/site\/accounts\/UsjOoppK\/index.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/accounts\/7Rnmwy3f\/.htpasswd",
+      "oAP" : "\/site\/accounts\/UsjOoppK\/index.php",
       "oF" : 0
     },
-    "\/site\/accounts\/7Rnmwy3f\/index.php" : {
+    "\/site\/accounts\/UsjOoppK\/user.txt" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/accounts\/7Rnmwy3f\/index.php",
-      "oF" : 0
-    },
-    "\/site\/accounts\/7Rnmwy3f\/user.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/accounts\/7Rnmwy3f\/user.txt",
+      "oAP" : "\/site\/accounts\/UsjOoppK\/user.txt",
       "oF" : 0
     },
     "\/site\/blueprints\/files\/image.yml" : {
@@ -9049,6 +10054,70 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/plugins\/kirby-locked-pages\/templates\/locked-pages-login.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-template-handler\/blueprints\/sections\/template-rules.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-template-handler\/blueprints\/sections\/template-rules.yml",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-template-handler\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-template-handler\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-template-handler\/lib\/helpers.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-template-handler\/lib\/helpers.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-template-handler\/lib\/templatehandler.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-template-handler\/lib\/templatehandler.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-timekeeper\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-timekeeper\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-timekeeper\/lib\/TimeKeeper.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-timekeeper\/lib\/TimeKeeper.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-timekeeper\/lib\/TimeTheme.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-timekeeper\/lib\/TimeTheme.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-timekeeper\/snippet\/theme-switcher.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-timekeeper\/snippet\/theme-switcher.php",
       "oF" : 0
     },
     "\/site\/plugins\/komments\/.github\/workflows\/main.yml" : {
@@ -25946,28 +27015,28 @@
       "oAP" : "\/site\/plugins\/seo\/vendor\/spatie\/schema-org\/src\/Zoo.php",
       "oF" : 0
     },
-    "\/site\/sessions\/1731369678.fe7bb48001a0e636c6b9.sess" : {
+    "\/site\/sessions\/1732031027.94297f450d38480dfd84.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1731369678.fe7bb48001a0e636c6b9.sess",
+      "oAP" : "\/site\/sessions\/1732031027.94297f450d38480dfd84.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1732572171.0a35be0bea684b4765af.sess" : {
+    "\/site\/sessions\/1732031027.c53c298fa7166b35d7ca.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1732572171.0a35be0bea684b4765af.sess",
+      "oAP" : "\/site\/sessions\/1732031027.c53c298fa7166b35d7ca.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1732572171.4b8f2872233cc600fb09.sess" : {
+    "\/site\/sessions\/1732034630.16d74462da5a50e9e685.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1732572171.4b8f2872233cc600fb09.sess",
+      "oAP" : "\/site\/sessions\/1732034630.16d74462da5a50e9e685.sess",
       "oF" : 0
     },
     "\/site\/sessions\/index.html" : {
@@ -25984,6 +27053,30 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/snippets\/components\/breadcrumb.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/components\/byline.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/byline.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/components\/last-updated.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/last-updated.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/components\/splash.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/splash.php",
       "oF" : 0
     },
     "\/site\/snippets\/components\/theme-picker.php" : {
@@ -26040,6 +27133,38 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/templates\/default.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/journal-container.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/journal-container.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/journal.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/journal.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/links.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/links.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/notes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/notes.php",
       "oF" : 0
     },
     "\/site\/templates\/project.php" : {

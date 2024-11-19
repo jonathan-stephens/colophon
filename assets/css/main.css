@@ -77,10 +77,18 @@ textarea:not([rows]) {
   font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 400 500 700 800;
-  src: url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/SemiBold.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/Bold.woff2) format("woff2");
+  src: url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff) format("woff");
+}
+@font-face {
+  font-display: swap;
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400 500 700 800;
+  src: url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff) format("woff");
 }
 :root {
   --font-sans:"IBM Plex Sans", sans-serif;
+  --font-mono:"IBM Plex Mono", sans-serif;
   --type-scale-2: 0.125rem;
   --type-scale-4: 0.25rem;
   --type-scale-8: 0.5rem;
@@ -493,6 +501,18 @@ p + p {
   color: var(--color-prominent);
 }
 
+time {
+  font-family: var(--font-mono);
+}
+
+h2 + p {
+  color: var(--color-nuance);
+}
+
+p + time {
+  color: var(--color-subtle);
+}
+
 :root {
   color-scheme: light;
   --background-primary: var(--palette-ash-00);
@@ -512,6 +532,7 @@ p + p {
   --border-color-distinct: var(--palette-ash-40);
   --border-color-prominent: var(--palette-ash-60);
   --border-color-emphasis: var(--palette-ash-80);
+  --link-hover: var(--palette-cyan-50);
 }
 
 html[data-theme=dark] {
@@ -533,6 +554,7 @@ html[data-theme=dark] {
   --border-color-distinct: var(--palette-ash-60);
   --border-color-prominent: var(--palette-ash-40);
   --border-color-emphasis: var(--palette-ash-20);
+  --link-hover: var(--palette-cyan-30);
 }
 
 .breadcrumb ol {
@@ -853,8 +875,17 @@ body > footer .final-info .u-email:active::before {
   mask-image: url("/assets/svg/icons/mail.svg");
 }
 
-.journal box-l {
-  background: var(--background-secondary);
+.journal box-l a {
+  text-decoration: none;
+}
+.journal box-l a:hover h2, .journal box-l a:hover .subtitle, .journal box-l a:hover time {
+  color: var(--link-hover);
+}
+.journal box-l h2 {
+  color: var(--color-distinct);
+}
+.journal box-l time {
+  color: var(--color-subtle);
 }
 
 .home h2 {

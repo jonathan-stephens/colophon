@@ -5,7 +5,27 @@
     font-weight: 400 500 700 800;
     src:
       url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff2) format("woff2"),
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff) format("woff"),
       url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff2) format("woff2"),
-      url(../fonts/ibm-plex-sans/woff2/SemiBold.woff2) format("woff2"),
-      url(../fonts/ibm-plex-sans/woff2/Bold.woff2) format("woff2");
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff) format("woff"),
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff2) format("woff2"),
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff) format("woff"),
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff2) format("woff2"),
+      url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff) format("woff");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400 500 700 800;
+    src:
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff2) format("woff2"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff) format("woff"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff2) format("woff2"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff) format("woff"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff2) format("woff2"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff) format("woff"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff2) format("woff2"),
+      url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff) format("woff");
 }

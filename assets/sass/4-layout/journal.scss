@@ -1,3 +1,17 @@
 .journal box-l {
-  background: var(--background-secondary);
+  a{
+    text-decoration:none;
+  }
+
+  a:hover{
+    h2, .subtitle, time{
+      color:var(--link-hover);
+    }
+  }
+  h2{
+    color:var(--color-distinct);
+  }
+  time{
+    color:var(--color-subtle);
+  }
 }

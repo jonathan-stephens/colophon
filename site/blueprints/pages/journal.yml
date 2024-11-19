@@ -34,6 +34,7 @@ fields:
     label: Date
     type: date
     default: now
+    display: dd MMM YYYY
   time:
     label: Time
     type: time

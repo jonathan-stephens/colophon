@@ -69,3 +69,15 @@ p+p{
 .byline{
   color:var(--color-prominent);
 }
+
+time{
+  font-family:var(--font-mono);
+}
+
+// COMBINATIONS
+h2 + p{
+  color:var(--color-nuance);
+}
+p + time{
+  color:var(--color-subtle);
+}

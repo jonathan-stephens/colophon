@@ -1,11 +1,10 @@
 <?php snippet('header') ?>
 
   <article class="wrapper">
-    <h1><?= $page->title()->html() ?></h1>
-    <p class="byline">
-      <span class="author">Jonathan Stephens</span>
-      <?= $page->metadata()->date() ?>
-      <?= $page->metadata()->location() ?>
+    <header>
+      <h1><?= $page->title()->html() ?></h1>
+      <?php snippet('/components/byline') ?>
+    </header>
 
     <?= $page->text()->kirbytext() ?>
   </article>

@@ -20,6 +20,25 @@
   container-type: inline-size;
 }
 
+stack-l {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+stack-l > * + * {
+  margin-block-start: var(--flow-space-5);
+}
+
+box-l {
+  display: block;
+  padding: var(--flow-space-5);
+  border-width: var(--flow-space-1);
+  /* ↓ For high contrast mode */
+  outline: var(--flow-space-1) solid transparent;
+  outline-offset: calc(var(--flow-space-1) * -1);
+}
+
 .center {
   box-sizing: content-box;
   margin-inline: auto;

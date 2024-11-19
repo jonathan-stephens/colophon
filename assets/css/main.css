@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Box sizing rules */
 *,
@@ -41,6 +42,7 @@ button, input, label {
 h1, h2,
 h3, h4 {
   text-wrap: balance;
+  margin: 0;
 }
 
 /* A elements that don't have a class get default styles */
@@ -368,6 +370,25 @@ a:focus, a:visited:focus {
   container-type: inline-size;
 }
 
+stack-l {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+stack-l > * + * {
+  margin-block-start: var(--flow-space-5);
+}
+
+box-l {
+  display: block;
+  padding: var(--flow-space-5);
+  border-width: var(--flow-space-1);
+  /* ↓ For high contrast mode */
+  outline: var(--flow-space-1) solid transparent;
+  outline-offset: calc(var(--flow-space-1) * -1);
+}
+
 .center {
   box-sizing: content-box;
   margin-inline: auto;
@@ -486,11 +507,11 @@ p + p {
   --color-distinct: var(--palette-ash-80);
   --color-prominent: var(--palette-ash-90);
   --color-emphasis: var(--palette-ash-100);
-  --border-subtle: var(--palette-ash-10);
-  --border-nuance: var(--palette-ash-20);
-  --border-distinct: var(--palette-ash-40);
-  --border-prominent: var(--palette-ash-60);
-  --border-emphasis: var(--palette-ash-80);
+  --border-color-subtle: var(--palette-ash-10);
+  --border-color-nuance: var(--palette-ash-20);
+  --border-color-distinct: var(--palette-ash-40);
+  --border-color-prominent: var(--palette-ash-60);
+  --border-color-emphasis: var(--palette-ash-80);
 }
 
 html[data-theme=dark] {
@@ -507,11 +528,11 @@ html[data-theme=dark] {
   --color-distinct: var(--palette-ash-10);
   --color-prominent: var(--palette-ash-05);
   --color-emphasis: var(--palette-ash-00);
-  --border-subtle: var(--palette-ash-90);
-  --border-nuance: var(--palette-ash-80);
-  --border-distinct: var(--palette-ash-60);
-  --border-prominent: var(--palette-ash-40);
-  --border-emphasis: var(--palette-ash-20);
+  --border-color-subtle: var(--palette-ash-90);
+  --border-color-nuance: var(--palette-ash-80);
+  --border-color-distinct: var(--palette-ash-60);
+  --border-color-prominent: var(--palette-ash-40);
+  --border-color-emphasis: var(--palette-ash-20);
 }
 
 .breadcrumb ol {
@@ -640,8 +661,8 @@ html[data-theme=dark] {
   --button-hover-color: var(--color-distinct);
   --button-border-width: 2px;
   --button-border-style: solid;
-  --button-border-color: var(--border-nuance);
-  --button-hover-border-color: var(--border-distinct);
+  --button-border-color: var(--border-color-nuance);
+  --button-hover-border-color: var(--border-color-distinct);
   --button-radius: var(--radii-square);
   display: inline-flex;
   align-items: center;
@@ -830,6 +851,10 @@ body > footer .final-info .u-email:active::before {
 
 .h-card .u-email::before {
   mask-image: url("/assets/svg/icons/mail.svg");
+}
+
+.journal box-l {
+  background: var(--background-secondary);
 }
 
 .home h2 {

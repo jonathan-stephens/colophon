@@ -1,0 +1,51 @@
+title: Journal
+preset: page
+icon: text
+
+fields:
+  hed:
+    type: text
+    label: Header
+    default: "{{ page.title }}"
+    max: 36
+  dek:
+    type: text
+    label: Subtitle
+    max: 72
+  text:
+    label: Content
+    type: textarea
+    size: large
+    buttons:
+      - headlines
+      - bold
+      - italic
+      - link
+      - email
+      - code
+      - ul
+      - ol
+  tags:
+    label: Tags
+    type: tags
+    options: query
+    query: site.index.pluck("tags", ",", true)
+  date:
+    label: Date
+    type: date
+    default: now
+    display: dd MMM YYYY
+  time:
+    label: Time
+    type: time
+    default: now
+  location:
+    label: Location
+    type: text
+    default: "{{ site.default_location }}"
+  images:
+    label: Images
+    type: files
+    multiple: true
+    layout: cards
+    template: image

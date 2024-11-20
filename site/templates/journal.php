@@ -1,12 +1,26 @@
 <?php snippet('header') ?>
 
-  <article class="wrapper">
-    <header>
-      <h1><?= $page->title()->html() ?></h1>
+  <article class="article wrapper">
+      <h1 class="p-name" itemprop="headline"><?= $page->title()->html() ?></h1>
       <?php snippet('/components/byline') ?>
-    </header>
 
-    <?= $page->text()->kirbytext() ?>
+    <div class="e-content body" itemprop="articleBody">
+      <?= $page->text()->kirbytext() ?>
+    </div>
+
+    <footer>
+      <p class="meta">
+        <span class="p-location h-geo">
+          <data class="p-latitude" value=""></data>
+          <data class="p-longitude" value=""></data>
+        </span>
+        <time datetime="<?= $page->metadata()->date()->toDate('F j Y') ?> <?= $page->metadata()->time()->toDate('H:i') ?>" itemprop="dateCreated pubdate datePublished"><?= $page->metadata()->time()->toDate('H:i') ?></time>
+      </p>
+      <p class="meta">
+        Tags
+      </p>
+    </footer>
+
   </article>
 
 

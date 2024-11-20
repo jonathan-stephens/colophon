@@ -439,8 +439,8 @@ box-l {
   --hed-tertiary:clamp(var(--type-scale-28),100%,var(--type-scale-32));
   --hed-quaternary:clamp(var(--type-scale-20),100%,var(--type-scale-24));
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
-  --small: clamp(var(--type-scale-14), 100%, var(--type-scale-16))
-  --measure:60ch;
+  --small: clamp(var(--type-scale-14), 100%, var(--type-scale-16));
+  --measure: 68ch;
   --caption:clamp(var(--type-scale-12),100%, var(--type-scale-14));
 }
 
@@ -886,6 +886,23 @@ body > footer .final-info .u-email:active::before {
 }
 .journal box-l time {
   color: var(--color-subtle);
+}
+
+article .header {
+  max-inline-size: 100%;
+}
+article .byline {
+  font-family: var(--font-mono) "";
+}
+article .body {
+  box-sizing: content-box;
+  margin-inline: auto;
+  text-align: left;
+  max-inline-size: var(--measure);
+  max-width: var(--measure);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .home h2 {

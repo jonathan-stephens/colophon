@@ -15,3 +15,27 @@
     color:var(--color-subtle);
   }
 }
+
+
+article {
+  .header{
+    max-inline-size:100%;
+  }
+
+  .byline{
+    font-family:var(--font-mono);
+  }
+
+  .body{
+    box-sizing: content-box;
+    margin-inline: auto;
+    text-align: left;
+    max-inline-size: var(--measure);
+    max-width: var(--measure);
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+
+}

@@ -22,6 +22,7 @@ fields:
       - italic
       - link
       - email
+      - file
       - code
       - ul
       - ol

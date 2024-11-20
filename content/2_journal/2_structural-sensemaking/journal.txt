@@ -41,8 +41,8 @@ In it, she highlighted the vast impact copy experimentations had on Booking.com.
 
 The climax of her story was when she removed all the words from the website.
 
-[Alt text](/structural-sensemaking-booking-with-copy.jpg)
-[Alt text](/structural-sensemaking-booking-without-copy.jpg)
+[A screenshot of Booking.com's homepage with all the words on the page](image: structural-sensemaking-booking-with-copy.jpg)
+[A screenshot of Booking.com's homepage with no words on the page, just loads of blank spaces, shapes, colors, and containers](image: structural-sensemaking-booking-without-copy.png)
 
 Surprise! *</sarcasm>*
 

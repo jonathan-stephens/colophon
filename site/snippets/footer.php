@@ -1,7 +1,7 @@
 
   </main>
 
-  <footer>
+  <footer role="contentinfo">
     <?php
     // Using footer_social instead of social_links
     $socialLinks = $site->footer_social()->toStructure();

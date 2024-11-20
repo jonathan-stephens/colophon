@@ -37,11 +37,11 @@
 </head>
 
 <body class="<?= $page->slug() ?>">
-  <header>
+  <header role="banner">
     <div class="wrapper">
       <?php snippet('components/breadcrumb') ?>
       <?php snippet('components/theme-picker') ?>
     </div>
   </header>
 
-  <main>
+  <main role="main">

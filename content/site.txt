@@ -46,6 +46,15 @@ Footer-social:
   url: https://jonathanstephens.substack.com
   logo: [ ]
 - 
+  platform: Instagram
+  url: https://instagram.com/elnatnal
+  logo: [ ]
+- 
+  platform: Mastodon
+  url: >
+    https://mastodon.social/@jonathanstephens
+  logo: [ ]
+- 
   platform: ADPList
   url: >
     https://adplist.org/mentors/jonathan-stephens
@@ -53,10 +62,6 @@ Footer-social:
 - 
   platform: Read.cv
   url: https://read.cv/jonathanstephens
-  logo: [ ]
-- 
-  platform: Instagram
-  url: https://instagram.com/elnatnal
   logo: [ ]
 - 
   platform: StoryGraph

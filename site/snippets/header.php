@@ -14,6 +14,7 @@
   <link rel="pingback" href="https://webmention.io/jonathanstephens.us/xmlrpc" />
   <link rel="webmention" href="https://webmention.io/jonathanstephens.us/webmention" />
   <link rel="micropub" href="https://jonathanstephens.us/micropub">
+  <link rel="authorization_endpoint" href="https://indieauth.com/auth">
   <link href="https://github.com/jonathan-stephens" rel="me">
 
 

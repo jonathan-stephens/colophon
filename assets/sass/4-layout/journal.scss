@@ -1,19 +1,11 @@
-.journal box-l {
-  a{
-    text-decoration:none;
-  }
+.journal article a{
+  text-decoration:none;
 
-  a:hover{
-    h2, .subtitle, time{
-      color:var(--link-hover);
-    }
+  &:hover{
+    h2, p, time{color:var(--link-hover);}
   }
-  h2{
-    color:var(--color-distinct);
-  }
-  time{
-    color:var(--color-subtle);
-  }
+}
+.journal box-l {
 }
 
 

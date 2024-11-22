@@ -20,6 +20,11 @@
   --measure: 68ch;
 
   --caption:clamp(var(--type-scale-12),100%, var(--type-scale-14));
+
+  --rhythm-vert-sm: var(--space-3);
+  --rhythm-vert-md: var(--space-9);
+  --rhythm-vert-lg: var(--space-12);
+  --rhythm-vert-xl: var(--space-15);
 }
 
 h1{
@@ -63,10 +68,6 @@ p, li{
   line-height:var(--leading-standard);
 }
 
-p+p{
-  padding:var(--flow-space-5) 0;
-}
-
 .byline{
   color:var(--color-prominent);
 }
@@ -78,7 +79,19 @@ time{
 // COMBINATIONS
 h2 + p{
   color:var(--color-nuance);
+  margin:0;
+  padding-block-start:var(--space-4);
+}
+p+p{
+  padding-block-start:var(--flow-space-3);
+}
+p + h2{
+  padding-block-start:var(--space-3);
 }
 p + time{
   color:var(--color-subtle);
+}
+
+article > .body{
+  margin-block-start:var(--flow-space-9);
 }

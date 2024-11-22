@@ -54,10 +54,11 @@ body > footer{
   }
 }
 
-.h-card{
+.last-updated .h-card{
   margin:0;
   color:var(--color-nuance);
   a,a:visited,.u-email{color:var(--color-nuance);}
+  time{font-family:var(--font-sans);}
 }
 
 
@@ -89,7 +90,7 @@ body > footer{
 .last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
 
 .last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
-.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0;}
+.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:-5px;}
 .h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
 .h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
 }

@@ -35,7 +35,11 @@
     mask-size: var(--type-scale-20);
     mask-position: center;
     margin-inline-end: var(--space-2);
-    margin-inline-start: 0;
+    margin-inline-start: var(--space-2);
+  }
+
+  li:first-of-type{
+    font-weight:var(--weight-bold);
   }
 
   li:last-of-type::after{

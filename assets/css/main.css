@@ -18,6 +18,7 @@ html {
 body, h1, h2, h3, h4, p,
 figure, blockquote, dl, dd {
   margin-block-end: 0;
+  margin-block-start: 0;
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
@@ -442,6 +443,10 @@ box-l {
   --small: clamp(var(--type-scale-14), 100%, var(--type-scale-16));
   --measure: 68ch;
   --caption:clamp(var(--type-scale-12),100%, var(--type-scale-14));
+  --rhythm-vert-sm: var(--space-3);
+  --rhythm-vert-md: var(--space-9);
+  --rhythm-vert-lg: var(--space-12);
+  --rhythm-vert-xl: var(--space-15);
 }
 
 h1 {
@@ -493,10 +498,6 @@ p, li {
   line-height: var(--leading-standard);
 }
 
-p + p {
-  padding: var(--flow-space-5) 0;
-}
-
 .byline {
   color: var(--color-prominent);
 }
@@ -507,18 +508,32 @@ time {
 
 h2 + p {
   color: var(--color-nuance);
+  margin: 0;
+  padding-block-start: var(--space-4);
+}
+
+p + p {
+  padding-block-start: var(--flow-space-3);
+}
+
+p + h2 {
+  padding-block-start: var(--space-3);
 }
 
 p + time {
   color: var(--color-subtle);
 }
 
+article > .body {
+  margin-block-start: var(--flow-space-9);
+}
+
 :root {
   color-scheme: light;
-  --background-primary: var(--palette-ash-00);
-  --background-secondary: var(--palette-ash-05);
-  --background-tertiary: var(--palette-ash-10);
-  --background-primary-inverse:var(--palette-ash-100);
+  --background-primary: var(--palette-ash-05);
+  --background-secondary: var(--palette-ash-10);
+  --background-tertiary: var(--palette-ash-20);
+  --background-primary-inverse:var(--palette-ash-95);
   --background-secondary-inverse: var(--palette-ash-90);
   --background-tertiary-inverse: var(--palette-ash-80);
   --color-quiet: var(--palette-ash-40);
@@ -537,12 +552,12 @@ p + time {
 
 html[data-theme=dark] {
   color-scheme: dark;
-  --background-primary: var(--palette-ash-100);
+  --background-primary: var(--palette-ash-95);
   --background-secondary: var(--palette-ash-90);
   --background-tertiary: var(--palette-ash-80);
-  --background-primary-inverse:var(--palette-ash-00);
-  --background-secondary-inverse: var(--palette-ash-05);
-  --background-tertiary-inverse: var(--palette-ash-10);
+  --background-primary-inverse:var(--palette-ash-05);
+  --background-secondary-inverse: var(--palette-ash-10);
+  --background-tertiary-inverse: var(--palette-ash-20);
   --color-quiet: var(--palette-ash-60);
   --color-subtle: var(--palette-ash-40);
   --color-nuance: var(--palette-ash-30);
@@ -587,7 +602,10 @@ html[data-theme=dark] {
   mask-size: var(--type-scale-20);
   mask-position: center;
   margin-inline-end: var(--space-2);
-  margin-inline-start: 0;
+  margin-inline-start: var(--space-2);
+}
+.breadcrumb li:first-of-type {
+  font-weight: var(--weight-bold);
 }
 .breadcrumb li:last-of-type::after {
   content: "";
@@ -680,11 +698,11 @@ html[data-theme=dark] {
   --button-bg: var(--background-primary);
   --button-color: var(--color-distinct);
   --button-hover-bg: var(--background-secondary);
-  --button-hover-color: var(--color-distinct);
+  --button-hover-color: var(--color-prominent);
   --button-border-width: 2px;
   --button-border-style: solid;
   --button-border-color: var(--border-color-nuance);
-  --button-hover-border-color: var(--border-color-distinct);
+  --button-hover-border-color: var(--border-color-prominent);
   --button-radius: var(--radii-square);
   display: inline-flex;
   align-items: center;
@@ -721,7 +739,7 @@ html[data-theme=dark] {
   outline-width: var(--button-outline-width, var(--button-border-width));
   outline-style: var(--button-outline-style, var(--button-border-style));
   outline-color: var(--button-outline-color, var(--button-border-color));
-  outline-offset: var(--button-outline-offset, calc(var(--button-border-width) * 2));
+  outline-offset: var(--button-outline-offset, calc(var(--button-border-width) * 1));
 }
 
 .button:active {
@@ -818,12 +836,15 @@ body > footer .final-info .u-email:active::before {
   background: var(--color-emphasis);
 }
 
-.h-card {
+.last-updated .h-card {
   margin: 0;
   color: var(--color-nuance);
 }
-.h-card a, .h-card a:visited, .h-card .u-email {
+.last-updated .h-card a, .last-updated .h-card a:visited, .last-updated .h-card .u-email {
   color: var(--color-nuance);
+}
+.last-updated .h-card time {
+  font-family: var(--font-sans);
 }
 
 .h-entry, .h-card {
@@ -863,7 +884,7 @@ body > footer .final-info .u-email:active::before {
 
 .last-updated .hm::before {
   mask-image: url("/assets/svg/icons/time.svg");
-  margin-inline-end: 0;
+  margin-inline-end: -5px;
 }
 
 .h-card::before {
@@ -875,24 +896,18 @@ body > footer .final-info .u-email:active::before {
   mask-image: url("/assets/svg/icons/mail.svg");
 }
 
-.journal box-l a {
+.journal article a {
   text-decoration: none;
 }
-.journal box-l a:hover h2, .journal box-l a:hover .subtitle, .journal box-l a:hover time {
+.journal article a:hover h2, .journal article a:hover p, .journal article a:hover time {
   color: var(--link-hover);
-}
-.journal box-l h2 {
-  color: var(--color-distinct);
-}
-.journal box-l time {
-  color: var(--color-subtle);
 }
 
 article .header {
   max-inline-size: 100%;
 }
 article .byline {
-  font-family: var(--font-mono) "";
+  font-family: var(--font-mono);
 }
 article .body {
   box-sizing: content-box;

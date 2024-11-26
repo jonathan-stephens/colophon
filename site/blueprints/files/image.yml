@@ -1,46 +1,161 @@
 title: Image
+accept:
+  type: image
+  extension:
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - webp
+    - avif
 
-columns:
-  main:
-    width: 1/2
-    sections:
-      content:
-        type: fields
-        fields:
-          caption:
-            label: Caption
-            type: textarea
-            size: medium
-  sidebar:
-    width: 1/2
-    sections:
-      meta:
-        type: fields
-        fields:
-          alt:
-            label: Alternative Text
-            type: text
-          creator:
-            label: Creator
-            type: text
-            width: 2/3
-          date_created:
-            label: Date created
-            type: date
-            display: DD MMM YYYY
-          location:
-            label: Location
-            type: text
-          license:
-            label: License
-            type: select
+fields:
+  preview:
+    label: Preview
+    type: image
+    ratio: 16/9
+    link: true
+
+  accessibility:
+    label: Accessibility
+    type: group
+    fields:
+      altText:
+        label: Alt Text
+        type: textarea
+        size: small
+        required: true
+        width: 2/3
+        help: Detailed description of the image for screen readers and when images fail to load
+
+      caption:
+        label: Caption
+        type: textarea
+        size: small
+        width: 2/3
+        help: Visual caption displayed below the image
+
+      decorative:
+        label: Decorative Image
+        type: toggle
+        text:
+          - "No"
+          - "Yes"
+        help: Enable if image is purely decorative and should be hidden from screen readers
+        width: 1/3
+
+      longDescription:
+        label: Long Description
+        type: textarea
+        help: Extended description for complex images (charts, graphs, etc.)
+        when:
+          decorative: false
+
+  metadata:
+    label: Image Information
+    type: group
+    fields:
+      title:
+        label: Title
+        type: text
+        width: 2/3
+        required: true
+
+      focalPoint:
+        label: Focal Point
+        type: point
+        help: Set the focus point for image cropping
+
+      dimensions:
+        label: Dimensions
+        type: dimensions
+        readonly: true
+        width: 1/2
+
+      orientation:
+        label: Orientation
+        type: text
+        readonly: true
+        width: 1/2
+
+      dateCreated:
+        label: Date Created
+        type: date
+        width: 1/2
+
+      location:
+        label: Location
+        type: text
+        width: 1/2
+
+  attribution:
+    label: Attribution
+    type: group
+    fields:
+      photographer:
+        label: Photographer
+        type: text
+        width: 1/2
+
+      copyright:
+        label: Copyright
+        type: text
+        width: 1/2
+
+      source:
+        label: Source
+        type: url
+        width: 1/2
+
+      license:
+        label: License
+        type: select
+        options:
+          - All Rights Reserved
+          - Public Domain
+          - CC BY
+          - CC BY-SA
+          - CC BY-ND
+          - CC BY-NC
+          - CC BY-NC-SA
+          - CC BY-NC-ND
+        width: 1/2
+
+  technical:
+    label: Technical Details
+    type: group
+    fields:
+      camera:
+        label: Camera
+        type: text
+        width: 1/3
+
+      lens:
+        label: Lens
+        type: text
+        width: 1/3
+
+      settings:
+        label: Camera Settings
+        type: structure
+        columns:
+          setting:
             width: 1/3
-            options:
-              - Unsplash
-              - CC BY 4.0
-              - CC BY-SA 4.0
-              - CC BY-NC 4.0
-              - CC BY-ND 4.0
-          link:
-            label: Link
-            type: url
+          value:
+            width: 2/3
+        fields:
+          setting:
+            label: Setting
+            type: text
+          value:
+            label: Value
+            type: text
+
+      colorProfile:
+        label: Color Profile
+        type: text
+        width: 1/3
+
+      keywords:
+        label: Keywords/Tags
+        type: tags

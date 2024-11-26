@@ -511,6 +511,10 @@ h2 + p {
   padding-block-start: var(--space-4);
 }
 
+.dek {
+  color: var(--color-nuance);
+}
+
 p + p {
   padding-block-start: var(--flow-space-3);
 }

@@ -1,0 +1,89 @@
+title: Default File
+accept:
+  type: document
+  extension:
+    - pdf
+    - doc
+    - docx
+    - txt
+    - rtf
+    - zip
+    - csv
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - webp
+    - avif
+
+fields:
+  metadata:
+    label: Metadata
+    type: group
+    fields:
+      title:
+        label: Title
+        type: text
+        width: 2/3
+        required: true
+        help: Descriptive title of the file
+      decorative:
+        label: Decorative Image
+        type: toggle
+        text:
+          - "No"
+          - "Yes"
+        help: Enable if image is purely decorative and should be hidden from screen readers
+        width: 1/3
+      description:
+        label: Alt Text
+        type: textarea
+        size: small
+        width: 2/3
+        help: Detailed description of the image for screen readers and when images fail to load
+      caption:
+        label: Caption
+        type: textarea
+        size: small
+        width: 2/3
+        help: Visual caption displayed below the image
+      keywords:
+        label: Keywords/Tags
+        type: tags
+        width: 1/3
+      dateCreated:
+        label: Date Created
+        type: date
+        width: 1/3
+      location:
+        label: Location
+        type: text
+        width: 1/3
+        
+      attribution:
+        label: Attribution
+        type: group
+        fields:
+          author:
+            label: Author/Creator
+            type: text
+            width: 1/2
+
+          source:
+            label: Source
+            type: url
+            width: 1/2
+
+          license:
+            label: License
+            type: select
+            options:
+              - All Rights Reserved
+              - Public Domain
+              - CC BY
+              - CC BY-SA
+              - CC BY-ND
+              - CC BY-NC
+              - CC BY-NC-SA
+              - CC BY-NC-ND
+            width: 1/2

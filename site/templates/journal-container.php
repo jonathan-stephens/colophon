@@ -10,9 +10,9 @@
   <article class="cluster">
     <a href="<?= $article->url() ?>">
       <box-l>
-          <h2><?= $article->hed()->html() ?></h2>
-          <p class="subtitle"><?= $article->dek()->html() ?></p>
-          <time datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('M j Y') ?></time>
+          <h2 class="hed"><?= $article->hed()->html() ?></h2>
+          <p class="dek"><?= $article->dek()->html() ?></p>
+          <time datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
       </box-l>
     </a>
   </article>

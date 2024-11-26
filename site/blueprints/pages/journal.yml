@@ -45,8 +45,16 @@ fields:
     type: text
     default: "{{ site.default_location }}"
   images:
-    label: Images
+    label: Article Images
     type: files
     multiple: true
     layout: cards
     template: image
+  documents:
+    label: Related Documents
+    type: files
+    template: default
+    layout: list
+    uploads:
+      accept:
+        type: document

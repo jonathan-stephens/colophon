@@ -4,7 +4,7 @@
       <h1 class="p-name" itemprop="headline"><?= $page->title()->html() ?></h1>
       <?php snippet('/components/byline') ?>
 
-    <div class="e-content body" itemprop="articleBody">
+    <div class="e-content prose" itemprop="articleBody">
       <?= $page->text()->kirbytext() ?>
     </div>
 

@@ -9,6 +9,13 @@
   --leading-standard:1.5;
   --leading-loose:1.7;
 
+  --leading-tighter: 110%;
+  --leading-tight: 120%;
+  --leading-snug: 130%;
+  --leading-base: 140%;
+  --leading-loose: 170%;
+  --leading-looser: 200%;
+
   --hed-primary:clamp(var(--type-scale-42),5rem,var(--type-scale-76));
   --hed-secondary:clamp(var(--type-scale-32),100%,var(--type-scale-60));
   --hed-tertiary:clamp(var(--type-scale-28),100%,var(--type-scale-32));
@@ -96,4 +103,11 @@ p + time{
 
 article > .body{
   margin-block-start:var(--flow-space-9);
+}
+
+code{
+  font-family:var(--font-mono);
+}
+blockquote{
+
 }

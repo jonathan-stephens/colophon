@@ -1,1 +1,45 @@
+Title: Screenshot of Booking.com's homepage
+
+----
+
+Decorative: false
+
+----
+
+Description: 
+
+----
+
+Caption: 
+
+----
+
+Keywords: Screenshot
+
+----
+
+Datecreated: 
+
+----
+
+Location: 
+
+----
+
+Author: 
+
+----
+
+Source: 
+
+----
+
+License: 
+
+----
+
 Uuid: ohWr28Ati7CBlP5i
+
+----
+
+Focus: 48.4% 23.2%

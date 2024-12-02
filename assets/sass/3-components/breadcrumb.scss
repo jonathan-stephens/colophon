@@ -21,7 +21,7 @@
   li::after{
     content: "";
     display: inline-block;
-    padding: 0 var(--flow-space-3);
+    padding: 0 var(--flow-3);
 
     display:inline-block;
     height:var(--type-scale-20);
@@ -34,8 +34,8 @@
     mask-repeat: no-repeat;
     mask-size: var(--type-scale-20);
     mask-position: center;
-    margin-inline-end: var(--space-2);
-    margin-inline-start: var(--space-2);
+    margin-inline-end: var(--rhythm-presto);
+    margin-inline-start: var(--rhythm-presto);
   }
 
   li:first-of-type{

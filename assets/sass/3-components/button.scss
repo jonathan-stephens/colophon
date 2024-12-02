@@ -5,7 +5,7 @@
   --button-color: var(--color-distinct);
   --button-hover-bg: var(--background-secondary);
   --button-hover-color: var(--color-prominent);
-  --button-border-width: 2px;
+  --button-border-width: var(--border-fine);
   --button-border-style: solid;
   --button-border-color: var(--border-color-nuance);
   --button-hover-border-color: var(--border-color-prominent);
@@ -13,8 +13,8 @@
 
   display: inline-flex;
   align-items: center;
-  gap: var(--button-gap, var(--flow-space-5));
-  padding: var(--button-padding, var(--flow-space-3) var(--flow-space-5));
+  gap: var(--button-gap, var(--flow-5));
+  padding: var(--button-padding, var(--flow-3) var(--flow-5));
 
   background: var(--button-bg);
   color: var(--button-color);

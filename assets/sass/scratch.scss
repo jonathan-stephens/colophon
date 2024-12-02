@@ -1,12 +1,12 @@
 .home{
   h2{
-    padding-bottom:var(--flow-space-10);
+    padding-bottom:var(--flow-10);
   }
 
   .splash{
     p:first-of-type::first-line{
       font-weight:bolder;
-      padding-bottom:var(--flow-space-8);
+      padding-bottom:var(--flow-8);
     }
     p{max-width:50ch;}
     .cta{
@@ -16,7 +16,20 @@
     .cluster{
       flex-direction:column;
       align-items:flex-start;
-      padding-top:var(--flow-space-3);
-    }
+      padding-top:var(--flow-3);
     }
   }
+}
+
+.codex .border-thickness{
+  display:flex;
+  flex-direction:column;
+  gap:var(--rhythm-moderato);
+
+  div{
+    height:var(--rhythm-largo);
+    width:100%;
+    border-color:var(--color-distinct);
+    border-style:solid;
+  }
+}

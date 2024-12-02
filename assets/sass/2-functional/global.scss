@@ -34,7 +34,7 @@ p, li{
   line-height:var(--leading-standard);
 }
 p+p{
-  padding:var(--flow-space-5) 0;
+  padding:var(--flow-5) 0;
 }
 
 h1{
@@ -62,14 +62,15 @@ h4{
 }
 
 a, a:visited{
-  color:var(--color-subtle);
+  color: var(--color-subtle);
   text-decoration: underline;
   text-decoration-color: var(--color-quiet);
-  text-underline-offset:var(--flow-space-1);
+  text-underline-offset: var(--border-thin);
+  text-decoration-thickness: var(--border-fine);
 
   &:hover{
     color:var(--color-distinct);
-    text-decoration:none;
+    text-decoration-color:var(--color-nuance);
   }
 
   &:active{
@@ -90,5 +91,5 @@ a, a:visited{
   width: 1cap;
   height: 0.75em;
   height: 1cap;
-  margin-inline-end: var(--flow-space-3);
+  margin-inline-end: var(--flow-3);
 }

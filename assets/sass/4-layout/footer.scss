@@ -1,14 +1,14 @@
 
 body > footer{
   background:var(--background-secondary);
-  margin:var(--flow-space-10) 0 0 0;
-  padding:var(--flow-space-10) var(--flow-space-3);
+  margin:var(--flow-10) 0 0 0;
+  padding:var(--flow-10) var(--flow-3);
 
   .wrapper{
     display: flex;
     flex-direction:column;
     width:100%;
-    gap:var(--space-6);
+    gap:var(--flow-6);
   }
 
   .social-links{
@@ -29,7 +29,7 @@ body > footer{
   .final-info{
     display:flex;
     flex-direction:column;
-    gap:var(--space-6);
+    gap:var(--flow-6);
     color:var(--color-nuance);
 
     a{
@@ -75,7 +75,7 @@ body > footer{
   display:inline-block;
   height:var(--type-scale-16);
   width:var(--type-scale-16);
-  margin:var(--space-2);
+  margin:var(--flow-2);
 
   top:7px;
 
@@ -83,14 +83,14 @@ body > footer{
   mask-repeat: no-repeat;
   mask-size: var(--type-scale-16);
   mask-position: center;
-  margin-inline-end: var(--space-2);
+  margin-inline-end: var(--flow-2);
   margin-inline-start: 0;
 }
 
 .last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
 
 .last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
-.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:-5px;}
+.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0px;}
 .h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
 .h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
 }

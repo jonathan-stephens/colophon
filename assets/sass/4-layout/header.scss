@@ -1,5 +1,5 @@
 body > header{
-  padding:var(--flow-space-10) 0 var(--flow-space-15) 0;
+  padding:var(--flow-10) 0 var(--flow-15) 0;
   container: site-header / inline-size;
 }
 header .wrapper{
@@ -25,7 +25,7 @@ header .wrapper{
 @container site-header (width < 700px) {
   header .wrapper{
     flex-wrap:wrap;
-    gap:var(--space-5);
+    gap:var(--flow-5);
 
     .breadcrumb{
       order:2;

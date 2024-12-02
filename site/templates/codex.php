@@ -107,7 +107,18 @@
  </svg>
  <hr/>
 
-
+<div class="border-thickness">
+  <div style="border-width:var(--border-hairline)"></div>
+  <div style="border-width:var(--border-fine)"></div>
+  <div style="border-width:var(--border-thin)"></div>
+  <div style="border-width:var(--border-light)"></div>
+  <div style="border-width:var(--border-regular)"></div>
+  <div style="border-width:var(--border-medium)"></div>
+  <div style="border-width:var(--border-bold)"></div>
+  <div style="border-width:var(--border-heavy)"></div>
+  <div style="border-width:var(--border-black)"></div>
+  <div style="border-width:var(--border-ultra)"></div>
+</div>
 
     </div>
   </section>

@@ -1,31 +1,18 @@
 :root{
-  --flow-space-1: 0.125rem;
-  --flow-space-2: 0.25rem;
-  --flow-space-3: 0.5rem;
-  --flow-space-4: 0.75rem;
-  --flow-space-5: 1rem;
-  --flow-space-6: 1.5rem;
-  --flow-space-7: 2rem;
-  --flow-space-8: 2.5rem;
-  --flow-space-9: 3rem;
-  --flow-space-10: 4rem;
-  --flow-space-11: 5rem;
-  --flow-space-12: 6rem;
-  --flow-space-13: 10rem;
-  --flow-space-14: 13rem;
-  --flow-space-15: 15rem;
-
-  --space-1: 0.125em;
-  --space-2: 0.25em;
-  --space-3: 0.5em;
-  --space-4: 0.75em;
-  --space-5: 1em;
-  --space-6: 1.5em;
-  --space-7: 2em;
-  --space-8: 2.5em;
-  --space-9: 3em;
-  --space-10: 4em;
-  --space-11: 5em;
-  --space-12: 6em;
-  --space-13: 10em;
+  --flow-1: clamp(0.125rem, 0.1033rem + 0.1087vw, 0.1875rem);
+  --flow-2: clamp(0.25rem, 0.2283rem + 0.1087vw, 0.3125rem);
+  --flow-3: clamp(0.5rem, 0.4565rem + 0.2174vw, 0.625rem);
+  --flow-4: clamp(0.75rem, 0.6848rem + 0.3261vw, 0.9375rem);
+  --flow-5: clamp(1rem, 0.913rem + 0.4348vw, 1.25rem);
+  --flow-6: clamp(1.5rem, 1.3696rem + 0.6522vw, 1.875rem);
+  --flow-7: clamp(2rem, 1.8261rem + 0.8696vw, 2.5rem);
+  --flow-8: clamp(2.5rem, 2.2826rem + 1.087vw, 3.125rem);
+  --flow-9: clamp(3rem, 2.7391rem + 1.3043vw, 3.75rem);
+  --flow-10: clamp(4rem, 3.6522rem + 1.7391vw, 5rem);
+  --flow-11: clamp(5rem, 4.5652rem + 2.1739vw, 6.25rem);
+  --flow-12: clamp(6rem, 5.4783rem + 2.6087vw, 7.5rem);
+  --flow-13: clamp(10rem, 9.1304rem + 4.3478vw, 12.5rem);
+  --flow-13: clamp(10rem, 9.1304rem + 4.3478vw, 12.5rem);
+  --flow-14: clamp(13rem, 11.8696rem + 5.6522vw, 16.25rem);
+  --flow-15: clamp(15rem, 13.6957rem + 6.5217vw, 18.75rem);
 }

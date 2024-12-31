@@ -36,20 +36,13 @@ body > footer{
       text-decoration:none;
       color:var(--color-nuance);
     }
-    a:hover{
+    a:hover, a:hover span{
       color:var(--color-distinct);
       text-decoration:underline;
       text-decoration-color:var(--color-subtle);
     }
     a:active{
       color:var(--color-emphasis);
-    }
-
-    .u-email:hover::before{
-      background:var(--color-distinct);
-    }
-    .u-email:active::before{
-      background:var(--color-emphasis);
     }
   }
 }
@@ -67,30 +60,29 @@ body > footer{
   align-items:baseline;
   color:var(--color-nuance);
 }
+// .last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before{
+//  content: "";
+//  position:relative;
+//  background:var(--color-nuance);
+//  display:inline-block;
+//  height:var(--type-scale-16);
+//  width:var(--type-scale-16);
+//  margin:var(--rhythm-presto);
+//
+//  top:7px;
 
-.last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before{
-  content: "";
-  position:relative;
-  background:var(--color-nuance);
-  display:inline-block;
-  height:var(--type-scale-16);
-  width:var(--type-scale-16);
-  margin:var(--flow-2);
+//  mask-mode: alpha;
+//  mask-repeat: no-repeat;
+//  mask-size: var(--type-scale-16);
+//  mask-position: center;
+//  margin-inline-end: var(--rhythm-presto);
+//  margin-inline-start: 0;
+//}
 
-  top:7px;
+// .last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
 
-  mask-mode: alpha;
-  mask-repeat: no-repeat;
-  mask-size: var(--type-scale-16);
-  mask-position: center;
-  margin-inline-end: var(--flow-2);
-  margin-inline-start: 0;
-}
-
-.last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
-
-.last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
-.last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0px;}
-.h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
-.h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
-}
+// .last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
+// .last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0px;}
+// .h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
+// .h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
+// }

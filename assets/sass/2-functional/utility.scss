@@ -1,5 +1,7 @@
 :root{
   --gutter: var(--flow-5);
+  --icon-color-primary: inherit;
+  --icon-color-secondary: currentColor;
 }
 .wrapper{
   margin-inline: auto;
@@ -49,21 +51,12 @@ box-l {
   align-items: center;
 }
 
-.icon {
-  width: 0.75em;
-  width: 1cap;
-  height: 0.75em;
-  height: 1cap;
-}
+.flow>*+*{margin-top:var(--flow-space,1em)}
 
-.with-icon {
-  display: inline-flex;
-  align-items: baseline;
-}
+.full-bleed{margin-left:calc(50% - 50vw);}
 
-.with-icon .icon {
-  margin-inline-end: var(--flow-5);
-}
+.flow+.flow{padding-right:6rem}
+.flow p:first-child{margin-top:var(--rhythm-moderato);}
 
 /* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
 .visually-hidden:not(:focus):not(:active) {

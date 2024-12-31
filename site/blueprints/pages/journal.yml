@@ -36,14 +36,24 @@ fields:
     type: date
     default: now
     display: dd MMM YYYY
+    width: 1/2
   time:
     label: Time
     type: time
     default: now
-  location:
-    label: Location
+    width: 1/2
+  addressLocality:
+    label: City
     type: text
-    default: "{{ site.default_location }}"
+    width: 1/3
+  addressRegion:
+    label: State or Region
+    type: text
+    width: 1/3
+  addressCountry:
+    label: Country
+    type: text
+    width: 1/3
   images:
     label: Article Images
     type: files

@@ -1,0 +1,44 @@
+:root{
+  --link-color: var(--color-subtle);
+  --link-deco: var(--color-quiet);
+
+  --link-color-hover: var(--color-distinct);
+  --link-deco-hover: var(--color-nuance);
+
+  --link-color-active: var(--color-emphasis);
+  --link-deco-active: var(--color-emphasis);
+}
+
+a, a:visited{
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--link-deco);
+  text-underline-offset: var(--border-thin);
+  text-decoration-thickness: var(--border-fine);
+
+  &:hover{
+    color:var(--link-color-hover);
+    text-decoration-color:var(--link-deco-hover);
+
+    span.with-icon svg{
+      fill:var(--link-color-hover);
+    }
+  }
+
+  &:active{
+    color:var(--link-color-active);
+    text-decoration-color:var(--link-deco-active);
+    position:relative;
+    left:1px;
+    top:1px;
+
+    span.with-icon svg{
+      fill:var(--link-color-active);
+    }
+  }
+
+  &:focus{
+    outline: solid 1px var(--color-prominent);
+    outline-offset: 1px;
+  }
+}

@@ -74,22 +74,93 @@ textarea:not([rows]) {
 /* Anything that has been anchored to should have extra scroll margin */
 
 @font-face {
-  font-display: swap;
   font-family: "IBM Plex Sans";
   font-style: normal;
-  font-weight: 400 500 700 800;
-  src: url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Text.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Medium.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Semibold.woff) format("woff"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff2) format("woff2"), url(../fonts/ibm-plex-sans/woff2/IBMPlexSans-Bold.woff) format("woff");
+  font-weight: normal;
+  src: url(../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Roman.woff2) format("woff2-variations");
 }
 @font-face {
-  font-display: swap;
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: normal;
+  src: url(../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Italic.woff2) format("woff2-variations");
+}
+@font-face {
   font-family: "IBM Plex Mono";
+  font-weight: 400;
   font-style: normal;
-  font-weight: 400 500 700 800;
-  src: url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Text.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Medium.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Semibold.woff) format("woff"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff2) format("woff2"), url(../fonts/ibm-plex-mono/woff2/IBMPlexMono-Bold.woff) format("woff");
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexMono-Text.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-weight: 500;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexMono-Medium.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-weight: 700;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexMono-Semibold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-weight: 800;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexMono-Bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 400;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Text.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 500;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Medium.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 700;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Semibold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 800;
+  font-style: normal;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 400;
+  font-style: italic;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-TextItalic.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 500;
+  font-style: italic;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-MediumItalic.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 700;
+  font-style: italic;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-SemiboldItalic.woff2) format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-weight: 800;
+  font-style: italic;
+  src: url(../fonts/ibm-plex-serif/woff2/IBMPlexSerif-BoldItalic.woff2) format("woff2");
 }
 :root {
   --font-sans:"IBM Plex Sans", sans-serif;
-  --font-mono:"IBM Plex Mono", sans-serif;
+  --font-serif:"IBM Plex Serif", serif;
+  --font-mono:"IBM Plex Mono", monospace;
   --type-scale-2: 0.125rem;
   --type-scale-4: 0.25rem;
   --type-scale-8: 0.5rem;
@@ -130,7 +201,6 @@ textarea:not([rows]) {
   --flow-10: clamp(4rem, 3.6522rem + 1.7391vw, 5rem);
   --flow-11: clamp(5rem, 4.5652rem + 2.1739vw, 6.25rem);
   --flow-12: clamp(6rem, 5.4783rem + 2.6087vw, 7.5rem);
-  --flow-13: clamp(10rem, 9.1304rem + 4.3478vw, 12.5rem);
   --flow-13: clamp(10rem, 9.1304rem + 4.3478vw, 12.5rem);
   --flow-14: clamp(13rem, 11.8696rem + 5.6522vw, 16.25rem);
   --flow-15: clamp(15rem, 13.6957rem + 6.5217vw, 18.75rem);
@@ -293,72 +363,10 @@ main {
   min-height: 80vh;
 }
 
-p, li {
-  font-size: var(--prose);
-  font-weight: var(--font-normal);
-  line-height: var(--leading-standard);
-}
-
-p + p {
-  padding: var(--flow-5) 0;
-}
-
-h1 {
-  font-size: var(--hed-primary);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-loose);
-}
-
-h2 {
-  font-size: var(--hed-secondary);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-loose);
-}
-
-h3 {
-  font-size: var(--hed-tertiary);
-  font-weight: var(--font-medium);
-  line-height: var(--leading-loose);
-}
-
-h4 {
-  font-size: var(--hed-quaternary);
-  font-weight: var(--font-normal);
-  line-height: var(--leading-loose);
-}
-
-a, a:visited {
-  color: var(--color-subtle);
-  text-decoration: underline;
-  text-decoration-color: var(--color-quiet);
-  text-underline-offset: var(--border-thin);
-  text-decoration-thickness: var(--border-fine);
-}
-a:hover, a:visited:hover {
-  color: var(--color-distinct);
-  text-decoration-color: var(--color-nuance);
-}
-a:active, a:visited:active {
-  color: var(--color-emphasis);
-  position: relative;
-  left: 1px;
-  top: 1px;
-}
-a:focus, a:visited:focus {
-  outline: solid 1px var(--color-prominent);
-  outline-offset: 1px;
-}
-
-.icon {
-  width: 0.75em;
-  width: 1cap;
-  height: 0.75em;
-  height: 1cap;
-  margin-inline-end: var(--flow-3);
-}
-
 :root {
   --gutter: var(--flow-5);
+  --icon-color-primary: inherit;
+  --icon-color-secondary: currentColor;
 }
 
 .wrapper {
@@ -410,11 +418,16 @@ box-l {
   align-items: center;
 }
 
-.icon {
-  width: 0.75em;
-  width: 1cap;
-  height: 0.75em;
-  height: 1cap;
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+.flow + .flow {
+  padding-right: 6rem;
+}
+
+.flow p:first-child {
+  margin-top: var(--rhythm-moderato);
 }
 
 /* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
@@ -434,8 +447,68 @@ box-l {
   --rhythm-allegro:var(--flow-4);
   --rhythm-moderato:var(--flow-5);
   --rhythm-andante:var(--flow-7);
-  --rhythm-adagio:var(--flow-11);
-  --rhythm-largo:var(--flow-13);
+  --rhythm-adagio:var(--flow-13);
+  --rhythm-largo:var(--flow-15);
+}
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  width: 1.75cap;
+  height: 1em;
+  height: 1.75cap;
+  position: relative;
+  top: 0.15em;
+  top: 0.3cap;
+  fill: var(--color-subtle);
+}
+
+.with-icon {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.with-icon .icon {
+  margin-inline-end: 0.2em;
+}
+
+:root {
+  --link-color: var(--color-subtle);
+  --link-deco: var(--color-quiet);
+  --link-color-hover: var(--color-distinct);
+  --link-deco-hover: var(--color-nuance);
+  --link-color-active: var(--color-emphasis);
+  --link-deco-active: var(--color-emphasis);
+}
+
+a, a:visited {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--link-deco);
+  text-underline-offset: var(--border-thin);
+  text-decoration-thickness: var(--border-fine);
+}
+a:hover, a:visited:hover {
+  color: var(--link-color-hover);
+  text-decoration-color: var(--link-deco-hover);
+}
+a:hover span.with-icon svg, a:visited:hover span.with-icon svg {
+  fill: var(--link-color-hover);
+}
+a:active, a:visited:active {
+  color: var(--link-color-active);
+  text-decoration-color: var(--link-deco-active);
+  position: relative;
+  left: 1px;
+  top: 1px;
+}
+a:active span.with-icon svg, a:visited:active span.with-icon svg {
+  fill: var(--link-color-active);
+}
+a:focus, a:visited:focus {
+  outline: solid 1px var(--color-prominent);
+  outline-offset: 1px;
 }
 
 :root {
@@ -443,78 +516,114 @@ box-l {
   --weight-medium:500;
   --weight-semibold:700;
   --weight-bold:800;
-  --leading-flat:1;
-  --leading-fine:1.15;
-  --leading-standard:1.5;
-  --leading-loose:1.7;
   --leading-tighter: 110%;
   --leading-tight: 120%;
   --leading-snug: 130%;
-  --leading-base: 140%;
+  --leading-base: 150%;
   --leading-loose: 170%;
   --leading-looser: 200%;
-  --hed-primary:clamp(var(--type-scale-42),2.032vw + 1.975rem,var(--type-scale-76));
-  --hed-secondary:clamp(var(--type-scale-36),1.434vw + 1.791rem,var(--type-scale-60));
+  --hed-primary:clamp(var(--type-scale-36),1.434vw + 1.791rem,var(--type-scale-60));
+  --hed-secondary:clamp(var(--type-scale-28),0.837vw + 1.482rem,var(--type-scale-42));
   --hed-tertiary:clamp(var(--type-scale-28),0.478vw + 1.597rem,var(--type-scale-36));
   --hed-quaternary:clamp(var(--type-scale-20),0.239vw + 1.174rem,var(--type-scale-24));
   --hed-quinary: var(--prose);
-  --prose:clamp(var(--type-scale-16), 0.239vw + 0.924rem, var(--type-scale-20));
+  --prose:clamp(var(--type-scale-18), 0.191vw + 1.087rem, var(--type-scale-20));
   --small: clamp(var(--type-scale-14), 0.12vw + 0.837rem, var(--type-scale-16));
   --caption:clamp(var(--type-scale-12),0.12vw + 0.712rem, var(--type-scale-14));
-  --measure: 68ch;
+  --measure: 70ch;
+  --flow-space:var(--prose);
+  --dropcap: var(--hed-quaternary);
 }
 
-h1 {
+strong, b {
+  font-weight: bolder;
+}
+
+em, i {
+  font-style: italic;
+}
+
+h1, .hed-primary {
   font-size: var(--hed-primary);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-loose);
   color: var(--color-emphasis);
 }
 
 h2 {
   font-size: var(--hed-secondary);
-  color: var(--color-prominent);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--color-distinct);
 }
 
 h3 {
   font-size: var(--hed-tertiary);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-loose);
   color: var(--color-distinct);
 }
 
 h4 {
   font-size: var(--hed-quaternary);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-loose);
   color: var(--color-nuance);
 }
 
-h5, h6 {
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+}
+
+h5, .--hed-quinary {
   font-size: var(--prose);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-loose);
+  color: var(--color-nuance);
 }
 
 h6 {
-  font-weight: var(--weight-prose);
+  font-size: var(--prose);
+  font-weight: var(--weight-semibold);
   font-style: italic;
-}
-
-h1, h2 {
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-flat);
-}
-
-h3, h4 {
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-fine);
-}
-
-h5, h6 {
-  line-height: var(--leading-standard);
+  line-height: var(--leading-loose);
+  color: var(--color-nuance);
 }
 
 p, li {
   font-size: var(--prose);
   font-weight: var(--weight-text);
-  line-height: var(--leading-standard);
+  font-variation-settings: "wght" 425, "wdth" 100;
+  line-height: var(--leading-base);
+  max-inline-size: var(--measure);
+  color: var(--color-distinct);
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+blockquote {
+  margin: 0;
+  margin-top: var(--flow-2);
+  padding: var(--flow-5);
+  background: var(--background-tertiary);
+  border-left: var(--border-thin) solid var(--color-quiet);
+  color: var(--color-emphasis);
 }
 
 .byline {
   color: var(--color-prominent);
+}
+
+.dek {
+  color: var(--color-nuance);
+}
+
+h1 + p {
+  font-family: var(--font-sans);
+  font-size: var(--hed-secondary);
+  color: var(--color-nuance);
 }
 
 h2 + p {
@@ -522,28 +631,30 @@ h2 + p {
   padding-block-start: var(--flow-4);
 }
 
-.dek {
-  color: var(--color-nuance);
+p + h2, ul + h2 {
+  padding: var(--rhythm-andante) 0 0 0;
+  font-size: var(--hed-tertiary);
+  color: var(--color-emphasis);
 }
 
 p + p {
-  padding-block-start: var(--flow-3);
-}
-
-p + h2 {
-  padding-block-start: var(--flow-3);
+  padding: var(--flow-3) 0;
 }
 
 p + time {
   color: var(--color-subtle);
 }
 
+p + blockquote {
+  margin-bottom: var(--flow-5);
+}
+
 article > .body {
   margin-block-start: var(--flow-9);
 }
 
-code {
-  font-family: var(--font-mono);
+.e-content {
+  padding: var(--rhythm-moderato) 0;
 }
 
 :root {
@@ -565,7 +676,6 @@ code {
   --border-color-distinct: var(--palette-ash-40);
   --border-color-prominent: var(--palette-ash-60);
   --border-color-emphasis: var(--palette-ash-80);
-  --link-hover: var(--palette-cyan-50);
 }
 
 html[data-theme=dark] {
@@ -587,7 +697,6 @@ html[data-theme=dark] {
   --border-color-distinct: var(--palette-ash-60);
   --border-color-prominent: var(--palette-ash-40);
   --border-color-emphasis: var(--palette-ash-20);
-  --link-hover: var(--palette-cyan-30);
 }
 
 .breadcrumb ol {
@@ -709,6 +818,24 @@ html[data-theme=dark] {
 .color-mode-toggle label:focus-within {
   outline: 2px solid blue;
   outline-offset: 3px;
+}
+
+.tags {
+  font-size: var(--small);
+  max-inline-size: none;
+}
+.tags .icon {
+  fill: var(--color-distinct);
+}
+
+.p-category.button {
+  padding: var(--flow-1) var(--flow-4) var(--flow-2) var(--flow-4);
+  border-radius: var(--radii-circle);
+  margin-inline-end: var(--flow-2);
+}
+.p-category.button:active {
+  background: var(--background-primary-inverse);
+  color: var(--background-primary);
 }
 
 /* https://piccalil.li/blog/how-i-build-a-button-component/ */
@@ -839,19 +966,13 @@ body > footer .final-info a {
   text-decoration: none;
   color: var(--color-nuance);
 }
-body > footer .final-info a:hover {
+body > footer .final-info a:hover, body > footer .final-info a:hover span {
   color: var(--color-distinct);
   text-decoration: underline;
   text-decoration-color: var(--color-subtle);
 }
 body > footer .final-info a:active {
   color: var(--color-emphasis);
-}
-body > footer .final-info .u-email:hover::before {
-  background: var(--color-distinct);
-}
-body > footer .final-info .u-email:active::before {
-  background: var(--color-emphasis);
 }
 
 .last-updated .h-card {
@@ -874,46 +995,6 @@ body > footer .final-info .u-email:active::before {
   color: var(--color-nuance);
 }
 
-.last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before {
-  content: "";
-  position: relative;
-  background: var(--color-nuance);
-  display: inline-block;
-  height: var(--type-scale-16);
-  width: var(--type-scale-16);
-  margin: var(--flow-2);
-  top: 7px;
-  mask-mode: alpha;
-  mask-repeat: no-repeat;
-  mask-size: var(--type-scale-16);
-  mask-position: center;
-  margin-inline-end: var(--flow-2);
-  margin-inline-start: 0;
-}
-
-.last-updated .h-entry::before {
-  mask-image: url("/assets/svg/icons/code-slash.svg");
-  margin-inline-end: 0;
-}
-
-.last-updated .dmy::before {
-  mask-image: url("/assets/svg/icons/date.svg");
-}
-
-.last-updated .hm::before {
-  mask-image: url("/assets/svg/icons/time.svg");
-  margin-inline-end: 0px;
-}
-
-.h-card::before {
-  mask-image: url("/assets/svg/icons/copyright.svg");
-  margin-inline-end: 0;
-}
-
-.h-card .u-email::before {
-  mask-image: url("/assets/svg/icons/mail.svg");
-}
-
 .journal article a {
   text-decoration: none;
 }
@@ -921,11 +1002,25 @@ body > footer .final-info .u-email:active::before {
   color: var(--link-hover);
 }
 
-article .header {
+article header {
   max-inline-size: 100%;
 }
-article .byline {
+article .on-at-in {
+  border-top: var(--border-fine) dashed var(--color-quiet);
+  border-bottom: var(--border-fine) solid var(--color-quiet);
+  padding: var(--rhythm-allegro) 0;
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
   font-family: var(--font-mono);
+  font-size: var(--small);
+  color: var(--color-nuance);
+  margin-bottom: var(--rhythm-allegro);
+}
+article .on-at-in .with-icon .icon {
+  margin-inline-end: var(--flow-2);
+  top: 4px;
+  fill: var(--color-nuance);
 }
 article .prose {
   box-sizing: content-box;
@@ -936,6 +1031,26 @@ article .prose {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+article footer {
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: var(--small);
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: baseline;
+  color: var(--color-nuance);
+  border-bottom: var(--border-fine) dashed var(--color-quiet);
+  border-top: var(--border-fine) solid var(--color-quiet);
+  padding: var(--rhythm-allegro) 0;
+  margin-top: var(--rhythm-andante);
+}
+article footer .on-at-in {
+  font-size: var(--small);
+}
+article footer .with-icon .icon {
+  fill: var(--color-distinct);
+  margin-inline-end: var(--flow-3);
 }
 
 .home h2 {

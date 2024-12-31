@@ -4,101 +4,162 @@
   --weight-semibold:700;
   --weight-bold:800;
 
-  --leading-flat:1;
-  --leading-fine:1.15;
-  --leading-standard:1.5;
-  --leading-loose:1.7;
-
   --leading-tighter: 110%;
   --leading-tight: 120%;
   --leading-snug: 130%;
-  --leading-base: 140%;
+  --leading-base: 150%;
   --leading-loose: 170%;
   --leading-looser: 200%;
 
-  --hed-primary:clamp(var(--type-scale-42),2.032vw + 1.975rem,var(--type-scale-76));
-  --hed-secondary:clamp(var(--type-scale-36),1.434vw + 1.791rem,var(--type-scale-60));
+  --hed-primary:clamp(var(--type-scale-36),1.434vw + 1.791rem,var(--type-scale-60));
+  --hed-secondary:clamp(var(--type-scale-28),0.837vw + 1.482rem,var(--type-scale-42));
   --hed-tertiary:clamp(var(--type-scale-28),0.478vw + 1.597rem,var(--type-scale-36));
   --hed-quaternary:clamp(var(--type-scale-20),0.239vw + 1.174rem,var(--type-scale-24));
   --hed-quinary: var(--prose);
 
-  --prose:clamp(var(--type-scale-16), 0.239vw + 0.924rem, var(--type-scale-20));
+  --prose:clamp(var(--type-scale-18), 0.191vw + 1.087rem, var(--type-scale-20));
   --small: clamp(var(--type-scale-14), 0.12vw + 0.837rem, var(--type-scale-16));
   --caption:clamp(var(--type-scale-12),0.12vw + 0.712rem, var(--type-scale-14));
 
-  --measure: 68ch;
+  --measure: 70ch;
+  --flow-space:var(--prose);
+
+  --dropcap: var(--hed-quaternary);
 }
 
-h1{
+strong, b{
+  font-weight: bolder;
+}
+em, i{font-style:italic;}
+
+h1, .hed-primary{
   font-size:var(--hed-primary);
+  font-weight:var(--weight-medium);
+
+  line-height:var(--leading-loose);
   color:var(--color-emphasis);
 }
-h2{
+h2, .hed-secondary{
   font-size:var(--hed-secondary);
-  color:var(--color-prominent);
-}
-h3{
-  font-size:var(--hed-tertiary);
+  font-weight:var(--weight-medium);
+
+  line-height:var(--leading-tight);
   color:var(--color-distinct);
 }
-h4{
+h3, .hed-tertiary{
+  font-size:var(--hed-tertiary);
+  font-weight:var(--weight-semibold);
+
+  line-height:var(--leading-loose);
+  color:var(--color-distinct);
+}
+h4, .hed-quaternary{
   font-size:var(--hed-quaternary);
+  font-weight:var(--weight-bold);
+
+  line-height:var(--leading-loose);
   color:var(--color-nuance);
 }
-h5,h6{
-  font-size: var(--prose);
-}
-h6{
-  font-weight: var(--weight-prose);
-  font-style: italic;
+
+h1, h2, h3, h4{
+  font-family:var(--font-serif);
 }
 
-h1,h2{
+h5, .--hed-quinary{
+  font-size:var(--prose);
   font-weight:var(--weight-bold);
-  line-height:var(--leading-flat);
+
+  line-height:var(--leading-loose);
+  color:var(--color-nuance);
 }
-h3,h4{
-  font-weight:var(--weight-medium);
-  line-height:var(--leading-fine);
+
+h6{
+  font-size:var(--prose);
+  font-weight:var(--weight-semibold);
+  font-style: italic;
+
+  line-height:var(--leading-loose);
+  color:var(--color-nuance);
 }
-h5, h6{
-  line-height:var(--leading-standard);
-}
+
 p, li{
   font-size:var(--prose);
   font-weight: var(--weight-text);
-  line-height:var(--leading-standard);
-}
-
-.byline{
-  color:var(--color-prominent);
-}
-
-// COMBINATIONS
-h2 + p{
-  margin:0;
-  padding-block-start:var(--flow-4);
-}
-.dek{
-  color:var(--color-nuance);
-}
-p+p{
-  padding-block-start:var(--flow-3);
-}
-p + h2{
-  padding-block-start:var(--flow-3);
-}
-p + time{
-  color:var(--color-subtle);
-}
-
-article > .body{
-  margin-block-start:var(--flow-9);
+  font-variation-settings: "wght" 425, "wdth" 100;
+  line-height:var(--leading-base);
+  max-inline-size: var(--measure);
+  color:var(--color-distinct);
 }
 
 code{
   font-family:var(--font-mono);
 }
 blockquote{
+  margin:0;
+  margin-top:var(--flow-2);
+  padding: var(--flow-5);
+  background:var(--background-tertiary);
+  border-left:var(--border-thin) solid var(--color-quiet);
+  color:var(--color-emphasis);
+}
 
+.byline{
+  color:var(--color-prominent);
+}
+
+.dek{
+  color:var(--color-nuance);
+}
+
+
+
+// COMBINATIONS
+h1 + p{
+  font-family:var(--font-sans);
+  font-size:var(--hed-secondary);
+  color:var(--color-nuance);
+}
+
+h2 + p{
+  margin:0;
+  padding-block-start:var(--flow-4);
+}
+p + h2, ul + h2{
+  padding:var(--rhythm-andante) 0 0 0;
+  font-size:var(--hed-tertiary);
+  color:var(--color-emphasis);
+}
+
+h3 + p{}
+p + h3{}
+
+h4 + p{}
+p + h4{}
+
+h5 + p{}
+p + h5{}
+
+
+p + p{
+  padding:var(--flow-3) 0;
+}
+p + time{
+  color:var(--color-subtle);
+}
+
+p + blockquote{
+  margin-bottom:var(--flow-5);
+}
+
+blockquote + p {
+}
+
+// INHERITANCE
+article > .body{
+  margin-block-start:var(--flow-9);
+}
+
+// MICROFORMATS
+.e-content{
+  padding:var(--rhythm-moderato) 0;
 }

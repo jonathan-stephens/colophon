@@ -17,10 +17,6 @@
       <div>
     </section>
   <?php else: ?>
-
     <?= $page->text()->kirbytext() ?>
-
-
-
   <?php endif ?>
 <?php snippet('footer') ?>

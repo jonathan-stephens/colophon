@@ -1,0 +1,23 @@
+.icon {
+  display:inline-block;
+  flex-shrink: 0;
+
+  width: 1em;
+  width: 1.75cap;
+  height: 1em;
+  height: 1.75cap;
+  position:relative;
+  top: .15em;
+  top: .3cap;
+
+  fill:var(--color-subtle);
+}
+
+.with-icon {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.with-icon .icon {
+  margin-inline-end: .2em;
+}

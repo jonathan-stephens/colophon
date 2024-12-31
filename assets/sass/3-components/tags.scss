@@ -1,0 +1,17 @@
+.tags {
+  font-size:var(--small);
+  max-inline-size:none;
+
+  .icon{fill:var(--color-distinct);}
+}
+
+.p-category.button{
+  padding: var(--flow-1) var(--flow-4) var(--flow-2) var(--flow-4);
+  border-radius: var(--radii-circle);
+  margin-inline-end:var(--flow-2);
+
+  &:active{
+    background:var(--background-primary-inverse);
+    color:var(--background-primary);
+  }
+}

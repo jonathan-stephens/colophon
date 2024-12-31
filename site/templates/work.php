@@ -1,12 +1,4 @@
 <?php snippet('header') ?>
-  <section class="wrapper">
-    <?php snippet('components/breadcrumb') ?>
-
-
-    <div class="splash">
-      <?= $page->text()->kirbytext() ?>
-    </div>
-
     <?php foreach($page->children()->listed()->flip() as $project): ?>
       <article>
         <h2 class="hed"><?= $project->hed()->html() ?></h2>

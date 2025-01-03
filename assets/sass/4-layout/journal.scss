@@ -21,6 +21,8 @@ article {
     border-top: var(--border-fine) dashed var(--color-quiet);
     border-bottom: var(--border-fine) solid var(--color-quiet);
     padding: var(--rhythm-allegro) 0;
+    container-type: inline-size;
+    container-name: on-at-in;
     width: 100%;
     display: inline-flex;
     justify-content: space-between;
@@ -30,15 +32,13 @@ article {
     margin-bottom:var(--rhythm-allegro);
 
     .with-icon .icon{
-      margin-inline-end:var(--flow-2);
+      margin-inline-end:var(--rhythm-presto);
       top:4px;
       fill:var(--color-nuance);
     }
-
   }
   .prose{
     box-sizing: content-box;
-    margin-inline: auto;
     text-align: left;
     max-inline-size: var(--measure);
     max-width: var(--measure);
@@ -49,8 +49,6 @@ article {
 
   footer{
     display:flex;
-    font-family:var(--font-mono);
-    font-size: var(--small);
     flex-direction: column;
     justify-content: flex-end;
     align-items: baseline;
@@ -68,5 +66,20 @@ article {
       margin-inline-end:var(--flow-3);
     }
   }
+  .written-url{
+    font-family:var(--font-mono);
+    font-size:var(--small);
+    font-weight: bolder;
+  }
+}
 
+@media (min-width: 320px) and (max-width:632px) {
+  article .on-at-in {
+    flex-direction: column;
+    gap: var(--rhythm-presto);
+  }
+}
+
+.day-group .meta{
+  text-align:right;
 }

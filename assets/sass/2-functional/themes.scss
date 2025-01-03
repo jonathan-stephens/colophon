@@ -44,12 +44,15 @@
   --border-color-distinct:  var(--palette-ash-60);
   --border-color-prominent: var(--palette-ash-40);
   --border-color-emphasis:  var(--palette-ash-20);
+
 }
 
 :root{
   @include theme-light;
+
 }
 
 html[data-theme='dark']{
   @include theme-dark;
+  background:url('/assets/png/stardust.png') repeat, var(--background-primary);
 }

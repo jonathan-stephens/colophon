@@ -1,14 +1,22 @@
 .tags {
-  font-size:var(--small);
+  font-size:var(--caption);
+  font-family:var(--font-mono);
   max-inline-size:none;
+  gap:var(--rhythm-vivace);
+  justify-content: flex-end;
+  margin-inline-end: calc(-1*var(--rhythm-allegro));
 
   .icon{fill:var(--color-distinct);}
 }
 
 .p-category.button{
-  padding: var(--flow-1) var(--flow-4) var(--flow-2) var(--flow-4);
+  padding: var(--rhythm-presto) var(--rhythm-allegro);
   border-radius: var(--radii-circle);
-  margin-inline-end:var(--flow-2);
+  font-size:var(--caption);
+  font-family:var(--font-mono);
+  position:relative;
+  bottom:-2px;
+
 
   &:active{
     background:var(--background-primary-inverse);

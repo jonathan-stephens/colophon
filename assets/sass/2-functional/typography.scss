@@ -8,8 +8,8 @@
   --leading-tight: 120%;
   --leading-snug: 130%;
   --leading-base: 150%;
-  --leading-loose: 170%;
-  --leading-looser: 200%;
+  --leading-loose: 160%;
+  --leading-looser: 180%;
 
   --hed-primary:clamp(var(--type-scale-36),1.434vw + 1.791rem,var(--type-scale-60));
   --hed-secondary:clamp(var(--type-scale-28),0.837vw + 1.482rem,var(--type-scale-42));
@@ -21,7 +21,7 @@
   --small: clamp(var(--type-scale-14), 0.12vw + 0.837rem, var(--type-scale-16));
   --caption:clamp(var(--type-scale-12),0.12vw + 0.712rem, var(--type-scale-14));
 
-  --measure: 70ch;
+  --measure: 68ch;
   --flow-space:var(--prose);
 
   --dropcap: var(--hed-quaternary);
@@ -36,7 +36,7 @@ h1, .hed-primary{
   font-size:var(--hed-primary);
   font-weight:var(--weight-medium);
 
-  line-height:var(--leading-loose);
+  line-height:var(--leading-base);
   color:var(--color-emphasis);
 }
 h2, .hed-secondary{
@@ -96,7 +96,7 @@ code{
 }
 blockquote{
   margin:0;
-  margin-top:var(--flow-2);
+  margin-top:var(--rhythm-presto);
   padding: var(--flow-5);
   background:var(--background-tertiary);
   border-left:var(--border-thin) solid var(--color-quiet);

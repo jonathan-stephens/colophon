@@ -16,6 +16,26 @@ a, a:visited{
   text-underline-offset: var(--border-thin);
   text-decoration-thickness: var(--border-fine);
 
+  &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']) {
+    margin-inline-end: var(--rhythm-vivace);
+    padding-inline-end: var(--rhythm-allegro);
+  }
+  &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']):after {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: var(--rhythm-prestissimo);
+    mask: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8" standalone="no"%3F><svg width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><path d="M26,28L6,28C4.903,27.999 4.001,27.097 4,26L4,6C4.001,4.903 4.903,4.001 6,4L16,4L16,6L6,6L6,26L26,26L26,16L28,16L28,26C27.999,27.097 27.097,27.999 26,28Z"/><path d="M20,2L20,4L26.586,4L18,12.586L19.414,14L28,5.414L28,12L30,12L30,2L20,2Z"/></svg>');
+    transform: translateY(0.25em);
+    mask-size: 75%;
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    background:var(--link-deco);
+    }
+
+
   &:hover{
     color:var(--link-color-hover);
     text-decoration-color:var(--link-deco-hover);
@@ -23,6 +43,8 @@ a, a:visited{
     span.with-icon svg{
       fill:var(--link-color-hover);
     }
+    &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']):after {background:var(--link-deco-hover);}
+
   }
 
   &:active{
@@ -32,13 +54,15 @@ a, a:visited{
     left:1px;
     top:1px;
 
+    &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']):after {background:var(--link-deco-active);position:relative;left:1px;}
+
     span.with-icon svg{
       fill:var(--link-color-active);
     }
   }
 
-  &:focus{
-    outline: solid 1px var(--color-prominent);
-    outline-offset: 1px;
+  &:focus, {
+    outline: solid var(--border-thin) var(--color-prominent);
+    outline-offset: var(--border-thin);
   }
 }

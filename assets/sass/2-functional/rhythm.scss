@@ -1,9 +1,13 @@
 :root{
+  // https://mosaicmusicinstruction.com/wp-content/uploads/2018/07/basic-tempo-markings.pdf
+  --rhythm-prestissimo: var(--flow-1);
   --rhythm-presto: var(--flow-2);
   --rhythm-vivace:var(--flow-3);
   --rhythm-allegro:var(--flow-4);
   --rhythm-moderato:var(--flow-5);
+  --rhythm-andantino:var(--flow-6);
   --rhythm-andante:var(--flow-7);
-  --rhythm-adagio:var(--flow-13);
-  --rhythm-largo:var(--flow-15);
+  --rhythm-adagio:var(--flow-11);
+  --rhythm-largo:var(--flow-13);
+  --rhythm-grave:var(--flow-15);
 }

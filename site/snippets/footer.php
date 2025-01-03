@@ -2,6 +2,18 @@
   </main>
 
   <footer role="contentinfo">
+    <?php $menuItems = $site->footer_nav()->toStructure(); ?>
+      <?php if ($menuItems->isNotEmpty()): ?>
+      <nav role="navigation" class="wrapper">
+        <ul>
+          <li>Navigation</li>
+          <?php foreach ($menuItems as $menuItem): ?>
+            <li><a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>"><?= $menuItem->linkTitle()->or($menuItem->link()->html()) ?></a></li>
+          <?php endforeach ?>
+        </ul>
+      </nav>
+    <?php endif ?>
+
     <?php
     // Using footer_social instead of social_links
     $socialLinks = $site->footer_social()->toStructure();

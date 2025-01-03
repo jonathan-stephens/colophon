@@ -81,19 +81,20 @@ tabs:
     icon: download
     columns:
       - width: 1/3
-        sections:
-          footer_col1:
-            type: fields
-            fields:
-              footer_col1_title:
-                label: Footer Nav
-                type: text
-              footer_col1_pages:
-                label: Footer Nav
-                type: pages
-                multiple: true
-                status: published
-
+          fields:
+            footer_nav:
+              label: Footer Nav
+              type: structure
+              fields:
+                linkTitle:
+                  type: text
+                  label: Menu item title
+                link:
+                  type: link
+                  label: Link
+                  options:
+                    - page
+                    - url
       - width: 1/3
         sections:
           footer_col2:

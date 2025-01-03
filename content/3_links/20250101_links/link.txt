@@ -1,0 +1,45 @@
+Title: Links
+
+----
+
+Date: 2025-01-01
+
+----
+
+Time: 11:50:00
+
+----
+
+Addresslocality: Premia de Mar
+
+----
+
+Addressregion: Barcelona
+
+----
+
+Addresscountry: Spain
+
+----
+
+Website: https://adactio.com/links
+
+----
+
+Text: Initial inspiration to start collecting links in a single repo on my website. Been wanting to have a public place to collect, curate, and share. Will eventually turn into an RSS feed too.
+
+----
+
+Tags: Inspiration, Links, Habit Building, Sharing, Curating, Cataloging
+
+----
+
+Description: Initial inspiration to start collecting links in a single repo on my website. Been wanting to have a public place to collect, curate, and share. Will eventually turn into an RSS feed too.
+
+----
+
+Url: https://adactio.com/links
+
+----
+
+Uuid: ZkiAFqpMv76WrOvl

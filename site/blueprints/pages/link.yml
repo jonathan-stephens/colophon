@@ -11,32 +11,52 @@ fields:
       date:
         label: Date
         type: date
-        width: 1/3
+        width: 1/2
         default: now
       time:
         label: Time
         type: time
-        width: 1/3
+        width: 1/2
         default: now
-      location:
-        label: Location
+      addressLocality:
+        label: City
         type: text
         width: 1/3
-        default: "{{ site.default_location }}"
+      addressRegion:
+        label: State or Region
+        type: text
+        width: 1/3
+      addressCountry:
+        label: Country
+        type: text
+        width: 1/3
 
-  url:
+  website:
     label: URL
     type: url
     required: true
     width: 1/2
+  tld:
+    label: Top Level Domain
+    type: url
+    required: true
+    width: 1/2
 
-  content:
-    label: Content
-    type: group
-    fields:
-      description:
-        label: Description
-        type: textarea
+
+  text:
+    label: Description, quotes, etc.
+    type: textarea
+    size: large
+    buttons:
+      - headlines
+      - bold
+      - italic
+      - link
+      - email
+      - file
+      - code
+      - ul
+      - ol
 
   tags:
     label: Tags

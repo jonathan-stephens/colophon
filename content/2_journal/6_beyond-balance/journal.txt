@@ -83,11 +83,11 @@ Addresslocality: Raleigh
 
 ----
 
-Addressregion: North Carolina
+Addressregion: NC
 
 ----
 
-Addresscountry: United States
+Addresscountry: US
 
 ----
 

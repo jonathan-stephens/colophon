@@ -14,11 +14,14 @@ Default-location: Raleigh, NC
 
 ----
 
-Footer-col1-title: Site
+Footer-nav:
 
-----
-
-Footer-col1-pages: 
+- 
+  linktitle: Journal
+  link: page://gevx6G03JRLRHtml
+- 
+  linktitle: Links
+  link: page://R7cAOwWwS9jlMnD0
 
 ----
 
@@ -76,6 +79,45 @@ Footer-social:
   platform: Dribbble
   url: https://dribbble.com/jonathanstephens
   logo: [ ]
+
+----
+
+Footer-nav-pages:
+
+- 
+  linktitle: Journal
+  link: page://gevx6G03JRLRHtml
+- 
+  linktitle: Links
+  link: page://R7cAOwWwS9jlMnD0
+
+----
+
+Footer-col1-title: Site
+
+----
+
+Footer-col1-pages:
+
+- 
+  page: Journal
+  url: https://jonathanstephens.us/journal
+  id: journal
+  image:
+    back: pattern
+    color: gray-500
+    cover: false
+    icon: text
+  info: ""
+  link: /pages/journal
+  sortable: true
+  text: Journal
+  uuid: page://gevx6G03JRLRHtml
+  dragtext: '(link: page://gevx6G03JRLRHtml text: Journal)'
+  haschildren: true
+- 
+  page: Links
+  url: https://jonathanstephens.us/links
 
 ----
 

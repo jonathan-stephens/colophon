@@ -1,14 +1,15 @@
 
 body > footer{
-  background:var(--background-secondary);
+  background:url('/assets/png/rice-paper-2.png') repeat, var(--background-secondary);
   margin:var(--flow-10) 0 0 0;
   padding:var(--flow-10) var(--flow-3);
+  background-attachment:fixed;
 
   .wrapper{
     display: flex;
     flex-direction:column;
     width:100%;
-    gap:var(--flow-6);
+    gap:var(--rhythm-moderato);
   }
 
   .social-links{
@@ -20,6 +21,15 @@ body > footer{
      li{
        font-size:var(--small);
      }
+  }
+
+  nav[role="navigation"]{
+    ul{
+      list-style-type:none;
+      padding:0;
+      display:inline-flex;
+      gap:var(--rhythm-moderato);
+    }
   }
 
   #theme-picker{
@@ -47,6 +57,12 @@ body > footer{
   }
 }
 
+html[data-theme='dark'] body > footer{
+  background:url('/assets/png/stardust.png') repeat, var(--background-secondary);
+  background-size:75%;
+}
+
+
 .last-updated .h-card{
   margin:0;
   color:var(--color-nuance);
@@ -55,7 +71,7 @@ body > footer{
 }
 
 
-.h-entry, .h-card {font-size:var(--caption);}
+footer {.h-entry, .h-card {font-size:var(--caption);}}
 .dt-updated span{
   align-items:baseline;
   color:var(--color-nuance);

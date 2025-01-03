@@ -12,7 +12,7 @@
           fill="currentColor"
         />
       </svg>
-      <?= $page->metadata()->date()->toDate('l, F d Y') ?></span> at <?= $page->metadata()->time()->toDate('H:i') ?>
+      <?= $page->metadata()->date()->toDate('l, M d Y') ?></span> at <?= $page->metadata()->time()->toDate('H:i') ?>
     </span>
   </time>
   <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="with-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">

@@ -28,6 +28,30 @@
       </svg>
 
  <hr />
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-quiet)" />
+ </svg>
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-subtle)" />
+ </svg>
+
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-nuance)" />
+ </svg>
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-distinct)" />
+ </svg>
+
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-prominent)" />
+ </svg>
+
+ <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+   <rect width="160" height="160" fill="var(--color-emphasis)" />
+ </svg>
+
+<hr />
+
 
  <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
    <rect width="160" height="160" fill="color-mix(in oklch shorter hue, var(--palette-cyan-50), var(--palette-green-50))" />
@@ -198,9 +222,11 @@
       </div>
     </div>
     <div class="figures">
-      
+      <figure>
+        <img src="image.png" alt="put image description here" />
+        <figcaption>Figure 1: The caption</figcaption>
+      </figure>
     </div>
-
   </div>
 </div>
     </div>

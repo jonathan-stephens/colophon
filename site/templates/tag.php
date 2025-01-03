@@ -1,15 +1,21 @@
 <?php snippet('header') ?>
 
-<h1>Posts tagged: <?= html($tag) ?></h1>
+<h1>Content tagged: <?= html($tag) ?></h1>
 
 <?php
-$taggedPosts = page('blog')->children()->filterBy('tags', $tag, ',');
-foreach ($taggedPosts as $post):
-?>
-    <article>
-        <h2><a href="<?= $post->url() ?>"><?= $post->title() ?></a></h2>
-        <!-- Add more post details as needed -->
-    </article>
-<?php endforeach ?>
+$taggedContent = site()
+    ->index()
+    ->listed()
+    ->filterBy('tags', '*=', $tag);
+
+if ($taggedContent->count()): ?>
+    <?php foreach ($taggedContent as $item): ?>
+        <article>
+            <h2><a href="<?= $item->url() ?>"><?= $item->title() ?></a></h2>
+        </article>
+    <?php endforeach ?>
+<?php else: ?>
+    <p>No content found with this tag.</p>
+<?php endif ?>
 
 <?php snippet('footer') ?>

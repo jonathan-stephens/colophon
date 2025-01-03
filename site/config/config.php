@@ -1,10 +1,9 @@
 <?php
-  return [
-    'panel' =>[
-      'debug' => false,
-      'mauricerenck.indieConnector.secret' => 'my-secret',
+return [
+    'panel' => [
+        'debug' => true,
+        'mauricerenck.indieConnector.secret' => 'my-secret',
     ],
-
     'jonathanstephens.template-handler' => [
         'cache' => true,
         'defaultTemplate' => 'default'
@@ -13,10 +12,18 @@
         'useClientTime' => true,
         'allowManualOverride' => true,
         'cookieDuration' => 60 * 60 * 24
+    ],
+    'routes' => [
+        [
+            'pattern' => 'tag/(:any)',
+            'action'  => function($tag) {
+                return page('default')->render([
+                    'template' => 'tag',
+                    'data' => [
+                        'tag' => urldecode($tag)
+                    ]
+                ]);
+            }
+        ]
     ]
-  ];
-
-  return [
 ];
-
-?>

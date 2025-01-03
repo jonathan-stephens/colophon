@@ -13,7 +13,6 @@ footer {
 }
 
 body {
-  background:var(--background-primary);
   color:var(--color-distinct);
   font-family: var(--font-sans);
   transition: background-color 0.3s, color 0.3s;
@@ -26,4 +25,10 @@ body {
 
 main{
   min-height:80vh;
+}
+
+html[data-theme='dark'] body{
+  background:url('/assets/png/stardust.png') repeat, var(--background-primary);
+  background-size:25%;
+  background-attachment:fixed;
 }

@@ -19,7 +19,7 @@ I’ve been practicing and learning about how to write for a long while now; I�
 - Multiple writing classes—learning the Craft with others;
 -  Many books from writers about writing;
 - Actively learning expository-, UX-, and content-writing “on the job” from coworkers; and
-- Years of writing self-reflections for performance reviews while preparing, crafting, building, presenting, and giving performance reviews for the hundreds I’ve worked with. 
+- Years of writing self-reflections for performance reviews while preparing, crafting, building, presenting, and giving performance reviews for the hundreds I’ve worked with.
 
 ## How to write on the internet that generates money
 
@@ -32,7 +32,7 @@ The differences lay in the word count.
 These days, it’s more than words on screen or paper. From starting a podcast to a well-made YouTube channel to TikTok, all require lengths of writing that do not come naturally or from how I’ve practiced over the years.
 
 1. Word-count is a hell-of-a-lot-less than books.
-2. I have to learn script-writing. 
+2. I have to learn script-writing.
 
 ## Putting word-count into perspective
 
@@ -45,7 +45,7 @@ These days, it’s more than words on screen or paper. From starting a podcast t
 - 50% of a short online article;
 - 31% of an ideal Medium article;
 - 1% of a 50,000 word book;
-- .3% of a 150,000 word book. 
+- .3% of a 150,000 word book.
 
 My long term goal is to write published articles, essays, and books.
 
@@ -57,23 +57,35 @@ Tags: Writing, Purpose, Routine, Goals
 
 ----
 
-Date: 2024-07-02
+Date: 2024-07-12
 
 ----
 
-Time: 09:35:00
+Time: 15:35:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Images:
+
+----
+
+Documents:
 
 ----
 
 Location: Raleigh
-
-----
-
-Images: 
-
-----
-
-Documents: 
 
 ----
 

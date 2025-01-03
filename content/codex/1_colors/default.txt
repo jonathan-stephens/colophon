@@ -2,7 +2,11 @@ Title: colors
 
 ----
 
-Text: 
+Template: colors
+
+----
+
+Text:
 
 ----
 

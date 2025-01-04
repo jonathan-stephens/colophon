@@ -3,11 +3,15 @@
   font-family:var(--font-mono);
   max-inline-size:none;
   gap:var(--rhythm-vivace);
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-inline-end: calc(-1*var(--rhythm-allegro));
 
   .icon{fill:var(--color-distinct);}
 }
+.journal .tags, .links .tags{
+  justify-content: flex-end;
+}
+
 
 .p-category.button{
   padding: var(--rhythm-presto) var(--rhythm-allegro);

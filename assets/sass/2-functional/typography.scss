@@ -124,6 +124,10 @@ h2 + p{
   margin:0;
   padding-block-start:var(--flow-4);
 }
+
+blockquote + h2{
+  padding-block-start: var(--rhythm-andante);
+}
 p + h2, ul + h2{
   padding:var(--rhythm-andante) 0 0 0;
   font-size:var(--hed-tertiary);

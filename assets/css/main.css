@@ -665,6 +665,10 @@ h2 + p {
   padding-block-start: var(--flow-4);
 }
 
+blockquote + h2 {
+  padding-block-start: var(--rhythm-andante);
+}
+
 p + h2, ul + h2 {
   padding: var(--rhythm-andante) 0 0 0;
   font-size: var(--hed-tertiary);
@@ -922,11 +926,15 @@ html[data-theme=dark] {
   font-family: var(--font-mono);
   max-inline-size: none;
   gap: var(--rhythm-vivace);
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-inline-end: calc(-1 * var(--rhythm-allegro));
 }
 .tags .icon {
   fill: var(--color-distinct);
+}
+
+.journal .tags, .links .tags {
+  justify-content: flex-end;
 }
 
 .p-category.button {

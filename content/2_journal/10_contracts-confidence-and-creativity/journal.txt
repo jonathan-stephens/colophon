@@ -30,10 +30,10 @@ I found myself caught in a loop of questions:
 
 This multi-year journey on pricing led me to explore various pricing models, from hourly rates to project-based fees. Some of the extremely valuable resources of my learning journey:
 
--     (link: https://jessicahische.teachable.com/p/the-dark-art-of-pricing text: The Dark Art Pricing) by (link: https://www.jessicahische.is/ text: Jessica Hische)
--     (link: https://www.designisajob.com/ text: Design is a Job) by (link: https://www.muledesign.com/mule-design-founder-bios text: Mike Monteiro)
--     (link: https://stuffandnonsense.co.uk/projects/contract-killer/ text: Contract Killer) on (link: https://24ways.org/2008/contract-killer/ text: 24Ways) by (link: https://stuffandnonsense.co.uk/about/ text: Andy Clarke)
--     (link: https://www.aiga.org/sites/default/files/2021-04/standard-form-of-agreement-for-design-services.pdf text: Standard Form of Agreement for Design Services) by the (link: https://www.aiga.org/resources/business-freelance-resources text: AIGA)
+- (link: https://jessicahische.teachable.com/p/the-dark-art-of-pricing text: The Dark Art Pricing) by (link: https://www.jessicahische.is/ text: Jessica Hische)
+- (link: https://www.designisajob.com/ text: Design is a Job) by (link: https://www.muledesign.com/mule-design-founder-bios text: Mike Monteiro)
+- (link: https://stuffandnonsense.co.uk/projects/contract-killer/ text: Contract Killer) on (link: https://24ways.org/2008/contract-killer/ text: 24Ways) by (link: https://stuffandnonsense.co.uk/about/ text: Andy Clarke)
+- (link: https://www.aiga.org/sites/default/files/2021-04/standard-form-of-agreement-for-design-services.pdf text: Standard Form of Agreement for Design Services) by the (link: https://www.aiga.org/resources/business-freelance-resources text: AIGA)
 
 The model that resonated most was impact-based pricing.
 
@@ -100,11 +100,11 @@ Addresscountry: US
 
 ----
 
-Images:
+Images: 
 
 ----
 
-Documents:
+Documents: 
 
 ----
 

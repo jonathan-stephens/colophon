@@ -67,14 +67,16 @@ It’s a fantastic, simple, in-depth repository of historical knowledge of…siz
 ### What is sizes.com?
 
 > Sizes, Inc. is incorporated in Delaware; currently this web site is its only project. Since time is precious, we do not give out phone numbers. If you are an SEO consultant, thanks, but we do not have the money to hire you. Also, the domain name is not for sale. And if you are a fraudster, we don't sell anything, so don't bother sending us fraudulent orders asking if we accept credit cards.
+>
 > **An explanatory history**
+>
 > The author is an educational “content provider” who began his career in film, many media technologies ago. Even before the birth of the microprocessor, media began changing so rapidly that one had to run hard to stay in the same spot. In the early 1990's Microsoft was pushing a hot new format, CD-ROM. (Older readers may remember when a CD burner cost hundreds of dollars, and a blank CD was $15, not 15 cents.) Since the best way to learn a new technology is to make something with it, I looked around for a topic suited to the CD-ROM's capabilities.
 
 ## Type sizes of past worlds
 
 The impetus of my search was in type sizes—how was metal type categorized, size wise, apart from straight point-numbers? Sizes.com has a dedicated page fully to (link: https://www.sizes.com/tools/type.htm text: printing type). And I’ve found a naming structure!
 
-`
+```
 --size-diamond:   var(--step--3);
 --size-pearl:     var(--step--2);
 --size-ruby:      var(--step--1);
@@ -87,6 +89,7 @@ The impetus of my search was in type sizes—how was metal type categorized, siz
 --size-columbian: var(--step-6);
 --size-paragon:   var(--step-7);
 --size-meridian:  var(--step-8);
+```
 
 It’s exciting to be able to finally found a resource that offers so MUCH interesting content to read through and learn from.
 
@@ -104,10 +107,10 @@ Honestly, it’s the first time in a long, long while that I found a new favorit
 
 Last week, it was a true joy to finish my week discovering & exploring this treasure trove of historical taxonomic information. I mean, where else can you find descriptions of the:
 
-- (link: https://www.sizes.com/units/scoville_unit.htm text: Scoville Heat Unit), that measure of heat in chili peppers, alongside the
-- (link: https://www.sizes.com/society/waffle_house_index.htm text: Waffle House Index), the measure American federal services use to measure ponential severity of natural weather occurrences, with
-- (link: https://www.sizes.com/tools/spikes_railroad.htm text: Railroad Track Spikes), the standard length & width with average number in a shipping container, and
-- (link: https://www.sizes.com/materials/candle_wicks.htm text: Candlewicks), the standardized thickness of candle wicks.
+- (link: https://www.sizes.com/units/scoville_unit.htm text: Scoville Heat Unit,) that measure of heat in chili peppers, alongside the
+- (link: https://www.sizes.com/society/waffle_house_index.htm text: Waffle House Index,) the measure American federal services use to measure ponential severity of natural weather occurrences, with
+- (link: https://www.sizes.com/tools/spikes_railroad.htm text: Railroad Track Spikes,) the standard length & width with average number in a shipping container, and
+- (link: https://www.sizes.com/materials/candle_wicks.htm text: Candlewicks,) the standardized thickness of candle wicks.
 
 ## I hope you’ve enjoyed this pebble
 

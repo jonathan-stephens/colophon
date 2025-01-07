@@ -10,6 +10,26 @@ Dek: How do I consistently practice when the catalysing rituals don't occur?
 
 ----
 
+Date: 2026-08-29
+
+----
+
+Time: 15:36:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
 Text:
 
 Saturday was the first day I missed this daily writing practice.
@@ -22,9 +42,8 @@ I want to honor weekends, and those times of rest, but I lose my ritual of writi
 
 Currently, this is the first thing I do when sitting down for the day, before focusing on my goal for the day. It’s the moment of quiet before starting, but: in a specific location, at a specific time, in a specific flow.
 
-[TO-DO]
-PHOTO: A photograph of a woman practicing calligraphy letters, with a wide assortment of knick knacks and utensils surrounding the paper she's writing on. There are champagne glasses filled with bubbly that has no more bubbles, water glasses for humans and pens, potato chips, ink pots, potatoes to stab with pens, and papers all around to practice.
-CAPTION: Shot at a calligraphy class, taught by (link: https://www.ohprettypaper.nl/ text: Oh Pretty Paper) in Amsterdam; April 2018
+(image: calligraphy.jpg)
+
 
 ## Consistency for consistency’s sake
 
@@ -76,31 +95,11 @@ Tags: Habit Building, Rituals, Writing, Purpose, Flow, Reading, Books
 
 ----
 
-Date: 2024-07-29
+Images: 
 
 ----
 
-Time: 15:36:00
-
-----
-
-Addresslocality: Raleigh
-
-----
-
-Addressregion: NC
-
-----
-
-Addresscountry: US
-
-----
-
-Images:
-
-----
-
-Documents:
+Documents: 
 
 ----
 

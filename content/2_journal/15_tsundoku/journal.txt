@@ -10,6 +10,26 @@ Dek: The beauty of untranslatable words and the joy of gifted books
 
 ----
 
+Date: 2024-07-24
+
+----
+
+Time: 00:45:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
 Text:
 
 I’m an avid collector, and a lot of my collections are connecting to writing & reading. Scaling from the smallest to the spacious—fonts, words, posters, books, and series. We’re around the 600+ count mark of our home-library; it continues to grow.
@@ -64,9 +84,7 @@ For readers, it’s a wonderful gift, contextualizing a leader’s context. Wher
 
 The second day of working this new company, there was a new book at my front door.
 
-[TO-ADD]
-- IMAGE: A photo of me holding the book Feel Good Productivity by Ali Abdaal in my hand, in front of a book shelf packed with piles of books. My left-hand wrist tattoo is visible, reading "be Kind" with a neurodiversity infinity symbol below it, custom with an ocean wave breaking from the top-left towards the center. The book shelf is filled with a broad selection of books and paraphernalia: topics of design, tech, ethics, branding, web development, graphic novels, CD's, linotype machine poster, and a plushy elephant in the bottom right.
-- CAPTION: A photo of me holding the book Feel Good Productivity by Ali Abdaal in my hand, in front of a book shelf, stacked with piles of books.
+(image: feel-good-productivity.jpg)
 
 The book shelf is filled with a broad selection of books and paraphernalia: topics of design, tech, ethics, branding, web development, graphic novels, CD's, linotype machine poster, and a plushy elephant in the bottom right.
 
@@ -84,31 +102,11 @@ Tags: Books, Reading, Gifts, Tsundoku, Words, Definitions
 
 ----
 
-Date: 2024-07-24
+Images: 
 
 ----
 
-Time: 00:45:00
-
-----
-
-Addresslocality: Raleigh
-
-----
-
-Addressregion: NC
-
-----
-
-Addresscountry: US
-
-----
-
-Images:
-
-----
-
-Documents:
+Documents: 
 
 ----
 

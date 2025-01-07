@@ -10,13 +10,31 @@ Dek: Honoring Disability Pride Month, a story of discovering my neurodivergence
 
 ----
 
+Date: 2024-07-25
+
+----
+
+Time: 15:59:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
 Text:
 
 I've always been interested in stories: stories of magic; stories from people long passed; stories of how *now* just came to be.
 
-[TO-DO]
-- PHOTO: A photograph from Booking.com's Annual Meeting, January 2020. Colorful beams of light fill a concert-sized room full of people. The bottom-fifth frames the rest of the image with the tops of heads, looking towards the stage. On the stage shows a small person...but above his head is a screen that magnifies him for the rest of the crowd. From the outside in are four banners, hanging from the ceiling. Matching the rainbow of lightbeams, the banners are decorated with the rainbow's visual-light spectrum. Each has various Booking.com logos, announcing the Travel Proud program, "helping to make travel more inclusive for LGBTQ+ travelers."
-- CAPTION: Photograph from Booking.com’s Annual Meeting from January 2020
+(image: bam-2020.jpg)
 
 In my life and career, I've grown by finding routes & strategies to leverage my strengths while filling gaps where I falter. I've learned to recognize my emotions, listening to address them. I've developed strategies to help with my prioritisation, using calendars, and planning ahead.
 
@@ -98,31 +116,11 @@ Tags: Naming, Story, Discovery, Weird, ADHD, Late Diagnosis, Late Realization, N
 
 ----
 
-Date: 2024-07-25
+Images: 
 
 ----
 
-Time: 15:59:00
-
-----
-
-Addresslocality: Raleigh
-
-----
-
-Addressregion: NC
-
-----
-
-Addresscountry: US
-
-----
-
-Images:
-
-----
-
-Documents:
+Documents: 
 
 ----
 

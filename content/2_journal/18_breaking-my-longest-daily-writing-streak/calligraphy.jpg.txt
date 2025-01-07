@@ -1,0 +1,57 @@
+Alt: A photograph of a woman practicing calligraphy letters, with a wide assortment of knick knacks and utensils surrounding the paper she's writing on. There are champagne glasses filled with bubbly that has no more bubbles, water glasses for humans and pens, potato chips, ink pots, potatoes to stab with pens, and papers all around to practice.
+
+----
+
+Caption: Shot at a calligraphy class, taught by (link: https://www.ohprettypaper.nl/ text: Oh Pretty Paper)
+
+----
+
+Creator: 
+
+----
+
+Link: 
+
+----
+
+Addresslocality: Amsterdam
+
+----
+
+Addresscountry: Netherlands
+
+----
+
+Date: 2018-04-05
+
+----
+
+Keywords: Calligraphy, Photo
+
+----
+
+Source: 
+
+----
+
+Location: Amsterdam, Netherlands
+
+----
+
+Sort: 1
+
+----
+
+Uuid: LomWZjVgsy0YDZkJ
+
+----
+
+Template: blocks/image
+
+----
+
+Focus: 60.3% 47.1%
+
+----
+
+Year: 2018

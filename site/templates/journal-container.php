@@ -7,12 +7,12 @@
 <div class="wrapper">
 <?php foreach($page->children()->listed()->flip() as $article): ?>
 
-  <article class="cluster">
+  <article class="h-entry">
     <a href="<?= $article->url() ?>">
-      <box-l>
-          <h2 class="hed"><?= $article->hed()->html() ?></h2>
+      <box-l class="e-content">
+          <time class="dt-published" datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
+          <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>
           <p class="dek"><?= $article->dek()->html() ?></p>
-          <time datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
       </box-l>
     </a>
   </article>

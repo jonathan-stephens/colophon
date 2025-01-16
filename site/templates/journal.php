@@ -9,16 +9,15 @@
 
 
     <div class="e-content prose" itemprop="articleBody">
-      <?= $page->text()->kirbytext() ?>
+      <?= $page->text()->footnotes() ?>
     </div>
+
+
 
     <footer class="meta">
       <?php snippet('/components/tags', ['reference' => $page]) ?>
     </footer>
 
   </article>
-
-
-
 
 <?php snippet('footer') ?>

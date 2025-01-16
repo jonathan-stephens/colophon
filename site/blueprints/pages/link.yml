@@ -2,6 +2,12 @@ title: Link
 preset: page
 num: date
 icon: link
+sorting: zero                   # This sets zero-based numbering
+reference: sorting             # This references the automatic sorting
+options:
+  changeSlug: false            # Prevents slug modification
+  changeTemplate: false        # Prevents template changes
+  delete: true                 # Allows deletion
 
 fields:
   metadata:
@@ -18,19 +24,6 @@ fields:
         type: time
         width: 1/2
         default: now
-      addressLocality:
-        label: City
-        type: text
-        width: 1/3
-      addressRegion:
-        label: State or Region
-        type: text
-        width: 1/3
-      addressCountry:
-        label: Country
-        type: text
-        width: 1/3
-
   website:
     label: URL
     type: url
@@ -38,7 +31,7 @@ fields:
     width: 1/2
   tld:
     label: Top Level Domain
-    type: url
+    type: text
     required: true
     width: 1/2
 

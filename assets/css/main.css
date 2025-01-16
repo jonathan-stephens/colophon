@@ -364,12 +364,11 @@ main {
 
 html[data-theme=dark] body {
   background: url("/assets/png/stardust.png") repeat, var(--background-primary);
-  background-size: 25%;
   background-attachment: fixed;
 }
 
 :root {
-  --gutter: var(--flow-5);
+  --gutter: var(--rhythm-moderato);
   --icon-color-primary: inherit;
   --icon-color-secondary: currentColor;
 }
@@ -385,7 +384,7 @@ html[data-theme=dark] body {
 .cluster {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space, var(--flow-5));
+  gap: var(--space, var(--rhythm-moderato));
   justify-content: flex-start;
   align-items: center;
 }
@@ -401,12 +400,12 @@ stack-l {
 }
 
 stack-l > * + * {
-  margin-block-start: var(--flow-5);
+  margin-block-start: var(--rhythm-moderato);
 }
 
 box-l {
   display: block;
-  padding: var(--flow-5);
+  padding: var(--rhythm-moderato);
   border-width: var(--border-thin);
   /* ↓ For high contrast mode */
   outline: var(--border-thin) solid transparent;
@@ -691,10 +690,6 @@ article > .body {
   margin-block-start: var(--flow-9);
 }
 
-.e-content {
-  padding: var(--rhythm-moderato) 0;
-}
-
 :root {
   color-scheme: light;
   --background-primary: var(--palette-ash-05);
@@ -744,6 +739,9 @@ html[data-theme=dark] {
   padding: 0;
   --space: 0;
   max-inline-size: none;
+}
+.breadcrumb li {
+  padding-block: var(--rhythm-vivace);
 }
 .breadcrumb a {
   text-decoration: none;
@@ -933,7 +931,7 @@ html[data-theme=dark] {
   fill: var(--color-distinct);
 }
 
-.journal .tags, .links .tags {
+.journal .tags {
   justify-content: flex-end;
 }
 
@@ -1036,8 +1034,10 @@ body > footer .final-info a:active {
 }
 
 html[data-theme=dark] body > footer {
+  mix-blend-mode: lighten;
   background: url("/assets/png/stardust.png") repeat, var(--background-secondary);
-  background-size: 75%;
+  background-size: 50%;
+  box-shadow: var(--rhythm-presto) var(--rhythm-allegro) var(--rhythm-andante) var(--rhythm-moderato) var(--background-secondary);
 }
 
 .last-updated .h-card {
@@ -1063,8 +1063,33 @@ footer .h-entry, footer .h-card {
 .journal article a {
   text-decoration: none;
 }
-.journal article a:hover h2, .journal article a:hover p, .journal article a:hover time {
+.journal article a:hover h2, .journal article a:hover p, .journal article a:hover time, .journal article a:active h2, .journal article a:active p, .journal article a:active time {
   color: var(--link-hover);
+}
+
+.journal article {
+  --measure: 80ch;
+}
+.journal article:hover time, .journal article:active time {
+  border-top: var(--border-fine) dashed var(--border-color-emphasis);
+  border-bottom: var(--border-fine) dashed var(--border-color-emphasis);
+}
+.journal article time {
+  display: block;
+  padding-block: var(--rhythm-vivace);
+  margin-block-end: var(--rhythm-vivace);
+  border-top: var(--border-fine) dashed var(--border-color-distinct);
+  border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+}
+
+.links article {
+  --measure: 80ch;
+}
+.links article .meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gutter);
+  align-items: baseline;
 }
 
 article header {
@@ -1104,8 +1129,8 @@ article footer {
   justify-content: flex-end;
   align-items: baseline;
   color: var(--color-nuance);
-  border-bottom: var(--border-fine) dashed var(--color-quiet);
-  border-top: var(--border-fine) solid var(--color-quiet);
+  border-bottom: var(--border-fine) solid var(--color-quiet);
+  border-top: var(--border-fine) dashed var(--color-quiet);
   padding: var(--rhythm-allegro) 0;
   margin-top: var(--rhythm-andante);
 }

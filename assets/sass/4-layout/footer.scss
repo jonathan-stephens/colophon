@@ -58,10 +58,16 @@ body > footer{
 }
 
 html[data-theme='dark'] body > footer{
+  mix-blend-mode: lighten;
   background:url('/assets/png/stardust.png') repeat, var(--background-secondary);
-  background-size:75%;
+  background-size:50%;
+  box-shadow:
+    var(--rhythm-presto)
+    var(--rhythm-allegro)
+    var(--rhythm-andante)
+    var(--rhythm-moderato)
+    var(--background-secondary);
 }
-
 
 .last-updated .h-card{
   margin:0;

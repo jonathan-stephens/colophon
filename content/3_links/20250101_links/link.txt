@@ -10,6 +10,22 @@ Time: 11:50:00
 
 ----
 
+Website: https://adactio.com/links
+
+----
+
+Tld: adactio.com
+
+----
+
+Text: Initial inspiration to start collecting links in a single repo on my website. Been wanting to have a public place to collect, curate, and share. Will eventually turn into an RSS feed too.
+
+----
+
+Tags: Inspiration, Links, Habit Building, Sharing, Curating, Cataloging
+
+----
+
 Addresslocality: Premia de Mar
 
 ----
@@ -19,18 +35,6 @@ Addressregion: Barcelona
 ----
 
 Addresscountry: Spain
-
-----
-
-Website: https://adactio.com/links
-
-----
-
-Text: Initial inspiration to start collecting links in a single repo on my website. Been wanting to have a public place to collect, curate, and share. Will eventually turn into an RSS feed too.
-
-----
-
-Tags: Inspiration, Links, Habit Building, Sharing, Curating, Cataloging
 
 ----
 

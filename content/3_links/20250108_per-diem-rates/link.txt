@@ -1,0 +1,29 @@
+Title: Per diem rates
+
+----
+
+Date: 2025-01-08
+
+----
+
+Time: 00:35:00
+
+----
+
+Website: https://www.gsa.gov/travel/plan-book/per-diem-rates
+
+----
+
+Tld: gsa.gov
+
+----
+
+Text: For creating per diem rates in the United States for business travel, this is a nice starting point to reference when coming up with amount to specify.
+
+----
+
+Tags: Rates, Per diem, United States, Consulting, Travel
+
+----
+
+Uuid: 8BbROv9j3hQaboMq

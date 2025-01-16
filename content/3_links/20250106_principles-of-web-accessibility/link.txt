@@ -1,0 +1,42 @@
+Title: Principles of Web Accessibility
+
+----
+
+Date: 2025-01-06
+
+----
+
+Time: 12:30:00
+
+----
+
+Website: https://github.com/Heydon/principles-of-web-accessibility
+
+----
+
+Tld: github.com/Heydon
+
+----
+
+Text:
+
+- Perfection is the enemy
+- By default or death
+- Parity is paramount
+- Design for implementation
+- Structure first
+- Use your words
+- Tools are not identities
+- Less is less
+- Get paid
+- Fishing, not fish
+- No points for performance
+- Let evil rot
+
+----
+
+Tags: Accessibility, Principles, Web Development, Design, Process, Defaults, Front End Development
+
+----
+
+Uuid: hvJdlHWlJJ59ko4x

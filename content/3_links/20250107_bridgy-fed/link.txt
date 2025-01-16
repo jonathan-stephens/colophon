@@ -1,0 +1,33 @@
+Title: Bridgy Fed
+
+----
+
+Date: 2025-01-07
+
+----
+
+Time: 12:30:00
+
+----
+
+Website: https://fed.brid.gy/docs
+
+----
+
+Tld: fed.brid.gy
+
+----
+
+Text:
+
+> Bridgy Fed is a decentralized social network bridge. It connects the fediverse, the web, and Bluesky. If you're on one of these networks, you can use Bridgy Fed to follow people on other networks, see their posts, and reply and like and repost them. Likewise, they'll be able to see you and your posts too.
+
+This looks like it'll be useful in POSSE'ing the site...and to work into webmentions and all that fun stuff.
+
+----
+
+Tags: IndieWeb, POSSE, Web Development, Front End Development
+
+----
+
+Uuid: osy3OkN6ujSJb4sw

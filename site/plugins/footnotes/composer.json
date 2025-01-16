@@ -1,0 +1,20 @@
+{
+    "name": "sylvainjule/footnotes",
+    "description": "Footnotes plugin for Kirby 3 and 4",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "version": "2.0.0",
+    "authors": [
+        {
+            "name": "Sylvain Julé",
+            "email": "contact@sylvain-jule.fr"
+        }
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    },
+    "extra": {
+        "installer-name": "footnotes"
+    },
+    "minimum-stability": "beta"
+}

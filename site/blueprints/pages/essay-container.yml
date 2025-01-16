@@ -9,17 +9,17 @@ options:
 
 tabs:
   entries:
-    label: Entries
+    label: Essays
     sections:
       drafts:
-        headline: Draft Entries
+        headline: Draft Essays
         type: pages
         status: draft
         templates: [essay]
         sortBy: date desc
 
       published:
-        headline: Published Entries
+        headline: Published Essays
         type: pages
         status: published
         templates: [essay]

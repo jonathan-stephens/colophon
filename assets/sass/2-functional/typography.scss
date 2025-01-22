@@ -132,6 +132,7 @@ p + h2, ul + h2{
   padding:var(--rhythm-andante) 0 0 0;
   font-size:var(--hed-tertiary);
   color:var(--color-emphasis);
+  line-height:var(--leading-snug);
 }
 
 h3 + p{}

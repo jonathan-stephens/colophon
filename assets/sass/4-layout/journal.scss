@@ -9,18 +9,54 @@
 .journal article{
   --measure: 80ch;
 
-  &:hover time, &:active time{
+  &:hover .meta, &:active .meta{
     border-top: var(--border-fine) dashed var(--border-color-emphasis);
     border-bottom: var(--border-fine) dashed var(--border-color-emphasis);
 
   }
-  time{
-    display: block;
+
+  .meta{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: var(--small);
     padding-block: var(--rhythm-vivace);
     margin-block-end: var(--rhythm-vivace);
-
     border-top: var(--border-fine) dashed var(--border-color-distinct);
     border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+  }
+  .text-stats{
+    display: grid;
+    grid-template-columns: auto 1fr 1fr auto;
+    justify-self: flex-end;
+    font-size:var(--small);
+    color:var(--color-subtle);
+
+    dt,dd{
+      text-color:var(--color-subtle);
+    }
+    .word-count + dd{
+      margin: 0;
+      padding-left: var(--rhythm-vivace);
+    }
+
+    dd + .reading-time{
+      justify-self: right;
+      padding-right: var(--rhythm-vivace);
+    }
+
+    .reading-time + dd{
+      margin:0;
+    }
+
+  }
+
+  time{
+    display: block;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 5%;
+    text-transform: uppercase;
   }
 
 }

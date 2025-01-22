@@ -42,6 +42,16 @@
     margin-inline-start: var(--rhythm-presto);
   }
 
+
+.icon.arrow-right{
+  mask-image: url('/assets/svg/icons/arrow-right.svg');
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-size: var(--type-scale-20);
+  mask-position: center;
+  margin-inline-end: var(--rhythm-presto);
+  margin-inline-start: var(--rhythm-presto);
+}
   li:first-of-type{
     font-weight:var(--weight-bold);
   }

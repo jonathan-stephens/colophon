@@ -672,6 +672,7 @@ p + h2, ul + h2 {
   padding: var(--rhythm-andante) 0 0 0;
   font-size: var(--hed-tertiary);
   color: var(--color-emphasis);
+  line-height: var(--leading-snug);
 }
 
 p + p {
@@ -1070,16 +1071,36 @@ footer .h-entry, footer .h-card {
 .journal article {
   --measure: 80ch;
 }
-.journal article:hover time, .journal article:active time {
+.journal article:hover .meta, .journal article:active .meta {
   border-top: var(--border-fine) dashed var(--border-color-emphasis);
   border-bottom: var(--border-fine) dashed var(--border-color-emphasis);
 }
-.journal article time {
-  display: block;
+.journal article .meta {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--small);
   padding-block: var(--rhythm-vivace);
   margin-block-end: var(--rhythm-vivace);
   border-top: var(--border-fine) dashed var(--border-color-distinct);
   border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+}
+.journal article .text-stats {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  justify-self: flex-end;
+  font-size: var(--small);
+  color: var(--color-subtle);
+}
+.journal article .text-stats dt, .journal article .text-stats dd {
+  text-color: var(--color-subtle);
+}
+.journal article time {
+  display: block;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 5%;
+  text-transform: uppercase;
 }
 
 .links article {

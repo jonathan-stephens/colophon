@@ -1,0 +1,3 @@
+<?php
+
+$field->words(): int

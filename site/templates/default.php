@@ -17,6 +17,14 @@
       <div>
     </section>
   <?php else: ?>
-    <?= $page->text()->kirbytext() ?>
+    <article class="default wrapper">
+      <header>
+        <h1 class="p-name" itemprop="name headline"><?= $page->title() ?></h1>
+      </header>
+
+      <div class="e-content prose" itemprop="articleBody">
+        <?= $page->text()->footnotes() ?>
+      </div>
+    </article>
   <?php endif ?>
 <?php snippet('footer') ?>

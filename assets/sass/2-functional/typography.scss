@@ -92,7 +92,7 @@ article > .body{
   margin-block-start:var(--flow-space-9);
 }
 
-article h2{
+article.default h2{
   margin-block-start: var(--rhythm-andante);
   width: 100%;
   padding-block: var(--rhythm-moderato);

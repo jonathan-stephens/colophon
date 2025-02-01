@@ -645,7 +645,7 @@ article > .body {
   margin-block-start: var(--flow-space-9);
 }
 
-article h2 {
+article.default h2 {
   margin-block-start: var(--rhythm-andante);
   width: 100%;
   padding-block: var(--rhythm-moderato);
@@ -1036,6 +1036,14 @@ footer .h-entry, footer .h-card {
   color: var(--color-nuance);
 }
 
+.journal h2 {
+  font-size: var(--hed-tertiary);
+  line-height: var(--leading-fine);
+  color: var(--color-distinct);
+  font-weight: var(--weight-semibold);
+  text-wrap: balance;
+  padding-block-start: var(--rhythm-presto);
+}
 .journal article a {
   text-decoration: none;
 }
@@ -1076,6 +1084,9 @@ footer .h-entry, footer .h-card {
   font-weight: var(--weight-semibold);
   letter-spacing: 5%;
   text-transform: uppercase;
+}
+.journal article .dek {
+  color: var(--color-subtle);
 }
 
 .links article {

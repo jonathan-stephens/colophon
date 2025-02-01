@@ -1,8 +1,18 @@
-.journal article a{
-  text-decoration:none;
+.journal {
+  h2{
+    font-size:var(--hed-tertiary);
+    line-height:var(--leading-fine);
+    color:var(--color-distinct);
+    font-weight:var(--weight-semibold);
+    text-wrap:balance;
+    padding-block-start:var(--rhythm-presto);
+  }
+  article a{
+    text-decoration:none;
 
-  &:hover, &:active{
-    h2, p, time{color:var(--link-hover);}
+    &:hover, &:active{
+      h2, p, time{color:var(--link-hover);}
+    }
   }
 }
 
@@ -57,6 +67,10 @@
     font-weight: var(--weight-semibold);
     letter-spacing: 5%;
     text-transform: uppercase;
+  }
+
+  .dek{
+    color:var(--color-subtle);
   }
 
 }

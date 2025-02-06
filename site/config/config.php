@@ -5,6 +5,7 @@ return [
         'debug' => true,
         'mauricerenck.indieConnector.secret' => 'my-secret',
     ],
+    'date.timezone' => 'America/New_York',
     'jonathanstephens.template-handler' => [
         'cache' => true,
         'defaultTemplate' => 'default'

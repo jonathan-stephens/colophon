@@ -12,6 +12,20 @@ fields:
     type: text
     label: Subtitle
     max: 72
+  text:
+    label: Content
+    type: textarea
+    size: large
+    buttons:
+      - headlines
+      - bold
+      - italic
+      - link
+      - email
+      - file
+      - code
+      - ul
+      - ol
   date:
     label: Date
     type: date
@@ -37,21 +51,7 @@ fields:
   addressCountry:
     label: Country
     type: text
-    width: 1/3    
-  text:
-    label: Content
-    type: textarea
-    size: large
-    buttons:
-      - headlines
-      - bold
-      - italic
-      - link
-      - email
-      - file
-      - code
-      - ul
-      - ol
+    width: 1/3
   tags:
     label: Tags
     type: tags

@@ -924,6 +924,11 @@ html[data-theme=dark] {
   color: var(--background-primary);
 }
 
+figure {
+  margin: 0;
+  padding-block: var(--rhythm-moderato);
+}
+
 body > header {
   padding: var(--flow-10) 0 var(--flow-15) 0;
   container: site-header/inline-size;

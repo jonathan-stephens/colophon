@@ -926,7 +926,7 @@ html[data-theme=dark] {
 
 figure {
   margin: 0;
-  padding-block: var(--rhythm-moderato);
+  padding-block: var(--rhythm-andante);
 }
 
 body > header {

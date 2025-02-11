@@ -5,9 +5,10 @@
   --weight-bold:800;
 
   --leading-flat:1;
-  --leading-fine:1.15;
+  --leading-snug:1.125;
+  --leading-fine:1.25;
   --leading-standard:1.5;
-  --leading-loose:1.7;
+  --leading-loose:1.75;
 
   --hed-primary:clamp(var(--type-scale-42),1.107rem + 4.048vw,var(--type-scale-76));
   --hed-secondary:clamp(var(--type-scale-32),0.75rem + 3.333vw,var(--type-scale-60));
@@ -117,4 +118,10 @@ article.default{
   h1{
     padding-block-end: var(--rhythm-andante);
   }
+}
+
+.prose h2{
+  font-size: var(--hed-tertiary);
+  line-height: var(--leading-fine);
+  padding-block-start: var(--rhythm-andante);
 }

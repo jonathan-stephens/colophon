@@ -1,13 +1,9 @@
 figure{
   margin:0;
-  padding-block: var(--rhythm-andante);
+  padding-block: var(--rhythm-moderato);
   mix-blend-mode: luminosity;
 
   &:hover{
     mix-blend-mode:normal;
   }
-}
-
-.profile-photo-wed{
-  padding-block-start:var(--rhythm-moderato);
 }

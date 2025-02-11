@@ -7,3 +7,17 @@ figure{
     mix-blend-mode:normal;
   }
 }
+
+figcaption{
+  margin-block: var(--rhythm-moderato);
+  font-family: var(--font-mono);
+  font-size: var(--caption);
+  width: 75%;
+
+  &:before{
+    content:"↑";
+    font-size:var(--prose);
+    font-weight:bold;
+    padding-inline-end:var(--rhythm-presto);
+  }
+}

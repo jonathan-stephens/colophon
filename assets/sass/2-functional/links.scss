@@ -15,7 +15,7 @@ a, a:visited{
   text-decoration-color: var(--link-deco);
   text-underline-offset: var(--border-thin);
   text-decoration-thickness: var(--border-fine);
-
+/*
   &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']) {
     margin-inline-end: var(--rhythm-vivace);
     padding-inline-end: var(--rhythm-allegro);
@@ -34,7 +34,7 @@ a, a:visited{
     mask-position: bottom;
     background:var(--link-deco);
     }
-
+*/
 
   &:hover{
     color:var(--link-color-hover);
@@ -43,8 +43,9 @@ a, a:visited{
     span.with-icon svg{
       fill:var(--link-color-hover);
     }
+    /*
     &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']):after {background:var(--link-deco-hover);}
-
+    */
   }
 
   &:active{

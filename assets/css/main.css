@@ -927,6 +927,10 @@ html[data-theme=dark] {
 figure {
   margin: 0;
   padding-block: var(--rhythm-andante);
+  mix-blend-mode: luminosity;
+}
+figure:hover {
+  mix-blend-mode: normal;
 }
 
 body > header {

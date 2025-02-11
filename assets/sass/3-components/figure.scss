@@ -1,4 +1,9 @@
 figure{
   margin:0;
   padding-block: var(--rhythm-andante);
+  mix-blend-mode: luminosity;
+
+  &:hover{
+    mix-blend-mode:normal;
+  }
 }

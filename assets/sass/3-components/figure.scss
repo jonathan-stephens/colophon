@@ -7,3 +7,7 @@ figure{
     mix-blend-mode:normal;
   }
 }
+
+figure.profile-photo:first-of-type{
+  padding-block-start:var(--rhythm-moderato);
+}

@@ -598,7 +598,7 @@ h6 {
 
 h1, h2 {
   font-weight: var(--weight-bold);
-  line-height: var(--leading-flat);
+  line-height: var(--leading-fine);
 }
 
 h3, h4 {
@@ -622,6 +622,12 @@ p, li {
 
 time {
   font-family: var(--font-mono);
+}
+
+h1 + p {
+  color: var(--color-subtle);
+  font-size: var(--hed-tertiary);
+  padding-block-start: var(--rhythm-vivace);
 }
 
 h2 + p {
@@ -685,6 +691,9 @@ article.default h1 {
   --border-color-distinct: var(--palette-ash-40);
   --border-color-prominent: var(--palette-ash-60);
   --border-color-emphasis: var(--palette-ash-80);
+  background: url("/assets/png/paper-tile.png") repeat, var(--background-primary);
+  background-size: 15%;
+  background-attachment: fixed;
 }
 
 html[data-theme=dark] {
@@ -969,82 +978,6 @@ header .wrapper .color-mode-toggle {
     order: 1;
   }
 }
-body > footer {
-  background: url("/assets/png/rice-paper-2.png") repeat, var(--background-secondary);
-  margin: var(--flow-10) 0 0 0;
-  padding: var(--flow-10) var(--flow-3);
-  background-attachment: fixed;
-}
-body > footer .wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--rhythm-moderato);
-}
-body > footer .social-links {
-  max-inline-size: var(--measure);
-}
-body > footer .social-links ul[role=list] {
-  padding: 0;
-}
-body > footer .social-links li {
-  font-size: var(--small);
-}
-body > footer nav[role=navigation] ul {
-  list-style-type: none;
-  padding: 0;
-  display: inline-flex;
-  gap: var(--rhythm-moderato);
-}
-body > footer #theme-picker {
-  align-items: center;
-}
-body > footer .final-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--flow-6);
-  color: var(--color-nuance);
-}
-body > footer .final-info a {
-  text-decoration: none;
-  color: var(--color-nuance);
-}
-body > footer .final-info a:hover, body > footer .final-info a:hover span {
-  color: var(--color-distinct);
-  text-decoration: underline;
-  text-decoration-color: var(--color-subtle);
-}
-body > footer .final-info a:active {
-  color: var(--color-emphasis);
-}
-
-html[data-theme=dark] body > footer {
-  mix-blend-mode: lighten;
-  background: url("/assets/png/stardust.png") repeat, var(--background-secondary);
-  background-size: 50%;
-  box-shadow: var(--rhythm-presto) var(--rhythm-allegro) var(--rhythm-andante) var(--rhythm-moderato) var(--background-secondary);
-}
-
-.last-updated .h-card {
-  margin: 0;
-  color: var(--color-nuance);
-}
-.last-updated .h-card a, .last-updated .h-card a:visited, .last-updated .h-card .u-email {
-  color: var(--color-nuance);
-}
-.last-updated .h-card time {
-  font-family: var(--font-sans);
-}
-
-footer .h-entry, footer .h-card {
-  font-size: var(--caption);
-}
-
-.dt-updated span {
-  align-items: baseline;
-  color: var(--color-nuance);
-}
-
 .journal h2 {
   font-size: var(--hed-tertiary);
   line-height: var(--leading-fine);
@@ -1171,6 +1104,100 @@ article .written-url {
 }
 .day-group .meta {
   text-align: right;
+}
+
+.date-header {
+  font-size: var(--hed-quaternary);
+  padding-block-start: var(--rhythm-andante);
+  margin-block-start: var(--rhythm-andante);
+  border-top: var(--border-thin) solid var(--border-color-subtle);
+}
+
+.links box-l {
+  padding: 0;
+}
+.links box-l h3 {
+  margin-block-start: var(--rhythm-moderato);
+}
+
+.day-group:has(article:nth-of-type(2)) article {
+  padding-block: var(--rhythm-moderato);
+}
+
+body > footer {
+  background: url("/assets/png/rice-paper-2.png") repeat, var(--background-secondary);
+  margin: var(--flow-10) 0 0 0;
+  padding: var(--flow-10) var(--flow-3);
+  background-attachment: fixed;
+}
+body > footer .wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--rhythm-moderato);
+}
+body > footer .social-links {
+  max-inline-size: var(--measure);
+}
+body > footer .social-links ul[role=list] {
+  padding: 0;
+}
+body > footer .social-links li {
+  font-size: var(--small);
+}
+body > footer nav[role=navigation] ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-flex;
+  gap: var(--rhythm-moderato);
+}
+body > footer #theme-picker {
+  align-items: center;
+}
+body > footer .final-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--flow-6);
+  color: var(--color-nuance);
+}
+body > footer .final-info a {
+  text-decoration: none;
+  color: var(--color-nuance);
+}
+body > footer .final-info a:hover, body > footer .final-info a:hover span {
+  color: var(--color-distinct);
+  text-decoration: underline;
+  text-decoration-color: var(--color-subtle);
+}
+body > footer .final-info a:active {
+  color: var(--color-emphasis);
+}
+
+html[data-theme=dark] body > footer {
+  mix-blend-mode: lighten;
+  background: url("/assets/png/stardust.png") repeat, var(--background-secondary);
+  background-size: 50%;
+  box-shadow: var(--rhythm-presto) var(--rhythm-allegro) var(--rhythm-andante) var(--rhythm-moderato) var(--background-secondary);
+}
+
+.last-updated .h-card {
+  margin: 0;
+  color: var(--color-nuance);
+}
+.last-updated .h-card a, .last-updated .h-card a:visited, .last-updated .h-card .u-email {
+  color: var(--color-nuance);
+}
+.last-updated .h-card time {
+  font-family: var(--font-sans);
+}
+
+footer .h-entry, footer .h-card {
+  font-size: var(--caption);
+}
+
+.dt-updated span {
+  align-items: baseline;
+  color: var(--color-nuance);
 }
 
 .home h2 {

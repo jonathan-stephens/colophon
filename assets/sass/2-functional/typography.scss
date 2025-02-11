@@ -50,7 +50,7 @@ h6{
 
 h1,h2{
   font-weight:var(--weight-bold);
-  line-height:var(--leading-flat);
+  line-height:var(--leading-fine);
 }
 h3,h4{
   font-weight:var(--weight-medium);
@@ -74,6 +74,12 @@ time{
 }
 
 // COMBINATIONS
+h1 + p{
+  color: var(--color-subtle);
+  font-size: var(--hed-tertiary);
+  padding-block-start: var(--rhythm-vivace);
+}
+
 h2 + p{
   margin:0;
   padding-block-start:var(--rhythm-allegro);

@@ -49,6 +49,9 @@
 
 :root{
   @include theme-light;
+  background:url('/assets/png/paper-tile.png') repeat, var(--background-primary);
+  background-size:15%;
+  background-attachment:fixed;
 
 }
 

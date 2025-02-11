@@ -1,0 +1,19 @@
+.date-header{
+  font-size:var(--hed-quaternary);
+  padding-block-start:var(--rhythm-andante);
+  margin-block-start:var(--rhythm-andante);
+  border-top:var(--border-thin) solid var(--border-color-subtle);
+}
+.links box-l{
+  padding:0;
+
+  h3{
+    margin-block-start:var(--rhythm-moderato);
+  }
+}
+
+.day-group:has(article:nth-of-type(2)){
+  article{
+    padding-block:var(--rhythm-moderato);
+  }
+}

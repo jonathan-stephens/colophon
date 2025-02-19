@@ -85,6 +85,12 @@ h2 + p{
   margin:0;
   padding-block-start:var(--rhythm-allegro);
 }
+
+p + h4{
+  line-height: var(--leading-flat);
+  padding-block:var(--rhythm-allegro);
+  color:var(--color-prominent);
+}
 p+p{
   padding-block-start:var(--rhythm-moderato);
 }
@@ -93,6 +99,12 @@ p + h2{
 }
 p + time{
   color:var(--color-subtle);
+}
+
+p code{
+  font-size: var(--small);
+  background: var(--background-tertiary);
+  padding: 0 var(--rhythm-presto);
 }
 
 article > .body{

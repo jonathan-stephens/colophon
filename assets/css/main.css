@@ -349,7 +349,7 @@ footer {
 }
 
 body {
-  color: var(--color-distinct);
+  color: var(--color-prominent);
   font-family: var(--font-sans);
   transition: background-color 0.3s, color 0.3s;
   margin: 0;
@@ -494,7 +494,7 @@ a, a:visited {
   text-decoration: underline;
   text-decoration-color: var(--link-deco);
   text-underline-offset: var(--border-thin);
-  text-decoration-thickness: var(--border-fine);
+  text-decoration-thickness: var(--border-thin);
   /*
     &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']) {
       margin-inline-end: var(--rhythm-vivace);
@@ -617,6 +617,16 @@ p, li {
   font-size: var(--prose);
   font-weight: var(--weight-text);
   line-height: var(--leading-standard);
+}
+
+ol {
+  padding: 0;
+  max-width: 80%;
+}
+
+li {
+  padding-block: var(--rhythm-vivace);
+  text-wrap: balance;
 }
 
 .byline {

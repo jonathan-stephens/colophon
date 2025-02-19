@@ -66,6 +66,16 @@ p, li{
   line-height:var(--leading-standard);
 }
 
+ol{
+  padding:0;
+  max-width:80%;
+}
+
+li{
+  padding-block:var(--rhythm-vivace);
+  text-wrap: balance;
+}
+
 .byline{
   color:var(--color-prominent);
 }

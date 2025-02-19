@@ -1,5 +1,7 @@
 /* Footnote reference within text */
 sup.footnote {
+  font-family:var(--font-mono);
+  font-size:var(--caption);
 
 }
 /* Footnotes container */
@@ -7,10 +9,21 @@ sup.footnote {
 
 }
 /* Footnotes ordered list */
-.footnotes-list {}
+.footnotes-list {
+  padding:0;
+}
 
 /* Footnote entry */
-.footnotes-list li {}
+.footnotes-list li {
+  font-family:var(--font-mono);
+  font-size:var(--caption);
+
+}
 
 /* Footnote back link ↩ */
-.footnotereverse {}
+.footnotereverse {
+  font-size:var(--prose);
+  line-height:var(--leading-flat);
+  font-weight:bolder;
+  text-decoration:none;
+}

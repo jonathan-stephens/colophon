@@ -638,6 +638,12 @@ h2 + p {
   padding-block-start: var(--rhythm-allegro);
 }
 
+p + h4 {
+  line-height: var(--leading-flat);
+  padding-block: var(--rhythm-allegro);
+  color: var(--color-prominent);
+}
+
 p + p {
   padding-block-start: var(--rhythm-moderato);
 }
@@ -648,6 +654,12 @@ p + h2 {
 
 p + time {
   color: var(--color-subtle);
+}
+
+p code {
+  font-size: var(--small);
+  background: var(--background-tertiary);
+  padding: 0 var(--rhythm-presto);
 }
 
 article > .body {
@@ -849,6 +861,32 @@ html[data-theme=dark] {
 .color-mode-toggle label:focus-within {
   outline: 2px solid blue;
   outline-offset: 3px;
+}
+
+/* Footnote reference within text */
+sup.footnote {
+  font-family: var(--font-mono);
+  font-size: var(--caption);
+}
+
+/* Footnotes container */
+/* Footnotes ordered list */
+.footnotes-list {
+  padding: 0;
+}
+
+/* Footnote entry */
+.footnotes-list li {
+  font-family: var(--font-mono);
+  font-size: var(--caption);
+}
+
+/* Footnote back link ↩ */
+.footnotereverse {
+  font-size: var(--prose);
+  line-height: var(--leading-flat);
+  font-weight: bolder;
+  text-decoration: none;
 }
 
 /* https://piccalil.li/blog/how-i-build-a-button-component/ */

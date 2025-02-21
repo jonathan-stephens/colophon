@@ -34,7 +34,11 @@ fields:
     type: text
     required: true
     width: 1/2
-
+  tags:
+    label: Tags
+    type: tags
+    options: query
+    query: site.index.pluck("tags", ",", true)
 
   text:
     label: Description, quotes, etc.
@@ -50,9 +54,3 @@ fields:
       - code
       - ul
       - ol
-
-  tags:
-    label: Tags
-    type: tags
-    options: query
-    query: site.index.pluck("tags", ",", true)

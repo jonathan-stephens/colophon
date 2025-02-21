@@ -111,8 +111,14 @@ p + time{
   color:var(--color-subtle);
 }
 
-p code{
+p :not(pre)>code{
   font-size: var(--small);
+  display:inline-flex;
+  border-radius:--radii-square;
+  color:var(--color-prominent);
+  white-space:nowrap;
+  overflow-y:hidden;
+  overflow-x:hidden;
   background: var(--background-tertiary);
   padding: 0 var(--rhythm-presto);
 }

@@ -111,7 +111,7 @@ p + time{
   color:var(--color-subtle);
 }
 
-p :not(pre)>code{
+p :not(pre)>code, li code{
   font-size: var(--small);
   display:inline-flex;
   border-radius:--radii-square;
@@ -152,4 +152,16 @@ article.default{
   font-size: var(--hed-tertiary);
   line-height: var(--leading-fine);
   padding-block-start: var(--rhythm-andante);
+}
+
+blockquote{
+  background: var(--background-secondary);
+  padding-block: var(--rhythm-moderato);
+  padding-inline: var(--rhythm-andante);
+  border-inline-start: var(--border-medium) solid var(--background-tertiary-inverse);
+  margin: 0;
+}
+
+blockquote + p{
+  margin-block-start:var(--rhythm-moderato);
 }

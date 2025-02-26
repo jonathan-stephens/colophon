@@ -65,11 +65,10 @@ class LastUpdated {
         <div class="last-updated">
             <div class="h-entry">
                 <data
-                    class="dt-updated u-updated"
-                    value="{$isoDate}"
-                    itemprop="dateModified"
-                >
-                    Page last updated one {$timeOfDay}
+                  class="dt-updated u-updated"
+                  value="{$isoDate}"
+                  itemprop="dateModified">
+                    This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a> and was last updated one {$timeOfDay}
                     in {$season}, <span class="with-icon"><svg class="icon" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z"

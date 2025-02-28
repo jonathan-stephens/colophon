@@ -423,15 +423,11 @@ box-l {
 }
 
 .flow > * + * {
-  margin-top: var(--flow-space, 1em);
+  margin-block-start: var(--flow-space, 1em);
 }
 
 .flow + .flow {
   padding-right: 6rem;
-}
-
-.flow p:first-child {
-  margin-top: var(--rhythm-moderato);
 }
 
 /* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */

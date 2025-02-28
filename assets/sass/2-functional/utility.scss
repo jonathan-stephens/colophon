@@ -51,12 +51,11 @@ box-l {
   align-items: center;
 }
 
-.flow > *+*{margin-top:var(--flow-space,1em)}
+.flow > *+*{margin-block-start:var(--flow-space,1em)}
 
 .full-bleed{margin-left:calc(50% - 50vw);}
 
 .flow+.flow{padding-right:6rem}
-.flow p:first-child{margin-top:var(--rhythm-moderato);}
 
 /* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
 .visually-hidden:not(:focus):not(:active) {

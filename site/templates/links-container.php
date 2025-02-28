@@ -24,7 +24,7 @@
 
     <?php foreach($dayArticles as $article): ?>
       <article class="h-entry">
-        <box-l class="e-content">
+        <box-l class="e-content flow">
           <h3 class="p-name u-bookmark-of hed"><a href="<?= $article->website()->html() ?>"><?= $article->title()->html() ?> (<?= $article->tld()->html() ?>)</a></h3>
           <?= $article->text()->kirbytext() ?>
           <div class="meta flow">

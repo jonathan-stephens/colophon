@@ -695,10 +695,6 @@ strong {
   font-weight: var(--weight-semibold);
 }
 
-article.default h1 {
-  padding-block-end: var(--rhythm-andante);
-}
-
 .prose h2 {
   font-size: var(--hed-tertiary);
   line-height: var(--leading-fine);

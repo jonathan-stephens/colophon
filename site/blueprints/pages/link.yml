@@ -5,8 +5,8 @@ icon: link
 sorting: zero                   # This sets zero-based numbering
 reference: sorting             # This references the automatic sorting
 options:
-  changeSlug: false            # Prevents slug modification
-  changeTemplate: false        # Prevents template changes
+  changeSlug: true            # Prevents slug modification
+  changeTemplate: true        # Prevents template changes
   delete: true                 # Allows deletion
 
 fields:
@@ -24,6 +24,10 @@ fields:
         type: time
         width: 1/2
         default: now
+        notation: 24
+        step:
+            unit: minute
+            size: 1
   website:
     label: URL
     type: url
@@ -39,7 +43,6 @@ fields:
     type: tags
     options: query
     query: site.index.pluck("tags", ",", true)
-
   text:
     label: Description, quotes, etc.
     type: textarea

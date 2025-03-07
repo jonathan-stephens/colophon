@@ -2,49 +2,13 @@ Title: Jonathan Stephens
 
 ----
 
-Hed: 
-
-----
-
-Dek: 
-
-----
-
 Text:
 
-## Product Design, Team Development, Neuroinclusive Leadership
+## Product development, design systems, organizational design
 
 👋 Hello, I'm Jonathan—a human from Earth.
 
-I've spent over 18 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
-
-----
-
-Tags: About
-
-----
-
-Date: 2025-03-05
-
-----
-
-Tended: 
-
-----
-
-Time: 
-
-----
-
-Addresslocality: 
-
-----
-
-Addressregion: 
-
-----
-
-Addresscountry: 
+I've spent over 15 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
 
 ----
 

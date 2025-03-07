@@ -1,0 +1,33 @@
+Title: Greg Pak's Link Directory
+
+----
+
+Date: 2025-02-19
+
+----
+
+Time: 16:25:00
+
+----
+
+Website: https://gregpak.link/
+
+----
+
+Tld: gregpak.link
+
+----
+
+Text:
+
+A wonderful link directory, harkening back to the early days of the internet. This is what I want to grow this `/links/` into but am doing it this way, one step at a time. 
+
+I'm working from an emergent directory categorization standpoint. As I continue tagging all the links and posts, I'll look at the breakdown of all the things at a point in the future and re-vamp my `/links/` _or_ I'll get the jonathanstephens.link and populate accordingly.
+
+----
+
+Tags: Inspiration, Links, Directory, Purpose, Internet History, Open Web, Tools
+
+----
+
+Uuid: oS4NaO6wAuL1QaIz

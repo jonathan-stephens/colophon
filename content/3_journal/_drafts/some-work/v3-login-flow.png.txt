@@ -1,0 +1,25 @@
+Sort: 17
+
+----
+
+Alt: 
+
+----
+
+Caption: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Uuid: zaahmXQmLbbv4El7
+
+----
+
+Template: blocks/image

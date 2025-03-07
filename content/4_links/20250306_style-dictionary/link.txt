@@ -1,0 +1,35 @@
+Title: Style Dictionary
+
+----
+
+Date: 2025-03-06
+
+----
+
+Time: 16:10:00
+
+----
+
+Website: https://v4.styledictionary.com/getting-started/installation/
+
+----
+
+Tld: styledictionary.com
+
+----
+
+Tags: Web Development, CSS, Tokens, Front End Development, Design Systems, Tool, Web Design
+
+----
+
+Text:
+
+Very handy tool that I feel like I want to learn how to use and get going on. 
+
+> Style Dictionary is a build-system that runs in both NodeJS and browsers (natively), to parse and transform your design tokens to then export them to any platform: iOS, Android, CSS, JS, HTML, sketch files, style documentation, or anything you can think of.
+
+> It’s also forward-compatible with Design Token Community Group spec.
+
+----
+
+Uuid: 72OKhLSEBf7g6GGH

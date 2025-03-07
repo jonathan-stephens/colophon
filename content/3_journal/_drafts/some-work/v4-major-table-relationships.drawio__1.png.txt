@@ -1,0 +1,25 @@
+Sort: 24
+
+----
+
+Alt: 
+
+----
+
+Caption: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Uuid: k2Pjo5urhKVL6gSl
+
+----
+
+Template: blocks/image

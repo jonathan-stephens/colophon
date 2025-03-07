@@ -1,0 +1,45 @@
+Title: Home-Cooked Software
+
+----
+
+Date: 2025-02-14
+
+----
+
+Time: 01:45:00
+
+----
+
+Website: https://maggieappleton.com/home-cooked-software
+
+----
+
+Tld: maggieappleton.com
+
+----
+
+Tags: Web Development, IndieWeb, Small Tech, Accessibility, Craft, Reference, Home-cooked, Move Slow and Bake Things
+
+----
+
+Text:
+
+> Home-cooked apps, like meals, are apps you make for the people you know and love.
+
+> We’ve progressed enough since 2004 that someone can make one of these on their own.
+
+> They’re simple – they require some skills, but not tons.
+
+> They’re cheap or free to run – you’re not at the mercy of a corporate pricing strategy.
+
+> You control what happens to them – you control whether features are added or removed, and whether they’ll be shut down or sunset.
+
+- Private – won’t sell your data.
+- Serve your specific needs.
+- No financial pressure to monetize them or make a profit off them.
+- Safe – very little risk of nefarious actors or misaligned incentives.
+- Made with love and care.
+
+----
+
+Uuid: VjlcGalGzoiUItvk

@@ -1,0 +1,33 @@
+Title: Subheadings, subtitles, alternative titles, and taglines in HTML
+
+----
+
+Date: 2025-03-04
+
+----
+
+Time: 15:35:00
+
+----
+
+Website: https://www.tpgi.com/subheadings-subtitles-alternative-titles-and-taglines-in-html/
+
+----
+
+Tld: tpgi.com
+
+----
+
+Tags: HTML, Accessibility, Structure, Semantic
+
+----
+
+Text:
+
+> **Do not use `h1-h6` to mark up *Subheadings, subtitles, alternative titles and taglines* in `<hgroup>`, use `<p>` elements.**
+
+Whether the semantics of the `<hgroup>` and the specifics of child `<p>` elements are to be conveyed to users is a decision for the assistive technology developers in consultation with their users. What browsers can and should do is ensure that unambiguous semantics are exposed in the accessibility tree.
+
+----
+
+Uuid: CQkFnjLXNWJGQqv2

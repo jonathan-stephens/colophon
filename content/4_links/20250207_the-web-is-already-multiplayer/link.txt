@@ -1,0 +1,29 @@
+Title: The web is already multiplayer
+
+----
+
+Date: 2025-02-07
+
+----
+
+Time: 05:25:00
+
+----
+
+Website: https://macwright.com/2025/02/06/the-web-is-already-multiplayer
+
+----
+
+Tld: macwright.com
+
+----
+
+Text: > In fancy terms, it’s multivariate and extended over time. Frontends, backends, browsers, and users are all variable, unpredictable actors.
+
+----
+
+Tags: Web Development, Front End Development, Design, Accessibility, Internet
+
+----
+
+Uuid: N3GhzGoJANOIAI7S

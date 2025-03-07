@@ -1,0 +1,29 @@
+Title: Draw.io
+
+----
+
+Date: 2025-01-16
+
+----
+
+Time: 11:10:00
+
+----
+
+Website: https://app.diagrams.net/
+
+----
+
+Tld: diagrams.net
+
+----
+
+Text: A very useful, free, open sourced tool to draw diagrams. Much better and easier to use for creating flow charts and maps than Figma, has decent typography, and has some very nice grids that show how flows would be presented on a printed page (with ability to change sizes).
+
+----
+
+Tags: Tool, Flow Charts, Diagrams, Free
+
+----
+
+Uuid: EcdC2AiBvoDYOUPM

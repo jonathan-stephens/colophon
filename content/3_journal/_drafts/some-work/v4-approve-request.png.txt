@@ -1,0 +1,25 @@
+Sort: 21
+
+----
+
+Alt: 
+
+----
+
+Caption: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Uuid: EMUZopIXdgzQQBBo
+
+----
+
+Template: blocks/image

@@ -1,0 +1,25 @@
+Sort: 13
+
+----
+
+Alt: 
+
+----
+
+Caption: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Uuid: dlAFPlUo3sTMnf99
+
+----
+
+Template: blocks/image

@@ -1,0 +1,38 @@
+Title: Color Theory and Palette Resources and Tools
+
+----
+
+Date: 2025-02-18
+
+----
+
+Time: 18:45:00
+
+----
+
+Website: https://stephaniewalter.design/blog/color-theory-palette-resources-tools-for-designers/
+
+----
+
+Tld: stephaniewalter.design
+
+----
+
+Text:
+
+Fantastic roundup of _many_ resources and tools to work with color. Topics cover:
+- Understanding Color Theory
+- Building Color Palettes for Websites and UI Design
+- Accessibility and colors
+- Curated Ready-to-Use Palettes
+- Color Palette Generators
+- Dark and Light Color Scale Generators
+- Enhancing Data Visualization with Effective Color Choices
+
+----
+
+Tags: Resource, Tools, Reference, Color, Accessibility, Web Design, Design Systems, Open Web
+
+----
+
+Uuid: DsiF3e1Lb5lTW2fQ

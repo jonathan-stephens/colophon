@@ -1,0 +1,49 @@
+Title: Horizontal Leadership
+
+----
+
+Hed: {{ page.title }}
+
+----
+
+Dek: 
+
+----
+
+Text:
+
+Horizontal vs vertical leadership
+
+Was taught in horizontal Leadership style, specifically because vertical only works so  long. 
+ 
+Also, in a complex org of many different roles, 'vertical" doesn't necessarily cut it. 
+
+What is horizontal Leadership?
+
+----
+
+Date: 2025-02-09
+
+----
+
+Time: 21:50:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Tags: Leadership, Management, Team Development, Process
+
+----
+
+Uuid: ceLGDKvd92FbefxI

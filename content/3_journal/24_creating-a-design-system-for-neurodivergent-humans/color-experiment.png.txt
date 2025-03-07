@@ -1,0 +1,45 @@
+Alt: Color experiments that lived on my website, using a mix of CSS root- and non-root variables, color-mixing, the oklch color space, systemisation, and exploration. Choices of colors is rooted in CMYK of ink-based color-mixing and applying the concept to the web to generate a programmatic color system.
+
+----
+
+Caption: 
+
+----
+
+Creator: Jonathan Stephens
+
+----
+
+Link: 
+
+----
+
+Addresslocality: 
+
+----
+
+Addresscountry: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Sort: 2
+
+----
+
+Uuid: J7IK5ryh2riW8No7
+
+----
+
+Template: blocks/image
+
+----
+
+Focus: 47.5% 21.7%

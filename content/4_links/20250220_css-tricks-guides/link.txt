@@ -1,0 +1,29 @@
+Title: CSS Tricks Guides
+
+----
+
+Date: 2025-02-20
+
+----
+
+Time: 11:20:00
+
+----
+
+Website: https://css-tricks.com/guides/
+
+----
+
+Tld: css-tricks.com
+
+----
+
+Text: This has some of my always go-to reference guides for CSS. Specifically, I've used the one for `flex-box` and `grids` but just found this whole guides archive and found some newer ones that cover `containers` _and_ cascade layers! Excited to dig into the newer ones (and check out the grid one too...saw it's updated and should have the `subgrid` stuff included too. Fun reading for later days.
+
+----
+
+Tags: CSS, Reference, Guide, Front End Development, Web Design
+
+----
+
+Uuid: fhFUFFXJHF7sgRqe

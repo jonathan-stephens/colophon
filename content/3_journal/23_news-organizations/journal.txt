@@ -1,0 +1,65 @@
+Title: News Organizations
+
+----
+
+Hed: News Organizations
+
+----
+
+Dek: List of moral & ethical journalism
+
+----
+
+Text:
+
+In the environment of today, I'm wanting to keep a running list of ethical and moral news organizations. Eventually, this will be a bit like Greg Pak's link directory. These are some I regularly read from, and will update periodically.
+
+(image: screenshot_19-2-2025_9194_gregpak.link.jpeg)
+
+## News Orgs
+- **ProPublica**
+(link: https://www.propublica.org/ text: https://www.propublica.org/)
+- **TechDirt**
+(link: https://www.techdirt.com/ text: https://www.techdirt.com/)
+- **Wired, Politics**
+(link: https://www.wired.com/category/politics/ text: https://www.wired.com/)
+- **Teen Vogue, Politics**
+(link: https://www.teenvogue.com/news-politics text: https://www.teenvogue.com/news-politics)
+- **404 Media**
+(link: https://www.404media.co/ text: https://www.404media.co/)
+- **Rolling Stone, Politics**
+(link: https://www.rollingstone.com/politics/ text: https://www.rollingstone.com/politics/)
+- **Talking Points Memo**
+(link: https://talkingpointsmemo.com/ text: https://talkingpointsmemo.com/)
+
+----
+
+Tags: News, Reference, Ethics, Democracy, Reading, Resource
+
+----
+
+Date: 2025-02-09
+
+----
+
+Tended: 2025-03-05
+
+----
+
+Time: 09:00:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Uuid: LykiHq4qjnoa6pGW

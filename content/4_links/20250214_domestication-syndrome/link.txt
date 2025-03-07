@@ -1,0 +1,34 @@
+Title: Domestication Syndrome
+
+----
+
+Date: 2025-02-14
+
+----
+
+Time: 01:35:00
+
+----
+
+Website: https://www.bbc.com/future/article/20210805-the-animals-changed-by-proximity-to-humans
+
+----
+
+Tld: bbc.com
+
+----
+
+Text:
+
+> The most famous example of domestication syndrome comes from a 1959 experiment, in which Soviet biologists Dmitri Belyaev and Lyudmila Trut took a few dozen wild silver foxes from a Siberian fur farm and began selectively breeding the tamest animals.
+ 
+> Domestication syndrome might in fact be an accidental side effect of breeding tamer animals
+Remarkably, within just a few generations the scientists had bred docile and friendly foxes. It wasn't just their behaviour that had changed; the foxes looked different too. They had shorter muzzles, floppy ears, piebald spots and curly waggy tails.
+
+----
+
+Tags: Science, Reference, Animals, Change, Process, Evolution
+
+----
+
+Uuid: qXXtktma6tqluL2h

@@ -1,0 +1,29 @@
+Title: Doing my heading in
+
+----
+
+Date: 2025-03-04
+
+----
+
+Time: 15:30:00
+
+----
+
+Website: https://html5accessibility.com/stuff/2024/06/05/doing-my-heading-in/
+
+----
+
+Tld: html5accessibility.com
+
+----
+
+Tags: Accessibility, HTML, Interview, Internet History
+
+----
+
+Text: An interesting interview talking about the semantic-ness of HTML, how the `h1-h6` tags ended up getting where they were. Reminder to keep using `h1-h6` as described in the spec...but hopefully the spec will evolve for more accessible and reality-based semantic meaning.
+
+----
+
+Uuid: ZhsOwIWkDx7gINFR

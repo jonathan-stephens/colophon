@@ -1,0 +1,33 @@
+Title: Time.fyi
+
+----
+
+Date: 2025-01-16
+
+----
+
+Time: 11:20:00
+
+----
+
+Website: https://time.fyi/timezones
+
+----
+
+Tld: time.fyi
+
+----
+
+Text:
+
+This is one of my favorite new apps. It's a simple web app that does its one thing well: telling time and time zones. Free to use. My favorite thing is scrubbing time across 4-6 time-zones. It works well for me, giving great context of time.
+
+Also, I enjoy it's design and quite a few of the features.
+
+----
+
+Tags: Tool, Free, Time, Timezones
+
+----
+
+Uuid: xgbULzFDF86IrDGw

@@ -1,0 +1,35 @@
+Title: Situated Software
+
+----
+
+Date: 2025-02-13
+
+----
+
+Time: 01:05:00
+
+----
+
+Website: https://gwern.net/doc/technology/2004-03-30-shirky-situatedsoftware.html
+
+----
+
+Tld: gwern.net
+
+----
+
+Text:
+
+> Situated software is in the small pieces category, with the following additional characteristic -- it is designed for use by a specific social group, rather than for a generic set of "users".
+
+> This is software designed in and for a particular social situation or context. This way of making software is in contrast with what I'll call the Web School (the paradigm I learned to program in), where scalability, generality, and completeness were the key virtues.
+
+> Situated software isn't a technological strategy so much as an attitude about closeness of fit between software and its group of users, and a refusal to embrace scale, generality or completeness as unqualified virtues. Seen in this light, the obsession with personalization of Web School software is an apology for the obvious truth -- most web applications are impersonal by design, as they are built for a generic user.
+
+----
+
+Tags: Web Development, IndieWeb, Degrowth, Small Tech, Internet, Scale
+
+----
+
+Uuid: CzOvetk8QABBlUjr

@@ -1,0 +1,29 @@
+Title: Monica Powell
+
+----
+
+Date: 2025-03-05
+
+----
+
+Time: 15:20:00
+
+----
+
+Website: https://monica.dev/
+
+----
+
+Tld: monica.dev
+
+----
+
+Tags: Personal Websites, Web Development, Creative Coding
+
+----
+
+Text: Lovely "working in public" website. Especially ilking her use of creative coding and aproach to open source.
+
+----
+
+Uuid: x5EhXaEG7RaRLLkm

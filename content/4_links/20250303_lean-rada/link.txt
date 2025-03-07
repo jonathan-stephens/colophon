@@ -1,0 +1,29 @@
+Title: Lean Rada
+
+----
+
+Date: 2025-03-03
+
+----
+
+Time: 11:15:00
+
+----
+
+Website: https://leanrada.com/
+
+----
+
+Tld: leanrada.com
+
+----
+
+Tags: Personal Websites, IndieWeb, Web Development
+
+----
+
+Text: A lovely personal website. Love her (link: https://leanrada.com/guestbook/ text: `/guestbook`) idea, the (link: https://leanrada.com/misc/ text: `/misc` page), and just all around personal website.
+
+----
+
+Uuid: DRJHXBmsP9Xoam8P

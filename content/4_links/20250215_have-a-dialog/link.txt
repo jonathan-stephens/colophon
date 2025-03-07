@@ -1,0 +1,29 @@
+Title: Have a dialog
+
+----
+
+Date: 2025-02-15
+
+----
+
+Time: 22:45:00
+
+----
+
+Website: https://nerdy.dev/have-a-dialog
+
+----
+
+Tld: nerdy.dev
+
+----
+
+Text: Fantastic free resource on using pure HTML/CSS and `<dialog>` to create...well...dialogs. Just in a more friendly, native web way without Javascript.
+
+----
+
+Tags: Web Development, Front End Development, HTML, CSS, Resource
+
+----
+
+Uuid: KlRxz2x3rZxmqmAR

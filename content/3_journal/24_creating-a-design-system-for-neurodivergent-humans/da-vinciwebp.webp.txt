@@ -1,0 +1,45 @@
+Alt: Photograph of an enlarged page from Manuscript M (1497), Lenoardo da Vinci’s drawings for the plates of Pacioli’s book Divine Proportione. This is the solid dodecahedron—a polyhedron with 12 faces. Taken at Château du Clos Lucé, da Vinci’s final home, on October 8, 2021.
+
+----
+
+Caption: Photograph of an enlarged page from Manuscript M (1497), Lenoardo da Vinci’s drawings for the plates of Pacioli’s book Divine Proportione. This is the solid dodecahedron—a polyhedron with 12 faces. Taken at Château du Clos Lucé, da Vinci’s final home, on October 8, 2021.
+
+----
+
+Creator: Jonathan Stephens
+
+----
+
+Link: 
+
+----
+
+Addresslocality: Château du Clos Lucé
+
+----
+
+Addresscountry: France
+
+----
+
+Date: 2021-10-08
+
+----
+
+Keywords: Leonardo da Vinci
+
+----
+
+Sort: 1
+
+----
+
+Uuid: OL1SYdLc68dIi9xn
+
+----
+
+Template: blocks/image
+
+----
+
+Focus: 56.2% 53.8%

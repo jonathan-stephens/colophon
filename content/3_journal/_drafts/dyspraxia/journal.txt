@@ -1,0 +1,53 @@
+Title: Dyspraxia
+
+----
+
+Hed: {{ page.title }}
+
+----
+
+Dek: 
+
+----
+
+Text:
+
+Again, just talking about how this affects me. 
+
+- diagnosable clumsiness 
+- tripping over self
+- running into things
+- dropping things
+- etc.
+
+----
+
+Tags: 
+
+----
+
+Date: 2025-03-03
+
+----
+
+Tended: 
+
+----
+
+Time: 16:11:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Uuid: N1genWvl2V2s4eRx

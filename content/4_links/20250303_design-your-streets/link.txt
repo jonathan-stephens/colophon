@@ -1,0 +1,33 @@
+Title: Design your streets
+
+----
+
+Date: 2025-03-03
+
+----
+
+Time: 08:35:00
+
+----
+
+Website: https://streetmix.net
+
+----
+
+Tld: streetmix.net
+
+----
+
+Tags: Open Source, Small Tech, IndieWeb, Tool, Design, Resource, Reference, Move Slow and Bake Things
+
+----
+
+Text:
+
+Found while reading (link: https://bookshop.org/a/104898/9781735286501 text: A Civic Technologists' Practice Guide) by (link: https://cydharrell.wpcomstaging.com/ text: Cyd Harrell), the current Chief Digital Services Officer for San Francisco.
+
+A fantastic, open source tool that you can use to design streets, with sandard widths for trees, bike paths, sidewalks, traffic lane sizes, etc. It comes out of Code for America, and is available in tens of languages.
+
+----
+
+Uuid: c56a3sURV0GykS6m

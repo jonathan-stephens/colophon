@@ -1,0 +1,68 @@
+Title: Situational Awareness and Leadership
+
+----
+
+Hed: Situational Awareness & Leadership
+
+----
+
+Dek: 
+
+----
+
+Text:
+
+Basically, a lot of what my project now is is developing situational Awareness. The Equalizer show, S3E17, Robyn (Queen Latifah)—an ex-CIA agent turned consultant with a certain set of skills that helps people, where other's won't—talks about situational awareness while training her daughter. 
+
+Situational awareness is again an aspect of Situational Leadership that is so essential but never talked about. 
+
+It's not about diagnosing skills and putting people into boxes, it's about a framework that gives a shared reference point for situational awareness and direct communication. 
+
+Can even bring in The Culture Map by Erin Meyer in terms of how diverse teams work best together (communication wise). Understanding how to navigate cross-cultural communication strengthens & facilitates the communicative to more quickly bring up to speed on the situation, context, and thing. 
+
+It's through practiced, intentional routine to develop a habit of listening, noticing, reflecting, asking, listening, reflecting, noticing, asking, listening. 
+
+Then there's Design. 
+
+At it's root, it's a kind of intentional building and cultivation of situational awareness while leading groups of people through the process of creating something. People who speak languages wildly different than one's own—literally, metaphorically, experientially. 
+
+Practice of translation. 
+
+As well as (I have a book written by someone that was teaching remote working forever...need to find it).
+
+## Remote Work
+Working remotely is also bringing into the thought that Design is Documentation. 
+
+In Dan Mall's CSS' root variables on his website, you can see `--options` and `--decisions` clearly kId out. 
+
+In Brad Frost's Design is Documentation
+
+In Zeroheight guy's stuff.
+
+----
+
+Date: 2025-02-14
+
+----
+
+Time: 03:26:00
+
+----
+
+Addresslocality: 
+
+----
+
+Addressregion: 
+
+----
+
+Addresscountry: 
+
+----
+
+Tags: 
+
+----
+
+Uuid: EvJuQwwyZsTXCgSh

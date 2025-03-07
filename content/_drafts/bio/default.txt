@@ -1,0 +1,24 @@
+Title: Bio
+
+----
+
+Text:
+
+Copy something sorta like (link: https://laurakalbag.com/bio/ text: Laura Kalbag's `/bio` page)
+
+Third person version (he/they)
+First person version (I)
+
+short version
+long version
+
+plain text
+markdown
+html
+
+without links
+with links
+
+----
+
+Uuid: LWPjgKegPt1FeLxJ

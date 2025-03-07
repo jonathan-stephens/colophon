@@ -1,0 +1,39 @@
+Title: De-risking custom technology projects
+
+----
+
+Date: 2025-03-01
+
+----
+
+Time: 18:30:00
+
+----
+
+Website: https://agilebudgeting.org/
+
+----
+
+Tld: agilebudgeting.org
+
+----
+
+Tags: Tech, Consulting, Budgeting, Resource, Reference, Open Source, Civic Tech, Playbook
+
+----
+
+Text:
+
+> This playbook also gives you the tools you need to start tackling related problems like:
+- The need to use, maintain, and modernize legacy systems simultaneously
+- Lock-in from legacy commercial arrangements
+- Siloed organizations and risk-averse cultures
+- Long budget cycles that don’t always match modern software design practices
+- Security threats
+- Hiring, staffing, and other resource constraints
+
+> This is written specifically for procurement of custom software, but it’s important to recognize that commercial off-the-shelf software (COTS) is often custom and Software as a Service (SaaS) often requires custom code.
+
+----
+
+Uuid: aDfa4bwuGBRKRqwY

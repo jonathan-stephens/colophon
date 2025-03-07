@@ -1,0 +1,29 @@
+Title: Alex Russell
+
+----
+
+Date: 2025-03-05
+
+----
+
+Time: 22:55:00
+
+----
+
+Website: https://infrequently.org/
+
+----
+
+Tld: infrequently.org
+
+----
+
+Tags: Personal Websites, Accessibility, Standards, Web Development
+
+----
+
+Text: > Alex Russell on browsers, standards, and the process of progress.
+
+----
+
+Uuid: fqH5KRZVgo5O2SEi

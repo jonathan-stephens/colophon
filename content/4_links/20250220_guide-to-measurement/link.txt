@@ -1,0 +1,44 @@
+Title: The Sensemaker’s Guide to Measurement
+
+----
+
+Date: 2025-02-20
+
+----
+
+Time: 22:15:00
+
+----
+
+Website: https://abbycovert.com/writing/guide-to-measurement/
+
+----
+
+Tld: abbycovert.com
+
+----
+
+Text:
+
+A wonderfully thorough guide to measures. Beautifully accessible writing and gives direction in various different ways.
+
+> The truth is, measurement in sensemaking isn’t just about numbers in a spreadsheet or checkboxes on a task list. It’s about noticing when people start asking different questions, spotting the moment teams begin to share understanding, and yes, sometimes even counting things.
+
+- What is Measurement in Sensemaking?
+- Reasons to Measure
+- Common Measurement Use Cases
+- Types of Measurement
+- Approaches to Measurement
+- Tips for Getting Started
+- Measurement Hot Takes
+- Answering the Tough Questions
+- Avoiding the Common Pitfalls
+- The Path Forward
+
+----
+
+Tags: Measures, Sensemaking, Guide, Process, Reference, Design, Information Architecture
+
+----
+
+Uuid: EoqONnM8LjVMBGCR

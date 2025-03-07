@@ -1,0 +1,21 @@
+Title: some-work
+
+----
+
+Hed: {{ page.title }}
+
+----
+
+Dek: 
+
+----
+
+Text: 
+
+----
+
+Tags: 
+
+----
+
+Uuid: fyrX9mBanAWPUSCX

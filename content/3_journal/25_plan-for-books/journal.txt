@@ -1,0 +1,115 @@
+Title: Plan for /books
+
+----
+
+Hed: Planning for `/books`
+
+----
+
+Dek: Working through my site's URL design
+
+----
+
+Text:
+
+There are quite a few different things I want to have surrounding `/books`. 
+
+- I want it to be about the ones I'll write. 
+- I want it to be about the ones I read. 
+- I want it to be about the ones I recommend. 
+- I want to tell stories about them. 
+
+These are all valid, but difficult to encompass in a singular URL design that tends to represent one's own books. Especially in an author's context. 
+
+But,
+- what about a writer?
+- what about a reader?
+- what about a follower?
+
+Both may imply levels of authorship or hot takes, but don't determine such. One can be an author but not a reader. I find it highly unlikely, but also believe humans have a vast capacity for hubris & ignorance that may have one believe, "I won't read others for fear of influencing my style & beliefs." 
+
+Back to the point. 
+
+This page should evolve into something. Just starting out with a basic bit. 
+
+# Examples of potential posts
+- Mrs Frisby and the Rats of NIMH (a few)
+- Animorphs (many)
+- Craft-focused
+- Neurodiversity-focused
+- Leadership-focused
+- Climate-focused
+- Dune 
+- Hitchhikers Guide
+- Art of Gathering
+
+# Essentially...reviews. 
+Basically, right. That means reviews. But `/reviews` in a "my website URL design" connotes reviews of my work, etc. Not reviews I've written.
+
+Are stories reviews?
+Are sparks fire?
+
+I tend to read books, articles, posts, essays, and papers. More or less in that order. 
+
+But they're all essentially different. 
+
+# My site—my home.
+From Naz's article this week, I'm making this for me. In the same way of building a digital garden: these are thoughts, spaces, etc. that I'm cultivating for myself, and for: reference, posterity, academia, and writer. 
+
+## `/books` can be whatever I make of it. 
+And that's the point. 
+
+I like the idea of having it as a container for:
+- my own
+    - works in progress 
+    - published
+- recommendations
+- stories 
+- lists
+
+It's part of my documentation I build and reference. 
+
+## do `/essays` follow the same design?
+No. 
+
+Maybe?
+
+Perhaps. 
+
+That's my challenge. Designing a consistent thing from the onset versus a more emergent iterative evolution. 
+
+From a structured mindset, and many different template types, the practicality of such a diverse structure- & style-base, maintenance & upkeep—there's a far greater benefit to KISS it. Keep it simple, stupid. 
+
+Though I don't like the phrase as I age, it has a great acronym.
+
+----
+
+Tags: Books, Writing, Move Slow and Bake Things, Wired for Design, Purpose, Website, IndieWeb, Process, Small Tech, Slow
+
+----
+
+Date: 2025-02-27
+
+----
+
+Tended: 
+
+----
+
+Time: 03:09:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Uuid: FpBzD3lxYs4ABpZf

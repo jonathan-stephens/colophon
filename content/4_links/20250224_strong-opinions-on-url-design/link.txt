@@ -1,0 +1,29 @@
+Title: Strong opinions on URL design
+
+----
+
+Date: 2025-02-24
+
+----
+
+Time: 05:35:00
+
+----
+
+Website: https://vale.rocks/posts/strong-opinions-on-url-design
+
+----
+
+Tld: vale.rocks
+
+----
+
+Tags: Web Development, Web Design, Information Architecture
+
+----
+
+Text: I want/need to write something similar. I have strong opinions on this, and it's quite similar. URL's are one of those things that I find very few sites design with intention. Even ones that I'd assume would give more attention & care.
+
+----
+
+Uuid: iZg8VbSgXLIcdh6r

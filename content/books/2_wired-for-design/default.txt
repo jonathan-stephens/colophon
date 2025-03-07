@@ -1,0 +1,45 @@
+Title: Wired for Design
+
+----
+
+Hed: Wired for Design
+
+----
+
+Dek: A memoir about neurodivergence, design, and the internet
+
+----
+
+Text: 
+
+----
+
+Tags: Wired for Design, Book
+
+----
+
+Date: 2025-03-06
+
+----
+
+Tended: 
+
+----
+
+Time: 16:15:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Uuid: 31QaWkNI8CXXKn9G

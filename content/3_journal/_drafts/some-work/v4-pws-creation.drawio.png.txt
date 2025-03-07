@@ -1,0 +1,25 @@
+Sort: 26
+
+----
+
+Alt: 
+
+----
+
+Caption: 
+
+----
+
+Date: 
+
+----
+
+Keywords: 
+
+----
+
+Uuid: DkLA4zvpfW81zJCh
+
+----
+
+Template: blocks/image

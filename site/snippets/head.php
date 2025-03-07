@@ -9,6 +9,22 @@
     <?= $site->title()->esc() ?> | <?php if($page->isHomePage()): ?>Home<?php else: ?><?= $page->title()->esc() ?><?php endif ?>
 
   </title>
+  <meta name="description" content="Personal site & portfolio of Jonathan Stephens: designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
+
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content="https://jonathanstephens.us">
+  <meta property="og:title" content="Jonathan Stephens">
+  <meta property="og:description" content="Personal site & portfolio of Jonathan Stephens—designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
+  <meta property="og:image" content="<?= $site->url() ?>/assets/png/og-image.webp">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="jonathanstephens.us">
+  <meta property="twitter:url" content="https://jonathanstephens.us">
+  <meta name="twitter:title" content="Jonathan Stephens">
+  <meta name="twitter:description" content="Personal site & portfolio of Jonathan Stephens: designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
+  <meta name="twitter:image" content="<?= $site->url() ?>/assets/png/og-image.webp">
+
 
   <!-- webmention -->
   <link rel="pingback" href="https://webmention.io/jonathanstephens.us/xmlrpc" />

@@ -11,6 +11,7 @@ Icon
 !/media/index.html
 assets/sass/css/*
 content/*
+config.codekit3
 
 # Lock files
 # ---------------

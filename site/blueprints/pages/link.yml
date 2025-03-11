@@ -57,3 +57,14 @@ fields:
       - code
       - ul
       - ol
+      - abbr
+      - cite
+      - dfn
+      - ins
+      - mark
+      - q
+      - s
+      - samp
+      - smallcaps
+      - sub
+      - sup

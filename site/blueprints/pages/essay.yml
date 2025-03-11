@@ -22,9 +22,21 @@ fields:
       - italic
       - link
       - email
+      - file
       - code
       - ul
       - ol
+      - abbr
+      - cite
+      - dfn
+      - ins
+      - mark
+      - q
+      - s
+      - samp
+      - smallcaps
+      - sub
+      - sup
   tags:
     label: Tags
     type: tags

@@ -1,8 +1,9 @@
+name: 🚀 Deploy website on push
 on: 
   push:
     branches:
       - main
-name: 🚀 Deploy website on push
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -10,6 +11,11 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+    
+    - name: 🛠️ Set up FTP details
+      run: |
+        echo "FTP Server: ${{ secrets.ftp_server }}"
+        echo "FTP Username: ${{ secrets.ftp_username }}"
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5

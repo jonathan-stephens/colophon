@@ -8,8 +8,8 @@
         <a class="button" href="https://linkedin.com/in/elnatnal">
           Connect on LinkedIn
         </a>
-        <a class="button" href="https://jonathanstephens.substack.com/">
-          Subscribe on Substack
+        <a class="button" href="https://https://bsky.app/profile/jonathanstephens.us">
+          Say hi on Bluesky
         </a>
         <a class="button"  href="https://cal.com/jonathanstephens/book">
           Book time on my calendar

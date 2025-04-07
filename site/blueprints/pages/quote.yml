@@ -1,0 +1,23 @@
+title: Quote
+icon: quote
+
+fields:
+  quoteText:
+    width: 2/3
+    label: Quote
+    type: textarea
+    size: medium
+
+  pageNumber:
+    width: 1/3
+    label: Page Number
+    type: number
+    min: 1
+    width: 1/4
+
+  notes:
+    width: 1/1
+    label: Notes
+    type: textarea
+    size: medium
+    help: Your thoughts on this quote

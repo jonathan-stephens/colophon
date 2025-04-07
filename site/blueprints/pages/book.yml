@@ -1,0 +1,53 @@
+title: Book
+icon: book
+
+options:
+  changeSlug: true
+
+columns:
+  sections:
+    width: 2/3
+    fields:
+      hed:
+        label: Title
+        type: text
+        width: 1/1
+        required: true
+      dek:
+        label: Subtitle
+        type: text
+        width: 1/2
+      purchaseLink:
+        label: Affiliate Link
+        type: url
+        help: Add your Bookshop.org affiliate link here
+        width: 1/2
+      authors:
+        label: Author(s)
+        type: structure
+        width: 1/1
+        fields:
+          name:
+            label: Name
+            type: text
+          website:
+            label: Website
+            type: url
+      description:
+        label: Description
+        type: textarea
+        size: medium
+
+  sidebar:
+    width: 1/3
+    sections:
+      cover:
+        label: Book Cover
+        type: files
+        multiple: false
+        max: 1
+        layout: cards
+        query: page.images
+        uploads: image
+      pages:
+        template: quotes

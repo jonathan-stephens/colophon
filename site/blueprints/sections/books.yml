@@ -1,0 +1,40 @@
+type: pages
+headline: Books
+info: "{{ page.dek }}"
+parent: site.find("library")
+template: book
+empty: No books have been added yet
+sortBy: title asc
+image:
+  query: "page.images.first"
+  cover: true
+  ratio: 3/4
+layout: cards
+size: small
+limit: 20
+
+status: all
+
+details:
+  - width: 1/3
+    fields:
+      - width: 1/2
+        key: author
+        label: Author
+        type: info
+        text: "{{ page.author.toStructure.first.name }}"
+      - width: 1/2
+        key: quotes
+        label: Quotes
+        type: info
+        text: "{{ page.find('quotes').children.count }}"
+  - width: 2/3
+    fields:
+      - key: subtitle
+        label: Subtitle
+        type: info
+
+actions:
+  - edit
+  - duplicate
+  - delete

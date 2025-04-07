@@ -1,0 +1,28 @@
+title: Quotes
+icon: quote
+
+options:
+  changeSlug: true
+  changeStatus: true
+
+pages:
+  template: quote
+
+tabs:
+  books:
+    label: Draft Quotes
+    sections:
+      drafts:
+        headline: Draft
+        type: pages
+        status: draft
+        template: quote
+        sortBy: date desc
+
+      published:
+        headline: Published Quotes
+        type: pages
+        status: published
+        template: quote
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"

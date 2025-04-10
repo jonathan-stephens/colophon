@@ -21,13 +21,12 @@ class BookPage extends Page
         return implode(', ', $names);
     }
 
-    // Get cover image with fallback
     public function coverImage()
     {
-        return $this->cover()->toFile() ?? null;
+        // Simply get the first image file from the page
+        return $this->files()->filterBy('template', 'blocks/image')->first();
     }
-
-    // Get book purchase URL if set
+        // Get book purchase URL if set
     public function purchaseUrl()
     {
         return $this->purchaseLink()->isNotEmpty() ? $this->purchaseLink()->url() : null;

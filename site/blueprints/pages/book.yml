@@ -47,7 +47,7 @@ columns:
         multiple: false
         max: 1
         layout: cards
-        query: page.images
         uploads: image
+        template: blocks/image
       pages:
         template: quotes

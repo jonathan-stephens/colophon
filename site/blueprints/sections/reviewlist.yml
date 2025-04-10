@@ -1,0 +1,39 @@
+type: pages
+headline: Reviews
+info: "{{ page.lede }}"
+template: review
+empty: No reviews have been added yet
+sortBy: reviewDate desc
+layout: cards
+size: medium
+limit: 20
+image:
+  query: "page.headshot.toFile"
+  cover: false
+  ratio: 1/1
+
+status: all
+
+details:
+  - width: 1/2
+    fields:
+      - key: role
+        label: Role
+        type: info
+      - key: relationship
+        label: Relationship
+        type: info
+  - width: 1/2
+    fields:
+      - key: reviewDate
+        label: Review Date
+        type: info
+        text: "{{ page.reviewDate.toDate('Y-m-d') }}"
+      - key: tags
+        label: Tags
+        type: info
+
+actions:
+  - edit
+  - duplicate
+  - delete

@@ -9,6 +9,25 @@ return [
         'cache' => true,
         'defaultTemplate' => 'default'
     ],
+    'routes' => [
+      [
+        'pattern' => 'tags/(:any)',
+        'action'  => function ($tag) {
+          // Handle comma-separated tags
+          $tags = explode(',', urldecode($tag));
+          $tags = array_map('trim', $tags);
+
+          // Check if tags page exists
+          $tagsPage = page('tags');
+          if (!$tagsPage) {
+            return site()->errorPage();
+          }
+
+          // Pass the filtered tags to the template
+          return $tagsPage->render(['filterTags' => $tags]);
+        }
+      ]
+    ],
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
 

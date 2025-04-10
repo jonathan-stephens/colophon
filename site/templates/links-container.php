@@ -28,7 +28,9 @@
           <h3 class="p-name u-bookmark-of hed"><a href="<?= $article->website()->html() ?>"><?= $article->title()->html() ?> (<?= $article->tld()->html() ?>)</a></h3>
           <?= $article->text()->kirbytext() ?>
           <div class="meta flow">
-            <?php snippet('/components/tags', ['reference' => $article]) ?>
+            <?php if($article->tags()->isNotEmpty()): ?>
+              <?php snippet('/components/tags', ['reference' => $article]) ?>
+            <?php endif ?>
             <a rel="bookmark" class="u-url" href="<?= $article->url() ?>"><time class="dt-published" datetime="<?= $article->metadata()->date()->toDate('F j Y') ?><?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->time()->toDate('H:i') ?></time></a>
           </div>
         </box-l>

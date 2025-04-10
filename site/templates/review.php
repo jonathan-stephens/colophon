@@ -25,6 +25,15 @@
                 <?= $page->relationshipLabel() ?>
               </span>
             <?php endif ?>
+
+            <?php if($page->context()->isNotEmpty()): ?>
+              <span class="context">
+                <span class="sr-only">Context:</span>
+                <?= $page->context() ?>
+              </span>
+            <?php endif ?>
+
+
           </div>
         </div>
       </header>

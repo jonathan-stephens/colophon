@@ -17,27 +17,22 @@ columns:
             width: 1/3
             required: true
 
-          lede:
-            label: Lede
-            type: text
-            size: medium
-            width: 2/3
-
-          paraphrase:
-            label: Paraphrase
-            type: text
-            size: medium
-            width: 1/2
-
           role:
             label: Reviewer's Role
             type: text
-            width: 1/4
+            width: 1/3
+
+          reviewDate:
+            label: Date of Review
+            type: date
+            display: dd MMM YYYY
+            width: 1/3
+            default: today
 
           relationship:
             label: Relationship
             type: select
-            width: 1/4
+            width: 1/3
             options:
               mentee: Mentee
               mentor: Mentor
@@ -47,12 +42,45 @@ columns:
               client: Client
               other: Other
 
+          context:
+            label: Context of Relationship (Company, etc.)
+            type: tags
+            width: 1/3
+            options: query
+            query:
+              fetch: site.find("reviews").children.pluck("company", ",", true)
+              text: "{{ option }}"
+              value: "{{ option }}"
+            icon: building
+            max: 1
+
+          website:
+            label: Their website
+            type: url
+            width: 1/3
+
+          lede:
+            label: Lede
+            type: textarea
+            size: small
+            width: 1/1
+            buttons: false
+            counter: true
+
+          paraphrase:
+            label: Paraphrase
+            type: textarea
+            size: medium
+            width: 1/1
+            buttons: false
+            counter: true
+
           review:
             label: Full Review
             type: textarea
-            size: medium
+            size: large
             buttons: true
-
+            counter: true
 
   sidebar:
     width: 1/3
@@ -60,11 +88,6 @@ columns:
       sidebarContent:
         type: fields
         fields:
-          canonical_url:
-            label: Canonical URL (originally posted at)
-            type: url
-            width: 1/1
-
           headshot:
             label: Reviewer's Headshot
             type: files
@@ -73,17 +96,11 @@ columns:
             layout: cards
             uploads: image
             template: blocks/image
-          reviewDate:
-            label: Date of Review
-            type: date
-            display: dd MMM YYYY
-            width: 1/2
-            default: today
-          website:
-            label: Their website
-            type: url
-            width: 1/2
           tags:
             label: Tags
             type: tags
             required: false
+          canonical_url:
+            label: Canonical URL (originally posted at)
+            type: url
+            width: 1/1

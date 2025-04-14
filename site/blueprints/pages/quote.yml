@@ -1,23 +1,45 @@
 title: Quote
 icon: quote
 
-fields:
-  quoteText:
+columns:
+  left:
     width: 2/3
-    label: Quote
-    type: textarea
-    size: medium
+    fields:
+      quoteText:
+        width: 1/1
+        label: Quote
+        type: textarea
+        size: small
+      notes:
+        width: 1/1
+        label: Notes
+        type: textarea
+        size: medium
+        help: Your thoughts on this quote
 
-  pageNumber:
+  right:
     width: 1/3
-    label: Page Number
-    type: number
-    min: 1
-    width: 1/4
-
-  notes:
-    width: 1/1
-    label: Notes
-    type: textarea
-    size: medium
-    help: Your thoughts on this quote
+    fields:
+      pageNumber:
+        label: Page Number
+        type: number
+        min: 1
+        width: 1/4
+      date:
+        label: Planted
+        type: date
+        display: dd MMM YYYY
+        width: 1/3
+        default: today
+        required: true
+      tended:
+        label: Tended
+        type: date
+        display: dd MMM YYYY
+        width: 1/3
+      tags:
+        label: Tags
+        type: tags
+        options: query
+        query: site.index.pluck("tags", ",", true)
+        required: true

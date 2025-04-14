@@ -33,6 +33,12 @@ columns:
           website:
             label: Website
             type: url
+      tags:
+        label: Tags
+        type: tags
+        options: query
+        query: site.index.pluck("tags", ",", true)
+        required: true
       description:
         label: Description
         type: textarea

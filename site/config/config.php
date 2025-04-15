@@ -9,6 +9,13 @@ return [
         'cache' => true,
         'defaultTemplate' => 'default'
     ],
+    'ready' => function ($kirby) {
+        return [
+            'pechente.kirby-admin-bar' => [
+                'active' => $kirby->user() !== null
+            ]
+        ];
+    },
     'routes' => [
       [
         'pattern' => 'tags/(:any)',

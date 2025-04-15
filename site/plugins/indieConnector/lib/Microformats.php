@@ -6,7 +6,7 @@ use Kirby\Http\Url;
 
 class Microformats
 {
-    private $urlTypes = ['like-of', 'repost-of', 'bookmark-of', 'in-reply-to'];
+    private $urlTypes = ['like-of', 'repost-of', 'bookmark-of', 'in-reply-to', 'mention-of'];
     public function __construct(private $pageUrl = null, private $contentHtml = null)
     {
         $this->contentHtml = $contentHtml ?? option('mauricerenck.indieConnector.receive.useHtmlContent', false);
@@ -23,7 +23,7 @@ class Microformats
         $url_validation_regex = "/^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$/";
 
         foreach ($urls as $url) {
-            if(preg_match($url_validation_regex, $url) !== 1) {
+            if (preg_match($url_validation_regex, $url) !== 1) {
                 continue;
             }
 
@@ -52,7 +52,7 @@ class Microformats
         return false;
     }
 
-    public function getTypes(array $microformats): array
+    public function getTypes(array $microformats): array | null
     {
         if (empty($microformats['items'])) {
             return null;
@@ -98,6 +98,10 @@ class Microformats
                     $types[] = 'invite';
                 }
             }
+        }
+
+        if (count($types) === 0) {
+            return ['mention-of'];
         }
 
         return $types;
@@ -149,6 +153,7 @@ class Microformats
             'name' => null,
             'url' => null,
             'photo' => null,
+            'note' => null,
         ];
 
         foreach ($microformats['items'] as $item) {
@@ -220,6 +225,17 @@ class Microformats
         return !isset($photo[0]['value']) ? null : $photo[0]['value'];
     }
 
+    public function getAuthorNote(array $hCard): string|null
+    {
+        if (!isset($hCard['properties']['note'])) {
+            return null;
+        }
+
+        $note = $this->returnArraySave($hCard['properties']['note']);
+
+        return !isset($note[0]) ? null : $note[0];
+    }
+
     public function getAuthorFromHCard(array $hCard)
     {
         if (!isset($hCard['properties'])) {
@@ -229,11 +245,13 @@ class Microformats
         $name = $this->getAuthorName($hCard);
         $url = $this->getAuthorUrl($hCard);
         $photo = $this->getAuthorPhoto($hCard);
+        $note = $this->getAuthorNote($hCard);
 
         return [
             'name' => $name,
             'url' => $url,
             'photo' => $photo,
+            'note' => $note,
         ];
     }
 

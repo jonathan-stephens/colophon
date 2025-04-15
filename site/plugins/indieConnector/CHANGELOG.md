@@ -1,3 +1,114 @@
+## [2.7.2](https://github.com/mauricerenck/indieConnector/compare/v2.7.1...v2.7.2) (2025-04-12)
+
+
+### Bug Fixes
+
+* prevent timing issue when writing multiple posts to outbox [#18](https://github.com/mauricerenck/indieConnector/issues/18) ([a4991bc](https://github.com/mauricerenck/indieConnector/commit/a4991bcd166ab96033a0f9f128f54e66a4560fda)), closes [#19](https://github.com/mauricerenck/indieConnector/issues/19) [#20](https://github.com/mauricerenck/indieConnector/issues/20)
+
+## [2.7.1](https://github.com/mauricerenck/indieConnector/compare/v2.7.0...v2.7.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* autoload ([e66d406](https://github.com/mauricerenck/indieConnector/commit/e66d40643dc1ac6f18f84fce1edfffb109a03717))
+
+# [2.7.0](https://github.com/mauricerenck/indieConnector/compare/v2.6.0...v2.7.0) (2025-04-04)
+
+
+### Bug Fixes
+
+* transforms the field name to lowercase [#16](https://github.com/mauricerenck/indieConnector/issues/16) ([d837bdd](https://github.com/mauricerenck/indieConnector/commit/d837bdd381a952fbf50f298f1f6c2f2d838dfbd4))
+
+
+### Features
+
+* send webmentions via triggered hook ([9c0c7aa](https://github.com/mauricerenck/indieConnector/commit/9c0c7aade870cc4d0bea4ce7c2869645fab2207d))
+
+# [2.6.0](https://github.com/mauricerenck/indieConnector/compare/v2.5.0...v2.6.0) (2025-02-28)
+
+
+### Features
+
+* source view splitted into sources and users ([d609310](https://github.com/mauricerenck/indieConnector/commit/d609310e76f2c7b1ad32583370f215af6ee0c46e))
+
+# [2.5.0](https://github.com/mauricerenck/indieConnector/compare/v2.4.1...v2.5.0) (2025-01-24)
+
+
+### Bug Fixes
+
+* handle bluesky posting when preferedLanguage is empty ([2f63a4f](https://github.com/mauricerenck/indieConnector/commit/2f63a4fb4760f63a601c5360f14c1cda6371b5ad))
+
+
+### Features
+
+* kirby 5 compatibility ([ae1575c](https://github.com/mauricerenck/indieConnector/commit/ae1575c3a387e34705db2c790617179540da9aa8))
+
+## [2.4.1](https://github.com/mauricerenck/indieConnector/compare/v2.4.0...v2.4.1) (2024-12-29)
+
+
+### Bug Fixes
+
+* shorter toggle labels ([9af1d17](https://github.com/mauricerenck/indieConnector/commit/9af1d179ded8c9917941133eb73d1be26494022e))
+
+# [2.4.0](https://github.com/mauricerenck/indieConnector/compare/v2.3.4...v2.4.0) (2024-11-28)
+
+
+### Features
+
+* allow setting a language for posting to mastodon and bluesky ([be447c7](https://github.com/mauricerenck/indieConnector/commit/be447c71ad98e1b6e2e6bfd6195685f663a6e803))
+* set a prefered language for posting to mastodon or bluesky ([d86dac0](https://github.com/mauricerenck/indieConnector/commit/d86dac00f184937dfbe357a40b0b7934094779e5))
+
+## [2.3.4](https://github.com/mauricerenck/indieConnector/compare/v2.3.3...v2.3.4) (2024-11-28)
+
+
+### Bug Fixes
+
+* allow empty title ([88dd5e5](https://github.com/mauricerenck/indieConnector/commit/88dd5e5066edb099adc7676ee3ac57810f273d4d))
+
+## [2.3.3](https://github.com/mauricerenck/indieConnector/compare/v2.3.2...v2.3.3) (2024-11-28)
+
+
+### Bug Fixes
+
+* allow empty author ([0f0d636](https://github.com/mauricerenck/indieConnector/commit/0f0d636a47907bdb9826f513a553a8b1a30853f9))
+
+## [2.3.2](https://github.com/mauricerenck/indieConnector/compare/v2.3.1...v2.3.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* webmention stats - allow empty image ([9c232c4](https://github.com/mauricerenck/indieConnector/commit/9c232c46ee0ebbdee25d5d46a3db6f7de724a0b4))
+
+## [2.3.1](https://github.com/mauricerenck/indieConnector/compare/v2.3.0...v2.3.1) (2024-11-23)
+
+
+### Bug Fixes
+
+* revert to mention-of if no type was detected ([7dbb53a](https://github.com/mauricerenck/indieConnector/commit/7dbb53a8d33cc133f006ec702e4e9e96261ef2cf))
+* set target and source urls if not set in constructor ([d932d81](https://github.com/mauricerenck/indieConnector/commit/d932d81b424bffea18bba4c9a9062afffd78a1d2))
+
+# [2.3.0](https://github.com/mauricerenck/indieConnector/compare/v2.2.2...v2.3.0) (2024-11-23)
+
+
+### Features
+
+* process queue from panel ([0e5c460](https://github.com/mauricerenck/indieConnector/commit/0e5c460ff6e6cb0c2b4508e10d7e29e79f440e97))
+
+## [2.2.2](https://github.com/mauricerenck/indieConnector/compare/v2.2.1...v2.2.2) (2024-11-13)
+
+
+### Bug Fixes
+
+* shorten text when too long ([a9590aa](https://github.com/mauricerenck/indieConnector/commit/a9590aad45f122a7175eb669ee57a73810635965))
+
+## [2.2.1](https://github.com/mauricerenck/indieConnector/compare/v2.2.0...v2.2.1) (2024-11-11)
+
+
+### Bug Fixes
+
+* add note to author info ([d37148a](https://github.com/mauricerenck/indieConnector/commit/d37148abed02a55dc7a31d243d78cd2298786d9b))
+* dependency updates ([0db3960](https://github.com/mauricerenck/indieConnector/commit/0db3960b0e5082ce3b706fa409020e4e19573913)), closes [#15](https://github.com/mauricerenck/indieConnector/issues/15)
+
 # [2.2.0](https://github.com/mauricerenck/indieConnector/compare/v2.1.3...v2.2.0) (2024-09-26)
 
 

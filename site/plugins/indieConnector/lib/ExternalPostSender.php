@@ -9,6 +9,8 @@ class ExternalPostSender extends Sender
     public function __construct(
         public ?array $textfields = null,
         public ?string $imagefield = null,
+        public ?string $prefereLanguage = null,
+        public ?bool $usePermalinkUrl = null,
         private ?int $maxPostLength = null,
         public ?UrlChecks $urlChecks = null,
         public ?PageChecks $pageChecks = null
@@ -17,6 +19,8 @@ class ExternalPostSender extends Sender
 
         $this->textfields = $textfields ?? option('mauricerenck.indieConnector.post.textfields', ['description']);
         $this->imagefield = $imagefield ?? option('mauricerenck.indieConnector.post.imagefield', false);
+        $this->prefereLanguage = $prefereLanguage ?? option('mauricerenck.indieConnector.post.prefereLanguage', false);
+        $this->usePermalinkUrl = $usePermalinkUrl ?? option('mauricerenck.indieConnector.post.usePermalinkUrl', false);
         $this->maxPostLength = $maxPostLength ?? 300;
 
         $this->urlChecks = $urlChecks ?? new UrlChecks();
@@ -37,21 +41,37 @@ class ExternalPostSender extends Sender
         }
     }
 
-    public function getTextFieldContent($page, $trimTextPosition) {
-        if(is_array($this->textfields)) {
-            foreach($this->textfields as $field) {
-                if($page->$field()->exists() && $page->$field()->isNotEmpty()) {
-                    return $page->$field()->value();
+    public function getTextFieldContent($page, $trimTextPosition)
+    {
+        $pageOfLanguage = !$this->prefereLanguage ? null : $page->translation($this->prefereLanguage);
+        $content = !is_null($pageOfLanguage) ? $pageOfLanguage->content() : $page->content()->toArray();
+
+        if (is_array($this->textfields)) {
+            foreach ($this->textfields as $field) {
+                $lowercaseField = strtolower($field);
+                if (isset($content[$lowercaseField]) && !empty($content[$lowercaseField])) {
+                    return Str::short($content[$lowercaseField], $trimTextPosition);
                 }
             }
         }
 
         $field = $this->textfields;
-        if(!is_array($this->textfields) && $page->$field()->isNotEmpty()) {
-            return $page->$field()->value();
+        if (!is_array($this->textfields) && isset($content[$field]) && !empty($content[$field])) {
+            return Str::short($content[$field], $trimTextPosition);
         }
 
-        return Str::short($page->title(), $trimTextPosition);
+        return Str::short($content['title'], $trimTextPosition);
+    }
+
+    public function getPostUrl($page)
+    {
+        $url = $page->url($this->prefereLanguage);
+
+        if ($this->usePermalinkUrl) {
+            $url = $page->permalink();
+        }
+
+        return $url;
     }
 
     public function calculatePostTextLength(string $url)
@@ -60,8 +80,8 @@ class ExternalPostSender extends Sender
         return $this->maxPostLength - $urlLength - 2;
     }
 
-    public function updatePosts($url, $statusCode, $page, $target)
+    public function updatePosts($id, $url, $statusCode, $page, $target)
     {
-        return $this->updateExternalPosts($url, $statusCode, $target, $page);
+        return $this->updateExternalPosts($id, $url, $statusCode, $target, $page);
     }
 }

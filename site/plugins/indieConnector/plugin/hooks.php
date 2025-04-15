@@ -13,11 +13,23 @@ return [
         $webmentions->sendWebmentions($newPage);
 
         if (!$newPage->isDraft() && $oldPage->isDraft()) {
+
+            $postResults = [];
+
             $mastodonSender = new MastodonSender();
-            $mastodonSender->sendPost($newPage);
+            $mastodonPost = $mastodonSender->sendPost($newPage);
+            if ($mastodonPost !== false) {
+                $postResults[] = $mastodonPost;
+            }
 
             $blueskySender = new BlueskySender();
-            $blueskySender->sendPost($newPage);
+            $blueskyPost = $blueskySender->sendPost($newPage);
+
+            if ($blueskyPost !== false) {
+                $postResults[] = $blueskyPost;
+            }
+
+            $mastodonSender->updateExternalPosts($postResults, $newPage);
         }
     },
 
@@ -70,7 +82,6 @@ return [
     'indieConnector.webmention.received' => function ($webmention, $targetPage) {
         if (option('mauricerenck.indieConnector.stats.enabled', false)) {
             $stats = new WebmentionStats();
-            $receiver = new Receiver();
             $page = page($targetPage);
 
             $stats->trackMention(
@@ -81,6 +92,13 @@ return [
                 $webmention['author']['name'],
                 $webmention['title']
             );
+        }
+    },
+
+    'indieConnector.webmention.send' => function ($page, $targetUrl, $sourceUrl) {
+        if (option('mauricerenck.indieConnector.send.hook.enabled', false)) {
+            $webmentions = new WebmentionSender();
+            $webmentions->sendWebmentionFromHook($page, $targetUrl, $sourceUrl);
         }
     },
 ];

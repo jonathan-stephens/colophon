@@ -7,7 +7,7 @@ if (option('mauricerenck.indieConnector.stats.enabled', false) === false) {
 }
 
 return [
-    'webmentions' => function ($kirby) {
+    'webmentions' => function () {
         return [
             'label' => 'Webmentions',
             'icon' => 'live',
@@ -17,6 +17,11 @@ return [
                 [
                     'pattern' => ['webmentions', 'webmentions/(:any)/(:any)'],
                     'action' => function ($year = null, $month = null) {
+
+                        $queueHandler = new QueueHandler();
+                        $queuedItems = $queueHandler->getQueuedItems(limit: 0, includeFailed: true);
+                        $itemsInQueue = $queuedItems->count();
+
                         if (is_null($year) || is_null($month)) {
                             $timestamp = time();
                             $year = date('Y', $timestamp);
@@ -56,6 +61,7 @@ return [
                                     'targets' => [],
                                     'sources' => [],
                                     'sent' => [],
+                                    'itemsInQueue' => $itemsInQueue ?? 0
                                 ],
                             ];
                         }
@@ -63,6 +69,7 @@ return [
                         $summary = $stats->getSummaryByMonth($year, $month);
                         $targets = $stats->getTargets($year, $month);
                         $sources = $stats->getSourceHosts($year, $month);
+                        $authors = $stats->getSourceAuthors($year, $month);
                         $sent = $stats->getSentMentions($year, $month);
 
                         return [
@@ -78,12 +85,67 @@ return [
                                 'summary' => $summary,
                                 'targets' => $targets,
                                 'sources' => $sources,
+                                'authors' => $authors,
                                 'sent' => $sent,
+                                'itemsInQueue' => $itemsInQueue ?? 0
                             ],
                         ];
                     },
                 ],
+                [
+                    'pattern' => ['webmentions/queue'],
+                    'action' => function () {
+
+                        $queueHandler = new QueueHandler();
+                        $queuedItems = $queueHandler->getQueuedItems(limit: 0, includeFailed: true);
+                        $itemsInQueue = $queuedItems->count();
+
+                        return [
+                            'component' => 'k-webmentions-queue-view',
+                            'title' => 'Test',
+                            'props' => [
+                                'disabled' => !$queueHandler->queueEnabled(),
+                                'itemsInQueue' => $itemsInQueue ?? 0,
+                                'queuedItems' => $queuedItems->toArray(),
+                            ],
+                        ];
+                    }
+                ],
             ],
+            'dialogs' => [
+                'queue/delete/(:any)' => [
+                    'load' => function () {
+                        return [
+                            'component' => 'k-remove-dialog',
+                            'props' => [
+                                'text' => 'Do you really want to delete this item?'
+                            ]
+                        ];
+                    },
+                    'submit' => function (string $id) {
+                        $queueHandler = new QueueHandler();
+                        $result = $queueHandler->deleteQueueItem($id);
+
+                        return $result;
+                    }
+                ],
+                'queue/clean/(:any)' => [
+                    'load' => function (string $status) {
+                        return [
+                            'component' => 'k-remove-dialog',
+                            'props' => [
+                                'text' => 'This will delete all entries with the status <strong>' . $status . '</strong>. Do you really want to proceed?'
+                            ]
+                        ];
+                    },
+                    'submit' => function (string $status) {
+                        $queueHandler = new QueueHandler();
+                        $result = $queueHandler->cleanQueue($status);
+
+                        return $result;
+                    }
+                ],
+            ]
         ];
     },
 ];

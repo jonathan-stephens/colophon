@@ -67,8 +67,8 @@ class MastodonSender extends ExternalPostSender
         }
 
         try {
-            $pageUrl = $page->url();
-            $trimTextPosition = $this->calculatePostTextLength($page->url());
+            $pageUrl = $this->getPostUrl($page);
+            $trimTextPosition = $this->calculatePostTextLength($pageUrl);
 
             $message = $this->getTextFieldContent($page, $trimTextPosition);
             $message .= "\n" . $pageUrl;
@@ -84,6 +84,10 @@ class MastodonSender extends ExternalPostSender
                 $requestBody['language'] = $defaultLanguage->code();
             }
 
+            if ($this->prefereLanguage !== false) {
+                $requestBody['language'] = $this->prefereLanguage;
+            }
+
             if ($mediaId = $this->uploadImage($page)) {
                 $requestBody['media_ids'] = [$mediaId];
             }
@@ -97,9 +101,14 @@ class MastodonSender extends ExternalPostSender
             $result = $response->json();
 
             $url = $result['url'] ?? null;
-            $this->updatePosts($url, $response->code(), $page, 'mastodon');
+            $id = $result['id'] ?? null;
 
-            return true;
+            return [
+                'id' => $id,
+                'uri' => $url,
+                'status' => 200,
+                'target' => 'mastodon'
+            ];
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
             return false;
@@ -166,5 +175,4 @@ class MastodonSender extends ExternalPostSender
             return false;
         }
     }
-
 }

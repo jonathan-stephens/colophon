@@ -15,8 +15,15 @@ class WebmentionReceiver extends Receiver
 
     public function processWebmention($sourceUrl, $targetUrl)
     {
-        try {
+        if (is_null($this->sourceUrl)) {
+            $this->sourceUrl = $sourceUrl;
+        }
 
+        if (is_null($this->targetUrl)) {
+            $this->targetUrl = $targetUrl;
+        }
+
+        try {
             $microformats = $this->getDataFromSource($sourceUrl);
             $webmention = $this->getWebmentionData($microformats);
 
@@ -35,6 +42,14 @@ class WebmentionReceiver extends Receiver
             }
 
             $targetPage = $this->getPageFromUrl($targetUrl);
+
+            if (!$targetPage) {
+                return [
+                    'status' => 'error',
+                    'message' => 'no target page found for ' . $targetUrl,
+                ];
+            }
+
             $hookData = $this->splitWebmentionDataIntoHooks($webmention);
 
             foreach ($hookData as $data) {

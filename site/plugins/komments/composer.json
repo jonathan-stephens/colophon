@@ -1,6 +1,6 @@
 {
     "name": "mauricerenck/komments",
-    "version": "2.1.2",
+    "version": "3.1.0",
     "description": "A comment and webmention plugin for Kirby 3",
     "homepage": "https://github.com/mauricerenck/komments",
     "type": "kirby-plugin",
@@ -13,10 +13,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "mauricerenck\\Komments\\": "utils/"
+            "mauricerenck\\Komments\\": "lib/"
         },
         "classmap": [
-            "utils"
+            "lib"
         ]
     },
     "require-dev": {

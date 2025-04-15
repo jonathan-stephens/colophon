@@ -1,3 +1,79 @@
+# [3.1.0](https://github.com/mauricerenck/komments/compare/v3.0.4...v3.1.0) (2025-04-04)
+
+
+### Features
+
+* reply via webmention ([#74](https://github.com/mauricerenck/komments/issues/74)) ([4f634a0](https://github.com/mauricerenck/komments/commit/4f634a0bc1814db5472e2079b302766eb39cd85a))
+
+## [3.0.4](https://github.com/mauricerenck/komments/compare/v3.0.3...v3.0.4) (2025-04-04)
+
+
+### Bug Fixes
+
+* use hostname as author of webmentions when not author name present ([9655e20](https://github.com/mauricerenck/komments/commit/9655e2085e88c30075f6fc2107f0e7c1415a64b3))
+
+## [3.0.3](https://github.com/mauricerenck/komments/compare/v3.0.2...v3.0.3) (2025-03-26)
+
+
+### Bug Fixes
+
+* gravatar link is saved instead of the e-mail address ([#71](https://github.com/mauricerenck/komments/issues/71)) ([2a42356](https://github.com/mauricerenck/komments/commit/2a42356cc5991daf85ed3b71d3b71694b082a91f))
+
+## [3.0.2](https://github.com/mauricerenck/komments/compare/v3.0.1...v3.0.2) (2025-03-21)
+
+
+### Bug Fixes
+
+* use textare field to avoid html content in replis ([ba5188a](https://github.com/mauricerenck/komments/commit/ba5188a54f1f7c7544c3410696355f9c17dda078))
+
+## [3.0.1](https://github.com/mauricerenck/komments/compare/v3.0.0...v3.0.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* single language handling in form ([132050c](https://github.com/mauricerenck/komments/commit/132050c93ff343988427aafd69d66be422d4ff8c))
+
+# [3.0.0](https://github.com/mauricerenck/komments/compare/v2.1.2...v3.0.0) (2025-03-18)
+
+
+### Features
+
+* komments version 3 ([#69](https://github.com/mauricerenck/komments/issues/69)) ([c9553bc](https://github.com/mauricerenck/komments/commit/c9553bca7380ac54df5c8146fb51f1a6d17ef368))
+
+
+### BREAKING CHANGES
+
+* old comments have to be migrated
+
+* feat: SQLite storage
+
+* feat: new folder structure
+
+* feat: database migrations
+
+* feat: comments deep link via uuid
+
+* feat: new snippets for lists and responses
+* old snippets are deprecated, new snippets with different names and more condensed
+
+* feat: new panel view
+
+* feat: new comment moderation panel view
+
+* feat: reply from panel
+
+* feat: manage comments on page level
+
+* feat: show or hide webmentions in moderation view via field config or options
+
+* feat: updated comment form with less overhead
+
+* feat: new markdown inbox format
+
+* feat: akismet spam detection
+
+* feat: migration flow in panel
+
 ## [2.1.2](https://github.com/mauricerenck/komments/compare/v2.1.1...v2.1.2) (2024-09-02)
 
 

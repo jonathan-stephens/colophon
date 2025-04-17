@@ -32,10 +32,9 @@
   <link rel="micropub" href="https://jonathanstephens.us/micropub">
   <link rel="authorization_endpoint" href="https://indieauth.com/auth">
   <link href="https://github.com/jonathan-stephens" rel="me">
-
-
   <?php snippet('webmention-endpoint'); ?>
 
+<link rel="alternate" type="application/rss+xml" title="Links RSS Feed" href="<?= url('links/rss') ?>"/>
 
   <?= css([
     'assets/css/main.css',

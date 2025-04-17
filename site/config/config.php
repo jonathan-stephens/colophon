@@ -49,7 +49,7 @@ return [
                         $format = 'rss';
                     }
 
-                    return feed(fn() => page('links')->children()->listed()->flip(), [
+                    return feed(fn() => page('links')->children()->listed()->flip()->limit(20), [
                         'title' => 'My Links Feed',
                         'description' => 'A collection of interesting links I want to share',
                         'link' => 'links',

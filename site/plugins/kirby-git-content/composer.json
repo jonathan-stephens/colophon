@@ -1,0 +1,43 @@
+{
+  "name": "thathoff/kirby-git-content",
+  "description": "Plugin to track changes to content in a git repository.",
+  "type": "kirby-plugin",
+  "license": "MIT",
+  "version": "5.2.0",
+  "authors": [
+    {
+      "name": "Markus Denhoff",
+      "email": "markus@denhoff.com"
+    },
+    {
+      "name": "reinorange GmbH",
+      "email": "info@reinorange.com"
+    }
+  ],
+  "support": {
+		"issues": "https://github.com/thathoff/kirby-git-content/issues",
+		"source": "https://github.com/thathoff/kirby-git-content"
+	},
+  "require": {
+    "czproject/git-php": "^4.0.1",
+    "getkirby/composer-installer": "^1.1"
+  },
+  "require-dev": {
+    "getkirby/cms": "^3.6.0|^4.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Thathoff\\GitContent\\": "src/"
+    }
+  },
+  "extra": {
+    "installer-name": "git-content",
+    "kirby-cms-path": false
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  }
+}

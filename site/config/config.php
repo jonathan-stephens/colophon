@@ -16,27 +16,69 @@ return [
             ]
         ];
     },
+    'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
+    'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
+
+    'jonathanstephens.timekeeper' => [
+        'useClientTime' => true,
+        'allowManualOverride' => true,
+        'cookieDuration' => 60 * 60 * 24
+    ],
     'routes' => [
-        // RSS, JSON and Atom feeds for links
+        // Generic feed handler for specific formats only
         [
-            'pattern' => 'links/(:any)',
+            'pattern' => '(:any)/(rss|feed.json|feed.atom)',
             'method' => 'GET',
-            'action'  => function ($format) {
-                // Valid formats list
-                $validFormats = ['rss', 'json', 'atom'];
-                // Default to RSS if format isn't valid
-                if (!in_array($format, $validFormats)) {
-                    $format = 'rss';
+            'action'  => function ($section, $format) {
+                // Valid sections
+                $validSections = ['journal', 'links', 'articles', 'notes'];
+
+                // Check if valid section
+                if (!in_array($section, $validSections) || !page($section)) {
+                    // Only handle routes that match our pattern, let Kirby handle the rest
+                    return null;
                 }
-                return feed(fn() => page('links')->children()->listed()->flip()->limit(20), [
-                    'title' => 'My Links Feed',
-                    'description' => 'A collection of interesting links I want to share',
-                    'link' => 'links',
-                    'snippet' => 'feed/' . $format,
-                    'feedurl' => site()->url() . '/links/' . $format . '/',
+
+                // Determine the format for the snippet
+                $snippetFormat = $format;
+                if ($format === 'feed.json') $snippetFormat = 'json';
+                if ($format === 'feed.atom') $snippetFormat = 'atom';
+
+                return feed(fn() => page($section)->children()->listed()->flip()->limit(20), [
+                    'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+                    'description' => 'The latest ' . $section . ' from ' . site()->title(),
+                    'link' => $section,
+                    'snippet' => 'feed/' . $snippetFormat,
+                    'feedurl' => site()->url() . '/' . $section . '/' . $format,
                 ]);
             }
         ],
+
+        // Main RSS feed for all content
+        [
+            'pattern' => 'rss',
+            'method' => 'GET',
+            'action'  => function () {
+                // Collect entries from all sections
+                $items = new Pages();
+                $sections = ['journal', 'links', 'articles', 'notes'];
+
+                foreach ($sections as $section) {
+                    if ($page = page($section)) {
+                        $items = $items->add($page->children()->listed());
+                    }
+                }
+
+                return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
+                    'title' => site()->title() . ' - All Content RSS',
+                    'description' => 'The latest content from ' . site()->title(),
+                    'link' => 'rss',
+                    'snippet' => 'feed/rss',
+                    'feedurl' => site()->url() . '/rss',
+                ]);
+            }
+        ],
+
         // Tags handling route
         [
             'pattern' => 'tags/(:any)',
@@ -53,13 +95,5 @@ return [
                 return $tagsPage->render(['filterTags' => $tags]);
             }
         ]
-    ],
-    'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
-    'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
-
-    'jonathanstephens.timekeeper' => [
-        'useClientTime' => true,
-        'allowManualOverride' => true,
-        'cookieDuration' => 60 * 60 * 24
     ]
-];
+  ];

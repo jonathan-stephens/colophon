@@ -41,6 +41,14 @@
       "oAP" : "\/.htaccess",
       "oF" : 0
     },
+    "\/.sqlite\/komments.sqlite" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/.sqlite\/komments.sqlite",
+      "oF" : 0
+    },
     "\/assets\/css\/main.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -333,6 +341,278 @@
       "oAP" : "\/assets\/fonts\/ibm-plex-mono\/woff2\/license.txt",
       "oF" : 0
     },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Bold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Bold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-BoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-BoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ExtraLight.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ExtraLight.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ExtraLightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ExtraLightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Italic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Italic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Light.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Light.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-LightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-LightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Medium.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Medium.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-MediumItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-MediumItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Regular.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Regular.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-SemiBold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-SemiBold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-SemiBoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-SemiBoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Text.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Text.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-TextItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-TextItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Thin.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-Thin.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ThinItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/IBMPlexSansCondensed-ThinItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff\/license.txt",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Bold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Bold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-BoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-BoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ExtraLight.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ExtraLight.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ExtraLightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ExtraLightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Italic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Italic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Light.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Light.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-LightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-LightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Medium.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Medium.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-MediumItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-MediumItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Regular.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Regular.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-SemiBold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-SemiBold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-SemiBoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-SemiBoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Text.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Text.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-TextItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-TextItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Thin.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-Thin.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ThinItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/IBMPlexSansCondensed-ThinItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans-condensed\/woff2\/license.txt",
+      "oF" : 0
+    },
     "\/assets\/fonts\/ibm-plex-sans\/woff\/IBMPlexSans-Bold.woff" : {
       "cB" : 0,
       "ft" : 8192,
@@ -581,6 +861,22 @@
       "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/IBMPlexSans-ThinItalic.woff2",
       "oF" : 0
     },
+    "\/assets\/fonts\/ibm-plex-sans\/woff2\/IBMPlexSansVar-Italic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/IBMPlexSansVar-Italic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-sans\/woff2\/IBMPlexSansVar-Roman.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/IBMPlexSansVar-Roman.woff2",
+      "oF" : 0
+    },
     "\/assets\/fonts\/ibm-plex-sans\/woff2\/license.txt" : {
       "cB" : 0,
       "ft" : 8192,
@@ -589,6 +885,326 @@
       "oAP" : "\/assets\/fonts\/ibm-plex-sans\/woff2\/license.txt",
       "oF" : 0
     },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Bold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Bold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-BoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-BoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ExtraLight.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ExtraLight.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ExtraLightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ExtraLightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Italic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Italic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Light.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Light.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-LightItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-LightItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Medium.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Medium.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-MediumItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-MediumItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Regular.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Regular.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-SemiBold.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-SemiBold.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-SemiBoldItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-SemiBoldItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Text.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Text.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-TextItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-TextItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Thin.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-Thin.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ThinItalic.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/IBMPlexSerif-ThinItalic.woff",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff\/license.txt",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Bold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Bold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-BoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-BoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ExtraLight.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ExtraLight.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ExtraLightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ExtraLightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Italic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Italic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Light.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Light.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-LightItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-LightItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Medium.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Medium.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-MediumItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-MediumItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Regular.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Regular.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-SemiBold.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-SemiBold.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-SemiBoldItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-SemiBoldItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Text.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Text.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-TextItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-TextItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Thin.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-Thin.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ThinItalic.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/IBMPlexSerif-ThinItalic.woff2",
+      "oF" : 0
+    },
+    "\/assets\/fonts\/ibm-plex-serif\/woff2\/license.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/fonts\/ibm-plex-serif\/woff2\/license.txt",
+      "oF" : 0
+    },
+    "\/assets\/jonathanstephens-self-hi.jpg" : {
+      "ft" : 16384,
+      "iS" : 4732655,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/jonathanstephens-self-hi.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/assets\/jonathanstephens-self-web.webp" : {
+      "ft" : 8388608,
+      "iS" : 898264,
+      "oA" : 0,
+      "oAP" : "\/assets\/jonathanstephens-self-web.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/assets\/jonathanstephens-wed-hi.jpg" : {
+      "ft" : 16384,
+      "iS" : 2395082,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/jonathanstephens-wed-hi.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/assets\/jonathanstephens-wed-web.webp" : {
+      "ft" : 8388608,
+      "iS" : 643482,
+      "oA" : 0,
+      "oAP" : "\/assets\/jonathanstephens-wed-web.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
     "\/assets\/js\/box.js" : {
       "bF" : 3,
       "ft" : 64,
@@ -596,6 +1212,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/assets\/js\/box-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/assets\/js\/icon.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/assets\/js\/icon-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -643,6 +1270,102 @@
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
+    },
+    "\/assets\/png\/og-image.png" : {
+      "ft" : 32768,
+      "iS" : 448240,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/og-image.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/assets\/png\/og-image.webp" : {
+      "ft" : 8388608,
+      "iS" : 297988,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/og-image.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/assets\/png\/paper-tile.png" : {
+      "ft" : 32768,
+      "iS" : 148242,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/paper-tile.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/assets\/png\/paper-tile.webp" : {
+      "ft" : 8388608,
+      "iS" : 41044,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/paper-tile.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/assets\/png\/rice-paper-2.png" : {
+      "ft" : 32768,
+      "iS" : 313490,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/rice-paper-2.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/assets\/png\/rice-paper-2.webp" : {
+      "ft" : 8388608,
+      "iS" : 254688,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/rice-paper-2.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/assets\/png\/stardust.png" : {
+      "ft" : 32768,
+      "iS" : 9145,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/stardust.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/assets\/png\/stardust.webp" : {
+      "ft" : 8388608,
+      "iS" : 8774,
+      "oA" : 0,
+      "oAP" : "\/assets\/png\/stardust.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
     },
     "\/assets\/sass\/0-global\/fonts.scss" : {
       "aP" : 0,
@@ -699,6 +1422,21 @@
       "ma" : 1,
       "oA" : 1,
       "oAP" : "\/assets\/sass\/css\/palette-generator.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/1-constants\/borders.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/borders.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
@@ -764,21 +1502,6 @@
       "pg" : 2,
       "sct" : 0
     },
-    "\/assets\/sass\/2-functional\/borders.scss" : {
-      "aP" : 0,
-      "bl" : 0,
-      "co" : 0,
-      "dP" : 10,
-      "ec" : 1,
-      "ft" : 4,
-      "ma" : 1,
-      "oA" : 0,
-      "oAP" : "\/assets\/sass\/css\/borders.css",
-      "oF" : 0,
-      "oS" : 0,
-      "pg" : 2,
-      "sct" : 0
-    },
     "\/assets\/sass\/2-functional\/global.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -789,6 +1512,51 @@
       "ma" : 1,
       "oA" : 1,
       "oAP" : "\/assets\/sass\/css\/global.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/2-functional\/icons.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/icons.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/2-functional\/links.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/links.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/2-functional\/rhythm.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/rhythm.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
@@ -869,6 +1637,51 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/sass\/3-components\/figure.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/figure.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/3-components\/footnotes.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/footnotes.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/3-components\/tags.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/tags.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
     "\/assets\/sass\/3-components\/theme-picker.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -924,6 +1737,21 @@
       "ma" : 1,
       "oA" : 1,
       "oAP" : "\/assets\/sass\/css\/journal.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 2,
+      "sct" : 0
+    },
+    "\/assets\/sass\/4-layout\/links.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 1,
+      "oA" : 1,
+      "oAP" : "\/assets\/sass\/css\/links.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 2,
@@ -1029,6 +1857,26 @@
       "oAP" : "\/assets\/sass\/css\/color-palette-generator.css.map",
       "oF" : 0
     },
+    "\/assets\/sass\/css\/figure.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/figure-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/figure.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/figure.css.map",
+      "oF" : 0
+    },
     "\/assets\/sass\/css\/flow.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -1127,6 +1975,26 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/assets\/sass\/css\/journal-container.css.map",
+      "oF" : 0
+    },
+    "\/assets\/sass\/css\/links.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/links-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/sass\/css\/links.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/sass\/css\/links.css.map",
       "oF" : 0
     },
     "\/assets\/sass\/css\/mix-ins.css" : {
@@ -1279,6 +2147,46 @@
       "pg" : 2,
       "sct" : 0
     },
+    "\/assets\/svg\/backgrounds\/grain.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/backgrounds\/grain.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/css\/style.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/svg\/css\/style-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/assets\/svg\/demo.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/svg\/demo.html",
+      "oF" : 0
+    },
+    "\/assets\/svg\/icons.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
     "\/assets\/svg\/icons\/arrow-down.svg" : {
       "ft" : 2097152,
       "miP" : 0,
@@ -1304,6 +2212,26 @@
       "miP" : 0,
       "oA" : 2,
       "oAP" : "\/assets\/svg\/icons\/book-time.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/circle--outline.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/circle--outline.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/circle--solid.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/circle--solid.svg",
       "oF" : 0,
       "opt" : 0,
       "plM" : 52780316221407,
@@ -1359,11 +2287,61 @@
       "plM" : 52780316221407,
       "prP" : 0
     },
+    "\/assets\/svg\/icons\/launch.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/launch.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/location.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/location.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
     "\/assets\/svg\/icons\/mail.svg" : {
       "ft" : 2097152,
       "miP" : 0,
       "oA" : 2,
       "oAP" : "\/assets\/svg\/icons\/mail.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/sprout.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/sprout.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/square--outline.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/square--outline.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/square--solid.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/square--solid.svg",
       "oF" : 0,
       "opt" : 0,
       "plM" : 52780316221407,
@@ -1379,11 +2357,41 @@
       "plM" : 52780316221407,
       "prP" : 0
     },
+    "\/assets\/svg\/icons\/tag.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/tag.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
     "\/assets\/svg\/icons\/time.svg" : {
       "ft" : 2097152,
       "miP" : 0,
       "oA" : 2,
       "oAP" : "\/assets\/svg\/icons\/time.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/triangle--down--outline.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/triangle--down--outline.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/assets\/svg\/icons\/triangle--down--solid.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/assets\/svg\/icons\/triangle--down--solid.svg",
       "oF" : 0,
       "opt" : 0,
       "plM" : 52780316221407,
@@ -1396,6 +2404,14 @@
       "oF" : 0,
       "oO" : 1,
       "oS" : 1
+    },
+    "\/content\/_drafts\/about" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/about",
+      "oF" : 0
     },
     "\/content\/_drafts\/companies\/1_booking-com\/booking.svg" : {
       "ft" : 2097152,
@@ -1431,29 +2447,21 @@
       "oAP" : "\/content\/_drafts\/companies\/companies.txt",
       "oF" : 0
     },
-    "\/content\/_drafts\/era\/_drafts\/chapter\/_drafts\/project\/project.txt" : {
+    "\/content\/_drafts\/companies\/strategi\/company.txt" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/content\/_drafts\/era\/_drafts\/chapter\/_drafts\/project\/project.txt",
+      "oAP" : "\/content\/_drafts\/companies\/strategi\/company.txt",
       "oF" : 0
     },
-    "\/content\/_drafts\/era\/_drafts\/chapter\/chapter.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/_drafts\/era\/_drafts\/chapter\/chapter.txt",
-      "oF" : 0
-    },
-    "\/content\/_drafts\/era\/era.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/_drafts\/era\/era.txt",
-      "oF" : 0
+    "\/content\/_drafts\/companies\/strategi\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/_drafts\/companies\/strategi\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
     },
     "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/indieConnector.json" : {
       "ft" : 524288,
@@ -1469,6 +2477,22 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/content\/_drafts\/link\/20241112_creating-artifacts-with-fonts\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/_drafts\/link\/20250101_links-to-all-my-places\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/_drafts\/link\/20250101_links-to-all-my-places\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/_drafts\/link\/20250101_links-to-all-my-places\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/_drafts\/link\/20250101_links-to-all-my-places\/link.txt",
       "oF" : 0
     },
     "\/content\/_drafts\/link\/links-container.txt" : {
@@ -1519,28 +2543,12 @@
       "oAP" : "\/content\/_drafts\/note\/notes-container.txt",
       "oF" : 0
     },
-    "\/content\/_drafts\/resume\/.lock" : {
+    "\/content\/_drafts\/travel\/1_london\/.lock" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/content\/_drafts\/resume\/.lock",
-      "oF" : 0
-    },
-    "\/content\/_drafts\/resume\/resume.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/_drafts\/resume\/resume.txt",
-      "oF" : 0
-    },
-    "\/content\/_drafts\/this-is-a-thing\/journal.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/_drafts\/this-is-a-thing\/journal.txt",
+      "oAP" : "\/content\/_drafts\/travel\/1_london\/.lock",
       "oF" : 0
     },
     "\/content\/1_home\/home.txt" : {
@@ -1559,12 +2567,20 @@
       "oO" : 1,
       "oS" : 1
     },
-    "\/content\/2_journal\/_drafts\/hello-there\/journal.txt" : {
+    "\/content\/2_journal\/_drafts\/opening-boxes\/journal.txt" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/content\/2_journal\/_drafts\/hello-there\/journal.txt",
+      "oAP" : "\/content\/2_journal\/_drafts\/opening-boxes\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/_drafts\/sadfasf\/journal-entry.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/_drafts\/sadfasf\/journal-entry.txt",
       "oF" : 0
     },
     "\/content\/2_journal\/1_neurodivergence-and-habit-building\/indieConnector.json" : {
@@ -1598,6 +2614,14 @@
       "oF" : 0,
       "oO" : 1,
       "oS" : 1
+    },
+    "\/content\/2_journal\/2_structural-sensemaking\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/indieConnector.json.txt",
+      "oF" : 0
     },
     "\/content\/2_journal\/2_structural-sensemaking\/journal.txt" : {
       "cB" : 0,
@@ -1649,6 +2673,473 @@
       "oAP" : "\/content\/2_journal\/2_structural-sensemaking\/structural-sensemaking-booking-without-copy.png.txt",
       "oF" : 0
     },
+    "\/content\/2_journal\/3_500-words\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/3_500-words\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/3_500-words\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/3_500-words\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/4_why-500-words-is-important\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/4_why-500-words-is-important\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/4_why-500-words-is-important\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/4_why-500-words-is-important\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/5_beyond-balance\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/5_beyond-balance\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/5_beyond-balance\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/5_beyond-balance\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/6_pursuing-flow-kindness-and-imperfection\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/6_pursuing-flow-kindness-and-imperfection\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/6_pursuing-flow-kindness-and-imperfection\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/6_pursuing-flow-kindness-and-imperfection\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/7_reflecting-on-glue-work\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/7_reflecting-on-glue-work\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/7_reflecting-on-glue-work\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/7_reflecting-on-glue-work\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/8_everyone-forgets-about-mourning\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/8_everyone-forgets-about-mourning\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/8_everyone-forgets-about-mourning\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/8_everyone-forgets-about-mourning\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/9_the-hidden-power-of-defaults\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/9_the-hidden-power-of-defaults\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/9_the-hidden-power-of-defaults\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/9_the-hidden-power-of-defaults\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/10_contracts-confidence-and-creativity\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/10_contracts-confidence-and-creativity\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/10_contracts-confidence-and-creativity\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/10_contracts-confidence-and-creativity\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/11_chapter-2-500-characters\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/11_chapter-2-500-characters\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/11_chapter-2-500-characters\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/11_chapter-2-500-characters\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/12_towards-new-beginnings\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/12_towards-new-beginnings\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/12_towards-new-beginnings\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/12_towards-new-beginnings\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/13_my-new-favorite-website\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/13_my-new-favorite-website\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/13_my-new-favorite-website\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/13_my-new-favorite-website\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/14_growing-my-own-digital-garden\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/14_growing-my-own-digital-garden\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/14_growing-my-own-digital-garden\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/14_growing-my-own-digital-garden\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/15_tsundoku\/feel-good-productivity.jpg" : {
+      "ft" : 16384,
+      "iS" : 425040,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/15_tsundoku\/feel-good-productivity.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/15_tsundoku\/feel-good-productivity.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/15_tsundoku\/feel-good-productivity.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/15_tsundoku\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/15_tsundoku\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/15_tsundoku\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/15_tsundoku\/indieConnector.json.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/15_tsundoku\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/15_tsundoku\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/16_discovering-and-naming-my-magic\/bam-2020.jpg" : {
+      "ft" : 16384,
+      "iS" : 313552,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/16_discovering-and-naming-my-magic\/bam-2020.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/16_discovering-and-naming-my-magic\/bam-2020.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/16_discovering-and-naming-my-magic\/bam-2020.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/16_discovering-and-naming-my-magic\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/16_discovering-and-naming-my-magic\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/16_discovering-and-naming-my-magic\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/16_discovering-and-naming-my-magic\/indieConnector.json.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/16_discovering-and-naming-my-magic\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/16_discovering-and-naming-my-magic\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/17_more-meaningful-not-more\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/17_more-meaningful-not-more\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/17_more-meaningful-not-more\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/17_more-meaningful-not-more\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/calligraphy.jpg" : {
+      "ft" : 16384,
+      "iS" : 206276,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/calligraphy.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/calligraphy.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/calligraphy.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/indieConnector.json.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/18_breaking-my-longest-daily-writing-streak\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/19_aphantasia\/aphantasia-test.jpg" : {
+      "ft" : 16384,
+      "iS" : 26274,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/19_aphantasia\/aphantasia-test.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/19_aphantasia\/aphantasia-test.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/19_aphantasia\/aphantasia-test.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/19_aphantasia\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/19_aphantasia\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/19_aphantasia\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/19_aphantasia\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/color-experiments-oklch.png" : {
+      "ft" : 32768,
+      "iS" : 2224134,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/color-experiments-oklch.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/color-experiments-oklch.png.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/color-experiments-oklch.png.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/da-vinci.jpg" : {
+      "ft" : 16384,
+      "iS" : 422958,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/da-vinci.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/da-vinci.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/da-vinci.jpg.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/indieConnector.json.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/indieConnector.json.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/journal.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/journal.txt",
+      "oF" : 0
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/trackway-color-system.jpg" : {
+      "ft" : 16384,
+      "iS" : 473675,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/trackway-color-system.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/content\/2_journal\/20_design-system-for-neurodivergence\/trackway-color-system.jpg.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/2_journal\/20_design-system-for-neurodivergence\/trackway-color-system.jpg.txt",
+      "oF" : 0
+    },
     "\/content\/2_journal\/indieConnector.json" : {
       "ft" : 524288,
       "oA" : 1,
@@ -1663,6 +3154,254 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/content\/2_journal\/journal-container.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250101_links\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250101_links\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250101_links\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250101_links\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250106_bone-up-html-2025\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250106_bone-up-html-2025\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250106_bone-up-html-2025\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250106_bone-up-html-2025\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250106_principles-of-web-accessibility\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250106_principles-of-web-accessibility\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250106_principles-of-web-accessibility\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250106_principles-of-web-accessibility\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250107_bridgy-fed\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250107_bridgy-fed\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250107_bridgy-fed\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250107_bridgy-fed\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250108_cold-pitch-magic\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250108_cold-pitch-magic\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250108_cold-pitch-magic\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250108_cold-pitch-magic\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250108_per-diem-rates\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250108_per-diem-rates\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250108_per-diem-rates\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250108_per-diem-rates\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250109_create-your-go-bag\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250109_create-your-go-bag\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250109_create-your-go-bag\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250109_create-your-go-bag\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250109_map-of-monotropic-experiences\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250109_map-of-monotropic-experiences\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250109_map-of-monotropic-experiences\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250109_map-of-monotropic-experiences\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250109_power-outages\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250109_power-outages\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250109_power-outages\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250109_power-outages\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250114_international-harmonized-stage-codes\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250114_international-harmonized-stage-codes\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250114_international-harmonized-stage-codes\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250114_international-harmonized-stage-codes\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250116_eu-common-charger-rules\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/3_links\/20250116_eu-common-charger-rules\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/3_links\/20250116_eu-common-charger-rules\/link.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250116_eu-common-charger-rules\/link.txt",
+      "oF" : 0
+    },
+    "\/content\/3_links\/20250220_erik-baker-make-your-own-job-interview\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/20250220_erik-baker-make-your-own-job-interview\/.lock",
+      "oF" : 0
+    },
+    "\/content\/3_links\/links-container.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/3_links\/links-container.txt",
+      "oF" : 0
+    },
+    "\/content\/4_essays\/1_chrysalis\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/4_essays\/1_chrysalis\/.lock",
+      "oF" : 0
+    },
+    "\/content\/4_essays\/1_chrysalis\/essay.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/4_essays\/1_chrysalis\/essay.txt",
+      "oF" : 0
+    },
+    "\/content\/4_essays\/1_chrysalis\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/4_essays\/1_chrysalis\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/4_essays\/essay-container.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/4_essays\/essay-container.txt",
+      "oF" : 0
+    },
+    "\/content\/4_essays\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/content\/4_essays\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/content\/4_links\/_drafts\/thinking-in-triplicate\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/4_links\/_drafts\/thinking-in-triplicate\/.lock",
+      "oF" : 0
+    },
+    "\/content\/codex\/_drafts\/structure\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/codex\/_drafts\/structure\/.lock",
       "oF" : 0
     },
     "\/content\/codex\/codex.txt" : {
@@ -1689,6 +3428,14 @@
       "oAP" : "\/content\/reviews\/1_helen-lovett\/review.txt",
       "oF" : 0
     },
+    "\/content\/reviews\/6_eraj-ali\/.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/content\/reviews\/6_eraj-ali\/.lock",
+      "oF" : 0
+    },
     "\/content\/reviews\/reviews.txt" : {
       "cB" : 0,
       "ft" : 8192,
@@ -1703,86 +3450,6 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/content\/site.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/_drafts\/hello\/_drafts\/hello\/project.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/_drafts\/hello\/_drafts\/hello\/project.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/_drafts\/hello\/chapter.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/_drafts\/hello\/chapter.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/1_growth-and-localization\/.lock" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/1_growth-and-localization\/.lock",
-      "oF" : 0
-    },
-    "\/content\/work\/1_growth-and-localization\/project.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/1_growth-and-localization\/project.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/2_partner-platforms\/project.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/2_partner-platforms\/project.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/3_director-of-product-development\/.lock" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/3_director-of-product-development\/.lock",
-      "oF" : 0
-    },
-    "\/content\/work\/3_director-of-product-development\/1_growth-and-localization\/1_growth\/project.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/3_director-of-product-development\/1_growth-and-localization\/1_growth\/project.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/3_director-of-product-development\/1_growth-and-localization\/chapter.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/3_director-of-product-development\/1_growth-and-localization\/chapter.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/3_director-of-product-development\/era.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/3_director-of-product-development\/era.txt",
-      "oF" : 0
-    },
-    "\/content\/work\/work.txt" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/content\/work\/work.txt",
       "oF" : 0
     },
     "\/index.php" : {
@@ -8317,6 +9984,47 @@
       "oAP" : "\/media\/index.html",
       "oF" : 0
     },
+    "\/media\/pages\/about\/a52c12a8b6-1741385726\/.jobs\/jonathanstephens-self-web-38x.webp.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/about\/a52c12a8b6-1741385726\/.jobs\/jonathanstephens-self-web-38x.webp-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/about\/a52c12a8b6-1741385726\/jonathanstephens-self-web-76x.webp" : {
+      "ft" : 8388608,
+      "iS" : 3202,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/about\/a52c12a8b6-1741385726\/jonathanstephens-self-web-76x.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/media\/pages\/about\/a52c12a8b6-1741385726\/jonathanstephens-self-web.webp" : {
+      "ft" : 8388608,
+      "iS" : 898264,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/about\/a52c12a8b6-1741385726\/jonathanstephens-self-web.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/media\/pages\/about\/cdd86a80cc-1741385727\/jonathanstephens-wed-web.webp" : {
+      "ft" : 8388608,
+      "iS" : 643482,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/about\/cdd86a80cc-1741385727\/jonathanstephens-wed-web.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
     "\/media\/pages\/companies\/booking-com\/2cf48e8d0b-1728929993\/booking.svg" : {
       "ft" : 2097152,
       "miP" : 0,
@@ -8336,6 +10044,122 @@
       "opt" : 0,
       "plM" : 52780316221407,
       "prP" : 0
+    },
+    "\/media\/pages\/journal\/aphantasia\/8a6a013b2c-1738438332\/.jobs\/aphantasia-test-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/aphantasia\/8a6a013b2c-1738438332\/.jobs\/aphantasia-test-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/aphantasia\/8a6a013b2c-1738438332\/.jobs\/aphantasia-test-76x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/aphantasia\/8a6a013b2c-1738438332\/.jobs\/aphantasia-test-76x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/.jobs\/calligraphy-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/.jobs\/calligraphy-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/.jobs\/calligraphy-76x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/.jobs\/calligraphy-76x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/calligraphy.jpg" : {
+      "ft" : 16384,
+      "iS" : 206276,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/breaking-my-longest-daily-writing-streak\/510ea1226a-1738438332\/calligraphy.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/design-system-for-neurodivergence\/823a7beb03-1738438332\/da-vinci.jpg" : {
+      "ft" : 16384,
+      "iS" : 422958,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/design-system-for-neurodivergence\/823a7beb03-1738438332\/da-vinci.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/.jobs\/color-experiments-oklch-38x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/.jobs\/color-experiments-oklch-38x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/.jobs\/color-experiments-oklch-76x.png.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/.jobs\/color-experiments-oklch-76x.png-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/color-experiments-oklch.png" : {
+      "ft" : 32768,
+      "iS" : 2224134,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/design-system-for-neurodivergence\/4287fbf2df-1738438332\/color-experiments-oklch.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/design-system-for-neurodivergence\/ac35ece315-1738438332\/trackway-color-system.jpg" : {
+      "ft" : 16384,
+      "iS" : 473675,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/design-system-for-neurodivergence\/ac35ece315-1738438332\/trackway-color-system.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/discovering-and-naming-my-magic\/c04bf0d18b-1738438332\/.jobs\/bam-2020-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/discovering-and-naming-my-magic\/c04bf0d18b-1738438332\/.jobs\/bam-2020-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/discovering-and-naming-my-magic\/c04bf0d18b-1738438332\/.jobs\/bam-2020-76x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/discovering-and-naming-my-magic\/c04bf0d18b-1738438332\/.jobs\/bam-2020-76x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
     },
     "\/media\/pages\/journal\/structural-sensemaking\/2f539bdc87-1731965503\/.jobs\/structural-sensemaking-booking-with-copy-38x.jpg.json" : {
       "ft" : 524288,
@@ -8450,6 +10274,19 @@
       "q" : 100,
       "rq" : 75
     },
+    "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy.jpg" : {
+      "ft" : 16384,
+      "iS" : 859315,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/73bda968df-1731965503\/structural-sensemaking-booking-with-copy.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
     "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/.jobs\/structural-sensemaking-booking-without-copy-38x.png.json" : {
       "ft" : 524288,
       "oA" : 1,
@@ -8492,6 +10329,19 @@
       "iS" : 368827,
       "oA" : 0,
       "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy-1408x.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy.png" : {
+      "ft" : 32768,
+      "iS" : 341707,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/journal\/structural-sensemaking\/55514cb40e-1731965503\/structural-sensemaking-booking-without-copy.png",
       "oF" : 0,
       "oIPL" : 0,
       "opt" : 0,
@@ -8548,6 +10398,226 @@
       "oT" : 1,
       "ou" : "lpckwebp-none",
       "q" : 90,
+      "rq" : 75
+    },
+    "\/media\/pages\/journal\/tsundoku\/ea67a41a41-1738438332\/.jobs\/feel-good-productivity-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/tsundoku\/ea67a41a41-1738438332\/.jobs\/feel-good-productivity-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/journal\/tsundoku\/ea67a41a41-1738438332\/.jobs\/feel-good-productivity-76x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/journal\/tsundoku\/ea67a41a41-1738438332\/.jobs\/feel-good-productivity-76x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-38x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-38x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/oxide-575-civic-tech-book-cover-20200720-76x.jpg" : {
+      "ft" : 16384,
+      "iS" : 4560,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/oxide-575-civic-tech-book-cover-20200720-76x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg" : {
+      "ft" : 16384,
+      "iS" : 24288,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/7125c05526-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x469-crop.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x469-crop.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x1152-crop.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x1152-crop.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg" : {
+      "ft" : 16384,
+      "iS" : 24288,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x1877-crop.jpg" : {
+      "ft" : 16384,
+      "iS" : 150724,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x1877-crop.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720.jpg" : {
+      "ft" : 16384,
+      "iS" : 19864,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/8888377179-1744319887\/oxide-575-civic-tech-book-cover-20200720.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-352x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/.jobs\/oxide-575-civic-tech-book-cover-20200720-864x.jpg-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg" : {
+      "ft" : 16384,
+      "iS" : 24288,
+      "jF" : 0,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/bcc3c7fcf7-1744319887\/oxide-575-civic-tech-book-cover-20200720-1408x.jpg",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
+    "\/media\/pages\/library\/a-civic-technologists-practice-guide\/eb30647b56-1744319911\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/a-civic-technologists-practice-guide\/eb30647b56-1744319911\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/library\/draft\/2da05369b1-1744319938\/indieConnector.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/library\/draft\/2da05369b1-1744319938\/indieConnector-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/.jobs\/helen-lovett-352x.webp.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/.jobs\/helen-lovett-352x.webp-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/.jobs\/helen-lovett-864x.webp.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/.jobs\/helen-lovett-864x.webp-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/helen-lovett-1408x.webp" : {
+      "ft" : 8388608,
+      "iS" : 56262,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/helen-lovett-1408x.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
+      "rq" : 75
+    },
+    "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/helen-lovett.webp" : {
+      "ft" : 8388608,
+      "iS" : 48940,
+      "oA" : 0,
+      "oAP" : "\/media\/pages\/reviews\/helen-lovett\/f09d4f7bdb-1744310150\/helen-lovett.webp",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "ou" : "lpckwebp-default",
       "rq" : 75
     },
     "\/media\/panel\/e46528792882c54882f660b60936a0fc\/apple-touch-icon-dark.png" : {
@@ -8798,6 +10868,22 @@
       "oAP" : "\/site\/accounts\/UsjOoppK\/user.txt",
       "oF" : 0
     },
+    "\/site\/blueprints\/files\/blocks\/image.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/blueprints\/files\/blocks\/image.yml",
+      "oF" : 0
+    },
+    "\/site\/blueprints\/files\/default.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/blueprints\/files\/default.yml",
+      "oF" : 0
+    },
     "\/site\/blueprints\/files\/image.yml" : {
       "cB" : 0,
       "ft" : 8192,
@@ -8806,12 +10892,12 @@
       "oAP" : "\/site\/blueprints\/files\/image.yml",
       "oF" : 0
     },
-    "\/site\/blueprints\/pages\/chapter.yml" : {
+    "\/site\/blueprints\/pages\/book.yml" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/blueprints\/pages\/chapter.yml",
+      "oAP" : "\/site\/blueprints\/pages\/book.yml",
       "oF" : 0
     },
     "\/site\/blueprints\/pages\/codex.yml" : {
@@ -8846,12 +10932,20 @@
       "oAP" : "\/site\/blueprints\/pages\/default.yml",
       "oF" : 0
     },
-    "\/site\/blueprints\/pages\/era.yml" : {
+    "\/site\/blueprints\/pages\/essay-container.yml" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/blueprints\/pages\/era.yml",
+      "oAP" : "\/site\/blueprints\/pages\/essay-container.yml",
+      "oF" : 0
+    },
+    "\/site\/blueprints\/pages\/essay.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/blueprints\/pages\/essay.yml",
       "oF" : 0
     },
     "\/site\/blueprints\/pages\/journal-container.yml" : {
@@ -8868,6 +10962,14 @@
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/blueprints\/pages\/journal.yml",
+      "oF" : 0
+    },
+    "\/site\/blueprints\/pages\/library.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/blueprints\/pages\/library.yml",
       "oF" : 0
     },
     "\/site\/blueprints\/pages\/link.yml" : {
@@ -8910,20 +11012,20 @@
       "oAP" : "\/site\/blueprints\/pages\/project--2.yml",
       "oF" : 0
     },
-    "\/site\/blueprints\/pages\/project.yml" : {
+    "\/site\/blueprints\/pages\/quote.yml" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/blueprints\/pages\/project.yml",
+      "oAP" : "\/site\/blueprints\/pages\/quote.yml",
       "oF" : 0
     },
-    "\/site\/blueprints\/pages\/resume.yml" : {
+    "\/site\/blueprints\/pages\/quotes.yml" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/blueprints\/pages\/resume.yml",
+      "oAP" : "\/site\/blueprints\/pages\/quotes.yml",
       "oF" : 0
     },
     "\/site\/blueprints\/pages\/review.yml" : {
@@ -8942,12 +11044,20 @@
       "oAP" : "\/site\/blueprints\/pages\/reviews.yml",
       "oF" : 0
     },
-    "\/site\/blueprints\/pages\/work.yml" : {
+    "\/site\/blueprints\/sections\/books.yml" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/blueprints\/pages\/work.yml",
+      "oAP" : "\/site\/blueprints\/sections\/books.yml",
+      "oF" : 0
+    },
+    "\/site\/blueprints\/sections\/reviewlist.yml" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/blueprints\/sections\/reviewlist.yml",
       "oF" : 0
     },
     "\/site\/blueprints\/site.yml" : {
@@ -8964,12 +11074,76 @@
       "oAP" : "\/site\/cache",
       "oF" : 0
     },
+    "\/site\/collections\/quotes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/collections\/quotes.php",
+      "oF" : 0
+    },
     "\/site\/config\/config.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/config\/config.php",
+      "oF" : 0
+    },
+    "\/site\/config\/methods.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/config\/methods.php",
+      "oF" : 0
+    },
+    "\/site\/config\/routes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/config\/routes.php",
+      "oF" : 0
+    },
+    "\/site\/models\/book.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/models\/book.php",
+      "oF" : 0
+    },
+    "\/site\/models\/essay.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/models\/essay.php",
+      "oF" : 0
+    },
+    "\/site\/models\/link.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/models\/link.php",
+      "oF" : 0
+    },
+    "\/site\/models\/quote.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/models\/quote.php",
+      "oF" : 0
+    },
+    "\/site\/models\/review.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/models\/review.php",
       "oF" : 0
     },
     "\/site\/plugins\/devkit\/index.php" : {
@@ -9006,6 +11180,97 @@
       "pME" : 1,
       "rFN" : 0,
       "uCM" : 0
+    },
+    "\/site\/plugins\/footnotes\/.editorconfig" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/.editorconfig",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/.gitignore" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/.gitignore",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/composer.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/footnotes\/composer-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/footnotes\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/lib\/footnotes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/lib\/footnotes.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/LICENSE" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/LICENSE",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/README.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/README.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/footnotes\/snippets\/container.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/snippets\/container.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/snippets\/entry.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/snippets\/entry.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/footnotes\/snippets\/reference.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/footnotes\/snippets\/reference.php",
+      "oF" : 0
     },
     "\/site\/plugins\/indieConnector\/.nvmrc" : {
       "cB" : 0,
@@ -9543,6 +11808,14 @@
       "oAP" : "\/site\/plugins\/indieConnector\/migrations\/database_202407211411.sql",
       "oF" : 0
     },
+    "\/site\/plugins\/indieConnector\/plugin\/api.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/indieConnector\/plugin\/api.php",
+      "oF" : 0
+    },
     "\/site\/plugins\/indieConnector\/plugin\/areas.php" : {
       "cB" : 0,
       "ft" : 8192,
@@ -9965,6 +12238,458 @@
       "oAP" : "\/site\/plugins\/indieConnector\/vendor\/mf2\/mf2\/Mf2\/Parser.php",
       "oF" : 0
     },
+    "\/site\/plugins\/kirby-admin-bar\/.editorconfig" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/.editorconfig",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/.gitattributes" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/.gitattributes",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/.gitignore" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/.gitignore",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/assets\/admin-bar.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/assets\/admin-bar-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/composer.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/composer-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby-admin-bar\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/LICENSE.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/LICENSE.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/README.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/README.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/snippets\/admin-bar.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/snippets\/admin-bar.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-admin-bar\/snippets\/panel-icon.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-admin-bar\/snippets\/panel-icon.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/CHANGELOG.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/CHANGELOG.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/composer.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/composer-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby-git-content\/composer.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/composer.lock",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/CONTRIBUTING.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/CONTRIBUTING.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/index.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/index-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/js\/components\/GitContent.vue" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/js\/components\/GitContent.vue",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/js\/index.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/js\/index-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/LICENSE.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/LICENSE.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/package.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/package-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby-git-content\/README.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/README.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/src\/areas\/git-content.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/src\/areas\/git-content.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/src\/KirbyGit.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/src\/KirbyGit.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/src\/KirbyGitHelper.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/src\/KirbyGitHelper.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/autoload.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/autoload.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_classmap.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_classmap.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_namespaces.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_namespaces.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_psr4.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_psr4.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_real.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_real.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_static.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/autoload_static.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/ClassLoader.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/ClassLoader.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/installed.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/installed.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/InstalledVersions.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/InstalledVersions.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/composer\/platform_check.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/composer\/platform_check.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/code-checker.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/code-checker.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/CommandProcessor.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/CommandProcessor.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Commit.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Commit.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/CommitId.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/CommitId.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/exceptions.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/exceptions.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Git.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Git.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/GitRepository.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/GitRepository.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Helpers.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Helpers.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/IRunner.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/IRunner.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/RunnerResult.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/RunnerResult.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/CliRunner.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/CliRunner.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/MemoryRunner.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/MemoryRunner.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/OldGitRunner.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-git-content\/vendor\/czproject\/git-php\/src\/Runners\/OldGitRunner.php",
+      "oF" : 0
+    },
     "\/site\/plugins\/kirby-locked-pages\/blueprints\/fields\/locked-pages.yml" : {
       "cB" : 0,
       "ft" : 8192,
@@ -10056,6 +12781,233 @@
       "oAP" : "\/site\/plugins\/kirby-locked-pages\/templates\/locked-pages-login.php",
       "oF" : 0
     },
+    "\/site\/plugins\/kirby-markup\/.gitignore" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/.gitignore",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/composer.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/composer-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby-markup\/index.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/index-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/index.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/index-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/LICENSE" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/LICENSE",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/package.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/package-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby-markup\/README.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/README.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/components\/CiteDialog.vue" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/components\/CiteDialog.vue",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/components\/ClassDialog.vue" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/components\/ClassDialog.vue",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/components\/MarkupDialog.vue" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/components\/MarkupDialog.vue",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/icons.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/icons-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Abbreviation.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Abbreviation-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Citation.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Citation-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Definition.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Definition-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/InlineQuote.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/InlineQuote-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Insert.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Insert-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Mark.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Mark-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Sample.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/Sample-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/marks\/SmallCaps.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/marks\/SmallCaps-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/config\/textareaButtons.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/config\/textareaButtons-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/site\/plugins\/kirby-markup\/src\/index.js" : {
+      "bF" : 3,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby-markup\/src\/index-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/site\/plugins\/kirby-template-handler\/blueprints\/sections\/template-rules.yml" : {
       "cB" : 0,
       "ft" : 8192,
@@ -10120,12 +13072,183 @@
       "oAP" : "\/site\/plugins\/kirby-timekeeper\/snippet\/theme-switcher.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/.github\/workflows\/main.yml" : {
+    "\/site\/plugins\/kirby3-feed\/classes\/Feed.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/.github\/workflows\/main.yml",
+      "oAP" : "\/site\/plugins\/kirby3-feed\/classes\/Feed.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/composer.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/composer-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/site\/plugins\/kirby3-feed\/composer.lock" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/composer.lock",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/index.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/index.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/LICENSE" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/LICENSE",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/README.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/README.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/snippets\/feed\/atom.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/snippets\/feed\/atom.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/snippets\/feed\/json.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/snippets\/feed\/json.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/snippets\/feed\/rss.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/snippets\/feed\/rss.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/snippets\/feed\/sitemap.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/snippets\/feed\/sitemap.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/snippets\/feed\/sitemap.xsl.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/snippets\/feed\/sitemap.xsl.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/autoload.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/autoload.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_classmap.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_classmap.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_namespaces.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_namespaces.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_psr4.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_psr4.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_real.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_real.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_static.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/autoload_static.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/ClassLoader.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/ClassLoader.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/installed.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/installed.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/InstalledVersions.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/InstalledVersions.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/kirby3-feed\/vendor\/composer\/platform_check.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/kirby3-feed\/vendor\/composer\/platform_check.php",
       "oF" : 0
     },
     "\/site\/plugins\/komments\/.nvmrc" : {
@@ -10164,14 +13287,6 @@
       "oF" : 0,
       "pg" : 0
     },
-    "\/site\/plugins\/komments\/assets\/komments.css.map" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/assets\/komments.css.map",
-      "oF" : 0
-    },
     "\/site\/plugins\/komments\/assets\/komments.js" : {
       "bF" : 3,
       "ft" : 64,
@@ -10190,25 +13305,6 @@
       "oA" : 0,
       "oAP" : "\/site\/plugins\/komments\/blueprints\/sections\/komments.yml",
       "oF" : 0
-    },
-    "\/site\/plugins\/komments\/BREAKING_CHANGES.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/BREAKING_CHANGES.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
     },
     "\/site\/plugins\/komments\/CHANGELOG.md" : {
       "cB" : 0,
@@ -10229,62 +13325,6 @@
       "rFN" : 0,
       "uCM" : 0
     },
-    "\/site\/plugins\/komments\/components\/api.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/api.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/areas.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/areas.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/fields.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/fields.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/hooks.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/hooks.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/page-methods.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/page-methods.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/site-methods.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/site-methods.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/components\/snippets.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/components\/snippets.php",
-      "oF" : 0
-    },
     "\/site\/plugins\/komments\/composer.json" : {
       "ft" : 524288,
       "oA" : 1,
@@ -10301,27 +13341,11 @@
       "oAP" : "\/site\/plugins\/komments\/composer.lock",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/config\/options.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/config\/options.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/config\/translations.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/config\/translations.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/doc-assets\/komment-section.png" : {
+    "\/site\/plugins\/komments\/doc-assets\/panel-moderation-view.png" : {
       "ft" : 32768,
-      "iS" : 28377,
+      "iS" : 5072938,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/doc-assets\/komment-section.png",
+      "oAP" : "\/site\/plugins\/komments\/doc-assets\/panel-moderation-view.png",
       "oF" : 0,
       "oIPL" : 0,
       "opt" : 0,
@@ -10329,159 +13353,6 @@
       "ou" : "lpckwebp-none",
       "q" : 90,
       "rq" : 75
-    },
-    "\/site\/plugins\/komments\/doc-assets\/komment-stats.png" : {
-      "ft" : 32768,
-      "iS" : 11776,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/doc-assets\/komment-stats.png",
-      "oF" : 0,
-      "oIPL" : 0,
-      "opt" : 0,
-      "oT" : 1,
-      "ou" : "lpckwebp-none",
-      "q" : 90,
-      "rq" : 75
-    },
-    "\/site\/plugins\/komments\/doc-assets\/komments-dashboard.png" : {
-      "ft" : 32768,
-      "iS" : 97716,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/doc-assets\/komments-dashboard.png",
-      "oF" : 0,
-      "oIPL" : 0,
-      "opt" : 0,
-      "oT" : 1,
-      "ou" : "lpckwebp-none",
-      "q" : 90,
-      "rq" : 75
-    },
-    "\/site\/plugins\/komments\/doc-assets\/komments-pending.png" : {
-      "ft" : 32768,
-      "iS" : 11129,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/doc-assets\/komments-pending.png",
-      "oF" : 0,
-      "oIPL" : 0,
-      "opt" : 0,
-      "oT" : 1,
-      "ou" : "lpckwebp-none",
-      "q" : 90,
-      "rq" : 75
-    },
-    "\/site\/plugins\/komments\/docs\/faq.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/faq.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
-    },
-    "\/site\/plugins\/komments\/docs\/notifications.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/notifications.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
-    },
-    "\/site\/plugins\/komments\/docs\/options.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/options.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
-    },
-    "\/site\/plugins\/komments\/docs\/panel.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/panel.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
-    },
-    "\/site\/plugins\/komments\/docs\/templates.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/templates.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
-    },
-    "\/site\/plugins\/komments\/docs\/webmentions.md" : {
-      "cB" : 0,
-      "cS" : 0,
-      "eF" : 1,
-      "eL" : 1,
-      "ema" : 1,
-      "eSQ" : 1,
-      "ft" : 4096,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/docs\/webmentions.html",
-      "oF" : 0,
-      "oFM" : 0,
-      "oS" : 0,
-      "pHT" : 0,
-      "pME" : 1,
-      "rFN" : 0,
-      "uCM" : 0
     },
     "\/site\/plugins\/komments\/index.css" : {
       "aP" : 1,
@@ -10514,12 +13385,220 @@
       "oAP" : "\/site\/plugins\/komments\/index.php",
       "oF" : 0
     },
+    "\/site\/plugins\/komments\/lib\/DatabaseAbstraction.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/DatabaseAbstraction.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/KommentModeration.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/KommentModeration.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/KommentNotifications.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/KommentNotifications.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/KommentReceiver.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/KommentReceiver.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/KommentsFrontend.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/KommentsFrontend.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/MarkdownConverter.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/MarkdownConverter.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/Migrations.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/Migrations.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/Storage.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/Storage.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/StorageFactory.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/StorageFactory.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/StorageMarkdown.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/StorageMarkdown.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/StoragePhpunit.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/StoragePhpunit.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/StorageSqlite.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/StorageSqlite.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/TestCaseMocked.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/TestCaseMocked.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/lib\/WebmentionReceiver.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/lib\/WebmentionReceiver.php",
+      "oF" : 0
+    },
     "\/site\/plugins\/komments\/LICENSE" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/plugins\/komments\/LICENSE",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/migrations\/database_202407211411.sql" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/migrations\/database_202407211411.sql",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/api.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/api.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/areas.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/areas.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/blueprints.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/blueprints.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/fields.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/fields.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/hooks.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/hooks.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/options.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/options.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/page-methods.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/page-methods.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/routes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/routes.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/site-methods.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/site-methods.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/snippets.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/snippets.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/plugin\/translations.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/plugin\/translations.php",
       "oF" : 0
     },
     "\/site\/plugins\/komments\/README.md" : {
@@ -10541,52 +13620,108 @@
       "rFN" : 0,
       "uCM" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/kommentform.php" : {
+    "\/site\/plugins\/komments\/snippets\/deprecated.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/kommentform.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/deprecated.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/mention-type-like.php" : {
+    "\/site\/plugins\/komments\/snippets\/form.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/mention-type-like.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/form.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/mention-type-mention.php" : {
+    "\/site\/plugins\/komments\/snippets\/list-comments.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/mention-type-mention.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/list-comments.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/mention-type-reply.php" : {
+    "\/site\/plugins\/komments\/snippets\/list-likes.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/mention-type-reply.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/list-likes.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/mention-type-repost.php" : {
+    "\/site\/plugins\/komments\/snippets\/list-mentions.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/mention-type-repost.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/list-mentions.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/snippets\/webmentions-splitted.php" : {
+    "\/site\/plugins\/komments\/snippets\/list-replies.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/snippets\/webmentions-splitted.php",
+      "oAP" : "\/site\/plugins\/komments\/snippets\/list-replies.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/list-reposts.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/list-reposts.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-base.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-base.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-comment.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-comment.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-like.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-like.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-mention.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-mention.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-reply.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-reply.php",
+      "oF" : 0
+    },
+    "\/site\/plugins\/komments\/snippets\/response-repost.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/plugins\/komments\/snippets\/response-repost.php",
       "oF" : 0
     },
     "\/site\/plugins\/komments\/templates\/emails\/newComments.php" : {
@@ -10597,68 +13732,12 @@
       "oAP" : "\/site\/plugins\/komments\/templates\/emails\/newComments.php",
       "oF" : 0
     },
-    "\/site\/plugins\/komments\/utils\/base.php" : {
+    "\/site\/plugins\/komments\/templates\/pages\/response.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/base.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/Frontend.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/Frontend.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/moderation.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/moderation.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/notifications.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/notifications.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/receiveKomment.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/receiveKomment.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/sendMastodon.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/sendMastodon.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/sendWebmention.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/sendWebmention.php",
-      "oF" : 0
-    },
-    "\/site\/plugins\/komments\/utils\/TestCaseMocked.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/plugins\/komments\/utils\/TestCaseMocked.php",
+      "oAP" : "\/site\/plugins\/komments\/templates\/pages\/response.php",
       "oF" : 0
     },
     "\/site\/plugins\/komments\/vendor\/autoload.php" : {
@@ -27015,28 +30094,28 @@
       "oAP" : "\/site\/plugins\/seo\/vendor\/spatie\/schema-org\/src\/Zoo.php",
       "oF" : 0
     },
-    "\/site\/sessions\/1732031027.94297f450d38480dfd84.sess" : {
+    "\/site\/sessions\/1745517377.4c9e184e3a8702ee2a43.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1732031027.94297f450d38480dfd84.sess",
+      "oAP" : "\/site\/sessions\/1745517377.4c9e184e3a8702ee2a43.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1732031027.c53c298fa7166b35d7ca.sess" : {
+    "\/site\/sessions\/1745517377.5db4134c1524a068c8e7.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1732031027.c53c298fa7166b35d7ca.sess",
+      "oAP" : "\/site\/sessions\/1745517377.5db4134c1524a068c8e7.sess",
       "oF" : 0
     },
-    "\/site\/sessions\/1732034630.16d74462da5a50e9e685.sess" : {
+    "\/site\/sessions\/1746123834.788eb53415ea2efd912a.sess" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/sessions\/1732034630.16d74462da5a50e9e685.sess",
+      "oAP" : "\/site\/sessions\/1746123834.788eb53415ea2efd912a.sess",
       "oF" : 0
     },
     "\/site\/sessions\/index.html" : {
@@ -27047,20 +30126,20 @@
       "oAP" : "\/site\/sessions\/index.html",
       "oF" : 0
     },
+    "\/site\/snippets\/blocks\/image.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/blocks\/image.php",
+      "oF" : 0
+    },
     "\/site\/snippets\/components\/breadcrumb.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/snippets\/components\/breadcrumb.php",
-      "oF" : 0
-    },
-    "\/site\/snippets\/components\/byline.php" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/site\/snippets\/components\/byline.php",
       "oF" : 0
     },
     "\/site\/snippets\/components\/last-updated.php" : {
@@ -27071,12 +30150,28 @@
       "oAP" : "\/site\/snippets\/components\/last-updated.php",
       "oF" : 0
     },
+    "\/site\/snippets\/components\/on-at-in.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/on-at-in.php",
+      "oF" : 0
+    },
     "\/site\/snippets\/components\/splash.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/snippets\/components\/splash.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/components\/tags.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/components\/tags.php",
       "oF" : 0
     },
     "\/site\/snippets\/components\/theme-picker.php" : {
@@ -27087,12 +30182,28 @@
       "oAP" : "\/site\/snippets\/components\/theme-picker.php",
       "oF" : 0
     },
+    "\/site\/snippets\/copyright.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/copyright.php",
+      "oF" : 0
+    },
     "\/site\/snippets\/footer.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/snippets\/footer.php",
+      "oF" : 0
+    },
+    "\/site\/snippets\/head.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/snippets\/head.php",
       "oF" : 0
     },
     "\/site\/snippets\/header.php" : {
@@ -27111,12 +30222,36 @@
       "oAP" : "\/site\/snippets\/index.html",
       "oF" : 0
     },
+    "\/site\/templates\/archives.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/archives.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/book.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/book.php",
+      "oF" : 0
+    },
     "\/site\/templates\/codex.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/templates\/codex.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/colors.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/colors.php",
       "oF" : 0
     },
     "\/site\/templates\/company.php" : {
@@ -27135,6 +30270,22 @@
       "oAP" : "\/site\/templates\/default.php",
       "oF" : 0
     },
+    "\/site\/templates\/essay-container.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/essay-container.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/essay.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/essay.php",
+      "oF" : 0
+    },
     "\/site\/templates\/journal-container.php" : {
       "cB" : 0,
       "ft" : 8192,
@@ -27151,12 +30302,28 @@
       "oAP" : "\/site\/templates\/journal.php",
       "oF" : 0
     },
-    "\/site\/templates\/links.php" : {
+    "\/site\/templates\/library.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
-      "oAP" : "\/site\/templates\/links.php",
+      "oAP" : "\/site\/templates\/library.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/link.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/link.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/links-container.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/links-container.php",
       "oF" : 0
     },
     "\/site\/templates\/notes.php" : {
@@ -27175,12 +30342,58 @@
       "oAP" : "\/site\/templates\/project.php",
       "oF" : 0
     },
+    "\/site\/templates\/quote.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/quote.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/quotes.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/quotes.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/review.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/review.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/reviews.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/reviews.php",
+      "oF" : 0
+    },
+    "\/site\/templates\/tags.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/site\/templates\/tags.php",
+      "oF" : 0
+    },
     "\/site\/templates\/work.php" : {
       "cB" : 0,
       "ft" : 8192,
       "hM" : 0,
       "oA" : 0,
       "oAP" : "\/site\/templates\/work.php",
+      "oF" : 0
+    },
+    "\/vendor\/psr\/log" : {
+      "ft" : 65536,
+      "oA" : 1,
+      "oAP" : "\/vendor\/psr\/log",
       "oF" : 0
     }
   },

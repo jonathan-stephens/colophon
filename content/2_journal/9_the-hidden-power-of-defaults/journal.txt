@@ -1,0 +1,108 @@
+Title: The hidden power of defaults
+
+----
+
+Hed: The hidden power of defaults
+
+----
+
+Dek: Lessons in responsibility from web design, experimentation, and life
+
+----
+
+Text:
+
+Early in my career, I learned a crucial lesson about defaults through a spectacular failed experiment.
+
+I changed the text highlight color on Booking.com.
+
+Inspired by the still-relatively-new (link: https://html5boilerplate.com/ text: HTML5 Boilerplate) and watching hours of user research—specifically how people read on the website—I thought, “Why not?”
+
+My reasoning seemed sound:
+
+- align with our brand colors,
+- improve color contrast for better readability, and
+- help users track their place while reading.
+
+But things did not go as planned. Not at all.
+
+Users didn't want a brand experience while highlighting text; they simply wanted to navigate information. Conversion statistically & significantly dropped. By altering this ingrained default, I created cognitive dissonance that disrupted their unique decision-making process.
+
+This experience opened my eyes to the importance of respecting user expectations, remembering user’s own context, and the impactful implications of defaults.
+
+## More than just settings
+
+Defaults extend far beyond the realm of web design. Our brains wire them into our very being—shaping our habits, mindsets, and how we perceive the world. On the web, defaults range from accessibility features built into HTML and CSS to the keyboard shortcuts we create in our tools. In life, they manifest as the well-traveled mental pathways we use to navigate our daily experiences.
+
+Understanding defaults is critical because they:
+
+- set expectations and boundaries;
+- create shortcuts that simplify our lives;
+- can become invisible, making change challenging; and
+- reveal potential for improvement when recognized.
+
+## Power in questioning defaults
+
+Identifying & naming defaults gives us the power to question them.
+
+We can start to imagine alternatives, dream of improvements, and take action to create new norms. This process isn't always smooth or successful—like my failed highlight experiment—but it's essential.
+
+It’s confrontational.
+
+It challenges us to re-think approach & beliefs.
+
+It’s the flywheel that drives growth and innovation.
+
+Consider how defaults affect your daily life:
+
+- Do you follow a set order for your morning routine?
+- Do you walk on a particular side of the road?
+- Do you push or pull a door when opening it?
+
+These behaviors often stem from defaults we've unconsciously accepted. By questioning them, we open ourselves to new possibilities, realizing potential harm or alternative, better ways of doing things.
+
+## Experiments today, defaults tomorrow
+
+As we navigate life and work, we should stay curious about the defaults that surround us. Ask yourself: Which defaults serve me well? Which ones might benefit from a thoughtful redesign? By challenging these norms, we can discover better, more fulfilling ways to live and work.
+
+Remember: defaults are powerful shapers in our life experiences. They reflect and reinforce our values. They are designed, conscious choices.
+
+Today's experiments can become tomorrow's accepted defaults.
+
+Let's make sure they're ones worth keeping.
+
+----
+
+Tags: Defaults, Settings, Accessibility, Design, Story
+
+----
+
+Date: 2024-07-17
+
+----
+
+Time: 18:55:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Images:
+
+----
+
+Documents:
+
+----
+
+Uuid: sVdXzRgUn0PmgI9z

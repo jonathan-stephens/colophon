@@ -1,0 +1,41 @@
+Alt: Grids of color ranges going from 100–900 in different groupings. At the top are the primary colors, the sources of all the color mixing with ranges of cyan, magenta, yellow, and black (named Ink and Paper). The next row are three secondary colors with subheaders of what was mixed to get them: green (cyan + yellow), purpple (magenta + cyan), and orange (magenta + yellow). The final group consists of ranges from 100% to 0% mixing pairs of the primary and secondary colors in the oklch color space with shorter- and longer-hues set (to exlore what colors are created).
+
+----
+
+Caption: Color experiments that currently live on my website, using a mix of CSS root- and non-root variables, color-mixing, the oklch color space, systemisation, and exploration. Choices of colors is rooted in CMYK of ink-based color-mixing and applying the concept to the web to generate a programmatic color system.
+
+----
+
+Creator: 
+
+----
+
+Link: 
+
+----
+
+Addresslocality: 
+
+----
+
+Addresscountry: 
+
+----
+
+Date: 
+
+----
+
+Keywords: Color Mixing, OKLCH
+
+----
+
+Sort: 1
+
+----
+
+Uuid: 5DUsJyU7AfTOnkgw
+
+----
+
+Template: blocks/image

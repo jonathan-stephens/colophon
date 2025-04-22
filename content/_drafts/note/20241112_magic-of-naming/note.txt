@@ -1,0 +1,29 @@
+Title: Magic of naming
+
+----
+
+Date: 2024-11-12
+
+----
+
+Time: 15:00:00
+
+----
+
+Location: {{ site.default_location }}
+
+----
+
+Category: quotes
+
+----
+
+Text: For magic consists in this, the true naming of a thing.
+
+----
+
+Tags: Ursula Le Guin
+
+----
+
+Uuid: 4YEfISifgLNa2YPG

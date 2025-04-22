@@ -1,0 +1,151 @@
+Title: A story of my new favorite website
+
+----
+
+Hed: A story of my new favorite website
+
+----
+
+Dek: It's what the internet used-to, still-is, and could become again
+
+----
+
+Text:
+
+It’s a shared joke in the Design Industry about the challenge it is to design & build your own website. There are multiple dimensions to the plight, but I think it stems from negotiating the past, present, and future of how one presents themselves on the internet.
+
+For me, it’s kept along the lines of “I have a broad set of skills that I’m trying to package for jobs & gigs, but haven’t found the focused niche yet” mixed with a healthy dose of “how do I tell my story…and what’s even my story to begin with?”
+
+## Context of my website
+
+One of my personal branding goals is to align the digital with the physical, searching to balance patinas of use when the canvas doesn’t age. I want to bring that hand-made quality to a hand-crafted website…even if its crafted by hands via keyboard.
+
+It’s one of the reasons I hung onto (link: https://www.typography.com/fonts/inkwell/design-notes text: Inkwell) and (link: https://www.typography.com/fonts/operator/design-notes text: Operator) as my brand fonts for so long. Each are intimiately aligned with production methods through the centuries—from handwriting to the printing press to the portable, desktop typewriter.
+
+My brand colors also hearken back to color printing production, with cyan, magenta, yellow, black, and paper (white). The secondary colors are direct mixes of each of those colors—excitingly mixed with new CSS features like (link: https://www.smashingmagazine.com/2022/06/simplify-color-palette-css-color-mix/ text: color-mix) and (link: https://oklch.com/ text: oklch colors).
+
+## Deepening the metaphor
+
+As I’ve started naming my CSS’ root-variables, I’ve wanted to continue the alignment to the physical & historical aspects of graphic design & print production. I’ve discovered new terms that have been used in news design for centuries—it’s exciting what one can find when analyzing random website’s CSS.
+
+It’s what I’m using for the class names of for structure:
+
+- `hed` → header;
+- `dek` → subtitle or subheader;
+- `lede` → first paragraph, the hook;
+- `nutgraf` → summary paragraph, typically second; and
+- `prose` → main long-form content.
+
+It’s what—I think—I’ll use for separating types of content:
+
+- `article` → news, facts, reporting;
+- `feature` → news with style, storytelling devices; and
+- `editorial` → opinionated piece from.
+
+As well as naming my classes for the style itself:
+
+- `bleed` → ink/image goes beyond margins;
+- `hue` → pure color with no black or white;
+- `tint` → pure color mixed with white;
+- `shade` → pure color mixed with black;
+- `tone` → pure color mixed with gray.
+
+## Defining sizes
+
+So, I have direction there…but I need to name the sizes and scales of the design itself. Some sites use extra-small, small, medium, large, extra-large—xs, s, m, l, xl—as identifiers. Others use some sort of counting method from 00–90 or 000–900, aligning with digital typographic conventions and how CSS names colors.
+
+Yet, these naming conventions don’t connect to any historical systems.
+
+What are contextual & historical sizing systems anyways?
+
+## I asked; the internet provided
+
+(link: https://www.sizes.com/indexes.htm text: Sizes.com) is one of my new favorite websites.
+
+It’s a fantastic, simple, in-depth repository of historical knowledge of…sizes! It’s absolutely lovely. Apart from it’s brilliantly honest & direct about page—two paragraphs excerpted below—it’s an amazingly useful tool.
+
+### What is sizes.com?
+
+> Sizes, Inc. is incorporated in Delaware; currently this web site is its only project. Since time is precious, we do not give out phone numbers. If you are an SEO consultant, thanks, but we do not have the money to hire you. Also, the domain name is not for sale. And if you are a fraudster, we don't sell anything, so don't bother sending us fraudulent orders asking if we accept credit cards.
+>
+> **An explanatory history**
+>
+> The author is an educational “content provider” who began his career in film, many media technologies ago. Even before the birth of the microprocessor, media began changing so rapidly that one had to run hard to stay in the same spot. In the early 1990's Microsoft was pushing a hot new format, CD-ROM. (Older readers may remember when a CD burner cost hundreds of dollars, and a blank CD was $15, not 15 cents.) Since the best way to learn a new technology is to make something with it, I looked around for a topic suited to the CD-ROM's capabilities.
+
+## Type sizes of past worlds
+
+The impetus of my search was in type sizes—how was metal type categorized, size wise, apart from straight point-numbers? Sizes.com has a dedicated page fully to (link: https://www.sizes.com/tools/type.htm text: printing type). And I’ve found a naming structure!
+
+```
+--size-diamond:   var(--step--3);
+--size-pearl:     var(--step--2);
+--size-ruby:      var(--step--1);
+--size-emerald:   var(--step-0);
+--size-minion:    var(--step-1);
+--size-brevier:   var(--step-2);
+--size-bourgeois: var(--step-3);
+--size-pica:      var(--step-4);
+--size-english:   var(--step-5);
+--size-columbian: var(--step-6);
+--size-paragon:   var(--step-7);
+--size-meridian:  var(--step-8);
+```
+
+It’s exciting to be able to finally found a resource that offers so MUCH interesting content to read through and learn from.
+
+## Keep the internet weird
+
+My largest laments of the internet-of-today are its (link: https://en.wikipedia.org/wiki/Closed_platform text: walled-gardens), spyware, lack of control, and everything being at the mercy of The Algorithm. It’s one of the reasons I gravitate towards many of the independent web movements, open source, web standards, and even my continued interest in simple—yet complex—HTML and CSS.
+
+Sizes.com is one of those live time-capsules that hasn’t yet been lost to the corporate-internet, like (link: https://en.wikipedia.org/wiki/GeoCities text: Geocities) or (link: https://en.wikipedia.org/wiki/Tumblr text: Tumblr).
+
+It’s absolutely lovely in it’s purpose & function.
+
+## I don’t have favorite websites these days
+
+Honestly, it’s the first time in a long, long while that I found a new favorite website.
+
+Last week, it was a true joy to finish my week discovering & exploring this treasure trove of historical taxonomic information. I mean, where else can you find descriptions of the:
+
+- (link: https://www.sizes.com/units/scoville_unit.htm text: Scoville Heat Unit,) that measure of heat in chili peppers, alongside the
+- (link: https://www.sizes.com/society/waffle_house_index.htm text: Waffle House Index,) the measure American federal services use to measure ponential severity of natural weather occurrences, with
+- (link: https://www.sizes.com/tools/spikes_railroad.htm text: Railroad Track Spikes,) the standard length & width with average number in a shipping container, and
+- (link: https://www.sizes.com/materials/candle_wicks.htm text: Candlewicks,) the standardized thickness of candle wicks.
+
+## I hope you’ve enjoyed this pebble
+
+----
+
+Tags: Internet, Web Development, CSS, Weird, Design History, Internet History, Typography, Design, Website, Sizes, Measures
+
+----
+
+Date: 2024-07-22
+
+----
+
+Time: 16:30:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Images:
+
+----
+
+Documents:
+
+----
+
+Uuid: trBYDqcAr4ksQSKe

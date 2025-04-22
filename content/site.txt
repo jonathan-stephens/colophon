@@ -1,0 +1,162 @@
+Title: Jonathan Stephens
+
+----
+
+Site-title: Jonathan Stephens
+
+----
+
+Site-description: 
+
+----
+
+Default-location: Raleigh, NC
+
+----
+
+Footer-nav:
+
+- 
+  linktitle: About
+  link: page://GtStMuixcji45tsP
+- 
+  linktitle: Journal
+  link: page://gevx6G03JRLRHtml
+- 
+  linktitle: Links
+  link: page://R7cAOwWwS9jlMnD0
+
+----
+
+Footer-col2-title: About Jonathan
+
+----
+
+Footer-col2-pages: 
+
+----
+
+Footer-social:
+
+- 
+  platform: LinkedIn
+  url: https://linkedin.com/in/elnatnal
+  logo: [ ]
+- 
+  platform: Bluesky
+  url: >
+    https://bsky.app/profile/jonathanstephens.bsky.social
+  logo: [ ]
+- 
+  platform: Read.cv
+  url: https://read.cv/jonathanstephens
+  logo: [ ]
+- 
+  platform: ADPList
+  url: >
+    https://adplist.org/mentors/jonathan-stephens
+  logo: [ ]
+- 
+  platform: Substack
+  url: https://jonathanstephens.substack.com
+  logo: [ ]
+- 
+  platform: StoryGraph
+  url: >
+    https://app.thestorygraph.com/profile/elnatnal
+  logo: [ ]
+- 
+  platform: Github
+  url: https://github.com/jonathan-stephens
+  logo: [ ]
+- 
+  platform: Mastodon
+  url: >
+    https://mastodon.social/@jonathanstephens
+  logo: [ ]
+- 
+  platform: Dribbble
+  url: https://dribbble.com/jonathanstephens
+  logo: [ ]
+- 
+  platform: Instagram
+  url: https://instagram.com/elnatnal
+  logo: [ ]
+
+----
+
+Footer-nav-pages:
+
+- 
+  linktitle: Journal
+  link: page://gevx6G03JRLRHtml
+- 
+  linktitle: Links
+  link: page://R7cAOwWwS9jlMnD0
+
+----
+
+Footer-col1-title: Site
+
+----
+
+Footer-col1-pages:
+
+- 
+  page: Journal
+  url: https://jonathanstephens.us/journal
+  id: journal
+  image:
+    back: pattern
+    color: gray-500
+    cover: false
+    icon: text
+  info: ""
+  link: /pages/journal
+  sortable: true
+  text: Journal
+  uuid: page://gevx6G03JRLRHtml
+  dragtext: '(link: page://gevx6G03JRLRHtml text: Journal)'
+  haschildren: true
+- 
+  page: Links
+  url: https://jonathanstephens.us/links
+
+----
+
+Logo: 
+
+----
+
+Show-search: false
+
+----
+
+Linktitle: Leadership Values
+
+----
+
+Link: https://jonathanstephens.substack.com/p/my-leadership-values
+
+----
+
+Social-links:
+
+-
+  platform: Github
+  url: https://github.com/jonathan-stephens
+  icon: [ ]
+-
+  platform: Substack
+  url: https://jonathanstephens.substack.com
+  icon: [ ]
+
+----
+
+Addresses:
+
+- 
+  street: null
+  zip: null
+  city: null
+  _id: 68f6de1d-02ca-464f-bca5-176dd676e40a

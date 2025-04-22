@@ -1,0 +1,37 @@
+Title: Links to all my places
+
+----
+
+Date: 2025-01-01
+
+----
+
+Time: 11:50:00
+
+----
+
+Addresslocality: Premia de Mar
+
+----
+
+Addressregion: Barcelona
+
+----
+
+Addresscountry: Spain
+
+----
+
+Url: https://bell.bz/links/
+
+----
+
+Description: 
+
+----
+
+Tags: Links, Inspiration
+
+----
+
+Uuid: oSR8Bm9LgJGfWRz2

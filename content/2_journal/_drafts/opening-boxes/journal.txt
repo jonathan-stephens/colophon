@@ -1,0 +1,53 @@
+Title: Opening boxes through a design lens
+
+----
+
+Hed: Opening boxes through a design lens
+
+----
+
+Dek: Experiencing
+
+----
+
+Date: 
+
+----
+
+Time: 22:40:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
+
+----
+
+Text:
+
+I just opened one of my holiday gifts: a rhythmic boxing game that attaches to the wall. Like DDR—(link: https://en.wikipedia.org/wiki/Dance_Dance_Revolution text: Dance, Dance Revolution)—for your fists. 
+
+1. We got to know the package arrived with a welcome notification by our dog, Freyja. After a month apart, it was a wonderful reminder we were all together again. Also, border collies. They **do** enjoy telling you about stuff they see, especially ones they think you should know about. 
+2. It was the biggest package I've received in a while.
+3. Ended up being a package in a package. 
+    - "What a waste of space"
+    - "Ahh, I bet because automation and the whole algo for figuring out best size "averages" it'd be difficult to do. When outsourced to an LLM, there're complications of things like physical constraints and on-the-floor realities, even moreso."
+    - "Standardizations. (link: https://xkcd.com/927/ text: Going 14 to 15, everytime)."
+    - "But sometimes, it works...Europe just set a lawful standard for USB-C.  Because convenience, reducing waste, efficiency, and the reality for standards in this complex, global infrastructure considering wesource wars, climate crisis, and rapidly burning planet."
+4. Open the package in a package. 
+    - It's in a Helvetica, with an isometric drawing.
+
+----
+
+Tags: 
+
+----
+
+Uuid: VvEu5daX29gpByyV

@@ -1,7 +1,23 @@
-
   </main>
 
   <footer role="contentinfo">
+    <section class="subscribe">
+      <h3>Subscribe to Weekly Wanders</h3>
+      <p>A weekly newsletter with bite-sized bits of writings & discoveries.</p>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/jonathanstephens"
+        method="post"
+        target="popupwindow"
+        onsubmit="window.open('https://buttondown.com/jonathanstephens', 'popupwindow')"
+        class="embeddable-buttondown-form">
+        <label for="bd-email">Enter email</label>
+        <input type="email" name="email" id="bd-email" />
+
+        <input type="submit" value="Subscribe" />
+      </form>
+    </section>
+
     <?php $menuItems = $site->footer_nav()->toStructure(); ?>
       <?php if ($menuItems->isNotEmpty()): ?>
       <nav role="navigation" class="wrapper">

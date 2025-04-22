@@ -7,17 +7,26 @@
       <?php snippet('/components/on-at-in') ?>
     </header>
 
-
     <div class="e-content prose" itemprop="articleBody">
       <?= $page->text()->footnotes() ?>
     </div>
+    <aside>
+      <?php
+       // Process content once and use for both TOC and display
+       $content = $page->text()->kt();
 
+       // Get TOC with desired header levels (h2-h4 in this example)
+       $headlines = $content->toc(2, 4);
+
+       // Include TOC snippet
+       snippet('toc', ['headlines' => $headlines]);
+       ?>
+    </aside>
 
 
     <footer class="meta">
       <?php snippet('/components/tags', ['reference' => $page]) ?>
     </footer>
-
   </article>
 
 <?php snippet('footer') ?>

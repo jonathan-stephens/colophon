@@ -6,260 +6,37 @@ Hed: Chrysalis
 
 ----
 
-Dek: Stage of being or growth—record; reflection; story
+Dek: Subtitle
 
 ----
 
 Text:
 
-## An Introduction
+Lorem ipsum odor amet, consectetuer adipiscing elit. Ad nam molestie duis ut sollicitudin mauris quisque tristique. Sagittis himenaeos inceptos interdum, ante velit non hac hendrerit mus. Ridiculus auctor maximus dignissim molestie conubia nibh. Eget est ipsum imperdiet nam nascetur elit dui faucibus dictum. Curae lacus maximus suspendisse bibendum maximus fermentum dictumst etiam? Ridiculus eu netus efficitur habitasse nec nostra cras ultricies ligula.
 
-**Phew; what a year.**
+Faucibus potenti convallis ultrices volutpat nibh in per. Laoreet iaculis porttitor eu in curabitur. Quisque est pharetra sagittis suspendisse vulputate orci platea dis mauris. Aenean litora hac sed laoreet, dolor amet ac eget himenaeos. Rhoncus risus montes habitasse volutpat feugiat leo pulvinar. Eros vehicula ante non; vitae leo id. Lacinia non ut fames nulla montes quis! Varius adipiscing mi finibus; enim lacinia efficitur interdum. Litora neque cursus nullam quisque odio. Lacus in ultricies viverra mauris dui pretium.
 
-Time—from a non-linear, non-subjective viewpoint—is a big ball of wibbly wobbly, timey-wimey...stuff.[^ Of course I had to kick it off with a Doctor Who quote. Specifically from David Tennant as the Doctor, in S3E10 titled Blink.] Though, 2020 had more of a Jeremy Bearimy feel to it—absurdly loopty-loop when days felt like weeks; weeks like months; and months, years. It was an end of a decade that felt like a decade within itself. Yet, the Earth continues to spin, the sun rises and sets, even while encapsulated in the same space for eleven months; the universe moves—forward.
+Ultricies dictumst egestas aenean per libero potenti. Sapien sodales ultrices justo quis ultrices nullam conubia augue? Afames eros sit pretium; rhoncus suspendisse amet. Per vulputate curabitur nec nulla taciti, finibus iaculis quis. Non ex arcu risus dapibus ridiculus, efficitur lacinia commodo dis. Habitasse venenatis tempor viverra sed semper ligula etiam sodales nulla. Erat vestibulum dignissim laoreet luctus fames facilisis ut habitant cursus.
 
-I'm fortunate enough to be able to write this in reflection, continuing to adventure through life, when so many others have not. It's not something taken for granted or lightly felt. But, as my experience of time has ceased to mean much of anything, this is my record of what happened. I need it for myself, to remember. It's my sort of "origin story;" putting words to something that I also want to share, in hopes someone, somewhere, could learn something interesting and useful along the way. 
+Potenti molestie dapibus nascetur praesent consequat habitant fusce interdum. Elit tempus sociosqu urna luctus sem lacinia eros. Ablandit blandit; fringilla at aptent commodo vulputate tellus. Parturient nostra tellus penatibus elit vivamus morbi ultrices mattis quis. Aliquam hendrerit nam; pulvinar semper ultricies pharetra. Per facilisis laoreet; nisi dolor urna tellus integer.
 
-I came into 2020 a caterpillar.
-
-I fed on an innate need to always be moving, doing, helping. As time past, the layers of global & personal life-changing events surged, flooding with change. Despite how it felt at the time, what kept me grounded was its relativity. What a human calls rain, a caterpillar calls flood. Through my pursuit of perspective—and metaphorically running headfirst into a brick wall—I finally started to accept my needs. 
-
-I entered a stage of fundamental & transformative change; filled with rest, recovery, and reflection. 
-
-*In chrysalis.* ¶
-
-## The Before Times
-
-At the start of the year, never would have thought I'd be where and who I am today. Few could.
-
-After spending New Years in North Carolina, then heading straight to my first Three King's Day in Barcelona with my partner, we returned to Amsterdam for Booking.com's Annual Meeting. I started taking on new roles and responsibilities at work. 
-
-In October 2019, I had been elected as an employee representative to the Dutch Works Council. To provide the mandated capacity for Works Council duties, I was taking a step back from my managerial role and creating a new position for myself, to individually contribute—laying groundwork for departmental knowledge management. All the while, life's adventure filled season of holidays, as seed was beginning to sprout about a proposal sometime in 2020. ¶
-
-### New Adventures 2020
-<time datetime="2020-22-01">January 22nd</time>
-
-<span class="lead-in">Nottingham, England</span> I was lucky enough to attend my second (link: https://newadventuresconf.com/2020/ text: New Adventures Conference), hosted by (link: https://colly.com/about/ text: Simon Collison). 
-
-2019's conference prompted more personal responsibility to act and actively work to change the tech industry for the better—eventually providing the inspiration that led to my involvement in the Works Council. From Jeremy Keith's keynote, (link:https://newadventuresconf.com/2019/coverage/jeremy text: Building), to Ethan Marcotte's impelling closing, (link: https://newadventuresconf.com/2019/coverage/ethan text: The World Wide Work): there's not a conference I'd recommend more. 
-
-While (link: https://newadventuresconf.com/2019/ text: 2019's conference) brought the "why & what needs to change," 2020's brought tools and voices that directly told everyone _how._ Because each speaker prompted so much internal reflection, their presentations are linked here, along with notes by Shane Hudson for quicker perusal:
-- (link: https://www.youtube.com/watch?v=OeBIeD6ccuA text: Building Better Worlds) by (link: https://www.cennydd.com/ text: Cennydd Bowles) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-cennydd-bowles-on-building-better-worlds/ text: Notes))
-- (link: https://www.youtube.com/watch?v=e5L16rQw8dE text: Clean your studio. Draw on walls. Don't break things. Radical is close to home.) by (link: https://www.linkedin.com/in/akilbenjamin/ text: Akil Benjamin) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-akil-benjamin's-clean-your-studio.-draw-on-walls.-don't-break-things.-radical-is-close-to-home./ text: Notes))
-- (link: https://www.youtube.com/watch?v=XzLqgWHiFlA text: Unknown Unknowns: Collecting our digital lives) by (link: https://ndkane.com/ text: Natalie Kane) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-natalie-kane's-unknown-unknowns:-collecting-our-digital-lives/ text: Notes))
-- (link: https://www.youtube.com/watch?v=O5abEgBQ3ZM text: Productivity recreates disability) by (link: https://linktr.ee/eejackson text: Liz Jackson) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-liz-jackson's-productivity-recreates-disability/ text: Notes))
-- (link: https://www.youtube.com/watch?v=F5CvwioUy40 text: Defying the mainstream: building technology that respects our rights) by (link: https://laurakalbag.com text: Laura Kalbag) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-laura-kalbag-on-defying-the-mainstream:-building-technology-that-respects-our-rights/ text: Notes))
-- (link: https://www.youtube.com/watch?v=-DXWwlXAe5M text: Designing for a collective futurity: mapping the unseen) by (link: https://twitter.com/FINOkoye text: Florence Okoye) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-florence-okoye-on-designing-for-a-collective-futurity:-mapping-the-unseen/ text: Notes))
-- (link: https://www.youtube.com/watch?v=s3C88R-WIro text: Our Banal Binary) by (link: https://tatianamac.com/ text: Tatiana Mac) ((link: https://shanehudson.net/articles/2020/new-adventures-2020-tatiana-mac's-our-banal-binary/ text: Notes))
-
-After each morning & afternoon speaker sessions, (link: https://jeffveen.me/ text: Jeff Veen) of the (link: http://presentable.fm/ text: Presentable podcast) hosted a live panel with the speakers of each:
-- (link: https://www.relay.fm/presentable/79 text: Part 1; with Cennyd, Akil, and Natalie Bowles)
-- (link: https://www.relay.fm/presentable/80 text: Part 2; with Liz, Laura, Florence, and Tatiana)
-
-I can't say thank you enough to (link: https://colly.com text: Simon), (link: https://hellogeri.com/ text: Geri), and the team that made this conference happen. Thank you to all the speakers for the wisdom, knowledge, and lessons y'all chose to chare. 
-
-While it may feel like this conference was ages ago, it's been an impactful highlight of my year that, all things considered, would be prescient of a year that exposed the world's already broken systems & beliefs, revealing humanity's collective capacity to show chare for other humans. **We can do better.** ¶
-
-## Pandemic Times
-There's a saying, how weather begins in March predicts how it will end. It either "comes in like a lion & out like a lamb" or "comes in like a lion & out like a lion." This year, March came in like a pride of lions, devouring the flock of lambs that would have led towards some sense of spring. 
-
-*That time when Earth went into quarantine.* ¶
-
-### Netherlands goes into lockdown, now the work at home begins
-<time datetime="2020-03-16">March 16th</time>
-
-This meant focusing, full-time, on my Works Council responsibilities. Now, many around the world aren't familiar with Works Councils and the power they provide employees, enabling collaboration with decision makers in specific circumstances. It's helpful to understand this is **the standard way of doing business** in the Netherlands, especially as an example of a direction the United States could make use of, especially in light of (link: https://theintercept.com/2021/02/10/amazon-alabama-union-busting-koch/ text: invigorated union suppression) and (link: https://www.bbc.com/news/business-55535325 text: labor-organizing.)
-
-Below is a quick introduction to them. If you'd rather skip it, that's okay. You wouldn't miss anything...but some super cool legislation! It covers the basic undersatnding of what a Works Council is, the powers it holds, and how it can yield that power. 
-
-<aside>
-
-### An introduction to: The Dutch Works Council Act
-
-Works Councils—also referred to as WoCo's—in the Netherlands are a group of elected employee representatives of a business, that have to be established at any company with more than 50 employeees. They function as enterprise-level complements to trade labor negoiations in the Netherlands. (link: https://erindoesthings.com/ text: Erin Weigel), the Executive Chair of the Works Council & Principal Designer at the time, describes WoCo's as <q cite="https://erindoesthings.com/">a fulcrum between labor unions and the business, ever balancing the interests of employees while helping the business do better.</q>
-
-Section IV-A of the Dutch Works Councils Act establishes four basic rights, through special powers:
-- **Right of Advice**
-Any time a decision around taking over another company, significantly expanding business operations, reducing size of the business, significantly changing the organization or distribution of power, change of location, recruitment of employees, making investments, adding new technology used in the working environment, or the appointment/dismissal of a director, the Works Council needs to provide its educated advice on how to move forward, within a reasonable period of time.
-- **Right of Consent**
-Any change to working hours, holidays, pay, job evaluation systems, working conditions, sick leave, reintegration policies, privacy policies, and pension needs to be approved by the Works Council or the change can not be made.
-- **Right of Initiative**
-The Works Council can initiate subjects, topics, projects, etc. for the business to take up, themselves. If a Works Council does use the Right of Initiative, the Business needs to come back to the Works Council with explicit reasoning why it would or would not pick it up; after consulting the Works Council around the subjects. This is kind of similar to how a "suggestions box" works in television offices, except with a bit more democracy involved. If there is one suggestion. that gets enough banking, the business has to accept or reject it...with reasoning provided for either response. 
-- **Right of Information**
-For all of the above, a Works Council also has the right to request & receive any information that will inform & guide decisions when responding to a Request for Advice or Consent. This includes: the reasoning for that decision, the expected effects the decision will have on the business' employees, and what exactly the change or measures taken would be to execute on the decision. Think of this as a <abbr title="Freedom of Information Act">FOIA</abbr>—Freedom of Information Act—request in the United States; but specific to employees of the business they're requesting information for, with quicker turnaround times. 
-
-Dutch Works Councils also have additional duties, but two of my favorites come from Article 28, items three and four.
-
-They must—*emphasis* my own:
-- "guard against discrimination in general within the enterprise, and shall in particular *promote the equal treatment of men and women and the employment of disabled persons and minorities in the enterprise*"...and...
-- "shall do all in its power to *promote environmental care on part of the enterprise*, including the taking or changing of *policy-related, organizational, or administrative measures* relating to the natural environment. [^ These descriptions have been summarized and described using <abbr title="Societal and Economic Council of the Netherlands">SER</abbr>'s (link: https://www.ser.nl/-/media/ser/downloads/engels/2023/works-councils-act-jan2023.pdf text: 2019 English translation of the Dutch Works Councils Act). However, linked here is the 2023 version as I hadn't archived the 2019's. ]
-</aside>
-
-As Covid-19 spread towards a global pandemic, I quickly came to the realization that the Works Council would be instrumental in a possible restructure for the business. I sought help from a therapist to help me process that forecoming responsibility. Just processing that fact took more than a month. 
-
-Because. There was a lot of work to do. 
-
-The travel industry was at a standstill and it would be Booking.com's first exercise in downsizing, after years of exponential growth. We'd be spending a significant amount of time learning together—as a Works Council and busines— the collaborative and exhaustive process for restructuring in the Netherlands. 
-
-Across the world, humanity was asked to step up, in whatever & however way we could. It was, and continues to be, a time to take heed of science and the continued responsibility to care for fellow humans; not put their health and lives at even more risk. As a leading travel company, and a connecting link between businesses and their customers, there was an additional responsibility to continue business while respecting local & global limitations. Doing what we could, as we could.
-
-In April, I was elected to the Executive Committee Co-Chair. With that new position, second in legal responsibility for the Works Council's proceedings, I grew to understand the extremely unique position to bring positive change at a scale I hadn't thought possible. We would—*spoiler:* would & did— do some very good things. We ould be setting up future Works Councils to be in a better relationship with the Business, while building in more open employee collaboration and consultation into Booking.com's standard operating procedures. 
-
-I took these duties, as most things, seriously; and with hope. ¶
-
-<aside>
-
-### Flashback → January 2020
-
-Sometimes, words I don't normally use pop out of nowhere, that make me ask: "now, *where did that come from?!*" I kept slipping Freudians with the verb: to propose. 
-
-Before we traveled back to Europe, my mom heard me say something to my partner, from the other room; starting to cheer and celebrate...we didn't get why. As everything became clearer, she—my mom—thinking I had proposed, I realized something. I had been using that verb a lot recently.  I started listening to my unconscious' slips. 
-
-I knew it, deep; I'd be proposing sometime in 2020. 
-</aside>
-
-### Less an idea, more a plan. 
-<time datetime="2020-04">April. 2020</time>
-
-By April, we had been working from home for a month. Covid-19's impact continued to rise around the world. These were poignant times, with daily reminders of how prcious and short life is. So. I seet a date—June. 
-
-Now that I had the timing, I had to make sure our expectations of a life well lived were aligned enough to figure out how to ask the grand question: want to partner up and adventure for life? Anyone who knows anything about me knows this: when facing big decisions,  I do my research. Good experiences take good planning; be prepared. 
-
-We started having some of the deepest, rawest conversations I've ever had. They continued to nourish the sprouting seed, discovering an oak. Imagining what future l ife could be—also brought on by reality bombarding both of us at once—helped.
-
-...thaat and Animal Crossing. ¶
-
-Between all the responsibility at work, conversations of future lives, and the pandemic...all of a sudden, I felt all-growed-up, almost like an "adult." I was hopping between all sorts of different worlds while,  in the between-times, sketching and starting to move towards a world I wanted to create; together. ¶
-
-### Setting my fairy tale in motion
-<time datetime="2020-05-22">May 22nd</time>
-
-I rummaged through my "gonna use someday" art supplies: found nice handmade paper, watercolor paints, book binding needle & thread, and thin hemp string. I had storyboarded and planned long enough, June wasn't too. far away. Enough planning with pen & paper, time to start painting a future.
-
-Both my partner and I are fond of stories, quickly connecting through magic, princesses, animation, and books. With everything available, and how we've travelled together to experience good storytelling, this felt right: I began painting a fairy tale—our fairy tale. 
-
-I painted our relationship, small snapshots for remembering, smiling, and re-living our story. Page by page, water cup by water cup. It took 11 days to paint, practice, and finally bind my Fairy Tale Proposal book. It was ready!
-
-3 days before proposing. ¶
-
-### We're going on an adventure!
-<time datetime="2020-06-04">June 4th</time>
-
-Throughout the week, I tested the waters, seeing if she thought anything was afoot. Luckily, we were already planning a celebration that day, providing some good cover. Side note: the ring actually hadn't arrived yet; had to improvise. 
-
-We woke up to croissants & coffee with mimosas & magical Scrabble. I decidedly lost both 'bouts...unintentionally and disappointed. We're both a bit competitive...anyways. The day moved on—for her: pampered and relaxing, oblivious. For me, anything but.
-
-We had a special night planned. We walked outside together, a first since the pandemic began, to pick up a five-course prepped meal that we'd be cooking at h ome. It came with everything we needed! Including video tutorials (in Dutch and English) and a music playlist while cooking & dining!
-
-Before dessert, I prepared my gift. I retrieved it from the other room; pausing with a deep breath before I re-entered. I had her close her eyes before I left. I came back in and sat back into my seat across the table. Knowing myself, I wasn't going to set myself up to miss the moment by trying to figure out how to unsuspiciously get down on one knee.
-
-She opened her eyes, with book in hand: *A Fairy Tale of Past, Present, and Possible Futures.* Flipping through for the first time, she began to realize it was full of watercolored paintings of our adventures. I divided the book into chapters, based on my family tree rings tattoo. 
-
-The same way a tree's age is measured in rings, as I age, rings would be added to it:
-- **Black** for family;
-- **Yellow** for my married partner;
-- **Cyan & Magenta** intertwined, for future children.
-
-Arriving to the page with the bright yellow band and *The Present* painted on the page, that tattoo association was missed. She went to the next page: a gold interrobang taking up the page.
-
-"Huh?"
-
-Flipping to the next chapter, *Possible Futures*, seeing an aisle—apprehension dawned. I took off the claddagh ring I've worn since University began, hoping all the words would come out right. Then?
-
-**She siad *yes!***
-
-Nothing changed and everything changed at the same time. ¶
-
-She saw me, embracing all of me; and I her. If she can accept me for what I hope is a long life, why shouldn't I accept me for me?
-
-*This was my catalyst towards chrysalis.* ¶
-
-### Discovering and naming my magic
-<time datetime="2020-06-19">June 19th</time>
-
-I've always been interested in stories: stories of magic; stories from people long passed; stories of how *now* just came to be. 
-
-In my life and career, I've grown by finding routes and strategies to use & facilitate my strengths, and make up where I falter. I've learned to recognize my emotions, listeningt o address them. I've developed. strategies to help with my prioritisation, using calendars, and planning ahead. 
-
-Yet—
-
-I've always had this constant feeling of difference. No matter where I searched, I couldn't find the right words, the label, grasping at something just out of reach. While this Friday started off like many otherse, it was the day I finally found the right words:
-
-**Aha! I'm ADHD!**
-
-After a friend's post lit the spark, I went to my first places to start investigating. a new and interesting topic: Reddit. Sometimes, I'm lucky, and there's an active, respectful, engaged, and moderated community that's an invaluable resource. (link: http://reddit.com/r/adhd text: r/ADHD) didn't let me down. Their wiki sent me to (link: https://www.youtube.com/watch?v=Li_tcua0AJI text: a video of Russel Barkley)—a clinical psychologist who's spent most of his scientific career researching and communicating about ADHD—that explains what ADHD *really* is. 
-
-I was on the couch as I watched, in happy, ugly tears. I had never felt to seen.
-
-It's like every story of a character approached by a magical entity where they're told, for the first time, of their powers. They reflect at the strange, random things that happened in their life. Those that just didn't add up. For me, It was lightning hit the sane. of my brain, crystalizing into fulguritic clarity. 
-
-I continued my dive down the ADHD rabbit hole and found a thriving community. My people. 
-
-They were sharing their own ADHD experiences, describing their lives, and I continued to see how it aligned so much with my own. I had n ever seen my life laid bare with such clarity and consistency. 
-
-Thank you to all the people communicating the science, life, and experiences of ADHD with words, voices, and art. Some of the #adhdsquad tht were specifically halpeful, and again 💛:
-- (link: https://howtoadhd.com
-text:How to ADHD by Jessica McCabe)
-- (link: https://instagram.com/theadhdgoodlife text: The ADHD Good Life by Sandra Coral)
-- (link: https://twitter.com/ADHD_Alien text: Webcomic, ADHD Alien by Pina)
-- (link:https://adhddd.com text: Webcomics, ADHDDD by Dani Donovan)
-- (link:https://twitter.com/dustychipura text: Coach Dusty Chipura), and 
-- (link: https://blackgirllostkeys.com text: Black Girl Lost Keys by Reneé Brooks). ¶
-
-That afternoon, I had a therapy session. I couldn't wait to go and share my epiphany. I had begun working with this therapist as the pandemic began, to prepare for the expected challenges of the Works Council responsibilities and, well, the pandemic. I hadn't expected such a revelation, but so very grateful I had this support when I did. 
-
-For the whole session, I shared what had just come up, what I was learning, and how I knew this was right. She sent me tests they had at the time, not specializing in ADHD but had resources available to help guide me. After taking the tests, they were clear as well: I'm ADHD. ¶
-
-<aside>
-#### An introduction to Attention Deficit Hyperactivity Disorder
-
-There are currently three diagnosable presentations of ADHD:
-- **Predominantly Hyperactive & Impulsive** *(ADHD-HI):* Difficulties primarily with impulsive and hyperactive behaviour and not with attention or concentration.
-- **Predominantly Innattentive** *(ADHD-I):* Significant inattentiveness without being impulsive or hyperactive
-- **Combined type** *(ADHD-C):* Significant inattentiveness. with impulsive and hyperative behaviour.
-
-ADHD isn't something everyone has a little bit of. It's deeply intwined with every aspect of living life.
-- It impacts cognition, attention, perception, motor skills, behaviour, social relations...oral and written communication. 
-- It doesn't solely impact one single thing, but an interconnected aspect of experiencing life. 
-- It comes with a lot of comorbidities—additional health challenges that are much more l ikely to be present with this "primary" diagnosis.
-- It's commonly missed and dismissed because of societal expectations put on other humans, radically influencing diagnosis possibilities or **any** ability to receive support. 
-</aside>
-
-Learning this has constructed a more solid frame, gifting clearer lenses to look through and seem some of the *why* of my life...but,  it h asn't magically made anything "better" per-se. It's notthing I can "fix" or "grow out of." 
-
-Some liken it to having super powers. That's not the metaphor for me. Superpowers tend. to be born of extraordinary events, creating people with extraordinary talents that feel a responsibility because of their great power. ADHD is a condition when things others consider "ordinary" become extraordinary. 
-
-I liken ADHD more to magic. It's something that's fundamental to the collective human experience. Stories across time and space have stories of humans:
-
-**Q:** *Why?*
-**A:** Because *magic.*
-
-Most magicks are powered. and influenced by an individual's affinity or unique trait. It's one that's recurring, again, and again, throughout life. It's part of the good—tenacity, impulsivity, curiosity,  insatiety. It's part of the bad—lack of awareness, accidents, relationships lost, opportunities missed, moments forgotten, fines paid. There's always a give and take when performing magic, whether it be your own energies or inadvertent costs. Magic always has a price.
-
-Unaware, I've experienced my plenty of the good, and far more of the bad than I had realized. Understanding is one thing, but accepting ADHD as a disability has been a mountain I'm still. trekking. The more I do accept that this magic has a cost, and it's disabling, the smaller this particular. hurdle's gotten. Disability's not a bad word.  It's helped give myself permission to ask for help, because I really do need it. 
-
-*We all do.* ¶
-
-## End of Part 1
-This 2020 story, *Chrysalis* is completed in **Part Two.** The first h alf ended w ith two large, life changing, non-eventful events. of revelatory nature. In the second half, I'll find a leaf—protection from the torrential downpour. Once there, the skin of caterpillar-Jonathan will shed. A new skin will grow in its place, harder and encasing. Safer and more secure, everything that made caterpillar-Jonathan a caterpillar will dissolve...into goop.
-
-As I go into chrysalis. ¶
+Orci penatibus luctus inceptos vitae vestibulum commodo mus nostra. Eros ante tempor dictum aliquam facilisi sagittis class. Sem nisi non turpis, varius leo tempor suscipit pellentesque. Curabitur turpis sem tristique vel malesuada condimentum ex. Sem senectus mi elit, vehicula vitae volutpat primis orci. Ante penatibus sodales in sodales augue fermentum. Purus faucibus dolor ullamcorper mi rutrum curabitur.
 
 ----
 
-Tags: Chrysalis, Wired for Design, Story, Personal
+Tags: Test Post
 
 ----
 
-Date: 2021-02-02
+Date: 2025-01-16
 
 ----
 
-Time: 12:35:00
+Time: 01:15:00
 
 ----
 
-Location: Amsterdam, Netherlands
+Location: {{ site.default_location }}
 
 ----
 

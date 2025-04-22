@@ -17,9 +17,6 @@ Default-location: Raleigh, NC
 Footer-nav:
 
 - 
-  linktitle: About
-  link: page://GtStMuixcji45tsP
-- 
   linktitle: Journal
   link: page://gevx6G03JRLRHtml
 - 
@@ -48,8 +45,17 @@ Footer-social:
     https://bsky.app/profile/jonathanstephens.bsky.social
   logo: [ ]
 - 
-  platform: Read.cv
-  url: https://read.cv/jonathanstephens
+  platform: Substack
+  url: https://jonathanstephens.substack.com
+  logo: [ ]
+- 
+  platform: Instagram
+  url: https://instagram.com/elnatnal
+  logo: [ ]
+- 
+  platform: Mastodon
+  url: >
+    https://mastodon.social/@jonathanstephens
   logo: [ ]
 - 
   platform: ADPList
@@ -57,8 +63,8 @@ Footer-social:
     https://adplist.org/mentors/jonathan-stephens
   logo: [ ]
 - 
-  platform: Substack
-  url: https://jonathanstephens.substack.com
+  platform: Read.cv
+  url: https://read.cv/jonathanstephens
   logo: [ ]
 - 
   platform: StoryGraph
@@ -70,17 +76,8 @@ Footer-social:
   url: https://github.com/jonathan-stephens
   logo: [ ]
 - 
-  platform: Mastodon
-  url: >
-    https://mastodon.social/@jonathanstephens
-  logo: [ ]
-- 
   platform: Dribbble
   url: https://dribbble.com/jonathanstephens
-  logo: [ ]
-- 
-  platform: Instagram
-  url: https://instagram.com/elnatnal
   logo: [ ]
 
 ----

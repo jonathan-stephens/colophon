@@ -1,0 +1,25 @@
+Title: This is a thing
+
+----
+
+Date: 2024-11-11
+
+----
+
+Time: 22:55:00
+
+----
+
+Location: {{ site.default_location }}
+
+----
+
+Images: 
+
+----
+
+Tags: 
+
+----
+
+Uuid: OIepM3bYxMnk1kHo

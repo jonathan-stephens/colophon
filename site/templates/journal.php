@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-  <article class="article post wrapper" itemscope itemtype="http://schema.org/Article">
+  <article class="article post wrapper h-entry" itemscope itemtype="http://schema.org/Article">
     <header>
       <h1 class="p-name" itemprop="name headline"><?= $page->hed()->html() ?></h1>
       <p><?= $page->dek()->html() ?><p>

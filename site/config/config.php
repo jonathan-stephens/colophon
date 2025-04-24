@@ -25,35 +25,68 @@ return [
         'cookieDuration' => 60 * 60 * 24
     ],
     'routes' => [
-        // Generic feed handler for specific formats only
-        [
-            'pattern' => '(:any)/(rss|feed.json|feed.atom)',
-            'method' => 'GET',
-            'action'  => function ($section, $format) {
-                // Valid sections
-                $validSections = ['journal', 'links', 'articles', 'notes'];
+      // Generic feed handler for specific formats only
+      [
+          'pattern' => '(:any)/(rss|feed.json|feed.atom)',
+          'method' => 'GET',
+          'action'  => function ($section, $format) {
+              // Valid sections
+              $validSections = ['journal', 'links'];
+              // Check if valid section
+              if (!in_array($section, $validSections) || !page($section)) {
+                  // Only handle routes that match our pattern, let Kirby handle the rest
+                  return false;  // Changed from null to false to properly indicate route should be skipped
+              }
 
-                // Check if valid section
-                if (!in_array($section, $validSections) || !page($section)) {
-                    // Only handle routes that match our pattern, let Kirby handle the rest
-                    return null;
-                }
+              // Determine the format for the snippet
+              $snippetFormat = $format;
+              if ($format === 'feed.json') $snippetFormat = 'json';
+              if ($format === 'feed.atom') $snippetFormat = 'atom';
 
-                // Determine the format for the snippet
-                $snippetFormat = $format;
-                if ($format === 'feed.json') $snippetFormat = 'json';
-                if ($format === 'feed.atom') $snippetFormat = 'atom';
+              // Fix for Atom feed timestamp issues
+              $options = [
+                  'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+                  'description' => 'The latest ' . $section . ' from ' . site()->title(),
+                  'link' => $section,
+                  'snippet' => 'feed/' . $snippetFormat,
+                  'feedurl' => site()->url() . '/' . $section . '/' . $format,
+                  'modified' => time(), // Ensure this is an integer timestamp
+              ];
 
-                return feed(fn() => page($section)->children()->listed()->flip()->limit(20), [
-                    'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
-                    'description' => 'The latest ' . $section . ' from ' . site()->title(),
-                    'link' => $section,
-                    'snippet' => 'feed/' . $snippetFormat,
-                    'feedurl' => site()->url() . '/' . $section . '/' . $format,
-                ]);
-            }
-        ],
+              // Special handling for atom feeds to fix timestamp issue
+              if ($snippetFormat === 'atom') {
+                  $options['datefield'] = function($page) {
+                      $date = $page->date()->toDate();
+                      return $date ? $date : time();
+                  };
+              }
 
+              return feed(fn() => page($section)->children()->listed()->flip()->limit(20), $options);
+          }
+      ],
+      // Main RSS feed for all content
+      [
+          'pattern' => 'rss',
+          'method' => 'GET',
+          'action'  => function () {
+              // Collect entries from all sections
+              $items = new Pages();
+              $sections = ['journal', 'links'];
+              foreach ($sections as $section) {
+                  if ($page = page($section)) {
+                      $items = $items->add($page->children()->listed());
+                  }
+              }
+              return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
+                  'title' => site()->title() . ' - All Content RSS',
+                  'description' => 'The latest content from ' . site()->title(),
+                  'link' => 'rss',
+                  'snippet' => 'feed/rss',
+                  'feedurl' => site()->url() . '/rss',
+                  'modified' => time(), // Added timestamp
+              ]);
+          }
+      ],
         // Main RSS feed for all content
         [
             'pattern' => 'rss',
@@ -61,7 +94,7 @@ return [
             'action'  => function () {
                 // Collect entries from all sections
                 $items = new Pages();
-                $sections = ['journal', 'links', 'articles', 'notes'];
+                $sections = ['journal', 'links'];
 
                 foreach ($sections as $section) {
                     if ($page = page($section)) {

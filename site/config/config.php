@@ -25,22 +25,17 @@ return [
         'cookieDuration' => 60 * 60 * 24
     ],
     'routes' => [
-      // Generic feed handler for specific formats only
+      // Section-specific RSS feeds (journal/rss, links/rss)
       [
-          'pattern' => '(:any)/(rss|feed.json|feed.atom)',
+          'pattern' => '(:any)/rss',
           'method' => 'GET',
-          'action'  => function ($section, $format) {
+          'action'  => function ($section) {
               // Valid sections
               $validSections = ['journal', 'links'];
               // Check if valid section
               if (!in_array($section, $validSections) || !page($section)) {
                   return false;
               }
-
-              // Determine the format for the snippet
-              $snippetFormat = $format;
-              if ($format === 'feed.json') $snippetFormat = 'json';
-              if ($format === 'feed.atom') $snippetFormat = 'atom';
 
               // Section-specific descriptions
               $descriptions = [
@@ -50,15 +45,21 @@ return [
 
               // Basic feed options
               $options = [
-                  'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+                  'title' => site()->title() . ' - ' . ucfirst($section),
                   'description' => $descriptions[$section] ?? 'The latest ' . $section . ' from ' . site()->title(),
                   'link' => $section,
-                  'snippet' => 'feed/' . $snippetFormat,
-                  'feedurl' => site()->url() . '/' . $section . '/' . $format,
+                  'snippet' => 'feed/atom', // Use atom feed format for better standards compliance
+                  'feedurl' => site()->url() . '/' . $section . '/rss',
                   'modified' => time(),
                   'language' => 'en',
                   'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
                   'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+
+                  // Handle timestamp conversion for atom feed
+                  'datefield' => function($page) {
+                      $date = $page->date()->toDate();
+                      return $date ? $date : $page->modified();
+                  },
 
                   // Custom item generation for additional fields
                   'item' => function($page) use ($section) {
@@ -66,21 +67,34 @@ return [
                           'title' => $page->title()->value(),
                           'link' => $page->url(),
                           'description' => $page->text()->kirbytext()->value(),
-                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
                       ];
 
-                      // Add GUID (use bookmark URL for links section)
+                      // Handle publication date
+                      if ($page->date()->exists() && $page->date()->isNotEmpty()) {
+                          $timestamp = $page->date()->toDate();
+                          if ($timestamp) {
+                              $item['pubDate'] = date('r', $timestamp);
+                          } else {
+                              $item['pubDate'] = date('r', $page->modified());
+                          }
+                      } else {
+                          $item['pubDate'] = date('r', $page->modified());
+                      }
+
+                      // Add GUID (use website URL for links section)
                       if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
-                          $item['guid'] = $page->website()->url();
+                          $item['guid'] = $page->website()->value();
                       } else {
                           $item['guid'] = $page->url();
                       }
 
                       // Add categories/tags if they exist
                       if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          // Debug tags
+                          $tags = $page->tags()->split(',');
                           $categories = [];
-                          foreach ($page->tags()->split() as $tag) {
-                              $categories[] = ['name' => $tag];
+                          foreach ($tags as $tag) {
+                              $categories[] = ['name' => trim($tag)];
                           }
                           $item['category'] = $categories;
                       }
@@ -88,14 +102,6 @@ return [
                       return $item;
                   }
               ];
-
-              // Special handling for atom feeds to fix timestamp issue
-              if ($snippetFormat === 'atom') {
-                  $options['datefield'] = function($page) {
-                      $date = $page->date()->toDate();
-                      return $date ? $date : $page->modified();
-                  };
-              }
 
               return feed(fn() => page($section)->children()->listed()->flip()->limit(20), $options);
           }
@@ -115,15 +121,21 @@ return [
               }
 
               return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
-                  'title' => site()->title() . ' - All Content RSS',
+                  'title' => site()->title() . ' - All Content',
                   'description' => 'The latest content from Jonathan Stephens',
                   'link' => 'rss',
-                  'snippet' => 'feed/rss',
+                  'snippet' => 'feed/atom', // Use atom feed format
                   'feedurl' => site()->url() . '/rss',
                   'modified' => time(),
                   'language' => 'en',
                   'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
                   'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+
+                  // Handle timestamp conversion for atom feed
+                  'datefield' => function($page) {
+                      $date = $page->date()->toDate();
+                      return $date ? $date : $page->modified();
+                  },
 
                   // Custom item generation for additional fields
                   'item' => function($page) {
@@ -133,21 +145,33 @@ return [
                           'title' => $page->title()->value(),
                           'link' => $page->url(),
                           'description' => $page->text()->kirbytext()->value(),
-                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
                       ];
 
-                      // Add GUID (use bookmark URL for links section)
-                      if ($section === 'links' && $page->bookmarkof()->exists() && $page->bookmarkof()->isNotEmpty()) {
-                          $item['guid'] = $page->bookmarkof()->url();
+                      // Handle publication date
+                      if ($page->date()->exists() && $page->date()->isNotEmpty()) {
+                          $timestamp = $page->date()->toDate();
+                          if ($timestamp) {
+                              $item['pubDate'] = date('r', $timestamp);
+                          } else {
+                              $item['pubDate'] = date('r', $page->modified());
+                          }
+                      } else {
+                          $item['pubDate'] = date('r', $page->modified());
+                      }
+
+                      // Add GUID (use website URL for links section)
+                      if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
+                          $item['guid'] = $page->website()->value();
                       } else {
                           $item['guid'] = $page->url();
                       }
 
                       // Add categories/tags if they exist
                       if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          $tags = $page->tags()->split(',');
                           $categories = [];
-                          foreach ($page->tags()->split() as $tag) {
-                              $categories[] = ['name' => $tag];
+                          foreach ($tags as $tag) {
+                              $categories[] = ['name' => trim($tag)];
                           }
                           $item['category'] = $categories;
                       }
@@ -156,8 +180,7 @@ return [
                   }
               ]);
           }
-      ],
-        // Tags handling route
+      ],        // Tags handling route
         [
             'pattern' => 'tags/(:any)',
             'action'  => function ($tag) {

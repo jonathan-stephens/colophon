@@ -34,8 +34,7 @@ return [
               $validSections = ['journal', 'links'];
               // Check if valid section
               if (!in_array($section, $validSections) || !page($section)) {
-                  // Only handle routes that match our pattern, let Kirby handle the rest
-                  return false;  // Changed from null to false to properly indicate route should be skipped
+                  return false;
               }
 
               // Determine the format for the snippet
@@ -43,21 +42,58 @@ return [
               if ($format === 'feed.json') $snippetFormat = 'json';
               if ($format === 'feed.atom') $snippetFormat = 'atom';
 
-              // Fix for Atom feed timestamp issues
+              // Section-specific descriptions
+              $descriptions = [
+                  'journal' => 'Personal writings and articles from Jonathan Stephens',
+                  'links' => 'Interesting links and bookmarks curated by Jonathan Stephens'
+              ];
+
+              // Basic feed options
               $options = [
                   'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
-                  'description' => 'The latest ' . $section . ' from ' . site()->title(),
+                  'description' => $descriptions[$section] ?? 'The latest ' . $section . ' from ' . site()->title(),
                   'link' => $section,
                   'snippet' => 'feed/' . $snippetFormat,
                   'feedurl' => site()->url() . '/' . $section . '/' . $format,
-                  'modified' => time(), // Ensure this is an integer timestamp
+                  'modified' => time(),
+                  'language' => 'en',
+                  'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+                  'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+
+                  // Custom item generation for additional fields
+                  'item' => function($page) use ($section) {
+                      $item = [
+                          'title' => $page->title()->value(),
+                          'link' => $page->url(),
+                          'description' => $page->text()->kirbytext()->value(),
+                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
+                      ];
+
+                      // Add GUID (use bookmark URL for links section)
+                      if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
+                          $item['guid'] = $page->website()->url();
+                      } else {
+                          $item['guid'] = $page->url();
+                      }
+
+                      // Add categories/tags if they exist
+                      if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          $categories = [];
+                          foreach ($page->tags()->split() as $tag) {
+                              $categories[] = ['name' => $tag];
+                          }
+                          $item['category'] = $categories;
+                      }
+
+                      return $item;
+                  }
               ];
 
               // Special handling for atom feeds to fix timestamp issue
               if ($snippetFormat === 'atom') {
                   $options['datefield'] = function($page) {
                       $date = $page->date()->toDate();
-                      return $date ? $date : time();
+                      return $date ? $date : $page->modified();
                   };
               }
 
@@ -77,41 +113,50 @@ return [
                       $items = $items->add($page->children()->listed());
                   }
               }
+
               return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
                   'title' => site()->title() . ' - All Content RSS',
-                  'description' => 'The latest content from ' . site()->title(),
+                  'description' => 'The latest content from Jonathan Stephens',
                   'link' => 'rss',
                   'snippet' => 'feed/rss',
                   'feedurl' => site()->url() . '/rss',
-                  'modified' => time(), // Added timestamp
+                  'modified' => time(),
+                  'language' => 'en',
+                  'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+                  'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+
+                  // Custom item generation for additional fields
+                  'item' => function($page) {
+                      $section = $page->parent()->slug();
+
+                      $item = [
+                          'title' => $page->title()->value(),
+                          'link' => $page->url(),
+                          'description' => $page->text()->kirbytext()->value(),
+                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
+                      ];
+
+                      // Add GUID (use bookmark URL for links section)
+                      if ($section === 'links' && $page->bookmarkof()->exists() && $page->bookmarkof()->isNotEmpty()) {
+                          $item['guid'] = $page->bookmarkof()->url();
+                      } else {
+                          $item['guid'] = $page->url();
+                      }
+
+                      // Add categories/tags if they exist
+                      if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          $categories = [];
+                          foreach ($page->tags()->split() as $tag) {
+                              $categories[] = ['name' => $tag];
+                          }
+                          $item['category'] = $categories;
+                      }
+
+                      return $item;
+                  }
               ]);
           }
       ],
-        // Main RSS feed for all content
-        [
-            'pattern' => 'rss',
-            'method' => 'GET',
-            'action'  => function () {
-                // Collect entries from all sections
-                $items = new Pages();
-                $sections = ['journal', 'links'];
-
-                foreach ($sections as $section) {
-                    if ($page = page($section)) {
-                        $items = $items->add($page->children()->listed());
-                    }
-                }
-
-                return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
-                    'title' => site()->title() . ' - All Content RSS',
-                    'description' => 'The latest content from ' . site()->title(),
-                    'link' => 'rss',
-                    'snippet' => 'feed/rss',
-                    'feedurl' => site()->url() . '/rss',
-                ]);
-            }
-        ],
-
         // Tags handling route
         [
             'pattern' => 'tags/(:any)',

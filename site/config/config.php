@@ -25,9 +25,9 @@ return [
         'cookieDuration' => 60 * 60 * 24
     ],
     'routes' => [
-      // Generic feed handler for specific formats only
+      // Section-specific feeds: /journal/rss, /links/rss, /journal/feed, /links/feed
       [
-          'pattern' => '(:any)/(rss|feed.json|feed.atom)',
+          'pattern' => '(:any)/(rss|feed)',
           'method' => 'GET',
           'action'  => function ($section, $format) {
               // Valid sections
@@ -39,8 +39,7 @@ return [
 
               // Determine the format for the snippet
               $snippetFormat = $format;
-              if ($format === 'feed.json') $snippetFormat = 'json';
-              if ($format === 'feed.atom') $snippetFormat = 'atom';
+              if ($format === 'feed') $snippetFormat = 'json';
 
               // Section-specific descriptions
               $descriptions = [
@@ -91,22 +90,14 @@ return [
                   }
                 ];
 
-              // Special handling for atom feeds to fix timestamp issue
-              if ($snippetFormat === 'atom') {
-                  $options['datefield'] = function($page) {
-                      $date = $page->date()->toDate();
-                      return $date ? $date : $page->modified();
-                  };
-              }
-
               return feed(fn() => page($section)->children()->listed()->flip()->limit(20), $options);
           }
       ],
-      // Main RSS feed for all content
+      // Main feeds: /rss, /feed
       [
-          'pattern' => 'rss',
+          'pattern' => '(rss|feed)',
           'method' => 'GET',
-          'action'  => function () {
+          'action'  => function ($format) {
               // Collect entries from all sections
               $items = new Pages();
               $sections = ['journal', 'links'];
@@ -116,18 +107,22 @@ return [
                   }
               }
 
+              // Determine the format for the snippet
+              $snippetFormat = $format;
+              if ($format === 'feed') $snippetFormat = 'json';
+
               return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
-                  'title' => site()->title() . ' - All Content RSS',
+                  'title' => site()->title() . ' - All Content ' . strtoupper($snippetFormat),
                   'description' => 'The latest content from Jonathan Stephens',
-                  'link' => 'rss',
-                  'snippet' => 'feed/rss',
-                  'feedurl' => site()->url() . '/rss',
+                  'link' => $format,
+                  'snippet' => 'feed/' . $snippetFormat,
+                  'feedurl' => site()->url() . '/' . $format,
                   'modified' => time(),
                   'language' => 'en',
                   'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
                   'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
 
-                  // Inside the main RSS feed action:
+                  // Inside the main feed action:
                   'item' => function($page) {
                       $section = $page->parent()->slug();
 
@@ -157,7 +152,8 @@ return [
                       }
 
                       return $item;
-                  }              ]);
+                  }
+              ]);
           }
       ],
         // Tags handling route

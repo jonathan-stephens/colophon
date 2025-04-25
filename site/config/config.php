@@ -25,161 +25,139 @@ return [
         'cookieDuration' => 60 * 60 * 24
     ],
     'routes' => [
-        // Section-specific RSS feeds (journal/rss, links/rss)
-        [
-            'pattern' => '(:any)/rss',
-            'method' => 'GET',
-            'action'  => function ($section) {
-                // Valid sections
-                $validSections = ['journal', 'links'];
-                // Check if valid section
-                if (!in_array($section, $validSections) || !page($section)) {
-                    return false;
-                }
-                // Section-specific descriptions
-                $descriptions = [
-                    'journal' => 'Personal writings and articles from Jonathan Stephens',
-                    'links' => 'Interesting links and bookmarks curated by Jonathan Stephens'
-                ];
-                // Create pages collection first
-                $collection = page($section)->children()->listed()->flip()->limit(20);
+      // Generic feed handler for specific formats only
+      [
+          'pattern' => '(:any)/(rss|feed.json|feed.atom)',
+          'method' => 'GET',
+          'action'  => function ($section, $format) {
+              // Valid sections
+              $validSections = ['journal', 'links'];
+              // Check if valid section
+              if (!in_array($section, $validSections) || !page($section)) {
+                  return false;
+              }
 
-                // Create custom options array to pass to feed snippet
-                $customData = [
-                    'customGuids' => [],
-                    'feedCategories' => []
-                ];
+              // Determine the format for the snippet
+              $snippetFormat = $format;
+              if ($format === 'feed.json') $snippetFormat = 'json';
+              if ($format === 'feed.atom') $snippetFormat = 'atom';
 
-                // Process items manually to add custom fields
-                foreach($collection as $page) {
-                    // Handle the guid for links
-                    if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
-                        // Store in custom array instead of as property
-                        $customData['customGuids'][$page->id()] = $page->website()->value();
-                    }
+              // Section-specific descriptions
+              $descriptions = [
+                  'journal' => 'Personal writings and articles from Jonathan Stephens',
+                  'links' => 'Interesting links and bookmarks curated by Jonathan Stephens'
+              ];
 
-                    // Process tags if they exist
-                    if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
-                        $tags = $page->tags()->split(',');
-                        $customData['feedCategories'][$page->id()] = array_map('trim', $tags);
-                    }
-                }
+              // Basic feed options
+              $options = [
+                  'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+                  'description' => $descriptions[$section] ?? 'The latest ' . $section . ' from ' . site()->title(),
+                  'link' => $section,
+                  'snippet' => 'feed/' . $snippetFormat,
+                  'feedurl' => site()->url() . '/' . $section . '/' . $format,
+                  'modified' => time(),
+                  'language' => 'en',
+                  'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+                  'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
 
-                // Basic feed options
-                $options = [
-                    'title' => site()->title() . ' - ' . ucfirst($section),
-                    'description' => $descriptions[$section] ?? 'The latest ' . $section . ' from ' . site()->title(),
-                    'link' => $section,
-                    'snippet' => 'feed/custom-rss', // Use our custom RSS snippet
-                    'feedurl' => site()->url() . '/' . $section . '/rss',
-                    'modified' => time(),
-                    'language' => 'en',
-                    'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
-                    'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
-                    // Fix datefield to ensure it's reliable
-                    'date' => function($page) {
-                      // Handle dates explicitly
-                      if ($page->date()->exists() && $page->date()->isNotEmpty()) {
-                          // Store the formatted date directly in customData
-                          $customData['pubDates'][$page->id()] = date('r', $page->date()->toDate('U'));
+                  // Custom item generation for additional fields
+                  'item' => function($page) use ($section) {
+                      $item = [
+                          'title' => $page->title()->value(),
+                          'link' => $page->url(),
+                          'description' => $page->text()->kirbytext()->value(),
+                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
+                      ];
+
+                      // Add GUID (use bookmark URL for links section)
+                      if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
+                          $item['guid'] = $page->website()->url();
                       } else {
-                          $customData['pubDates'][$page->id()] = date('r', $page->modified());
+                          $item['guid'] = $page->url();
                       }
-                    },
-                    // Pass the custom data
-                    'customData' => $customData
-                ];
 
-                return feed($collection, $options);
-            }
-        ],
+                      // Add categories/tags if they exist
+                      if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          $categories = [];
+                          foreach ($page->tags()->split() as $tag) {
+                              $categories[] = ['name' => $tag];
+                          }
+                          $item['category'] = $categories;
+                      }
 
-        // Main RSS feed combining all content
-        [
-            'pattern' => 'feed',
-            'method' => 'GET',
-            'action'  => function () {
-                // Valid sections to include in the main feed
-                $validSections = ['journal', 'links'];
+                      return $item;
+                  }
+              ];
 
-                // Start with an empty collection
-                $collection = null;
+              // Special handling for atom feeds to fix timestamp issue
+              if ($snippetFormat === 'atom') {
+                  $options['datefield'] = function($page) {
+                      $date = $page->date()->toDate();
+                      return $date ? $date : $page->modified();
+                  };
+              }
 
-                // Build combined collection from all valid sections
-                foreach ($validSections as $section) {
-                    if (page($section)) {
-                        $sectionPages = page($section)->children()->listed();
-                        if ($collection === null) {
-                            $collection = $sectionPages;
-                        } else {
-                            $collection = $collection->merge($sectionPages);
-                        }
-                    }
-                }
+              return feed(fn() => page($section)->children()->listed()->flip()->limit(20), $options);
+          }
+      ],
+      // Main RSS feed for all content
+      [
+          'pattern' => 'rss',
+          'method' => 'GET',
+          'action'  => function () {
+              // Collect entries from all sections
+              $items = new Pages();
+              $sections = ['journal', 'links'];
+              foreach ($sections as $section) {
+                  if ($page = page($section)) {
+                      $items = $items->add($page->children()->listed());
+                  }
+              }
 
-                // Sort combined collection by date and limit
-                $collection = $collection->sortBy('date', 'desc')->flip()->limit(30);
+              return feed(fn() => $items->sortBy('date', 'desc')->limit(20), [
+                  'title' => site()->title() . ' - All Content RSS',
+                  'description' => 'The latest content from Jonathan Stephens',
+                  'link' => 'rss',
+                  'snippet' => 'feed/rss',
+                  'feedurl' => site()->url() . '/rss',
+                  'modified' => time(),
+                  'language' => 'en',
+                  'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
+                  'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
 
-                // Create custom options array to pass to feed snippet
-                $customData = [
-                    'customGuids' => [],
-                    'feedCategories' => []
-                ];
+                  // Custom item generation for additional fields
+                  'item' => function($page) {
+                      $section = $page->parent()->slug();
 
-                // Process items manually to add custom fields
-                foreach($collection as $page) {
-                    // Add section as category
-                    $section = $page->parent()->id();
-                    $customData['feedCategories'][$page->id()] = [$section];
+                      $item = [
+                          'title' => $page->title()->value(),
+                          'link' => $page->url(),
+                          'description' => $page->text()->kirbytext()->value(),
+                          'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
+                      ];
 
-                    // Handle the guid for links
-                    if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
-                        $customData['customGuids'][$page->id()] = $page->website()->value();
-                    }
-
-                    // Add additional tags if they exist
-                    if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
-                        $tags = $page->tags()->split(',');
-                        if (isset($customData['feedCategories'][$page->id()])) {
-                            $customData['feedCategories'][$page->id()] = array_merge(
-                                $customData['feedCategories'][$page->id()],
-                                array_map('trim', $tags)
-                            );
-                        } else {
-                            $customData['feedCategories'][$page->id()] = array_map('trim', $tags);
-                        }
-                    }
-                }
-
-                // Basic feed options
-                $options = [
-                    'title' => site()->title() . ' - All Content',
-                    'description' => 'Recent content from all sections of ' . site()->title(),
-                    'link' => '/',
-                    'snippet' => 'feed/custom-rss', // Use custom RSS snippet
-                    'feedurl' => site()->url() . '/feed',
-                    'modified' => time(),
-                    'language' => 'en',
-                    'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
-                    'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
-                    // Fix datefield to ensure it's reliable
-                    'date' => function($page) {
-                      // Handle dates explicitly
-                      if ($page->date()->exists() && $page->date()->isNotEmpty()) {
-                          // Store the formatted date directly in customData
-                          $customData['pubDates'][$page->id()] = date('r', $page->date()->toDate('U'));
+                      // Add GUID (use bookmark URL for links section)
+                      if ($section === 'links' && $page->bookmarkof()->exists() && $page->bookmarkof()->isNotEmpty()) {
+                          $item['guid'] = $page->bookmarkof()->url();
                       } else {
-                          $customData['pubDates'][$page->id()] = date('r', $page->modified());
+                          $item['guid'] = $page->url();
                       }
-                    },
-                    // Pass the custom data
-                    'customData' => $customData
-                ];
 
-                return feed($collection, $options);
-            }
-        ],
-      // Tags handling route
+                      // Add categories/tags if they exist
+                      if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
+                          $categories = [];
+                          foreach ($page->tags()->split() as $tag) {
+                              $categories[] = ['name' => $tag];
+                          }
+                          $item['category'] = $categories;
+                      }
+
+                      return $item;
+                  }
+              ]);
+          }
+      ],
+        // Tags handling route
         [
             'pattern' => 'tags/(:any)',
             'action'  => function ($tag) {

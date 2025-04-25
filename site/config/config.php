@@ -69,9 +69,9 @@ return [
                           'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
                       ];
 
-                      // Add GUID (use bookmark URL for links section)
+                      // Add GUID (use website URL for links section)
                       if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
-                          $item['guid'] = $page->website()->url();
+                          $item['guid'] = $page->website()->value();
                       } else {
                           $item['guid'] = $page->url();
                       }
@@ -82,12 +82,14 @@ return [
                           foreach ($page->tags()->split() as $tag) {
                               $categories[] = ['name' => $tag];
                           }
-                          $item['category'] = $categories;
+                          if (!empty($categories)) {
+                              $item['category'] = $categories;
+                          }
                       }
 
                       return $item;
                   }
-              ];
+                ];
 
               // Special handling for atom feeds to fix timestamp issue
               if ($snippetFormat === 'atom') {
@@ -125,7 +127,7 @@ return [
                   'managingEditor' => 'hello@jonathanstephens.us (Jonathan Stephens)',
                   'webMaster' => 'hello@jonathanstephens.us (Jonathan Stephens)',
 
-                  // Custom item generation for additional fields
+                  // Inside the main RSS feed action:
                   'item' => function($page) {
                       $section = $page->parent()->slug();
 
@@ -136,9 +138,9 @@ return [
                           'pubDate' => $page->date()->exists() ? date('r', strtotime($page->date()->value())) : date('r', $page->modified()),
                       ];
 
-                      // Add GUID (use bookmark URL for links section)
-                      if ($section === 'links' && $page->bookmarkof()->exists() && $page->bookmarkof()->isNotEmpty()) {
-                          $item['guid'] = $page->bookmarkof()->url();
+                      // Add GUID (use website URL for links section)
+                      if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
+                          $item['guid'] = $page->website()->value();
                       } else {
                           $item['guid'] = $page->url();
                       }
@@ -149,12 +151,13 @@ return [
                           foreach ($page->tags()->split() as $tag) {
                               $categories[] = ['name' => $tag];
                           }
-                          $item['category'] = $categories;
+                          if (!empty($categories)) {
+                              $item['category'] = $categories;
+                          }
                       }
 
                       return $item;
-                  }
-              ]);
+                  }              ]);
           }
       ],
         // Tags handling route

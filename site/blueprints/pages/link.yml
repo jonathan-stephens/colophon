@@ -68,3 +68,11 @@ fields:
       - smallcaps
       - sub
       - sup
+
+sidebar:
+  images:
+    label: Images
+    type: files
+    multiple: true
+    layout: cards
+    template: blocks/image

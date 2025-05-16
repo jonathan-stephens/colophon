@@ -8,7 +8,7 @@
       <section class="navigation">
         <div class="wrapper">
           <h2>Navigation</h2>
-          <nav role="navigation">
+          <nav>
             <ul>
               <?php foreach ($menuItems as $menuItem): ?>
                 <li><a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>"><?= $menuItem->title()->or($menuItem->link()->html()) ?></a></li>

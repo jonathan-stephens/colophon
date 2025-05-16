@@ -2,11 +2,20 @@
   --link-color: var(--color-subtle);
   --link-deco: var(--color-quiet);
 
+  --link-color-inverse: var(--color-subtle-inverse);
+  --link-deco-inverse: var(--color-quiet-inverse);
+
   --link-color-hover: var(--color-distinct);
   --link-deco-hover: var(--color-nuance);
 
   --link-color-active: var(--color-emphasis);
   --link-deco-active: var(--color-emphasis);
+
+  --link-color-hover-inverse: var(--color-distinct-inverse);
+  --link-deco-hover-inverse: var(--color-nuance-inverse);
+
+  --link-color-active-inverse: var(--color-emphasis-inverse);
+  --link-deco-active-inverse: var(--color-emphasis-inverse);
 }
 
 a, a:visited{
@@ -62,8 +71,8 @@ a, a:visited{
     }
   }
 
-  &:focus, {
+  &:focus {
     outline: solid var(--border-thin) var(--color-prominent);
-    outline-offset: var(--border-thin);
+    outline-offset: .5em;
   }
 }

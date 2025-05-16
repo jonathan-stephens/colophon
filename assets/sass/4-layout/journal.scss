@@ -1,4 +1,4 @@
-.journal {
+.journal .h-entry{
   h2{
     font-size:var(--hed-tertiary);
     line-height:var(--leading-fine);
@@ -7,7 +7,11 @@
     text-wrap:balance;
     padding-block-start:var(--rhythm-presto);
   }
-  article a{
+
+  &:focus-within{
+    background:var(--background-primary);
+  }
+  a{
     text-decoration:none;
 
     &:hover, &:active{
@@ -22,7 +26,6 @@
   &:hover .meta, &:active .meta{
     border-top: var(--border-fine) dashed var(--border-color-emphasis);
     border-bottom: var(--border-fine) dashed var(--border-color-emphasis);
-
   }
 
   .meta{

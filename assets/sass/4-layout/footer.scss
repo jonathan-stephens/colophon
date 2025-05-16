@@ -134,7 +134,12 @@ body > footer{
     border-radius: var(--radii-square);
     background: var(--background-tertiary-inverse);
     color:var(--color-distinct-inverse);
+
+    &::placeholder{
+      color:var(--color-distinct-inverse);
+    }
   }
+
   button{
     background: var(--background-tertiary);
     color: var(--color-distinct);

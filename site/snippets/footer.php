@@ -27,7 +27,7 @@
             <h2 id="newsletter">
               Join my mailing list</h2>
             <p>Every week or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
-            <p><em>Subscribe to my newsletter—</em>Craft & Practice</p>
+            <p>Subscribe to my newsletter: <em>Craft & Practice</em></p>
           </div>
 
           <form

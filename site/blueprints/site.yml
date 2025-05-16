@@ -78,17 +78,20 @@ tabs:
 
   footer:
     label: Footer
-    icon: download
+    icon: grid-bottom
     columns:
       - width: 1/3
           fields:
             footer_nav:
-              label: Footer Nav
+              label: Navigation
               type: structure
               fields:
-                linkTitle:
+                title:
                   type: text
-                  label: Menu item title
+                  label: Page
+                description:
+                  type: text
+                  label: Description
                 link:
                   type: link
                   label: Link
@@ -96,23 +99,28 @@ tabs:
                     - page
                     - url
       - width: 1/3
-        sections:
-          footer_col2:
-            type: fields
-            fields:
-              footer_col2_title:
-                label: About Me
-                type: text
-              footer_col2_pages:
-                label: About me
-                type: pages
-                multiple: true
-                status: published
+          fields:
+            footer_feeds:
+              label: Feeds
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Feed
+                description:
+                  type: text
+                  label: Description
+                flavorRSS:
+                  type: link
+                  label: RSS url
+                flavorJSON:
+                  type: link
+                  label: JSON ul
 
       - width: 1/3
           fields:
             footer_social:
-              label: Social Navigation
+              label: Socials
               type: structure
               fields:
                 platform:

@@ -6,8 +6,8 @@
 .wrapper{
   margin-inline: auto;
   max-width: clamp(16rem,var(--wrapper-max-width,100vw),80rem);
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
+  padding-inline-start: var(--gutter);
+  padding-inline-end: var(--gutter);
   position: relative;
 }
 
@@ -34,7 +34,7 @@ stack-l > * + * {
 
 box-l {
   display: block;
-  padding: var(--rhythm-moderato);
+  padding-block: var(--rhythm-moderato);
   border-width: var(--border-thin);
   /* ↓ For high contrast mode */
   outline: var(--border-thin) solid transparent;

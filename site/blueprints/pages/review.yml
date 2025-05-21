@@ -40,6 +40,7 @@ columns:
               indirect_report: Indirect Report
               colleague: Colleague
               client: Client
+              manager: Manager
               other: Other
 
           context:

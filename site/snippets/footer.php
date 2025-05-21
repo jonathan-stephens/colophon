@@ -39,7 +39,7 @@
           >
             <input type="email" name="email" id="bd-email" aria-label="Email Address" placeholder="Email Address" />
 
-            <button type="submit" data-element="submit">
+            <button type="submit" data-element="submit" class="button">
               <span>Submit</span>
             </button>
           </form>

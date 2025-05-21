@@ -24,7 +24,7 @@ body > footer{
     mix-blend-mode: luminosity;
 
     svg{
-      width: calc(2*var(--hed-tertiary));
+      width: calc(2*var(--hed-quaternary));
       height: auto;
       margin-block-end: var(--rhythm-vivace);
       margin-inline-start: calc(-1*var(--rhythm-vivace));
@@ -81,11 +81,14 @@ body > footer{
     font-family: var(--font-sans);
   }
 
-  .subscribe h2{
-    font-size:var(--hed-tertiary);
-    color:var(--color-prominent-inverse);
-  }
+  .subscribe {
+    font-size:var(--small);
 
+    h2{
+      font-size:var(--hed-quaternary);
+      color:var(--color-prominent-inverse);
+    }
+  }
   .navigation .wrapper, .socials .wrapper{
     display:flex;
     align-items:baseline;
@@ -139,12 +142,15 @@ body > footer{
     }
   }
 
-  button{
-    background: var(--background-tertiary);
-    color: var(--color-distinct);
-    padding-block: var(--rhythm-vivace);
-    border-radius: var(--radii-square);
-    border: 0;
+  .button{
+    --button-bg: var(--background-secondary);
+
+    &:hover{
+      --button-hover-bg:var(--background-tertiary);
+    }
+    &:active{
+      opacity: 84%;
+    }
   }
   .social-links{
      max-inline-size:var(--measure);

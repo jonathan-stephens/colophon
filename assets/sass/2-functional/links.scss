@@ -73,6 +73,8 @@ a, a:visited{
 
   &:focus {
     outline: solid var(--border-thin) var(--color-prominent);
-    outline-offset: .5em;
+    outline-offset: 0.25em;
+    outline-width: 0.25em;
+    border-radius:var(--radii-square);
   }
 }

@@ -103,6 +103,7 @@
 
 <?= js([
   'assets/js/theme-picker.js',
+  'assets/js/prism.js',
 ]) ?>
 
 

@@ -21,18 +21,3 @@ header .wrapper{
     align-self: auto;
   }
 }
-
-@container site-header (width < 700px) {
-  header .wrapper{
-    flex-wrap:wrap;
-    gap:var(--flow-5);
-
-    .breadcrumb{
-      order:2;
-      width:100%;
-    }
-    .color-mode-toggle{
-      order:1;
-    }
-  }
-}

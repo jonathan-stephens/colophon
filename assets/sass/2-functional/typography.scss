@@ -31,7 +31,6 @@ body{
 
 h1,h2,h3,h4{
   font-family:var(--font-serif);
-  font-size-adjust: 0.514;
   font-variant-numeric: lining-nums;
 }
 h1{
@@ -151,13 +150,11 @@ article h3{
 
 strong, b, th {
   font-weight: bold;
-  font-size-adjust: 0.514;
 }
 
 .prose{
   text-wrap: pretty;
   font-variant-numeric: oldstyle-nums proportional-nums;
-  font-size-adjust: 0.507;
 
   -webkit-hyphens: auto;
   -webkit-hyphenate-limit-before: 4;

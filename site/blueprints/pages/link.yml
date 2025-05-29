@@ -70,6 +70,10 @@ fields:
       - sup
 
 sidebar:
+  uploads:
+    label: Uploads
+    type: files
+    multiple: true  
   images:
     label: Images
     type: files

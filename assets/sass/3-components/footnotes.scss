@@ -1,23 +1,25 @@
 /* Footnote reference within text */
 sup.footnote {
-  font-family:var(--font-mono);
   font-size:var(--caption);
 
 }
 /* Footnotes container */
 .footnotes-container {
-
+  h2{
+    padding-block-end:0;
+  }
 }
 /* Footnotes ordered list */
 .footnotes-list {
   padding:0;
+  margin-block-end:var(--rhythm-moderato);
 }
 
 /* Footnote entry */
 .footnotes-list li {
   font-family:var(--font-mono);
   font-size:var(--caption);
-
+  padding-block:var(--rhythm-allegro);
 }
 
 /* Footnote back link ↩ */

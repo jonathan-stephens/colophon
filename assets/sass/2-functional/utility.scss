@@ -3,6 +3,7 @@
   --icon-color-primary: inherit;
   --icon-color-secondary: currentColor;
 }
+
 .wrapper{
   margin-inline: auto;
   max-width: clamp(16rem,var(--wrapper-max-width,100vw),80rem);
@@ -53,9 +54,9 @@ box-l {
 
 .flow > *+*{margin-block-start:var(--flow-space,1em)}
 
-.full-bleed{margin-left:calc(50% - 50vw);}
+.full-bleed{margin-inline-start:calc(50% - 50vw);}
 
-.flow+.flow{padding-right:6rem}
+.flow+.flow{padding-inline-end:6rem}
 
 /* SOURCE: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
 .visually-hidden:not(:focus):not(:active) {

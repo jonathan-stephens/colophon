@@ -1,5 +1,6 @@
 body > header{
-  padding:var(--flow-10) 0 var(--flow-15) 0;
+  padding-block-start:var(--flow-10);
+  padding-block-end: var(--flow-15);
   container: site-header / inline-size;
 }
 header .wrapper{

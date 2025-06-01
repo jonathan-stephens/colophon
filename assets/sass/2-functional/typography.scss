@@ -39,15 +39,15 @@ h1{
 }
 h2{
   font-size:var(--hed-secondary);
-  color:var(--color-prominent);
+//  color:var(--color-prominent);
 }
 h3{
   font-size:var(--hed-tertiary);
-  color:var(--color-distinct);
+//  color:var(--color-distinct);
 }
 h4{
   font-size:var(--hed-quaternary);
-  color:var(--color-nuance);
+//  color:var(--color-nuance);
 }
 h5,h6{
   font-size: var(--prose);
@@ -104,11 +104,6 @@ h2 + p{
   padding-block-start:var(--rhythm-allegro);
 }
 
-p + h4{
-  line-height: var(--leading-flat);
-  padding-block:var(--rhythm-allegro);
-  color:var(--color-prominent);
-}
 p+p{
   padding-block-start:var(--rhythm-moderato);
 }
@@ -143,11 +138,6 @@ article.default h2{
   border-bottom: var(--border-regular) solid var(--border-color-distinct);
 }
 
-article h3{
-  margin-block-start:var(--rhythm-andante);
-  margin-block-end: var(--rhythm-moderato);
-}
-
 strong, b, th {
   font-weight: bold;
 }
@@ -168,9 +158,21 @@ strong, b, th {
   hyphenate-limit-last: always;
 
   h2{
-    font-size: var(--hed-tertiary);
     line-height: var(--leading-fine);
     padding-block-start: var(--rhythm-andante);
+    padding-block-end:var(--rhythm-vivace);
+  }
+  h3{
+    padding-block-start:var(--rhythm-moderato);
+    padding-block-end:var(--rhythm-vivace);
+  }
+  h4{
+    padding-block:var(--rhythm-moderato);
+    line-height: var(--leading-flat);
+    font-style:italic;
+  }
+  h3 + h4{
+    padding-block-start:var(--rhythm-vivace);
   }
 }
 
@@ -179,11 +181,8 @@ blockquote{
   padding-block: var(--rhythm-moderato);
   padding-inline: var(--rhythm-andante);
   border-inline-start: var(--border-medium) solid var(--background-tertiary-inverse);
-  margin: 0;
-}
-
-blockquote + p{
-  margin-block-start:var(--rhythm-moderato);
+  margin-inline: 0;
+  margin-block:var(--rhythm-allegro);
 }
 
 @supports ( font-variant-position: sub ) {

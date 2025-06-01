@@ -19,7 +19,7 @@
   // Now loop through the grouped articles
   foreach($groupedArticles as $date => $dayArticles):
 ?>
-  <section class="day-group">
+  <section class="day-group flow">
     <h2 class="date-header"><?= $date ?></h2>
 
     <?php foreach($dayArticles as $article): ?>

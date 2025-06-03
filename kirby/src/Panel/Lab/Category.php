@@ -4,7 +4,6 @@ namespace Kirby\Panel\Lab;
 
 use Kirby\Cms\App;
 use Kirby\Filesystem\Dir;
-use Kirby\Filesystem\F;
 use Kirby\Toolkit\A;
 use Kirby\Toolkit\Str;
 
@@ -33,7 +32,7 @@ class Category
 	) {
 		$this->root = $root ?? static::base() . '/' . $this->id;
 
-		if (F::exists($this->root . '/index.php', static::base()) === true) {
+		if (file_exists($this->root . '/index.php') === true) {
 			$this->props = array_merge(
 				require $this->root . '/index.php',
 				$this->props

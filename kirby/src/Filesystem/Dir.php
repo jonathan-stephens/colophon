@@ -114,14 +114,9 @@ class Dir
 	/**
 	 * Checks if the directory exists on disk
 	 */
-	public static function exists(string $dir, string|null $in = null): bool
+	public static function exists(string $dir): bool
 	{
-		try {
-			static::realpath($dir, $in);
-			return true;
-		} catch (Exception) {
-			return false;
-		}
+		return is_dir($dir) === true;
 	}
 
 	/**
@@ -154,7 +149,7 @@ class Dir
 		string $dir,
 		bool $recursive = false,
 		array|false|null $ignore = [],
-		string|null $path = null
+		string $path = null
 	): array {
 		$result = [];
 		$dir    = realpath($dir);
@@ -439,7 +434,7 @@ class Dir
 	 */
 	public static function modified(
 		string $dir,
-		string|null $format = null,
+		string $format = null,
 		string|null $handler = null
 	): int|string {
 		$modified = filemtime($dir);
@@ -526,33 +521,6 @@ class Dir
 		}
 
 		return $result;
-	}
-
-	/**
-	 * Returns the absolute path to the directory if the directory can be found.
-	 * @since 4.7.1
-	 */
-	public static function realpath(string $dir, string|null $in = null): string
-	{
-		$realpath = realpath($dir);
-
-		if ($realpath === false || is_dir($realpath) === false) {
-			throw new Exception(sprintf('The directory does not exist at the given path: "%s"', $dir));
-		}
-
-		if ($in !== null) {
-			$parent = realpath($in);
-
-			if ($parent === false || is_dir($parent) === false) {
-				throw new Exception(sprintf('The parent directory does not exist: "%s"', $in));
-			}
-
-			if (substr($realpath, 0, strlen($parent)) !== $parent) {
-				throw new Exception('The directory is not within the parent directory');
-			}
-		}
-
-		return $realpath;
 	}
 
 	/**

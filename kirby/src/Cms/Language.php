@@ -57,7 +57,7 @@ class Language
 		}
 
 		static::$kirby      = $props['kirby'] ?? null;
-		$this->code         = basename(trim($props['code'])); // prevent path traversal
+		$this->code         = trim($props['code']);
 		$this->default      = ($props['default'] ?? false) === true;
 		$this->direction    = ($props['direction'] ?? null) === 'rtl' ? 'rtl' : 'ltr';
 		$this->name         = trim($props['name'] ?? $this->code);
@@ -325,7 +325,6 @@ class Language
 	public static function loadRules(string $code): array
 	{
 		$kirby = App::instance();
-		$code  = basename($code); // prevent path traversal
 		$code  = Str::contains($code, '.') ? Str::before($code, '.') : $code;
 		$file  = $kirby->root('i18n:rules') . '/' . $code . '.json';
 
@@ -345,7 +344,7 @@ class Language
 	 *
 	 * @param int $category If passed, returns the locale for the specified category (e.g. LC_ALL) as string
 	 */
-	public function locale(int|null $category = null): array|string|null
+	public function locale(int $category = null): array|string|null
 	{
 		if ($category !== null) {
 			return $this->locale[$category] ?? $this->locale[LC_ALL] ?? null;
@@ -514,7 +513,7 @@ class Language
 	 * Update language properties and save them
 	 * @internal
 	 */
-	public function update(array|null $props = null): static
+	public function update(array $props = null): static
 	{
 		$kirby = App::instance();
 		$user  = $kirby->user();

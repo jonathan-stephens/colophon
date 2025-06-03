@@ -88,27 +88,8 @@ class MastodonSender extends ExternalPostSender
                 $requestBody['language'] = $this->prefereLanguage;
             }
 
-            $mediaIds = [];
-            if ($images = $this->getImages($page)) {
-
-                foreach ($images->toFiles()->limit(4) as $image) {
-                    if (is_null($image)) {
-                        continue;
-                    }
-
-                    $imagePath = $image->root();
-                    $mediaId = $this->uploadImage($imagePath);
-
-                    if (!$mediaId) {
-                        continue;
-                    }
-
-                    $mediaIds[] = $mediaId;
-                }
-            }
-
-            if (count($mediaIds) > 0) {
-                $requestBody['media_ids'] = $mediaIds;
+            if ($mediaId = $this->uploadImage($page)) {
+                $requestBody['media_ids'] = [$mediaId];
             }
 
             $response = Remote::request($this->instanceUrl . '/api/v1/statuses', [
@@ -134,50 +115,61 @@ class MastodonSender extends ExternalPostSender
         }
     }
 
-    public function uploadImage($imagePath)
+    public function uploadImage($page)
     {
         try {
-            if (!F::exists($imagePath)) {
-                return false;
+            if ($this->imagefield) {
+                $imagefield = $this->imagefield;
+                $image = $page->$imagefield();
+
+                if (!is_null($image) && $image->isNotEmpty()) {
+                    $imagePath = $image->toFile()->root();
+
+                    if (!F::exists($imagePath)) {
+                        return false;
+                    }
+
+                    $boundary = uniqid();
+                    $delimiter = '-------------' . $boundary;
+
+                    $fileData = file_get_contents($imagePath);
+                    $postData =
+                        '--' .
+                        $delimiter .
+                        "\r\n" .
+                        'Content-Disposition: form-data; name="file"; filename="' .
+                        basename($imagePath) .
+                        '"' .
+                        "\r\n" .
+                        'Content-Type: ' .
+                        mime_content_type($imagePath) .
+                        "\r\n\r\n" .
+                        $fileData .
+                        "\r\n" .
+                        '--' .
+                        $delimiter .
+                        "--\r\n";
+
+                    $response = Remote::request($this->instanceUrl . '/api/v2/media', [
+                        'method' => 'POST',
+                        'headers' => [
+                            'Authorization: Bearer ' . $this->token,
+                            'Content-Type' => 'multipart/form-data; boundary=' . $delimiter,
+                        ],
+                        'data' => $postData,
+                    ]);
+
+                    $responseData = $response->json();
+
+                    if ($response->code() !== 200) {
+                        return false;
+                    }
+
+                    return $responseData['id'];
+                }
             }
 
-            $boundary = uniqid();
-            $delimiter = '-------------' . $boundary;
-
-            $fileData = file_get_contents($imagePath);
-            $postData =
-                '--' .
-                $delimiter .
-                "\r\n" .
-                'Content-Disposition: form-data; name="file"; filename="' .
-                basename($imagePath) .
-                '"' .
-                "\r\n" .
-                'Content-Type: ' .
-                mime_content_type($imagePath) .
-                "\r\n\r\n" .
-                $fileData .
-                "\r\n" .
-                '--' .
-                $delimiter .
-                "--\r\n";
-
-            $response = Remote::request($this->instanceUrl . '/api/v2/media', [
-                'method' => 'POST',
-                'headers' => [
-                    'Authorization: Bearer ' . $this->token,
-                    'Content-Type' => 'multipart/form-data; boundary=' . $delimiter,
-                ],
-                'data' => $postData,
-            ]);
-
-            $responseData = $response->json();
-
-            if ($response->code() !== 200) {
-                return false;
-            }
-
-            return $responseData['id'];
+            return false;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
             return false;

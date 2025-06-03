@@ -1,7 +1,6 @@
 <?php
 
 use Kirby\Field\FieldOptions;
-use Kirby\Toolkit\I18n;
 
 return [
 	'extends' => 'radio',
@@ -14,14 +13,14 @@ return [
 		/**
 		 * Custom icon to replace the arrow down.
 		 */
-		'icon' => function (string|null $icon = null) {
+		'icon' => function (string $icon = null) {
 			return $icon;
 		},
 		/**
 		 * Custom placeholder string for empty option.
 		 */
-		'placeholder' => function (string|array $placeholder = '—') {
-			return I18n::translate($placeholder, $placeholder);
+		'placeholder' => function (string $placeholder = '—') {
+			return $placeholder;
 		},
 	],
 	'methods' => [

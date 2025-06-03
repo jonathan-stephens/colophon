@@ -153,8 +153,8 @@ class Environment
 	 * @param array|null $info Optional override for `$_SERVER`
 	 */
 	public function detect(
-		array|null $options = null,
-		array|null $info = null
+		array $options = null,
+		array $info = null
 	): array {
 		$defaults = [
 			'cli'     => null,
@@ -178,11 +178,11 @@ class Environment
 		if ($options['allowed'] === '*' || $options['allowed'] === ['*']) {
 			$this->detectAuto(true);
 
-			// fixed environments
+		// fixed environments
 		} elseif (empty($options['allowed']) === false) {
 			$this->detectAllowed($options['allowed']);
 
-			// secure auto-detection
+		// secure auto-detection
 		} else {
 			$this->detectAuto();
 		}
@@ -810,24 +810,18 @@ class Environment
 		}
 
 		// load the config for the host
-		if (
-			empty($host) === false &&
-			F::exists($path = $root . '/config.' . $host . '.php', $root) === true
-		) {
+		if (empty($host) === false) {
 			$configHost = F::load(
-				file: $path,
+				file: $root . '/config.' . $host . '.php',
 				fallback: [],
 				allowOutput: false
 			);
 		}
 
 		// load the config for the server IP
-		if (
-			empty($addr) === false &&
-			F::exists($path = $root . '/config.' . $addr . '.php', $root) === true
-		) {
+		if (empty($addr) === false) {
 			$configAddr = F::load(
-				file: $path,
+				file: $root . '/config.' . $addr . '.php',
 				fallback: [],
 				allowOutput: false
 			);

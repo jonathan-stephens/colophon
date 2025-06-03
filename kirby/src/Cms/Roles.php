@@ -25,19 +25,15 @@ class Roles extends Collection
 
 	/**
 	 * Returns a filtered list of all
-	 * roles that can be changed by the
+	 * roles that can be created by the
 	 * current user
-	 *
-	 * Use with `$kirby->roles()`. For retrieving
-	 * which roles are available for a specific user,
-	 * use `$user->roles()` without additional filters.
 	 *
 	 * @return $this|static
 	 * @throws \Exception
 	 */
 	public function canBeChanged(): static
 	{
-		if (App::instance()->user()?->isAdmin() !== true) {
+		if (App::instance()->user()) {
 			return $this->filter(function ($role) {
 				$newUser = new User([
 					'email' => 'test@getkirby.com',
@@ -54,16 +50,14 @@ class Roles extends Collection
 	/**
 	 * Returns a filtered list of all
 	 * roles that can be created by the
-	 * current user.
-	 *
-	 * Use with `$kirby->roles()`.
+	 * current user
 	 *
 	 * @return $this|static
 	 * @throws \Exception
 	 */
 	public function canBeCreated(): static
 	{
-		if (App::instance()->user()?->isAdmin() !== true) {
+		if (App::instance()->user()) {
 			return $this->filter(function ($role) {
 				$newUser = new User([
 					'email' => 'test@getkirby.com',
@@ -96,7 +90,7 @@ class Roles extends Collection
 		return $collection->sort('name', 'asc');
 	}
 
-	public static function load(string|null $root = null, array $inject = []): static
+	public static function load(string $root = null, array $inject = []): static
 	{
 		$kirby = App::instance();
 		$roles = new static();

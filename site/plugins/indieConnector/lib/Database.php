@@ -1,5 +1,4 @@
 <?php
-
 namespace mauricerenck\IndieConnector;
 
 use Kirby\Database\Database;
@@ -35,22 +34,6 @@ class IndieConnectorDatabase
             $values = $this->convertValuesToSaveDbString($values);
             $query =
                 'INSERT INTO ' . $table . '(' . implode(',', $fields) . ') VALUES("' . implode('","', $values) . '")';
-
-            $this->db->query($query);
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function upsert(string $table, array $fields, array $values, string $uniqueField, string $set): bool
-    {
-        try {
-            $values = $this->convertValuesToSaveDbString($values);
-            $query =
-                'INSERT INTO ' . $table . '(' . implode(',', $fields) . ') VALUES("' . implode('","', $values) . '")'
-                . ' ON CONFLICT(' . $uniqueField . ') DO UPDATE SET ' . $set;
 
             $this->db->query($query);
 
@@ -101,15 +84,6 @@ class IndieConnectorDatabase
             $this->db->query($query);
 
             return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function query(string $query): mixed
-    {
-        try {
-            return $this->db->query($query);
         } catch (Exception $e) {
             return false;
         }

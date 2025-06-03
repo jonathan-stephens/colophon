@@ -25,7 +25,7 @@ class PageRules
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException If the given number is invalid
 	 */
-	public static function changeNum(Page $page, int|null $num = null): bool
+	public static function changeNum(Page $page, int $num = null): bool
 	{
 		if ($num !== null && $num < 0) {
 			throw new InvalidArgumentException(['key' => 'page.num.invalid']);
@@ -86,7 +86,7 @@ class PageRules
 	public static function changeStatus(
 		Page $page,
 		string $status,
-		int|null $position = null
+		int $position = null
 	): bool {
 		if (isset($page->blueprint()->status()[$status]) === false) {
 			throw new InvalidArgumentException(['key' => 'page.status.invalid']);
@@ -365,40 +365,27 @@ class PageRules
 		$allowed = [];
 
 		// collect all allowed subpage templates
-		// from all pages sections in the blueprint
-		// (only consider page sections that list pages
-		// of the targeted new parent page)
-		$sections = array_filter(
-			$parent->blueprint()->sections(),
-			fn ($section) =>
-				$section->type() === 'pages' &&
-				$section->parent()->is($parent)
-		);
+		foreach ($parent->blueprint()->sections() as $section) {
+			// only take pages sections into consideration
+			if ($section->type() !== 'pages') {
+				continue;
+			}
 
-		// check if the parent has at least one pages section
-		if ($sections === []) {
-			throw new LogicException([
-				'key'  => 'page.move.noSections',
-				'data' => [
-					'parent' => $parent->id() ?? '/',
-				]
-			]);
-		}
+			// only consider page sections that list pages
+			// of the targeted new parent page
+			if ($section->parent() !== $parent) {
+				continue;
+			}
 
-		// go through all allowed templates and
-		// add the name to the allowlist
-		foreach ($sections as $section) {
-			foreach ($section->templates() as $template) {
-				$allowed[] = $template;
+			// go through all allowed blueprints and
+			// add the name to the allow list
+			foreach ($section->blueprints() as $blueprint) {
+				$allowed[] = $blueprint['name'];
 			}
 		}
 
 		// check if the template of this page is allowed as subpage type
-		// for the potential new parent
-		if (
-			$allowed !== [] &&
-			in_array($page->intendedTemplate()->name(), $allowed) === false
-		) {
+		if (in_array($page->intendedTemplate()->name(), $allowed) === false) {
 			throw new PermissionException([
 				'key'  => 'page.move.template',
 				'data' => [

@@ -3,7 +3,6 @@
 namespace Kirby\Cms;
 
 use Closure;
-use Exception as GlobalException;
 use Generator;
 use Kirby\Data\Data;
 use Kirby\Email\Email as BaseEmail;
@@ -286,7 +285,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function bakeRoots(array|null $roots = null): static
+	protected function bakeRoots(array $roots = null): static
 	{
 		$roots = array_merge($this->core->roots(), (array)$roots);
 		$this->roots = Ingredients::bake($roots);
@@ -298,7 +297,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function bakeUrls(array|null $urls = null): static
+	protected function bakeUrls(array $urls = null): static
 	{
 		$urls = array_merge($this->core->urls(), (array)$urls);
 		$this->urls = Ingredients::bake($urls);
@@ -319,18 +318,9 @@ class App
 			}
 		}
 
-		try {
-			// protect against path traversal attacks
-			$root     = $this->root('blueprints') . '/' . $type;
-			$realpath = Dir::realpath($root, $this->root('blueprints'));
-
-			foreach (glob($realpath . '/*.yml') as $blueprint) {
-				$name = F::name($blueprint);
-				$blueprints[$name] = $name;
-			}
-		} catch (GlobalException) {
-			// if the realpath operation failed, the following glob was skipped,
-			// keeping just the blueprints from extensions
+		foreach (glob($this->root('blueprints') . '/' . $type . '/*.yml') as $blueprint) {
+			$name = F::name($blueprint);
+			$blueprints[$name] = $name;
 		}
 
 		ksort($blueprints);
@@ -341,7 +331,7 @@ class App
 	/**
 	 * Calls any Kirby route
 	 */
-	public function call(string|null $path = null, string|null $method = null): mixed
+	public function call(string $path = null, string $method = null): mixed
 	{
 		$path   ??= $this->path();
 		$method ??= $this->request()->method();
@@ -488,7 +478,7 @@ class App
 		}
 
 		// controller from site root
-		$controller   = Controller::load($this->root('controllers') . '/' . $name . '.php', $this->root('controllers'));
+		$controller   = Controller::load($this->root('controllers') . '/' . $name . '.php');
 		// controller from extension
 		$controller ??= $this->extension('controllers', $name);
 
@@ -707,7 +697,7 @@ class App
 	 * @psalm-return ($lazy is false ? static : static|null)
 	 */
 	public static function instance(
-		self|null $instance = null,
+		self $instance = null,
 		bool $lazy = false
 	): static|null {
 		if ($instance !== null) {
@@ -862,7 +852,7 @@ class App
 	 *
 	 * @internal
 	 */
-	public function kirbytags(string|null $text = null, array $data = []): string
+	public function kirbytags(string $text = null, array $data = []): string
 	{
 		$data['kirby']  ??= $this;
 		$data['site']   ??= $data['kirby']->site();
@@ -882,7 +872,7 @@ class App
 	 *
 	 * @internal
 	 */
-	public function kirbytext(string|null $text = null, array $options = []): string
+	public function kirbytext(string $text = null, array $options = []): string
 	{
 		$text = $this->apply('kirbytext:before', compact('text'), 'text');
 		$text = $this->kirbytags($text, $options);
@@ -901,7 +891,7 @@ class App
 	 * Returns the language by code or shortcut (`default`, `current`).
 	 * Passing `null` is an alias for passing `current`
 	 */
-	public function language(string|null $code = null): Language|null
+	public function language(string $code = null): Language|null
 	{
 		if ($this->multilang() === false) {
 			return null;
@@ -919,7 +909,7 @@ class App
 	 *
 	 * @internal
 	 */
-	public function languageCode(string|null $languageCode = null): string|null
+	public function languageCode(string $languageCode = null): string|null
 	{
 		return $this->language($languageCode)?->code();
 	}
@@ -962,7 +952,7 @@ class App
 	 *
 	 * @internal
 	 */
-	public function markdown(string|null $text = null, array|null $options = null): string
+	public function markdown(string $text = null, array $options = null): string
 	{
 		// merge global options with local options
 		$options = array_merge(
@@ -1191,10 +1181,10 @@ class App
 	 * current request
 	 */
 	public function render(
-		string|null $path = null,
-		string|null $method = null
+		string $path = null,
+		string $method = null
 	): Response|null {
-		if ((filter_var($_ENV['KIRBY_RENDER'] ?? true, FILTER_VALIDATE_BOOLEAN)) === false) {
+		if (($_ENV['KIRBY_RENDER'] ?? true) === false) {
 			return null;
 		}
 
@@ -1224,10 +1214,8 @@ class App
 	 * @internal
 	 * @throws \Kirby\Exception\NotFoundException if the home page cannot be found
 	 */
-	public function resolve(
-		string|null $path = null,
-		string|null $language = null
-	): mixed {
+	public function resolve(string|null $path = null, string|null $language = null): mixed
+	{
 		// set the current translation
 		$this->setCurrentTranslation($language);
 
@@ -1275,12 +1263,6 @@ class App
 		// only try to return a representation
 		// when the page has been found
 		if ($page) {
-			// if extension is the default content type,
-			// redirect to page URL without extension
-			if ($extension === 'html') {
-				return Response::redirect($page->url(), 301);
-			}
-
 			try {
 				$response = $this->response();
 				$output   = $page->render([], $extension);
@@ -1302,36 +1284,11 @@ class App
 
 		// try to resolve image urls for pages and drafts
 		if ($page = $site->findPageOrDraft($id)) {
-			return $this->resolveFile($page->file($filename));
+			return $page->file($filename);
 		}
 
 		// try to resolve site files at least
-		return $this->resolveFile($site->file($filename));
-	}
-
-	/**
-	 * Filters a resolved file object using the configuration
-	 * @internal
-	 */
-	public function resolveFile(File|null $file): File|null
-	{
-		// shortcut for files that don't exist
-		if ($file === null) {
-			return null;
-		}
-
-		$option = $this->option('content.fileRedirects', true);
-
-		if ($option === true) {
-			return $file;
-		}
-
-		if ($option instanceof Closure) {
-			return $option($file) === true ? $file : null;
-		}
-
-		// option was set to `false` or an invalid value
-		return null;
+		return $site->file($filename);
 	}
 
 	/**
@@ -1450,7 +1407,7 @@ class App
 	public function sessionHandler(): AutoSession
 	{
 		return $this->sessionHandler ??= new AutoSession(
-			($this->component('session::store'))($this),
+			$this->root('sessions'),
 			$this->option('session', [])
 		);
 	}
@@ -1484,7 +1441,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function setLanguages(array|null $languages = null): static
+	protected function setLanguages(array $languages = null): static
 	{
 		if ($languages !== null) {
 			$objects = [];
@@ -1505,7 +1462,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function setPath(string|null $path = null): static
+	protected function setPath(string $path = null): static
 	{
 		$this->path = $path !== null ? trim($path, '/') : null;
 		return $this;
@@ -1516,7 +1473,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function setRequest(array|null $request = null): static
+	protected function setRequest(array $request = null): static
 	{
 		if ($request !== null) {
 			$this->request = new Request($request);
@@ -1530,7 +1487,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function setRoles(array|null $roles = null): static
+	protected function setRoles(array $roles = null): static
 	{
 		if ($roles !== null) {
 			$this->roles = Roles::factory($roles);
@@ -1544,7 +1501,7 @@ class App
 	 *
 	 * @return $this
 	 */
-	protected function setSite(Site|array|null $site = null): static
+	protected function setSite(Site|array $site = null): static
 	{
 		if (is_array($site) === true) {
 			$site = new Site($site);
@@ -1571,7 +1528,7 @@ class App
 	 *
 	 * @internal
 	 */
-	public function smartypants(string|null $text = null): string
+	public function smartypants(string $text = null): string
 	{
 		$options = $this->option('smartypants', []);
 

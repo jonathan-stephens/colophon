@@ -239,7 +239,7 @@ class User extends ModelWithContent
 	 */
 	public static function hashPassword(
 		#[SensitiveParameter]
-		string|null $password = null
+		string $password = null
 	): string|null {
 		if ($password !== null) {
 			$password = password_hash($password, PASSWORD_DEFAULT);
@@ -279,7 +279,7 @@ class User extends ModelWithContent
 	/**
 	 * Compares the current object with the given user object
 	 */
-	public function is(User|null $user = null): bool
+	public function is(User $user = null): bool
 	{
 		if ($user === null) {
 			return false;
@@ -574,24 +574,33 @@ class User extends ModelWithContent
 	}
 
 	/**
-	 * Returns all available roles for this user,
-	 * that the authenticated user can change to.
-	 *
-	 * For all roles the current user can create
-	 * use `$kirby->roles()->canBeCreated()`.
+	 * Returns all available roles
+	 * for this user, that can be selected
+	 * by the authenticated user
 	 */
 	public function roles(): Roles
 	{
 		$kirby = $this->kirby();
 		$roles = $kirby->roles();
 
-		// if the authenticated user doesn't have the permission to change
-		// the role of this user, only the current role is available
-		if ($this->permissions()->can('changeRole') === false) {
-			return $roles->filter('id', $this->role()->id());
+		// a collection with just the one role of the user
+		$myRole = $roles->filter('id', $this->role()->id());
+
+		// if there's an authenticated user …
+		// admin users can select pretty much any role
+		if ($kirby->user()?->isAdmin() === true) {
+			// except if the user is the last admin
+			if ($this->isLastAdmin() === true) {
+				// in which case they have to stay admin
+				return $myRole;
+			}
+
+			// return all roles for mighty admins
+			return $roles;
 		}
 
-		return $roles->canBeCreated();
+		// any other user can only keep their role
+		return $myRole;
 	}
 
 	/**
@@ -625,7 +634,7 @@ class User extends ModelWithContent
 	 *
 	 * @return $this
 	 */
-	protected function setBlueprint(array|null $blueprint = null): static
+	protected function setBlueprint(array $blueprint = null): static
 	{
 		if ($blueprint !== null) {
 			$blueprint['model'] = $this;
@@ -657,7 +666,7 @@ class User extends ModelWithContent
 	 */
 	protected function siblingsCollection(): Users
 	{
-		return $this->kirby()->users()->sortBy('username', 'asc');
+		return $this->kirby()->users();
 	}
 
 	/**
@@ -683,7 +692,7 @@ class User extends ModelWithContent
 	 *                              (`null` to keep the original token)
 	 */
 	public function toString(
-		string|null $template = null,
+		string $template = null,
 		array $data = [],
 		string|null $fallback = '',
 		string $handler = 'template'
@@ -711,7 +720,7 @@ class User extends ModelWithContent
 	 */
 	public function validatePassword(
 		#[SensitiveParameter]
-		string|null $password = null
+		string $password = null
 	): bool {
 		if (empty($this->password()) === true) {
 			throw new NotFoundException(['key' => 'user.password.undefined']);

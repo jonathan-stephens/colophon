@@ -361,7 +361,7 @@ class Page extends ModelWithContent
 	}
 
 	/**
-	 * Returns the directory name (UID with optional sorting number)
+	 * Sorting number + Slug
 	 */
 	public function dirname(): string
 	{
@@ -377,8 +377,7 @@ class Page extends ModelWithContent
 	}
 
 	/**
-	 * Returns the directory path relative to the `content` root
-	 * (including optional sorting numbers and draft directories)
+	 * Sorting number + Slug
 	 */
 	public function diruri(): string
 	{
@@ -524,12 +523,11 @@ class Page extends ModelWithContent
 			return false;
 		}
 
-		static $accessible   = [];
-		$role                = $this->kirby()->user()?->role()->id() ?? '__none__';
-		$template            = $this->intendedTemplate()->name();
-		$accessible[$role] ??= [];
+		static $accessible = [];
 
-		return $accessible[$role][$template] ??= $this->permissions()->can('access');
+		$template = $this->intendedTemplate()->name();
+
+		return $accessible[$template] ??= $this->permissions()->can('access');
 	}
 
 	/**
@@ -691,12 +689,11 @@ class Page extends ModelWithContent
 			return false;
 		}
 
-		static $listable   = [];
-		$role              = $this->kirby()->user()?->role()->id() ?? '__none__';
-		$template          = $this->intendedTemplate()->name();
-		$listable[$role] ??= [];
+		static $listable = [];
 
-		return $listable[$role][$template] ??= $this->permissions()->can('list');
+		$template = $this->intendedTemplate()->name();
+
+		return $listable[$template] ??= $this->permissions()->can('list');
 	}
 
 	/**
@@ -748,12 +745,11 @@ class Page extends ModelWithContent
 	 */
 	public function isReadable(): bool
 	{
-		static $readable   = [];
-		$role              = $this->kirby()->user()?->role()->id() ?? '__none__';
-		$template          = $this->intendedTemplate()->name();
-		$readable[$role] ??= [];
+		static $readable = [];
 
-		return $readable[$role][$template] ??= $this->permissions()->can('read');
+		$template = $this->intendedTemplate()->name();
+
+		return $readable[$template] ??= $this->permissions()->can('read');
 	}
 
 	/**
@@ -777,7 +773,7 @@ class Page extends ModelWithContent
 	 * This is only used for drafts so far.
 	 * @internal
 	 */
-	public function isVerified(string|null $token = null): bool
+	public function isVerified(string $token = null): bool
 	{
 		if (
 			$this->isPublished() === true &&
@@ -1092,7 +1088,7 @@ class Page extends ModelWithContent
 	 *
 	 * @return $this
 	 */
-	protected function setBlueprint(array|null $blueprint = null): static
+	protected function setBlueprint(array $blueprint = null): static
 	{
 		if ($blueprint !== null) {
 			$blueprint['model'] = $this;
@@ -1107,7 +1103,7 @@ class Page extends ModelWithContent
 	 *
 	 * @return $this
 	 */
-	protected function setTemplate(string|null $template = null): static
+	protected function setTemplate(string $template = null): static
 	{
 		if ($template !== null) {
 			$this->intendedTemplate = $this->kirby()->template($template);
@@ -1121,7 +1117,7 @@ class Page extends ModelWithContent
 	 *
 	 * @return $this
 	 */
-	protected function setUrl(string|null $url = null): static
+	protected function setUrl(string $url = null): static
 	{
 		if (is_string($url) === true) {
 			$url = rtrim($url, '/');
@@ -1134,7 +1130,7 @@ class Page extends ModelWithContent
 	/**
 	 * Returns the slug of the page
 	 */
-	public function slug(string|null $languageCode = null): string
+	public function slug(string $languageCode = null): string
 	{
 		if ($this->kirby()->multilang() === true) {
 			$languageCode      ??= $this->kirby()->languageCode();
@@ -1246,7 +1242,7 @@ class Page extends ModelWithContent
 	 * The uri is the same as the id, except
 	 * that it will be translated in multi-language setups
 	 */
-	public function uri(string|null $languageCode = null): string
+	public function uri(string $languageCode = null): string
 	{
 		// set the id, depending on the parent
 		if ($parent = $this->parent()) {
@@ -1302,7 +1298,7 @@ class Page extends ModelWithContent
 	 */
 	public function urlForLanguage(
 		$language = null,
-		array|null $options = null
+		array $options = null
 	): string {
 		if ($options !== null) {
 			return Url::to($this->urlForLanguage($language), $options);

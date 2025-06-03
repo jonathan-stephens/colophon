@@ -389,8 +389,7 @@ class FileSessionStore extends SessionStore
 	 */
 	protected function name(int $expiryTime, string $id): string
 	{
-		// protect against path traversal
-		return $expiryTime . '.' . basename($id);
+		return $expiryTime . '.' . $id;
 	}
 
 	/**

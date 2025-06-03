@@ -105,11 +105,10 @@ class Collections
 	{
 		$kirby = App::instance();
 
-		// first check for collection file in the `collections` root
-		$root = $kirby->root('collections');
-		$file = $root . '/' . $name . '.php';
+		// first check for collection file
+		$file = $kirby->root('collections') . '/' . $name . '.php';
 
-		if (F::exists($file, $root) === true) {
+		if (is_file($file) === true) {
 			$collection = F::load($file, allowOutput: false);
 
 			if ($collection instanceof Closure) {

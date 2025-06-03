@@ -3,7 +3,6 @@
 use Kirby\Cms\App;
 use Kirby\Cms\Find;
 use Kirby\Cms\PageRules;
-use Kirby\Cms\Url;
 use Kirby\Exception\Exception;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\PermissionException;
@@ -432,7 +431,7 @@ return [
 				];
 			}
 
-			$slugAppendix  = Url::slug(I18n::translate('page.duplicate.appendix'));
+			$slugAppendix  = Str::slug(I18n::translate('page.duplicate.appendix'));
 			$titleAppendix = I18n::translate('page.duplicate.appendix');
 
 			// if the item to be duplicated already exists

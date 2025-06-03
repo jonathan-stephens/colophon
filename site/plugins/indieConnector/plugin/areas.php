@@ -95,13 +95,10 @@ return [
                 [
                     'pattern' => ['webmentions/queue'],
                     'action' => function () {
-                        $responseCollector = new ResponseCollector();
-                        $queueHandler = new QueueHandler();
 
+                        $queueHandler = new QueueHandler();
                         $queuedItems = $queueHandler->getQueuedItems(limit: 0, includeFailed: true);
                         $itemsInQueue = $queuedItems->count();
-
-                        $urlCounts = $responseCollector->getPostUrlMetrics();
 
                         return [
                             'component' => 'k-webmentions-queue-view',
@@ -110,16 +107,6 @@ return [
                                 'disabled' => !$queueHandler->queueEnabled(),
                                 'itemsInQueue' => $itemsInQueue ?? 0,
                                 'queuedItems' => $queuedItems->toArray(),
-                                'responses' => [
-                                    'enabled' => $responseCollector->isEnabled(),
-                                    'limit' => option('mauricerenck.indieConnector.responses.limit', 10),
-                                    'urls' => [
-                                        'total' => $urlCounts['total'],
-                                        'due' => $urlCounts['due'],
-                                        'mastodon' => $urlCounts['mastodon'],
-                                        'bluesky' => $urlCounts['bluesky'],
-                                    ],
-                                ],
                             ],
                         ];
                     }

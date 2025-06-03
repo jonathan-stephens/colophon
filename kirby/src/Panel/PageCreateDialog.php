@@ -54,7 +54,6 @@ class PageCreateDialog
 		'tags',
 		'tel',
 		'text',
-		'toggle',
 		'toggles',
 		'time',
 		'url'
@@ -248,9 +247,8 @@ class PageCreateDialog
 	 */
 	public function model(): Page
 	{
-		// TODO: use actual in-memory page in v5
 		return $this->model ??= Page::factory([
-			'slug'     => '__new__',
+			'slug'     => 'new',
 			'template' => $this->template,
 			'model'    => $this->template,
 			'parent'   => $this->parent instanceof Page ? $this->parent : null
@@ -268,7 +266,12 @@ class PageCreateDialog
 
 		// create temporary page object
 		// to resolve the template strings
-		$page = $this->model()->clone(['content' => $input]);
+		$page = new Page([
+			'slug'     => 'tmp',
+			'template' => $this->template,
+			'parent'   => $this->model(),
+			'content'  => $input
+		]);
 
 		if (is_string($title)) {
 			$input['title'] = $page->toSafeString($title);

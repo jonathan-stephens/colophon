@@ -1,3 +1,17 @@
+# [2.8.0](https://github.com/mauricerenck/indieConnector/compare/v2.7.3...v2.8.0) (2025-05-27)
+
+
+### Features
+
+* fetch responses from mastodon and bluesky ([#23](https://github.com/mauricerenck/indieConnector/issues/23)) ([0978d26](https://github.com/mauricerenck/indieConnector/commit/0978d26deea65bbb1e2a5289b22dc00588e78dae)), closes [#22](https://github.com/mauricerenck/indieConnector/issues/22) [#17](https://github.com/mauricerenck/indieConnector/issues/17)
+
+## [2.7.3](https://github.com/mauricerenck/indieConnector/compare/v2.7.2...v2.7.3) (2025-04-16)
+
+
+### Bug Fixes
+
+* check for empty atUri ([d8b3732](https://github.com/mauricerenck/indieConnector/commit/d8b3732818d9a58516a6a8b2b49acf7f590a530c))
+
 ## [2.7.2](https://github.com/mauricerenck/indieConnector/compare/v2.7.1...v2.7.2) (2025-04-12)
 
 

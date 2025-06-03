@@ -18,6 +18,11 @@ return [
     },
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
+    'mauricerenck.indieConnector.bluesky.enabled' => true,
+    'mauricerenck.indieConnector.bluesky.handle' => 'jonathanstephens.us',
+    'mauricerenck.indieConnector.bluesky.password' => 'ybnj-44ep-gfte-ktyg',
+    'mauricerenck.indieConnector.post.allowedTemplates' => ['links', 'journal','essays'],
+    'mauricerenck.indieConnector.send.enabled' => true,
     'jonathanstephens.timekeeper' => [
         'useClientTime' => true,
         'allowManualOverride' => true,

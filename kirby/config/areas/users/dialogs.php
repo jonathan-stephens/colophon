@@ -3,6 +3,7 @@
 use Kirby\Cms\App;
 use Kirby\Cms\Find;
 use Kirby\Cms\UserRules;
+use Kirby\Exception\Exception;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Panel\Field;
 use Kirby\Panel\Panel;
@@ -20,11 +21,18 @@ return [
 		'pattern' => 'users/create',
 		'load' => function () {
 			$kirby = App::instance();
+			$roles = $kirby->roles()->canBeCreated();
 
 			// get default value for role
 			if ($role = $kirby->request()->get('role')) {
-				$role = $kirby->roles()->find($role)?->id();
+				$role = $roles->find($role)?->id();
 			}
+
+			// get role field definition, incl. available role options
+			$roles = Field::role(
+				roles: $roles,
+				props: ['required' => true]
+			);
 
 			return [
 				'component' => 'k-form-dialog',
@@ -35,13 +43,13 @@ return [
 							'link'     => false,
 							'required' => true
 						]),
-						'password'     => Field::password(),
+						'password'     => Field::password([
+							'autocomplete' => 'new-password'
+						]),
 						'translation'  => Field::translation([
 							'required' => true
 						]),
-						'role' => Field::role([
-							'required' => true
-						])
+						'role' => $roles
 					],
 					'submitButton' => I18n::translate('create'),
 					'value' => [
@@ -49,7 +57,7 @@ return [
 						'email'       => '',
 						'password'    => '',
 						'translation' => $kirby->panelLanguage(),
-						'role'        => $role ?? $kirby->user()->role()->name()
+						'role'        => $role ?? $roles['options'][0]['value'] ?? null
 					]
 				]
 			];
@@ -175,17 +183,23 @@ return [
 	'user.changePassword' => [
 		'pattern' => 'users/(:any)/changePassword',
 		'load' => function (string $id) {
-			$user = Find::user($id);
+			Find::user($id);
 
 			return [
 				'component' => 'k-form-dialog',
 				'props' => [
-					'fields' => [
+					'fields'       => [
+						'currentPassword' => Field::password([
+							'label'        => I18n::translate('user.changePassword.current'),
+							'autocomplete' => 'current-password'
+						]),
 						'password' => Field::password([
-							'label' => I18n::translate('user.changePassword.new'),
+							'label'        => I18n::translate('user.changePassword.new'),
+							'autocomplete' => 'new-password'
 						]),
 						'passwordConfirmation' => Field::password([
-							'label' => I18n::translate('user.changePassword.new.confirm'),
+							'label'        => I18n::translate('user.changePassword.new.confirm'),
+							'autocomplete' => 'new-password'
 						])
 					],
 					'submitButton' => I18n::translate('change'),
@@ -193,13 +207,26 @@ return [
 			];
 		},
 		'submit' => function (string $id) {
-			$request = App::instance()->request();
+			$kirby   = App::instance();
+			$request = $kirby->request();
 
 			$user                 = Find::user($id);
+			$currentPassword      = $request->get('currentPassword');
 			$password             = $request->get('password');
 			$passwordConfirmation = $request->get('passwordConfirmation');
 
-			// validate the password
+			// validate the current password of the acting user
+			try {
+				$kirby->user()->validatePassword($currentPassword);
+			} catch (Exception) {
+				// catching and re-throwing exception to avoid automatic
+				// sign-out of current user from the Panel
+				throw new InvalidArgumentException([
+					'key' => 'user.password.wrong'
+				]);
+			}
+
+			// validate the new password
 			UserRules::validPassword($user, $password ?? '');
 
 			// compare passwords
@@ -228,10 +255,13 @@ return [
 				'component' => 'k-form-dialog',
 				'props' => [
 					'fields' => [
-						'role' => Field::role([
-							'label'    => I18n::translate('user.changeRole.select'),
-							'required' => true,
-						])
+						'role' => Field::role(
+							roles: $user->roles(),
+							props: [
+								'label'    => I18n::translate('user.changeRole.select'),
+								'required' => true,
+							]
+						)
 					],
 					'submitButton' => I18n::translate('user.changeRole'),
 					'value' => [

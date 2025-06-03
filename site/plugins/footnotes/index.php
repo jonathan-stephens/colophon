@@ -6,7 +6,7 @@ require_once __DIR__ . '/lib/footnotes.php';
 
 Kirby::plugin('sylvainjule/footnotes', [
     'options' => array(
-        'wrapper'  => 'aside',
+        'wrapper'  => 'div',
         'back'     => '&#8617;',
         'links'    => true,
     ),

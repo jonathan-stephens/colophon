@@ -14,15 +14,21 @@ Protect pages that you want to hide from unwanted views with a password.
 
 ## Installation
 
+### Download
+
+Download and copy this repository to `/site/plugins/kirby-locked-pages`.
+
+### Git Submodule
+
+```
+git submodule add https://github.com/johannschopplich/kirby-locked-pages.git site/plugins/kirby-locked-pages
+```
+
 ### Composer
 
 ```
 composer require johannschopplich/kirby-locked-pages
 ```
-
-### Download
-
-Download and copy this repository to `/site/plugins/kirby-locked-pages`.
 
 ## Usage
 
@@ -88,7 +94,7 @@ return [
         'slug' => 'geschuetzt',
         'title' => 'Geschützte Seite',
         'error' => [
-            'csrf' => 'Der CSRF-Token ist nicht korrekt',
+            'csrf' => 'Der CSRF-Token ist nicht korrket',
             'password' => 'Das Passwort ist nicht korrekt'
         ]
     ]
@@ -101,4 +107,4 @@ return [
 
 ## License
 
-[MIT](./LICENSE) License © 2021-PRESENT [Johann Schopplich](https://github.com/johannschopplich)
+[MIT](./LICENSE) License © 2021-2023 [Johann Schopplich](https://github.com/johannschopplich)

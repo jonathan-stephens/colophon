@@ -22,7 +22,15 @@
   },
   "require": {
     "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-    "getkirby/cms": "^4.0"
+    "getkirby/cms": "^4.0",
+    "mauricerenck/indieconnector": "^2.8",
+    "mauricerenck/komments": "^3.1",
+    "sylvainjule/footnotes": "^2.0",
+    "pechente/kirby-admin-bar": "^2.2",
+    "johannschopplich/kirby-locked-pages": "^2.1",
+    "scottboms/kirby-markup": "^1.1",
+    "bnomei/kirby3-feed": "^5.0",
+    "tobimori/kirby-seo": "^1.1"
   },
   "config": {
     "allow-plugins": {

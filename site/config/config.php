@@ -18,6 +18,10 @@ return [
     },
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
+    'mauricerenck.indieConnector.send.url-fields' => [
+      'text:text',
+      'website:text',
+    ],
     'jonathanstephens.timekeeper' => [
         'useClientTime' => true,
         'allowManualOverride' => true,

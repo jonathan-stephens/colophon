@@ -1,15 +1,3 @@
-title: Link
-num: date
-icon: link
-sorting: zero                   # This sets zero-based numbering
-reference: sorting             # This references the automatic sorting
-
-create:
-  fields:
-    - website
-    - tld
-    - tags
-
 tabs:
   content:
     label: Content
@@ -21,23 +9,16 @@ tabs:
           content:
             type: fields
             fields:
-              website:
-                label: URL
-                type: url
-                required: true
-                width: 1/2
-              tld:
-                label: Top Level Domain
+              hed:
                 type: text
-                required: true
-                width: 1/2
-              tags:
-                label: Tags
-                type: tags
-                options: query
-                query: site.index.pluck("tags", ",", true)
+                label: Header
+                max: 36
+              dek:
+                type: text
+                label: Subtitle
+                max: 72
               text:
-                label: Description, quotes, etc.
+                label: Content
                 type: textarea
                 size: large
                 buttons:
@@ -61,16 +42,20 @@ tabs:
                   - smallcaps
                   - sub
                   - sup
+          meta:
+            type: fields
+            fields:
+              meta: fields/meta
       sidebar:
         width: 1/3
         sections:
-          metadata:
-            label: Metadata
+          children:
             type: fields
             fields:
-              datetime: fields/datetime
+              pages:
+                type: pages
+                template: default
           uploads:
-            label: Uploads
             type: fields
             fields:
               uploads: fields/uploads

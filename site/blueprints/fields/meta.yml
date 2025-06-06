@@ -1,0 +1,10 @@
+type: group
+fields:
+  tags:
+    label: Tags
+    type: tags
+    options: query
+    query: site.index.pluck("tags", ",", true)
+    required: true
+  datetime: fields/datetime
+  location: fields/location

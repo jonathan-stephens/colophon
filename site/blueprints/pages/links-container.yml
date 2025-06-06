@@ -1,11 +1,6 @@
 title: Links (Container)
 icon: link
 
-options:
-  changeSlug: false
-  changeStatus: false
-  delete: false
-
 tabs:
   entries:
     label: Links
@@ -23,4 +18,7 @@ tabs:
         status: published
         templates: [link]
         sortBy: date desc
-        info: "{{ page.url }}"
+        layout: table
+        columns:
+          tld: true
+          tags: true

@@ -8,6 +8,7 @@ title: Image
 # More about file blueprints: https://getkirby.com/docs/reference/panel/blueprints/file
 
 accept:
+  mime: image/*
   type: image
 
 columns:

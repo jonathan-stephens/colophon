@@ -42,10 +42,10 @@ tabs:
                   - smallcaps
                   - sub
                   - sup
-          meta:
+          metadata:
             type: fields
             fields:
-              meta: fields/meta
+              metadata: fields/metadata
       sidebar:
         width: 1/3
         sections:

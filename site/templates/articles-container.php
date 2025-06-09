@@ -11,7 +11,7 @@
     <a href="<?= $article->url() ?>">
       <box-l class="e-content">
           <div class="meta">
-            <time class="dt-published" datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
+            <time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?> <?= $article->time()->toDate('H:i') ?>"><?= $article->date()->toDate('j M Y') ?></time>
             <p class="text-stats">
               <?php
                 $wordCount = $article->text()->words();
@@ -37,6 +37,7 @@
                   }
                 }
               ?>
+            </p>
           </div>
           <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>
           <p class="dek"><?= $article->dek()->html() ?></p>

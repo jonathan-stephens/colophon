@@ -19,8 +19,8 @@
           if ($currentSection && $crumb->isActive()) {
             switch ($currentSection) {
               case 'journal':
-                $year = $page->metadata()->date()->toDate('Y');
-                $monthDay = $page->metadata()->date()->toDate('F j, Y');
+                $year = $page->date()->toDate('Y');
+                $monthDay = $page->date()->toDate('F j, Y');
 
                 $yearPage = $site->find('journal/' . $year);
                 if ($yearPage) {

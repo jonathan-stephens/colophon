@@ -1,0 +1,37 @@
+article:is(.review){
+  a{
+    text-decoration:none;
+
+    &:is(:hover) :is(.reviewer, .meta, .role, .context){
+      color:var(--color-distinct);
+    }
+    &:is(:hover) :is(.meta){
+        border-color:var(--border-color-emphasis);
+    }
+  }
+  .meta{
+    display: flex;
+    flex-flow:row;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: var(--rhythm-vivace);
+    margin-block-end: var(--rhythm-vivace);
+    border-top: var(--border-fine) dashed var(--border-color-distinct);
+    border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+    font-size:var(--small);
+    font-family:var(--font-mono);
+  }
+  .lede{
+    font-size:var(--hed-tertiary);
+    color:var(--color-distinct);
+  }
+  .reviewer{
+    font-size:var(--hed-quaternary);
+    color:var(--color-distinct);
+  }
+  .reviewer + p{
+      padding-block-start:var(--rhythm-prestissimo);
+      color:var(--color-nuance);
+  }
+
+}

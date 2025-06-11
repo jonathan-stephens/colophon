@@ -1,0 +1,17 @@
+type: group
+fields:
+  addressLocality:
+    label: City
+    type: text
+    width: 1/3
+    default: "Raleigh"
+  addressRegion:
+    label: State or Region
+    type: text
+    width: 1/3
+    default: "NC"
+  addressCountry:
+    label: Country
+    type: text
+    width: 1/3
+    default: "US"

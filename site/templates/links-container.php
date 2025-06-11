@@ -9,7 +9,7 @@
   $groupedArticles = [];
 
   foreach($articles as $article) {
-    $date = $article->metadata()->date()->toDate('F j, Y');
+    $date = $article->date()->toDate('F j, Y');
     if(!isset($groupedArticles[$date])) {
       $groupedArticles[$date] = [];
     }
@@ -19,7 +19,7 @@
   // Now loop through the grouped articles
   foreach($groupedArticles as $date => $dayArticles):
 ?>
-  <section class="day-group">
+  <section class="day-group flow">
     <h2 class="date-header"><?= $date ?></h2>
 
     <?php foreach($dayArticles as $article): ?>
@@ -31,7 +31,7 @@
             <?php if($article->tags()->isNotEmpty()): ?>
               <?php snippet('/components/tags', ['reference' => $article]) ?>
             <?php endif ?>
-            <a rel="bookmark" class="u-url" href="<?= $article->url() ?>"><time class="dt-published" datetime="<?= $article->metadata()->date()->toDate('F j Y') ?><?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->time()->toDate('H:i') ?></time></a>
+            <a rel="bookmark" class="u-url" href="<?= $article->url() ?>"><time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?><?= $article->time()->toDate('H:i') ?>"><?= $article->time()->toDate('H:i') ?></time></a>
           </div>
         </box-l>
       </article>

@@ -12,7 +12,7 @@
       <box-l>
           <h2 class="hed"><?= $article->hed()->html() ?></h2>
           <p class="dek"><?= $article->dek()->html() ?></p>
-          <time datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
+          <time datetime="<?= $article->date()->toDate('F j Y') ?> <?= $article->time()->toDate('H:i') ?>"><?= $article->date()->toDate('j M Y') ?></time>
       </box-l>
     </a>
   </article>

@@ -1,17 +1,12 @@
 <?php snippet('header') ?>
 
-<div class="masthead wrapper">
-    <!--<h1><?= $page->title()->html() ?></h1>-->
-</div>
-
 <div class="wrapper">
 <?php foreach($page->children()->listed()->flip() as $article): ?>
-
   <article class="h-entry">
     <a href="<?= $article->url() ?>">
       <box-l class="e-content">
           <div class="meta">
-            <time class="dt-published" datetime="<?= $article->metadata()->date()->toDate('F j Y') ?> <?= $article->metadata()->time()->toDate('H:i') ?>"><?= $article->metadata()->date()->toDate('j M Y') ?></time>
+            <time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?> <?= $article->time()->toDate('H:i') ?>"><?= $article->date()->toDate('j M Y') ?></time>
             <p class="text-stats">
               <?php
                 $wordCount = $article->text()->words();

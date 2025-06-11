@@ -1,9 +1,10 @@
 <?php snippet('header') ?>
 
   <?php if($page->isHomePage()): ?>
-    <section class="splash wrapper">
+    <section class="splash wrapper flow">
+      <h2><?= $page->dek()->html() ?></h2>
+      <h1><?= $page->hed()->html() ?></h1>
       <?= $page->text()->kirbytext() ?>
-
       <div class="cluster">
         <a class="button" href="https://linkedin.com/in/elnatnal">
           Connect on LinkedIn

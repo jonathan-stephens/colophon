@@ -16,6 +16,7 @@
 
   display: inline-flex;
   align-items: center;
+  justify-content:center;
   gap: var(--button-gap, var(--flow-5));
   padding: var(--button-padding, var(--flow-3) var(--flow-5));
 

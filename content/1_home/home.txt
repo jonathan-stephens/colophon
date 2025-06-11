@@ -2,13 +2,43 @@ Title: Jonathan Stephens
 
 ----
 
-Text:
+Hed: 👋 Hello, I'm Jonathan—a human from Earth.
 
-## Product development, design systems, organizational design
+----
 
-👋 Hello, I'm Jonathan—a human from Earth.
+Dek: Product development, design systems, organizational design
 
-I've spent over 15 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
+----
+
+Text: I've spent over 15 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
+
+----
+
+Tags: About
+
+----
+
+Date: 2025-05-06
+
+----
+
+Tended: 
+
+----
+
+Time: 17:30:00
+
+----
+
+Addresslocality: Raleigh
+
+----
+
+Addressregion: NC
+
+----
+
+Addresscountry: US
 
 ----
 

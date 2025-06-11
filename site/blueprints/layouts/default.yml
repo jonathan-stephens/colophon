@@ -1,0 +1,61 @@
+tabs:
+  content:
+    label: Content
+    icon: grid-full
+    columns:
+      main:
+        width: 2/3
+        sections:
+          content:
+            type: fields
+            fields:
+              hed:
+                type: text
+                label: Header
+                max: 36
+              dek:
+                type: text
+                label: Subtitle
+                max: 72
+              text:
+                label: Content
+                type: textarea
+                size: large
+                buttons:
+                  - headlines
+                  - bold
+                  - italic
+                  - link
+                  - email
+                  - file
+                  - code
+                  - ul
+                  - ol
+                  - abbr
+                  - cite
+                  - dfn
+                  - ins
+                  - mark
+                  - q
+                  - s
+                  - samp
+                  - smallcaps
+                  - sub
+                  - sup
+          metadata:
+            type: fields
+            fields:
+              metadata: fields/metadata
+      sidebar:
+        width: 1/3
+        sections:
+          children:
+            type: fields
+            fields:
+              pages:
+                type: pages
+                template: default
+          uploads:
+            type: fields
+            fields:
+              uploads: fields/uploads

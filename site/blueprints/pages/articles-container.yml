@@ -1,0 +1,22 @@
+title: Articles (Container)
+type: pages
+icon: text
+
+tabs:
+  entries:
+    label: Entries
+    sections:
+      drafts:
+        headline: Draft Entries
+        type: pages
+        status: draft
+        templates: [article]
+        sortBy: date desc
+
+      published:
+        headline: Published Entries
+        type: pages
+        status: published
+        templates: [article]
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"

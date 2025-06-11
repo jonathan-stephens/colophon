@@ -1,11 +1,6 @@
-title: Essays
+title: Essays (Container)
 type: pages
 icon: text
-
-options:
-  changeSlug: false
-  changeStatus: true
-  delete: false
 
 tabs:
   entries:

@@ -10,38 +10,30 @@
     </header>
 
     <?php if($reviews = $page->children()->listed()): ?>
-      <div class="reviews-grid">
+      <div class="cluster">
         <?php foreach($reviews as $review): ?>
           <article class="review">
             <a href="<?= $review->url() ?>" class="review-link">
-              <?php if($image = $review->headshot()->toFile()): ?>
-                <div class="review-image">
-
-                  <img src="<?= $review->headshot()->url() ?>"
-                       alt="Photo of <?= $review->hed()->html() ?>"
-                       width="<?= $review->headshot()->width() ?>"                    
-                       loading="lazy">
-                </div>
-              <?php endif ?>
-
-              <div>
-                <h2 class="reviewer"><?= $review->hed()->html() ?></h2>
-
-                <?php if($review->role()->isNotEmpty()): ?>
-                  <p class="role"><?= $review->role()->html() ?></p>
-                <?php endif ?>
-
-                <?php if($review->lede()->isNotEmpty()): ?>
-                  <p class="lede"><?= $review->lede()->html() ?></p>
-                <?php endif ?>
-
-                <div class="meta">
-                  <span class="date"><?= $review->reviewDate()->toDate('F Y') ?></span>
+              <box-l>
+                <p class="meta">
                   <?php if($review->relationship()->isNotEmpty()): ?>
                     <span class="relationship"><?= $review->relationshipLabel() ?></span>
                   <?php endif ?>
-                </div>
-              </div>
+                  <?php if($review->reviewDate()->isNotEmpty()): ?>
+                    <span class="role"><?= $review->reviewDate()->toDate('F Y') ?> </span>
+                  <?php endif ?>
+                </p>
+
+                  <h2 class="reviewer"><?= $review->hed()->html() ?></h2>
+                  <p>
+                    <?php if($review->role()->isNotEmpty()): ?>
+                      <span class="role"><?= $review->role()->html() ?>, </span>
+                    <?php endif ?>
+                    <?php if($review->context()->isNotEmpty()): ?>
+                      <span class="context"><?= $review->context()->html() ?></span>
+                    <?php endif ?>
+                  </p>
+              </box-l>
             </a>
           </article>
         <?php endforeach ?>

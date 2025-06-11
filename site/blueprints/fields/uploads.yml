@@ -1,0 +1,11 @@
+type: group
+fields:
+  files:
+    label: Files
+    type: files
+  images:
+    label: Images
+    type: files
+    multiple: true
+    layout: cards
+    template: blocks/image

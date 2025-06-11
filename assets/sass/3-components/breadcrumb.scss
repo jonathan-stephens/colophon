@@ -15,7 +15,6 @@
     text-decoration:none;
     font-size:var(--hed-tertiary);
 
-
     &:hover{
       color:var(--color-emphasis);
       text-decoration: underline;
@@ -24,14 +23,11 @@
 
   li::after{
     content: "";
-    display: inline-block;
     padding: 0 var(--flow-3);
-
     display:inline-block;
     height:var(--type-scale-20);
     width:var(--type-scale-20);
     position:relative;
-    background:var(--color-nuance);
 
     mask-image: url('/assets/svg/icons/arrow-right.svg');
     mask-mode: alpha;
@@ -42,18 +38,14 @@
     margin-inline-start: var(--rhythm-presto);
   }
 
-
-.icon.arrow-right{
-  mask-image: url('/assets/svg/icons/arrow-right.svg');
-  mask-mode: alpha;
-  mask-repeat: no-repeat;
-  mask-size: var(--type-scale-20);
-  mask-position: center;
-  margin-inline-end: var(--rhythm-presto);
-  margin-inline-start: var(--rhythm-presto);
-}
-  li:first-of-type{
-    font-weight:var(--weight-bold);
+  .icon.arrow-right{
+    mask-image: url('/assets/svg/icons/arrow-right.svg');
+    mask-mode: alpha;
+    mask-repeat: no-repeat;
+    mask-size: var(--type-scale-20);
+    mask-position: center;
+    margin-inline-end: var(--rhythm-presto);
+    margin-inline-start: var(--rhythm-presto);
   }
 
   li:last-of-type::after{
@@ -61,9 +53,18 @@
     background:transparent;
   }
 
+  li:has(a:focus)::after {
+      /*you may replace this with an explicit className, e.g. :has(.child1)*/
+      background:transparent;
+  }
+
   li:nth-last-child(2){
     a{
       color: var(--color-nuance);
+      &:hover{
+        color: var(--color-distinct);
+        text-decoration-color:var(--color-distinct);
+      }
     }
     &::after{
       background:var(--color-nuance);
@@ -73,6 +74,10 @@
   li:nth-last-child(3) {
     a{
       color: var(--color-subtle);
+      &:hover{
+        color: var(--color-nuance);
+        text-decoration-color:var(--color-nuance);
+      }
     }
     &::after{
       background:var(--color-subtle);
@@ -82,6 +87,10 @@
   li:nth-last-child(4) {
     a{
       color: var(--color-quiet);
+      &:hover{
+        color: var(--color-subtle);
+        text-decoration-color:var(--color-subtle);
+      }
     }
     &::after{
       background:var(--color-quiet);
@@ -90,5 +99,11 @@
 
   [aria-current="page"]{
     color:var(--color-distinct);
+    font-weight: var(--weight-medium);
+
+    &:hover{
+      text-decoration:none;
+      color:none;
+    }
   }
 }

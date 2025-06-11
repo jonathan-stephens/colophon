@@ -1,0 +1,23 @@
+fields:
+  location:
+    label: Location
+    type: select
+    options: api
+    api: locations
+    width: 1/2
+  locationDetails:
+    label: Location Details
+    type: info
+    text: Selected location details will be saved automatically including city, state/region, country, and geo coordinates.
+    width: 1/2
+  # Hidden fields that store the actual location data
+  addressLocality:
+    type: hidden
+  addressRegion:
+    type: hidden
+  addressCountry:
+    type: hidden
+  latitude:
+    type: hidden
+  longitude:
+    type: hidden

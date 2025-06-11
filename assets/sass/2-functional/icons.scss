@@ -21,3 +21,15 @@
 .with-icon .icon {
   margin-inline-end: .3em;
 }
+
+/* Finding a way to scale icons based on their typographic pairing */
+.with-icon:has(.icon + h1) .icon{}
+.with-icon:has(.icon + h2) .icon{}
+.with-icon:has(.icon + h3) .icon{}
+.with-icon:has(.icon + h4) .icon{}
+.with-icon:has(.icon + h5) .icon{}
+.with-icon:has(.icon + h6) .icon{}
+.with-icon:has(.icon + h6) .icon{}
+
+.with-icon:has(.icon + time) .icon{}
+.with-icon:has(.icon + p) .icon{}

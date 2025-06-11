@@ -20,12 +20,15 @@
 @import '3-components/theme-picker';
 @import '3-components/footnotes';
 @import '3-components/button';
+@import '3-components/prism';
 @import '3-components/tags';
 @import '3-components/figure';
 
 @import '4-layout/header';
-@import '4-layout/journal';
-@import '4-layout/links';
 @import '4-layout/footer';
+
+@import '5-pages/journal';
+@import '5-pages/links';
+@import '5-pages/reviews';
 
 @import 'scratch';

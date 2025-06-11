@@ -21,9 +21,17 @@
 
   --caption:clamp(var(--type-scale-12),0.661rem + 0.238vw, var(--type-scale-14));
 }
+body{
+  line-height: 1.5;
+  text-decoration-skip-ink: auto;
+  font-optical-sizing: auto;
+  font-variant-ligatures: common-ligatures no-discretionary-ligatures no- historical-ligatures contextual;
+  font-kerning: normal;
+}
 
 h1,h2,h3,h4{
   font-family:var(--font-serif);
+  font-variant-numeric: lining-nums;
 }
 h1{
   font-size:var(--hed-primary);
@@ -31,15 +39,15 @@ h1{
 }
 h2{
   font-size:var(--hed-secondary);
-  color:var(--color-prominent);
+//  color:var(--color-prominent);
 }
 h3{
   font-size:var(--hed-tertiary);
-  color:var(--color-distinct);
+//  color:var(--color-distinct);
 }
 h4{
   font-size:var(--hed-quaternary);
-  color:var(--color-nuance);
+//  color:var(--color-nuance);
 }
 h5,h6{
   font-size: var(--prose);
@@ -72,7 +80,7 @@ ol{
 }
 
 li{
-  padding-block:var(--rhythm-vivace);
+  padding-block:var(--rhythm-presto);
   text-wrap: balance;
 }
 
@@ -96,11 +104,6 @@ h2 + p{
   padding-block-start:var(--rhythm-allegro);
 }
 
-p + h4{
-  line-height: var(--leading-flat);
-  padding-block:var(--rhythm-allegro);
-  color:var(--color-prominent);
-}
 p+p{
   padding-block-start:var(--rhythm-moderato);
 }
@@ -135,17 +138,43 @@ article.default h2{
   border-bottom: var(--border-regular) solid var(--border-color-distinct);
 }
 
-article h3{
-  margin-block-start:var(--rhythm-andante);
-  margin-block-end: var(--rhythm-moderato);
+strong, b, th {
+  font-weight: bold;
 }
 
-strong{font-weight:var(--weight-semibold);}
+.prose{
+  text-wrap: pretty;
+  font-variant-numeric: oldstyle-nums proportional-nums;
 
-.prose h2{
-  font-size: var(--hed-tertiary);
-  line-height: var(--leading-fine);
-  padding-block-start: var(--rhythm-andante);
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 4;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-lines: 2;
+
+  hyphens: auto;
+  hyphenate-limit-chars: 7 4 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-zone: 8%;
+  hyphenate-limit-last: always;
+
+  h2{
+    line-height: var(--leading-fine);
+    font-size:var(--hed-tertiary);
+    padding-block-start: var(--rhythm-andante);
+    padding-block-end:var(--rhythm-vivace);
+  }
+  h3{
+    padding-block-start:var(--rhythm-moderato);
+    padding-block-end:var(--rhythm-vivace);
+  }
+  h4{
+    padding-block:var(--rhythm-moderato);
+    line-height: var(--leading-flat);
+    font-style:italic;
+  }
+  h3 + h4{
+    padding-block-start:var(--rhythm-vivace);
+  }
 }
 
 blockquote{
@@ -153,9 +182,32 @@ blockquote{
   padding-block: var(--rhythm-moderato);
   padding-inline: var(--rhythm-andante);
   border-inline-start: var(--border-medium) solid var(--background-tertiary-inverse);
-  margin: 0;
+  margin-inline: 0;
+  margin-block:var(--rhythm-allegro);
 }
 
-blockquote + p{
-  margin-block-start:var(--rhythm-moderato);
+@supports ( font-variant-position: sub ) {
+    sub, .sub {
+        vertical-align: baseline;
+        font-size: 100%;
+        line-height: inherit;
+        font-variant-position: sub;
+    }
 }
+
+@supports ( font-variant-position: super ) {
+    sup, .sup {
+        vertical-align: baseline;
+        font-size: 100%;
+        line-height: inherit;
+        font-variant-position: super;
+    }
+}
+
+td, math, time[datetime*=":"] {
+    font-variant-numeric: tabular-nums lining-nums slashed-zero;
+}
+
+:lang(en) > * { quotes: '“' '”' '‘' '’' ; } /* “Generic English ‘style’” */
+:lang(en-GB) > * { quotes: '‘' '’' '“' '”'; } /* ‘British “style”’ */
+:lang(fr) > * { quotes: '«?0202F' '?0202F»' '“' '”'; } /* « French “style” » */

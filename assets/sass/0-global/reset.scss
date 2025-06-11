@@ -74,3 +74,31 @@ textarea:not([rows]) {
 :target {
   scroll-margin-block: 5ex;
 }
+
+/* My additions */
+/* Center-align text until it wraps onto more than one line, then it’s no longer centered. */
+figcaption{
+  max-inline-size: max-content;
+  margin-inline: auto;
+}
+/* Center-align text until it wraps onto more than one line, then it’s no longer centered. */
+ul,ol,dl,dt,dd,p,figure,blockquote {
+  hanging-punctuation: first last;
+  text-wrap: pretty;
+}
+
+/* From Richard Rutter: https://clagnut.com/blog/2433/; typographic default stylesheet */
+
+/* Remove default margins in favour of better control in authored CSS. */
+body, h1, h2, h3, h4, h5, h6, address, p, hr, pre, blockquote, ol, ul, li, dl, dt, dd, figure, figcaption, div, table, caption, form, fieldset {
+  margin: 0;
+}
+
+/* Inherit fonts for inputs and buttons. */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}

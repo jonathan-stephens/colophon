@@ -1,11 +1,6 @@
-title: Journal
+title: Journal (Container)
 type: pages
 icon: text
-
-options:
-  changeSlug: false
-  changeStatus: true
-  delete: false
 
 tabs:
   entries:

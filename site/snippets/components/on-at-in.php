@@ -1,5 +1,5 @@
 <div class="meta on-at-in">
-  <time class="dt-published" datetime="<?= $page->metadata()->date()->toDate('F d Y') ?><?= $page->metadata()->time()->toDate('H:i') ?>" itemprop="dateCreated pubdate datePublished">
+  <time class="dt-published" datetime="<?= $page->date()->toDate('F d Y') ?><?= $page->time()->toDate('H:i') ?>" itemprop="dateCreated pubdate datePublished">
     <span class="with-icon">
       <svg class="icon" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -12,7 +12,7 @@
           fill="currentColor"
         />
       </svg>
-      <?= $page->metadata()->date()->toDate('l, M d Y') ?></span> at <?= $page->metadata()->time()->toDate('H:i') ?>
+      <?= $page->date()->toDate('l, M d Y') ?></span> at <?= $page->time()->toDate('H:i') ?>
     </span>
   </time>
   <?php if(!$page->addressLocality()->isEmpty() || !$page->addressRegion()->isEmpty() || !$page->addressCountry()->isEmpty()): ?>

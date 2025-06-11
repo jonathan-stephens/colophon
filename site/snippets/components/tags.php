@@ -5,7 +5,7 @@
     </span>
 
       <?php foreach ($reference->tags()->split() as $tag): ?>
-        <a rel="tag" class="p-category button" style="cursor:not-allowed;" href="<?= url('tags/' . urlencode($tag)) ?>">
+        <a rel="tag" class="p-category button" href="<?= url('tags/' . urlencode($tag)) ?>">
           <?= $tag ?>
         </a>
       <?php endforeach ?>

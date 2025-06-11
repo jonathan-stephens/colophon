@@ -1,70 +1,76 @@
 title: Link
-preset: page
 num: date
 icon: link
 sorting: zero                   # This sets zero-based numbering
 reference: sorting             # This references the automatic sorting
-options:
-  changeSlug: true            # Prevents slug modification
-  changeTemplate: true        # Prevents template changes
-  delete: true                 # Allows deletion
 
-fields:
-  metadata:
-    label: Metadata
-    type: group
-    fields:
-      date:
-        label: Date
-        type: date
-        width: 1/2
-        default: now
-      time:
-        label: Time
-        type: time
-        width: 1/2
-        default: now
-        notation: 24
-        step:
-            unit: minute
-            size: 1
-  website:
-    label: URL
-    type: url
-    required: true
-    width: 1/2
-  tld:
-    label: Top Level Domain
-    type: text
-    required: true
-    width: 1/2
-  tags:
-    label: Tags
-    type: tags
-    options: query
-    query: site.index.pluck("tags", ",", true)
-  text:
-    label: Description, quotes, etc.
-    type: textarea
-    size: large
-    buttons:
-      - headlines
-      - bold
-      - italic
-      - link
-      - email
-      - file
-      - code
-      - ul
-      - ol
-      - abbr
-      - cite
-      - dfn
-      - ins
-      - mark
-      - q
-      - s
-      - samp
-      - smallcaps
-      - sub
-      - sup
+create:
+  fields:
+    - website
+    - tld
+    - tags
+
+tabs:
+  content:
+    label: Content
+    icon: grid-full
+    columns:
+      main:
+        width: 2/3
+        sections:
+          content:
+            type: fields
+            fields:
+              website:
+                label: URL
+                type: url
+                required: true
+                width: 1/2
+              tld:
+                label: Top Level Domain
+                type: text
+                required: true
+                width: 1/2
+              tags:
+                label: Tags
+                type: tags
+                options: query
+                query: site.index.pluck("tags", ",", true)
+              text:
+                label: Description, quotes, etc.
+                type: textarea
+                size: large
+                buttons:
+                  - headlines
+                  - bold
+                  - italic
+                  - link
+                  - email
+                  - file
+                  - code
+                  - ul
+                  - ol
+                  - abbr
+                  - cite
+                  - dfn
+                  - ins
+                  - mark
+                  - q
+                  - s
+                  - samp
+                  - smallcaps
+                  - sub
+                  - sup
+      sidebar:
+        width: 1/3
+        sections:
+          metadata:
+            label: Metadata
+            type: fields
+            fields:
+              datetime: fields/datetime
+          uploads:
+            label: Uploads
+            type: fields
+            fields:
+              uploads: fields/uploads

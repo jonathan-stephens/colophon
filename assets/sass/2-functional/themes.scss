@@ -1,3 +1,5 @@
+// To Do: Rename Background Primary - Tertiary into semantic gradient of quiet to emphasis, then rename everything everywhere. Same with Inverse. Also, gives more flexibility with everything, to have it more explicit on each one. Especially when developing color themes. 
+
 @mixin theme-light() {
   color-scheme: light;
   --background-primary: var(--palette-ash-05);

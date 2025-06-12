@@ -159,8 +159,8 @@ return [
               ]);
           }
       ],
-        // Tags handling route
-        [
+      // Tags handling route
+      [
             'pattern' => 'tags/(:any)',
             'action'  => function ($tag) {
                 // Handle comma-separated tags
@@ -174,6 +174,28 @@ return [
                 // Pass the filtered tags to the template
                 return $tagsPage->render(['filterTags' => $tags]);
             }
-        ]
+      ],
+      [
+    'pattern' => 'sitemap.xml',
+    'method' => 'GET',
+    'action'  => function () {
+        // while this would be possible
+        // return site()->index()->listed()->limit(50000)->sitemap();
+
+        // using a closure allows for better performance on a cache hit
+        return sitemap(fn() => site()->index()->listed()->limit(50000));
+          }
+      ],
+      // (optional) Add stylesheet for human readable version of the xml file.
+      // With that stylesheet visiting the xml in a browser will per-generate the images.
+      // The images will NOT be pre-generated if the xml file is downloaded (by google).
+      [
+          'pattern' => 'sitemap.xsl',
+          'method' => 'GET',
+          'action'  => function () {
+              snippet('feed/sitemapxsl');
+              die;
+          }
+      ],
     ]
   ];

@@ -115,8 +115,19 @@ tabs:
                   label: RSS url
                 flavorJSON:
                   type: link
-                  label: JSON ul
-
+                  label: JSON url
+      - width: 1/3
+          fields:
+            footer_addenda:
+              label: Addenda
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Label
+                link:
+                  type: link
+                  label: URL
       - width: 1/3
           fields:
             footer_social:

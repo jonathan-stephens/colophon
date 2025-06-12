@@ -20,6 +20,7 @@ return [
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
     'mauricerenck.indieConnector.send.url-fields' => [
       'text:text',
+      'main:text',
       'website:text',
     ],
     'jonathanstephens.timekeeper' => [

@@ -1,20 +1,4 @@
 title: Default File
-accept:
-  type: document
-  extension:
-    - pdf
-    - doc
-    - docx
-    - txt
-    - rtf
-    - zip
-    - csv
-    - jpg
-    - jpeg
-    - png
-    - gif
-    - webp
-    - avif
 
 fields:
   metadata:
@@ -59,7 +43,7 @@ fields:
         label: Location
         type: text
         width: 1/3
-        
+
       attribution:
         label: Attribution
         type: group

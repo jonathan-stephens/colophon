@@ -30,7 +30,6 @@
     </span>
   </div>
   <div class="p-summary summary p-description description" itemprop="description">
-
     <?php if($block->descriptionListed()->isNotEmpty()): ?>
       <details>
         <summary>

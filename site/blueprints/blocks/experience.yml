@@ -39,5 +39,5 @@ tabs:
         size: small
       descriptionListed:
         label: List
-        type: textarea
+        type: list
         size: medium

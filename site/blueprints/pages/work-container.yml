@@ -1,11 +1,29 @@
+title: Work (Container)
+type: pages
+icon: text
+
 tabs:
+  entries:
+    label: Entries
+    sections:
+      drafts:
+        headline: Draft Entries
+        type: pages
+        status: draft
+        templates: [work]
+        sortBy: date desc
+
+      published:
+        headline: Published Entries
+        type: pages
+        status: published
+        templates: [work]
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"
+
   content:
     label: Content
-    icon: grid-full
-    columns:
-      main:
-        width: 2/3
-        sections:
+    sections:
           content:
             type: fields
             fields:
@@ -46,24 +64,3 @@ tabs:
             type: fields
             fields:
               metadata: fields/metadata
-      sidebar:
-        width: 1/3
-        sections:
-          children:
-            type: fields
-            fields:
-              pages:
-                type: pages
-                template: default
-                status: all
-                options:
-                    changeTemplate:
-                      - default
-                      - journal
-                      - article
-                      - essay
-                      - link
-          uploads:
-            type: fields
-            fields:
-              uploads: fields/uploads

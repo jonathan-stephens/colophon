@@ -92,12 +92,13 @@
       </section>
     <?php endif ?>
 
-    <div class="final-info">
+    <section class="final-info">
       <div class="wrapper">
+        <?php snippet('components/addenda') ?>
         <?php snippet('components/last-updated') ?>
         <?php snippet('copyright') ?>
       </div>
-    </div>
+    </section>
 
   </footer>
 

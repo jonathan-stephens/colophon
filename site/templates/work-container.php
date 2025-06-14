@@ -4,7 +4,6 @@
   <header>
     <h1 class="p-name" itemprop="name headline"><?= $page->hed()->html() ?></h1>
     <p><?= $page->dek()->html() ?><p>
-    <?php snippet('/components/on-at-in') ?>
   </header>
 
   <div class="e-content prose" itemprop="articleBody">
@@ -13,14 +12,5 @@
 
   <footer class="meta">
     <?php snippet('/components/tags', ['reference' => $page]) ?>
-
-    <?php snippet('komments/lists/likes'); ?>
-    <?php snippet('komments/lists/mentions'); ?>
-    <?php snippet('komments/lists/replies'); ?>
-    <?php snippet('komments/lists/reposts'); ?>
-
   </footer>
-</article>
-
-
-<?php snippet('footer') ?>
+</article><?php snippet('footer') ?>

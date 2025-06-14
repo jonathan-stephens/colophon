@@ -1,0 +1,43 @@
+name: Experience
+icon: sort
+label: "{{ title }} at {{ organization}}"
+tabs:
+  content:
+    fields:
+      organization:
+        label: Organization
+        type: text
+      organizationUrl:
+        label: Organization's URL
+        type: url
+      title:
+        label: Title
+        type: text
+      startDate:
+        label: Start Date
+        type: date
+        step: month
+        display: MMM YYYY
+      endDate:
+        label: End Date
+        type: date
+        step: month
+        display: MMM YYYY
+      location:
+        label: Location
+        type: text
+      workModel:
+        label: Work Model
+        type: select
+        options:
+          remote: Remote
+          hybrid: Hybrid
+          office: Office
+      descriptionSummary:
+        label: Summary
+        type: textarea
+        size: small
+      descriptionListed:
+        label: List
+        type: list
+        size: medium

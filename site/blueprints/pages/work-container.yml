@@ -1,0 +1,4 @@
+title: Work (Container)
+type: pages
+icon: text
+extends: layouts/default

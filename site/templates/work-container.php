@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <article class="article post wrapper h-entry" itemscope itemtype="http://schema.org/Article">
   <header>
@@ -13,4 +13,4 @@
   <footer class="meta">
     <?php snippet('/components/tags', ['reference' => $page]) ?>
   </footer>
-</article><?php snippet('footer') ?>
+</article><?php snippet('site-footer') ?>

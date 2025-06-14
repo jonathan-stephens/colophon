@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <div class="masthead wrapper">
     <!--<h1><?= $page->title()->html() ?></h1>-->
@@ -23,4 +23,4 @@
 
 
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

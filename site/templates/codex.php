@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
   <section class="wrapper">
     <?php snippet('components/breadcrumb') ?>
 
@@ -231,4 +231,4 @@
 </div>
     </div>
   </section>
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

@@ -21,7 +21,7 @@ if($filterTags) {
   ksort($sections);
 
   // Use the tag template
-  snippet('header');
+  snippet('site-header');
   ?>
 
   <div class="wrapper">
@@ -55,7 +55,7 @@ if($filterTags) {
   </div>
 
   <?php
-  snippet('footer');
+  snippet('site-footer');
 
 } else {
   // This is the tags index page showing all tags
@@ -80,7 +80,7 @@ if($filterTags) {
   // Sort tags by count (descending)
   arsort($tags);
 
-  snippet('header');
+  snippet('site-header');
   ?>
 
   <div class="wrapper">
@@ -106,6 +106,6 @@ if($filterTags) {
   </div>
 
   <?php
-  snippet('footer');
+  snippet('site-footer');
 }
 ?>

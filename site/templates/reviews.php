@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
   <div class="wrapper">
     <header class="page-header">
       <h1><?= $page->title() ?></h1>
@@ -43,4 +43,4 @@
     <?php endif ?>
   </div>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

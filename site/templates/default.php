@@ -1,7 +1,9 @@
 <?php if($page->isHomePage()): ?>
   <?php snippet('site-header') ?>
-  <?php snippet('layout/home') ?>
+    <?php snippet('layout/home') ?>
   <?php snippet('site-footer') ?>
 <?php else: ?>
-  <?php snippet('layout/default') ?>
+  <?php snippet('site-header') ?>
+    <?php snippet('layout/default') ?>
+  <?php snippet('site-footer') ?>
 <?php endif ?>

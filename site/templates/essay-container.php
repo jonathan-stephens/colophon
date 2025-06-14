@@ -5,7 +5,7 @@
 </div>
 
 <div class="wrapper">
-  
+
 <?php foreach($page->children()->listed()->flip() as $article): ?>
 
   <article class="cluster">
@@ -20,8 +20,5 @@
 
   <?php endforeach ?>
 </div>
-
-
-
 
 <?php snippet('site-footer') ?>

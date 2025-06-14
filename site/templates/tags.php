@@ -97,7 +97,9 @@ if($filterTags) {
         <?php foreach($tags as $tag => $count): ?>
           <li>
             <a href="<?= url('tags/' . urlencode($tag)) ?>" class="p-category button">
-              <?= html($tag) ?> <span class="count"><?= $count ?></span>
+              <span class="count"><?= $count ?></span>
+
+              <?= html($tag) ?>
             </a>
           </li>
         <?php endforeach ?>

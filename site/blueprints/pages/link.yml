@@ -1,6 +1,6 @@
 title: Link
 num: date
-icon: link
+icon: url
 sorting: zero                   # This sets zero-based numbering
 reference: sorting             # This references the automatic sorting
 

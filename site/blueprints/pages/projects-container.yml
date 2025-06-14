@@ -1,0 +1,22 @@
+title: Projects (Container)
+type: pages
+icon: text
+
+tabs:
+  entries:
+    label: Projects
+    sections:
+      drafts:
+        headline: Draft Projects
+        type: pages
+        status: draft
+        templates: [project]
+        sortBy: date desc
+
+      published:
+        headline: Published Projects
+        type: pages
+        status: published
+        templates: [project]
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"

@@ -1,0 +1,34 @@
+.grid {
+  --columns: 12;
+  --gutter: 3rem;
+  display: grid;
+  grid-gap: var(--gutter);
+  grid-template-columns: 1fr;
+  max-inline-size:none;
+}
+.grid > .column {
+  margin-bottom: var(--gutter);
+  grid-column: span var(--span);
+}
+
+.autogrid {
+  --gutter: 3rem;
+  --min: 10rem;
+  display: grid;
+  grid-gap: var(--gutter);
+  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
+  grid-auto-flow: dense;
+}
+
+@media screen and (min-width: 60rem) {
+  body {
+    --padding: 3rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .grid > .column {
+  }
+
+}

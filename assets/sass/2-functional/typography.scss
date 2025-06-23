@@ -74,9 +74,9 @@ p, li{
   line-height:var(--leading-standard);
 }
 
-ol{
-  padding:0;
-  max-width:80%;
+ol, ul{
+  padding-inline-start: 1em;
+  max-width:95%;
 }
 
 li{

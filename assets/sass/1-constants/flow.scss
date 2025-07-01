@@ -1,9 +1,3 @@
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
-$breakpoint-xxl: 1400px;
-
 :root{
   --flow-1: clamp(0.125rem, 0.1033rem + 0.1087vw, 0.1875rem);
   --flow-2: clamp(0.25rem, 0.2283rem + 0.1087vw, 0.3125rem);

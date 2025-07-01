@@ -3,6 +3,7 @@ icon: star-filled
 
 options:
   changeSlug: true
+  sortable: true
 
 columns:
   main:
@@ -41,6 +42,7 @@ columns:
               colleague: Colleague
               client: Client
               manager: Manager
+              counterpart: Counterpart
               other: Other
 
           context:
@@ -97,6 +99,7 @@ columns:
             layout: cards
             uploads: image
             template: blocks/image
+
           tags:
             label: Tags
             type: tags

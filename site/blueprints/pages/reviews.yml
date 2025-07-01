@@ -5,6 +5,16 @@ pages:
   template: review
 
 sections:
-  reviews:
+  published:
+    status: listed
     extends: sections/reviewlist
-    headline: All Reviews
+    headline: Listed
+    cover: true
+  unlisted:
+    status: unlisted
+    extends: sections/reviewlist
+    headline: Unlisted
+  drafts:
+    status: draft
+    extends: sections/reviewlist
+    headline: Drafts

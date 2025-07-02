@@ -1,5 +1,5 @@
 <?php snippet('site-header') ?>
-  <div class="wrapper">
+  <div class="wrapper flow">
     <header class="page-header">
       <h1><?= $page->title() ?></h1>
       <?php if($page->intro()->isNotEmpty()): ?>
@@ -21,7 +21,7 @@
                 <h2 class="reviewer"><?= $review->hed()->html() ?></h2>
                 <p>
                   <?php if($review->role()->isNotEmpty()): ?>
-                    <span class="role"><?= $review->role()->html() ?>, </span>
+                    <span class="role"><?= $review->role()->html() ?>; </span>
                   <?php endif ?>
                   <?php if($review->context()->isNotEmpty()): ?>
                     <span class="context"><?= $review->context()->html() ?></span>

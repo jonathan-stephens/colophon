@@ -5,6 +5,7 @@ article:is(.review){
   gap:var(--rhythm-vivace);
   background: var(--background-primary);
   border: 1px solid var(--border-color-nuance);
+  --flow-space: var(--rhythm-andantino);
 
   .lede{
     font-size:var(--hed-tertiary);
@@ -24,11 +25,15 @@ article:is(.review){
   & > div > div{
     padding: var(--rhythm-moderato);
   }
-}
-.endorsements main .wrapper{
-  display:flex;
-  flex-flow:column;
-  gap:var(--rhythm-moderato);
+  .role{
+    font-weight: var(--weight-medium);
+  }
+  .context{
+    font-style: italic;
+  }
+  .relationship{
+    text-transform:capitalize;
+  }
 }
 
 @media only screen and (min-width: 576px){

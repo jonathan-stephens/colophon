@@ -109,7 +109,7 @@ body > footer{
     max-inline-size:none;
   }
 
-@media (min-width: var(--breakpoint-md)) {
+@media (min-width: 768px) {
     .subscribe .wrapper{
       display:grid;
       grid-template-columns: repeat(2, auto);

@@ -51,7 +51,7 @@ columns:
             width: 1/3
             options: query
             query:
-              fetch: site.find("reviews").children.pluck("company", ",", true)
+              fetch: site.find("endorsements").children.pluck("company", ",", true)
               text: "{{ option }}"
               value: "{{ option }}"
             icon: building

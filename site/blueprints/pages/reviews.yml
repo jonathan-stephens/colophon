@@ -10,11 +10,14 @@ sections:
     extends: sections/reviewlist
     headline: Listed
     cover: true
+    layout: cardlets
   unlisted:
     status: unlisted
     extends: sections/reviewlist
     headline: Unlisted
+    layout: cardlets
   drafts:
     status: draft
     extends: sections/reviewlist
     headline: Drafts
+    layout: cardlets

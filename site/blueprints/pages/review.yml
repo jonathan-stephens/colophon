@@ -1,5 +1,8 @@
 title: Review
-icon: star-filled
+image:
+  icon: false
+  query: page.headshot
+  cover: true
 
 options:
   changeSlug: true

@@ -185,6 +185,10 @@ blockquote{
   border-inline-start: var(--border-medium) solid var(--background-tertiary-inverse);
   margin-inline: 0;
   margin-block:var(--rhythm-allegro);
+
+  ul, ol{
+    padding-block: none;
+  }
 }
 
 @supports ( font-variant-position: sub ) {

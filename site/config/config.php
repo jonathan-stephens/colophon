@@ -28,6 +28,14 @@ return [
         'allowManualOverride' => true,
         'cookieDuration' => 60 * 60 * 24
     ],
+    'johannschopplich.locked-pages' => [
+        'slug' => 'locked',
+        'title' => 'Locked Page',
+        'error' => [
+            'csrf' => 'The CSRF-Token is not correct.',
+            'password' => 'The password is not correct.',
+        ]
+    ],
     'routes' => [
       // Section-specific feeds: /journal/rss, /links/rss, /journal/feed, /links/feed
       [

@@ -1,43 +1,39 @@
 <?php snippet('site-header') ?>
-  <div class="wrapper">
+
+  <div class="wrapper case-studies">
     <?php foreach($page->children()->listed()->flip() as $article): ?>
-      <article class="h-entry">
-        <a href="<?= $article->url() ?>">
-          <box-l class="e-content">
-              <div class="meta">
-                <time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?> <?= $article->time()->toDate('H:i') ?>"><?= $article->date()->toDate('j M Y') ?></time>
-                <p class="text-stats">
-                  <?php
-                    $wordCount = $article->text()->words();
-                    $minSpeed = 167; // words per minute
-                    $maxSpeed = 285; // words per minute
+      <a href="<?= $article->url() ?>" class="case-study">
+        <article class="h-entry">
+          <p>
+            <span class="client"><?= $article->client()->html() ?></span> •
+            <span class="context"><?= $article->context()->html() ?></span>
+          </p>
 
-                    $minSeconds = ceil($wordCount / ($minSpeed / 60));
-                    $maxSeconds = ceil($wordCount / ($maxSpeed / 60));
+          <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>
+          <p class="dek"><?= $article->dek()->html() ?></p>
 
-                    if ($minSeconds < 60) {
-                      if ($minSeconds === $maxSeconds) {
-                        echo $minSeconds . ' sec read';
-                      } else {
-                        echo $maxSeconds . '&thinsp;–&thinsp;' . $minSeconds . '  sec read';
-                      }
-                    } else {
-                      $minMinutes = ceil($minSeconds / 60);
-                      $maxMinutes = ceil($maxSeconds / 60);
-                      if ($minMinutes === $maxMinutes) {
-                        echo $minMinutes . ' min read';
-                      } else {
-                        echo $maxMinutes . '&thinsp;–&thinsp;' . $minMinutes . ' min read';
-                      }
-                    }
-                  ?>
-                </p>
-              </div>
-              <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>
-              <p class="dek"><?= $article->dek()->html() ?></p>
-          </box-l>
-        </a>
-      </article>
+            <ul class="meta">
+              <li class="role">
+                <span>Role</span>
+                <span><?= $article->role()->html() ?></span>
+              </li>
+              <li class="industries">
+                <span>Industries</span>
+                <span><?php foreach ($article->industry()->split() as $industry): ?>
+                    <span><?= $industry ?></span>
+                <?php endforeach ?>
+              </li>
+              <li class="organization">
+                <span>Organization</span>
+                <span>
+                  <span class="business-model"><?= $article->businessModel()->html() ?></span>
+                  <span class="working-model"><?= $article->workingModel()->html() ?></span>
+                  <span class="company-size"><?= $article->companySize()->html() ?></span>
+                </span>
+              </li>
+            </ul>
+        </article>
+      </a>
     <?php endforeach ?>
   </div>
 <?php snippet('site-footer') ?>

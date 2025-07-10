@@ -1,0 +1,94 @@
+.wrapper:is(.case-studies){
+  display:flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  gap: var(--rhythm-andantino);
+}
+
+.case-study{
+  padding:var(--rhythm-moderato);
+  text-decoration: none;
+  background: var(--background-primary);
+  border: var(--border-fine) solid var(--border-color-nuance);
+  border-radius:var(--rhythm-vivace);
+  width:100%;
+
+  p:has(.client + .context){
+    text-align:center;
+  }
+  .client{
+    font-weight:var(--weight-medium);
+  }
+  .context{
+
+  }
+  .hed{
+    text-align:center;
+  }
+  .dek{
+    font-size:var(--hed-quaternary);
+    text-align:center;
+    border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+    padding-block-end:var(--rhythm-moderato);
+    margin-block-end: var(--rhythm-moderato);
+
+
+  }
+  .meta{
+    display: inline-flex;
+    flex-flow: column;
+    list-style-type: none;
+    padding:0;
+    width:100%;
+    max-width:100%;
+    font-size: var(--small);
+    overflow-x:hidden;
+
+    li{
+      display: flex;
+      flex-flow:column;
+    }
+
+    li.organization span > span:not(:last-child)::after, li.industries span > span:not(:last-child)::after { content: ',';}
+
+    li > span:first-of-type{
+      font-weight: var(--weight-semibold);
+      padding-block-start: var(--rhythm-presto);
+    }
+    li span:nth-of-type(){
+      padding-block-end: var(--rhythm-presto);
+    }
+
+    span{
+    }
+  }
+}
+
+.case-study:hover{
+  background-color: var(--background-secondary);
+  border: var(--border-fine) solid var(--border-subtle) ;
+  color: var(--color-emphasis);
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper:is(.case-studies){
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+  }
+  .case-study{
+    .dek{
+      margin-block-end:var(--rhythm-vivace);
+    }
+    .meta{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      list-style-type: none;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      column-gap: var(--rhythm-andantino);
+
+      li{font-size: var(--small);}
+    }
+  }
+}

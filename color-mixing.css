@@ -1,0 +1,38 @@
+:root {
+  --sunlight:    oklch(0.794 0.171 71.2);
+  --forest: oklch(0.593 0.151 137.9);
+  --ocean:   oklch(0.429 0.074 190.9);
+  --moonlight:  oklch(0.377 0.040 274.8);
+  --black:  oklch(0.150 0.000 263.3);
+  --white:  oklch(0.979 0.012 91.6);
+
+  --sunlight-lightest: color-mix(in lch shorter hue, var(--sunlight) 9%, var(--white));
+  --sunlight-lighter: color-mix(in lch shorter hue, var(--sunlight) 36%, var(--white));
+  --sunlight-default: var(--sunlight);
+  --sunlight-darker: color-mix(in lch shorter hue, var(--sunlight) 64%, var(--black));
+  --sunlight-darkest: color-mix(in lch shorter hue, var(--sunlight) 18%, var(--black));
+
+  --forest-lightest: color-mix(in lch shorter hue, var(--forest) 9%, var(--white));
+  --forest-lighter: color-mix(in lch shorter hue, var(--forest) 36%, var(--white));
+  --forest-default: var(--forest);
+  --forest-darker: color-mix(in lch shorter hue, var(--forest) 64%, var(--black));
+  --forest-darkest: color-mix(in lch shorter hue, var(--forest) 27%, var(--black));
+
+  --ocean-lightest: color-mix(in lch shorter hue, var(--ocean) 9%, var(--white));
+  --ocean-lighter: color-mix(in lch shorter hue, var(--ocean) 36%, var(--white));
+  --ocean-default: var(--ocean);
+  --ocean-darker: color-mix(in lch shorter hue, var(--ocean) 64%, var(--black));
+  --ocean-darkest: color-mix(in lch shorter hue, var(--ocean) 36%, var(--black));
+
+  --moonlight-lightest: color-mix(in lch shorter hue, var(--moonlight) 9%, var(--white));
+  --moonlight-lighter: color-mix(in lch shorter hue, var(--moonlight) 45%, var(--white));
+  --moonlight-default: var(--moonlight);
+  --moonlight-darker: color-mix(in lch shorter hue, var(--moonlight) 64%, var(--black));
+  --moonlight-darkest: color-mix(in lch shorter hue, var(--moonlight) 27%, var(--black));
+
+  --mono-darkest: var(--black);
+  --mono-darker: color-mix(in lch shorter hue, var(--white) 27%, var(--black));
+  --mono-default: color-mix(in lch shorter hue, var(--white) 55%, var(--black));
+  --mono-lighter: color-mix(in lch shorter hue, var(--white) 82%, var(--black));
+  --mono-lightest: var(--white);
+}

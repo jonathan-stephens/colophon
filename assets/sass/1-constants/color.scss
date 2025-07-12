@@ -45,15 +45,4 @@
   --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
   --palette-ash-00: var(--palette-paper);
 
-  @include generate-palette("cyan", oklch(49.13% 0.084 222.18));
-  @include generate-palette("yellow", oklch(68.4% 0.146 67.27));
-  @include generate-palette("magenta", oklch(45.73% 0.158 4.61));
-  @include generate-palette("green", oklch(48.52% 0.1297 137.78));
-  @include generate-palette("purple", oklch(41.1% 0.117 290.38));
-
-  @include generate-palette("orange", oklch(54.9% 0.152 35.8));
-
-
-
-
 }

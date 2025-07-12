@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <article class="book-detail wrapper">
       <h1 class="book-title"><?= $page->hed()->html() ?></h1>
@@ -74,4 +74,4 @@
   </div>
 </article>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
   <div class="wrapper">
     <?php if($library = $page->children()->listed()): ?>
         <?php foreach($library as $book): ?>
@@ -48,4 +48,4 @@
     <?php endif ?>
   </div>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

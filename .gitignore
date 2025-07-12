@@ -24,6 +24,8 @@ config.codekit3
 *.sublime-workspace
 /.vscode
 /.idea
+voltron/*
+
 
 # -------------SECURITY-------------
 # NEVER publish these files via Git!

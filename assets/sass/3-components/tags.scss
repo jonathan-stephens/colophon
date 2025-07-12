@@ -19,6 +19,7 @@
   font-family:var(--font-mono);
   position:relative;
   bottom:-2px;
+  cursor: pointer;
 
   &:focus{
     outline-offset: var(--flow-1);
@@ -27,6 +28,9 @@
   &:active{
     background:var(--background-secondary-inverse);
     color:var(--background-secondary);
+  }
+  &:has(.count){
+    padding-inline-start: var(--rhythm-presto);
   }
 }
 
@@ -46,7 +50,7 @@
   }
   .count{
     background: var(--background-secondary);
-    border-radius: var(--radii-square);
+    border-radius: var(--radii-circle);
     padding-inline: var(--flow-1);
     padding-block: var(--flow-1);
     display:inline-flex;

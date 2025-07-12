@@ -3,10 +3,10 @@
 
 @import '1-constants/typography';
 @import '1-constants/flow';
+@import '1-constants/breakpoints';
 @import '1-constants/radii';
 @import '1-constants/color';
 @import '1-constants/borders';
-
 
 @import '2-functional/global';
 @import '2-functional/utility';
@@ -25,9 +25,11 @@
 @import '3-components/figure';
 
 @import '4-layout/header';
+@import '4-layout/grid';
 @import '4-layout/footer';
 
 @import '5-pages/journal';
+@import '5-pages/case-studies';
 @import '5-pages/links';
 @import '5-pages/reviews';
 

@@ -17,7 +17,7 @@
 
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
   --small: clamp(var(--type-scale-14), 0.786rem + 0.238vw, var(--type-scale-16));
-  --measure: 68ch;
+  --measure: 84ch;
 
   --caption:clamp(var(--type-scale-12),0.661rem + 0.238vw, var(--type-scale-14));
 }
@@ -74,9 +74,10 @@ p, li{
   line-height:var(--leading-standard);
 }
 
-ol{
-  padding:0;
-  max-width:80%;
+ol, ul{
+  padding-inline-start: var(--rhythm-moderato);
+  padding-block: var(--rhythm-moderato);
+  max-width:95%;
 }
 
 li{
@@ -159,7 +160,7 @@ strong, b, th {
 
   h2{
     line-height: var(--leading-fine);
-    font-size:var(--hed-tertiary);
+    font-size:calc(1.25*var(--hed-tertiary));
     padding-block-start: var(--rhythm-andante);
     padding-block-end:var(--rhythm-vivace);
   }
@@ -184,6 +185,10 @@ blockquote{
   border-inline-start: var(--border-medium) solid var(--background-tertiary-inverse);
   margin-inline: 0;
   margin-block:var(--rhythm-allegro);
+
+  ul, ol{
+    padding-block: none;
+  }
 }
 
 @supports ( font-variant-position: sub ) {

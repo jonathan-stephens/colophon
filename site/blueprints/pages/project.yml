@@ -1,0 +1,7 @@
+title: Project
+icon: lab
+
+extends: layouts/default
+
+tabs:
+  extends: tabs/case-study

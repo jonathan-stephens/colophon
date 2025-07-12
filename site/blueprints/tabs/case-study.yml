@@ -1,0 +1,50 @@
+label: Meta
+icon: asterisk
+fields:
+  context:
+    label: Context (Working as or on behalf of)
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("context", ",", true)
+    max: 1
+  client:
+    label: Client (Who the work was for)
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("client", ",", true)
+    max: 1
+  role:
+    label: Role
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("role", ",", true)
+    max: 1
+  businessModel:
+    label: Business Model
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("businessModel", ",", true)
+  industry:
+    label: Industries
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("industry", ",", true)
+  workingModel:
+    label: Work Model
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("workModel", ",", true)
+    max: 1
+  companySize:
+    label: Company Size
+    type: tags
+    width: 1/3
+    options: query
+    query: site.index.pluck("companySize", ",", true)
+    max: 1

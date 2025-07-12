@@ -1,0 +1,25 @@
+title: Portfolio (Fast)
+icon: badge
+
+fields:
+  layout:
+    type: layout
+    layouts:
+      - "1/1"
+      - "1/2, 1/2"
+      - "1/4, 1/4, 1/4, 1/4"
+      - "1/3, 2/3"
+      - "2/3, 1/3"
+      - "1/3, 1/3, 1/3"
+    fieldsets:
+      - code
+      - gallery
+      - heading
+      - image
+      - line
+      - list
+      - markdown
+      - quote
+      - table
+      - text
+      - video

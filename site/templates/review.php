@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <main id="content" class="review-detail">
   <div class="wrapper">
@@ -74,4 +74,4 @@
   </div>
 </main>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

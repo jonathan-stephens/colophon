@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <div class="wrapper">
 <?php foreach($page->children()->listed()->flip() as $article): ?>
@@ -45,4 +45,4 @@
 
 
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

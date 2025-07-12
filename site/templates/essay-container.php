@@ -1,10 +1,11 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
 <div class="masthead wrapper">
     <!--<h1><?= $page->title()->html() ?></h1>-->
 </div>
 
 <div class="wrapper">
+
 <?php foreach($page->children()->listed()->flip() as $article): ?>
 
   <article class="cluster">
@@ -20,7 +21,4 @@
   <?php endforeach ?>
 </div>
 
-
-
-
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

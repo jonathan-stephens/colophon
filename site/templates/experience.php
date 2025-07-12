@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('site-header') ?>
 
   <article class="h-resume post wrapper" itemscope itemtype="http://schema.org/Article">
     <header>
@@ -15,4 +15,4 @@
     <?php endforeach ?>
   </article>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

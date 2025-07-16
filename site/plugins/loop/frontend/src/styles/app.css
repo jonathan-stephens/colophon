@@ -1,0 +1,13 @@
+kirby-loop {
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-7);
+  box-sizing: border-box;
+}
+
+html.loop-overlay-open {
+  a {
+    pointer-events: none;
+  }
+}

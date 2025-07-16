@@ -1,0 +1,23 @@
+kirby-loop {
+  /* Color Customization */
+  --color-neutral-h: 900;
+  --color-neutral-c: 0;
+  --color-accent-h: 900;
+  --color-accent-c: 0.18;
+  --color-accent-l: 0.75;
+  --color-accent-dark-factor: 0.4;
+  --color-accent-light-factor: 1.2;
+
+  /* Neutral lightness values */
+  --color-neutral-l-0: 1;
+  --color-neutral-l-100: 0.95;
+  --color-neutral-l-200: 0.9;
+  --color-neutral-l-300: 0.7;
+  --color-neutral-l-400: 0.6;
+  --color-neutral-l-600: 0.4;
+  --color-neutral-l-500: 0.5;
+  --color-neutral-l-700: 0.3;
+  --color-neutral-l-800: 0.2;
+  --color-neutral-l-900: 0.1;
+  --color-neutral-l-1000: 0;
+}

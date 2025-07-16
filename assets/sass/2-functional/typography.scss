@@ -80,6 +80,13 @@ ol, ul{
   max-width:95%;
 }
 
+@media screen and (min-width: 768px) {
+  .about ul{
+    max-width:78%;
+  }
+}
+
+
 li{
   padding-block:var(--rhythm-presto);
   text-wrap: balance;

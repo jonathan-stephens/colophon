@@ -1,4 +1,4 @@
-@import '../0-mixins/palette-generator';
+@use '../0-mixins/palette-generator';
 
 :root{
   --palette-ink: oklch(12.43% 0.015 47.04 / 100);

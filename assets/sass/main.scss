@@ -1,36 +1,36 @@
-@import '0-global/reset';
-@import '0-global/fonts';
+@use '0-global/reset';
+@use '0-global/fonts';
 
-@import '1-constants/typography';
-@import '1-constants/flow';
-@import '1-constants/breakpoints';
-@import '1-constants/radii';
-@import '1-constants/color';
-@import '1-constants/borders';
+@use '1-constants/typography';
+@use '1-constants/flow';
+@use '1-constants/breakpoints';
+@use '1-constants/radii';
+@use '1-constants/color';
+@use '1-constants/borders';
 
-@import '2-functional/global';
-@import '2-functional/utility';
-@import '2-functional/rhythm';
-@import '2-functional/icons';
-@import '2-functional/links';
-@import '2-functional/typography';
-@import '2-functional/themes';
+@use '2-functional/global';
+@use '2-functional/utility';
+@use '2-functional/rhythm';
+@use '2-functional/icons';
+@use '2-functional/links';
+@use '2-functional/typography' as typography2;
+@use '2-functional/themes';
 
-@import '3-components/breadcrumb';
-@import '3-components/theme-picker';
-@import '3-components/footnotes';
-@import '3-components/button';
-@import '3-components/prism';
-@import '3-components/tags';
-@import '3-components/figure';
+@use '3-components/breadcrumb';
+@use '3-components/theme-picker';
+@use '3-components/footnotes';
+@use '3-components/button';
+@use '3-components/prism';
+@use '3-components/tags';
+@use '3-components/figure';
 
-@import '4-layout/header';
-@import '4-layout/grid';
-@import '4-layout/footer';
+@use '4-layout/header';
+@use '4-layout/grid';
+@use '4-layout/footer';
 
-@import '5-pages/journal';
-@import '5-pages/case-studies';
-@import '5-pages/links';
-@import '5-pages/reviews';
+@use '5-pages/journal';
+@use '5-pages/case-studies';
+@use '5-pages/links' as links2;
+@use '5-pages/reviews';
 
-@import 'scratch';
+@use 'scratch';

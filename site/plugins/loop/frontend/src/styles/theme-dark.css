@@ -1,0 +1,35 @@
+kirby-loop[theme="dark"] {
+  /* Accent lightness values */
+  --color-accent-l: 0.85;
+
+  /* Neutral lightness values */
+  --color-neutral-l-0: 0;
+  --color-neutral-l-100: 0.1;
+  --color-neutral-l-200: 0.2;
+  --color-neutral-l-300: 0.45;
+  --color-neutral-l-400: 0.5;
+  --color-neutral-l-600: 0.55;
+  --color-neutral-l-500: 0.6;
+  --color-neutral-l-700: 0.7;
+  --color-neutral-l-800: 0.8;
+  --color-neutral-l-900: 0.95;
+  --color-neutral-l-1000: 1;
+
+  /* Shadow tokens */
+  --shadow-s: 0 0.1em 0.25em oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.1);
+  --shadow-m: 0 2px 8px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.08),
+    0 8px 16px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.12),
+    0 16px 24px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.08);
+  --shadow-l: 0 4px 16px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.08),
+    0 12px 32px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.12),
+    0 24px 48px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.16),
+    0 48px 80px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.08);
+  --shadow-light-edge: inset 1px 1px 1px oklch(var(--color-neutral-l-1000) var(--color-neutral-c) var(--color-neutral-h) / 0.3);
+  --shadow-dark-edge: inset -1px -1px 1px oklch(var(--color-neutral-l-100) var(--color-neutral-c) var(--color-neutral-h) / 0.3);
+
+  /* Background tokens */
+  --background-glass: linear-gradient(135deg, transparent, var(--color-base-background-o-50));
+
+  /* Panel */
+  --panel-threads-background: oklch(var(--color-neutral-l-200) var(--color-neutral-c) var(--color-neutral-h) / 0.99)
+}

@@ -36,6 +36,7 @@ return [
             'password' => 'The password is not correct.',
         ]
     ],
+    'moinframe.loop.enabled' => false,
     'routes' => [
       // Section-specific feeds: /journal/rss, /links/rss, /journal/feed, /links/feed
       [

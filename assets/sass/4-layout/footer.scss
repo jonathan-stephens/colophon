@@ -21,16 +21,18 @@ body > footer{
     color:var(--color-distinct-inverse);
     mix-blend-mode: luminosity;
 
-    svg{
-      width: calc(2*var(--hed-quaternary));
-      height: auto;
-      margin-block-end: var(--rhythm-vivace);
-      margin-inline-start: calc(-1*var(--rhythm-vivace));
+    .with-icon{
+      align-items:center;
+      gap:var(--rhythm-presto);
     }
 
-    .feeds svg{
-      margin-inline-start: calc(-1*var(--rhythm-presto));
+    .icon{
+      width: calc(1.5*var(--hed-quaternary));
+      height: auto;
+      margin-block-end: var(--rhythm-vivace);
+      fill: inherit;
     }
+
     .feeds ul{
       flex-flow:column;
     }

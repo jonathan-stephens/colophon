@@ -24,7 +24,7 @@
         <div class="newsletter">
           <div class="description">
             <span class="with-icon">
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32" width="100%" height="auto"><title>bullhorn</title><path class="cls-1" d="M26,6V8.17L5.64,11.87a2,2,0,0,0-1.64,2v4.34a2,2,0,0,0,1.64,2L8,20.56V24a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2V22.74l6,1.09V26h2V6ZM18,24H10V20.93l8,1.45ZM6,18.17V13.83L26,10.2V21.8Z"/></svg>
+              <?= asset('assets/svg/icons/bullhorn.svg')->read() ?>
               <h2 id="newsletter">
                 Join my mailing list
               </h2>
@@ -53,12 +53,7 @@
           <?php if ($feedItems->isNotEmpty()): ?>
             <div class="description">
               <span class="with-icon">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="auto">
-                  <title>RSS icon</title>
-                  <path d="M8,18c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6C14,20.7,11.3,18,8,18z M8,28c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4C12,26.2,10.2,28,8,28z"/>
-                  <path d="M30,24h-2C28,13,19,4,8,4V2C20.1,2,30,11.9,30,24z"/>
-                  <path d="M22,24h-2c0-6.6-5.4-12-12-12v-2C15.7,10,22,16.3,22,24z"/>
-                </svg>
+                <?= asset('assets/svg/icons/rss.svg')->read() ?>
                 <h2>Feeds</h2>
               </span>
               <p>Get my latest content in your favorite RSS reader. <a href="https://aboutfeeds.com/">What is RSS?</a></p>

@@ -52,12 +52,24 @@ tabs:
     icon: title
     columns:
       - width: 1/3
-        sections:
-          primary_navigation:
-            type: pages
-            headline: Primary Navigation
-            template: default
-            status: published
+        fields:
+          primary_nav:
+            label: Primary Navigation
+            type: structure
+            headline: Primary Nav
+            fields:
+              title:
+                type: text
+                label: Page
+              description:
+                type: text
+                label: Description
+              link:
+                type: link
+                label: Link
+                options:
+                  - page
+                  - url
             sortable: true
       - width: 1/3
         sections:

@@ -1,14 +1,12 @@
 class HeaderController {
     constructor() {
         this.isNavOpen = false;
-
+        this.isTransitioning = false;
         // Get DOM elements
         this.navToggle = document.getElementById('nav-toggle');
-        this.navClose = document.getElementById('nav-close');
         this.navPanel = document.getElementById('nav-panel');
         this.navToggleText = document.getElementById('nav-toggle-text');
         this.overlay = document.getElementById('overlay');
-
         this.init();
     }
 
@@ -18,12 +16,13 @@ class HeaderController {
             this.navToggle.addEventListener('click', () => this.toggleNav());
         }
 
-        if (this.navClose) {
-            this.navClose.addEventListener('click', () => this.closeNav());
-        }
-
         if (this.overlay) {
             this.overlay.addEventListener('click', () => this.closeNav());
+        }
+
+        // Listen for transition end to update classes
+        if (this.navPanel) {
+            this.navPanel.addEventListener('transitionend', () => this.handleTransitionEnd());
         }
 
         // Close panel on Escape key
@@ -32,9 +31,25 @@ class HeaderController {
                 this.closeNav();
             }
         });
+
+        // Close panel on outside click (anywhere except nav panel and header)
+        document.addEventListener('click', (e) => {
+            if (this.isNavOpen && !this.isTransitioning) {
+                // Check if click is outside nav panel and header
+                if (!this.navPanel.contains(e.target) &&
+                    !e.target.closest('.site-header')) {
+                    this.closeNav();
+                }
+            }
+        });
+
+        // Set initial collapsed state
+        this.navPanel.classList.add('is-collapsed');
     }
 
     toggleNav() {
+        if (this.isTransitioning) return; // Prevent multiple clicks during transition
+
         if (this.isNavOpen) {
             this.closeNav();
         } else {
@@ -43,13 +58,41 @@ class HeaderController {
     }
 
     openNav() {
+        if (this.isTransitioning) return;
+
         this.isNavOpen = true;
+        this.isTransitioning = true;
+
+        // Remove collapsed class and add opening class
+        this.navPanel.classList.remove('is-collapsed');
+        this.navPanel.classList.add('is-opening');
+
         this.updateNavState();
     }
 
     closeNav() {
+        if (this.isTransitioning) return;
+
         this.isNavOpen = false;
+        this.isTransitioning = true;
+
+        // Add closing class
+        this.navPanel.classList.add('is-closing');
+
         this.updateNavState();
+    }
+
+    handleTransitionEnd() {
+        this.isTransitioning = false;
+
+        if (this.isNavOpen) {
+            // Transition to open state complete
+            this.navPanel.classList.remove('is-opening');
+        } else {
+            // Transition to closed state complete - clean up all classes
+            this.navPanel.classList.remove('is-closing');
+            this.navPanel.classList.add('is-collapsed');
+        }
     }
 
     updateNavState() {
@@ -61,12 +104,17 @@ class HeaderController {
         this.navToggle.setAttribute('aria-expanded', this.isNavOpen.toString());
         this.navToggleText.textContent = this.isNavOpen ? 'Close Navigation' : 'Open Navigation';
 
-        // Update close button
-        this.navClose.setAttribute('aria-expanded', this.isNavOpen.toString());
+        // Update the button icon (you'll need to handle this in CSS or swap the SVG)
+        // You could add a class to the button to change the icon via CSS
+        this.navToggle.classList.toggle('is-open', this.isNavOpen);
 
-        // Update overlay
+        // Update overlay for smooth left-slide transition
+        // The overlay should fade in/out in sync with the panel slide
         this.overlay.classList.toggle('active', this.isNavOpen);
         this.overlay.setAttribute('aria-hidden', (!this.isNavOpen).toString());
+
+        // Add state classes to body for global styling control
+        document.body.classList.toggle('nav-open', this.isNavOpen);
 
         this.manageFocus();
     }

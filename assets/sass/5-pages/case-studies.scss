@@ -55,10 +55,9 @@
       font-weight: var(--weight-semibold);
       padding-block-start: var(--rhythm-presto);
     }
-    li span:nth-of-type(){
+    li span{
       padding-block-end: var(--rhythm-presto);
     }
-
     span{
     }
   }

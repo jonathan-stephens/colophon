@@ -151,7 +151,6 @@ strong, b, th {
 }
 
 .prose{
-  text-wrap: pretty;
   font-variant-numeric: oldstyle-nums proportional-nums;
 
   -webkit-hyphens: auto;
@@ -182,6 +181,20 @@ strong, b, th {
   }
   h3 + h4{
     padding-block-start:var(--rhythm-vivace);
+  }
+}
+
+@supports (text-wrap: pretty){
+  .prose{text-wrap: pretty;}
+
+  ul,ol,dl,dt,dd,p,figure,blockquote {
+    text-wrap: pretty;
+  }
+}
+
+@supports (hanging-punctuation: first last){
+  ul,ol,dl,dt,dd,p,figure,blockquote {
+    hanging-punctuation: first last;
   }
 }
 

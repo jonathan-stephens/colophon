@@ -25,10 +25,14 @@ body{
   line-height: 1.5;
   text-decoration-skip-ink: auto;
   font-optical-sizing: auto;
-  font-variant-ligatures: common-ligatures no-discretionary-ligatures no- historical-ligatures contextual;
   font-kerning: normal;
 }
 
+@supports font-variant-ligatures(common-ligatures){
+  body{
+    font-variant-ligatures: common-ligatures no-discretionary-ligatures no-historical-ligatures contextual;
+  }
+}
 h1,h2,h3,h4{
   font-family:var(--font-serif);
   font-variant-numeric: lining-nums;
@@ -125,7 +129,7 @@ p + time{
 p :not(pre)>code, li code{
   font-size: var(--small);
   display:inline-flex;
-  border-radius:--radii-square;
+  border-radius:var(--radii-square);
   color:var(--color-prominent);
   white-space:nowrap;
   overflow-y:hidden;

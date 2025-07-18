@@ -95,9 +95,11 @@ box-l {
 }
 
 
-.dlig { font-variant-ligatures: discretionary-ligatures; }
-.hlig { font-variant-ligatures: historical-ligatures; }
-.dlig.hlig { font-variant-ligatures: discretionary-ligatures historical-ligatures; } /* Apply both historic and discretionary */
+@supports (font-variant-ligatures: discretionary-ligatures){
+  .dlig { font-variant-ligatures: discretionary-ligatures; }
+  .hlig { font-variant-ligatures: historical-ligatures; }
+  .dlig.hlig { font-variant-ligatures: discretionary-ligatures historical-ligatures; } /* Apply both historic and discretionary */
+}
 
 .pnum { font-variant-numeric: proportional-nums; }
 .tnum { font-variant-numeric: tabular-nums;    }

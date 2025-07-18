@@ -14,7 +14,6 @@
     }
 
     $breadcrumbItems = $site->breadcrumb();
-
     // Remove home from breadcrumb items since we handle it separately
     $breadcrumbItems = $breadcrumbItems->filter(function($item) use ($site) {
       return $item->id() !== $site->homePage()->id();
@@ -26,12 +25,12 @@
       if ($currentSection && $crumb->isActive()) {
         switch ($currentSection) {
           case 'journal':
+          case 'links':
             $year = $page->date()->toDate('Y');
             $monthDay = $page->date()->toDate('F j, Y');
             $breadcrumbText .= $year . ' ' . $monthDay;
             break;
           case 'notes':
-          case 'links':
             $breadcrumbText .= $crumb->title();
             break;
         }
@@ -49,16 +48,16 @@
       if ($currentSection && $crumb->isActive()) {
         switch ($currentSection) {
           case 'journal':
+          case 'links':
             $year = $page->date()->toDate('Y');
             $monthDay = $page->date()->toDate('F j, Y');
-            $yearPage = $site->find('journal/' . $year);
+            $yearPage = $site->find($currentSection . '/' . $year);
             if ($yearPage) {
               echo '<li><a href="' . $yearPage->url() . '">' . $year . '</a></li>';
             }
             echo '<li><a aria-current="page">' . $monthDay . '</a></li>';
             break;
           case 'notes':
-          case 'links':
             $title = $needsConcatenation ? Str::short($crumb->title(), 30) : $crumb->title();
             echo '<li><a aria-current="page">' . html($title) . '</a></li>';
             break;

@@ -196,49 +196,24 @@ class HeaderController {
         // Update nav state
         this.updateNavState();
 
-        // FIXED: Restore body scroll immediately, don't wait for transition
+        // Restore body scroll
         this.restoreBodyScroll();
     }
 
     preventBodyScroll() {
-        // Enhanced body scroll prevention
+        // Simple body scroll prevention
         this.body.classList.add('nav-open');
-
-        // Store current scroll position more reliably
-        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop || this.body.scrollTop || 0;
-
-        if (this.isMobile) {
-            // Additional mobile-specific scroll prevention
-            this.body.style.position = 'fixed';
-            this.body.style.top = `-${this.scrollPosition}px`;
-            this.body.style.width = '100%';
-            this.body.style.left = '0';
-            this.body.style.right = '0';
-        }
+        this.body.style.overflow = 'hidden';
     }
 
     restoreBodyScroll() {
-        // FIXED: More robust body scroll restoration
+        // Simple body scroll restoration
         this.body.classList.remove('nav-open');
+        this.body.style.overflow = '';
 
-        if (this.isMobile) {
-            // Store the scroll position before clearing styles
-            const scrollPos = this.scrollPosition;
-
-            // Clear all the fixed positioning styles
-            this.body.style.position = '';
-            this.body.style.top = '';
-            this.body.style.width = '';
-            this.body.style.left = '';
-            this.body.style.right = '';
-
-            // Restore scroll position with a small delay to ensure DOM is ready
-            requestAnimationFrame(() => {
-                window.scrollTo(0, scrollPos);
-                // Backup restoration method
-                document.documentElement.scrollTop = scrollPos;
-                this.body.scrollTop = scrollPos;
-            });
+        // Restore scroll position if needed
+        if (this.scrollPosition > 0) {
+            window.scrollTo(0, this.scrollPosition);
         }
     }
 
@@ -298,6 +273,7 @@ class HeaderController {
             svgElement.replaceWith(newSvg);
         }
     }
+
     manageFocus() {
         if (this.isNavOpen) {
             // Use a small delay to ensure the panel is visible

@@ -65,3 +65,7 @@ Header set Content-Type "text/plain" "expr=-z %{CONTENT_TYPE}"
 Header set X-Content-Type-Options "nosniff"
 
 </IfModule>
+
+<IfModule mod_headers.c>
+Header set Access-Control-Allow-Origin "jonathanstephens.us"
+</IfModule>

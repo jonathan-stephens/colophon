@@ -4,13 +4,11 @@
   <a href="#main" class="skip-link visually-hidden">Skip to main content</a>
 
   <header class="site-header" role="banner"  <?php if ($kirby->user()): ?>style="top:var(--admin-bar--height)"<?php endif ?>>
+    <?php snippet('components/breadcrumb') ?>
     <button class="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open navigation menu">
-      <?= asset('assets/svg/icons/panel-left---to-open.svg')->read() ?>
       <span id="nav-toggle-text">Open Navigation</span>
+      <?= asset('assets/svg/icons/panel-right---to-open.svg')->read() ?>
     </button>
-    <a href="#" class="logo" aria-label="Go to homepage">
-      <?= asset('assets/svg/brandmark.svg')->read() ?>
-    </a>
     <div id="nav-panel" class="panel nav-panel">
       <?php $delay = 0; ?>
 

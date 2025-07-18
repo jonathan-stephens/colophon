@@ -8,28 +8,50 @@
   display: flex;
   justify-content: space-between;
   transition: all 0.3s ease;
-  align-items:center;
+  align-items:last baseline;
+  text-shadow: 1px 1px 1px var(--background-primary);
 
   #nav-toggle, .logo{
     z-index:1003;
     position:relative;
   }
+
+  #nav-toggle{
+    align-self: stretch;
+    align-items: center;
+    margin-block-start: calc(-1*var(--rhythm-moderato));
+    padding-block-start: var(--rhythm-moderato);
+    padding-block-end: var(--flow-7);
+
+    margin-inline-end: calc(-1*var(--rhythm-moderato));
+    padding-inline-end: var(--rhythm-moderato);
+    backdrop-filter: blur(var(--rhythm-prestissimo));
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
+    mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
+
+    &[aria-expanded="true"]:hover{
+        background:var(--background-tertiary);
+    }
+  }
 }
+
 .site-header .button{
   --button-gap: var(--rhythm-vivace);
   --button-bg: transparent;
   --button-border-color: transparent;
   --button-hover-color: var(--color-emphasis);
-  --button-hover-border-color: var(--color-emphasis);
+  --button-hover-border-color: transparent;
   --button-padding: var(--rhythm-vivace);
+  --button-radius: 0 var(--radii-square) var(--radii-square) var(--radii-square);
 
-  height: min-content;
-  backdrop-filter:blur(var(--rhythm-vivace));
   cursor: pointer;
   display: flex;
   align-items: flex-end;
   transition: all 0.3s ease;
   font-size: var(--caption);
+  width: -moz-available;
+  width: -webkit-fill-available;
+  justify-content: flex-end;
 
   #nav-toggle-text{
     em{
@@ -41,15 +63,6 @@
     --button-icon-size: var(--prose);
     fill: var(--color-prominent);
     top:1px;
-  }
-}
-
-.site-header .button:hover {
-  em{
-    opacity: 1;
-  }
-  .icon{
-    fill: var(--color-emphasis);
   }
 }
 
@@ -138,7 +151,7 @@ html[data-theme="dark"]{
   height:100vh;
   height: 100dvh;
   background-color: var(--panel-background);
-  transform: translateX(-100%);
+  transform: translateX(100%);
 
   z-index: 1001;
   overflow: hidden;
@@ -165,7 +178,7 @@ html[data-theme="dark"]{
 }
 
 .nav-panel.transitions-enabled.is-closing {
-  transform: translateX(-100%);
+  transform: translateX(100%);
   transition: transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19),
               backdrop-filter 0.3s ease;
 }
@@ -175,7 +188,7 @@ html[data-theme="dark"]{
 }
 
 .nav-panel.is-collapsed {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 
 /* Add backdrop as a separate layer */
@@ -267,6 +280,7 @@ html[data-theme="dark"]{
     width: 100vw;
     height: 100vh;
     height: 100dvh;
+    transform: translateX(100%);
 
     /* Optimize for mobile performance */
     -webkit-overflow-scrolling: touch;
@@ -277,14 +291,15 @@ html[data-theme="dark"]{
 
   /* Faster transitions on mobile */
   .nav-panel.is-opening {
+    transform: translateX(0);
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .nav-panel.is-closing {
+    transform: translateX(100%);
     transition: transform 0.25s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
 }
-
 
 @media(min-width: 20em) {
   .panel{
@@ -298,6 +313,7 @@ html[data-theme="dark"]{
   }
   .panel {
     top:0;
+    transform: translateX(100%);
 
     flex-flow: column;
     justify-content: flex-start;
@@ -321,4 +337,11 @@ body.nav-open {
 main {
   position: relative;
   z-index: 1;
+}
+
+.site-header:has(.nav-panel.open){
+  .breadcrumb, #nav-toggle{
+    backdrop-filter: blur(0px);
+
+  }
 }

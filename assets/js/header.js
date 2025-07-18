@@ -45,7 +45,6 @@ class HeaderController {
         // Load both SVG icons
         await this.loadIcons();
 
-        // Replace the existing timeout with this:
         // Set initial collapsed state FIRST, before any transitions
         this.navPanel.classList.add('is-collapsed');
         this.navPanel.setAttribute('aria-hidden', 'true');
@@ -54,7 +53,7 @@ class HeaderController {
         requestAnimationFrame(() => {
           this.navPanel.classList.add('transitions-enabled');
         });
-                
+
         // Check if elements exist before adding listeners
         if (this.navToggle) {
             this.navToggle.addEventListener('click', (e) => {
@@ -135,12 +134,11 @@ class HeaderController {
 
     async loadIcons() {
         try {
-            // Load the open icon (current one)
-            const openResponse = await fetch('/assets/svg/icons/panel-left---to-open.svg');
+            // FIXED: Load the correct icon files
+            const openResponse = await fetch('/assets/svg/icons/panel-right---to-open.svg');
             this.openIcon = await openResponse.text();
 
-            // Load the close icon
-            const closeResponse = await fetch('/assets/svg/icons/panel-left---to-close.svg');
+            const closeResponse = await fetch('/assets/svg/icons/panel-right---to-close.svg');
             this.closeIcon = await closeResponse.text();
         } catch (error) {
             console.warn('Could not load navigation icons:', error);
@@ -168,7 +166,7 @@ class HeaderController {
         this.isTransitioning = true;
 
         // Store current scroll position and prevent body scroll
-        this.scrollPosition = window.pageYOffset;
+        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         this.preventBodyScroll();
 
         // Remove collapsed class first
@@ -198,34 +196,49 @@ class HeaderController {
         // Update nav state
         this.updateNavState();
 
-        // Restore body scroll
+        // FIXED: Restore body scroll immediately, don't wait for transition
         this.restoreBodyScroll();
     }
 
     preventBodyScroll() {
-        // Enhanced body scroll prevention for mobile
+        // Enhanced body scroll prevention
         this.body.classList.add('nav-open');
+
+        // Store current scroll position more reliably
+        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop || this.body.scrollTop || 0;
 
         if (this.isMobile) {
             // Additional mobile-specific scroll prevention
             this.body.style.position = 'fixed';
             this.body.style.top = `-${this.scrollPosition}px`;
             this.body.style.width = '100%';
+            this.body.style.left = '0';
+            this.body.style.right = '0';
         }
     }
 
     restoreBodyScroll() {
-        // Restore body scroll
+        // FIXED: More robust body scroll restoration
         this.body.classList.remove('nav-open');
 
         if (this.isMobile) {
-            // Restore mobile-specific styles
+            // Store the scroll position before clearing styles
+            const scrollPos = this.scrollPosition;
+
+            // Clear all the fixed positioning styles
             this.body.style.position = '';
             this.body.style.top = '';
             this.body.style.width = '';
+            this.body.style.left = '';
+            this.body.style.right = '';
 
-            // Restore scroll position
-            window.scrollTo(0, this.scrollPosition);
+            // Restore scroll position with a small delay to ensure DOM is ready
+            requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPos);
+                // Backup restoration method
+                document.documentElement.scrollTop = scrollPos;
+                this.body.scrollTop = scrollPos;
+            });
         }
     }
 
@@ -277,12 +290,14 @@ class HeaderController {
         const newSvg = tempDiv.querySelector('svg');
 
         if (newSvg) {
-            // Copy classes from old SVG
-            newSvg.className = svgElement.className;
+            // Copy classes from old SVG using setAttribute instead of className
+            if (svgElement.className.baseVal) {
+                newSvg.setAttribute('class', svgElement.className.baseVal);
+            }
+
             svgElement.replaceWith(newSvg);
         }
     }
-
     manageFocus() {
         if (this.isNavOpen) {
             // Use a small delay to ensure the panel is visible

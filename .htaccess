@@ -66,6 +66,13 @@ Header set X-Content-Type-Options "nosniff"
 
 </IfModule>
 
+<IfModule mod_setenvif.c>
+  SetEnvIf Origin "^https://example\.com$" ORIGIN_OK
+  SetEnvIf Origin "^http://localhost(:[0-9]+)?$" ORIGIN_OK
+</IfModule>
+
 <IfModule mod_headers.c>
-Header set Access-Control-Allow-Origin "jonathanstephens.us"
+  Header always set Access-Control-Allow-Origin "%{Origin}e" env=ORIGIN_OK
+  Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS" env=ORIGIN_OK
+  Header always set Access-Control-Allow-Headers "Content-Type, Authorization" env=ORIGIN_OK
 </IfModule>

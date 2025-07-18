@@ -11,8 +11,11 @@ main,
 footer {
   max-inline-size: none;
 }
-
+html{
+  background-color: var(--background-primary);
+}
 body {
+  background-color: var(--background-primary);
   color:var(--color-prominent);
   font-family: var(--font-sans);
   transition: background-color 0.3s, color 0.3s;

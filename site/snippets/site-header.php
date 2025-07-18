@@ -18,13 +18,13 @@
         <ul class="nav-list" role="list">
             <?php $menuItems = $site->primary_nav()->toStructure(); ?>
               <?php foreach ($menuItems as $menuItem): ?>
-                <?php $delay += 0.2; ?>
+                <?php $delay += 0.15; ?>
                 <li class="nav-item" role="listitem" style="--item-delay:<?= $delay ?>s;">
                   <a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>" class="nav-link"><?= $menuItem->title()->or($menuItem->link()->html()) ?></a></li>
               <?php endforeach ?>
           </ul>
       </nav>
-      <section class="theme-picker" style="--item-delay:<?= $delay + 0.2 ?>s;">
+      <section class="theme-picker" style="--item-delay:<?= $delay + 0.15 ?>s;">
         <h2>Theme</h2>
         <?php snippet('components/theme-picker') ?>
       </section>

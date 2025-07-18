@@ -60,7 +60,7 @@ a:has(.brandmark){
 }
 .brandmark {
   text-decoration: none;
-  width:var(--hed-primary);
+  width:var(--flow-11);
 
   .background{
     fill: var(--background-primary-inverse);
@@ -132,54 +132,78 @@ html[data-theme="dark"]{
 
 .panel {
   position: fixed;
-  left: -100vw;
+  left: 0;
   top:0;
   width:100vw;
   height:100vh;
-  backdrop-filter: blur(var(--rhythm-moderato));
+  height: 100dvh;
+  background-color: var(--panel-background);
   transform: translateX(-100%);
-  transition: left 0.5s cubic-bezier(0.04, -0.1, 0.29, 0.98);
-  z-index: 1000;
+
+  z-index: 1001;
   overflow: hidden;
-  backface-visibility: hidden;
+
+  will-change: transform;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  contain: layout style paint;
 
   display: flex;
   flex-flow: column;
   justify-content: space-between;
   padding: var(--rhythm-moderato);
   padding-block-start:var(--rhythm-andante);
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 
-/* Opening state */
-.nav-panel.is-opening {
-  left: 0;
+/* Add transitions only when the panel is ready to animate */
+.nav-panel.transitions-enabled.is-opening {
   transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              backdrop-filter 0.4s ease;
 }
 
-/* Open state */
+.nav-panel.transitions-enabled.is-closing {
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19),
+              backdrop-filter 0.3s ease;
+}
+
 .nav-panel.open {
-  left: 0;
   transform: translateX(0);
 }
-/* Closing state */
-.nav-panel.is-closing {
-  left: -100vw;
-  transform: translateX(-100%);
-}
 
-/* Collapsed state */
 .nav-panel.is-collapsed {
-  left: -100vw;
   transform: translateX(-100%);
 }
 
-.panel.open {
-  transform: translateX(0);
+/* Add backdrop as a separate layer */
+.nav-panel::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.1); /* Subtle tint */
+  backdrop-filter: blur(var(--rhythm-moderato));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
 }
 
+.nav-panel.transitions-enabled.is-opening::before,
+.nav-panel.open::before {
+  opacity: 1;
+}
+
+.nav-panel.transitions-enabled.is-closing::before {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+// NAVIGATION LIST
 .nav-panel[aria-hidden="true"] .nav-list{
   transform: translateY(1.5em);
   opacity: 0;
@@ -194,10 +218,10 @@ html[data-theme="dark"]{
   transform: translateY(1.5em);
   transition: opacity 0.3s ease, transform 0.3s ease;
   transition-delay: 0s;
+  will-change: opacity, transform;
 }
 
 .nav-panel.is-opening .nav-item, .nav-panel.open .nav-item, .open .theme-picker {
-  opacity: 1;
   opacity: 1;
   transform: translateY(0);
   transition-delay: var(--item-delay);
@@ -207,8 +231,8 @@ html[data-theme="dark"]{
 .nav-panel.is-closing .nav-item {
   opacity: 0;
   transform: translateY(1.5em);
-  transition: opacity 0.1s ease, transform 0.1s ease;
   transition-delay: 0s;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-panel.is-collapsed .nav-item {
@@ -232,45 +256,33 @@ html[data-theme="dark"]{
 }
 
 .nav-link:hover, .nav-link:focus {
-  background-color: var(--palette-tint-05);
-  color: var(--color-emphasis);
+  color: var(--color-prominent);
+  text-decoration-color: var(--color-prominent);
   outline:none;
   border-radius: var(--radii-square);
 }
+@media (max-width: 60em) {
+  .panel {
+    /* Ensure full coverage on mobile */
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
 
-.is-collapsed .panel, .is-closing .panel{}
+    /* Optimize for mobile performance */
+    -webkit-overflow-scrolling: touch;
 
+    /* Reduce backdrop blur on mobile for better performance */
+    backdrop-filter: blur(calc(var(--rhythm-moderato) / 2));
+  }
 
+  /* Faster transitions on mobile */
+  .nav-panel.is-opening {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-/* Header stays on top with high z-index */
-.site-header {
-  margin: 0 auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1002; /* Higher than nav panel */
-}
-.nav-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--panel-background);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.nav-panel.is-opening::before,
-.nav-panel.open::before {
-  opacity: 1;
-}
-
-.nav-panel.is-closing::before {
-  opacity: 0;
-  transition: opacity 0.1s ease;
+  .nav-panel.is-closing {
+    transition: transform 0.25s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
 }
 
 
@@ -296,14 +308,17 @@ html[data-theme="dark"]{
 }
 
 
-
-/* Prevent body scroll when nav is open */
+/* Enhanced body scroll prevention */
 body.nav-open {
   overflow: hidden;
+  position: fixed;
+  width: 100%;
+  /* Prevent scroll jumping on mobile */
+  touch-action: none;
 }
 
-/* Ensure main content doesn't move - reset any transforms */
+/* Ensure main content stability */
 main {
   position: relative;
-  z-index: 1; /* Below overlay */
+  z-index: 1;
 }

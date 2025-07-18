@@ -233,7 +233,6 @@ html[data-theme="dark"]{
 
 /* Header stays on top with high z-index */
 .site-header {
-  max-width:clamp(16rem,var(--wrapper-max-width,100vw),80rem);
   margin: 0 auto;
   position: fixed;
   top: 48px;
@@ -242,8 +241,15 @@ html[data-theme="dark"]{
   z-index: 1002; /* Higher than nav panel */
   background: var(--header-bg-color);
 }
+@media(min-width: 20em) {
 
+}
 
+@media(min-width: 60em) {
+  .site-header{
+    max-width:clamp(16rem,var(--wrapper-max-width,100vw),80rem);
+  }
+}
 /* Overlay covers the entire page but doesn't affect layout */
 .overlay {
   position: fixed;

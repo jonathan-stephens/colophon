@@ -6,23 +6,31 @@ class HeaderController {
         this.navToggle = document.getElementById('nav-toggle');
         this.navPanel = document.getElementById('nav-panel');
         this.navToggleText = document.getElementById('nav-toggle-text');
-        this.overlay = document.getElementById('overlay');
+
+        // Store the original SVG content for switching
+        this.openIcon = null;
+        this.closeIcon = null;
+
         this.init();
     }
 
-    init() {
+    async init() {
+        // Load both SVG icons
+        await this.loadIcons();
+
         // Check if elements exist before adding listeners
         if (this.navToggle) {
             this.navToggle.addEventListener('click', () => this.toggleNav());
         }
 
-        if (this.overlay) {
-            this.overlay.addEventListener('click', () => this.closeNav());
-        }
-
         // Listen for transition end to update classes
         if (this.navPanel) {
-            this.navPanel.addEventListener('transitionend', () => this.handleTransitionEnd());
+            this.navPanel.addEventListener('transitionend', (e) => {
+                // Only handle the main panel transition, not child elements
+                if (e.target === this.navPanel) {
+                    this.handleTransitionEnd();
+                }
+            });
         }
 
         // Close panel on Escape key
@@ -47,6 +55,23 @@ class HeaderController {
         this.navPanel.classList.add('is-collapsed');
     }
 
+    async loadIcons() {
+        try {
+            // Load the open icon (current one)
+            const openResponse = await fetch('/assets/svg/icons/panel-left---to-open.svg');
+            this.openIcon = await openResponse.text();
+
+            // Load the close icon
+            const closeResponse = await fetch('/assets/svg/icons/panel-left---to-close.svg');
+            this.closeIcon = await closeResponse.text();
+        } catch (error) {
+            console.warn('Could not load navigation icons:', error);
+            // Fallback - keep the existing icon
+            this.openIcon = this.navToggle.querySelector('svg')?.outerHTML || '';
+            this.closeIcon = this.openIcon; // Use same icon as fallback
+        }
+    }
+
     toggleNav() {
         if (this.isTransitioning) return; // Prevent multiple clicks during transition
 
@@ -67,17 +92,24 @@ class HeaderController {
         this.navPanel.classList.remove('is-collapsed');
         this.navPanel.classList.add('is-opening');
 
+        // Force a reflow to ensure the class change is applied
+        this.navPanel.offsetHeight;
+
         this.updateNavState();
     }
 
     closeNav() {
-        if (this.isTransitioning) return;
+        if (this.isTransitioning || !this.isNavOpen) return;
 
         this.isNavOpen = false;
         this.isTransitioning = true;
 
-        // Add closing class
+        // Remove opening class and add closing class
+        this.navPanel.classList.remove('is-opening');
         this.navPanel.classList.add('is-closing');
+
+        // Force a reflow to ensure the class change is applied
+        this.navPanel.offsetHeight;
 
         this.updateNavState();
     }
@@ -104,19 +136,34 @@ class HeaderController {
         this.navToggle.setAttribute('aria-expanded', this.isNavOpen.toString());
         this.navToggleText.textContent = this.isNavOpen ? 'Close Navigation' : 'Open Navigation';
 
-        // Update the button icon (you'll need to handle this in CSS or swap the SVG)
-        // You could add a class to the button to change the icon via CSS
-        this.navToggle.classList.toggle('is-open', this.isNavOpen);
+        // Update the button icon
+        this.updateIcon();
 
-        // Update overlay for smooth left-slide transition
-        // The overlay should fade in/out in sync with the panel slide
-        this.overlay.classList.toggle('active', this.isNavOpen);
-        this.overlay.setAttribute('aria-hidden', (!this.isNavOpen).toString());
+        // Update the button class for styling
+        this.navToggle.classList.toggle('is-open', this.isNavOpen);
 
         // Add state classes to body for global styling control
         document.body.classList.toggle('nav-open', this.isNavOpen);
 
         this.manageFocus();
+    }
+
+    updateIcon() {
+        if (!this.openIcon || !this.closeIcon) return;
+
+        // Find the SVG element in the button
+        const svgElement = this.navToggle.querySelector('svg');
+        if (!svgElement) return;
+
+        // Replace the SVG with the appropriate icon
+        const newIconHTML = this.isNavOpen ? this.closeIcon : this.openIcon;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = newIconHTML;
+        const newSvg = tempDiv.querySelector('svg');
+
+        if (newSvg) {
+            svgElement.replaceWith(newSvg);
+        }
     }
 
     manageFocus() {

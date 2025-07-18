@@ -1,136 +1,104 @@
-// Prevent FOUC (Flash of Unstyled Content) - inline script in <head>
-const themeInitializer = `
-  (function() {
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  })();
-`;
+// FOUC prevention - inline this in your <head>
+       (function() {
+           const saved = localStorage.getItem('theme');
+           const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+           const isDark = saved === 'dark' || (!saved && systemDark);
+           if (isDark) {
+               document.documentElement.setAttribute('data-theme', 'dark');
+           }
+       })();
 
-// Create and insert the script element
-const script = document.createElement('script');
-script.textContent = themeInitializer;
-document.head.insertBefore(script, document.head.firstChild);
+       // Lightweight Theme Manager
+       class ThemeManager {
+           constructor() {
+               this.toggle = document.querySelector('.js-mode-toggle');
+               this.statusElement = document.querySelector('.js-mode-status');
+               this.toggleContainer = document.querySelector('.color-mode-toggle');
+               this.htmlElement = document.documentElement;
 
-// Main theme functionality
-class ThemeManager {
-  constructor() {
-    this.themeToggle = document.querySelector('.js-mode-toggle');
-    this.modeStatus = document.querySelector('.js-mode-status');
-    this.modeToggleText = document.querySelector('.js-mode-toggle-text');
-    this.toggleContainer = document.querySelector('.color-mode-toggle');
-    this.htmlElement = document.documentElement;
+               this.init();
+           }
 
-    this.init();
-  }
+           init() {
+               if (!this.toggle) {
+                   console.warn('Theme toggle not found');
+                   return;
+               }
 
-  init() {
-    // Check if toggle exists
-    if (!this.themeToggle) {
-      console.warn('Theme toggle not found');
-      return;
-    }
+               // Set initial state based on current theme
+               this.updateToggleState();
 
-    // Set initial state
-    this.updateToggleState();
+               // Single event listener for all interactions
+               this.toggle.addEventListener('change', () => this.handleToggle());
 
-    // Event listener for toggle change
-    this.themeToggle.addEventListener('change', () => this.handleThemeToggle());
+               // Listen for system theme changes (only if no saved preference)
+               this.setupSystemThemeListener();
 
-    // Keyboard support
-    this.setupKeyboardSupport();
+               // Show toggle after setup
+               if (this.toggleContainer) {
+                   this.toggleContainer.style.visibility = 'visible';
+               }
+           }
 
-    // Listen for system theme changes
-    this.setupSystemThemeListener();
+           getCurrentTheme() {
+               return this.htmlElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+           }
 
-    // Make toggle visible after setup
-    if (this.toggleContainer) {
-      this.toggleContainer.style.visibility = 'visible';
-    }
-  }
+           handleToggle() {
+               const newTheme = this.toggle.checked ? 'dark' : 'light';
+               this.setTheme(newTheme);
+           }
 
-  getCurrentTheme() {
-    return this.htmlElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  }
+           setTheme(theme) {
+               const isDark = theme === 'dark';
 
-  isDarkMode() {
-    return this.getCurrentTheme() === 'dark';
-  }
+               // Update DOM
+               if (isDark) {
+                   this.htmlElement.setAttribute('data-theme', 'dark');
+               } else {
+                   this.htmlElement.removeAttribute('data-theme');
+               }
 
-  handleThemeToggle() {
-    const isDark = this.themeToggle.checked;
-    this.setTheme(isDark ? 'dark' : 'light');
-  }
+               // Save preference
+               localStorage.setItem('theme', theme);
 
-  setTheme(theme) {
-    const isDark = theme === 'dark';
+               // Update toggle state
+               this.updateToggleState();
+           }
 
-    if (isDark) {
-      this.htmlElement.setAttribute('data-theme', 'dark');
-    } else {
-      this.htmlElement.removeAttribute('data-theme');
-    }
+           updateToggleState() {
+               const isDark = this.getCurrentTheme() === 'dark';
 
-    // Save preference
-    localStorage.setItem('theme', theme);
+               // Update checkbox
+               this.toggle.checked = isDark;
+               this.toggle.setAttribute('aria-checked', isDark.toString());
 
-    // Update toggle state
-    this.updateToggleState();
-  }
+               // Update status for screen readers
+               if (this.statusElement) {
+                   this.statusElement.textContent = `Color mode is currently ${isDark ? 'dark' : 'light'}`;
+               }
+           }
 
-  updateToggleState() {
-    const isDark = this.isDarkMode();
+           setupSystemThemeListener() {
+               const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Update checkbox state
-    this.themeToggle.checked = isDark;
-    this.themeToggle.setAttribute('aria-checked', isDark.toString());
+               const handleSystemChange = (e) => {
+                   // Only apply system theme if user hasn't set a preference
+                   if (!localStorage.getItem('theme')) {
+                       this.setTheme(e.matches ? 'dark' : 'light');
+                   }
+               };
 
-    // Update status text
-    if (this.modeStatus) {
-      this.modeStatus.textContent = `Color mode is currently ${isDark ? 'dark' : 'light'}`;
-    }
+               // Use modern addEventListener with fallback
+               if (mediaQuery.addEventListener) {
+                   mediaQuery.addEventListener('change', handleSystemChange);
+               } else {
+                   mediaQuery.addListener(handleSystemChange);
+               }
+           }
+       }
 
-    // Update toggle text
-    if (this.modeToggleText) {
-      this.modeToggleText.textContent = isDark ? 'Enable light mode' : 'Enable dark mode';
-    }
-  }
-
-  setupKeyboardSupport() {
-    this.themeToggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.themeToggle.checked = !this.themeToggle.checked;
-        this.handleThemeToggle();
-      }
-    });
-  }
-
-  setupSystemThemeListener() {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Use the newer addEventListener method if available
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', (e) => this.handleSystemThemeChange(e));
-    } else {
-      // Fallback for older browsers
-      mediaQuery.addListener((e) => this.handleSystemThemeChange(e));
-    }
-  }
-
-  handleSystemThemeChange(e) {
-    // Only apply system theme if user hasn't set a preference
-    const savedTheme = localStorage.getItem('theme');
-    if (!savedTheme) {
-      this.setTheme(e.matches ? 'dark' : 'light');
-    }
-  }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  new ThemeManager();
-});
+       // Initialize when DOM is ready
+       document.addEventListener('DOMContentLoaded', () => {
+           new ThemeManager();
+       });

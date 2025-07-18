@@ -1,55 +1,34 @@
 <?php snippet('head') ?>
 
-<body class="<?= $page->slug() ?> tmpl-<?= $page->template() ?>" data-color-mode="system" data-theme="design">
+<body class="<?= $page->slug() ?> tmpl-<?= $page->template() ?> <?php if ($kirby->user()): ?>logged-in<?php endif ?>" data-color-mode="system" data-theme="design">
   <a href="#main" class="skip-link visually-hidden">Skip to main content</a>
 
-  <?php if ($kirby->user()): ?>
-    <header class="site-header" role="banner" style="top:48px;">
-        <button
-          class="button"
-          id="nav-toggle"
-          aria-expanded="false"
-          aria-controls="nav-panel"
-          aria-label="Open navigation menu">
-          <?= asset('assets/svg/icons/panel-left---to-open.svg')->read() ?>
-          <span id="nav-toggle-text">Open Navigation</span>
-        </button>
-        <a href="#" class="logo" aria-label="Go to homepage">
-          <?= asset('assets/svg/brandmark.svg')->read() ?>
-        </a>
+  <header class="site-header" role="banner"  <?php if ($kirby->user()): ?>style="top:var(--admin-bar--height)"<?php endif ?>>
+    <button class="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open navigation menu">
+      <?= asset('assets/svg/icons/panel-left---to-open.svg')->read() ?>
+      <span id="nav-toggle-text">Open Navigation</span>
+    </button>
+    <a href="#" class="logo" aria-label="Go to homepage">
+      <?= asset('assets/svg/brandmark.svg')->read() ?>
+    </a>
+    <div id="nav-panel" class="panel nav-panel">
+      <?php $delay = 0; ?>
 
-        <?php snippet('components/theme-picker') ?>
-
-      <nav
-        class="panel nav-panel"
-        id="nav-panel"
-        role="navigation"
-        aria-label="Main navigation"
-        aria-hidden="true"
-        <?php if ($kirby->user()): ?>
-        style="padding-top:68px;"
-        <?php endif ?>
-          >
+      <nav role="navigation" aria-label="Main navigation" aria-hidden="true">
         <ul class="nav-list" role="list">
-          <?php $delay = 0; ?>
-          <?php $menuItems = $site->primary_nav()->toStructure(); ?>
-            <?php foreach ($menuItems as $menuItem): ?>
-              <?php $delay += 0.2; ?>
-              <li class="nav-item" role="listitem" style="--item-delay:<?= $delay ?>s;">
-                <a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>" class="nav-link"><?= $menuItem->title()->or($menuItem->link()->html()) ?></a></li>
-            <?php endforeach ?>
-        </ul>
+            <?php $menuItems = $site->primary_nav()->toStructure(); ?>
+              <?php foreach ($menuItems as $menuItem): ?>
+                <?php $delay += 0.2; ?>
+                <li class="nav-item" role="listitem" style="--item-delay:<?= $delay ?>s;">
+                  <a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>" class="nav-link"><?= $menuItem->title()->or($menuItem->link()->html()) ?></a></li>
+              <?php endforeach ?>
+          </ul>
       </nav>
-    </header>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
-  <?php else: ?>
-    <header role="banner">
-      <div class="wrapper">
-        <?php snippet('components/breadcrumb') ?>
+      <section class="theme-picker" style="--item-delay:<?= $delay + 0.2 ?>s;">
+        <h2>Theme</h2>
         <?php snippet('components/theme-picker') ?>
-      </div>
-    </header>
-  <?php endif ?>
+      </section>
+    </div>
+  </header>
 
-
-  <main role="main" <?php if ($kirby->user()): ?>style="padding-top:20em;"<?php endif ?>>
+  <main role="main">

@@ -33,6 +33,10 @@
     }
   }
 
+  li:not(:first-of-type){
+    display:none;
+  }
+
   li:first-of-type{
     margin-inline-end:var(--rhythm-moderato);
   }
@@ -120,5 +124,11 @@
       text-decoration:none;
       color:var(--color-distinct);
     }
+  }
+}
+
+@media(min-width:40em){
+  .breadcrumb li:not(:first-of-type){
+    display: flex;
   }
 }

@@ -4,8 +4,8 @@
   font-weight: 1 1000;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Roman.woff2) format('woff2') tech(variations),
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Roman.woff2) format("woff2-variations");
+    url("../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Roman.woff2") format('woff2') tech(variations),
+    url("../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Roman.woff2") format("woff2-variations");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -18,8 +18,8 @@
   font-weight: 1 1000;
   font-display: swap;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Italic.woff2) format('woff2') tech(variations),
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Italic.woff2) format("woff2-variations");
+    url("../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Italic.woff2") format('woff2') tech(variations),
+    url("../fonts/ibm-plex-sans/woff2/IBMPlexSansVar-Italic.woff2") format("woff2-variations");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -33,7 +33,7 @@
   size-adjust:105%;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexMono-Text.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexMono-Text.woff2") format("woff2");
   @supports (font-size-adjust: .514){
     font-size-adjust: .514;
   }
@@ -47,7 +47,7 @@
   size-adjust:105%;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexMono-Medium.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexMono-Medium.woff2") format("woff2");
   @supports (font-size-adjust: .514){
     font-size-adjust: .514;
   }
@@ -60,7 +60,7 @@
   size-adjust:105%;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexMono-Semibold.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexMono-Semibold.woff2") format("woff2");
   @supports (font-size-adjust: .514){
     font-size-adjust: .514;
   }
@@ -73,7 +73,7 @@
   font-style: normal;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexMono-Bold.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexMono-Bold.woff2") format("woff2");
   @supports (font-size-adjust: .514){
     font-size-adjust: .514;
   }
@@ -85,7 +85,7 @@
   font-style: normal;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-Text.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Text.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -98,7 +98,7 @@
   font-style: normal;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-Medium.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Medium.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -110,7 +110,7 @@
   font-style: normal;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-Semibold.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Semibold.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -122,7 +122,7 @@
   font-style: normal;
   font-display: fallback;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-Bold.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-Bold.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -134,7 +134,7 @@
   font-style: italic;
   font-display: swap;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-TextItalic.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-TextItalic.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -146,7 +146,7 @@
   font-style: italic;
   font-display: swap;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-MediumItalic.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-MediumItalic.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -158,7 +158,7 @@
   font-style: italic;
   font-display: swap;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-SemiboldItalic.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-SemiboldItalic.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }
@@ -170,7 +170,7 @@
   font-style: italic;
   font-display: swap;
   src:
-    url(https://jonathanstephens.us/assets/fonts/ibm-plex-serif/woff2/IBMPlexSerif-BoldItalic.woff2) format("woff2");
+    url("../fonts/ibm-plex-serif/woff2/IBMPlexSerif-BoldItalic.woff2") format("woff2");
   @supports (font-size-adjust: .521){
     font-size-adjust: .521;
   }

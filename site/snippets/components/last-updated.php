@@ -71,7 +71,7 @@ class LastUpdated {
                   class="dt-updated u-updated"
                   value="{$isoDate}"
                   itemprop="dateModified">
-                    This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a> and was last updated one {$timeOfDay}
+                    This page was last updated one {$timeOfDay}
                     in {$season}, <span class="with-icon">{$calendarIcon}
                       <time class="dmy" datetime="{$kirbyDate}">{$kirbyDate}</time></span> at
                       <span class="with-icon">{$clockIcon}
@@ -79,7 +79,10 @@ class LastUpdated {
                         {$page->modified('H:i')}.
                     </time></span>
                 </data>
+                This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, cleaner than 97% of all web pages globallylast tested
             </div>
+            <div id="wcb" class="carbonbadge wcb-d"></div>
+<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
             <!-- Schema.org metadata -->
             <script type="application/ld+json">
             {

@@ -216,14 +216,14 @@ html[data-theme='dark']{
   }
 }
 
-.carbon #wcb.carbonbadge{
+.footer .carbon #wcb.carbonbadge{
   display: inline-flex;
   --b1: var(--color-distinct);
   --b2: transparent;
   font-size:var(--caption);
   margin-inline-start:calc(-1*var(--rhythm-prestissimo));
 
-  #wcb_p{
+  #wcb #wcb_p{
     order: 2;
 
     &:after{
@@ -233,7 +233,7 @@ html[data-theme='dark']{
       padding-inline:0;
     }
   }
-  #wcb_2{
+  #wcb #wcb_2{
     order: 1;
     text-transform: lowercase;
     color: var(--color-distinct);
@@ -260,7 +260,10 @@ html[data-theme='dark']{
     padding:0;
   }
 
-  #wcb_a{display:none!important;}
+  #wcb.wcb-d #wcb_a{
+    border:0;
+    margin:0;
+    display:none!important;}
 }
 // .last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before{
 //  content: "";

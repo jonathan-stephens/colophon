@@ -38,15 +38,15 @@ body > footer{
     }
     a{
       color:var(--color-prominent);
-      text-decoration-color: var(--link-deco);
+      text-decoration-color: var(--color-distinct);
 
       &:hover{
-        color:var(--link-color-hover);
-        text-decoration-color: var(--link-deco-hover);
+        color:var(--color-emphasis);
+        text-decoration-color: var(--color-prominent);
       }
       &:active{
-        color:var(--link-color-active);
-        text-decoration-color: var(--link-deco-active);
+        color:var(--color-emphasis);
+        text-decoration-color: var(--color-emphasis);
       }
       &:focus{
         outline-color:var(--color-prominent);

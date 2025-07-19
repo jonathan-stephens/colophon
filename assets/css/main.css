@@ -1796,15 +1796,15 @@ body > footer section.subscribe .feeds ul {
 }
 body > footer section.subscribe a {
   color: var(--color-prominent);
-  text-decoration-color: var(--link-deco);
+  text-decoration-color: var(--color-distinct);
 }
 body > footer section.subscribe a:hover {
-  color: var(--link-color-hover);
-  text-decoration-color: var(--link-deco-hover);
+  color: var(--color-emphasis);
+  text-decoration-color: var(--color-prominent);
 }
 body > footer section.subscribe a:active {
-  color: var(--link-color-active);
-  text-decoration-color: var(--link-deco-active);
+  color: var(--color-emphasis);
+  text-decoration-color: var(--color-emphasis);
 }
 body > footer section.subscribe a:focus {
   outline-color: var(--color-prominent);

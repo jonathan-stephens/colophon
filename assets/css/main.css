@@ -1789,7 +1789,7 @@ body > footer section.subscribe .icon {
   width: calc(1.5 * var(--hed-quaternary));
   height: auto;
   margin-block-end: var(--rhythm-vivace);
-  fill: inherit;
+  fill: var(--color-prominent);
 }
 body > footer section.subscribe .feeds ul {
   flex-flow: column;
@@ -1848,7 +1848,7 @@ body > footer .subscribe {
 }
 body > footer .subscribe h2 {
   font-size: var(--hed-quaternary);
-  color: var(--color-prominent-inverse);
+  color: var(--color-prominent);
 }
 body > footer .navigation .wrapper, body > footer .socials .wrapper {
   display: flex;

@@ -30,7 +30,7 @@ body > footer{
       width: calc(1.5*var(--hed-quaternary));
       height: auto;
       margin-block-end: var(--rhythm-vivace);
-      fill: inherit;
+      fill: var(--color-prominent);
     }
 
     .feeds ul{
@@ -86,7 +86,7 @@ body > footer{
 
     h2{
       font-size:var(--hed-quaternary);
-      color:var(--color-prominent-inverse);
+      color:var(--color-prominent);
     }
   }
   .navigation .wrapper, .socials .wrapper{

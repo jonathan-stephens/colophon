@@ -92,8 +92,7 @@
         <?php snippet('components/addenda') ?>
         <div class="carbon">
             <?= asset('assets/svg/icons/sprout.svg')->read() ?>
-            This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, <div id="wcb" class="carbonbadge wcb-d"></div>
-            <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
+            This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, cleaner than 97% of pages tested at 0.02 CO<sub>2</sub>g/view.
         </div>
         <?php snippet('components/last-updated') ?>
         <?php snippet('copyright') ?>

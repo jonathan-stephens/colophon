@@ -37,7 +37,7 @@ body > footer{
       flex-flow:column;
     }
     a{
-      color:var(--link-color);
+      color:var(--color-distinct);
       text-decoration-color: var(--link-deco);
 
       &:hover{

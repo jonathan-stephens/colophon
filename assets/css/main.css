@@ -1795,7 +1795,7 @@ body > footer section.subscribe .feeds ul {
   flex-flow: column;
 }
 body > footer section.subscribe a {
-  color: var(--link-color);
+  color: var(--color-distinct);
   text-decoration-color: var(--link-deco);
 }
 body > footer section.subscribe a:hover {

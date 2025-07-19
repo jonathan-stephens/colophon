@@ -38,11 +38,11 @@ body > footer{
     }
     a{
       color:var(--color-prominent);
-      text-decoration-color: var(--color-distinct);
+      text-decoration-color: var(--color-prominent);
+      opacity:.85;
 
       &:hover{
-        color:var(--color-emphasis);
-        text-decoration-color: var(--color-prominent);
+        opacity:1;
       }
       &:active{
         color:var(--color-emphasis);

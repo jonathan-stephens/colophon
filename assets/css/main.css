@@ -1796,11 +1796,11 @@ body > footer section.subscribe .feeds ul {
 }
 body > footer section.subscribe a {
   color: var(--color-prominent);
-  text-decoration-color: var(--color-distinct);
+  text-decoration-color: var(--color-prominent);
+  opacity: 0.85;
 }
 body > footer section.subscribe a:hover {
-  color: var(--color-emphasis);
-  text-decoration-color: var(--color-prominent);
+  opacity: 1;
 }
 body > footer section.subscribe a:active {
   color: var(--color-emphasis);

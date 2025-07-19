@@ -92,7 +92,7 @@
         <?php snippet('components/addenda') ?>
         <div class="carbon">
             <?= asset('assets/svg/icons/sprout.svg')->read() ?>
-            This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, cleaner than 97% of pages tested at 0.02 CO<sub>2</sub>g/view.
+            This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, cleaner than 97% of pages tested at 0.02g  CO<sub>2</sub>/view.
         </div>
         <?php snippet('components/last-updated') ?>
         <?php snippet('copyright') ?>

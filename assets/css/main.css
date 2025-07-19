@@ -1797,7 +1797,7 @@ body > footer section.subscribe .feeds ul {
 body > footer section.subscribe a {
   color: var(--color-prominent);
   text-decoration-color: var(--color-prominent);
-  opacity: 0.85;
+  opacity: 0.65;
 }
 body > footer section.subscribe a:hover {
   opacity: 1;

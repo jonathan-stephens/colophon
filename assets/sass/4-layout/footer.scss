@@ -39,7 +39,7 @@ body > footer{
     a{
       color:var(--color-prominent);
       text-decoration-color: var(--color-prominent);
-      opacity:.85;
+      opacity:.65;
 
       &:hover{
         opacity:1;
@@ -216,14 +216,13 @@ html[data-theme='dark']{
   }
 }
 
-.carbon{
-  #wcb.carbonbadge{
-    display: inline-flex;
-    --b1: var(--color-distinct);
-    --b2: transparent;
-    font-size:var(--caption);
-    margin-inline-start:calc(-1*var(--rhythm-prestissimo));
-  }
+.carbon #wcb.carbonbadge{
+  display: inline-flex;
+  --b1: var(--color-distinct);
+  --b2: transparent;
+  font-size:var(--caption);
+  margin-inline-start:calc(-1*var(--rhythm-prestissimo));
+
   #wcb_p{
     order: 2;
 

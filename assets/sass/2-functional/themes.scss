@@ -1,14 +1,16 @@
-// To Do: Rename Background Primary - Tertiary into semantic gradient of quiet to emphasis, then rename everything everywhere. Same with Inverse. Also, gives more flexibility with everything, to have it more explicit on each one. Especially when developing color themes. 
+// To Do: Rename Background Primary - Tertiary into semantic gradient of quiet to emphasis, then rename everything everywhere. Same with Inverse. Also, gives more flexibility with everything, to have it more explicit on each one. Especially when developing color themes.
 
 @mixin theme-light() {
   color-scheme: light;
   --background-primary: var(--palette-ash-05);
   --background-secondary: var(--palette-ash-10);
   --background-tertiary: var(--palette-ash-20);
+  --background-quaternary: var(--palette-ash-30);
 
   --background-primary-inverse:var(--palette-ash-95);
   --background-secondary-inverse: var(--palette-ash-90);
   --background-tertiary-inverse: var(--palette-ash-80);
+  --background-quaternary-inverse: var(--palette-ash-70);
 
   --color-quiet:    var(--palette-ash-40);
   --color-subtle:    var(--palette-ash-60);
@@ -36,10 +38,12 @@
   --background-primary: var(--palette-ash-95);
   --background-secondary: var(--palette-ash-90);
   --background-tertiary: var(--palette-ash-80);
+  --background-quaternary: var(--palette-ash-70);
 
   --background-primary-inverse:var(--palette-ash-05);
   --background-secondary-inverse: var(--palette-ash-10);
   --background-tertiary-inverse: var(--palette-ash-20);
+  --background-quaternary-inverse: var(--palette-ash-30);
 
   --color-quiet:    var(--palette-ash-60);
   --color-subtle:    var(--palette-ash-40);

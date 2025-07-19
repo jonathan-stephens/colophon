@@ -90,6 +90,11 @@
     <section class="final-info">
       <div class="wrapper">
         <?php snippet('components/addenda') ?>
+        <div class="carbon">
+            <?= asset('assets/svg/icons/sprout.svg')->read() ?>
+            This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, <div id="wcb" class="carbonbadge wcb-d"></div>
+            <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
+        </div>
         <?php snippet('components/last-updated') ?>
         <?php snippet('copyright') ?>
       </div>
@@ -100,6 +105,8 @@
 <!-- Fathom - beautiful, simple website analytics -->
 <script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
 <!-- / Fathom -->
+
+<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
 
 <?= js([
   'assets/js/theme-picker.js',

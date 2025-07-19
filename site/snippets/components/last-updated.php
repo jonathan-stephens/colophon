@@ -63,10 +63,13 @@ class LastUpdated {
 
         $calendarIcon = asset('assets/svg/icons/date.svg')->read();
         $clockIcon = asset('assets/svg/icons/time.svg')->read();
+        $updateIcon = asset('assets/svg/icons/code-slash.svg')->read();
+        $carbonIcon = asset('assets/svg/icons/sprout.svg')->read();
 
         return <<<HTML
         <div class="last-updated">
             <div class="h-entry">
+              {$updateIcon}
                 <data
                   class="dt-updated u-updated"
                   value="{$isoDate}"
@@ -79,10 +82,7 @@ class LastUpdated {
                         {$page->modified('H:i')}.
                     </time></span>
                 </data>
-                This site is <a href="https://www.websitecarbon.com/website/jonathanstephens-us/">climate-friendly</a>, cleaner than 97% of all web pages globallylast tested
             </div>
-            <div id="wcb" class="carbonbadge wcb-d"></div>
-<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
             <!-- Schema.org metadata -->
             <script type="application/ld+json">
             {

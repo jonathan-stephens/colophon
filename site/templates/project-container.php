@@ -1,7 +1,7 @@
 <?php snippet('site-header') ?>
 
   <div class="wrapper case-studies">
-    <?php foreach($page->children()->listed()->flip() as $article): ?>
+    <?php foreach($page->children()->listed() as $article): ?>
       <a href="<?= $article->url() ?>" class="case-study">
         <article class="h-entry">
           <p>

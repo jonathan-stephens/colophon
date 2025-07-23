@@ -47,6 +47,7 @@
     height:var(--type-scale-20);
     width:var(--type-scale-20);
     position:relative;
+    align-self: center;
 
     mask-image: url('/assets/svg/icons/arrow-right.svg');
     mask-mode: alpha;

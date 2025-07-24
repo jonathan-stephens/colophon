@@ -16,7 +16,7 @@
     </h3>
   </header>
   <div class="p-summary summary p-description description" itemprop="description">
-    <?= $block->descriptionSummary() ?>
+    <?= $block->descriptionSummary()->kt() ?>
     <?php
 /*
     if($block->descriptionListed()->isNotEmpty()): ?>

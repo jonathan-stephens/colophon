@@ -1,5 +1,5 @@
-<div class="p-experience h-event vevent experience vevent" itemprop="worksFor" itemscope="" itemtype="https://schema.org/Organization https://schema.org/Role">
-  <div class="h-card vcard">
+<div class="p-experience h-event vevent gig vevent flow" itemprop="worksFor" itemscope="" itemtype="https://schema.org/Organization https://schema.org/Role">
+  <header class="h-card vcard">
     <h3>
       <span class="p-job-title" itemprop="roleName">
         <?= $block->title() ?>
@@ -14,26 +14,19 @@
         </span>
       </a>
     </h3>
-  </div>
-  <div class="time">
-    <time class="dt-start dtstart" datetime="<?= $block->startDate() ?>" itemprop="startDate"><?= $block->startDate()->toDate('M Y') ?></time>
-    –
-    <?php if($block->endDate()->isNotEmpty()): ?>
-    <time class="dt-end dtend" datetime="
-      <?= $block->endDate() ?>
-    " itemprop="endDate"><?= $block->endDate()->toDate('M Y') ?></time>
-  <?php else : ?>
-    present
-  <?php endif ?>
-    <span class="p-location location" itemprop="workLocation">
-      <?= $block->location() ?> (<?= $block->workModel()->html() ?>)
-    </span>
-  </div>
+  </header>
   <div class="p-summary summary p-description description" itemprop="description">
-    <?php if($block->descriptionListed()->isNotEmpty()): ?>
+    <?= $block->descriptionSummary() ?>
+    <?php
+/*
+    if($block->descriptionListed()->isNotEmpty()): ?>
       <details>
         <summary>
-          <?= $block->descriptionSummary() ?>
+          <?php if($block->descriptionSummary()->isNotEmpty()): ?>
+            <?= $block->descriptionSummary() ?>
+          <?php else : ?>
+            View responsibilities
+          <?php endif ?>
         </summary>
         <?= $block->descriptionListed() ?>
       </details>
@@ -41,6 +34,21 @@
       <p>
         <?= $block->descriptionSummary() ?>
       </p>
-    <?php endif ?>
+    <?php endif */ ?>
   </div>
+  <div class="meta">
+    <div class="time with-icon">
+      <?= asset('assets/svg/icons/date.svg')->read() ?>
+      <time class="dt-start dtstart" datetime="<?= $block->startDate() ?>" itemprop="startDate"><?= $block->startDate()->toDate('M Y') ?></time> – <?php if($block->endDate()->isNotEmpty()): ?><time class="dt-end dtend" datetime="<?= $block->endDate() ?>" itemprop="endDate"><?= $block->endDate()->toDate('M Y') ?></time><?php else : ?>present<?php endif ?>
+    </div>
+    <div class="p-location location with-icon" itemprop="workLocation">
+      <?= asset('assets/svg/icons/location.svg')->read() ?>
+      <?= $block->location() ?>
+    </div>
+    <div class="model with-icon">
+      <?= asset('assets/svg/icons/compass.svg')->read() ?>
+      <?= $block->workModel()->html() ?>
+    </div>
+  </div>
+
 </div>

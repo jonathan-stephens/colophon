@@ -18,10 +18,12 @@
 
 @use '3-components/breadcrumb';
 @use '3-components/theme-picker';
+@use '3-components/card';
 @use '3-components/footnotes';
 @use '3-components/button';
 @use '3-components/prism';
 @use '3-components/tags';
+@use '3-components/forms';
 @use '3-components/figure';
 
 @use '4-layout/header';
@@ -29,6 +31,8 @@
 @use '4-layout/footer';
 
 @use '5-pages/journal';
+@use '5-pages/experience';
+@use '5-pages/work';
 @use '5-pages/case-studies';
 @use '5-pages/links' as links2;
 @use '5-pages/reviews';

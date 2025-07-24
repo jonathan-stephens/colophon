@@ -1,16 +1,14 @@
 <?php snippet('site-header') ?>
+  <?php snippet('post-header') ?>
+  <?php snippet('post-prose') ?>
 
-<article class="article post wrapper h-entry" itemscope itemtype="http://schema.org/Article">
-  <header>
-    <h1 class="p-name" itemprop="name headline"><?= $page->hed()->html() ?></h1>
-    <p><?= $page->dek()->html() ?><p>
-  </header>
+  <h1><?php $pages->find('level1/level2/target-page') ?></h1>
 
-  <div class="e-content prose" itemprop="articleBody">
-    <?= $page->text()->footnotes() ?>
-  </div>
+  <section class="case-studies">
+    <h2>Case Studies</h2>
+    <p>Some recent work as an independent consultant, contributing strategically and individually.</p>
+    <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
+  </section>
 
-  <footer class="meta">
-    <?php snippet('/components/tags', ['reference' => $page]) ?>
-  </footer>
-</article><?php snippet('site-footer') ?>
+  <?php snippet('post-footer') ?>
+<?php snippet('site-footer') ?>

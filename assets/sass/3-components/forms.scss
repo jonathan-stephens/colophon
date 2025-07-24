@@ -1,0 +1,82 @@
+.honeypot {
+  position: absolute;
+  left: -9999px;
+}
+form{
+  display:flex;
+  flex-direction:column;
+  gap:var(--rhythm-allegro);
+  margin-block: var(--rhythm-moderato);
+}
+textarea, input{
+  padding-block: var(--rhythm-vivace);
+  padding-inline: var(--rhythm-vivace);
+  border-color: var(--border-color-distinct);
+  border-width: var(--border-fine);
+  border-style: solid;
+  border-radius: var(--radii-square);
+  background: var(--background-secondary);
+  color: var(--color-prominent);
+
+  &::placeholder{
+    color:var(--color-distinct-inverse);
+  }
+  &:focus, &:active{
+    background: var(--background-quaternary);
+  }
+}
+
+label{
+  font-weight:var(--weight-medium);
+  font-size:var(--prose);
+}
+
+form.error{
+  input#password{
+    border-color:var(--error-color);
+    border-width:var(--border-thin);
+  }
+
+  .error-text{
+    color: var(--error-color);
+    font-size:var(--small);
+  }
+
+  label{
+    color: var(--error-color);
+  }
+}
+
+body.locked{
+  main{
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    min-height:100vh;
+  }
+
+  .locked-dialog{
+    display:flex;
+    flex-direction: column;
+    gap:var(--rhythm-moderato);
+    align-items:center;
+    padding: var(--rhythm-moderato);
+
+    header{
+      text-align:center;
+    }
+    form{
+      width:42vw;
+      justify-self:center;
+      margin-block-end:var(--rhythm-adagio);
+    }
+    footer{
+      background: var(--background-secondary);
+      padding: var(--rhythm-andante);
+      padding-block-start:var(--rhythm-andantino);
+    }
+    h3{
+      margin-block-end: var(--rhythm-presto);
+    }
+  }
+}

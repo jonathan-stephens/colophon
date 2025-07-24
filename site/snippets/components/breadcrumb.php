@@ -13,6 +13,10 @@
       }
     }
 
+    // Define slugs where links should be removed for current page
+    $noLinkSlugs = ['locked']; // Add more slugs here as needed
+    $shouldRemoveLink = in_array($page->slug(), $noLinkSlugs);
+
     $breadcrumbItems = $site->breadcrumb();
     // Remove home from breadcrumb items since we handle it separately
     $breadcrumbItems = $breadcrumbItems->filter(function($item) use ($site) {
@@ -25,12 +29,12 @@
       if ($currentSection && $crumb->isActive()) {
         switch ($currentSection) {
           case 'journal':
-          case 'links':
             $year = $page->date()->toDate('Y');
             $monthDay = $page->date()->toDate('F j, Y');
             $breadcrumbText .= $year . ' ' . $monthDay;
             break;
           case 'notes':
+          case 'links':
             $breadcrumbText .= $crumb->title();
             break;
         }
@@ -48,7 +52,6 @@
       if ($currentSection && $crumb->isActive()) {
         switch ($currentSection) {
           case 'journal':
-          case 'links':
             $year = $page->date()->toDate('Y');
             $monthDay = $page->date()->toDate('F j, Y');
             $yearPage = $site->find($currentSection . '/' . $year);
@@ -58,8 +61,14 @@
             echo '<li><a aria-current="page">' . $monthDay . '</a></li>';
             break;
           case 'notes':
+          case 'links':
             $title = $needsConcatenation ? Str::short($crumb->title(), 30) : $crumb->title();
-            echo '<li><a aria-current="page">' . html($title) . '</a></li>';
+            // Check if link should be removed for current page
+            if ($shouldRemoveLink && $crumb->isActive()) {
+              echo '<li><span aria-current="page">' . html($title) . '</span></li>';
+            } else {
+              echo '<li><a aria-current="page">' . html($title) . '</a></li>';
+            }
             break;
         }
         break;
@@ -67,8 +76,14 @@
         // Default breadcrumb rendering
         $ariaCurrent = $crumb->isActive() ? ' aria-current="page"' : '';
         $title = $needsConcatenation ? Str::short($crumb->title(), 20) : $crumb->title();
-        echo '<li><a href="' . $crumb->url() . '"' . $ariaCurrent . '>' .
-             html($title) . '</a></li>';
+
+        // Check if link should be removed for current page
+        if ($shouldRemoveLink && $crumb->isActive()) {
+          echo '<li><span aria-current="page">' . html($title) . '</span></li>';
+        } else {
+          echo '<li><a href="' . $crumb->url() . '"' . $ariaCurrent . '>' .
+               html($title) . '</a></li>';
+        }
       }
     endforeach ?>
   </ol>

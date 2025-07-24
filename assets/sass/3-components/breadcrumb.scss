@@ -10,6 +10,7 @@
   margin-inline-start: calc(-1*var(--rhythm-moderato));
   padding-inline-start: var(--rhythm-moderato);
   z-index:1003;
+  container: breadcrumbList / inline-size;
 
   ol{
     list-style-type:none;
@@ -128,8 +129,14 @@
   }
 }
 
-@media(min-width:40em){
+@media(min-width:41em){
   .breadcrumb li:not(:first-of-type){
     display: flex;
+  }
+}
+
+@container breadcrumbList (min-width:40em) and (max-width:65em){
+  .breadcrumb a{
+    font-size: var(--hed-quaternary);
   }
 }

@@ -1,0 +1,25 @@
+.card{
+  background: var(--background-primary);
+  border: var(--border-fine) solid var(--border-color-nuance);
+  border-radius:var(--rhythm-vivace);
+  width:100%;
+  padding:var(--rhythm-moderato);
+
+  header{
+    display:flex;
+    flex-flow:column;
+    gap:var(--rhythm-vivace);
+  }
+}
+
+a.card{
+  text-decoration: none;
+}
+
+a.card{
+  &:hover, &:active{
+    background-color: var(--background-secondary);
+    border-color: var(--border-subtle);
+    color: var(--color-emphasis);
+  }
+}

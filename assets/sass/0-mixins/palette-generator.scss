@@ -26,3 +26,6 @@
     --palette-#{$color-name}-#{$grade}: #{$value};
   }
 }
+:root{
+  @include generate-palette("red", oklch(0.4471 0.1585 29.82));
+}

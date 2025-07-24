@@ -105,8 +105,6 @@
 <script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
 <!-- / Fathom -->
 
-<script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
-
 <?= js([
   'assets/js/theme-picker.js',
   'assets/js/prism.js',

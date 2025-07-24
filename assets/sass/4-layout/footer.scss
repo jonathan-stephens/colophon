@@ -16,7 +16,7 @@ body > footer{
     order:1;
   }
   section.subscribe{
-    background:var(--background-quaternary);
+    background:var(--background-tertiary);
     order:2;
     color:var(--color-distinct);
     mix-blend-mode: luminosity;
@@ -55,7 +55,7 @@ body > footer{
     }
   }
   section.socials{
-    background:var(--background-tertiary);
+    background:var(--background-quaternary);
     order:3;
   }
   section.final-info{
@@ -119,28 +119,6 @@ body > footer{
       grid-gap: calc(2*var(--gutter));
     }
 }
-
-
-  form{
-    display:flex;
-    flex-direction:column;
-    gap:var(--rhythm-moderato);
-    margin-block: var(--rhythm-moderato);
-  }
-  input{
-    padding-block: var(--flow-3);
-    padding-inline: var(--flow-3);
-    border-color: var(--border-color-distinct);
-    border-width: var(--border-fine);
-    border-style: solid;
-    border-radius: var(--radii-square);
-    background: var(--background-tertiary-inverse);
-    color:var(--color-distinct-inverse);
-
-    &::placeholder{
-      color:var(--color-distinct-inverse);
-    }
-  }
 
   .button{
     --button-bg: var(--background-secondary);
@@ -267,29 +245,3 @@ html[data-theme='dark']{
     margin:0;
     display:none!important;}
 }
-// .last-updated .dmy::before, .last-updated .hm::before, .last-updated .h-entry::before, .h-card::before, .u-email::before{
-//  content: "";
-//  position:relative;
-//  background:var(--color-nuance);
-//  display:inline-block;
-//  height:var(--type-scale-16);
-//  width:var(--type-scale-16);
-//  margin:var(--rhythm-presto);
-//
-//  top:7px;
-
-//  mask-mode: alpha;
-//  mask-repeat: no-repeat;
-//  mask-size: var(--type-scale-16);
-//  mask-position: center;
-//  margin-inline-end: var(--rhythm-presto);
-//  margin-inline-start: 0;
-//}
-
-// .last-updated .h-entry::before{ mask-image: url('/assets/svg/icons/code-slash.svg');margin-inline-end:0;}
-
-// .last-updated .dmy::before{ mask-image: url('/assets/svg/icons/date.svg');}
-// .last-updated .hm::before{ mask-image: url('/assets/svg/icons/time.svg');margin-inline-end:0px;}
-// .h-card::before{ mask-image: url('/assets/svg/icons/copyright.svg');margin-inline-end:0;}
-// .h-card .u-email::before{mask-image:url('/assets/svg/icons/mail.svg');
-// }

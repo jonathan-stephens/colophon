@@ -31,6 +31,8 @@
   --border-color-distinct:  var(--palette-ash-40);
   --border-color-prominent: var(--palette-ash-60);
   --border-color-emphasis:  var(--palette-ash-80);
+
+  --error-color: var(--palette-red-50);
 }
 
 @mixin theme-dark() {
@@ -65,6 +67,7 @@
   --border-color-prominent: var(--palette-ash-40);
   --border-color-emphasis:  var(--palette-ash-20);
 
+  --error-color: var(--palette-red-30);
 }
 
 :root{

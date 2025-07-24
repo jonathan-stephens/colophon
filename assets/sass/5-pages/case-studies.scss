@@ -1,20 +1,19 @@
-.wrapper:is(.case-studies){
+div.case-studies{
   display:flex;
   flex-flow: row;
   flex-wrap: wrap;
   gap: var(--rhythm-andantino);
+  margin-block:var(--rhythm-andante);
+}
+
+section.case-studies{
+  max-inline-size:none;
 }
 
 .case-study{
-  padding:var(--rhythm-moderato);
-  text-decoration: none;
-  background: var(--background-primary);
-  border: var(--border-fine) solid var(--border-color-nuance);
-  border-radius:var(--rhythm-vivace);
-  width:100%;
-
   p:has(.client + .context){
     text-align:center;
+    font-size:var(--small);
   }
   .client{
     font-weight:var(--weight-medium);
@@ -26,13 +25,11 @@
     text-align:center;
   }
   .dek{
-    font-size:var(--hed-quaternary);
+    font-size:var(--prose);
     text-align:center;
     border-bottom: var(--border-fine) dashed var(--border-color-distinct);
     padding-block-end:var(--rhythm-moderato);
     margin-block-end: var(--rhythm-moderato);
-
-
   }
   .meta{
     display: inline-flex;
@@ -41,12 +38,12 @@
     padding:0;
     width:100%;
     max-width:100%;
-    font-size: var(--small);
     overflow-x:hidden;
 
     li{
       display: flex;
       flex-flow:column;
+      font-size:var(--small);
     }
 
     li.organization span > span:not(:last-child)::after, li.industries span > span:not(:last-child)::after { content: ',';}
@@ -63,18 +60,8 @@
   }
 }
 
-.case-study:hover{
-  background-color: var(--background-secondary);
-  border-color: var(--border-subtle);
-  color: var(--color-emphasis);
-}
-
-.case-study article{
-  container: case-card / inline-size;
-}
-
 @media screen and (min-width: 40em) {
-  .wrapper:is(.case-studies){
+  div:is(.case-studies){
       display:grid;
       grid-template-columns: repeat(2, 1fr);
   }
@@ -92,11 +79,10 @@
       width: 100%;
       max-width: 100%;
 
-      li{font-size: var(--small);}
+      li{font-size: var(--caption);}
     }
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 65em) {
   .case-study .meta{
     grid-template-columns: repeat(2, 1fr);
@@ -107,3 +93,45 @@
     grid-area:  2 / 1 / 3 / 3;
   }
 }
+
+@media screen and (min-width: 60em) {
+  .case-study{
+    p:has(.client + .context){
+      font-size:var(--prose);
+    }
+    .dek{
+      font-size:var(--hed-quaternary);
+    }
+    .meta li{
+      font-size:var(--small);
+    }
+  }
+}
+
+
+/* OVERVIEW PAGES */
+.button:is(.case-details){
+  --button-gap: var(--rhythm-presto);
+}
+.button:is(.case-details)::before{
+
+  content: "";
+  position:relative;
+  align-self: center;
+  height: var(--prose);
+  width: var(--prose);
+  display:inline-block;
+  background:var(--color-emphasis);
+
+  mask-image: url('/assets/svg/icons/read-me.svg');
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-size: var(--prose);
+  mask-position: center;
+  margin-inline-end: var(--rhythm-presto);
+  margin-inline-start: var(--rhythm-presto);
+
+}
+
+
+/* DETAIL PAGES */

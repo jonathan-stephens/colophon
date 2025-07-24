@@ -1,6 +1,6 @@
 /* https://piccalil.li/blog/how-i-build-a-button-component/ */
 
-.button {
+button, .button {
   --button-bg: var(--background-primary);
   --button-color: var(--color-distinct);
   --button-hover-bg: var(--background-secondary);
@@ -37,20 +37,20 @@
   cursor: pointer;
 }
 
-.button svg {
+button svg, .button svg {
   height: var(--button-icon-size, 1.2cap);
   width: auto;
   flex: none;
 }
 
 /* Hover/focus/active */
-.button:hover {
+button:hover, .button:hover {
   background: var(--button-hover-bg);
   color: var(--button-hover-color);
   border-color:var(--button-hover-border-color);
 }
 
-.button:focus {
+button:focus, .button:focus {
   outline-width: var(--button-outline-width, var(--button-border-width));
   outline-style: var(--button-outline-style, var(--button-border-style));
   outline-color: var(--button-outline-color, var(--button-border-color));
@@ -60,7 +60,7 @@
   );
 }
 
-.button:active {
+button:active, .button:active {
   transform: scale(99%);
 }
 
@@ -96,4 +96,17 @@
 /* Radius variants */
 .button[data-button-radius="hard"] {
   --button-radius: 0;
+}
+
+button:has(.icon), .button:has(.icon){
+  --button-gap:var(--rhythm-presto);
+}
+
+
+button:has(.icon) svg, .button:has(.icon) svg{
+  fill: var(--button-color);
+
+  &:hover{
+    fill:var(--button-hover-color);
+  }
 }

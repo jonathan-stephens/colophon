@@ -158,7 +158,7 @@ section.case-studies{
     .summary{      order:1;}
     aside{         order:2;}
     .contribution{ order:3;}
-    .client{       order:4; --measure:70ch;}
+    .client{       order:4;}
 
     h2{
       font-size:calc(1.25*var(--hed-tertiary));
@@ -166,6 +166,9 @@ section.case-studies{
     }
     h2, h3{
       color:var(--color-distinct);
+    }
+    .client p{
+      --measure:50ch;
     }
   }
 
@@ -202,7 +205,12 @@ section.case-studies{
     max-width:none;
   }
   .contribution{
+    border-bottom:var(--border-fine)solid var(--color-quiet);
+    p{
+      --measure:50ch;
+    }
     p:first-of-type{
+      --measure: 70ch;
       font-size:var(--lede);
     }
   }

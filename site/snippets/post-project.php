@@ -4,10 +4,6 @@
       <h2>Overview</h2>
       <?= $page->overview()->kt() ?>
     </div>
-    <div class="contribution">
-      <h3>Contribution</h3>
-      <?= $page->contribution()->kt() ?>
-    </div>
     <div class="client">
       <h3>Client</h3>
       <?= $page->aboutClient()->kt() ?>
@@ -56,7 +52,6 @@
       <?php endif ?>
     </ul>
     </aside>
-
   </section>
 
   <?php if(!$page->objectives()->isEmpty()): ?>
@@ -75,6 +70,11 @@
     </div>
   </section>
   <?php endif?>
+
+  <section class="contribution">
+    <h2>Contribution</h2>
+    <?= $page->contribution()->kt() ?>
+  </section>
 
 <?php if ($details = $page->children()->findBy('slug', 'details')): ?>
   <div class="cta flow">

@@ -258,17 +258,15 @@ section:has(.objectives, .results){
   .project-overview{
     .overview{
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3,1fr);
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2,1fr);
       grid-auto-flow: row;
       grid-template-areas:
       "summary summary aside"
-      "contribution contribution aside"
       "client client aside";
       column-gap: var(--rhythm-andante);
 
       .summary{ grid-area: summary; }
-      .contribution{ grid-area: contribution;}
       .client{grid-area: client;}
       aside{grid-area: aside;}
     }

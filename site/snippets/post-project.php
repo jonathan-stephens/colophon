@@ -56,11 +56,13 @@
     </div>
   </section>
 
+<?php if ($details = $page->children()->findBy('slug', 'details')): ?>
   <div class="cta flow">
     <h3>Read the full case study</h3>
     <p>I have a full case study of this, if you'd like, with more details and such. But, you gotta ask for it.</p>
-    <a href="/" class="button case-details">Read the full case study</a>
+    <a href="<?= $details->url() ?>" class="button case-details">Read the full case study</a>
   </div>
+<?php endif ?>
 
   <section class="artifacts">
     <?= $page->text()->footnotes() ?>

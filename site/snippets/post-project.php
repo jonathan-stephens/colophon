@@ -2,15 +2,15 @@
   <section class="overview">
     <div class="summary">
       <h2>Overview</h2>
-      <p><?= $page->overview()->kt() ?></p>
+      <?= $page->overview()->kt() ?>
     </div>
     <div class="contribution">
       <h3>Contribution</h3>
-      <p><?= $page->contribution()->kt() ?></p>
+      <?= $page->contribution()->kt() ?>
     </div>
     <div class="client">
       <h3>Client</h3>
-      <p><?= $page->aboutClient()->kt() ?></p>
+      <?= $page->aboutClient()->kt() ?>
     </div>
     <aside>
       <ul>

@@ -10,15 +10,22 @@
   --leading-standard:1.5;
   --leading-loose:1.75;
 
+  --measure: 84ch;
   --hed-primary:clamp(var(--type-scale-42),1.107rem + 4.048vw,var(--type-scale-76));
   --hed-secondary:clamp(var(--type-scale-32),0.75rem + 3.333vw,var(--type-scale-60));
   --hed-tertiary:clamp(var(--type-scale-28),1.571rem + 0.476vw,var(--type-scale-32));
   --hed-quaternary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
+  --hed-quinary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
 
+  --dek-primary:clamp(var(--type-scale-28),1.571rem + 0.476vw,var(--type-scale-32));
+  --dek-secondary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
+
+  --lede: clamp(var(--type-scale-20), 1.071rem + 0.476vw, var(--type-scale-24));
+
+  --nutgraf-primary: clamp(var(--type-scale-20), 1.071rem + 0.476vw, var(--type-scale-24));
+  --nutgraf-secondary: clamp(var(--type-scale-18), 0.857rem + 0.714vw, var(--type-scale-24));
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
   --small: clamp(var(--type-scale-14), 0.786rem + 0.238vw, var(--type-scale-16));
-  --measure: 84ch;
-
   --caption:clamp(var(--type-scale-12),0.661rem + 0.238vw, var(--type-scale-14));
 }
 body{

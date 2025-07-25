@@ -169,9 +169,17 @@ section.case-studies{
     }
   }
 
+  .summary{
+    p{
+      font-size:var(--lede);
+      color:var(--color-distinct);
+    }
+  }
+
   aside{
     background:var(--background-secondary);
     border-radius:var(--radii-square);
+    height: max-content;
 
     li{
       font-size:var(--small);
@@ -258,6 +266,7 @@ section:has(.objectives, .results){
       "summary summary aside"
       "contribution contribution aside"
       "client client aside";
+      column-gap: var(--rhythm-andante);
 
       .summary{ grid-area: summary; }
       .contribution{ grid-area: contribution;}

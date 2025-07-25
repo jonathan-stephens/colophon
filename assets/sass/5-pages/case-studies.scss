@@ -167,8 +167,12 @@ section.case-studies{
     h2, h3{
       color:var(--color-distinct);
     }
-    .client p{
-      --measure:50ch;
+    .client {
+      padding-block-end: var(--rhythm-andante);
+
+      p{
+        --measure:50ch;
+      }
     }
   }
 
@@ -205,6 +209,7 @@ section.case-studies{
     max-width:none;
   }
   .contribution{
+    padding-block-end: var(--rhythm-andante);
     border-bottom:var(--border-fine)solid var(--color-quiet);
     p{
       --measure:50ch;

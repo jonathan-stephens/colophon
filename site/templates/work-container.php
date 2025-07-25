@@ -6,7 +6,7 @@
 
   <section class="case-studies">
     <h2>Case Studies</h2>
-    <p>Some recent work as an independent consultant, contributing strategically and individually.</p>
+    <p>Some recent work as an independent consultant, contributing strategically and individually.</p>asdfasdf
     <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
   </section>
 

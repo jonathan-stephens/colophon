@@ -10,7 +10,6 @@
       <?= asset('assets/svg/icons/tag.svg')->read() ?>
       Tags:
     </span>
-
       <?php foreach ($reference->tags()->split() as $tag): ?>
         <a rel="tag" class="p-category button" href="<?= url('tags/' . urlencode($tag)) ?>">
           <?= $tag ?>

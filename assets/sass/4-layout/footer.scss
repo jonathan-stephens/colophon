@@ -57,6 +57,7 @@ body > footer{
   section.socials{
     background:var(--background-quaternary);
     order:3;
+    a{color:var(--color-distinct);}
   }
   section.final-info{
     background:var(--background-secondary);

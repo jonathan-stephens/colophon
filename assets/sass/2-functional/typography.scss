@@ -152,7 +152,7 @@ strong, b, th {
 
 .prose{
   font-variant-numeric: oldstyle-nums proportional-nums;
-
+  color: var(--color-distinct);
   -webkit-hyphens: auto;
   -webkit-hyphenate-limit-before: 4;
   -webkit-hyphenate-limit-after: 3;

@@ -36,7 +36,7 @@ if ($filter) {
   // Example: filter by field value
   if (isset($filter['field']) && isset($filter['value'])) {
     $source = $source->filterBy($filter['field'], $filter['value']);
-  }
+    }
 }
 ?>
 
@@ -47,29 +47,23 @@ if ($filter) {
         <header>
           <p>
             <span class="client"><?= $article->client()->html() ?></span> •
-            <span class="context"><?= $article->context()->html() ?></span>
+            <span class="principal"><?= $article->principal()->html() ?></span>
           </p>
           <h<?= $hedLevel ?> class="p-name hed"><?= $article->hed()->html() ?></h<?= $hedLevel ?>>
           <p class="dek"><?= $article->dek()->html() ?></p>
         </header>
         <ul class="meta">
           <li class="role">
-            <span>Role</span>
+            <span class="label">Role</span>
             <span><?= $article->role()->html() ?></span>
           </li>
           <li class="industries">
-            <span>Industries</span>
-            <span><?php foreach ($article->industry()->split() as $industry): ?>
-              <span><?= $industry ?></span>
-            <?php endforeach ?></span>
+            <span class="label">Industries</span>
+            <span><?= implode(', ', $article->industry()->split()) ?></span>
           </li>
           <li class="organization">
-            <span>Organization</span>
-            <span>
-              <span class="business-model"><?= $article->businessModel()->html() ?></span>
-              <span class="working-model"><?= $article->workingModel()->html() ?></span>
-              <span class="company-size"><?= $article->companySize()->html() ?></span>
-            </span>
+            <span class="label">Organization</span>
+            <span><?= $article->businessModel()->html() ?>, <?= $article->workingModel()->html() ?>, <?= $article->companySize()->html() ?></span>
           </li>
         </ul>
       </article>

@@ -26,6 +26,17 @@ textarea, input{
   }
 }
 
+footer[role="contentinfo"]{
+  input{
+    background:var(--background-quaternary);
+    color: var(--color-distinct);
+
+    &::placeholder{
+      color:var(--color-distinct);
+    }
+  }
+}
+
 label{
   font-weight:var(--weight-medium);
   font-size:var(--prose);
@@ -66,8 +77,8 @@ body.locked{
       text-align:center;
     }
     form{
-      width:42vw;
       justify-self:center;
+      width:84vw;
       margin-block-end:var(--rhythm-adagio);
     }
     footer{
@@ -79,4 +90,7 @@ body.locked{
       margin-block-end: var(--rhythm-presto);
     }
   }
+}
+@media screen and (min-width:40em){
+  body.locked .locked-dialog form{ width: minmax(42vw, 42%);}
 }

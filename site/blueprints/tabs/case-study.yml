@@ -78,7 +78,7 @@ fields:
     label: Contribution
     type: textarea
     size: medium
-    maxlength: 400
+    maxlength: 600
     width: 1/2
   aboutClient:
     label: About Client

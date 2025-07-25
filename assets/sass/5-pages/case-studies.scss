@@ -179,6 +179,7 @@ section.case-studies{
   .summary{
     p{
       font-size:var(--lede);
+      color:var(--color-distinct);
     }
   }
 
@@ -217,6 +218,7 @@ section.case-studies{
     p:first-of-type{
       --measure: 70ch;
       font-size:var(--lede);
+      color:var(--color-distinct);
     }
   }
 }

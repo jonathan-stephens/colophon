@@ -1,17 +1,23 @@
 <div class="e-content prose" itemprop="articleBody">
   <section class="overview">
-    <div class="summary">
-      <h2>Overview</h2>
-      <?= $page->overview()->kt() ?>
-    </div>
-    <div class="contribution">
-      <h3>Contribution</h3>
-      <?= $page->contribution()->kt() ?>
-    </div>
-    <div class="client">
-      <h3>Client</h3>
-      <?= $page->aboutClient()->kt() ?>
-    </div>
+    <?php if(!$page->overview()->isEmpty()): ?>
+      <div class="summary">
+        <h2>Overview</h2>
+        <?= $page->overview()->kt() ?>
+      </div>
+    <?php endif ?>
+    <?php if(!$page->contribution()->isEmpty()): ?>
+      <div class="contribution">
+        <h3>Contribution</h3>
+        <?= $page->contribution()->kt() ?>
+      </div>
+    <?php endif ?>
+    <?php if(!$page->aboutClient()->isEmpty()): ?>
+      <div class="client">
+        <h3>Client</h3>
+        <?= $page->aboutClient()->kt() ?>
+      </div>
+    <?php endif ?>
     <aside>
       <ul>
         <?php if(!$page->role()->isEmpty()): ?>

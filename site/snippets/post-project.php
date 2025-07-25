@@ -59,6 +59,7 @@
 
   </section>
 
+  <?php if(!$page->objectives()->isEmpty()): ?>
   <section>
     <div class="objectives">
       <h2>Objectives</h2>
@@ -73,6 +74,7 @@
       </p>
     </div>
   </section>
+  <?php endif?>
 
 <?php if ($details = $page->children()->findBy('slug', 'details')): ?>
   <div class="cta flow">

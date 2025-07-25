@@ -4,10 +4,6 @@
       <h2>Overview</h2>
       <?= $page->overview()->kt() ?>
     </div>
-    <div class="client">
-      <h3>Client</h3>
-      <?= $page->aboutClient()->kt() ?>
-    </div>
     <aside>
       <ul>
         <?php if(!$page->role()->isEmpty()): ?>
@@ -53,6 +49,13 @@
     </ul>
     </aside>
   </section>
+  <section class="contribution">
+    <h2>Contribution</h3>
+    <?= $page->contribution()->kt() ?>
+    <h3>Client</h3>
+    <?= $page->aboutClient()->kt() ?>
+  </section>
+
 
   <?php if(!$page->objectives()->isEmpty()): ?>
   <section>
@@ -71,20 +74,17 @@
   </section>
   <?php endif?>
 
-  <section class="contribution">
-    <h2>Contribution</h2>
-    <?= $page->contribution()->kt() ?>
-  </section>
 
-<?php if ($details = $page->children()->findBy('slug', 'details')): ?>
-  <div class="cta flow">
-    <h3>Read the full case study</h3>
-    <p>I have a full case study of this, if you'd like, with more details and such. But, you gotta ask for it.</p>
-    <a href="<?= $details->url() ?>" class="button case-details">Read the full case study</a>
-  </div>
-<?php endif ?>
 
   <section class="artifacts">
     <?= $page->text()->footnotes() ?>
   </section>
+
+  <?php if ($details = $page->children()->findBy('slug', 'details')): ?>
+  <div class="cta flow">
+    <h3>Want more details?</h3>
+    <a href="<?= $details->url() ?>" class="button case-details">Read the full case study</a>
+  </div>
+  <?php endif ?>
+
 </div>

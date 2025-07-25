@@ -8,9 +8,10 @@
   header{
     display:flex;
     flex-flow:column;
+    row-gap:var(--rhythm-vivace);
 
     h3{
-      line-height:var(--leading-loose);
+      line-height:var(--leading-standard);
     }
   }
 }

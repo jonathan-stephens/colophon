@@ -87,12 +87,12 @@ fields:
     maxlength: 400
     width: 1/2
   objectives:
-    label: About Client
+    label: Objectives
     type: textarea
     size: medium
     width: 1/2
   results:
-    label: About Client
+    label: Results
     type: textarea
     size: medium
     width: 1/2

@@ -64,13 +64,13 @@
     <div class="objectives">
       <h2>Objectives</h2>
       <p>
-        <?= $page->stakeholders()->html() ?>
+        <?= $page->objectives()->html() ?>
       </p>
     </div>
     <div class="results">
       <h2>Results</h2>
       <p>
-        <?= $page->stakeholders()->html() ?>
+        <?= $page->results()->html() ?>
       </p>
     </div>
   </section>

@@ -160,13 +160,6 @@ section.case-studies{
     .contribution{ order:3;}
     .client{       order:4;}
 
-    h2{
-      font-size:calc(1.25*var(--hed-tertiary));
-      padding:0;
-    }
-    h2, h3{
-      color:var(--color-distinct);
-    }
     .client {
       padding-block-end: var(--rhythm-andante);
 
@@ -174,6 +167,13 @@ section.case-studies{
         --measure:50ch;
       }
     }
+  }
+  h2{
+    font-size:calc(1.25*var(--hed-tertiary));
+    padding:0;
+  }
+  h2, h3{
+    color:var(--color-prominent);
   }
 
   .summary{

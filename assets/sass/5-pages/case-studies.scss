@@ -148,7 +148,6 @@ section.case-studies{
     border-bottom: var(--border-fine)solid var(--color-quiet);
     padding: var(--rhythm-allegro) 0;
     width: 100%;
-    font-family: var(--font-mono);
     font-size: var(--small);
     color: var(--color-nuance);
     margin-bottom: var(--rhythm-andantino);
@@ -176,6 +175,7 @@ section.case-studies{
 
     li{
       font-size:var(--small);
+      font-family: var(--font-mono);
       list-style-type:none;
       display:flex;
       flex-direction:column;

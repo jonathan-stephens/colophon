@@ -158,7 +158,7 @@ section.case-studies{
     .summary{      order:1;}
     aside{         order:2;}
     .contribution{ order:3;}
-    .client{       order:4;}
+    .client{       order:4; --measure:70ch;}
 
     h2{
       font-size:calc(1.25*var(--hed-tertiary));
@@ -200,6 +200,11 @@ section.case-studies{
   .overview, .prose{
     max-inline-size:none;
     max-width:none;
+  }
+  .contribution{
+    p:first-of-type{
+      font-size:var(--lede);
+    }
   }
 }
 

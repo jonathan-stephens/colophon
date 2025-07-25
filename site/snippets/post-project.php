@@ -14,29 +14,39 @@
     </div>
     <aside>
       <ul>
+        <?php if(!$page->role()->isEmpty()): ?>
         <li>
           <span class="label">Role</span>
           <span class="content"><?= $page->role()->html() ?></span>
         </li>
-
+        <?php endif ?>
+        <?php if(!$page->client()->isEmpty()): ?>
         <li>
           <span class="label">Client</span>
           <span class="content"><?= $page->client()->html() ?></span>
         </li>
+        <?php endif ?>
+        <?php if(!$page->principal()->isEmpty()): ?>
         <li>
           <span class="label">Principal</span>
           <span class="content"><?= $page->principal()->html() ?></span>
         </li>
+        <?php endif ?>
+        <?php if(!$page->stakeholders()->isEmpty()): ?>
         <li>
           <span class="label">Key Stakeholders</span>
           <span class="content"><?= $page->stakeholders()->html() ?></span>
         </li>
+        <?php endif ?>
+        <?php if(!$page->skills()->isEmpty()): ?>
         <li>
           <span class="label">Skills</span>
           <span class="skills">
             <?php  $skills = $page->skills()->split(); foreach ($skills as $key => $skill): ?><span rel="tag" class="p-category"><?= $skill ?></span><?php if ($key < count($skills) - 1): ?>, <?php endif ?><?php endforeach ?>
           </span>
         </li>
+      <?php endif ?>
+    </ul>
     </aside>
 
   </section>

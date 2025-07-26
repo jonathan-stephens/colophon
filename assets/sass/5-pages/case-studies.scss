@@ -249,6 +249,7 @@ section:has(.objectives, .results){
   max-inline-size:var(--measure);
   width:100%;
   align-items: center;
+  row-gap:var(--rhythm-moderato);
 
   h3{
     padding:0;

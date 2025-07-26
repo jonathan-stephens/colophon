@@ -188,6 +188,11 @@ section.case-studies{
       padding-top:var(--rhythm-andante);
     }
   }
+  .artifacts{
+    h3 + p{
+      font-size:var(--lede);
+    }
+  }
 
   ul{
     background:var(--background-secondary);

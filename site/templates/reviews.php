@@ -13,11 +13,9 @@
         <?php foreach($reviews as $review): ?>
           <article class="review">
             <?= $review->headshot() ?>
-            <div>
-              <p>
-                <?= $review->paraphrase() ?>
-              </p>
-              <div>
+            <div class="content">
+              <?= $review->paraphrase()->kt() ?>
+              <div class="byline">
                 <h2 class="reviewer"><?= $review->hed()->html() ?></h2>
                 <p>
                   <?php if($review->role()->isNotEmpty()): ?>

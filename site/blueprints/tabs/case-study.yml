@@ -99,14 +99,13 @@ fields:
   mediaArticles:
     label: Media Articles
     type: structure
-    width: 1/2
-      fields:
-        tld:
-          label: Top Level Domain
-          type: text
-        datePublished:
-          label: Date Published
-          type: date
-        url:
-          label: URL
-          type: url
+    fields:
+      tld:
+        label: Top Level Domain
+        type: text
+      datePublished:
+        label: Date Published
+        type: date
+      url:
+        label: URL
+        type: url

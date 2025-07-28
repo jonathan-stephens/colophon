@@ -100,12 +100,15 @@ fields:
     label: Media Articles
     type: structure
     fields:
-      tld:
-        label: Top Level Domain
+      title:
+        label: Article Title
         type: text
       datePublished:
         label: Date Published
         type: date
+      tld:
+        label: Top Level Domain
+        type: text
       url:
         label: URL
         type: url

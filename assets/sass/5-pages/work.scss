@@ -1,0 +1,18 @@
+header.work{
+  padding-block-end:var(--rhythm-andante);
+
+  .dek{
+    font-size:calc(.85*var(--hed-secondary));
+    line-height: var(--leading-fine);
+    padding-block:var(--rhythm-andantino);
+    color:var(--color-distinct);
+    max-width: 33ch;
+
+  }
+  .lede{
+    color:var(--color-subtle);
+    max-width:84ch;
+    padding-block-end:var(--rhythm-andante);
+    p{font-size:var(--dek-primary);}
+  }
+}

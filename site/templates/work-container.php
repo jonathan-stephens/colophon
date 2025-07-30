@@ -1,14 +1,16 @@
 <?php snippet('site-header') ?>
-  <?php snippet('post-header') ?>
-  <?php snippet('post-prose') ?>
 
-  <h1><?php $pages->find('level1/level2/target-page') ?></h1>
+<article class="article post h-entry wrapper" itemscope itemtype="http://schema.org/Article">
+  <header class="work">
+    <h1>Selected Case Studies</h1>
 
-  <section class="case-studies">
-    <h2>Case Studies</h2>
-    <p>Some recent work as an independent consultant, contributing strategically and individually.</p>asdfasdf
-    <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
-  </section>
-  
+    <p class="dek">Guiding cross-functional product development through inclusive design leadership and systematic execution.</p>
+    <div class="lede">
+      <p>My approach combines strategic thinking with hands-on execution, delivering everything from design systems to complete product transformations.</p>
+      <p>I focus on connecting situational strengths to organizational goals, creating accessible experiences that drive measurable business growth.</p>
+    </div>
+  </header>
+  <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
+
   <?php snippet('post-footer') ?>
 <?php snippet('site-footer') ?>

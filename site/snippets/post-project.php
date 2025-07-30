@@ -6,12 +6,6 @@
     </div>
     <aside>
       <ul>
-        <?php if(!$page->role()->isEmpty()): ?>
-        <li>
-          <span class="label">Role</span>
-          <span class="content"><?= $page->role()->html() ?></span>
-        </li>
-        <?php endif ?>
         <?php if(!$page->client()->isEmpty()): ?>
         <li>
           <span class="label">Client</span>
@@ -24,12 +18,23 @@
           <span class="content"><?= $page->principal()->html() ?></span>
         </li>
         <?php endif ?>
-        <?php if(!$page->stakeholders()->isEmpty()): ?>
+        <?php if(!$page->role()->isEmpty()): ?>
         <li>
-          <span class="label">Key Stakeholders</span>
-          <span class="content"><?= $page->stakeholders()->html() ?></span>
+          <span class="label">Role</span>
+          <span class="content"><?= $page->role()->html() ?></span>
         </li>
         <?php endif ?>
+        <?php if(!$page->industry()->isEmpty()): ?>
+        <li>
+          <span class="label">Industries</span>
+          <span class="content"><?= implode(', ', $page->industry()->split()) ?></span>
+        </li>
+        <?php endif ?>
+        <li>
+          <span class="label">Organization</span>
+          <span class="content"><?= $page->businessModel()->html() ?>, <?= $page->workingModel()->html() ?>, <?= $page->companySize()->html() ?></span>
+        </li>
+
         <?php if(!$page->dateFrom()->isEmpty()): ?>
         <li>
           <span class="label">Dates</span>

@@ -43,8 +43,7 @@ return [
       'relativeUrls' => false, // relative URLs -> less HTML
     ],
     'thumbs' => [
-      'driver'    => 'im',
-      'bin'       => '/usr/local/bin/convert',
+      'driver'    => 'gd',
       'interlace' => true,
       'format'    => 'webp',
       'srcsets' => [

@@ -9,6 +9,6 @@
     <p>Some recent work as an independent consultant, contributing strategically and individually.</p>asdfasdf
     <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
   </section>
-  <?php dump(F::isWritable(kirby()->root('media'))); ?>
+  
   <?php snippet('post-footer') ?>
 <?php snippet('site-footer') ?>

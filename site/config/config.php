@@ -11,7 +11,7 @@ return [
     ],
     'ready' => function ($kirby) {
         return [
-            'pechente.kirby-admin-bar' => [
+           'pechente.kirby-admin-bar' => [
                 'active' => $kirby->user() !== null
             ]
         ];
@@ -30,13 +30,41 @@ return [
     ],
     'johannschopplich.locked-pages' => [
         'slug' => 'locked',
-        'title' => 'Locked Page',
+        'title' => 'Protected Page',
         'error' => [
             'csrf' => 'The CSRF-Token is not correct.',
             'password' => 'The password is not correct.',
         ]
     ],
     'moinframe.loop.enabled' => false,
+    'timnarr.imagex' => [
+      'formats' => ['avif', 'webp'], // our modern formats
+      'noSrcsetInImg' => false, // skip srcset in <img> with initial img-format -> less HTML
+      'relativeUrls' => false, // relative URLs -> less HTML
+    ],
+    'thumbs' => [
+      'driver'    => 'im',
+      'bin'       => '/usr/local/bin/convert',
+      'interlace' => true,
+      'format'    => 'webp',
+      'srcsets' => [
+        'default' => [ // preset for jpeg and png
+          '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 80],
+          '800w'  => ['width' =>  800, 'crop' => true, 'quality' => 80],
+          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 80],
+        ],
+        'webp' => [ // preset for webp
+          '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
+          '800w'  => ['width' =>  800, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
+          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
+        ],
+        'avif' => [ // preset for avif
+          '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
+          '800w'  => ['width' =>  800, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
+          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
+        ]
+      ],
+    ],
     'routes' => [
       // Section-specific feeds: /journal/rss, /links/rss, /journal/feed, /links/feed
       [

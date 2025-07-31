@@ -186,9 +186,10 @@ section.case-studies{max-inline-size:none;}
 
     .summary{
       order:1;
-      p{
-        font-size:var(--lede);
+      p:first-of-type{
+        font-size:var(--hed-quaternary);
         color:var(--color-distinct);
+        font-weight:var(--weight-medium);
       }
     }
     aside{
@@ -259,7 +260,8 @@ section.case-studies{max-inline-size:none;}
       --measure:50ch;
     }
     p:first-of-type{
-      font-size:var(--lede);
+      font-size:var(--hed-quaternary);
+      font-weight:var(--weight-medium);
       color:var(--color-distinct);
     }
   }
@@ -349,5 +351,4 @@ section:has(.objectives, .results){
     align-items: baseline;
   }
 }
-
 /* DETAIL PAGES */

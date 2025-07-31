@@ -54,6 +54,7 @@
     </ul>
     </aside>
   </section>
+
   <section class="contribution">
     <h2>Contribution</h3>
     <?= $page->contribution()->kt() ?>
@@ -62,28 +63,15 @@
   </section>
 
 
-  <?php if(!$page->objectives()->isEmpty()): ?>
-  <section>
-    <div class="objectives">
-      <h2>Objectives</h2>
-      <p>
-        <?= $page->objectives()->html() ?>
-      </p>
-    </div>
-    <div class="results">
-      <h2>Results</h2>
-      <p>
-        <?= $page->results()->html() ?>
-      </p>
-    </div>
-  </section>
-  <?php endif?>
-
-
-
   <section class="artifacts">
     <?= $page->text()->footnotes() ?>
   </section>
+
+  <section class="endorsements">
+    <h2>Endorsements</h2>
+    <?php snippet('/components/endorsements') ?>
+  </section>
+
 
   <?php if ($details = $page->children()->findBy('slug', 'details')): ?>
   <div class="cta flow">

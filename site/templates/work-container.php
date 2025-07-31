@@ -10,6 +10,7 @@
       <p>I focus on connecting situational strengths to organizational goals, creating accessible experiences that drive measurable business growth.</p>
     </div>
   </header>
+
   <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
 
   <?php snippet('post-footer') ?>

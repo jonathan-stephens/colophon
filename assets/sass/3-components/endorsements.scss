@@ -1,0 +1,175 @@
+/* Card Carousel Styles */
+section.endorsements{
+  padding-block:var(--rhythm-andantino);
+  margin-block-start:var(--rhythm-andantino);
+  border-block-start: var(--border-fine) solid var(--border-color-nuance);
+}
+.endorsements .inner{
+  max-inline-size:none;
+  display: flex;
+  gap: var(--rhythm-andantino);
+  padding: var(--rhythm-allegro) 0;
+  margin-block:var(--rhythm-andantino);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-left: var(--rhythm-moderato);
+  /* Constrain to parent container */
+  width: 100%;
+  max-width: 100%;
+  border-inline-end:var(--border-fine) solid var(--border-color-nuance);
+  border-inline-start:var(--border-fine) solid var(--border-color-nuance);
+  scroll-padding-right:var(--rhythm-grave);
+
+  /* Hide scrollbar but maintain functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+
+  /* Add scroll snap for better UX */
+  scroll-snap-type: x mandatory;
+
+}
+.endorsements .inner::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Focus management for keyboard navigation */
+.endorsements .inner:focus-within {
+  outline: 2px solid #0066cc;
+  outline-offset: 4px;
+}
+
+/* Individual card styles */
+.endorsement.card {
+  flex: 0 0 auto;
+  width: calc(1.25*var(--rhythm-grave));
+  max-width: 85vw;
+  box-shadow: 0 2px 8px var(--background-primary);
+  scroll-snap-align: start;
+
+  /* Ensure cards are focusable for keyboard users */
+  position: relative;
+
+  /* Smooth transitions */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:first-of-type{
+    margin-inline-start:var(--rhythm-andante);
+  }
+
+  &:last-of-type{
+    margin-inline-end:var(--rhythm-andante);
+  }
+}
+
+.endorsement.card:hover,
+.endorsement.card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.endorsement.card:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Card content layout */
+.endorsement .content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rhythm-moderato);
+  height:100%;
+}
+
+/* Typography and content styling */
+.endorsement p:first-child {
+  font-size: var(--nutgraf-secondary);
+  flex-grow: 1;
+  color:var(--color-nuance);
+}
+
+.endorsement .lede p {
+  margin: 0 0 var(--rhythm-moderato) 0;
+}
+
+.endorsement .lede p:last-child {
+  margin-bottom: 0;
+}
+
+.endorsement .byline {
+  margin-top: auto;
+  padding-top: var(--rhythm-moderato);
+  border-top: var(--border-thin) solid var(--border-color-subtle);
+}
+
+.endorsement .byline p {
+  font-size: var(--small);
+  color:var(--color-subtle);
+  margin: 0;
+}
+
+.endorsement .role {
+  font-weight: var(--weight-medium);
+}
+
+.endorsement.card .cta{
+  border-style: dashed;
+
+  a{
+    justify-content: center;
+    align-content:center;
+  &:hover{
+    color:var(--button-hover-color);
+    background:var(--button-hover-bg);
+  }
+  }
+}
+
+
+/* Responsive behavior */
+@media (min-width: 768px) {
+  .endorsements {
+    gap: 2rem;
+    padding: 1.5rem 0;
+  }
+
+  .endorsement.card {
+    width: 350px;
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .endorsement.card {
+    width: 380px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .endorsement.card {
+    width: 420px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .endorsements {
+    scroll-behavior: auto;
+  }
+
+  .endorsement.card {
+    transition: none;
+  }
+}
+
+/* Touch-specific improvements */
+@media (hover: none) and (pointer: coarse) {
+  .endorsement.card:hover {
+    transform: none;
+    box-shadow: 0 2px 8px var(--bac--background-secondary);
+  }
+
+  /* Add subtle touch feedback */
+  .endorsement.card:active {
+    transform: scale(0.98);
+  }
+}

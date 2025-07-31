@@ -4,12 +4,16 @@ div.case-studies{
   flex-wrap: wrap;
   gap: var(--rhythm-andantino);
   margin-block:var(--rhythm-andante);
-}
 
-section.case-studies{
-  max-inline-size:none;
+  article{
+    display:flex;
+    flex-flow:column;
+    justify-content:space-around;
+    height:100%;
+    row-gap:var(--rhythm-presto);
+  }
 }
-
+section.case-studies{max-inline-size:none;}
 .case-study{
   p:has(.client + .principal){
     text-align:center;
@@ -21,20 +25,22 @@ section.case-studies{
   }
   .hed{
     text-align:center;
+    line-height:var(--leading-fine);
     color: var(--color-distinct);
   }
   .dek{
     color: var(--color-nuance);
     font-size:var(--prose);
     text-align:center;
-    border-bottom: var(--border-fine) dashed var(--border-color-distinct);
     padding-block-end:var(--rhythm-moderato);
-    margin-block-end: var(--rhythm-moderato);
   }
   .meta{
+    padding-block-start: var(--rhythm-moderato);
+    border-block-start: var(--border-thin) dashed var(--border-color-nuance);
     display: inline-flex;
     flex-flow: column;
     list-style-type: none;
+    gap:var(--rhythm-presto);
     padding:0;
     width:100%;
     max-width:100%;
@@ -49,6 +55,9 @@ section.case-studies{
       padding-block:0;
       line-height:var(--leading-loose);
       column-gap: var(--rhythm-moderato);
+    }
+    li:first-of-type{
+      padding-block-start:var(--rhythm-moderato);
     }
     li span:nth-of-type(2){
       text-align:right;
@@ -68,7 +77,6 @@ section.case-studies{
     }
   }
 }
-
 @media screen and (min-width: 40.99em) {
   div:is(.case-studies){
       display:grid;
@@ -88,21 +96,24 @@ section.case-studies{
       width: 100%;
       max-width: 100%;
 
-      li span:nth-of-type(2){
-        text-align:left;
-      }
       li{
         flex-direction:column;
         font-size: var(--caption);
-      }
-      li.organization span{
-        text-align:right;
-      }
+        padding-block-start:var(--rhythm-moderato);
 
+        &.role span{
+          text-align:left;
+        }
+        &.organization{
+          span{
+            text-align:right;
+          }
+        }
+      }
     }
   }
 }
-@media screen and (min-width: 41em) and (max-width: 65em) {
+@media screen and (min-width: 41em) and (max-width: 59.99em) {
   .case-study .meta{
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto auto;
@@ -111,6 +122,18 @@ section.case-studies{
     li:last-of-type{
       grid-area:  2 / 1 / 3 / 3;
     }
+    li.role span{
+      text-align:left;
+    }
+    li.industries{
+      align-items:flex-end;
+      text-align:right;
+      justify-content: flex-start;
+
+      span{text-align:right;
+      }
+    }
+
     li.organization{
       flex-direction:row;
     }
@@ -120,11 +143,17 @@ section.case-studies{
   }
 
 }
-
 @media screen and (min-width: 60em) {
   .case-study{
     p:has(.client + .principal){
       font-size:var(--prose);
+    }
+    .meta li{
+      justify-content:flex-start;
+    }
+
+    li.industries{
+
     }
     .dek{
       font-size:var(--hed-quaternary);

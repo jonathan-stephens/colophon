@@ -111,6 +111,10 @@ section.endorsements{
   font-weight: var(--weight-medium);
 }
 
+.endorsement .relationship{
+  text-transform: capitalize;
+}
+
 .endorsement.card .cta{
   border-style: dashed;
 

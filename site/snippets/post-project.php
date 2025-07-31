@@ -1,3 +1,5 @@
+<?php $endorsements = $page->endorsements()->toPages(); ?>
+
 <div class="e-content prose" itemprop="articleBody">
   <section class="overview">
     <div class="summary">
@@ -67,10 +69,13 @@
     <?= $page->text()->footnotes() ?>
   </section>
 
+
+  <?php if ($endorsements->count() > 0): ?>
   <section class="endorsements">
     <h2>Endorsements</h2>
     <?php snippet('/components/endorsements') ?>
   </section>
+  <?php endif ?>
 
 
   <?php if ($details = $page->children()->findBy('slug', 'details')): ?>

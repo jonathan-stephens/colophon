@@ -120,6 +120,11 @@ section.endorsements{
   text-decoration:none;
   flex-flow:column;
   justify-content:center;
+  font-weight:var(--weight-medium);
+  .icon{
+    width:var(--rhythm-andantino);
+    height: var(--rhythm-andantino);
+  }
 
   &:hover{
     background:var(--background-tertiary);

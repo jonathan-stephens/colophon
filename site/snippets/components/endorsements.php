@@ -22,7 +22,7 @@
         </article>
         <?php endforeach ?>
         <a class="endorsement cta with-icon" href="<?= $site->url() ?>/endorsements">
-          <?= asset('assets/svg/icons/sprout.svg')->read() ?>
+          <?= asset('assets/svg/icons/review.svg')->read() ?>
             View more endorsements
         </a>
       </div>

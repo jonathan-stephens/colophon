@@ -1,0 +1,64 @@
+.tmpl-project .pagination{
+  justify-content: space-between;
+  align-items:baseline;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-areas:
+    "prev next";
+
+  a{
+    display:grid;
+    text-decoration:none;
+    width:100%;
+    padding-block:var(--rhythm-allegro);
+    padding-inline:var(--rhythm-allegro);
+  }
+  .label{
+    display: flex;
+    flex-flow:column;
+    span{
+      display:none;
+    }
+  }
+  .prev{
+    grid-area: prev;
+    justify-self: flex-start;
+  }
+  .next{
+    text-align:right;
+    grid-area: next;
+    justify-self: flex-end;
+  }
+  .direction{
+    color:var(--link-deco);
+    text-transform:uppercase;
+    font-weight:var(--weight-semibold);
+  }
+  a:hover, a:active{
+    background:var(--background-primary);
+    outline: var(--border-fine) solid var(--color-quiet);
+
+    .direction{
+      color:var(--link-deco-hover);
+    }
+  }
+  .disabled{
+    color:var(--color-quiet);
+  }
+}
+@media screen and (min-width:40em){
+  .tmpl-project .pagination{
+    justify-content: space-between;
+    align-items:baseline;
+
+    .label span{
+      display:inline;
+    }
+    a{
+      margin-block:calc(-1*var(--rhythm-allegro));
+      width:max-content;
+    }
+  }
+
+}

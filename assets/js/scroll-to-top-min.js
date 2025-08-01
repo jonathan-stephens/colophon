@@ -1,0 +1,1 @@
+const scrollToTopButton=document.querySelector(".scroll-to-top"),scrollThreshold=300;window.addEventListener("scroll",(()=>{window.scrollY>300?scrollToTopButton.classList.add("show"):scrollToTopButton.classList.remove("show")})),scrollToTopButton.addEventListener("click",(()=>{window.scrollTo({top:0,behavior:"smooth"})}));

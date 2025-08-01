@@ -110,3 +110,34 @@ button:has(.icon) svg, .button:has(.icon) svg{
     fill:var(--button-hover-color);
   }
 }
+
+
+.scroll-to-top {
+  position: fixed;
+  bottom: var(--rhythm-andante);
+  right: var(--rhythm-andante);
+  z-index: 9999999;
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+
+  font-family:var(--font-mono);
+  letter-spacing:1%;
+  font-size:var(--small);
+  align-items:center;
+
+  .icon{
+    top:0px;
+  }
+
+}
+
+/* Class added by JavaScript to make the button visible */
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

@@ -98,6 +98,10 @@
         <?php snippet('copyright') ?>
       </div>
     </section>
+
+    <button class="scroll-to-top" aria-label="Scroll to top">
+      <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>Scroll to top
+    </button>
   </footer>
 
 <!-- Fathom - beautiful, simple website analytics -->
@@ -105,9 +109,11 @@
 <!-- / Fathom -->
 
 <?= js([
-  'assets/js/theme-picker.js',
-  'assets/js/prism.js',
-  'assets/js/header.js'
+  'assets/js/theme-picker-min.js',
+  'assets/js/toc-min.js',
+  'assets/js/prism-min.js',
+  'assets/js/header-min.js',
+  'assets/js/scroll-to-top-min.js'
 ]) ?>
 
 

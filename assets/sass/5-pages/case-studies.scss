@@ -81,6 +81,7 @@ section.case-studies{max-inline-size:none;}
   div:is(.case-studies){
       display:grid;
       grid-template-columns: repeat(2, 1fr);
+
   }
   .case-study{
     .dek{

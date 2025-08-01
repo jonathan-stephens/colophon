@@ -19,6 +19,7 @@
 
     aside{
       order:2;
+      margin-block-start: var(--rhythm-andante);
     }
 
     .client {
@@ -155,7 +156,10 @@ section:has(.objectives, .results){
       column-gap: var(--rhythm-andante);
 
       .summary{ grid-area: summary; }
-      aside{ grid-area: aside;}
+      aside{
+        grid-area: aside;
+        margin-block-start:0;
+      }
     }
   }
   section:has(.objectives, .results){

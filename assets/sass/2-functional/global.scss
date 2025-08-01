@@ -13,12 +13,14 @@ footer {
 }
 html{
   background-color: var(--background-primary);
+  scroll-padding-top: var(--rhythm-largo);;
 }
 body {
   color:var(--color-prominent);
   font-family: var(--font-sans);
   transition: background-color 0.3s, color 0.3s;
   margin:0;
+
 
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;

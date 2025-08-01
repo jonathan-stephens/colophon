@@ -5,7 +5,14 @@
     <div class="summary">
       <h2>Overview</h2>
       <?= $page->overview()->kt() ?>
-    </div>
+
+
+      <?= snippet('toc', [
+          'exclude' => ['.reviewer'],
+          'minLevel' => 2,
+          'maxLevel' => 2,
+      ]) ?>
+</div>
     <aside>
       <ul>
         <?php if(!$page->client()->isEmpty()): ?>

@@ -33,6 +33,7 @@
   --border-color-emphasis:  var(--palette-ash-80);
 
   --error-color: var(--palette-red-50);
+  --background-nav-panel: var(--palette-tint-50);
 }
 
 @mixin theme-dark() {
@@ -68,17 +69,20 @@
   --border-color-emphasis:  var(--palette-ash-20);
 
   --error-color: var(--palette-red-30);
+
+  --background-nav-panel: var(--palette-shade-50);
 }
 
 :root{
   @include theme-light;
-  background:url('/assets/png/paper-tile.png') repeat, var(--background-primary);
+}
+html{
+  background:url('/assets/png/paper-tile.webp') repeat, var(--background-primary);
   background-size:15%;
   background-attachment:fixed;
-
 }
 
 html[data-theme='dark']{
   @include theme-dark;
-  background:url('/assets/png/stardust.png') repeat, var(--background-primary);
+  background:url('/assets/png/stardust.webp') repeat, var(--background-primary);
 }

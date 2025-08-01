@@ -60,7 +60,7 @@
   <section class="contribution">
     <h2>Contribution</h3>
     <?= $page->contribution()->kt() ?>
-    <h3>Client</h3>
+    <h3>Context</h3>
     <?= $page->aboutClient()->kt() ?>
   </section>
 

@@ -34,6 +34,9 @@ section.case-studies{max-inline-size:none;}
     text-align:center;
     padding-block-end:var(--rhythm-moderato);
   }
+  .lede{
+    line-height:var(--leading-fine);
+  }
   .meta{
     padding-block-start: var(--rhythm-moderato);
     border-block-start: var(--border-thin) dashed var(--border-color-nuance);
@@ -189,7 +192,6 @@ section.case-studies{max-inline-size:none;}
       p:first-of-type{
         font-size:var(--hed-quaternary);
         color:var(--color-distinct);
-        font-weight:var(--weight-medium);
       }
     }
     aside{
@@ -261,7 +263,6 @@ section.case-studies{max-inline-size:none;}
     }
     p:first-of-type{
       font-size:var(--hed-quaternary);
-      font-weight:var(--weight-medium);
       color:var(--color-distinct);
     }
   }

@@ -15,8 +15,7 @@ section.endorsements{
   scroll-behavior: smooth;
   scroll-padding-left: var(--rhythm-moderato);
   /* Constrain to parent container */
-  width: 100%;
-  max-width: 100%;
+  max-width: 92vw;
   border-inline-end:var(--border-fine) solid var(--border-color-nuance);
   border-inline-start:var(--border-fine) solid var(--border-color-nuance);
   scroll-padding-right:var(--rhythm-grave);

@@ -54,10 +54,6 @@ section.endorsements{
   &:first-of-type{
     margin-inline-start:var(--rhythm-andante);
   }
-
-  &:last-of-type{
-    margin-inline-end:var(--rhythm-andante);
-  }
 }
 
 .endorsement.card:hover,
@@ -114,16 +110,21 @@ section.endorsements{
   text-transform: capitalize;
 }
 
-.endorsement.card .cta{
-  border-style: dashed;
+.project-overview .endorsement.cta{
+  margin-inline-end:var(--rhythm-andante);
+  align-items:center;
+  min-width:20ch;
+  text-align:center;
+  background-blend-mode: multiply;
+  background:var(--background-secondary);
+  text-decoration:none;
+  flex-flow:column;
+  justify-content:center;
 
-  a{
-    justify-content: center;
-    align-content:center;
   &:hover{
-    color:var(--button-hover-color);
-    background:var(--button-hover-bg);
-  }
+    background:var(--background-tertiary);
+    color:var(--color-emphasis);
+    .icon{fill: var(--color-emphasis);}
   }
 }
 

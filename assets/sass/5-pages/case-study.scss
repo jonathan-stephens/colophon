@@ -19,7 +19,6 @@
 
     aside{
       order:2;
-      padding-block:var(--rhythm-andante);
     }
 
     .client {
@@ -53,6 +52,8 @@
     background:var(--background-secondary);
     border-radius:var(--radii-square);
     height: max-content;
+    padding-inline:var(--rhythm-moderato);
+    box-sizing:content-box;
 
     li{
       font-size:var(--small);
@@ -154,7 +155,7 @@ section:has(.objectives, .results){
       column-gap: var(--rhythm-andante);
 
       .summary{ grid-area: summary; }
-      aside{ grid-area: aside; padding-block-start:0;}
+      aside{ grid-area: aside;}
     }
   }
   section:has(.objectives, .results){

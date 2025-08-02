@@ -14,39 +14,109 @@ Default-location: Raleigh, NC
 
 ----
 
+Primary-nav:
+
+- 
+  title: Home
+  description: ""
+  link: page://2pzguVg2cGwzWYL5
+- 
+  title: About
+  description: ""
+  link: page://43jFbdqV3CFD9lxd
+- 
+  title: Work
+  description: ""
+  link: page://SyzULGYH1x99nySv
+- 
+  title: Endorsements
+  description: ""
+  link: page://moafXAVRp5A7ibuZ
+- 
+  title: Links
+  description: ""
+  link: page://R7cAOwWwS9jlMnD0
+- 
+  title: Journal
+  description: ""
+  link: page://gevx6G03JRLRHtml
+- 
+  title: Essays
+  description: ""
+  link: page://wHm8ZnEC0VlVLHEj
+
+----
+
 Footer-nav:
 
 - 
-  linktitle: Journal
-  link: page://gevx6G03JRLRHtml
+  title: About
+  description: ""
+  link: page://GtStMuixcji45tsP
+  linktitle: About
 - 
-  linktitle: Links
+  title: Work
+  description: ""
+  link: ""
+- 
+  title: Endorsements
+  description: ""
+  link: page://moafXAVRp5A7ibuZ
+- 
+  title: Links
+  description: ""
   link: page://R7cAOwWwS9jlMnD0
+  linktitle: Links
+- 
+  title: Journal
+  description: ""
+  link: page://gevx6G03JRLRHtml
+  linktitle: Journal
+- 
+  title: Essays
+  description: ""
+  link: page://wHm8ZnEC0VlVLHEj
 
 ----
 
-Footer-col2-title: About Jonathan
+Footer-feeds:
+
+- 
+  title: Links
+  description: ""
+  flavorrss: https://jonathanstephens.us/links/rss
+  flavorjson: https://jonathanstephens.us/links/feed
+- 
+  title: Journal
+  description: ""
+  flavorrss: https://jonathanstephens.us/journal/rss
+  flavorjson: https://jonathanstephens.us/journal/feed
+- 
+  title: Everything
+  description: ""
+  flavorrss: https://jonathanstephens.us/rss
+  flavorjson: https://jonathanstephens.us/feed
 
 ----
 
-Footer-col2-pages: 
+Footer-addenda:
+
+- 
+  title: Sitemap
+  link: https://jonathanstephens.us/sitemap.xml
 
 ----
 
 Footer-social:
 
 - 
-  platform: LinkedIn
-  url: https://linkedin.com/in/elnatnal
-  logo: [ ]
-- 
   platform: Bluesky
   url: >
     https://bsky.app/profile/jonathanstephens.bsky.social
   logo: [ ]
 - 
-  platform: Substack
-  url: https://jonathanstephens.substack.com
+  platform: LinkedIn
+  url: https://linkedin.com/in/elnatnal
   logo: [ ]
 - 
   platform: Instagram
@@ -72,6 +142,10 @@ Footer-social:
     https://app.thestorygraph.com/profile/elnatnal
   logo: [ ]
 - 
+  platform: Substack
+  url: https://jonathanstephens.substack.com
+  logo: [ ]
+- 
   platform: Github
   url: https://github.com/jonathan-stephens
   logo: [ ]
@@ -79,6 +153,14 @@ Footer-social:
   platform: Dribbble
   url: https://dribbble.com/jonathanstephens
   logo: [ ]
+
+----
+
+Footer-col2-title: About Jonathan
+
+----
+
+Footer-col2-pages: 
 
 ----
 

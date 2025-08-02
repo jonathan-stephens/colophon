@@ -1,4 +1,4 @@
-Title: colors
+Title: Colors
 
 ----
 
@@ -6,7 +6,7 @@ Template: colors
 
 ----
 
-Text:
+Text: 
 
 ----
 

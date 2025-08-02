@@ -6,11 +6,11 @@ Hed: 👋 Hello, I'm Jonathan—a human from Earth.
 
 ----
 
-Dek: Product development, design systems, organizational design
+Dek: Organizational Leadership. Product Development. People Management. Design Systems.
 
 ----
 
-Text: I've spent over 15 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
+Text: I've spent over 18 years building products and teams for global enterprises, start-ups, agencies, and governments. I'm now an independent consultant living in the United States.
 
 ----
 
@@ -22,7 +22,7 @@ Date: 2025-05-06
 
 ----
 
-Tended: 
+Tended: 2025-07-06
 
 ----
 
@@ -39,6 +39,22 @@ Addressregion: NC
 ----
 
 Addresscountry: US
+
+----
+
+Lockedpagesenable: false
+
+----
+
+Lockedpagespassword: 
+
+----
+
+Files: 
+
+----
+
+Images: 
 
 ----
 

@@ -13,8 +13,10 @@
     display:flex;
     flex-direction:column;
 
-    .summary{
+    .main-column{
       order:1;
+    }
+    .summary{
       max-width:75ch;
     }
 
@@ -22,7 +24,10 @@
       order:2;
       margin-block-start: var(--rhythm-andante);
     }
-
+    .table-of-contents{
+      order:3;
+      margin-block-start: var(--rhythm-andante);
+    }
     .client {
       padding-block-end: var(--rhythm-andante);
 
@@ -149,17 +154,22 @@ section:has(.objectives, .results){
 @media screen and (min-width:40em){
   .project-overview{
     .overview{
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-flow: row;
-      grid-template-areas:
-      "summary summary aside";
-      column-gap: var(--rhythm-andante);
+      display: flex;
+      flex-direction: row;
+      gap: var(--rhythm-andante);
 
-      .summary{ grid-area: summary; }
+      .main-column{
+        flex:2;
+        display:flex;
+        flex-direction:column;
+        gap:0;
+      }
       aside{
-        grid-area: aside;
-        margin-block-start:0;
+        flex:1;
+      }
+      .table-of-contents {
+        margin-top: var(--rhythm-andante);
+        order: initial; /* Places it after summary in the same column */
       }
     }
   }
@@ -175,67 +185,5 @@ section:has(.objectives, .results){
     flex-flow: row;
     justify-content: space-between;
     align-items: baseline;
-  }
-}
-/* DETAIL PAGES */
-
-
-
-.table-of-contents {
-  details {
-    max-width: 500px;
-    overflow: hidden; /* Keep this line to prevent an odd blue outline around the element in Safari. */
-  }
-
-  summary {
-    display: block;
-  }
-
-  summary::-webkit-details-marker {
-    display: none;
-  }
-
-  span {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-left: 1rem;
-    background: #444;
-    color: #fff;
-    height: 4rem;
-  }
-
-  span:hover {
-    cursor: pointer;
-  }
-
-  span::before {
-    content: "⇨ ";
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    margin-right: 0.5rem;
-    transition: rotate 200ms 400ms ease-out;
-  }
-
-  div.content {
-    box-sizing: border-box;
-    max-width: 500px;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 10px;
-    border: 2px solid transparent;
-    transition: max-height 400ms ease-out, border 0ms 400ms linear;
-  }
-
-  details[open] + div.content {
-    max-height: 800px; /* Set a max-height value enough to show all the content */
-    border-color: #888;
-    transition: max-height 400ms ease-out, border 0ms linear;
-  }
-
-  details[open] span::before {
-    rotate: 90deg;
-    transition: rotate 200ms ease-out;
   }
 }

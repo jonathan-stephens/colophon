@@ -33,12 +33,13 @@ $tocId = 'toc-' . uniqid();
      id="<?= $tocId ?>"
      data-toc-config="<?= htmlspecialchars(json_encode($config)) ?>"
      style="display: none;">
-    <?php if (!$config['hideTitle']): ?>
-        <details><summary><span class="toc-title"><?= $config['tocTitle'] ?></span></summary></details>
+     <?php if (!$config['hideTitle']): ?>
+        <details><summary>
+<span class="toc-title"><span class="with-icon"><?= asset('assets/svg/icons/panel-expansion.svg')->read() ?><?= $config['tocTitle'] ?></span><?= asset('assets/svg/icons/chevron-down.svg')->read() ?></span></summary></details>
     <?php endif; ?>
     <div class="content">
-    <ol class="toc-list" id="<?= $tocId ?>-content">
-        <!-- TOC will be populated by JavaScript -->
-    </ol>
-  </div>
+      <ol class="toc-list" id="<?= $tocId ?>-content">
+          <!-- TOC will be populated by JavaScript -->
+      </ol>
+    </div>
 </nav>

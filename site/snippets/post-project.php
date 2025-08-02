@@ -2,17 +2,17 @@
 
 <div class="e-content prose" itemprop="articleBody">
   <section class="overview">
-    <div class="summary">
-      <h2>Overview</h2>
-      <?= $page->overview()->kt() ?>
-
-
+    <div class="main-column">
+      <div class="summary">
+        <h2>Overview</h2>
+        <?= $page->overview()->kt() ?>
+      </div>
       <?= snippet('toc', [
           'exclude' => ['.reviewer'],
           'minLevel' => 2,
           'maxLevel' => 2,
       ]) ?>
-</div>
+    </div>
     <aside>
       <ul>
         <?php if(!$page->client()->isEmpty()): ?>

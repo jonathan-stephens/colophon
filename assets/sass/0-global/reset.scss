@@ -70,10 +70,6 @@ textarea:not([rows]) {
   min-height: 10em;
 }
 
-/* Anything that has been anchored to should have extra scroll margin */
-:target {
-  scroll-margin-block: 5ex;
-}
 
 /* My additions */
 /* Center-align text until it wraps onto more than one line, then it’s no longer centered. */

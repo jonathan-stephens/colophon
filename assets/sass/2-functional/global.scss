@@ -13,8 +13,13 @@ footer {
 }
 html{
   background-color: var(--background-primary);
-  scroll-padding-top: var(--rhythm-largo);;
+  scroll-margin-block: var(--rhythm-largo);
+  scroll-behavior: smooth;
 }
+:target, [id] {
+  scroll-margin-block:var(--rhythm-largo);
+}
+
 body {
   color:var(--color-prominent);
   font-family: var(--font-sans);

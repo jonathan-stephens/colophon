@@ -1,272 +1,186 @@
 (function() {
     'use strict';
 
-    // Helper functions
     function buildHierarchy(headings) {
-        var result = [];
-        var stack = [];
+        const result = [];
+        const stack = [];
 
-        headings.forEach(function(heading) {
-            var level = parseInt(heading.tagName.charAt(1));
-            var item = {
+        for (const heading of headings) {
+            const level = +heading.tagName[1];
+            const item = {
                 element: heading,
-                level: level,
+                level,
                 text: heading.textContent.trim(),
                 id: heading.id,
                 children: []
             };
 
-            // Find correct parent level
-            while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+            while (stack.length && stack[stack.length - 1].level >= level) {
                 stack.pop();
             }
 
-            if (stack.length === 0) {
-                result.push(item);
-            } else {
-                stack[stack.length - 1].children.push(item);
-            }
-
+            (stack.length ? stack[stack.length - 1].children : result).push(item);
             stack.push(item);
-        });
+        }
 
         return result;
     }
 
-    function shouldShowToc(hierarchy, config) {
-        function hasEnoughSubheadings(items) {
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i];
-                if (item.children.length >= config.minSubheadings) {
-                    return true;
+    function renderToc(items, nestLevel = 0) {
+        if (!items.length) return '';
+
+        let html = nestLevel === 0 ? '' : `<ol class="toc-list toc-nestlvl-${nestLevel}">`;
+
+        if (nestLevel === 0) {
+            for (const item of items) {
+                html += `<li class="toc-item toc-level-${item.level}">`;
+                html += `<a href="#${item.id}" class="toc-link" data-level="${item.level}">${item.text.replace(/[<>&"']/g, c => ({
+                    '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'
+                })[c])}</a>`;
+
+                if (item.children.length) {
+                    html += renderToc(item.children, nestLevel + 1);
                 }
-                if (hasEnoughSubheadings(item.children)) {
-                    return true;
-                }
+
+                html += '</li>';
             }
-            return false;
+        } else {
+            for (const item of items) {
+                html += `<li class="toc-item toc-level-${item.level}">`;
+                html += `<a href="#${item.id}" class="toc-link" data-level="${item.level}">${item.text.replace(/[<>&"']/g, c => ({
+                    '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'
+                })[c])}</a>`;
+
+                if (item.children.length) {
+                    html += renderToc(item.children, nestLevel + 1);
+                }
+
+                html += '</li>';
+            }
+            html += '</ol>';
         }
 
-        return hasEnoughSubheadings(hierarchy);
-    }
-
-    function renderTocLevel(items, config, level) {
-        if (items.length === 0) return '';
-
-        var html = '<ol class="toc-list toc-level-' + level + '">';
-
-        items.forEach(function(item) {
-            var hasChildren = item.children.length > 0;
-            var showChildren = hasChildren && (item.children.length >= config.minSubheadings || level > 0);
-
-            html += '<li class="toc-item toc-level-' + item.level + '">';
-            html += '<a href="#' + item.id + '" class="toc-link" data-level="' + item.level + '">';
-            html += escapeHtml(item.text);
-            html += '</a>';
-
-            if (showChildren) {
-                html += renderTocLevel(item.children, config, level + 1);
-            }
-
-            html += '</li>';
-        });
-
-        html += '</ol>';
         return html;
     }
 
-    function escapeHtml(text) {
-        var div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
+    function setupInteractions(tocNav, headings) {
+        tocNav.addEventListener('click', e => {
+            if (!e.target.matches('.toc-link')) return;
+            e.preventDefault();
 
-    function setupTOCInteractions(tocNav, headings) {
-        var tocLinks = tocNav.querySelectorAll('.toc-link');
+            const target = document.getElementById(e.target.getAttribute('href').slice(1));
+            if (!target) return;
 
-        // Smooth scrolling for TOC links
-        tocLinks.forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                var targetId = this.getAttribute('href').substring(1);
-                var target = document.getElementById(targetId);
-
-                if (target) {
-                    var offset = 20;
-                    var elementPosition = target.getBoundingClientRect().top;
-                    var offsetPosition = elementPosition + window.pageYOffset - offset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-
-                    // Update URL without triggering scroll
-                    if (history.replaceState) {
-                        history.replaceState(null, null, '#' + targetId);
-                    }
-                }
+            window.scrollTo({
+                top: target.getBoundingClientRect().top + window.pageYOffset - 20,
+                behavior: 'smooth'
             });
+
+            history.replaceState?.(null, null, e.target.getAttribute('href'));
         });
 
-        // Active state management with intersection observer
-        if ('IntersectionObserver' in window) {
-            var observerOptions = {
-                rootMargin: '-10% 0px -80% 0px',
-                threshold: 0
-            };
+        if (!window.IntersectionObserver) return;
 
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    var id = entry.target.getAttribute('id');
-                    var tocLink = tocNav.querySelector('.toc-link[href="#' + id + '"]');
+        const observer = new IntersectionObserver(entries => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
 
-                    if (tocLink) {
-                        if (entry.isIntersecting) {
-                            // Remove active class from all links
-                            tocLinks.forEach(function(link) {
-                                link.classList.remove('active');
-                            });
-                            // Add active class to current link
-                            tocLink.classList.add('active');
-                        }
-                    }
-                });
-            }, observerOptions);
+                tocNav.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
 
-            // Observe all headings
-            headings.forEach(function(heading) {
-                observer.observe(heading);
-            });
-        }
+                const link = tocNav.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+                link?.classList.add('active');
+            }
+        }, { rootMargin: '-10% 0px -80% 0px' });
 
-        // Handle page load with hash
-        if (window.location.hash) {
-            setTimeout(function() {
-                var target = document.querySelector(window.location.hash);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
-        }
+        headings.forEach(heading => observer.observe(heading));
     }
 
-    function processTOC(tocNav, tocContainer, mainContent, config) {
-        // Build heading selector based on level range
-        var headingLevels = [];
-        for (var i = config.minLevel; i <= config.maxLevel; i++) {
-            headingLevels.push('h' + i);
+    function processToc(tocNav) {
+        const config = JSON.parse(tocNav.dataset.tocConfig);
+        const tocContainer = document.getElementById(tocNav.id + '-content');
+        const mainContent = document.querySelector(config.mainSelector);
+
+        if (!tocContainer || !mainContent) {
+            console.warn('TOC: Missing elements for', tocNav.id);
+            return;
         }
-        var headingSelector = headingLevels.join(', ');
 
-        // Get all headings from main content
-        var headings = Array.from(mainContent.querySelectorAll(headingSelector));
+        const selector = Array.from({length: config.maxLevel - config.minLevel + 1}, (_, i) =>
+            `h${config.minLevel + i}`).join(',');
 
-        // Filter out excluded headings
-        if (config.exclude.length > 0) {
-            headings = headings.filter(function(heading) {
-                var shouldExclude = config.exclude.some(function(selector) {
+        let headings = [...mainContent.querySelectorAll(selector)];
+
+        if (config.exclude?.length) {
+            headings = headings.filter(heading =>
+                !config.exclude.some(sel => {
                     try {
-                        // Check if heading matches the exclusion selector
-                        return heading.matches(selector) ||
-                               heading.closest(selector) !== null ||
-                               heading.querySelector(selector) !== null;
-                    } catch (error) {
-                        console.warn('TOC: Invalid exclusion selector:', selector, error.message);
+                        return heading.matches(sel) || heading.closest(sel) || heading.querySelector(sel);
+                    } catch {
+                        console.warn('TOC: Invalid selector:', sel);
                         return false;
                     }
-                });
-                return !shouldExclude;
-            });
+                })
+            );
         }
 
-        if (headings.length === 0) {
+        if (!headings.length) {
             tocNav.classList.add('hidden');
             return;
         }
 
-        // Generate IDs for headings that don't have them
-        var usedIds = new Set();
-        headings.forEach(function(heading) {
-            if (!heading.id) {
-                var text = heading.textContent.trim();
-                var baseId = text
-                    .toLowerCase()
-                    .replace(/[^\w\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-')
-                    .replace(/^-|-$/g, '');
-
-                // Fallback for empty or invalid IDs
-                if (!baseId) {
-                    baseId = 'heading';
-                }
-
-                var finalId = baseId;
-                var counter = 1;
-                while (usedIds.has(finalId) || document.getElementById(finalId)) {
-                    finalId = baseId + '-' + counter;
-                    counter++;
-                }
-
-                heading.id = finalId;
-                usedIds.add(finalId);
-            } else {
+        const usedIds = new Set();
+        for (const heading of headings) {
+            if (heading.id) {
                 usedIds.add(heading.id);
+                continue;
             }
-        });
 
-        // Build and check hierarchy
-        var hierarchy = buildHierarchy(headings);
+            let baseId = heading.textContent.trim()
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '') || 'heading';
 
-        if (!shouldShowToc(hierarchy, config)) {
-            tocNav.classList.add('hidden');
-            return;
+            let finalId = baseId;
+            let counter = 1;
+            while (usedIds.has(finalId) || document.getElementById(finalId)) {
+                finalId = `${baseId}-${counter++}`;
+            }
+
+            heading.id = finalId;
+            usedIds.add(finalId);
         }
 
-        // Render TOC
-        tocContainer.innerHTML = renderTocLevel(hierarchy, config, 0);
+        const hierarchy = buildHierarchy(headings);
+
+        // If tocContainer is already an <ol>, add the class and render items directly
+        if (tocContainer.tagName === 'OL') {
+            tocContainer.className = 'toc-list toc-nestlvl-0';
+            tocContainer.innerHTML = renderToc(hierarchy);
+        } else {
+            // If tocContainer is a div or other element, render the full <ol>
+            tocContainer.innerHTML = `<ol class="toc-list toc-nestlvl-0">${renderToc(hierarchy)}</ol>`;
+        }
+
         tocNav.style.display = '';
-
-        // Setup interactions
-        setupTOCInteractions(tocNav, headings);
+        setupInteractions(tocNav, headings);
     }
 
-    function initTOC() {
-        // Find all TOC containers on the page
-        var tocNavs = document.querySelectorAll('.table-of-contents[data-toc-config]');
-
-        if (tocNavs.length === 0) {
-            return;
-        }
-
-        // Process each TOC
-        tocNavs.forEach(function(tocNav) {
+    function init() {
+        document.querySelectorAll('.table-of-contents[data-toc-config]').forEach(tocNav => {
             try {
-                // Configuration from data attribute
-                var config = JSON.parse(tocNav.getAttribute('data-toc-config'));
-                var tocId = tocNav.id;
-                var tocContainer = document.getElementById(tocId + '-content');
-                var mainContent = document.querySelector(config.mainSelector);
-
-                if (!tocNav || !tocContainer || !mainContent) {
-                    console.warn('TOC: Required elements not found for', tocId);
-                    return;
-                }
-
-                processTOC(tocNav, tocContainer, mainContent, config);
-
+                processToc(tocNav);
             } catch (error) {
-                console.error('TOC: Error processing TOC', error);
+                console.error('TOC: Error processing', tocNav.id, error);
             }
         });
+
+        if (location.hash) {
+            setTimeout(() => document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth' }), 100);
+        }
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTOC);
-    } else {
-        initTOC();
-    }
-
+    document.readyState === 'loading' ?
+        document.addEventListener('DOMContentLoaded', init) : init();
 })();

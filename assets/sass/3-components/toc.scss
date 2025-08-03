@@ -23,7 +23,7 @@
     font-size:var(--prose);
     border-radius:var(--radii-square);
     justify-content: space-between;
-    transition: border-radius 150ms ease;
+    transition: border-radius 400ms ease;
   }
 
   span.toc-title:hover {
@@ -35,7 +35,7 @@
     }
   }
   .icon.toc path{
-    transition: fill 150ms ease;
+    transition: fill 400ms ease;
   }
 
 
@@ -47,8 +47,12 @@
     overflow: hidden;
   }
 
+  .icon.toc{
+    transition: fill 400ms ease-out;
+  }
   details:not([open]) .icon.toc .small-inner, details:not([open]) .icon.toc .small-outer{
     fill:var(--color-prominent);
+
   }
   details:not([open]) .icon.toc .large-inner {
       fill: transparent;

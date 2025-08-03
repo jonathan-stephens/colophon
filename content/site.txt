@@ -57,7 +57,7 @@ Footer-nav:
 - 
   title: Work
   description: ""
-  link: ""
+  link: page://SyzULGYH1x99nySv
 - 
   title: Endorsements
   description: ""

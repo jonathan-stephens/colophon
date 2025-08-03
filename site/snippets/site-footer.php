@@ -22,14 +22,15 @@
     <section class="subscribe">
       <div class="wrapper">
         <div class="newsletter">
-          <div class="description">
+          <header>
             <span class="with-icon">
               <?= asset('assets/svg/icons/bullhorn.svg')->read() ?>
               <h2 id="newsletter">
                 Join my mailing list
               </h2>
             </span>
-
+          </header>
+          <div class="description">
             <p>Every week or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
             <p>Subscribe to my newsletter: <em>Craft & Practice</em></p>
           </div>
@@ -51,11 +52,13 @@
         <div class="feeds">
           <?php $feedItems = $site->footer_feeds()->toStructure(); ?>
           <?php if ($feedItems->isNotEmpty()): ?>
-            <div class="description">
+            <header>
               <span class="with-icon">
                 <?= asset('assets/svg/icons/rss.svg')->read() ?>
                 <h2>Feeds</h2>
               </span>
+            </header>
+            <div class="description">
               <p>Get my latest content in your favorite RSS reader. <a href="https://aboutfeeds.com/">What is RSS?</a></p>
             </div>
             <ul role="list">

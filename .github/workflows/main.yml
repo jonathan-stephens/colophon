@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -23,3 +22,10 @@ jobs:
         server: ftp.poetandscribe.com
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/content/**
+          **/node_modules/**
+          **/.DS_Store
+          **/Thumbs.db

@@ -1,6 +1,6 @@
 <?php snippet('site-header') ?>
 <div class="masthead wrapper">
-    <!--<h1><?= $page->title()->html() ?></h1>-->
+    <h1><?= $page->title()->html() ?></h1>
 </div>
 <div class="wrapper">
 <?php

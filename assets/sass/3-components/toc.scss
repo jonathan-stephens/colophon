@@ -30,7 +30,7 @@
     cursor: pointer;
     color: var(--color-emphasis);
 
-    .icon, .icon.toc .small-inner{
+    .icon{
       fill:var(--color-prominent);
     }
   }
@@ -47,18 +47,24 @@
     overflow: hidden;
   }
 
-  details:not([open]) .icon.toc .small-inner{
+  details:not([open]) .icon.toc .small-inner, details:not([open]) .icon.toc .small-outer{
     fill:var(--color-prominent);
   }
   details:not([open]) .icon.toc .large-inner {
       fill: transparent;
   }
+  details:not([open]) .icon.toc .large-outer{
+    fill: var(--color-subtle);
+  }
 
-  details[open] .icon.toc .large-inner {
+  details[open] .icon.toc .large-inner, details[open] .icon.toc .large-outer {
       fill: var(--color-prominent);
   }
   details[open] .icon.toc .small-inner{
     fill:transparent;
+  }
+  details[open] .icon.toc .small-outer{
+    fill:var(--color-subtle);
   }
 
   details[open] + div.content {

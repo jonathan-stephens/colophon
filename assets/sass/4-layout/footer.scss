@@ -3,23 +3,22 @@ body > footer{
   display:flex;
   flex-direction:column;
 
-  section{
+  section, .final-info{
     max-inline-size:none;
-    mix-blend-mode: normal;
+    mix-blend-mode:multiply;
 
     .wrapper{
       padding-block: var(--rhythm-moderato);
     }
   }
   section.navigation{
-    background:var(--background-secondary);
+    background:var(--background-primary);
     order:1;
   }
   section.subscribe{
-    background:var(--background-tertiary);
+    background:var(--background-secondary);
     order:2;
     color:var(--color-distinct);
-    mix-blend-mode: luminosity;
 
     .with-icon{
       align-items:center;
@@ -55,13 +54,16 @@ body > footer{
     }
   }
   section.socials{
-    background:var(--background-quaternary);
+    background:var(--background-tertiary);
     order:3;
     a{color:var(--color-distinct);}
   }
+  section.sticky-bottom{
+    order:5;
+    background:var(--background-tertiary)
+  }
   section.final-info{
     background:var(--background-secondary);
-    mix-blend-mode: normal;
     order:4;
   }
 

@@ -220,7 +220,7 @@ html[data-theme="dark"]{
   padding:0;
   margin-block-start:var(--rhythm-largo);
 }
-.nav-list li, .theme-picker {
+.nav-list li{
   opacity: 0;
   transform: translateY(1.5em);
   transition: opacity 0.3s ease, transform 0.3s ease;

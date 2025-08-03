@@ -22,10 +22,6 @@
               <?php endforeach ?>
           </ul>
       </nav>
-      <section class="theme-picker" style="--item-delay:<?= $delay + 0.15 ?>s;">
-        <h2>Theme</h2>
-        <?php snippet('components/theme-picker') ?>
-      </section>
     </div>
   </header>
 

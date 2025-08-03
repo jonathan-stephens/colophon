@@ -1,104 +1,127 @@
-// FOUC prevention - inline this in your <head>
-       (function() {
-           const saved = localStorage.getItem('theme');
-           const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-           const isDark = saved === 'dark' || (!saved && systemDark);
-           if (isDark) {
-               document.documentElement.setAttribute('data-theme', 'dark');
-           }
-       })();
+(() => {
+    // Wait for DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 
-       // Lightweight Theme Manager
-       class ThemeManager {
-           constructor() {
-               this.toggle = document.querySelector('.js-mode-toggle');
-               this.statusElement = document.querySelector('.js-mode-status');
-               this.toggleContainer = document.querySelector('.color-mode-toggle');
-               this.htmlElement = document.documentElement;
+    function init() {
+        // Theme functions
+        const getSystemMode = () => window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const getUserTheme = () => {
+            try {
+                return localStorage.getItem('theme-preference') || 'system';
+            } catch {
+                return 'system'; // Fallback if localStorage unavailable
+            }
+        };
+        const saveUserTheme = (theme) => {
+            try {
+                localStorage.setItem('theme-preference', theme);
+            } catch {
+                // Silently fail if localStorage unavailable
+            }
+        };
 
-               this.init();
-           }
+        const getAppliedTheme = (userPref) => {
+            if (userPref === 'light') return 'light';
+            if (userPref === 'dark') return 'dark';
+            return getSystemMode(); // system or fallback
+        };
 
-           init() {
-               if (!this.toggle) {
-                   console.warn('Theme toggle not found');
-                   return;
-               }
+        const setTheme = (mode) => {
+            document.documentElement.dataset.theme = mode;
+            // Update icon state via CSS
+            document.documentElement.dataset.themeIcon = mode;
+        };
 
-               // Set initial state based on current theme
-               this.updateToggleState();
+        const toggleTheme = () => {
+            const userPref = getUserTheme();
+            const currentApplied = getAppliedTheme(userPref);
+            const newPref = currentApplied === 'dark' ? 'light' : 'dark';
 
-               // Single event listener for all interactions
-               this.toggle.addEventListener('change', () => this.handleToggle());
+            saveUserTheme(newPref);
+            setTheme(newPref);
+        };
 
-               // Listen for system theme changes (only if no saved preference)
-               this.setupSystemThemeListener();
+        // Get elements
+        const themeFloating = document.getElementById('theme-toggle-floating');
+        const themeFooter = document.getElementById('theme-toggle-footer');
+        const scrollFloating = document.getElementById('scroll-to-top-floating');
+        const footer = document.querySelector('.sticky-bottom');
 
-               // Show toggle after setup
-               if (this.toggleContainer) {
-                   this.toggleContainer.style.visibility = 'visible';
-               }
-           }
+        if (!themeFloating || !scrollFloating) return;
 
-           getCurrentTheme() {
-               return this.htmlElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-           }
+        // State
+        let isVisible = false;
+        let isMorphed = false;
+        let ticking = false;
 
-           handleToggle() {
-               const newTheme = this.toggle.checked ? 'dark' : 'light';
-               this.setTheme(newTheme);
-           }
+        // Scroll handling
+        const update = () => {
+            const { scrollY, innerHeight } = window;
+            const { scrollHeight } = document.documentElement;
 
-           setTheme(theme) {
-               const isDark = theme === 'dark';
+            const shouldShow = scrollY > 300;
+            const shouldMorph = shouldShow && (scrollHeight - scrollY - innerHeight) <= 100;
 
-               // Update DOM
-               if (isDark) {
-                   this.htmlElement.setAttribute('data-theme', 'dark');
-               } else {
-                   this.htmlElement.removeAttribute('data-theme');
-               }
+            // Toggle visibility
+            if (shouldShow !== isVisible) {
+                isVisible = shouldShow;
+                const method = shouldShow ? 'add' : 'remove';
+                themeFloating.classList[method]('show');
+                scrollFloating.classList[method]('show');
+                themeFloating.setAttribute('aria-hidden', !shouldShow);
+                scrollFloating.setAttribute('aria-hidden', !shouldShow);
+            }
 
-               // Save preference
-               localStorage.setItem('theme', theme);
+            // Toggle morphing
+            if (shouldMorph !== isMorphed) {
+                isMorphed = shouldMorph;
+                const method = shouldMorph ? 'add' : 'remove';
+                themeFloating.classList[method]('morphed');
+                scrollFloating.classList[method]('morphed');
+                footer?.classList[method]('show-controls');
+            }
 
-               // Update toggle state
-               this.updateToggleState();
-           }
+            ticking = false;
+        };
 
-           updateToggleState() {
-               const isDark = this.getCurrentTheme() === 'dark';
+        const handleScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        };
 
-               // Update checkbox
-               this.toggle.checked = isDark;
-               this.toggle.setAttribute('aria-checked', isDark.toString());
+        // Initialize theme
+        const userPref = getUserTheme();
+        const appliedTheme = getAppliedTheme(userPref);
+        setTheme(appliedTheme);
 
-               // Update status for screen readers
-               if (this.statusElement) {
-                   this.statusElement.textContent = `Color mode is currently ${isDark ? 'dark' : 'light'}`;
-               }
-           }
+        // Set accessibility attributes
+        [themeFloating, scrollFloating].forEach(btn => {
+            btn.setAttribute('aria-hidden', 'true');
+        });
 
-           setupSystemThemeListener() {
-               const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        // Event listeners
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        themeFloating.addEventListener('click', toggleTheme);
+        themeFooter?.addEventListener('click', toggleTheme);
+        scrollFloating.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-               const handleSystemChange = (e) => {
-                   // Only apply system theme if user hasn't set a preference
-                   if (!localStorage.getItem('theme')) {
-                       this.setTheme(e.matches ? 'dark' : 'light');
-                   }
-               };
+        // System theme changes (only if user hasn't set a preference)
+        window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const currentUserPref = getUserTheme();
+            if (currentUserPref === 'system') {
+                const newSystemMode = getSystemMode();
+                setTheme(newSystemMode);
+            }
+        });
 
-               // Use modern addEventListener with fallback
-               if (mediaQuery.addEventListener) {
-                   mediaQuery.addEventListener('change', handleSystemChange);
-               } else {
-                   mediaQuery.addListener(handleSystemChange);
-               }
-           }
-       }
-
-       // Initialize when DOM is ready
-       document.addEventListener('DOMContentLoaded', () => {
-           new ThemeManager();
-       });
+        update();
+    }
+})();

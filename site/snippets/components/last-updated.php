@@ -58,19 +58,19 @@ class PageTimestamps {
 
         // Days ago (2-6 days)
         if ($days >= 2 && $days <= 6) {
-            return $days . ' days ago';
+            return 'a few days ago';
         }
 
         // Weeks ago (7-13 days)
         if ($days >= 7 && $days <= 13) {
             $weeks = floor($days / 7);
-            return $weeks == 1 ? 'a week ago' : $weeks . ' weeks ago';
+            return $weeks == 1 ? 'a week ago' : 'a few weeks ago';
         }
 
         // Fortnights ago (14-28 days)
         if ($days >= 14 && $days <= 28) {
             $fortnights = floor($days / 14);
-            return $fortnights == 1 ? 'a fortnight ago' : $fortnights . ' fortnights ago';
+            return $fortnights == 1 ? 'a fortnight ago' : 'a couple of fortnights ago';
         }
 
         // Last month (different calendar month, but within ~2 months)
@@ -81,13 +81,13 @@ class PageTimestamps {
         // Months ago (2-3 months past)
         if ($currentYear == $timestampYear && $currentMonth - $timestampMonth >= 2 && $currentMonth - $timestampMonth <= 3) {
             $months = $currentMonth - $timestampMonth;
-            return $months . ' months ago';
+            return 'a few months ago';
         }
 
         // Quarters ago (within the same year)
         if ($currentYear == $timestampYear && $currentQuarter > $timestampQuarter) {
             $quarterDiff = $currentQuarter - $timestampQuarter;
-            return $quarterDiff == 1 ? 'last quarter' : $quarterDiff . ' quarters ago';
+            return $quarterDiff == 1 ? 'last quarter' : 'a few quarters ago';
         }
 
         // Earlier this year (same year, but more than 1 quarter difference)
@@ -103,13 +103,13 @@ class PageTimestamps {
         // A few years ago (2-4 years)
         if ($currentYear - $timestampYear >= 2 && $currentYear - $timestampYear <= 4) {
             $years = $currentYear - $timestampYear;
-            return $years . ' years ago';
+            return 'a few years ago';
         }
 
         // More than 4 years ago
         if ($currentYear - $timestampYear > 4) {
             $years = $currentYear - $timestampYear;
-            return $years . ' years ago';
+            return $years . 'years ago';
         }
 
         // Fallback for edge cases
@@ -145,8 +145,8 @@ class PageTimestamps {
                   class="{$classPrefix}"
                   value="{$isoDate}"
                   itemprop="{$schemaProp}">
-                    This page {$verb} {$relativeDate}, one {$timeOfDay}
-                    in {$season}, <span class="with-icon">{$calendarIcon}
+                    This page {$verb} one {$timeOfDay}
+                    in {$season}, {$relativeDate} — <span class="with-icon">{$calendarIcon}
                       <time class="dmy" datetime="{$kirbyDate}">{$kirbyDate}</time></span> at
                       <span class="with-icon">{$clockIcon}
                         <time class="hidden hm" datetime="{$isoDate}">

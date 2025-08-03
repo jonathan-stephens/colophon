@@ -132,24 +132,20 @@ html[data-theme="dark"] .theme-icon .icon-moon {
   opacity: 1;
 }
 
-/* Hover logic for light theme */
-html[data-theme="light"] .theme-toggle:hover .theme-icon .icon-moon {
+/* Hover and Active logic: combine the "show" states */
+html[data-theme="light"] .theme-toggle:is(:hover, :active) .theme-icon .icon-moon,
+html[data-theme="dark"] .theme-toggle:is(:hover, :active) .theme-icon .icon-sun {
   transform: rotate(0deg);
   opacity: 1;
 }
 
-html[data-theme="light"] .theme-toggle:hover .theme-icon .icon-sun {
+/* Hover and Active logic: individual "hide" states */
+html[data-theme="light"] .theme-toggle:is(:hover, :active) .theme-icon .icon-sun {
   transform: rotate(90deg);
   opacity: 0;
 }
 
-/* Hover logic for dark theme */
-html[data-theme="dark"] .theme-toggle:hover .theme-icon .icon-sun {
-  transform: rotate(0deg);
-  opacity: 1;
-}
-
-html[data-theme="dark"] .theme-toggle:hover .theme-icon .icon-moon {
+html[data-theme="dark"] .theme-toggle:is(:hover, :active) .theme-icon .icon-moon {
   transform: rotate(-90deg);
   opacity: 0;
 }

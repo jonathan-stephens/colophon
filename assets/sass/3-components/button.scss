@@ -35,6 +35,7 @@ button, .button {
   line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
 
   cursor: pointer;
+  transition: all 0.1s ease;
 }
 
 button svg, .button svg {
@@ -62,6 +63,7 @@ button:focus, .button:focus {
 
 button:active, .button:active {
   transform: scale(99%);
+  transform: translateY(2px);
 }
 
 /* Variants */

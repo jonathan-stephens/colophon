@@ -1,7 +1,7 @@
 <?php snippet('site-header') ?>
 
 <article class="article post h-entry wrapper" itemscope itemtype="http://schema.org/Article">
-  <header class="masthead wrapper work">
+  <header class="masthead work">
     <h1><?= $page->title()->html() ?></h1>
 
     <p class="dek"><?= $page->dek()->html() ?></p>

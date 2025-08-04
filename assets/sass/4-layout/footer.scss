@@ -182,9 +182,15 @@ body > footer{
       font-family:var(--font-sans);
     }
   }
-
 }
 
+html[data-theme="dark"] body > footer{
+  section.navigation{background:var(--background-secondary);}
+  section.subscribe{background:var(--background-tertiary);}
+  section.socials{background:var(--background-tertiary);}
+  section.final-info{background:var(--background-secondary);}
+  section.sticky-bottom{background:var(--background-primary);}
+}
 footer {.h-entry, .h-card, .carbon {font-size:var(--caption);color:var(--color-distinct);}}
 .dt-updated span{
   align-items:baseline;

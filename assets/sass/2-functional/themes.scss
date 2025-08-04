@@ -33,7 +33,7 @@
   --border-color-emphasis:  var(--palette-ash-80);
 
   --error-color: var(--palette-red-50);
-  --background-nav-panel: var(--palette-tint-50);
+  --background-nav-panel: var(--palette-tint-70);
 }
 
 :root[data-theme="dark"] {
@@ -70,7 +70,7 @@
 
   --error-color: var(--palette-red-30);
 
-  --background-nav-panel: var(--palette-shade-50);
+  --background-nav-panel: var(--palette-shade-70);
 }
 
 html[data-theme='light']{

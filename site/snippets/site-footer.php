@@ -26,13 +26,13 @@
             <span class="with-icon">
               <?= asset('assets/svg/icons/bullhorn.svg')->read() ?>
               <h2 id="newsletter">
-                Join my mailing list
+                Newsletter: <em>Craft & Practice</em>
               </h2>
             </span>
           </header>
           <div class="description">
             <p>Every week or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
-            <p>Subscribe to my newsletter: <em>Craft & Practice</em></p>
+            <p>Feel free to <a href="https://buttondown.com/jonathanstephens/archive/">browse the archives</a>...before subscribing ( • ᴗ - ).</p>
           </div>
 
           <form
@@ -45,7 +45,7 @@
             <input type="email" name="email" id="bd-email" aria-label="Email Address" placeholder="Email Address" />
 
             <button type="submit" data-element="submit" class="button">
-              <span>Submit</span>
+              <span>Subscribe to my newsletter</span>
             </button>
           </form>
         </div>

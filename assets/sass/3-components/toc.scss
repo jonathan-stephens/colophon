@@ -24,6 +24,10 @@
     border-radius:var(--radii-square);
     justify-content: space-between;
     transition: border-radius 400ms ease;
+    background:transparent;
+    border:var(--border-fine) solid var(--border-color-nuance);
+
+    &:hover{background:var(--background-primary);}
   }
 
   span.toc-title:hover {
@@ -85,13 +89,19 @@
   }
 
   details[open] > summary span.toc-title {
-    background:var(--background-quaternary);
+    background:var(--background-primary);
     color:var(--color-prominent);
     border-end-end-radius:0;
     border-end-start-radius:0;
+    border-color:var(--border-color-subtle);
+    border-block-end: 0px;
 
     .with-icon .icon{
       fill:var(--color-prominent);
+    }
+    &:hover{
+      border-color:var(--border-color-nuance);
+      border-block-end-color:var(--border-fine);
     }
   }
 
@@ -102,6 +112,7 @@
     padding: var(--rhythm-presto);
     border: var(--border-fine) solid transparent;
     transition: max-height 300ms ease-out, border 0ms 200ms linear;
+    margin-inline-end:0px;
   }
   ol{
     margin-inline-start:var(--rhythm-moderato);

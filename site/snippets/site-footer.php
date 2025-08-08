@@ -89,17 +89,6 @@
             </div>
       </section>
     <?php endif ?>
-    <section class="sticky-bottom">
-      <div class="theme-picker wrapper">
-        <button class="theme-toggle footer" id="theme-toggle-footer" aria-label="Toggle between light and dark theme">
-          <span class="theme-icon"><?= asset('assets/svg/icons/theme-dark.svg')->read() ?></span>
-          <span class="theme-icon"><?= asset('assets/svg/icons/theme-light.svg')->read() ?></span>
-        </button>
-        <button class="scroll-to-top footer" aria-label="Scroll to top of page">
-          <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>To top
-        </button>
-      </div>
-    </section>
 
     <section class="final-info">
       <div class="wrapper">
@@ -112,6 +101,11 @@
         <?php snippet('copyright') ?>
       </div>
     </section>
+    <div class="floating-controls">
+      <button class="scroll-to-top floating" id="scroll-to-top-floating" aria-label="Scroll to top of page">
+        <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>
+      </button>
+    </div>
 
   </footer>
 

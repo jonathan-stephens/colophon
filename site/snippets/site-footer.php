@@ -101,16 +101,6 @@
       </div>
     </section>
 
-    <!-- Floating buttons -->
-    <div class="floating-controls">
-      <button class="theme-toggle floating" id="theme-toggle-floating" aria-label="Toggle between light and dark theme">
-        <span class="theme-icon"><?= asset('assets/svg/icons/theme-dark.svg')->read() ?></span>
-        <span class="theme-icon"><?= asset('assets/svg/icons/theme-light.svg')->read() ?></span>
-      </button>
-      <button class="scroll-to-top floating" id="scroll-to-top-floating" aria-label="Scroll to top of page">
-        <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>
-      </button>
-    </div>
     <section class="final-info">
       <div class="wrapper">
         <?php snippet('components/addenda') ?>

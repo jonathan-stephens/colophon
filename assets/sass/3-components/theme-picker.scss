@@ -14,7 +14,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: var(--z-floating);
   pointer-events: none;
 }
 
@@ -29,7 +29,7 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
-  z-index: 1001;
+  z-index: calc(1 + var(--z-floating));
   min-width: var(--flow-8);
   height: var(--flow-8);
 }

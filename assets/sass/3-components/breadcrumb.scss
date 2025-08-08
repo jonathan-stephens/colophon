@@ -1,15 +1,6 @@
 .breadcrumb{
   width: 100%;
-  backdrop-filter: blur(var(--rhythm-prestissimo));
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
-  mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
-  margin-block-start: calc(-1*var(--rhythm-moderato));
-  padding-block-start: var(--rhythm-moderato);
-  padding-block-end: var(--flow-7);
-  background:var(--background-nav-panel);
-  margin-inline-start: calc(-1*var(--rhythm-moderato));
-  padding-inline-start: var(--rhythm-moderato);
-  z-index:1003;
+  z-index:var(--z-breadcrumb);
   container: breadcrumbList / inline-size;
 
   ol{

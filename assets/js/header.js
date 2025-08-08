@@ -49,7 +49,7 @@ class HeaderController {
 
     setupInitialState() {
         if (this.navPanel) {
-            this.navPanel.classList.add('is-collapsed');
+            this.navPanel.classList.add('is-collapsed', 'transitions-enabled');
             this.navPanel.setAttribute('aria-hidden', 'true');
         }
     }
@@ -78,7 +78,7 @@ class HeaderController {
 
         this.isNavOpen = true;
         this.isTransitioning = true;
-        this.body.style.overflow = 'hidden';
+        this.body.classList.add('nav-open');
 
         if (this.navPanel) {
             this.navPanel.classList.remove('is-collapsed');
@@ -87,8 +87,10 @@ class HeaderController {
 
         this.updateNavState();
         this.scheduleTransitionEnd(() => {
-            this.navPanel && this.navPanel.classList.remove('is-opening');
-            this.navPanel && this.navPanel.classList.add('open');
+            if (this.navPanel) {
+                this.navPanel.classList.remove('is-opening');
+                this.navPanel.classList.add('open');
+            }
         });
     }
 
@@ -97,7 +99,7 @@ class HeaderController {
 
         this.isNavOpen = false;
         this.isTransitioning = true;
-        this.body.style.overflow = '';
+        this.body.classList.remove('nav-open');
 
         if (this.navPanel) {
             this.navPanel.classList.remove('is-opening', 'open');
@@ -106,8 +108,10 @@ class HeaderController {
 
         this.updateNavState();
         this.scheduleTransitionEnd(() => {
-            this.navPanel && this.navPanel.classList.remove('is-closing');
-            this.navPanel && this.navPanel.classList.add('is-collapsed');
+            if (this.navPanel) {
+                this.navPanel.classList.remove('is-closing');
+                this.navPanel.classList.add('is-collapsed');
+            }
         });
     }
 
@@ -119,7 +123,9 @@ class HeaderController {
     }
 
     updateNavState() {
-        this.navPanel && this.navPanel.setAttribute('aria-hidden', (!this.isNavOpen).toString());
+        if (this.navPanel) {
+            this.navPanel.setAttribute('aria-hidden', (!this.isNavOpen).toString());
+        }
 
         if (this.navToggle) {
             this.navToggle.setAttribute('aria-expanded', this.isNavOpen.toString());

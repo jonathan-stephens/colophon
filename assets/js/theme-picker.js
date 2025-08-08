@@ -46,43 +46,25 @@
         };
 
         // Get elements
-        const themeFloating = document.getElementById('theme-toggle-floating');
-        const themeFooter = document.getElementById('theme-toggle-footer');
+        const themeToggle = document.getElementById('theme-toggle-footer');
         const scrollFloating = document.getElementById('scroll-to-top-floating');
-        const footer = document.querySelector('.sticky-bottom');
 
-        if (!themeFloating || !scrollFloating) return;
+        if (!scrollFloating) return;
 
         // State
-        let isVisible = false;
-        let isMorphed = false;
+        let isScrollVisible = false;
         let ticking = false;
 
         // Scroll handling
         const update = () => {
-            const { scrollY, innerHeight } = window;
-            const { scrollHeight } = document.documentElement;
+            const shouldShowScroll = window.scrollY > 300;
 
-            const shouldShow = scrollY > 300;
-            const shouldMorph = shouldShow && (scrollHeight - scrollY - innerHeight) <= 100;
-
-            // Toggle visibility
-            if (shouldShow !== isVisible) {
-                isVisible = shouldShow;
-                const method = shouldShow ? 'add' : 'remove';
-                themeFloating.classList[method]('show');
+            // Toggle scroll-to-top visibility
+            if (shouldShowScroll !== isScrollVisible) {
+                isScrollVisible = shouldShowScroll;
+                const method = shouldShowScroll ? 'add' : 'remove';
                 scrollFloating.classList[method]('show');
-                themeFloating.setAttribute('aria-hidden', !shouldShow);
-                scrollFloating.setAttribute('aria-hidden', !shouldShow);
-            }
-
-            // Toggle morphing
-            if (shouldMorph !== isMorphed) {
-                isMorphed = shouldMorph;
-                const method = shouldMorph ? 'add' : 'remove';
-                themeFloating.classList[method]('morphed');
-                scrollFloating.classList[method]('morphed');
-                footer?.classList[method]('show-controls');
+                scrollFloating.setAttribute('aria-hidden', !shouldShowScroll);
             }
 
             ticking = false;
@@ -101,14 +83,11 @@
         setTheme(appliedTheme);
 
         // Set accessibility attributes
-        [themeFloating, scrollFloating].forEach(btn => {
-            btn.setAttribute('aria-hidden', 'true');
-        });
+        scrollFloating.setAttribute('aria-hidden', 'true');
 
         // Event listeners
         window.addEventListener('scroll', handleScroll, { passive: true });
-        themeFloating.addEventListener('click', toggleTheme);
-        themeFooter?.addEventListener('click', toggleTheme);
+        themeToggle?.addEventListener('click', toggleTheme);
         scrollFloating.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });

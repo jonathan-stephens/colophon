@@ -10,7 +10,12 @@
   -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
   mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
   overflow:visible;
+  padding-block-end:var(--flow-11);
+  transform: translateZ(0); /* Force hardware acceleration */
+  isolation: isolate; /* Create new stacking context */
+  backdrop-filter: blur(var(--rhythm-prestissimo)); /* Header itself needs backdrop-filter */
 }
+
 
 .site-header .inner {
   display: flex;
@@ -309,7 +314,6 @@ html[data-theme="dark"] .brandmark:focus .frills {
     height: 100dvh;
     transform: translateX(100%);
     -webkit-overflow-scrolling: touch;
-    backdrop-filter: blur(calc(var(--rhythm-vivace) / 2));
   }
 
   .nav-panel.is-opening {

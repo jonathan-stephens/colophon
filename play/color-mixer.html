@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKLCH Color Palette Mixer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem;
+            background: #fafafa;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="color"], select {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+            flex-direction: column;
+        }
+
+        .color-hex-row {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .color-hex-row input[type="text"] {
+            flex: 1;
+        }
+
+        .color-hex-row input[type="color"] {
+            width: 50px;
+            padding: 0;
+        }
+
+        .color-name-input {
+            width: 100%;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
+        }
+
+        .palette-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .palette-row {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .row-header {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .row-header:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .palette {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .swatch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .swatch::after {
+            content: attr(data-index);
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            font-weight: 500;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            z-index: 1000;
+            max-width: 400px;
+            word-break: break-all;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .info {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            color: #0c4a6e;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .controls {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .row-header {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .swatch {
+                width: 60px;
+                height: 60px;
+            }
+
+            .row-header {
+                width: 120px;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OKLCH Color Palette Mixer</h1>
+        
+        <div class="info">
+            <strong>How to use:</strong> Colors update live as you type. Click column headers to copy that interpolation method's CSS variables. Click swatches to copy individual OKLCH color values. CSS variable outputs use color-mix() with your selected color space and reference the base color variables.
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="color1">Color 1</label>
+                <div class="color-input-wrapper">
+                    <div class="color-hex-row">
+                        <input type="text" id="color1" value="#3b82f6" placeholder="#3b82f6">
+                        <input type="color" id="color1-picker" value="#3b82f6">
+                    </div>
+                    <input type="text" id="color1-name" class="color-name-input" placeholder="Color name (optional)" value="primary">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="color2">Color 2</label>
+                <div class="color-input-wrapper">
+                    <div class="color-hex-row">
+                        <input type="text" id="color2" value="#ef4444" placeholder="#ef4444">
+                        <input type="color" id="color2-picker" value="#ef4444">
+                    </div>
+                    <input type="text" id="color2-name" class="color-name-input" placeholder="Color name (optional)" value="secondary">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="color-space">Color Space</label>
+                <select id="color-space">
+                    <optgroup label="Polar Color Spaces">
+                        <option value="hsl">HSL</option>
+                        <option value="hwb">HWB</option>
+                        <option value="lch" selected>LCH</option>
+                        <option value="oklch">OKLCH</option>
+                    </optgroup>
+                    <optgroup label="Rectangular Color Spaces">
+                        <option value="srgb">sRGB</option>
+                        <option value="srgb-linear">sRGB Linear</option>
+                        <option value="display-p3">Display P3</option>
+                        <option value="a98-rgb">A98 RGB</option>
+                        <option value="prophoto-rgb">ProPhoto RGB</option>
+                        <option value="rec2020">REC2020</option>
+                        <option value="lab">LAB</option>
+                        <option value="oklab">OKLAB</option>
+                        <option value="xyz">XYZ</option>
+                        <option value="xyz-d50">XYZ D50</option>
+                        <option value="xyz-d65">XYZ D65</option>
+                    </optgroup>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="palette-size">Palette Size</label>
+                <select id="palette-size">
+                    <option value="3">3 colors</option>
+                    <option value="4">4 colors</option>
+                    <option value="5" selected>5 colors</option>
+                    <option value="6">6 colors</option>
+                    <option value="7">7 colors</option>
+                    <option value="8">8 colors</option>
+                    <option value="9">9 colors</option>
+                    <option value="10">10 colors</option>
+                    <option value="11">11 colors</option>
+                    <option value="12">12 colors</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn-secondary" onclick="copyAllCSSVariables()">Copy All CSS Variables</button>
+        </div>
+
+        <div class="palette-container" id="palette-container"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentPalettes = {};
+        const hueInterpolationMethods = ['shorter', 'longer', 'increasing', 'decreasing'];
+        const polarColorSpaces = ['hsl', 'hwb', 'lch', 'oklch'];
+
+        // Convert hex to RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16) / 255,
+                g: parseInt(result[2], 16) / 255,
+                b: parseInt(result[3], 16) / 255
+            } : null;
+        }
+
+        // Convert RGB to XYZ
+        function rgbToXyz(r, g, b) {
+            r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+            g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+            b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+
+            const x = r * 0.4124564 + g * 0.3575761 + b * 0.1804375;
+            const y = r * 0.2126729 + g * 0.7151522 + b * 0.0721750;
+            const z = r * 0.0193339 + g * 0.1191920 + b * 0.9503041;
+
+            return { x, y, z };
+        }
+
+        // Convert XYZ to OKLCH
+        function xyzToOklch(x, y, z) {
+            const l = 0.8189330101 * x + 0.3618667424 * y - 0.1288597137 * z;
+            const m = 0.0329845436 * x + 0.9293118715 * y + 0.0361456387 * z;
+            const s = 0.0482003018 * x + 0.2643662691 * y + 0.6338517070 * z;
+
+            const l_ = Math.sign(l) * Math.pow(Math.abs(l), 1/3);
+            const m_ = Math.sign(m) * Math.pow(Math.abs(m), 1/3);
+            const s_ = Math.sign(s) * Math.pow(Math.abs(s), 1/3);
+
+            const L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+            const a = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+            const b = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+
+            const C = Math.sqrt(a * a + b * b);
+            let h = Math.atan2(b, a) * 180 / Math.PI;
+            if (h < 0) h += 360;
+
+            return { l: L, c: C, h: h };
+        }
+
+        // Convert OKLCH to XYZ
+        function oklchToXyz(l, c, h) {
+            const hRad = h * Math.PI / 180;
+            const a = c * Math.cos(hRad);
+            const b = c * Math.sin(hRad);
+
+            const l_ = l + 0.3963377774 * a + 0.2158037573 * b;
+            const m_ = l - 0.1055613458 * a - 0.0638541728 * b;
+            const s_ = l - 0.0894841775 * a - 1.2914855480 * b;
+
+            const lms_l = l_ * l_ * l_;
+            const lms_m = m_ * m_ * m_;
+            const lms_s = s_ * s_ * s_;
+
+            const x = +1.2268798733 * lms_l - 0.5578149965 * lms_m + 0.2813910456 * lms_s;
+            const y = -0.0405801784 * lms_l + 1.1122568696 * lms_m - 0.0716766787 * lms_s;
+            const z = -0.0763812845 * lms_l - 0.4214819784 * lms_m + 1.5861632204 * lms_s;
+
+            return { x, y, z };
+        }
+
+        // Convert XYZ to RGB
+        function xyzToRgb(x, y, z) {
+            let r = x * +3.2404542 + y * -1.5371385 + z * -0.4985314;
+            let g = x * -0.9692660 + y * +1.8760108 + z * +0.0415560;
+            let b = x * +0.0556434 + y * -0.2040259 + z * +1.0572252;
+
+            r = Math.max(0, Math.min(1, r));
+            g = Math.max(0, Math.min(1, g));
+            b = Math.max(0, Math.min(1, b));
+
+            r = r > 0.0031308 ? 1.055 * Math.pow(r, 1/2.4) - 0.055 : 12.92 * r;
+            g = g > 0.0031308 ? 1.055 * Math.pow(g, 1/2.4) - 0.055 : 12.92 * g;
+            b = b > 0.0031308 ? 1.055 * Math.pow(b, 1/2.4) - 0.055 : 12.92 * b;
+
+            return {
+                r: Math.max(0, Math.min(255, Math.round(r * 255))),
+                g: Math.max(0, Math.min(255, Math.round(g * 255))),
+                b: Math.max(0, Math.min(255, Math.round(b * 255)))
+            };
+        }
+
+        // Convert hex to OKLCH
+        function hexToOklch(hex) {
+            const rgb = hexToRgb(hex);
+            if (!rgb) return null;
+            const xyz = rgbToXyz(rgb.r, rgb.g, rgb.b);
+            return xyzToOklch(xyz.x, xyz.y, xyz.z);
+        }
+
+        // Convert OKLCH to hex
+        function oklchToHex(l, c, h) {
+            const xyz = oklchToXyz(l, c, h);
+            const rgb = xyzToRgb(xyz.x, xyz.y, xyz.z);
+            
+            const toHex = (n) => {
+                const hex = n.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            
+            return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
+        }
+
+        // Interpolate between two OKLCH colors with specific hue interpolation
+        function interpolateOklchWithHue(oklch1, oklch2, t, hueMethod) {
+            let h1 = oklch1.h;
+            let h2 = oklch2.h;
+            
+            // Apply hue interpolation method
+            switch (hueMethod) {
+                case 'shorter':
+                    const diff = h2 - h1;
+                    if (Math.abs(diff) > 180) {
+                        if (diff > 0) {
+                            h1 += 360;
+                        } else {
+                            h2 += 360;
+                        }
+                    }
+                    break;
+                case 'longer':
+                    const diffLonger = h2 - h1;
+                    if (Math.abs(diffLonger) <= 180) {
+                        if (diffLonger > 0) {
+                            h2 -= 360;
+                        } else {
+                            h1 -= 360;
+                        }
+                    }
+                    break;
+                case 'increasing':
+                    if (h2 < h1) {
+                        h2 += 360;
+                    }
+                    break;
+                case 'decreasing':
+                    if (h2 > h1) {
+                        h1 += 360;
+                    }
+                    break;
+            }
+            
+            const l = oklch1.l + (oklch2.l - oklch1.l) * t;
+            const c = oklch1.c + (oklch2.c - oklch1.c) * t;
+            let h = h1 + (h2 - h1) * t;
+            
+            h = ((h % 360) + 360) % 360;
+            
+            return { l, c, h };
+        }
+
+        // Format OKLCH for color-mix CSS
+        function formatOklchForColorMix(oklch) {
+            return `oklch(${oklch.l.toFixed(3)} ${oklch.c.toFixed(3)} ${oklch.h.toFixed(1)})`;
+        }
+
+        // Generate color-mix CSS string
+        function generateColorMixCSS(varName, colorSpace, hueMethod, color1Oklch, color2Oklch, percentage, useVariables = false) {
+            const color1Name = document.getElementById('color1-name').value || 'color1';
+            const color2Name = document.getElementById('color2-name').value || 'color2';
+            
+            // Determine if we need hue interpolation syntax
+            const isPolarSpace = polarColorSpaces.includes(colorSpace);
+            const hueInterpolation = isPolarSpace ? ` ${hueMethod} hue` : '';
+            
+            if (useVariables) {
+                return `--${varName}: color-mix(in ${colorSpace}${hueInterpolation}, var(--${color1Name}) ${percentage}%, var(--${color2Name}));`;
+            } else {
+                const color1Str = formatOklchForColorMix(color1Oklch);
+                const color2Str = formatOklchForColorMix(color2Oklch);
+                return `--${varName}: color-mix(in ${colorSpace}${hueInterpolation}, ${color1Str} ${percentage}%, ${color2Str});`;
+            }
+        }
+
+        // Generate all palettes
+        function generatePalettes() {
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const color1Name = document.getElementById('color1-name').value || 'color1';
+            const color2Name = document.getElementById('color2-name').value || 'color2';
+            const paletteSize = parseInt(document.getElementById('palette-size').value);
+            const colorSpace = document.getElementById('color-space').value;
+
+            // Validate hex colors
+            if (!/^#[0-9A-F]{6}$/i.test(color1) || !/^#[0-9A-F]{6}$/i.test(color2)) {
+                return;
+            }
+
+            const oklch1 = hexToOklch(color1);
+            const oklch2 = hexToOklch(color2);
+
+            if (!oklch1 || !oklch2) {
+                return;
+            }
+
+            currentPalettes = {};
+            const container = document.getElementById('palette-container');
+            container.innerHTML = '';
+
+            // For non-polar color spaces, only show one row without hue interpolation
+            const isPolarSpace = polarColorSpaces.includes(colorSpace);
+            const methodsToShow = isPolarSpace ? hueInterpolationMethods : ['default'];
+
+            methodsToShow.forEach(method => {
+                const palette = [];
+                
+                for (let i = 0; i < paletteSize; i++) {
+                    const t = paletteSize === 1 ? 0 : i / (paletteSize - 1);
+                    const percentage = Math.round((1 - t) * 100);
+                    const interpolated = interpolateOklchWithHue(oklch1, oklch2, t, method);
+                    const hex = oklchToHex(interpolated.l, interpolated.c, interpolated.h);
+                    
+                    const varName = isPolarSpace ? 
+                        `${color1Name}-${color2Name}-${method}-${i + 1}` : 
+                        `${color1Name}-${color2Name}-${i + 1}`;
+                    const colorMixCSS = generateColorMixCSS(varName, colorSpace, method, oklch1, oklch2, percentage);
+                    
+                    palette.push({
+                        oklch: interpolated,
+                        hex: hex,
+                        colorMixCSS: colorMixCSS,
+                        varName: varName,
+                        percentage: percentage,
+                        oklchString: formatOklchForColorMix(interpolated)
+                    });
+                }
+
+                currentPalettes[method] = palette;
+
+                // Create row
+                const row = document.createElement('div');
+                row.className = 'palette-row';
+
+                const header = document.createElement('div');
+                header.className = 'row-header';
+                header.textContent = isPolarSpace ? method : colorSpace;
+                header.onclick = () => copyColumnCSS(method);
+
+                const paletteEl = document.createElement('div');
+                paletteEl.className = 'palette';
+
+                palette.forEach((color, index) => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'swatch';
+                    swatch.style.backgroundColor = color.hex;
+                    swatch.setAttribute('data-index', index + 1);
+                    swatch.onclick = () => copyOklchColor(color.oklchString);
+                    paletteEl.appendChild(swatch);
+                });
+
+                row.appendChild(header);
+                row.appendChild(paletteEl);
+                container.appendChild(row);
+            });
+        }
+
+        // Copy individual OKLCH color
+        async function copyOklchColor(oklchString) {
+            try {
+                await navigator.clipboard.writeText(oklchString);
+                showToast(`Copied: ${oklchString}`);
+            } catch (err) {
+                fallbackCopy(oklchString);
+                showToast(`Copied: ${oklchString}`);
+            }
+        }
+
+        // Copy individual color-mix CSS (keeping for potential future use)
+        async function copyColorMixCSS(colorMixCSS) {
+            try {
+                await navigator.clipboard.writeText(colorMixCSS);
+                showToast(`Copied: ${colorMixCSS}`);
+            } catch (err) {
+                fallbackCopy(colorMixCSS);
+                showToast(`Copied: ${colorMixCSS}`);
+            }
+        }
+
+        // Copy column CSS variables
+        async function copyColumnCSS(method) {
+            if (!currentPalettes[method]) {
+                showToast('Generate palettes first', 'error');
+                return;
+            }
+
+            const color1Name = document.getElementById('color1-name').value || 'color1';
+            const color2Name = document.getElementById('color2-name').value || 'color2';
+            const colorSpace = document.getElementById('color-space').value;
+            const isPolarSpace = polarColorSpaces.includes(colorSpace);
+            
+            let cssVars = `:root {\n`;
+            
+            // Add base colors
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const oklch1 = hexToOklch(color1);
+            const oklch2 = hexToOklch(color2);
+            
+            cssVars += `  --${color1Name}: ${formatOklchForColorMix(oklch1)};\n`;
+            cssVars += `  --${color2Name}: ${formatOklchForColorMix(oklch2)};\n\n`;
+            
+            // Add palette colors
+            currentPalettes[method].forEach(color => {
+                const varColorMixCSS = generateColorMixCSS(color.varName, colorSpace, method, oklch1, oklch2, color.percentage, true);
+                cssVars += `  ${varColorMixCSS}\n`;
+            });
+            
+            cssVars += `}`;
+
+            try {
+                await navigator.clipboard.writeText(cssVars);
+                const methodName = isPolarSpace ? method : colorSpace;
+                showToast(`Copied ${methodName} interpolation CSS variables!`);
+            } catch (err) {
+                fallbackCopy(cssVars);
+                const methodName = isPolarSpace ? method : colorSpace;
+                showToast(`Copied ${methodName} interpolation CSS variables!`);
+            }
+        }
+
+        // Copy all CSS variables
+        async function copyAllCSSVariables() {
+            if (Object.keys(currentPalettes).length === 0) {
+                showToast('Generate palettes first', 'error');
+                return;
+            }
+
+            const color1Name = document.getElementById('color1-name').value || 'color1';
+            const color2Name = document.getElementById('color2-name').value || 'color2';
+            const colorSpace = document.getElementById('color-space').value;
+            const isPolarSpace = polarColorSpaces.includes(colorSpace);
+            
+            let cssVars = `:root {\n`;
+            
+            // Add base colors
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const oklch1 = hexToOklch(color1);
+            const oklch2 = hexToOklch(color2);
+            
+            cssVars += `  --${color1Name}: ${formatOklchForColorMix(oklch1)};\n`;
+            cssVars += `  --${color2Name}: ${formatOklchForColorMix(oklch2)};\n\n`;
+            
+            // Add all palette colors grouped by method
+            const methodsToShow = isPolarSpace ? hueInterpolationMethods : ['default'];
+            methodsToShow.forEach(method => {
+                if (currentPalettes[method]) {
+                    const methodName = isPolarSpace ? `${method} hue interpolation` : colorSpace;
+                    cssVars += `  /* ${methodName} */\n`;
+                    currentPalettes[method].forEach(color => {
+                        const varColorMixCSS = generateColorMixCSS(color.varName, colorSpace, method, oklch1, oklch2, color.percentage, true);
+                        cssVars += `  ${varColorMixCSS}\n`;
+                    });
+                    cssVars += `\n`;
+                }
+            });
+            
+            cssVars += `}`;
+
+            try {
+                await navigator.clipboard.writeText(cssVars);
+                showToast('All CSS variables copied to clipboard!');
+            } catch (err) {
+                fallbackCopy(cssVars);
+                showToast('All CSS variables copied to clipboard!');
+            }
+        }
+
+        // Fallback copy method
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#ef4444' : '#10b981';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Set up live updates
+        function setupLiveUpdates() {
+            const inputs = ['color1', 'color2', 'color1-name', 'color2-name', 'palette-size', 'color-space'];
+            
+            inputs.forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener('input', generatePalettes);
+            });
+
+            // Sync color inputs with color pickers
+            document.getElementById('color1').addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                    document.getElementById('color1-picker').value = this.value;
+                }
+            });
+
+            document.getElementById('color1-picker').addEventListener('input', function() {
+                document.getElementById('color1').value = this.value;
+                generatePalettes();
+            });
+
+            document.getElementById('color2').addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                    document.getElementById('color2-picker').value = this.value;
+                }
+            });
+
+            document.getElementById('color2-picker').addEventListener('input', function() {
+                document.getElementById('color2').value = this.value;
+                generatePalettes();
+            });
+        }
+
+        // Initialize app
+        setupLiveUpdates();
+        generatePalettes();
+    </script>
+</body>
+</html>

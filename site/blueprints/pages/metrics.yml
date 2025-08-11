@@ -1,0 +1,106 @@
+# site/blueprints/pages/metrics.yml
+
+title: Content Metrics
+icon: 📊
+
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false
+  duplicate: false
+
+tabs:
+  content:
+    label: Content
+    icon: text
+    columns:
+      main:
+        width: 2/3
+        sections:
+          info:
+            type: info
+            label: Metrics Page
+            text: |
+              This page automatically generates comprehensive content metrics for your website.
+
+              **Metrics include:**
+              - Post count per content type
+              - Character and word count totals
+              - Reading time calculations
+              - Content freshness analysis
+              - Statistical analysis with min, max, average, and median values
+              - Publishing timeline for the last 12 months
+              - Visual charts and graphs
+
+              The data is calculated in real-time each time you visit the page.
+
+          settings:
+            type: fields
+            fields:
+              refreshRate:
+                type: info
+                label: Data Refresh
+                text: Metrics are calculated in real-time on each page load. For better performance on large sites, consider implementing caching.
+
+              excludedTemplates:
+                type: tags
+                label: Excluded Templates
+                help: Add template names to exclude from metrics (e.g., 'home', 'error')
+                options:
+                  - home
+                  - error
+                  - metrics
+                  - contact
+                  - sitemap
+                default:
+                  - home
+                  - error
+                  - metrics
+
+      sidebar:
+        width: 1/3
+        sections:
+          pages:
+            type: pages
+            headline: Site Structure
+            status: all
+            info: "{{ page.children.count }} pages"
+            limit: 10
+            sortBy: date desc
+
+  analytics:
+    label: Analytics
+    icon: chart
+    sections:
+      info:
+        type: info
+        label: Analytics Information
+        text: |
+          **Key Metrics Tracked:**
+
+          📊 **Content Volume**
+          - Total pages by template type
+          - Word and character counts
+          - Reading time estimates (200 words/minute)
+
+          🌱 **Content Freshness**
+          - Fresh: Less than 30 days old
+          - Moderate: 30-180 days old
+          - Stale: Over 180 days old
+
+          📈 **Statistical Analysis**
+          - Min, max, average, and median word counts
+          - Distribution analysis per content type
+          - Publishing timeline trends
+
+          📋 **Visual Reports**
+          - Content type distribution pie chart
+          - Word count comparison bar chart
+          - Publishing timeline over 12 months
+
+permissions:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false

@@ -11,7 +11,7 @@
  */
 
 // Default to getting case studies from a 'case-studies' page if it exists
-$defaultSource = site()->find('case-studies') ? site()->find('case-studies')->children()->listed() : site()->pages()->listed();
+$defaultSource = page('work') ? page('work')->children()->filterBy('template', 'project') : site()->pages()->listed();
 
 // Get parameters passed to the snippet
 $source = $source ?? $defaultSource;

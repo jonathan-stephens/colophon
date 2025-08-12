@@ -17,17 +17,16 @@
     display: flex;
     align-items: center;
     padding-inline: var(--rhythm-moderato);
-    background: var(--background-tertiary);
     color: var(--color-distinct);
     height: var(--hed-primary);
     font-size:var(--prose);
     border-radius:var(--radii-square);
     justify-content: space-between;
     transition: border-radius 400ms ease;
-    background:transparent;
+    background:var(--background-primary);
     border:var(--border-fine) solid var(--border-color-nuance);
 
-    &:hover{background:var(--background-primary);}
+    &:hover{background:var(--background-secondary);border-color:var(---border-color-distinct);}
   }
 
   span.toc-title:hover {
@@ -59,14 +58,14 @@
 
   }
   details:not([open]) .icon.toc .large-inner {
-      fill: transparent;
+    fill: transparent;
   }
   details:not([open]) .icon.toc .large-outer{
     fill: var(--color-subtle);
   }
 
   details[open] .icon.toc .large-inner, details[open] .icon.toc .large-outer {
-      fill: var(--color-prominent);
+    fill: var(--color-prominent);
   }
   details[open] .icon.toc .small-inner{
     fill:transparent;
@@ -77,7 +76,7 @@
 
   details[open] + div.content {
     max-height: 50vh;
-    border-color: var(--border-color-subtle);
+    border-color: var(--border-color-nuance);
     background:var(--background-nav-panel);
     transition: max-height 300ms ease-out, border 0ms linear;
   }
@@ -93,15 +92,14 @@
     color:var(--color-prominent);
     border-end-end-radius:0;
     border-end-start-radius:0;
-    border-color:var(--border-color-subtle);
-    border-block-end: 0px;
+    border-color:var(--border-color-nuance);
+    border-block-end-width: var(--border-hairline);
 
     .with-icon .icon{
       fill:var(--color-prominent);
     }
     &:hover{
-      border-color:var(--border-color-nuance);
-      border-block-end-color:var(--border-fine);
+      border-color:var(--border-color-distinct);
     }
   }
 

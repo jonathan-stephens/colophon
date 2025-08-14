@@ -15,6 +15,11 @@ div.case-studies{
 }
 section.case-studies{max-inline-size:none;}
 .case-study{
+  transition:
+    border var(--duration-base) ease-in-out,
+    background var(--duration-base) ease-in-out,
+    color var(--duration-slower) ease-in-out;
+
   p:has(.client + .principal){
     text-align:center;
     font-size:var(--small);
@@ -71,8 +76,14 @@ section.case-studies{max-inline-size:none;}
     }
   }
 
+  .client, .principal, .hed, .dek, .meta li{
+    transition:
+      border var(--duration-base) ease-in-out,
+      background var(--duration-base) ease-in-out,
+      color var(--duration-slower) ease-in-out;
+  }
   &:hover, &:active{
-    p:has(.client + .principal), .hed, .dek, .meta li{
+    .client, .principal, .hed, .dek, .meta li{
       color:var(--color-distinct);
     }
   }

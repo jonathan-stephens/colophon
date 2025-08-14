@@ -3,7 +3,7 @@
 <header>
     <h1><?= $page->title()->html() ?></h1>
 </header>
-<div>
+<div class="content">
   <?php
     // Get limit from URL parameter or default to 16
     $limit = (int) get('limit', 16);

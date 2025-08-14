@@ -7,7 +7,7 @@
   z-index: var(--z-header);
   padding: var(--rhythm-moderato);
   background: var(--background-nav-panel);
-  transition: all 0.3s ease;
+  transition: all var(--duration-base) ease;
   -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
   mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
   overflow:visible;
@@ -57,7 +57,7 @@
   cursor: pointer;
   display: flex;
   align-items: flex-end;
-  transition: all 0.3s ease;
+  transition: all var(--duration-base) ease;
   font-size: var(--caption);
   justify-content: flex-end;
   padding-inline-start: var(--rhythm-moderato);
@@ -106,7 +106,7 @@ a:has(.brandmark) {
   .border,
   .letter,
   .frills {
-    transition: all ease-in-out 0.1s;
+    transition: all ease-in-out var(--duration-fastest);
   }
 }
 
@@ -189,14 +189,14 @@ html[data-theme="dark"] .brandmark:focus .frills {
 /* Add transitions only when the panel is ready to animate */
 .nav-panel.transitions-enabled.is-opening {
   transform: translateX(0);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              backdrop-filter 0.4s ease;
+  transition: transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              backdrop-filter var(--duration-slower) ease;
 }
 
 .nav-panel.transitions-enabled.is-closing {
   transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19),
-    backdrop-filter 0.3s ease;
+  transition: transform var(--duration-base) cubic-bezier(0.55, 0.055, 0.675, 0.19),
+    backdrop-filter var(--duration-base) ease;
   pointer-events: none;
 }
 
@@ -220,7 +220,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
   background: var(--background-nav-panel);
   backdrop-filter: blur(var(--rhythm-presto));
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--duration-slower) ease;
   z-index: var(--z-backdrop);
 }
 
@@ -231,7 +231,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
 
 .nav-panel.transitions-enabled.is-closing::before {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-base) ease;
 }
 
 /* NAVIGATION LIST */
@@ -250,8 +250,8 @@ html[data-theme="dark"] .brandmark:focus .frills {
 .nav-list li {
   opacity: 0;
   transform: translateY(1.5em);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transition-delay: 0s;
+  transition: opacity var(--duration-base) ease, transform var(--duration-base) ease;
+  transition-delay: var(--duration-instant);
   max-inline-size:none;
   will-change: opacity, transform;
 }
@@ -268,8 +268,8 @@ html[data-theme="dark"] .brandmark:focus .frills {
 .nav-panel.is-closing .nav-item {
   opacity: 0;
   transform: translateY(1.5em);
-  transition-delay: 0s;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: var(--duration-instant);
+  transition: opacity var(--duration-slower) ease, transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-panel.is-collapsed .nav-item {
@@ -293,7 +293,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
   margin-inline-end: calc(var(--rhythm-moderato));
   padding-block: var(--rhythm-vivace);
   padding-inline-end: var(--rhythm-moderato);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-decoration-color: var(--color-quiet);
   text-align:right;
   max-inline-size:none;
@@ -319,13 +319,13 @@ html[data-theme="dark"] .brandmark:focus .frills {
 
   .nav-panel.is-opening {
     transform: translateX(0);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: auto;
   }
 
   .nav-panel.is-closing {
     transform: translateX(100%);
-    transition: transform 0.25s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition: transform var(--duration-faster) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
 }
 

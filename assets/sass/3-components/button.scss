@@ -35,7 +35,7 @@ button, .button {
   line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
 
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all var(--duration-fastest) ease;
 }
 
 button svg, .button svg {

@@ -5,7 +5,7 @@
   cursor: pointer;
   display: flex;
   align-items: baseline;
-  transition: all 0.3s ease;
+  transition: all var(--duration-base) ease;
 }
 
 .floating-controls {
@@ -62,14 +62,14 @@
 
 .sticky-bottom {
   position: relative;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-base) ease;
 }
 
 .sticky-bottom .theme-picker {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-base) ease;
   padding-block: var(--rhythm-vivace);
 }
 
@@ -94,7 +94,7 @@
   position: relative;
   width: var(--rhythm-andantino);
   height: var(--rhythm-andantino);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--duration-slower) cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
@@ -105,7 +105,7 @@
   width: 100%;
   height: 100%;
   fill: currentColor;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--duration-slower) cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: 50% 100%;
 }
 

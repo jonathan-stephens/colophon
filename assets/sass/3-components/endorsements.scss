@@ -50,7 +50,7 @@ section.endorsements{
   position: relative;
 
   /* Smooth transitions */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform var(--duration-faster) ease, box-shadow var(--duration-faster) ease;
   &:first-of-type{
     margin-inline-start:var(--rhythm-andante);
   }

@@ -29,7 +29,7 @@ html{
 body {
   color:var(--color-prominent);
   font-family: var(--font-sans);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color var(--duration-base), color var(--duration-base);
   margin:0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;

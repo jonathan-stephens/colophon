@@ -22,7 +22,7 @@
     font-size:var(--prose);
     border-radius:var(--radii-square);
     justify-content: space-between;
-    transition: border-radius 400ms ease;
+    transition: border-radius var(--duration-slower) ease;
     background:var(--background-primary);
     border:var(--border-fine) solid var(--border-color-nuance);
 
@@ -38,12 +38,12 @@
     }
   }
   .icon.toc path{
-    transition: fill 400ms ease;
+    transition: fill var(--duration-slower) ease;
   }
 
 
   .toc-title > .icon{
-    transition: rotate 150ms 150ms ease-out;
+    transition: rotate var(--duration-faster) var(--duration-faster) ease-out;
   }
 
   details{
@@ -51,7 +51,7 @@
   }
 
   .icon.toc{
-    transition: fill 400ms ease-out;
+    transition: fill var(--duration-slower) ease-out;
   }
   details:not([open]) .icon.toc .small-inner, details:not([open]) .icon.toc .small-outer{
     fill:var(--color-prominent);
@@ -78,12 +78,12 @@
     max-height: 50vh;
     border-color: var(--border-color-nuance);
     background:var(--background-nav-panel);
-    transition: max-height 300ms ease-out, border 0ms linear;
+    transition: max-height var(--duration-base) ease-out, border var(--duration-faster) linear;
   }
 
   details[open] .toc-title > .icon {
     rotate: 180deg;
-    transition: rotate 200ms ease-out;
+    transition: rotate var(--duration-faster) ease-out;
     fill:var(--color-prominent);
   }
 
@@ -109,7 +109,7 @@
     overflow: hidden;
     padding: var(--rhythm-presto);
     border: var(--border-fine) solid transparent;
-    transition: max-height 300ms ease-out, border 0ms 200ms linear;
+    transition: max-height var(--duration-base) ease-out, border var(--duration-faster) linear;
     margin-inline-end:0px;
   }
   ol{
@@ -131,7 +131,7 @@
     display: flex;
     align-items: center;
     padding-inline:var(--rhythm-moderato);
-    transition: color 150ms ease-in-out;
+    transition: color var(--duration-faster) ease-in-out;
 
 
     &:hover{
@@ -152,7 +152,7 @@
   .toc-link{
     flex:1;
     text-decoration:none;
-    transition: color 150ms ease-in-out;
+    transition: color var(--duration-faster) ease-in-out;
 
     &:hover{
       color:var(--color-emphasis);

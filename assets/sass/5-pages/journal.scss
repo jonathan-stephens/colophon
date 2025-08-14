@@ -12,7 +12,7 @@
 
   a{
     text-decoration:none;
-    h2, p, time{transition: color 150ms ease-in-out;}
+    h2, p, time{transition: color var(--duration-faster) ease-in-out;}
 
     &:hover, &:active{
       h2, p, time{color:var(--link-color-active);}
@@ -23,7 +23,7 @@
     padding:var(--rhythm-moderato);
     margin-inline-start:calc(-1*var(--rhythm-moderato));
     border: var(--border-fine) solid transparent;
-    transition: background 150ms ease-in-out, border 150ms ease-in-out;
+    transition: background var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out;
     border-radius: var(--radii-square);
 
     &:hover, &:active{
@@ -47,7 +47,7 @@
     margin-block-end: var(--rhythm-vivace);
     border-top: var(--border-fine) dashed var(--border-color-distinct);
     border-bottom: var(--border-fine) dashed var(--border-color-distinct);
-    transition: border-color 150ms ease-in-out;
+    transition: border-color var(--duration-faster) ease-in-out;
   }
 
   time{
@@ -56,7 +56,7 @@
     letter-spacing: 5%;
     text-transform: uppercase;
     color: var(--color-distinct);
-    transition: color 150ms ease-in-out;
+    transition: color var(--duration-faster) ease-in-out;
   }
 
   .text-stats{

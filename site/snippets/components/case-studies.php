@@ -42,30 +42,29 @@ if ($filter) {
 
 <div class="case-studies">
   <?php foreach($source as $article): ?>
-    <a href="<?= $article->url() ?>" class="case-study card">
-      <article class="h-entry">
-        <header>
-          <p>
-            <span class="client"><?= $article->client()->html() ?></span> •
-            <span class="principal"><?= $article->principal()->html() ?></span>
-          </p>
+    <a href="<?= $article->url() ?>" class="case-study">
+      <article class="h-entry card">
+        <img src="<?= $article->image()->url() ?>" style="--transition-image: url('<?= $article->image()->url() ?>)'">
           <h<?= $hedLevel ?> class="p-name hed"><?= $article->hed()->html() ?></h<?= $hedLevel ?>>
           <p class="dek"><?= $article->dek()->html() ?></p>
-        </header>
-        <ul class="meta">
-          <li class="role">
-            <span class="label">Role</span>
-            <span><?= $article->role()->html() ?></span>
-          </li>
-          <li class="industries">
-            <span class="label">Industries</span>
-            <span><?= implode(', ', $article->industry()->split()) ?></span>
-          </li>
-          <li class="organization">
-            <span class="label">Organization</span>
-            <span><?= $article->businessModel()->html() ?>, <?= $article->workingModel()->html() ?>, <?= $article->companySize()->html() ?></span>
-          </li>
-        </ul>
+          <p class="info">
+            <span class="client"><?= $article->client()->html() ?></span>
+            <span class="principal"><?= $article->principal()->html() ?></span>
+            <span class="time">
+                <time class="dt-start dtstart" datetime="<?= $article->dateFrom() ?>" itemprop="startDate">
+                    <?= $article->dateFrom()->toDate('Y') ?>
+                </time>
+                <?php if($article->dateTo()->isNotEmpty()): ?>
+                    <?php if($article->dateFrom()->toDate('Y') !== $article->dateTo()->toDate('Y')): ?>
+                        – <time class="dt-end dtend" datetime="<?= $article->dateTo() ?>" itemprop="endDate">
+                            <?= $article->dateTo()->toDate('Y') ?>
+                        </time>
+                    <?php endif ?>
+                <?php else : ?>
+                    – present
+                <?php endif ?>
+            </span>
+          </p>
       </article>
     </a>
   <?php endforeach ?>

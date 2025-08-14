@@ -194,6 +194,7 @@
   .prev, .next{
     margin-block:var(--rhythm-prestissimo);
     max-width:42vw;
+    border-radius:var(--radii-square);
   }
   .prev{
     grid-area: prev;

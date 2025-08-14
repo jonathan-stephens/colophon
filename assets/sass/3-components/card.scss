@@ -1,9 +1,11 @@
 .card{
   background: var(--background-primary);
   border: var(--border-fine) solid var(--border-color-nuance);
-  border-radius:var(--rhythm-vivace);
+  border-radius:var(--radii-square);
   width:100%;
+  overflow:hidden;
   padding:var(--rhythm-moderato);
+  transition: border-radius var(--duration-base) ease-in-out, color var(--duration-base) ease-in-out, border-color var(--duration-base) ease-in-out, background var(--duration-base) ease-in-out;
 
   header{
     display:flex;
@@ -16,14 +18,14 @@
   }
 }
 
-a.card{
+.card{
   text-decoration: none;
 }
 
-a.card{
+.card{
   &:hover, &:active{
     background-color: var(--background-secondary);
-    border-color: var(--border-subtle);
+    border-color: var(--color-emphasis);
     color: var(--color-emphasis);
   }
 }

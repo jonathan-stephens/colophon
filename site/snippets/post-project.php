@@ -48,8 +48,18 @@
         <li>
           <span class="label">Dates</span>
           <span class="content">
-            <time class="dt-start dtstart" datetime="<?= $page->dateFrom() ?>" itemprop="startDate"><?= $page->dateFrom()->toDate('M Y') ?></time> – <?php if($page->dateTo()->isNotEmpty()): ?><time class="dt-end dtend" datetime="<?= $page->dateTo() ?>" itemprop="endDate"><?= $page->dateTo()->toDate('M Y') ?></time><?php else : ?>present<?php endif ?>
-          </span>
+            <time class="dt-start dtstart" datetime="<?= $page->dateFrom() ?>" itemprop="startDate">
+                <?= $page->dateFrom()->toDate('M Y') ?>
+            </time>
+            <?php if($page->dateTo()->isNotEmpty()): ?>
+                <?php if($page->dateFrom()->toDate('M Y') !== $page->dateTo()->toDate('M Y')): ?>
+                    – <time class="dt-end dtend" datetime="<?= $page->dateTo() ?>" itemprop="endDate">
+                        <?= $page->dateTo()->toDate('M Y') ?>
+                    </time>
+                <?php endif ?>
+            <?php else : ?>
+                – present
+            <?php endif ?>          </span>
         </li>
         <?php endif ?>
         <?php if(!$page->skills()->isEmpty()): ?>

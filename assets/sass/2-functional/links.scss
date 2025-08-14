@@ -8,8 +8,8 @@
   --link-color-hover: var(--color-distinct);
   --link-deco-hover: var(--color-nuance);
 
-  --link-color-active: var(--color-emphasis);
-  --link-deco-active: var(--color-emphasis);
+  --link-color-active: var(--color-prominent);
+  --link-deco-active: var(--color-distinct);
 
   --link-color-hover-inverse: var(--color-distinct-inverse);
   --link-deco-hover-inverse: var(--color-nuance-inverse);
@@ -24,7 +24,6 @@ a, a:visited{
   text-decoration-color: var(--link-deco);
   text-underline-offset: var(--border-thin);
   text-decoration-thickness: var(--border-fine);
-  transition: all 0.1s ease;
 /*
   &:not([href*='jonathanstephens.us']):not([href*='localhost']):not([href^='#']):not([href^='/']) {
     margin-inline-end: var(--rhythm-vivace);

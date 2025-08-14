@@ -12,11 +12,16 @@ footer {
   max-inline-size: none;
 }
 html{
+  font-size: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
   background-color: var(--background-primary);
   scroll-margin-block: var(--rhythm-largo);
   scroll-behavior: smooth;
   box-sizing: border-box;
+  hanging-punctuation: first last;
 }
+
 :target, [id] {
   scroll-margin-block:var(--rhythm-largo);
 }
@@ -26,11 +31,11 @@ body {
   font-family: var(--font-sans);
   transition: background-color 0.3s, color 0.3s;
   margin:0;
-
-
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizeSpeed;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 main{

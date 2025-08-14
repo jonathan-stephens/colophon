@@ -52,7 +52,7 @@
       border-color:var(--color-emphasis);
     }
   }
-  .disabled{
+  .disabled, .disabled span{
     color:var(--color-quiet);
     text-decoration: line-through;
   }

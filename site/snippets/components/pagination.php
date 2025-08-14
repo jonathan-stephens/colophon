@@ -19,8 +19,12 @@ $total = $pagination->total();
 
 $startItem = (($currentPage - 1) * $perPage) + 1;
 $endItem = min($currentPage * $perPage, $total);
+
+// Determine pagination class based on total pages
+$paginationClass = $total <= 7 ? 'simple' : 'full';
+
 ?>
-<nav class="pagination full" aria-label="Page navigation">
+<nav class="pagination <?= $paginationClass ?>" aria-label="Page navigation">
   <p class="range">
     <?= $startItem ?>–<?= $endItem ?> of <?= $total ?>
   </p>

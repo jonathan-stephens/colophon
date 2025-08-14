@@ -20,7 +20,7 @@ $total = $pagination->total();
 $startItem = (($currentPage - 1) * $perPage) + 1;
 $endItem = min($currentPage * $perPage, $total);
 ?>
-<nav class="pagination" aria-label="Page navigation">
+<nav class="pagination full" aria-label="Page navigation">
   <p class="range">
     <?= $startItem ?>–<?= $endItem ?> of <?= $total ?>
   </p>

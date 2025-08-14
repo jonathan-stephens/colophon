@@ -1,15 +1,77 @@
 /* Card Carousel Styles */
 section.endorsements{
   padding-block:var(--rhythm-andantino);
-  margin-block-start:var(--rhythm-andantino);
   border-block-start: var(--border-fine) solid var(--border-color-nuance);
+  position: relative;
+  display:flex;
+  flex-flow:column;
+  gap:var(--rhythm-moderato);
 }
+.carousel-container {
+  position: relative;
+}
+.carousel-nav{
+  display:flex;
+  justify-content: space-between;
+}
+.scroll-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--duration-faster) ease;
+  padding-inline:var(--rhythm-moderato);
+
+  .icon{
+    position:inherit;
+  }
+}
+
+.scroll-indicator:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Progress Indicator */
+.carousel-progress {
+  display: flex;
+  justify-content: center;
+  gap: var(--rhythm-vivace);
+  align-items:center;
+}
+
+.progress-dot {
+  width: var(--rhythm-moderato);
+  height: var(--rhythm-moderato);
+  border-radius: 50%;
+  padding:0;
+  background: var(--link-deco);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-base) ease;
+}
+
+.progress-dot:hover {
+  background: var(--link-deco-hover);
+  transform: scale(1.2);
+}
+
+.progress-dot:focus {
+  outline: 2px solid var(--link-deco-active);
+  outline-offset: 2px;
+}
+
+.progress-dot.active {
+  background: var(--link-deco-active);
+  transform: scale(1.1);
+}
+
+
 .endorsements .inner{
   max-inline-size:none;
   display: flex;
   gap: var(--rhythm-andantino);
-  padding: var(--rhythm-allegro) 0;
-  margin-block:var(--rhythm-andantino);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -26,17 +88,13 @@ section.endorsements{
 
   /* Add scroll snap for better UX */
   scroll-snap-type: x mandatory;
+  position: relative;
 
 }
 .endorsements .inner::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* Focus management for keyboard navigation */
-.endorsements .inner:focus-within {
-  outline: 2px solid #0066cc;
-  outline-offset: 4px;
-}
 
 /* Individual card styles */
 .endorsement.card {
@@ -52,20 +110,19 @@ section.endorsements{
   /* Smooth transitions */
   transition: transform var(--duration-faster) ease, box-shadow var(--duration-faster) ease;
   &:first-of-type{
-    margin-inline-start:var(--rhythm-andante);
+  margin-inline-start:var(--rhythm-andante);
   }
+}
+.endorsement.card:first-of-type {
+  margin-inline-start: var(--rhythm-andante);
 }
 
 .endorsement.card:hover,
-.endorsement.card:focus-within {
+.endorsement.card:focus-within, .endorsement.card:focus{
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-.endorsement.card:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
-}
 
 /* Card content layout */
 .endorsement .content {
@@ -121,12 +178,17 @@ section.endorsements{
   flex-flow:column;
   justify-content:center;
   font-weight:var(--weight-medium);
-  .icon{
+  display: flex;
+  color: var(--color-emphasis);
+  transition: all var(--duration-faster) ease;
+
+  .icon, svg{
     width:var(--rhythm-andantino);
     height: var(--rhythm-andantino);
+    fill: currentColor;
   }
 
-  &:hover{
+  &:hover, &:focus{
     background:var(--background-tertiary);
     color:var(--color-emphasis);
     .icon{fill: var(--color-emphasis);}
@@ -135,37 +197,31 @@ section.endorsements{
 
 
 /* Responsive behavior */
-@media (min-width: 768px) {
+@media (min-width: 40em) {
   .endorsements {
-    gap: 2rem;
-    padding: 1.5rem 0;
+    gap: var(--rhythm-andante);
+    padding: var(--rhythm-andantino) 0;
   }
 
-  .endorsement.card {
-    width: 350px;
-    padding: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .endorsement.card {
-    width: 380px;
+  .endorsement.card, .endorsement.cta {
+    width: 30ch;
+    padding: var(--rhythm-andante);
   }
 }
 
-@media (min-width: 1200px) {
-  .endorsement.card {
-    width: 420px;
+@media (min-width: 50em) {
+  .endorsement.card, .endorsement.cta {
+    width: 38ch;
   }
 }
 
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
-  .endorsements {
+  .endorsements .inner {
     scroll-behavior: auto;
   }
 
-  .endorsement.card {
+  .endorsement.card, .scroll-indicator, .progress-dot {
     transition: none;
   }
 }
@@ -174,11 +230,28 @@ section.endorsements{
 @media (hover: none) and (pointer: coarse) {
   .endorsement.card:hover {
     transform: none;
-    box-shadow: 0 2px 8px var(--bac--background-secondary);
+    box-shadow: 0 2px 8px var(--background-primary);
   }
 
   /* Add subtle touch feedback */
   .endorsement.card:active {
     transform: scale(0.98);
+  }
+  .carousel-nav{justify-content: center;}
+  /* Hide scroll indicators on touch devices */
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .scroll-indicator {
+    border: 2px solid;
+  }
+
+  .endorsement.card:focus,
+  .endorsement.card:focus-within {
+    outline: 3px solid;
   }
 }

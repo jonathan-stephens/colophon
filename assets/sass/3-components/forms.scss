@@ -58,6 +58,20 @@ form.error{
   }
 }
 
+select{
+  background:var(--background-primary);
+  border-color:var(--border-color-distinct);
+  border-radius:var(--radii-square);
+  padding:var(--rhythm-presto);
+  outline:none;
+}
+
+select:hover, select:active{
+  cursor:pointer;
+  background:var(--background-secondary);
+  border-color:var(--border-color-prominent);
+}
+
 body.locked{
   main{
     display:flex;

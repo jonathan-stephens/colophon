@@ -1,6 +1,24 @@
-.links .wrapper section{
+
+@media screen and (min-width:80em){
+  .links main[role="main"] .wrapper{
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows:repeat(3, auto);
+    grid-template-areas:
+    "header header"
+    "content aside"
+    "footer footer";
+
+    header { grid-area: header; }
+    header + div { grid-area: content; }
+    footer{ grid-area: footer;}
+  }
+}
+
+.links .wrapper{
   overflow:hidden;
 }
+
 .date-header{
   font-size:var(--hed-quaternary);
   padding-block-start:var(--rhythm-andante);

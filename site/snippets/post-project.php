@@ -53,12 +53,12 @@
             </time>
             <?php if($page->dateTo()->isNotEmpty()): ?>
                 <?php if($page->dateFrom()->toDate('M Y') !== $page->dateTo()->toDate('M Y')): ?>
-                    – <time class="dt-end dtend" datetime="<?= $page->dateTo() ?>" itemprop="endDate">
+                    – <time class="dt-end dtend" datetime="<?= $page->dateTo() ?>" itemprop="endDate">
                         <?= $page->dateTo()->toDate('M Y') ?>
                     </time>
                 <?php endif ?>
             <?php else : ?>
-                – present
+                – now
             <?php endif ?>          </span>
         </li>
         <?php endif ?>

@@ -53,16 +53,16 @@ if ($filter) {
             <span class="time with-icon">
               <?= asset('assets/svg/icons/time.svg')->read() ?>
                 <time class="dt-start dtstart" datetime="<?= $article->dateFrom() ?>" itemprop="startDate">
-                    <?= $article->dateFrom()->toDate('Y') ?>
+                    <?= $article->dateFrom()->toDate('Y') ?> 
                 </time>
                 <?php if($article->dateTo()->isNotEmpty()): ?>
                     <?php if($article->dateFrom()->toDate('Y') !== $article->dateTo()->toDate('Y')): ?>
-                        – <time class="dt-end dtend" datetime="<?= $article->dateTo() ?>" itemprop="endDate">
+                        – <time class="dt-end dtend" datetime="<?= $article->dateTo() ?>" itemprop="endDate">
                             <?= $article->dateTo()->toDate('Y') ?>
                         </time>
                     <?php endif ?>
                 <?php else : ?>
-                    – present
+                   – now
                 <?php endif ?>
             </span>
           </p>

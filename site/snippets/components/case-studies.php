@@ -44,7 +44,7 @@ if ($filter) {
   <?php foreach($source as $article): ?>
     <a href="<?= $article->url() ?>" class="case-study">
       <article class="h-entry card">
-        <img src="<?= $article->image()->url() ?>" style="--transition-image: url('<?= $article->image()->url() ?>)'">
+        <img src="<?= $article->cover()->toFile()->url() ?>"> 
           <h<?= $hedLevel ?> class="p-name hed"><?= $article->hed()->html() ?></h<?= $hedLevel ?>>
           <p class="dek"><?= $article->dek()->html() ?></p>
           <p class="info">

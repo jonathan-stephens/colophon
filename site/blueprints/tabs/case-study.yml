@@ -68,6 +68,14 @@ fields:
     type: date
     width: 1/3
     step: month
+  cover:
+    label: Cover Photo
+    type: files
+    width: 1/3
+    multiple: false
+    layout: list
+    query: page.images
+
   overview:
     label: Overview
     type: textarea

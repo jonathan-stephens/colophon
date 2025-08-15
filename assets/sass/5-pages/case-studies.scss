@@ -37,7 +37,7 @@ section.case-studies{max-inline-size:none;}
     background:var(--background-primary);
 
   }
-  .client{
+  .client, .principal{
     font-weight:var(--weight-medium);
   }
   .hed{
@@ -79,12 +79,13 @@ section.case-studies{max-inline-size:none;}
     .time{grid-area:time;}
   }
 
-  .client, .principal, .hed, .dek,.time, img, .info{
+  .client, .principal, .hed, .dek,.time, img, .info, .icon{
     transition:
       border var(--duration-base) ease-in-out,
       background var(--duration-base) ease-in-out,
       mix-blend-mode var(--duration-base) ease-in-out,
-      color var(--duration-slower) ease-in-out;
+      color var(--duration-slower) ease-in-out,
+      fill var(--duration-base) ease-in-out;
   }
   &:hover, &:active{
     .client, .principal, .hed, .dek, .time {

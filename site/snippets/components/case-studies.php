@@ -48,9 +48,10 @@ if ($filter) {
           <h<?= $hedLevel ?> class="p-name hed"><?= $article->hed()->html() ?></h<?= $hedLevel ?>>
           <p class="dek"><?= $article->dek()->html() ?></p>
           <p class="info">
-            <span class="client"><?= $article->client()->html() ?></span>
-            <span class="principal"><?= $article->principal()->html() ?></span>
-            <span class="time">
+            <span class="client with-icon"><?= asset('assets/svg/icons/building.svg')->read() ?><?= $article->client()->html() ?></span>
+            <span class="principal with-icon"><?= asset('assets/svg/icons/parent-child.svg')->read() ?><?= $article->principal()->html() ?></span>
+            <span class="time with-icon">
+              <?= asset('assets/svg/icons/time.svg')->read() ?>
                 <time class="dt-start dtstart" datetime="<?= $article->dateFrom() ?>" itemprop="startDate">
                     <?= $article->dateFrom()->toDate('Y') ?>
                 </time>

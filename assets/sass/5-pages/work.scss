@@ -6,12 +6,12 @@ header.work{
     line-height: var(--leading-standard);
     color:var(--color-distinct);
     padding-block:var(--rhythm-andantino);
-    border-block: var(--border-fine) solid var(--border-color-distinct);
+    border-block: var(--border-fine) solid var(--border-color-nuance);
     margin-block: var(--rhythm-moderato);
     span{display:block;max-width: 38ch;}
   }
   .lede{
-    color:var(--color-subtle);
+    color:var(--color-nuance);
     max-width:84ch;
     padding-block-end:var(--rhythm-andante);
 

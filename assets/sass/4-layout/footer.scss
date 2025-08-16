@@ -70,10 +70,6 @@ body > footer{
     order:3;
     a{color:var(--color-distinct);}
   }
-  section.sticky-bottom{
-    order:5;
-    background:var(--background-tertiary)
-  }
   section.final-info{
     background:var(--background-secondary);
     order:4;
@@ -209,7 +205,6 @@ html[data-theme="dark"] body > footer{
   section.subscribe{background:var(--background-tertiary);}
   section.socials{background:var(--background-quaternary);}
   section.final-info{background:var(--background-secondary);}
-  section.sticky-bottom{background:var(--background-primary);}
 }
 footer {.h-entry, .h-card, .carbon {font-size:var(--caption);color:var(--color-distinct);}}
 .dt-updated span{

@@ -109,6 +109,7 @@ section:has(.objectives, .results){
   width:100%;
   align-items: center;
   row-gap:var(--rhythm-moderato);
+  box-sizing:border-box;
 
   h3{
     padding:0;

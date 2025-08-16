@@ -31,8 +31,7 @@
       border: var(--border-fine) solid var(--border-color-subtle);
 
       .meta{
-        border-top: var(--border-fine) dashed var(--border-color-prominent);
-        border-bottom: var(--border-fine) dashed var(--border-color-prominent);
+        border-block: var(--border-fine) dashed var(--border-color-prominent);
       }
     }
   }
@@ -45,8 +44,7 @@
     font-size: var(--small);
     padding-block: var(--rhythm-vivace);
     margin-block-end: var(--rhythm-vivace);
-    border-top: var(--border-fine) dashed var(--border-color-distinct);
-    border-bottom: var(--border-fine) dashed var(--border-color-distinct);
+    border-block: var(--border-fine) dashed var(--border-color-distinct);
     transition: border-color var(--duration-faster) ease-in-out;
   }
 
@@ -104,9 +102,9 @@ article {
     color:var(--color-subtle);
   }
   .on-at-in{
-    border-top: var(--border-fine) dashed var(--color-quiet);
-    border-bottom: var(--border-fine) solid var(--color-quiet);
-    padding: var(--rhythm-allegro) 0;
+    border-block: var(--border-fine) dashed var(--color-quiet);
+    border-block-start-style: solid;
+    padding-block: var(--rhythm-allegro);
     container-type: inline-size;
     container-name: on-at-in;
     width: 100%;
@@ -115,7 +113,7 @@ article {
     font-family:var(--font-mono);
     font-size:var(--small);
     color:var(--color-nuance);
-    margin-bottom:var(--rhythm-andantino);
+    margin-block:var(--rhythm-moderato) var(--rhythm-andantino);
 
     .with-icon .icon{
       margin-inline-end:var(--rhythm-presto);
@@ -139,9 +137,9 @@ article {
     justify-content: flex-end;
     align-items: baseline;
     color:var(--color-nuance);
-    border-bottom: var(--border-fine) solid var(--color-quiet);
-    border-top: var(--border-fine) dashed var(--color-quiet);
-    padding: var(--rhythm-presto) 0;
+    border-block: var(--border-fine) solid var(--color-quiet);
+    border-block-start-style: dashed;
+    padding-block: var(--rhythm-vivace) var(--rhythm-allegro);
     margin-top:var(--rhythm-andante);
 
     .on-at-in{
@@ -159,7 +157,7 @@ article {
   }
 }
 
-@media (min-width: 30em) and (max-width:40em) {
+@media (max-width: 40em){
   article .on-at-in {
     flex-direction: column;
     gap: var(--rhythm-presto);

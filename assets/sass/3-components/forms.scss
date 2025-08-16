@@ -8,11 +8,11 @@ form{
   gap:var(--rhythm-allegro);
   margin-block: var(--rhythm-moderato);
 }
-textarea, input{
+textarea, input, button{
   padding-block: var(--rhythm-vivace);
   padding-inline: var(--rhythm-vivace);
   border-color: var(--border-color-distinct);
-  border-width: var(--border-fine);
+  border-width: var(--border-thin);
   border-style: solid;
   border-radius: var(--radii-square);
   background: var(--background-secondary);
@@ -22,18 +22,34 @@ textarea, input{
     color:var(--color-distinct-inverse);
   }
   &:focus, &:active{
-    background: var(--background-quaternary);
+    background: var(--background-primary);
   }
 }
 
 footer[role="contentinfo"]{
+  form{
+    display:grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--rhythm-moderato);
+  }
   input{
-    background:var(--background-primary);
+    background:var(--background-secondary);
     color: var(--color-distinct);
 
+    &:hover{
+      border-color:var(--border-color-prominent);
+    }
     &::placeholder{
       color:var(--color-distinct);
     }
+    &:active, &:focus{
+      background:var(--background-primary);
+    }
+  }
+  button{
+    --button-bg:var(--background-tertiary);
+    --button-border-color:var(--border-color-distinct);
+    --button-border-width:var(--border-thin);
   }
 }
 

@@ -1,6 +1,6 @@
 <article class="article post h-entry wrapper" itemscope itemtype="http://schema.org/Article">
   <header>
-    
+
     <?php if($page->hed()->isNotEmpty()): ?>
       <h1 class="p-name" itemprop="name headline"><?= $page->hed()->html() ?></h1>
     <?php else: ?>
@@ -8,7 +8,7 @@
     <?php endif ?>
 
     <?php if($page->dek()->isNotEmpty()): ?>
-      <p><?= $page->dek()->html() ?><p>
+      <?= $page->dek()->kt() ?>
     <?php endif?>
 
     <?php snippet('/components/on-at-in') ?>

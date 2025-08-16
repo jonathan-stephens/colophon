@@ -1,0 +1,1944 @@
+    <!-- More Lede and Body Text -->
+    <div class="demo-section">
+        <div class="demo-label">Lede & Body Text Variations</div>
+        
+        <!-- Classic Lede with Drop Cap -->
+        <p class="lede drop-cap">Typography has always been the backbone of good design, but in the digital age, it has evolved from a purely aesthetic choice to a crucial element of user experience and accessibility.</p>
+        
+        <!-- Conversational Lede -->
+        <p class="lede conversational-lede">Let's be honest about something: most of us don't think about typography until it goes wrong. But when it's done right, it becomes invisible—a perfect vessel for ideas.</p>
+        
+        <!-- Literary Lede -->
+        <p class="lede literary-lede">In the beginning was the Word, and the Word was made manifest through careful arrangement of letters, spaces, and the silences between them.</p>
+        
+        <!-- Technical Lede -->
+        <p class="lede technical-lede">Modern web typography operates at the intersection of performance, accessibility, and visual design—a complex optimization problem with human consequences.</p>
+        
+        <!-- Question Lede -->
+        <p class="lede question-lede">What happens when design meets empathy? When accessibility becomes not just compliance but craftsmanship?</p>
+        
+        <!-- Statistical Lede -->
+        <p class="lede statistical-lede">47% of users abandon websites that take longer than 3 seconds to load. Typography choices can make or break that critical first impression.</p>
+        
+        <p class="nutgraf">This shift represents more than just a trend—it's a fundamental reimagining of how we communicate through text in digital spaces.</p>
+        
+        <div class="prose">
+            <p>The evolution of web typography has been remarkable. From the early days of the web when designers were limited to a handful of system fonts, we now have access to thousands of web fonts that can be loaded instantly and displayed consistently across all devices and browsers.</p>
+            
+            <p>This transformation has been driven by advances in font technology, improved browser support, and a growing understanding of how<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Boilerplate</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Typography Scale */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            --text-5xl: 3rem;
+            --text-6xl: 3.75rem;
+
+            /* Line Heights */
+            --leading-tight: 1.25;
+            --leading-snug: 1.375;
+            --leading-normal: 1.5;
+            --leading-relaxed: 1.625;
+            --leading-loose: 2;
+
+            /* Font Weights */
+            --font-light: 300;
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+            --font-black: 900;
+
+            /* Colors */
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --accent: #2563eb;
+            --border: #e5e5e5;
+            --bg-subtle: #f8fafc;
+
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: var(--text-base);
+            line-height: var(--leading-normal);
+            color: var(--text-primary);
+            max-width: 65ch;
+            margin: 0 auto;
+            padding: var(--space-2xl);
+        }
+
+        /* Headlines */
+        .hed {
+            font-size: var(--text-5xl);
+            font-weight: var(--font-black);
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-md);
+            letter-spacing: -0.025em;
+        }
+        
+        /* Display Headlines */
+        .display-hed {
+            font-size: var(--text-6xl);
+            font-weight: var(--font-black);
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+        
+        /* Question Headlines */
+        .question-hed {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-semibold);
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+        }
+        
+        /* Serif Headlines */
+        .serif-hed {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-4xl);
+            font-weight: var(--font-normal);
+            font-style: italic;
+            letter-spacing: 0;
+            line-height: var(--leading-snug);
+        }
+        
+        /* Condensed Headlines */
+        .condensed-hed {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-black);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+        
+        /* Playful Headlines */
+        .playful-hed {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-medium);
+            letter-spacing: -0.015em;
+            color: #7c3aed;
+        }
+
+        .subhed {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            line-height: var(--leading-snug);
+            margin: var(--space-xl) 0 var(--space-md) 0;
+            letter-spacing: -0.01em;
+        }
+
+        /* Dek (Subheadline) */
+        .dek {
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            font-style: italic;
+        }
+        
+        /* Dek Variations */
+        .compact-dek {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            font-style: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        
+        .conversational-dek {
+            font-size: var(--text-lg);
+            font-weight: var(--font-normal);
+            font-style: normal;
+            line-height: var(--leading-relaxed);
+        }
+        
+        .literary-dek {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-lg);
+            font-weight: var(--font-normal);
+            font-style: italic;
+            line-height: var(--leading-relaxed);
+        }
+        
+        .technical-dek {
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            font-style: normal;
+            color: var(--text-secondary);
+            line-height: var(--leading-normal);
+        }
+        
+        .optimistic-dek {
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            font-style: normal;
+            color: var(--accent);
+            line-height: var(--leading-relaxed);
+        }
+
+        /* Byline */
+        .byline {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .byline time {
+            font-weight: var(--font-normal);
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        /* Lede (Opening paragraph) */
+        .lede {
+            font-size: var(--text-lg);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-relaxed);
+            margin-bottom: var(--space-lg);
+        }
+        
+        /* Lede Variations */
+        .conversational-lede {
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+        }
+        
+        .literary-lede {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            font-style: italic;
+            line-height: var(--leading-loose);
+        }
+        
+        .technical-lede {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            line-height: var(--leading-normal);
+            color: var(--text-primary);
+        }
+        
+        .question-lede {
+            font-size: var(--text-xl);
+            font-weight: var(--font-medium);
+            font-style: italic;
+            line-height: var(--leading-relaxed);
+            color: var(--accent);
+        }
+        
+        .statistical-lede {
+            font-size: var(--text-lg);
+            font-weight: var(--font-semibold);
+            line-height: var(--leading-relaxed);
+        }
+
+        /* Nutgraf (Nut paragraph) */
+        .nutgraf {
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            line-height: var(--leading-relaxed);
+            margin-bottom: var(--space-lg);
+            padding-left: var(--space-md);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Body Text */
+        .prose p {
+            margin-bottom: var(--space-lg);
+            line-height: var(--leading-relaxed);
+        }
+
+        .prose p + p {
+            text-indent: 1.5em;
+            margin-top: calc(-1 * var(--space-lg));
+        }
+
+        /* Drop cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4em;
+            line-height: 0.8;
+            margin: 0.1em 0.1em 0 0;
+            font-weight: var(--font-bold);
+        }
+
+        /* Blockquotes */
+        .pullquote {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-medium);
+            line-height: var(--leading-snug);
+            font-style: italic;
+            text-align: center;
+            margin: var(--space-2xl) 0;
+            padding: var(--space-xl);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blockquote {
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            font-style: italic;
+            margin: var(--space-xl) 0;
+            padding-left: var(--space-xl);
+            border-left: 4px solid var(--accent);
+        }
+
+        .blockquote cite {
+            display: block;
+            font-size: var(--text-sm);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            color: var(--text-secondary);
+            margin-top: var(--space-sm);
+        }
+
+        .blockquote cite::before {
+            content: "— ";
+        }
+
+        /* Inline blockquote */
+        .inline-quote {
+            background: var(--bg-subtle);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 4px;
+            font-style: italic;
+            margin: var(--space-md) 0;
+        }
+        
+        /* Blockquote Variations */
+        .literary-blockquote {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-xl);
+            line-height: var(--leading-loose);
+            border-left: 4px solid #7c3aed;
+        }
+        
+        .technical-blockquote {
+            font-size: var(--text-base);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            line-height: var(--leading-normal);
+            background: var(--bg-subtle);
+            padding: var(--space-lg);
+            border: none;
+            border-radius: 6px;
+            border-left: 4px solid #059669;
+        }
+        
+        .question-blockquote {
+            font-size: var(--text-lg);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .testimonial-blockquote {
+            font-size: var(--text-base);
+            font-style: normal;
+            line-height: var(--leading-relaxed);
+            background: #f8fafc;
+            padding: var(--space-lg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .testimonial-blockquote cite {
+            font-weight: var(--font-semibold);
+            color: #f59e0b;
+        }
+        
+        .emphasis-quote {
+            font-weight: var(--font-semibold);
+            color: var(--accent);
+            background: none;
+            padding: 0;
+        }
+        
+        .centered-quote {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-light);
+            font-style: italic;
+            text-align: center;
+            margin: var(--space-3xl) 0;
+            color: var(--text-secondary);
+            border: none;
+            padding: 0;
+        }
+        
+        .sidebar-quote {
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            font-style: italic;
+            background: var(--bg-subtle);
+            padding: var(--space-lg);
+            margin: var(--space-xl) 0;
+            border-left: none;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .sidebar-quote cite {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Captions */
+        .caption {
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+            color: var(--text-secondary);
+            margin-top: var(--space-sm);
+            font-style: italic;
+        }
+
+        /* Citations */
+        .citation {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin: var(--space-sm) 0;
+        }
+
+        .citation a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .citation a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Caption Variations */
+        .photo-caption {
+            font-size: var(--text-sm);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            line-height: var(--leading-relaxed);
+            color: var(--text-primary);
+        }
+        
+        .technical-caption {
+            font-size: var(--text-xs);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            line-height: var(--leading-normal);
+            color: var(--text-secondary);
+        }
+        
+        .video-caption {
+            font-size: var(--text-base);
+            font-style: normal;
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+        }
+        
+        .sidebar-caption {
+            font-size: var(--text-xs);
+            font-style: normal;
+            font-weight: var(--font-medium);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Citation Variations */
+        .photo-credit {
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .technical-citation {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-xs);
+            font-weight: var(--font-normal);
+            background: var(--bg-subtle);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .video-credit {
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .quote-attribution {
+            font-size: var(--text-xs);
+            font-style: italic;
+            color: var(--text-muted);
+            border-left: 2px solid var(--border);
+            padding-left: var(--space-sm);
+        }
+        
+        .multiple-sources {
+            font-size: var(--text-xs);
+            line-height: var(--leading-relaxed);
+        }
+        
+        .multiple-sources a {
+            margin-right: var(--space-sm);
+        }
+        
+        .footnote-citation {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: var(--space-sm);
+            margin-top: var(--space-lg);
+        }
+        
+        .update-citation {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            background: var(--bg-subtle);
+            padding: var(--space-sm);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* Code */
+        code {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+            font-size: 0.875em;
+            background: var(--bg-subtle);
+            padding: 0.125em 0.25em;
+            border-radius: 3px;
+            color: var(--accent);
+        }
+
+        pre {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+            background: var(--bg-subtle);
+            padding: var(--space-md);
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: var(--space-lg) 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* Lists */
+        .prose ul, .prose ol {
+            margin-left: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .prose li {
+            margin-bottom: var(--space-sm);
+            line-height: var(--leading-relaxed);
+        }
+
+        /* Header Pairings */
+        .header-pairing {
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .header-pairing h1 {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-black);
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-xs);
+        }
+
+        .header-pairing h2 {
+            font-size: var(--text-lg);
+            font-weight: var(--font-normal);
+            color: var(--text-secondary);
+            line-height: var(--leading-normal);
+            margin-bottom: var(--space-xl);
+        }
+        
+        /* Minimal Pairing */
+        .minimal-pairing h1 {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-medium);
+            letter-spacing: 0.02em;
+        }
+        
+        .minimal-pairing h2 {
+            font-size: var(--text-base);
+            font-weight: var(--font-light);
+            font-style: italic;
+        }
+        
+        /* Bold Statement Pairing */
+        .bold-pairing h1 {
+            font-size: var(--text-6xl);
+            font-weight: var(--font-black);
+            letter-spacing: -0.05em;
+            color: var(--text-primary);
+        }
+        
+        .bold-pairing h2 {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+        
+        /* Question-Answer Pairing */
+        .qa-pairing h1 {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-normal);
+            font-style: italic;
+            color: var(--accent);
+        }
+        
+        .qa-pairing h2 {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            font-style: normal;
+        }
+        
+        /* Numeric Pairing */
+        .numeric-pairing .big-number {
+            font-size: 6rem;
+            font-weight: var(--font-black);
+            line-height: 0.8;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .numeric-pairing h1 {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .numeric-pairing h2 {
+            font-size: var(--text-base);
+        }
+        
+        /* Poetic Pairing */
+        .poetic-pairing h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-4xl);
+            font-weight: var(--font-normal);
+            font-style: italic;
+            line-height: var(--leading-snug);
+        }
+        
+        .poetic-pairing h2 {
+            font-family: inherit;
+            font-size: var(--text-base);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-relaxed);
+        }
+        
+        /* Technical Pairing */
+        .technical-pairing .version-tag {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: var(--accent);
+            background: var(--bg-subtle);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .technical-pairing h1 {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            font-family: inherit;
+        }
+        
+        /* Opinion Pairing */
+        .opinion-pairing .opinion-label {
+            font-size: var(--text-xs);
+            font-weight: var(--font-bold);
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+            padding: var(--space-xs) var(--space-sm);
+            background: #fef2f2;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        
+        .opinion-pairing h1 {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-bold);
+        }
+        
+        .opinion-pairing h2 {
+            font-size: var(--text-lg);
+            font-style: italic;
+        }
+        
+        /* Urgent/Breaking Pairing */
+        .urgent-pairing .timestamp {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .urgent-pairing .timestamp::before {
+            content: "🔴 ";
+            margin-right: var(--space-xs);
+        }
+        
+        .urgent-pairing h1 {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-black);
+        }
+        
+        /* Feature Story Pairing */
+        .feature-pairing .feature-tag {
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: #7c3aed;
+            background: #f3e8ff;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .feature-pairing h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-4xl);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-snug);
+        }
+        
+        .feature-pairing h2 {
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            max-width: 55ch;
+        }
+        
+        /* Data-Driven Pairing */
+        .data-pairing .stat-highlight {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            color: #059669;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .data-pairing h1 {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-semibold);
+        }
+        
+        /* Profile Pairing */
+        .profile-pairing .profile-tag {
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .profile-pairing h1 {
+            font-size: var(--text-5xl);
+            font-weight: var(--font-light);
+            letter-spacing: -0.02em;
+        }
+        
+        /* Book Design Typography */
+        .book-chapter {
+            max-width: 55ch;
+            margin: var(--space-3xl) 0;
+        }
+        
+        .chapter-number {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .chapter-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-4xl);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .chapter-epigraph {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-base);
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xs);
+            max-width: 45ch;
+        }
+        
+        .epigraph-attribution {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .book-lede {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .book-prose p {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-base);
+            line-height: var(--leading-loose);
+            margin-bottom: var(--space-lg);
+            text-align: justify;
+        }
+        
+        .book-running-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: var(--space-sm) 0;
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-2xl);
+        }
+        
+        .book-footnotes {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+        }
+        
+        .footnote-item {
+            font-size: var(--text-xs);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .footnote-number {
+            font-weight: var(--font-semibold);
+            color: var(--accent);
+            margin-right: var(--space-sm);
+        }
+        
+        /* Magazine Design Typography */
+        .magazine-feature {
+            max-width: 70ch;
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .magazine-kicker {
+            font-size: var(--text-xs);
+            font-weight: var(--font-bold);
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .magazine-headline {
+            font-size: var(--text-6xl);
+            font-weight: var(--font-black);
+            line-height: var(--leading-tight);
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .magazine-deck {
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            color: var(--text-secondary);
+            line-height: var(--leading-snug);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .magazine-byline {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .author {
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+        }
+        
+        .author-title {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .date {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .magazine-lede {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-normal);
+            line-height: var(--leading-snug);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .magazine-pullquote {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-medium);
+            line-height: var(--leading-tight);
+            font-style: italic;
+            text-align: center;
+            color: var(--accent);
+            margin: var(--space-3xl) 0;
+            padding: var(--space-2xl);
+            border: 3px solid var(--accent);
+        }
+        
+        .magazine-sidebar {
+            background: var(--bg-subtle);
+            padding: var(--space-xl);
+            border-radius: 8px;
+            margin: var(--space-2xl) 0;
+        }
+        
+        .sidebar-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: var(--space-md);
+        }
+        
+        .stat-number {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-black);
+            color: var(--accent);
+            margin-right: var(--space-md);
+        }
+        
+        .stat-label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: var(--leading-normal);
+        }
+        
+        /* Newspaper Design Typography */
+        .newspaper-header {
+            text-align: center;
+            padding: var(--space-lg) 0;
+            border-bottom: 2px solid var(--text-primary);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .newspaper-masthead {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-5xl);
+            font-weight: var(--font-bold);
+            letter-spacing: 0.1em;
+        }
+        
+        .newspaper-date {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            margin-top: var(--space-sm);
+        }
+        
+        .newspaper-breaking {
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .breaking-label {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            font-size: var(--text-xs);
+            font-weight: var(--font-bold);
+            padding: var(--space-xs) var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .newspaper-headline {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: var(--text-4xl);
+            font-weight: var(--font-bold);
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .newspaper-subhead {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            color: var(--text-secondary);
+            line-height: var(--leading-snug);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .newspaper-column {
+            column-count: 2;
+            column-gap: var(--space-xl);
+            font-family: Georgia, "Times New Roman", serif;
+        }
+        
+        .newspaper-lede {
+            font-size: var(--text-base);
+            line-height: var(--leading-relaxed);
+            margin-bottom: var(--space-md);
+        }
+        
+        .news-brief {
+            background: var(--bg-subtle);
+            padding: var(--space-lg);
+            border-left: 4px solid var(--accent);
+            margin: var(--space-xl) 0;
+        }
+        
+        .brief-headline {
+            font-size: var(--text-lg);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .brief-text {
+            font-size: var(--text-sm);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+        }
+        
+        /* Poster Design Typography */
+        .poster-design {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: var(--space-3xl);
+            border-radius: 12px;
+            margin: var(--space-xl) 0;
+            text-align: center;
+        }
+        
+        .event-poster .poster-kicker {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--space-md);
+        }
+        
+        .poster-headline {
+            font-size: 6rem;
+            font-weight: var(--font-black);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .poster-subline {
+            font-size: var(--text-xl);
+            font-weight: var(--font-light);
+            color: #d1d5db;
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .poster-details {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+        }
+        
+        .poster-date, .poster-location, .poster-cta {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .poster-cta {
+            color: #fbbf24;
+            font-weight: var(--font-semibold);
+        }
+        
+        .exhibition-poster {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+        }
+        
+        .exhibition-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 4rem;
+            font-weight: var(--font-normal);
+            line-height: 0.9;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .concert-poster {
+            background: linear-gradient(135deg, #7c3aed 0%, #3730a3 100%);
+        }
+        
+        .concert-date {
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            color: #c4b5fd;
+            margin-bottom: var(--space-md);
+        }
+        
+        .concert-headline {
+            font-size: 4rem;
+            font-weight: var(--font-black);
+            letter-spacing: 0.1em;
+            line-height: 0.8;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .headliner {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .supporting {
+            font-size: var(--text-lg);
+            color: #c4b5fd;
+            margin-bottom: var(--space-lg);
+        }
+        
+        /* Information Design Typography */
+        .info-dashboard {
+            background: var(--bg-subtle);
+            padding: var(--space-xl);
+            border-radius: 8px;
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .dashboard-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .dashboard-timestamp {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .metric-card {
+            background: white;
+            padding: var(--space-lg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        
+        .metric-value {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .metric-label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .metric-change {
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+        }
+        
+        .metric-change.positive {
+            color: #059669;
+        }
+        
+        .metric-change.negative {
+            color: #dc2626;
+        }
+        
+        .process-flow {
+            margin: var(--space-2xl) 0;
+        }
+        
+        .process-title {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .process-steps {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+        }
+        
+        .process-step {
+            background: var(--bg-subtle);
+            padding: var(--space-lg);
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .step-number {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-sm);
+            font-weight: var(--font-bold);
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .step-title {
+            font-size: var(--text-base);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .step-description {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: var(--leading-normal);
+        }
+        
+        .process-arrow {
+            font-size: var(--text-2xl);
+            color: var(--text-muted);
+        }
+        
+        .technical-spec {
+            background: var(--bg-subtle);
+            padding: var(--space-lg);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .spec-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-md);
+        }
+        
+        .spec-endpoint {
+            background: #1f2937;
+            color: #10b981;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 4px;
+            font-weight: var(--font-semibold);
+        }
+        
+        .spec-description {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            margin: var(--space-sm) 0;
+        }
+        
+        .param-label {
+            font-size: var(--text-xs);
+            font-weight: var(--font-semibold);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .param-item {
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: var(--text-xs);
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: var(--space-sm);
+            border: 1px solid var(--border);
+        }
+
+        /* Kicker (Eyebrow) */
+        .kicker {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
+        }
+
+        /* Section dividers */
+        .section-break {
+            text-align: center;
+            margin: var(--space-3xl) 0;
+            font-size: var(--text-lg);
+            color: var(--text-muted);
+        }
+
+        /* Fine print */
+        .fine-print {
+            font-size: var(--text-xs);
+            line-height: var(--leading-normal);
+            color: var(--text-muted);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            :root {
+                --text-6xl: 3rem;
+                --text-5xl: 2.25rem;
+                --text-4xl: 1.875rem;
+                --text-3xl: 1.5rem;
+            }
+            
+            body {
+                padding: var(--space-lg);
+            }
+            
+            .pullquote {
+                font-size: var(--text-xl);
+                padding: var(--space-lg);
+            }
+            
+            .numeric-pairing .big-number {
+                font-size: 4rem;
+            }
+            
+            .bold-pairing h1 {
+                font-size: var(--text-4xl);
+            }
+            
+            /* Responsive adjustments for graphic design styles */
+            .poster-headline {
+                font-size: 3rem;
+            }
+            
+            .exhibition-title, .concert-headline {
+                font-size: 2.5rem;
+            }
+            
+            .magazine-headline {
+                font-size: var(--text-4xl);
+            }
+            
+            .newspaper-column {
+                column-count: 1;
+            }
+            
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Demo styles */
+        .demo-section {
+            margin: var(--space-3xl) 0;
+            padding: var(--space-xl) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-label {
+            font-size: var(--text-xs);
+            font-weight: var(--font-semibold);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+            background: var(--bg-subtle);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 3px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Headlines -->
+    <div class="demo-section">
+        <div class="demo-label">Headlines</div>
+        
+        <!-- Classic Editorial Hed -->
+        <h1 class="hed">The Future of Digital Typography</h1>
+        <p class="dek">How modern web fonts and CSS are revolutionizing the way we read and interact with text online, creating more engaging and accessible experiences for users worldwide.</p>
+        <div class="byline">By Jane Smith • <time datetime="2024-01-15">January 15, 2024</time></div>
+        
+        <!-- Display Headline -->
+        <h1 class="hed display-hed">BOLD NEW WORLD</h1>
+        <p class="dek compact-dek">The era of unprecedented change begins now</p>
+        
+        <!-- Question Headline -->
+        <h1 class="hed question-hed">Are We Ready for What's Next?</h1>
+        <p class="dek conversational-dek">An honest look at preparation, possibility, and the paths ahead</p>
+        
+        <!-- Serif Headline -->
+        <h1 class="hed serif-hed">A Return to Elegance</h1>
+        <p class="dek literary-dek">In a world of digital noise, some designers are finding beauty in classical restraint</p>
+        
+        <!-- Condensed Headline -->
+        <h1 class="hed condensed-hed">MAXIMUM IMPACT</h1>
+        <p class="dek technical-dek">How compression algorithms are reshaping data storage</p>
+        
+        <!-- Playful Headline -->
+        <h1 class="hed playful-hed">Hello, Beautiful Future</h1>
+        <p class="dek optimistic-dek">Why tomorrow might be brighter than we think</p>
+    </div>
+
+    <!-- Kicker + Header Pairing -->
+    <div class="demo-section">
+        <div class="demo-label">Header Pairings</div>
+        <div class="header-pairing">
+            <div class="kicker">Technology</div>
+            <h1>Breaking Boundaries in Web Design</h1>
+            <h2>New CSS features are giving designers unprecedented control over typography and layout</h2>
+        </div>
+    </div>
+
+    <!-- Graphic Design Perspective Extensions -->
+    
+    <!-- Book Design Typography -->
+    <div class="demo-section">
+        <div class="demo-label">Book Design Typography</div>
+        
+        <!-- Chapter Opening -->
+        <div class="book-chapter">
+            <div class="chapter-number">Chapter 3</div>
+            <h1 class="chapter-title">The Architecture of Words</h1>
+            <p class="chapter-epigraph">"In typography, as in architecture, the overall structure matters more than any single element."</p>
+            <div class="epigraph-attribution">— Adrian Frutiger</div>
+            
+            <p class="book-lede">The relationship between text and space has been understood by book designers for centuries. Each page represents a carefully orchestrated balance of typography, margins, and white space—elements that web designers are only beginning to fully appreciate.</p>
+            
+            <div class="book-prose">
+                <p>Traditional book typography prioritizes sustained reading comfort above all else. The typeface selection, line spacing, and column width work together to create what typographers call "color"—the overall texture and rhythm of the text on the page.</p>
+                
+                <p>This approach translates remarkably well to digital environments when we consider the user's reading endurance and comprehension over time.</p>
+            </div>
+        </div>
+        
+        <!-- Running Headers -->
+        <div class="book-running-header">
+            <span class="verso-header">Chapter 3: The Architecture of Words</span>
+            <span class="page-number">47</span>
+            <span class="recto-header">Typography and Digital Publishing</span>
+        </div>
+        
+        <!-- Footnotes -->
+        <div class="book-footnotes">
+            <p class="footnote-item"><span class="footnote-number">1</span> The term "color" in typography refers to the overall visual density and rhythm of text, not actual chromatic color.</p>
+            <p class="footnote-item"><span class="footnote-number">2</span> Studies show that optimal line length for sustained reading is between 45-75 characters per line.</p>
+        </div>
+    </div>
+
+    <!-- Magazine Design Typography -->
+    <div class="demo-section">
+        <div class="demo-label">Magazine Design Typography</div>
+        
+        <!-- Feature Article Layout -->
+        <div class="magazine-feature">
+            <div class="magazine-kicker">Design</div>
+            <h1 class="magazine-headline">The New Wave of Digital Magazines</h1>
+            <h2 class="magazine-deck">How independent publishers are reimagining editorial design for the tablet era</h2>
+            <div class="magazine-byline">
+                <span class="author">Sarah Martinez</span>
+                <span class="author-title">Senior Design Editor</span>
+                <span class="date">September 2024</span>
+            </div>
+            
+            <p class="magazine-lede">The magazine industry is experiencing a renaissance of sorts, driven not by nostalgia but by a new understanding of how digital tools can enhance rather than replace traditional editorial design principles.</p>
+        </div>
+        
+        <!-- Pull Quote Magazine Style -->
+        <blockquote class="magazine-pullquote">
+            "We're not trying to replicate print on screen—we're creating something entirely new."
+            <cite>Elena Rodriguez, Creative Director at Modern Publishing</cite>
+        </blockquote>
+        
+        <!-- Sidebar -->
+        <div class="magazine-sidebar">
+            <h3 class="sidebar-title">Key Statistics</h3>
+            <div class="stat-item">
+                <span class="stat-number">73%</span>
+                <span class="stat-label">increase in digital magazine subscriptions</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2.4x</span>
+                <span class="stat-label">higher engagement rates for interactive content</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newspaper Design Typography -->
+    <div class="demo-section">
+        <div class="demo-label">Newspaper Design Typography</div>
+        
+        <!-- Newspaper Header -->
+        <div class="newspaper-header">
+            <div class="newspaper-masthead">The Digital Herald</div>
+            <div class="newspaper-date">Thursday, August 14, 2024</div>
+        </div>
+        
+        <!-- Breaking News -->
+        <div class="newspaper-breaking">
+            <span class="breaking-label">Breaking</span>
+            <h1 class="newspaper-headline">Global Climate Summit Reaches Historic Agreement</h1>
+            <h2 class="newspaper-subhead">47 nations commit to carbon neutrality by 2030 in unprecedented cooperation effort</h2>
+        </div>
+        
+        <!-- News Column -->
+        <div class="newspaper-column">
+            <p class="newspaper-lede"><strong>GENEVA</strong> — World leaders announced a groundbreaking climate agreement early Thursday morning, marking the most significant international environmental accord since the Paris Agreement of 2015.</p>
+            
+            <p>The agreement, reached after three days of intensive negotiations, commits participating nations to achieving carbon neutrality within six years—a timeline that climate scientists say is necessary to prevent catastrophic global warming.</p>
+        </div>
+        
+        <!-- News Brief -->
+        <div class="news-brief">
+            <h3 class="brief-headline">Technology Sector Leads Market Rally</h3>
+            <p class="brief-text">Stock markets surged following the climate announcement, with clean energy companies posting gains of up to 15%.</p>
+        </div>
+    </div>
+
+    <!-- Poster Design Typography -->
+    <div class="demo-section">
+        <div class="demo-label">Poster Design Typography</div>
+        
+        <!-- Event Poster -->
+        <div class="poster-design event-poster">
+            <div class="poster-kicker">Design Conference 2024</div>
+            <h1 class="poster-headline">FUTURE</h1>
+            <h2 class="poster-subline">The intersection of technology and creativity</h2>
+            <div class="poster-details">
+                <div class="poster-date">October 15-17</div>
+                <div class="poster-location">San Francisco Convention Center</div>
+                <div class="poster-cta">Register at futuredesign2024.com</div>
+            </div>
+        </div>
+        
+        <!-- Exhibition Poster -->
+        <div class="poster-design exhibition-poster">
+            <h1 class="exhibition-title">Minimalism<br>Revisited</h1>
+            <div class="exhibition-subtitle">A retrospective of contemporary design</div>
+            <div class="exhibition-details">
+                <div class="exhibition-dates">March 1 — June 15, 2024</div>
+                <div class="exhibition-venue">Museum of Modern Design</div>
+            </div>
+        </div>
+        
+        <!-- Concert Poster -->
+        <div class="poster-design concert-poster">
+            <div class="concert-date">Saturday, Sept 21</div>
+            <h1 class="concert-headline">JAZZ<br>UNDERGROUND</h1>
+            <div class="concert-lineup">
+                <div class="headliner">Maria Santos Quartet</div>
+                <div class="supporting">with The Digital Collective</div>
+            </div>
+            <div class="concert-venue">Blue Note NYC • 8:30 PM</div>
+        </div>
+    </div>
+
+    <!-- Information Design Typography -->
+    <div class="demo-section">
+        <div class="demo-label">Information Design Typography</div>
+        
+        <!-- Dashboard Header -->
+        <div class="info-dashboard">
+            <h1 class="dashboard-title">System Performance Monitor</h1>
+            <div class="dashboard-timestamp">Last updated: 14:32:15 UTC</div>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">94.7%</div>
+                    <div class="metric-label">Uptime</div>
+                    <div class="metric-change positive">+0.3%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">1.2ms</div>
+                    <div class="metric-label">Response Time</div>
+                    <div class="metric-change negative">+0.1ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2,847</div>
+                    <div class="metric-label">Active Users</div>
+                    <div class="metric-change positive">+127</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Process Flow -->
+        <div class="process-flow">
+            <h2 class="process-title">Data Processing Pipeline</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-title">Data Ingestion</div>
+                    <div class="step-description">Raw data collection from multiple sources</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-title">Processing</div>
+                    <div class="step-description">Cleaning and transformation algorithms</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-title">Output</div>
+                    <div class="step-description">Formatted results and visualizations</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technical Specification -->
+        <div class="technical-spec">
+            <h3 class="spec-title">API Endpoint Documentation</h3>
+            <div class="spec-item">
+                <code class="spec-endpoint">GET /api/v1/users</code>
+                <div class="spec-description">Retrieves a list of all active users</div>
+                <div class="spec-parameters">
+                    <span class="param-label">Parameters:</span>
+                    <span class="param-item">limit (integer)</span>
+                    <span class="param-item">offset (integer)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="demo-section">
+        <div class="demo-label">Additional Header Pairing Variations</div>
+        
+        <!-- Minimal Pairing -->
+        <div class="header-pairing minimal-pairing">
+            <h1>The Art of Restraint</h1>
+            <h2>Sometimes less is infinitely more</h2>
+        </div>
+        
+        <!-- Bold Statement Pairing -->
+        <div class="header-pairing bold-pairing">
+            <h1>REVOLUTION</h1>
+            <h2>How quiet voices are changing everything</h2>
+        </div>
+        
+        <!-- Question-Answer Pairing -->
+        <div class="header-pairing qa-pairing">
+            <h1>What Comes Next?</h1>
+            <h2>An exploration of possibility in uncertain times</h2>
+        </div>
+        
+        <!-- Number-Driven Pairing -->
+        <div class="header-pairing numeric-pairing">
+            <div class="big-number">47</div>
+            <h1>Countries Unite</h1>
+            <h2>A new international agreement reshapes global policy</h2>
+        </div>
+        
+        <!-- Poetic Pairing -->
+        <div class="header-pairing poetic-pairing">
+            <h1>Where Light Meets Shadow</h1>
+            <h2>An intimate portrait of transition in modern architecture</h2>
+        </div>
+        
+        <!-- Technical Pairing -->
+        <div class="header-pairing technical-pairing">
+            <div class="version-tag">v2.1.0</div>
+            <h1>System Update</h1>
+            <h2>Critical improvements to performance and security</h2>
+        </div>
+        
+        <!-- Editorial Opinion Pairing -->
+        <div class="header-pairing opinion-pairing">
+            <div class="opinion-label">Opinion</div>
+            <h1>We're Asking the Wrong Questions</h1>
+            <h2>Why the debate misses the point entirely</h2>
+        </div>
+        
+        <!-- Time-Sensitive Pairing -->
+        <div class="header-pairing urgent-pairing">
+            <div class="timestamp">Breaking • 2 hours ago</div>
+            <h1>Markets Respond to Unexpected Announcement</h1>
+            <h2>Global indices show immediate reaction to policy changes</h2>
+        </div>
+        
+        <!-- Feature Story Pairing -->
+        <div class="header-pairing feature-pairing">
+            <div class="feature-tag">Long Read</div>
+            <h1>The Last Mile Home</h1>
+            <h2>Following three families through their journey back to a place that no longer exists</h2>
+        </div>
+        
+        <!-- Data-Driven Pairing -->
+        <div class="header-pairing data-pairing">
+            <div class="stat-highlight">↑ 23%</div>
+            <h1>The Recovery Accelerates</h1>
+            <h2>New employment data suggests stronger growth than expected</h2>
+        </div>
+        
+        <!-- Profile Pairing -->
+        <div class="header-pairing profile-pairing">
+            <div class="profile-tag">Profile</div>
+            <h1>Maria Santos</h1>
+            <h2>The architect reimagining public spaces for community connection</h2>
+        </div>
+    </div>
+
+    <!-- Subheads and More Body Text -->
+    <div class="demo-section">
+        <div class="demo-label">Subheads & Continued Text Variations</div>
+        
+        <!-- Standard Editorial Subhead -->
+        <h2 class="subhed">The Science Behind Readable Typography</h2>
+        <div class="prose">
+            <p>Research in cognitive psychology and neuroscience has revealed fascinating insights about how our brains process text. The choice of typeface, line spacing, and text size all play crucial roles in reading comprehension and fatigue.</p>
+        </div>
+        
+        <!-- Minimal Subhead -->
+        <h2 class="subhed minimal-subhed">Essential Principles</h2>
+        <div class="prose minimal-prose">
+            <p>Clarity emerges from constraint. When every element serves a purpose, the message becomes unmistakable.</p>
+        </div>
+        
+        <!-- Question Subhead -->
+        <h2 class="subhed question-subhed">But What About Accessibility?</h2>
+        <div class="prose conversational-prose">
+            <p>This is where things get interesting. Accessibility isn't just about compliance—it's about creating experiences that work beautifully for everyone, regardless of their abilities or circumstances.</p>
+        </div>
+        
+        <!-- Technical Subhead -->
+        <h2 class="subhed technical-subhed">Implementation Details</h2>
+        <div class="prose technical-prose">
+            <p>The CSS <code>font-display: swap</code> property ensures that text remains visible during font swaps, preventing the dreaded "flash of invisible text" that can harm both user experience and Core Web Vitals scores.</p>
+        </div>
+        
+        <!-- Literary Subhead -->
+        <h2 class="subhed literary-subhed">The Poetry of Restraint</h2>
+        <div class="prose literary-prose">
+            <p>There is something profound about the space between words, the pause that punctuation creates, the rhythm that emerges when type finds its natural cadence on the page.</p>
+        </div>
+        
+        <!-- Data-Driven Subhead -->
+        <h2 class="subhed data-subhed">Performance Metrics</h2>
+        <div class="prose data-prose">
+            <p>Studies show that optimized typography can improve reading speed by 23% and reduce cognitive load by up to 18%. These aren't just abstract benefits—they translate directly to better user engagement and task completion rates.</p>
+        </div>
+    </div>
+
+    <!-- Blockquotes -->
+    <div class="demo-section">
+        <div class="demo-label">Blockquote Variations</div>
+        
+        <!-- Pull Quote -->
+        <blockquote class="pullquote">
+            "Typography is the craft of endowing human language with a durable visual form."
+        </blockquote>
+        
+        <!-- Standard Blockquote -->
+        <blockquote class="blockquote">
+            The best typography is invisible. When readers are aware of the typeface, the designer has failed. The goal is to create a transparent vessel for content that enhances understanding without drawing attention to itself.
+            <cite>Matthew Carter, Type Designer</cite>
+        </blockquote>
+        
+        <!-- Literary Blockquote -->
+        <blockquote class="blockquote literary-blockquote">
+            Words have no single fixed meaning. Like wayward electrons, they can spin away from their initial orbit and enter a wider magnetic field. No one owns them or has a proprietary right to dictate how they will be used.
+            <cite>David Lehman, Poet and Critic</cite>
+        </blockquote>
+        
+        <!-- Technical Blockquote -->
+        <blockquote class="blockquote technical-blockquote">
+            Performance is a feature. Typography that loads quickly and renders consistently across devices isn't just good engineering—it's good design.
+            <cite>Performance Engineering Best Practices</cite>
+        </blockquote>
+        
+        <!-- Question Blockquote -->
+        <blockquote class="blockquote question-blockquote">
+            What if accessibility isn't a constraint but a creative catalyst? What if designing for everyone makes our work not just more inclusive, but more innovative?
+            <cite>Inclusive Design Principles</cite>
+        </blockquote>
+        
+        <!-- Testimonial Blockquote -->
+        <blockquote class="blockquote testimonial-blockquote">
+            Since implementing these typography principles, our reading completion rates have increased by 34% and user satisfaction scores have jumped significantly. Good typography really does make a difference.
+            <cite>Sarah Chen, Product Designer at TechCorp</cite>
+        </blockquote>
+        
+        <!-- Inline Quote -->
+        <div class="prose">
+            <p>This philosophy of <span class="inline-quote">"invisible design"</span> continues to influence modern web typography, where the focus is on creating seamless reading experiences. As one designer noted, <span class="inline-quote emphasis-quote">"the moment you notice the typography, we've failed."</span></p>
+        </div>
+        
+        <!-- Centered Quote -->
+        <blockquote class="centered-quote">
+            Typography is what language looks like.
+        </blockquote>
+        
+        <!-- Sidebar Quote -->
+        <blockquote class="sidebar-quote">
+            "Design is not just what it looks like and feels like. Design is how it works."
+            <cite>Steve Jobs</cite>
+        </blockquote>
+    </div>
+
+    <!-- Code Examples -->
+    <div class="demo-section">
+        <div class="demo-label">Code</div>
+        <p>Modern CSS provides powerful tools for typography control. The <code>font-display</code> property ensures fonts load gracefully:</p>
+        
+        <pre><code>@font-face {
+  font-family: 'CustomFont';
+  src: url('custom-font.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400;
+}</code></pre>
+        
+        <p>This ensures text remains visible during font swaps, improving perceived performance.</p>
+    </div>
+
+    <!-- Lists -->
+    <div class="demo-section">
+        <div class="demo-label">Lists</div>
+        <div class="prose">
+            <p>Key principles of effective web typography include:</p>
+            <ul>
+                <li><strong>Hierarchy:</strong> Clear distinction between different levels of information through size, weight, and spacing</li>
+                <li><strong>Readability:</strong> Appropriate contrast, line length, and spacing for comfortable reading</li>
+                <li><strong>Performance:</strong> Optimized font loading to minimize impact on page speed</li>
+                <li><strong>Accessibility:</strong> Support for screen readers and various reading preferences</li>
+            </ul>
+            
+            <p>The implementation process typically follows these steps:</p>
+            <ol>
+                <li>Establish a typographic scale based on content hierarchy</li>
+                <li>Select appropriate typefaces for different content types</li>
+                <li>Optimize for performance with proper font loading strategies</li>
+                <li>Test across devices and accessibility tools</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Captions and Citations -->
+    <div class="demo-section">
+        <div class="demo-label">Caption & Citation Variations</div>
+        
+        <!-- Image with Standard Caption -->
+        <div style="background: var(--bg-subtle); height: 200px; border-radius: 6px; margin-bottom: var(--space-sm);"></div>
+        <p class="caption">Figure 1: The evolution of web typography from 1995 to 2024, showing the dramatic increase in available typefaces and typographic control.</p>
+        <p class="citation">Source: <a href="#">Web Typography Survey 2024</a>, Digital Design Institute</p>
+        
+        <!-- Image with Photo Caption -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 160px; border-radius: 8px; margin-bottom: var(--space-sm);"></div>
+        <p class="caption photo-caption">Maria Santos examines typographic specimens in her studio in Barcelona, where she develops custom typefaces for digital publications.</p>
+        <p class="citation photo-credit">Photo: Alex Chen for Design Weekly</p>
+        
+        <!-- Chart with Technical Caption -->
+        <div style="background: var(--bg-subtle); height: 180px; border-radius: 6px; margin-bottom: var(--space-sm); position: relative;">
+            <div style="position: absolute; bottom: 10px; left: 20px; font-size: 12px; color: #666;">Reading Speed vs. Font Size</div>
+        </div>
+        <p class="caption technical-caption">Performance metrics showing the relationship between font size and reading comprehension across different age groups (n=1,247).</p>
+        <p class="citation technical-citation">Data source: <a href="#">Readability Research Institute</a> • Methodology: <a href="#">Available here</a></p>
+        
+        <!-- Video Caption -->
+        <div style="background: #000; height: 200px; border-radius: 8px; margin-bottom: var(--space-sm); position: relative;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 48px;">▶</div>
+        </div>
+        <p class="caption video-caption">Watch: How type designers test new fonts across different devices and screen resolutions</p>
+        <p class="citation video-credit">Video: Design Process Documentary Series, Episode 3</p>
+        
+        <!-- Sidebar Caption -->
+        <div style="background: var(--bg-subtle); height: 120px; border-radius: 6px; margin-bottom: var(--space-sm); width: 60%;"></div>
+        <p class="caption sidebar-caption">Tools of the trade: Essential typography resources for web designers</p>
+        
+        <!-- Quote Attribution -->
+        <p class="citation quote-attribution">Interview conducted via video call, March 2024</p>
+        
+        <!-- Multiple Sources -->
+        <p class="citation multiple-sources">Sources: <a href="#">Typography Handbook</a>, <a href="#">Design Systems Guide</a>, <a href="#">Web Performance Study 2024</a></p>
+        
+        <!-- Footnote Style -->
+        <p class="citation footnote-citation">¹ This statistic reflects data from the 2024 Web Typography Census, which surveyed 10,000 websites across 12 countries.</p>
+        
+        <!-- Update Citation -->
+        <p class="citation update-citation">Last updated: August 14, 2024 • Next review: December 2024</p>
+    </div>
+
+    <!-- Section Break -->
+    <div class="section-break">
+        ⁂
+    </div>
+
+    <!-- Fine Print -->
+    <div class="demo-section">
+        <div class="demo-label">Fine Print</div>
+        <p class="fine-print">This typography boilerplate is designed for testing and iteration. All examples are for demonstration purposes. Font loading performance may vary depending on network conditions and device capabilities. Always test typography choices with real users and content.</p>
+    </div>
+</body>
+</html>

@@ -53,10 +53,12 @@ section.case-studies{max-inline-size:none;}
   .info{
     display:flex;
     margin-inline:var(--rhythm-moderato);
-    gap:var(--rhythm-vivace);
+    column-gap:var(--rhythm-vivace);
+    row-gap:var(--rhythm-presto);
     font-size:var(--small);
     color: var(--color-subtle);
     border-block-start: 1px dashed var(--border-color-distinct);
+    flex-wrap:wrap;
 
     justify-content:space-between;
     padding:0;

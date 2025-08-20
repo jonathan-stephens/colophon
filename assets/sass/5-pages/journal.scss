@@ -3,6 +3,7 @@
   flex-flow:column;
   gap:var(--rhythm-presto);
 }
+
 .journal .h-entry{
   --measure: 80ch;
 
@@ -12,10 +13,10 @@
 
   a{
     text-decoration:none;
-    h2, p, time{transition: color var(--duration-faster) ease-in-out;}
+    h2, p, time, svg{transition: color var(--duration-faster) ease-in-out, fill var(--duration-faster) ease-in-out;}
 
     &:hover, &:active{
-      h2, p, time{color:var(--link-color-active);}
+      h2, p, time, svg{color:var(--link-color-active);fill:var(--link-color-active)}
     }
   }
 
@@ -46,6 +47,7 @@
     margin-block-end: var(--rhythm-vivace);
     border-block: var(--border-fine) dashed var(--border-color-distinct);
     transition: border-color var(--duration-faster) ease-in-out;
+    background:var(--background-primary);
   }
 
   time{
@@ -63,6 +65,16 @@
     justify-self: flex-end;
     font-size:var(--small);
     color:var(--color-subtle);
+
+    &:has(.status-icon){
+      gap:1rem;
+      justify-content: flex-end;
+      grid-template-columns: auto 1fr;
+    }
+    .status-icon{
+      height:1rem;
+      width:1rem;
+    }
   }
 
   h2{

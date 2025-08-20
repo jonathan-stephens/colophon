@@ -28,7 +28,7 @@
     <article class="h-entry">
       <a href="<?= $article->url() ?>">
         <box-l class="e-content">
-            <div class="meta">
+          <div class="meta">
               <time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?> <?= $article->time()->toDate('H:i') ?>"><?= $article->date()->toDate('j M Y') ?></time>
               <p class="text-stats">
                 <?php
@@ -55,8 +55,12 @@
                     }
                   }
                 ?>
+                <?php snippet('components/pub-status', ['page' => $article]) ?>
+              </p>
             </div>
-            <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>
+            <h2 class="p-name hed">
+              <?= $article->hed()->html() ?>
+            </h2>
             <p class="dek"><?= $article->dek()->html() ?></p>
         </box-l>
       </a>
@@ -67,8 +71,5 @@
     <?php snippet('components/pagination', ['pagination' => $pagination]) ?>
   </footer>
 </div>
-
-
-
 
 <?php snippet('site-footer') ?>

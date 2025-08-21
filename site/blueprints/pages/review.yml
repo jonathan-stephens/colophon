@@ -101,7 +101,6 @@ columns:
             layout: cards
             uploads: image
             template: blocks/image
-
           tags:
             label: Tags
             type: tags
@@ -110,3 +109,10 @@ columns:
             label: Canonical URL (originally posted at)
             type: url
             width: 1/1
+          canonical_location:
+            label: Canonical Location
+            type: select
+            width: 1/1
+            options:
+              linkedin: LinkedIn
+              adplist: ADPList

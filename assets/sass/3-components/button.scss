@@ -21,7 +21,6 @@ button, .button {
   padding: var(--button-padding, var(--flow-3) var(--flow-3));
 
   background: var(--button-bg);
-  color: var(--button-color);
 
   border-width: var(--button-border-width);
   border-style: var(--button-border-style);
@@ -35,13 +34,15 @@ button, .button {
   line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
 
   cursor: pointer;
-  transition: all var(--duration-fastest) ease;
+  transition: color var(--duration-fastest) ease-in-out, border var(--duration-fastest) ease-in-out, background var(--duration-fastest) ease-in-out, fill var(--duration-fastest) ease-in-out;
 }
 
 button svg, .button svg {
   height: var(--button-icon-size, 1.2cap);
   width: auto;
   flex: none;
+  fill:var(--button-color);
+  transition: fill var(--duration-fastest) ease-in-out;
 }
 
 /* Hover/focus/active */
@@ -49,6 +50,7 @@ button:hover, .button:hover {
   background: var(--button-hover-bg);
   color: var(--button-hover-color);
   border-color:var(--button-hover-border-color);
+
 }
 
 button:focus, .button:focus {
@@ -92,7 +94,6 @@ button:active, .button:active {
   --button-bg: transparent;
   --button-border-color: currentColor;
   --button-color: currentColor;
-  background:red!important;
 }
 
 /* Radius variants */
@@ -106,9 +107,10 @@ button:has(.icon), .button:has(.icon){
 
 
 button:has(.icon) svg, .button:has(.icon) svg{
-  fill: var(--button-color);
-
-  &:hover{
+  fill: var(--link-color);
+}
+button:has(.icon), .button:has(.icon){
+  &:hover svg, &:active svg, &:focus svg{
     fill:var(--button-hover-color);
   }
 }

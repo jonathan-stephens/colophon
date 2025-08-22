@@ -1,10 +1,11 @@
 <?php snippet('site-header') ?>
 
-<div class="masthead wrapper">
-    <!--<h1><?= $page->title()->html() ?></h1>-->
-</div>
-
 <div class="wrapper">
+  <header>
+    <h1><?= $page->title()->html() ?></h1>
+  </header>
+
+<div class="content">
   <?php foreach($page->children()->listed()->flip() as $article): ?>
     <article class="h-entry">
       <a href="<?= $article->url() ?>">
@@ -36,6 +37,8 @@
                     }
                   }
                 ?>
+                <?php snippet('components/pub-status', ['page' => $article]) ?>
+
               </p>
             </div>
             <h2 class="p-name hed"><?= $article->hed()->html() ?></h2>

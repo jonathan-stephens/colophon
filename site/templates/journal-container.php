@@ -6,12 +6,27 @@
   </header>
   <div class="content">
     <?php
+      // Check if user is logged in
+      $user = kirby()->user();
+
+      // Get the appropriate collection based on login status
+      if ($user) {
+          // User is logged in - show all posts (draft, listed, unlisted)
+          $allChildren = $page->children()->listed()->add(
+              $page->children()->unlisted()
+          )->add(
+              $page->children()->drafts()
+          );
+      } else {
+          // User not logged in - show only listed posts
+          $allChildren = $page->children()->listed();
+      }
+
       // Get limit from URL parameter or default to 16
       $limit = (int) get('limit', 16);
-
       // Ensure limit is within reasonable bounds
       $allowedLimits = [16, 56, 121, 211, 326];
-      $totalItems = $page->children()->listed()->count();
+      $totalItems = $allChildren->count();
 
       // If limit is greater than total items, show all
       if ($limit >= $totalItems) {
@@ -21,7 +36,7 @@
       }
 
       // Get all articles with dynamic pagination
-      $articles = $page->children()->listed()->flip()->paginate($limit);
+      $articles = $allChildren->flip()->paginate($limit);
       $pagination = $articles->pagination();
     ?>
     <?php foreach($articles as $article): ?>

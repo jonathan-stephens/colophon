@@ -6,8 +6,26 @@
   </header>
 
 <div class="content">
-  <?php foreach($page->children()->listed()->flip() as $article): ?>
-    <article class="h-entry">
+  <?php
+    // Check if user is logged in
+    $user = kirby()->user();
+
+    // Get the appropriate collection based on login status
+    if ($user) {
+        // User is logged in - show all posts (draft, listed, unlisted)
+        $articles = $page->children()->listed()->add(
+            $page->children()->unlisted()
+        )->add(
+            $page->children()->drafts()
+        )->flip();
+    } else {
+        // User not logged in - show only listed posts
+        $articles = $page->children()->listed()->flip();
+    }
+  ?>
+
+  <?php foreach($articles as $article): ?>
+      <article class="h-entry">
       <a href="<?= $article->url() ?>">
         <box-l class="e-content">
             <div class="meta">

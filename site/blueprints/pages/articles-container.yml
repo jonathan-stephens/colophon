@@ -20,3 +20,4 @@ tabs:
         templates: [article]
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"
+  extends: tabs/listing

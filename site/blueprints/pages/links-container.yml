@@ -22,3 +22,4 @@ tabs:
         columns:
           tld: true
           tags: true
+  extends: tabs/listing

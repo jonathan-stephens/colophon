@@ -1,0 +1,7 @@
+label: Listing Page
+fields:
+  dek:
+    type: text
+    label: Subtitle
+    width: 1/3
+    max: 72

@@ -3,6 +3,9 @@
 <div class="wrapper">
   <header>
     <h1><?= $page->title()->html() ?></h1>
+    <?php if($page->dek()->isNotEmpty()): ?>
+      <?= $page->dek()->kt() ?>
+    <?php endif ?>
   </header>
 <div class="content">
 

@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Time-Based Color Token System</title>
+    <style>
+        /* ===== CSS CUSTOM PROPERTY DEFINITIONS FOR TYPE SAFETY ===== */
+        @property --lightness-darkest {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 15%;
+        }
+
+        @property --lightness-darker {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 25%;
+        }
+
+        @property --lightness-dark {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 35%;
+        }
+
+        @property --lightness-core {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 50%;
+        }
+
+        @property --lightness-light {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 65%;
+        }
+
+        @property --lightness-lighter {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 80%;
+        }
+
+        @property --lightness-lightest {
+            syntax: "<percentage>";
+            inherits: true;
+            initial-value: 92%;
+        }
+
+        @property --chroma-base {
+            syntax: "<number>";
+            inherits: true;
+            initial-value: 0.15;
+        }
+
+        /* ===== LAYER ARCHITECTURE FOR CASCADE CONTROL ===== */
+        @layer reset, base-palette, semantic-tokens, time-adjustments, components, utilities;
+
+        @layer reset {
+            *, *::before, *::after {
+                box-sizing: border-box;
+            }
+            
+            body {
+                margin: 0;
+                color-scheme: light dark;
+            }
+        }
+
+        @layer base-palette {
+            /**
+             * Static Base Color Palette using OKLCH
+             * These remain constant and are modified by time adjustments
+             */
+            :root {
+                /* Base color definitions - STATIC REFERENCE VALUES */
+                --primary-hue: 250;
+                --primary-chroma: 0.15;
+                
+                --secondary-hue: 300;
+                --secondary-chroma: 0.15;
+                
+                --tertiary-hue: 160;
+                --tertiary-chroma: 0.15;
+                
+                --quaternary-hue: 40;
+                --quaternary-chroma: 0.15;
+                
+                --quinary-hue: 10;
+                --quinary-chroma: 0.15;
+
+                /* Static reference lightness values */
+                --base-lightness-darkest: 15%;
+                --base-lightness-darker: 25%;
+                --base-lightness-dark: 35%;
+                --base-lightness-core: 50%;
+                --base-lightness-light: 65%;
+                --base-lightness-lighter: 80%;
+                --base-lightness-lightest: 92%;
+
+                /* Fallback colors for non-OKLCH supporting browsers */
+                --primary-fallback: hsl(250, 50%, 50%);
+                --secondary-fallback: hsl(300, 50%, 50%);
+                --tertiary-fallback: hsl(160, 50%, 50%);
+                --quaternary-fallback: hsl(40, 50%, 50%);
+                --quinary-fallback: hsl(10, 50%, 50%);
+            }
+
+            /* Generate base palette colors - these will be modified by time adjustments */
+            :root, .palette-primary {
+                --color-darkest: oklch(var(--lightness-darkest) var(--primary-chroma) var(--primary-hue));
+                --color-darker: oklch(var(--lightness-darker) var(--primary-chroma) var(--primary-hue));
+                --color-dark: oklch(var(--lightness-dark) var(--primary-chroma) var(--primary-hue));
+                --color-core: oklch(var(--lightness-core) var(--primary-chroma) var(--primary-hue));
+                --color-light: oklch(var(--lightness-light) var(--primary-chroma) var(--primary-hue));
+                --color-lighter: oklch(var(--lightness-lighter) var(--primary-chroma) var(--primary-hue));
+                --color-lightest: oklch(var(--lightness-lightest) var(--primary-chroma) var(--primary-hue));
+            }
+
+            .palette-secondary {
+                --color-darkest: oklch(var(--lightness-darkest) var(--secondary-chroma) var(--secondary-hue));
+                --color-darker: oklch(var(--lightness-darker) var(--secondary-chroma) var(--secondary-hue));
+                --color-dark: oklch(var(--lightness-dark) var(--secondary-chroma) var(--secondary-hue));
+                --color-core: oklch(var(--lightness-core) var(--secondary-chroma) var(--secondary-hue));
+                --color-light: oklch(var(--lightness-light) var(--secondary-chroma) var(--secondary-hue));
+                --color-lighter: oklch(var(--lightness-lighter) var(--secondary-chroma) var(--secondary-hue));
+                --color-lightest: oklch(var(--lightness-lightest) var(--secondary-chroma) var(--secondary-hue));
+            }
+
+            .palette-tertiary {
+                --color-darkest: oklch(var(--lightness-darkest) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-darker: oklch(var(--lightness-darker) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-dark: oklch(var(--lightness-dark) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-core: oklch(var(--lightness-core) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-light: oklch(var(--lightness-light) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-lighter: oklch(var(--lightness-lighter) var(--tertiary-chroma) var(--tertiary-hue));
+                --color-lightest: oklch(var(--lightness-lightest) var(--tertiary-chroma) var(--tertiary-hue));
+            }
+
+            .palette-quaternary {
+                --color-darkest: oklch(var(--lightness-darkest) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-darker: oklch(var(--lightness-darker) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-dark: oklch(var(--lightness-dark) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-core: oklch(var(--lightness-core) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-light: oklch(var(--lightness-light) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-lighter: oklch(var(--lightness-lighter) var(--quaternary-chroma) var(--quaternary-hue));
+                --color-lightest: oklch(var(--lightness-lightest) var(--quaternary-chroma) var(--quaternary-hue));
+            }
+
+            .palette-quinary {
+                --color-darkest: oklch(var(--lightness-darkest) var(--quinary-chroma) var(--quinary-hue));
+                --color-darker: oklch(var(--lightness-darker) var(--quinary-chroma) var(--quinary-hue));
+                --color-dark: oklch(var(--lightness-dark) var(--quinary-chroma) var(--quinary-hue));
+                --color-core: oklch(var(--lightness-core) var(--quinary-chroma) var(--quinary-hue));
+                --color-light: oklch(var(--lightness-light) var(--quinary-chroma) var(--quinary-hue));
+                --color-lighter: oklch(var(--lightness-lighter) var(--quinary-chroma) var(--quinary-hue));
+                --color-lightest: oklch(var(--lightness-lightest) var(--quinary-chroma) var(--quinary-hue));
+            }
+
+            /* Fallback strategy for browsers without OKLCH support */
+            @supports not (color: oklch(50% 0.1 180)) {
+                :root, .palette-primary {
+                    --color-core: var(--primary-fallback);
+                    --color-darkest: color-mix(in srgb, var(--color-core) 20%, black);
+                    --color-darker: color-mix(in srgb, var(--color-core) 40%, black);
+                    --color-dark: color-mix(in srgb, var(--color-core) 70%, black);
+                    --color-light: color-mix(in srgb, var(--color-core) 70%, white);
+                    --color-lighter: color-mix(in srgb, var(--color-core) 40%, white);
+                    --color-lightest: color-mix(in srgb, var(--color-core) 15%, white);
+                }
+
+                .palette-secondary {
+                    --color-core: var(--secondary-fallback);
+                    --color-darkest: color-mix(in srgb, var(--color-core) 20%, black);
+                    --color-darker: color-mix(in srgb, var(--color-core) 40%, black);
+                    --color-dark: color-mix(in srgb, var(--color-core) 70%, black);
+                    --color-light: color-mix(in srgb, var(--color-core) 70%, white);
+                    --color-lighter: color-mix(in srgb, var(--color-core) 40%, white);
+                    --color-lightest: color-mix(in srgb, var(--color-core) 15%, white);
+                }
+
+                .palette-tertiary {
+                    --color-core: var(--tertiary-fallback);
+                    --color-darkest: color-mix(in srgb, var(--color-core) 20%, black);
+                    --color-darker: color-mix(in srgb, var(--color-core) 40%, black);
+                    --color-dark: color-mix(in srgb, var(--color-core) 70%, black);
+                    --color-light: color-mix(in srgb, var(--color-core) 70%, white);
+                    --color-lighter: color-mix(in srgb, var(--color-core) 40%, white);
+                    --color-lightest: color-mix(in srgb, var(--color-core) 15%, white);
+                }
+
+                .palette-quaternary {
+                    --color-core: var(--quaternary-fallback);
+                    --color-darkest: color-mix(in srgb, var(--color-core) 20%, black);
+                    --color-darker: color-mix(in srgb, var(--color-core) 40%, black);
+                    --color-dark: color-mix(in srgb, var(--color-core) 70%, black);
+                    --color-light: color-mix(in srgb, var(--color-core) 70%, white);
+                    --color-lighter: color-mix(in srgb, var(--color-core) 40%, white);
+                    --color-lightest: color-mix(in srgb, var(--color-core) 15%, white);
+                }
+
+                .palette-quinary {
+                    --color-core: var(--quinary-fallback);
+                    --color-darkest: color-mix(in srgb, var(--color-core) 20%, black);
+                    --color-darker: color-mix(in srgb, var(--color-core) 40%, black);
+                    --color-dark: color-mix(in srgb, var(--color-core) 70%, black);
+                    --color-light: color-mix(in srgb, var(--color-core) 70%, white);
+                    --color-lighter: color-mix(in srgb, var(--color-core) 40%, white);
+                    --color-lightest: color-mix(in srgb, var(--color-core) 15%, white);
+                }
+            }
+        }
+
+        @layer semantic-tokens {
+            /**
+             * Base Semantic Color Tokens
+             * These will be modified by time adjustments
+             */
+            
+            /* Default semantic mapping (before time adjustments) */
+            :root, .palette-primary, .palette-secondary, .palette-tertiary, .palette-quaternary, .palette-quinary {
+                --token-frill: var(--color-lightest);
+                --token-border: var(--color-core);
+                --token-foreground: var(--color-darkest);
+                --token-surface: var(--color-lightest);
+                --token-background: white;
+                --token-hover-surface: var(--color-lighter);
+                --token-active-background: var(--color-light);
+            }
+
+            /* System preference-based theme mapping */
+            @media (prefers-color-scheme: dark) {
+                :root, .palette-primary, .palette-secondary, .palette-tertiary, .palette-quaternary, .palette-quinary {
+                    --token-frill: var(--color-darker);
+                    --token-border: var(--color-core);
+                    --token-foreground: var(--color-lightest);
+                    --token-surface: var(--color-darker);
+                    --token-background: var(--color-darkest);
+                    --token-hover-surface: var(--color-dark);
+                    --token-active-background: var(--color-core);
+                }
+            }
+
+            /* Manual theme override */
+            [data-theme="dark"] :root,
+            [data-theme="dark"] .palette-primary, 
+            [data-theme="dark"] .palette-secondary, 
+            [data-theme="dark"] .palette-tertiary, 
+            [data-theme="dark"] .palette-quaternary, 
+            [data-theme="dark"] .palette-quinary {
+                --token-frill: var(--color-darker);
+                --token-border: var(--color-core);
+                --token-foreground: var(--color-lightest);
+                --token-surface: var(--color-darker);
+                --token-background: var(--color-darkest);
+                --token-hover-surface: var(--color-dark);
+                --token-active-background: var(--color-core);
+            }
+
+            [data-theme="light"] :root,
+            [data-theme="light"] .palette-primary, 
+            [data-theme="light"] .palette-secondary, 
+            [data-theme="light"] .palette-tertiary, 
+            [data-theme="light"] .palette-quaternary, 
+            [data-theme="light"] .palette-quinary {
+                --token-frill: var(--color-lightest);
+                --token-border: var(--color-core);
+                --token-foreground: var(--color-darkest);
+                --token-surface: var(--color-lightest);
+                --token-background: white;
+                --token-hover-surface: var(--color-lighter);
+                --token-active-background: var(--color-light);
+            }
+        }
+
+        @layer time-adjustments {
+            /**
+             * Time-based Dynamic Adjustments
+             * JavaScript will add time-period classes to modify semantic tokens
+             */
+            
+            /* Time-based shadow definitions using --token-frill as color base */
+            :root {
+                /* Default shadows (will be overridden by time periods) */
+                --shadow-dawn: 0 2px 8px color-mix(in srgb, var(--token-frill) 40%, rgba(0,0,0,0.3));
+                --shadow-morning: 0 2px 8px color-mix(in srgb, var(--token-frill) 30%, rgba(0,0,0,0.2));
+                --shadow-afternoon: 0 1px 4px color-mix(in srgb, var(--token-frill) 20%, rgba(0,0,0,0.15));
+                --shadow-evening: 0 4px 12px color-mix(in srgb, var(--token-frill) 50%, rgba(0,0,0,0.4));
+                --shadow-night: 0 6px 20px color-mix(in srgb, var(--token-frill) 60%, rgba(0,0,0,0.6));
+                
+                /* Active shadow (set by JavaScript) */
+                --shadow-current: var(--shadow-dawn);
+            }
+
+            /* Fallback shadows for browsers without color-mix */
+            @supports not (color: color-mix(in srgb, red, blue)) {
+                :root {
+                    --shadow-dawn: 0 2px 8px rgba(0,0,0,0.15);
+                    --shadow-morning: 0 2px 6px rgba(0,0,0,0.1);
+                    --shadow-afternoon: 0 1px 3px rgba(0,0,0,0.08);
+                    --shadow-evening: 0 4px 10px rgba(0,0,0,0.2);
+                    --shadow-night: 0 6px 16px rgba(0,0,0,0.3);
+                    --shadow-current: var(--shadow-dawn);
+                }
+            }
+
+            /* Time period classes that JavaScript will apply */
+            .time-dawn {
+                /* Soft morning lighting */
+                --lightness-darkest: 20%;
+                --lightness-darker: 30%;
+                --lightness-dark: 40%;
+                --lightness-core: 65%;
+                --lightness-light: 75%;
+                --lightness-lighter: 85%;
+                --lightness-lightest: 95%;
+                --shadow-current: var(--shadow-dawn);
+            }
+
+            .time-morning {
+                /* Bright, energetic lighting */
+                --lightness-darkest: 15%;
+                --lightness-darker: 25%;
+                --lightness-dark: 35%;
+                --lightness-core: 50%;
+                --lightness-light: 65%;
+                --lightness-lighter: 80%;
+                --lightness-lightest: 95%;
+                --shadow-current: var(--shadow-morning);
+            }
+
+            .time-afternoon {
+                /* Peak brightness */
+                --lightness-darkest: 10%;
+                --lightness-darker: 20%;
+                --lightness-dark: 30%;
+                --lightness-core: 45%;
+                --lightness-light: 60%;
+                --lightness-lighter: 75%;
+                --lightness-lightest: 92%;
+                --shadow-current: var(--shadow-afternoon);
+            }
+
+            .time-evening {
+                /* Warmer, softer lighting */
+                --lightness-darkest: 25%;
+                --lightness-darker: 35%;
+                --lightness-dark: 45%;
+                --lightness-core: 60%;
+                --lightness-light: 70%;
+                --lightness-lighter: 80%;
+                --lightness-lightest: 90%;
+                --shadow-current: var(--shadow-evening);
+            }
+
+            .time-night {
+                /* Dark mode with ambient lighting */
+                --lightness-darkest: 10%;
+                --lightness-darker: 15%;
+                --lightness-dark: 25%;
+                --lightness-core: 40%;
+                --lightness-light: 55%;
+                --lightness-lighter: 70%;
+                --lightness-lightest: 85%;
+                --shadow-current: var(--shadow-night);
+                
+                /* Night-specific token adjustments */
+                --token-frill: var(--color-dark);
+                --token-border: var(--color-light);
+                --token-foreground: var(--color-lightest);
+                --token-surface: var(--color-darker);
+                --token-background: var(--color-darkest);
+                --token-hover-surface: var(--color-dark);
+                --token-active-background: var(--color-core);
+            }
+        }
+
+        @layer components {
+            /**
+             * Component Styles with Time-Aware Design
+             */
+            
+            body {
+                font-family: system-ui, -apple-system, sans-serif;
+                line-height: 1.6;
+                padding: 2rem;
+                background: var(--token-background);
+                color: var(--token-foreground);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .card {
+                container-type: inline-size;
+                border: 2px solid var(--token-border);
+                background: var(--token-surface);
+                color: var(--token-foreground);
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin: 1rem;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--shadow-current);
+                position: relative;
+            }
+
+            .card:hover {
+                background: var(--token-hover-surface);
+                transform: translateY(-2px);
+                box-shadow: 
+                    var(--shadow-current),
+                    0 8px 25px color-mix(in srgb, var(--token-frill) 30%, transparent);
+            }
+
+            @supports not (color: color-mix(in srgb, red, blue)) {
+                .card:hover {
+                    box-shadow: var(--shadow-current), 0 8px 25px rgba(0,0,0,0.15);
+                }
+            }
+
+            .card:active {
+                background: var(--token-active-background);
+                transform: translateY(0);
+            }
+
+            /* Container query adaptations */
+            @container (min-width: 300px) {
+                .card {
+                    padding: 2rem;
+                    border-radius: 16px;
+                }
+            }
+
+            @container (min-width: 500px) {
+                .card {
+                    padding: 2.5rem;
+                }
+            }
+
+            .btn {
+                container-type: inline-size;
+                border: 2px solid var(--token-border);
+                background: var(--token-surface);
+                color: var(--token-foreground);
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                font-family: inherit;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                display: inline-block;
+                box-shadow: var(--shadow-current);
+            }
+
+            .btn:hover {
+                background: var(--token-hover-surface);
+                border-color: var(--token-foreground);
+                transform: translateY(-1px);
+            }
+
+            .btn:active {
+                background: var(--token-active-background);
+                transform: translateY(0);
+            }
+
+            .btn.active {
+                background: var(--color-core);
+                color: var(--color-lightest);
+                border-color: var(--color-core);
+            }
+
+            /* Time info display */
+            .time-info {
+                background: var(--token-hover-surface);
+                padding: 1.5rem;
+                border-radius: 12px;
+                margin-bottom: 2rem;
+                border: 1px solid var(--token-border);
+                box-shadow: var(--shadow-current);
+            }
+
+            .controls {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin-bottom: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .demo-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+
+            .color-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .color-card {
+                background: var(--token-hover-surface);
+                border-radius: 12px;
+                padding: 1.5rem;
+                border: 1px solid var(--token-border);
+                box-shadow: var(--shadow-current);
+                transition: all 0.2s ease;
+            }
+
+            .color-card:hover {
+                transform: translateY(-2px);
+            }
+
+            .color-swatch {
+                height: 80px;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                border: 1px solid var(--token-border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--token-foreground);
+                font-weight: 500;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            }
+
+            .color-details {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .color-value {
+                font-family: 'Monaco', 'Menlo', monospace;
+                background: var(--token-surface);
+                color: var(--token-foreground);
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                margin-top: 0.5rem;
+                word-break: break-all;
+                border: 1px solid var(--token-border);
+            }
+
+            /* Apply palette classes */
+            .card[data-palette="secondary"], .btn[data-palette="secondary"] {
+                composes: palette-secondary;
+            }
+
+            .card[data-palette="tertiary"], .btn[data-palette="tertiary"] {
+                composes: palette-tertiary;
+            }
+
+            .card[data-palette="quaternary"], .btn[data-palette="quaternary"] {
+                composes: palette-quaternary;
+            }
+
+            .card[data-palette="quinary"], .btn[data-palette="quinary"] {
+                composes: palette-quinary;
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    padding: 1rem;
+                }
+                
+                .controls {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .btn {
+                    width: 100%;
+                    max-width: 200px;
+                }
+            }
+        }
+
+        @layer utilities {
+            /**
+             * Debug and Utility Classes
+             */
+            
+            .theme-toggle {
+                background: var(--color-core);
+                color: var(--color-lightest);
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: background 0.2s ease;
+                box-shadow: var(--shadow-current);
+            }
+
+            .theme-toggle:hover {
+                opacity: 0.9;
+                transform: translateY(-1px);
+            }
+
+            .footer {
+                margin-top: 3rem;
+                text-align: center;
+                color: var(--token-foreground);
+                opacity: 0.7;
+                font-size: 0.9rem;
+            }
+
+            /* High contrast mode indicator */
+            @media (prefers-contrast: high) {
+                .card::after {
+                    content: "High Contrast Mode";
+                    position: fixed;
+                    top: 1rem;
+                    right: 1rem;
+                    background: var(--color-core);
+                    color: var(--color-lightest);
+                    padding: 0.5rem;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    z-index: 1000;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Integrated Time-Based Color Token System</h1>
+            <p>OKLCH-based color tokens with dynamic time-of-day adjustments, CSS layers, and progressive enhancement.</p>
+        </header>
+        
+        <div class="time-info">
+            <h2 id="current-period">Loading...</h2>
+            <p id="time-details"></p>
+            <p id="lightness-info"></p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+            <button class="btn" data-period="dawn">Dawn</button>
+            <button class="btn" data-period="morning">Morning</button>
+            <button class="btn" data-period="afternoon">Afternoon</button>
+            <button class="btn" data-period="evening">Evening</button>
+            <button class="btn" data-period="night">Night</button>
+            <button class="btn" id="auto-btn">Auto</button>
+        </div>
+
+        <h2>Time-Responsive Color Palettes</h2>
+        <p>Colors and shadows automatically adjust based on time of day, with manual overrides available</p>
+        
+        <div class="demo-grid">
+            <div class="card palette-primary">
+                <h3>Primary Palette</h3>
+                <p>OKLCH ensures perceptual uniformity across all time periods. Shadows adapt to simulated sun position.</p>
+            </div>
+            
+            <div class="card palette-secondary" data-palette="secondary">
+                <h3>Secondary Palette</h3>
+                <p>Container queries adjust styling based on size while time adjustments modify lighting globally.</p>
+            </div>
+            
+            <div class="card palette-tertiary" data-palette="tertiary">
+                <h3>Tertiary Palette</h3>
+                <p>CSS layers ensure predictable cascade: base → semantic → time → components → utilities.</p>
+            </div>
+            
+            <div class="card palette-quaternary" data-palette="quaternary">
+                <h3>Quaternary Palette</h3>
+                <p>Progressive enhancement: works everywhere, enhanced with OKLCH, time-aware shadows, and container queries.</p>
+            </div>
+            
+            <div class="card palette-quinary" data-palette="quinary">
+                <h3>Quinary Palette</h3>
+                <p>System preferences map: dark mode → evening, light mode → morning, with full manual override capability.</p>
+            </div>
+        </div>
+
+        <h2>Interactive Components</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+            <button class="btn palette-primary">Primary Button</button>
+            <button class="btn palette-secondary" data-palette="secondary">Secondary</button>
+            <button class="btn palette-tertiary" data-palette="tertiary">Tertiary</button>
+            <button class="btn palette-quaternary" data-palette="quaternary">Quaternary</button>
+            <button class="btn palette-quinary" data-palette="quinary">Quinary</button>
+        </div>
+
+        <h2>Color Token Values</h2>
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-swatch" style="background: var(--color-core);">
+                    Primary Core
+                </div>
+                <div class="color-details">
+                    <strong>Primary Color</strong>
+                    <div class="color-value" id="primary-value"></div>
+                </div>
+            </div>
+            
+            <div class="color-card">
+                <div class="color-swatch palette-secondary" style="background: var(--color-core);">
+                    Secondary Core
+                </div>
+                <div class="color-details">
+                    <strong>Secondary Color</strong>
+                    <div class="color-value" id="secondary-value"></div>
+                </div>
+            </div>
+            
+            <div class="color-card">
+                <div class="color-swatch palette-tertiary" style="background: var(--color-core);">
+                    Tertiary Core
+                </div>
+                <div class="color-details">
+                    <strong>Tertiary Color</strong>
+                    <div class="color-value" id="tertiary-value"></div>
+                </div>
+            </div>
+            
+            <div class="color-card">
+                <div class="color-swatch palette-quaternary" style="background: var(--color-core);">
+                    Quaternary Core
+                </div>
+                <div class="color-details">
+                    <strong>Quaternary Color</strong>
+                    <div class="color-value" id="quaternary-value"></div>
+                </div>
+            </div>
+            
+            <div class="color-card">
+                <div class="color-swatch palette-quinary" style="background: var(--color-core);">
+                    Quinary Core
+                </div>
+                <div class="color-details">
+                    <strong>Quinary Color</strong>
+                    <div class="color-value" id="quinary-value"></div>
+                </div>
+            </div>
+            
+            <div class="color-card">
+                <div class="color-swatch" style="background: var(--token-surface); color: var(--token-foreground); text-shadow: none;">
+                    Surface Token
+                </div>
+                <div class="color-details">
+                    <strong>Surface Token</strong>
+                    <div class="color-value" id="surface-value"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Technical Features</h2>
+        <ul>
+            <li><strong>Time-Based Adjustments:</strong> 5 distinct periods with automatic transitions</li>
+            <li><strong>OKLCH Color Space:</strong> Perceptually uniform lightness modifications</li>
+            <li><strong>Dynamic Shadows:</strong> Time-aware shadows using --token-frill as color base</li>
+            <li><strong>CSS Layer Architecture:</strong> Predictable cascade with time-adjustments layer</li>
+            <li><strong>System Preference Integration:</strong> Dark mode → evening, light mode → morning</li>
+            <li><strong>Progressive Enhancement:</strong> Full fallback support for older browsers</li>
+            <li><strong>Container Queries:</strong> Size-responsive component adaptations</li>
+            <li><strong>Semantic Token System:</strong> Performance-optimized token modifications</li>
+        </ul>
+
+        <footer class="footer">
+            <p>Colors automatically adjust based on time of day (5AM-9AM: Dawn, 9AM-1PM: Morning, 1PM-5PM: Afternoon, 5PM-9PM: Evening, 9PM-5AM: Night)</p>
+            <p>System integrated with CSS layers, container queries, and progressive enhancement strategies</p>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * Integrated Time-Based Color Token System JavaScript
+         * Combines dynamic time calculations with advanced CSS architecture
+         */
+        var TimeBasedColorSystem = function() {
+            this.isAuto = true;
+            this.currentPeriod = 'morning';
+            this.currentTheme = null; // null = system preference, 'light', 'dark'
+            
+            this.timePeriods = {
+                dawn: { 
+                    start: 5, end: 9, 
+                    description: 'Soft morning lighting with gentle contrast',
+                    sunAngle: 15,
+                    shadowIntensity: 0.3,
+                    preferredTheme: 'light'
+                },
+                morning: { 
+                    start: 9, end: 13, 
+                    description: 'Bright and energetic, high contrast',
+                    sunAngle: 45,
+                    shadowIntensity: 0.2,
+                    preferredTheme: 'light'
+                },
+                afternoon: { 
+                    start: 13, end: 17, 
+                    description: 'Peak brightness, minimal shadows',
+                    sunAngle: 90,
+                    shadowIntensity: 0.15,
+                    preferredTheme: 'light'
+                },
+                evening: { 
+                    start: 17, end: 21, 
+                    description: 'Warmer tones, longer shadows',
+                    sunAngle: 30,
+                    shadowIntensity: 0.4,
+                    preferredTheme: 'dark'
+                },
+                night: { 
+                    start: 21, end: 5, 
+                    description: 'Dark mode, soft ambient lighting',
+                    sunAngle: 0,
+                    shadowIntensity: 0.6,
+                    preferredTheme: 'dark'
+                }
+            };
+        };
+        
+        TimeBasedColorSystem.prototype.init = function() {
+            this.detectSystemPreference();
+            this.updateTimeBasedColors();
+            this.setupEventListeners();
+            this.updateDisplay();
+            this.startPeriodicUpdates();
+        };
+
+        TimeBasedColorSystem.prototype.detectSystemPreference = function() {
+            // Map system preferences to time periods if no manual override
+            if (window.matchMedia && this.currentTheme === null) {
+                var darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                var lightModeQuery = window.matchMedia('(prefers-color-scheme: light)');
+                
+                if (darkModeQuery.matches) {
+                    // Dark mode maps to evening period
+                    this.currentPeriod = 'evening';
+                } else if (lightModeQuery.matches) {
+                    // Light mode maps to morning period  
+                    this.currentPeriod = 'morning';
+                }
+            }
+        };
+        
+        TimeBasedColorSystem.prototype.getCurrentTimePeriod = function() {
+            var now = new Date();
+            var hour = now.getHours();
+            
+            for (var period in this.timePeriods) {
+                var config = this.timePeriods[period];
+                if (config.start <= config.end) {
+                    // Normal period (e.g., 9-17)
+                    if (hour >= config.start && hour < config.end) {
+                        return period;
+                    }
+                } else {
+                    // Overnight period (e.g., 21-5)
+                    if (hour >= config.start || hour < config.end) {
+                        return period;
+                    }
+                }
+            }
+            
+            return 'morning'; // fallback
+        };
+
+        TimeBasedColorSystem.prototype.updateTimeBasedColors = function(forcePeriod) {
+            var period = forcePeriod || (this.isAuto ? this.getCurrentTimePeriod() : this.currentPeriod);
+            this.currentPeriod = period;
+            
+            // Apply time period class to body
+            var body = document.body;
+            
+            // Remove existing time classes
+            var timeClasses = ['time-dawn', 'time-morning', 'time-afternoon', 'time-evening', 'time-night'];
+            for (var i = 0; i < timeClasses.length; i++) {
+                body.classList.remove(timeClasses[i]);
+            }
+            
+            // Add current time class
+            body.classList.add('time-' + period);
+            
+            // Update shadow variables with current time period
+            this.updateShadowValues(period);
+            
+            this.updateDisplay();
+        };
+
+        TimeBasedColorSystem.prototype.updateShadowValues = function(period) {
+            var root = document.documentElement;
+            var config = this.timePeriods[period];
+            
+            // Generate time-specific shadow values
+            var shadowIntensity = config.shadowIntensity;
+            var sunAngle = config.sunAngle;
+            
+            // Calculate shadow direction based on sun angle
+            var shadowX = Math.sin(sunAngle * Math.PI / 180) * 8;
+            var shadowY = -Math.cos(sunAngle * Math.PI / 180) * 4;
+            
+            // Set CSS custom properties for shadows
+            var shadowValue = shadowX + 'px ' + shadowY + 'px ' + 
+                            (4 + sunAngle * 0.2) + 'px rgba(0, 0, 0, ' + 
+                            (shadowIntensity * 0.15) + ')';
+            
+            root.style.setProperty('--shadow-current', shadowValue);
+            
+            // Update specific time period shadow
+            var timeShadowVar = '--shadow-' + period;
+            root.style.setProperty(timeShadowVar, shadowValue);
+        };
+
+        TimeBasedColorSystem.prototype.updateDisplay = function() {
+            var now = new Date();
+            var timeString = now.toLocaleTimeString();
+            var config = this.timePeriods[this.currentPeriod];
+            
+            // Update time information display
+            document.getElementById('current-period').textContent = 
+                'Current Period: ' + this.currentPeriod.charAt(0).toUpperCase() + this.currentPeriod.slice(1);
+            document.getElementById('time-details').textContent = 
+                'Time: ' + timeString + ' | Mode: ' + (this.isAuto ? 'Auto' : 'Manual') + 
+                ' | Theme: ' + (this.currentTheme || 'System');
+            document.getElementById('lightness-info').textContent = 
+                config.description + ' | Sun Angle: ' + config.sunAngle + '° | Shadow Intensity: ' + 
+                (config.shadowIntensity * 100).toFixed(0) + '%';
+            
+            // Update color value displays
+            this.updateColorDisplays();
+            
+            // Update button states
+            this.updateButtonStates();
+        };
+
+        TimeBasedColorSystem.prototype.updateColorDisplays = function() {
+            var style = getComputedStyle(document.documentElement);
+            
+            var colorElements = [
+                { id: 'primary-value', property: '--color-core' },
+                { id: 'surface-value', property: '--token-surface' }
+            ];
+            
+            for (var i = 0; i < colorElements.length; i++) {
+                var element = document.getElementById(colorElements[i].id);
+                if (element) {
+                    var value = style.getPropertyValue(colorElements[i].property).trim();
+                    element.textContent = value || 'Not available';
+                }
+            }
+            
+            // Update palette-specific values
+            var paletteElements = ['secondary', 'tertiary', 'quaternary', 'quinary'];
+            for (var j = 0; j < paletteElements.length; j++) {
+                var paletteElement = document.getElementById(paletteElements[j] + '-value');
+                if (paletteElement) {
+                    // Get computed style from a palette element
+                    var paletteCard = document.querySelector('.palette-' + paletteElements[j]);
+                    if (paletteCard) {
+                        var paletteStyle = getComputedStyle(paletteCard);
+                        var paletteValue = paletteStyle.getPropertyValue('--color-core').trim();
+                        paletteElement.textContent = paletteValue || 'Not available';
+                    }
+                }
+            }
+        };
+
+        TimeBasedColorSystem.prototype.updateButtonStates = function() {
+            var buttons = document.querySelectorAll('.btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            
+            if (this.isAuto) {
+                document.getElementById('auto-btn').classList.add('active');
+            } else {
+                var activeBtn = document.querySelector('[data-period="' + this.currentPeriod + '"]');
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        };
+
+        TimeBasedColorSystem.prototype.setupEventListeners = function() {
+            var self = this;
+            
+            // Time period buttons
+            var periodButtons = document.querySelectorAll('[data-period]');
+            for (var i = 0; i < periodButtons.length; i++) {
+                periodButtons[i].addEventListener('click', function(e) {
+                    self.isAuto = false;
+                    self.currentPeriod = e.target.dataset.period;
+                    self.updateTimeBasedColors(self.currentPeriod);
+                    console.log('Manual time period set to:', self.currentPeriod);
+                });
+            }
+            
+            // Auto button
+            document.getElementById('auto-btn').addEventListener('click', function() {
+                self.isAuto = true;
+                self.detectSystemPreference();
+                self.updateTimeBasedColors();
+                console.log('Auto mode enabled, current period:', self.currentPeriod);
+            });
+            
+            // System preference change listeners
+            if (window.matchMedia) {
+                var darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                darkModeQuery.addListener(function(e) {
+                    if (self.currentTheme === null && self.isAuto) {
+                        if (e.matches) {
+                            self.currentPeriod = 'evening';
+                        } else {
+                            self.currentPeriod = 'morning';
+                        }
+                        self.updateTimeBasedColors();
+                        console.log('System preference changed, period updated to:', self.currentPeriod);
+                    }
+                });
+            }
+        };
+
+        TimeBasedColorSystem.prototype.startPeriodicUpdates = function() {
+            var self = this;
+            
+            // Check for time period changes every hour
+            setInterval(function() {
+                if (self.isAuto && self.currentTheme === null) {
+                    var newPeriod = self.getCurrentTimePeriod();
+                    if (newPeriod !== self.currentPeriod) {
+                        self.updateTimeBasedColors();
+                        console.log('Time period automatically changed to:', newPeriod);
+                    }
+                }
+                self.updateDisplay();
+            }, 3600000); // 1 hour
+            
+            // Update display every minute for time accuracy
+            setInterval(function() {
+                self.updateDisplay();
+            }, 60000); // 1 minute
+        };
+
+        // Theme toggle function (separate from time system)
+        function toggleTheme() {
+            var root = document.documentElement;
+            var currentTheme = root.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                root.setAttribute('data-theme', 'light');
+                console.log('Manual theme set to light');
+                if (window.colorSystem) {
+                    window.colorSystem.currentTheme = 'light';
+                    window.colorSystem.currentPeriod = 'morning';
+                    window.colorSystem.updateTimeBasedColors('morning');
+                }
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                console.log('Manual theme set to dark');
+                if (window.colorSystem) {
+                    window.colorSystem.currentTheme = 'dark';
+                    window.colorSystem.currentPeriod = 'evening';
+                    window.colorSystem.updateTimeBasedColors('evening');
+                }
+            }
+        }
+
+        // Initialize system when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            window.colorSystem = new TimeBasedColorSystem();
+            window.colorSystem.init();
+            console.log('Integrated Time-Based Color Token System initialized');
+        });
+    </script>
+</body>
+</html>

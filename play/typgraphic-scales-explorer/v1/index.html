@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typographic Scales Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #fff, #a8d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #a8d8ff;
+        }
+
+        select, input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .scale-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .scale-info h3 {
+            color: #a8d8ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .typography-demo {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .rhythm-demo {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .size-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .rhythm-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+            margin: 0.5rem 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .spacing-demo {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .spacing-example {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Typographic Scales Explorer</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="scale-type">Scale Type</label>
+                <select id="scale-type">
+                    <option value="1.125">Major Second (1.125)</option>
+                    <option value="1.2">Minor Third (1.2)</option>
+                    <option value="1.25">Major Third (1.25)</option>
+                    <option value="1.333">Perfect Fourth (1.333)</option>
+                    <option value="1.414">Augmented Fourth (1.414)</option>
+                    <option value="1.5">Perfect Fifth (1.5)</option>
+                    <option value="1.618" selected>Golden Ratio (1.618)</option>
+                    <option value="1.667">Minor Sixth (1.667)</option>
+                    <option value="1.778">Major Sixth (1.778)</option>
+                    <option value="1.875">Minor Seventh (1.875)</option>
+                    <option value="2">Octave (2)</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="base-size">Base Size (px)</label>
+                <input type="number" id="base-size" value="16" min="10" max="24">
+            </div>
+            
+            <div class="control-group">
+                <label for="rhythm-type">Rhythm System</label>
+                <select id="rhythm-type">
+                    <option value="linear">Linear Progression</option>
+                    <option value="fibonacci">Fibonacci Sequence</option>
+                    <option value="pentatonic">Pentatonic Scale</option>
+                    <option value="chromatic">Chromatic Scale</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="visual-weight">Visual Weight</label>
+                <select id="visual-weight">
+                    <option value="equal">Equal Weight</option>
+                    <option value="hierarchical">Hierarchical</option>
+                    <option value="rhythmic">Rhythmic Pattern</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="scale-info" id="scale-info">
+            <h3>Golden Ratio (φ = 1.618)</h3>
+            <p>The golden ratio appears frequently in nature and has been used in art and architecture for millennia. In typography, it creates harmonious relationships between text sizes that feel naturally balanced to the human eye.</p>
+        </div>
+
+        <div class="demo-container">
+            <div class="typography-demo" id="typography-demo">
+                <div class="size-display">
+                    <span>H1</span>
+                    <span id="h1-size">67.77px</span>
+                </div>
+                <h1 id="demo-h1">Heading Level 1</h1>
+                
+                <div class="size-display">
+                    <span>H2</span>
+                    <span id="h2-size">41.89px</span>
+                </div>
+                <h2 id="demo-h2">Heading Level 2</h2>
+                
+                <div class="size-display">
+                    <span>H3</span>
+                    <span id="h3-size">25.89px</span>
+                </div>
+                <h3 id="demo-h3">Heading Level 3</h3>
+                
+                <div class="size-display">
+                    <span>H4</span>
+                    <span id="h4-size">16px</span>
+                </div>
+                <h4 id="demo-h4">Heading Level 4</h4>
+                
+                <div class="size-display">
+                    <span>Body</span>
+                    <span id="body-size">16px</span>
+                </div>
+                <p id="demo-body">This is body text that demonstrates how the typographic scale creates visual hierarchy and rhythm. The relationships between sizes create a sense of proportion that guides the reader's eye naturally through the content.</p>
+                
+                <div class="size-display">
+                    <span>Small</span>
+                    <span id="small-size">9.89px</span>
+                </div>
+                <small id="demo-small">Small text for captions and fine print</small>
+            </div>
+
+            <div class="rhythm-demo">
+                <h3 style="color: #a8d8ff; margin-bottom: 1rem;">Visual Rhythm & Spacing</h3>
+                
+                <div id="rhythm-bars">
+                    <div class="rhythm-bar" style="width: 100%;"></div>
+                    <div class="rhythm-bar" style="width: 80%;"></div>
+                    <div class="rhythm-bar" style="width: 64%;"></div>
+                    <div class="rhythm-bar" style="width: 51%;"></div>
+                    <div class="rhythm-bar" style="width: 41%;"></div>
+                    <div class="rhythm-bar" style="width: 33%;"></div>
+                </div>
+
+                <div class="spacing-demo">
+                    <h4 style="color: #fff; margin-bottom: 1rem;">Spacing Relationships</h4>
+                    <div class="spacing-example">
+                        <span>Paragraph Spacing</span>
+                        <span id="para-spacing">26px</span>
+                    </div>
+                    <div class="spacing-example">
+                        <span>Line Height</span>
+                        <span id="line-height">1.618</span>
+                    </div>
+                    <div class="spacing-example">
+                        <span>Margin Ratio</span>
+                        <span id="margin-ratio">1:1.618</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const scales = {
+            '1.125': { name: 'Major Second', description: 'A subtle, conservative scale perfect for text-heavy designs. Creates gentle hierarchy without dramatic jumps.' },
+            '1.2': { name: 'Minor Third', description: 'Slightly more pronounced than Major Second, offering clear distinction while maintaining readability.' },
+            '1.25': { name: 'Major Third', description: 'A versatile scale that works well for most web applications, providing clear hierarchy without being overpowering.' },
+            '1.333': { name: 'Perfect Fourth', description: 'Based on musical harmony, this scale creates strong visual relationships and works well for editorial design.' },
+            '1.414': { name: 'Augmented Fourth', description: 'The square root of 2, creating dynamic tension. Sometimes called the "devil\'s interval" in music.' },
+            '1.5': { name: 'Perfect Fifth', description: 'A harmonious musical interval that translates beautifully to typography, creating clear size relationships.' },
+            '1.618': { name: 'Golden Ratio', description: 'The golden ratio appears frequently in nature and has been used in art and architecture for millennia. Creates naturally balanced relationships.' },
+            '1.667': { name: 'Minor Sixth', description: 'A more dramatic scale that works well for display typography and when strong hierarchy is needed.' },
+            '1.778': { name: 'Major Sixth', description: 'Creates bold contrasts perfect for headlines and display work. Use carefully to avoid overwhelming smaller text.' },
+            '1.875': { name: 'Minor Seventh', description: 'A very dramatic scale best used sparingly. Excellent for creating impact in poster-style designs.' },
+            '2': { name: 'Octave', description: 'The doubling ratio creates maximum contrast. Use when you need dramatic size differences.' }
+        };
+
+        const rhythmSystems = {
+            linear: [1, 1.2, 1.4, 1.6, 1.8, 2.0],
+            fibonacci: [1, 1, 2, 3, 5, 8],
+            pentatonic: [1, 1.125, 1.333, 1.5, 1.778, 2],
+            chromatic: [1, 1.059, 1.122, 1.189, 1.26, 1.335]
+        };
+
+        function updateScale() {
+            const scaleValue = parseFloat(document.getElementById('scale-type').value);
+            const baseSize = parseInt(document.getElementById('base-size').value);
+            const rhythmType = document.getElementById('rhythm-type').value;
+            const visualWeight = document.getElementById('visual-weight').value;
+
+            // Update scale info
+            const scaleInfo = scales[scaleValue.toString()];
+            document.getElementById('scale-info').innerHTML = `
+                <h3>${scaleInfo.name} (${scaleValue})</h3>
+                <p>${scaleInfo.description}</p>
+            `;
+
+            // Calculate sizes
+            const sizes = {
+                small: baseSize / (scaleValue * scaleValue),
+                body: baseSize,
+                h4: baseSize,
+                h3: baseSize * scaleValue,
+                h2: baseSize * scaleValue * scaleValue,
+                h1: baseSize * scaleValue * scaleValue * scaleValue
+            };
+
+            // Apply typography
+            document.getElementById('demo-h1').style.fontSize = sizes.h1 + 'px';
+            document.getElementById('demo-h2').style.fontSize = sizes.h2 + 'px';
+            document.getElementById('demo-h3').style.fontSize = sizes.h3 + 'px';
+            document.getElementById('demo-h4').style.fontSize = sizes.h4 + 'px';
+            document.getElementById('demo-body').style.fontSize = sizes.body + 'px';
+            document.getElementById('demo-small').style.fontSize = sizes.small + 'px';
+
+            // Update size displays
+            document.getElementById('h1-size').textContent = sizes.h1.toFixed(2) + 'px';
+            document.getElementById('h2-size').textContent = sizes.h2.toFixed(2) + 'px';
+            document.getElementById('h3-size').textContent = sizes.h3.toFixed(2) + 'px';
+            document.getElementById('h4-size').textContent = sizes.h4.toFixed(2) + 'px';
+            document.getElementById('body-size').textContent = sizes.body + 'px';
+            document.getElementById('small-size').textContent = sizes.small.toFixed(2) + 'px';
+
+            // Update rhythm bars
+            const rhythmValues = rhythmSystems[rhythmType];
+            const rhythmBars = document.querySelectorAll('.rhythm-bar');
+            rhythmBars.forEach((bar, index) => {
+                if (index < rhythmValues.length) {
+                    const normalizedValue = rhythmValues[index] / Math.max(...rhythmValues);
+                    bar.style.width = (normalizedValue * 100) + '%';
+                    
+                    // Apply visual weight
+                    if (visualWeight === 'hierarchical') {
+                        bar.style.opacity = normalizedValue;
+                    } else if (visualWeight === 'rhythmic') {
+                        bar.style.opacity = index % 2 === 0 ? 1 : 0.6;
+                    } else {
+                        bar.style.opacity = 1;
+                    }
+                }
+            });
+
+            // Update spacing information
+            document.getElementById('para-spacing').textContent = (baseSize * scaleValue).toFixed(0) + 'px';
+            document.getElementById('line-height').textContent = scaleValue.toFixed(3);
+            document.getElementById('margin-ratio').textContent = `1:${scaleValue.toFixed(3)}`;
+
+            // Apply line height based on scale
+            document.getElementById('demo-body').style.lineHeight = scaleValue;
+        }
+
+        // Event listeners
+        document.getElementById('scale-type').addEventListener('change', updateScale);
+        document.getElementById('base-size').addEventListener('input', updateScale);
+        document.getElementById('rhythm-type').addEventListener('change', updateScale);
+        document.getElementById('visual-weight').addEventListener('change', updateScale);
+
+        // Initialize
+        updateScale();
+    </script>
+</body>
+</html>

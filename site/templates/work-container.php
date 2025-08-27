@@ -38,9 +38,103 @@
 
   </header>
 
+  <section class="selected-work">
+    <h2>Selected Work</h2>
+    <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
+  </section>
+  <section class="timeline">
+    <h2>Experience</h2>
+    <ul>
+      <li>
+        <p>Product Design Lead
+          <span>Strategi Consulting</span>
+        </p>
+        <time>
+          2024 – now
+        </time>
+      </li>
+      <li>
+        <p>Design Systems & UX Consultant
+          <span>Leantime.io</span>
+        </p>
+        <time>
+          2024
+        </time>
+      </li>
+      <li>
+        <p>Business & Design Consultant
+          <span>Moon Audio</span>
+        </p>
+        <time>
+          2023
+        </time>
+      </li>
+      <li>
+        <p>Co-founder
+          <span>Poet & Scribe</span>
+        </p>
+        <time>
+          2022 – now
+        </time>
+      </li>
+      <li>
+        <p>Director of Product Development
+          <span>Booking.com</span>
+        </p>
+        <time>
+          2016 – 2022
+        </time>
+      </li>
+      <li>
+        <p>Freelance
+          <span>Self-employed</span>
+        </p>
+        <time>
+          2008 – 2016
+        </time>
+      </li>
+      <li>
+        <p>Manager of Product Development
+          <span>Booking.com</span>
+        </p>
+        <time>
+          2014 – 2016
+        </time>
+      </li>
+      <li>
+        <p>Senior Product Designer
+          <span>Booking.com</span>
+        </p>
+        <time>
+          2015 – 2016
+        </time>
+      </li>
+      <li>
+        <p>UX Designer
+          <span>Booking.com</span>
+        </p>
+        <time>
+          2013 – 2015
+        </time>
+      </li>
+      <li>
+        <p>Designer
+          <span>Smashing Boxes</span>
+        </p>
+        <time>
+          2011 – 2012
+        </time>
+      </li>
+    </ul>
 
-  <h2>Selected Work</h2>
-  <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
+    <div class="cta">
+      <p>View full experience</p>
+      <a href="/work/experience" class="button">
+        On my site</a>
+      <a href="https://linkedin.com/in/elnatnal" class="button">
+        On LinkedIn</a>
+    </div>
+  </section>
 
 
 <?php snippet('site-footer') ?>

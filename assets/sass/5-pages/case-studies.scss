@@ -13,14 +13,18 @@ div.case-studies{
     row-gap:var(--rhythm-presto);
   }
 }
-section.case-studies{max-inline-size:none;}
+.selected-work{max-inline-size:none;}
 .case-study{
   width:100%;
   transition:
-    border var(--duration-base) ease-in-out,
-    background var(--duration-base) ease-in-out,
-    color var(--duration-slower) ease-in-out;
-    text-decoration: none;
+  border var(--duration-base) ease-in-out,
+  background var(--duration-base) ease-in-out,
+  color var(--duration-slower) ease-in-out;
+  text-decoration: none;
+  &:nth-of-type(4) img{
+    position:relative;
+    top:-5px;
+  }
 
   .card{max-width: 600px;padding:0;}
 
@@ -32,6 +36,8 @@ section.case-studies{max-inline-size:none;}
     mix-blend-mode:normal;
     background:var(--background-primary);
     filter:grayscale(.15);
+    object-fit: cover;
+    object-position:center;
 
   }
   .client, .principal{

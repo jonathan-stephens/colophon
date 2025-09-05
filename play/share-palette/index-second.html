@@ -268,7 +268,7 @@
             <div class="input-section stack">
                 <header>
                     <h1>SVG Color Palette Tool</h1>
-                    <p>Upload or paste SVG color palettes, enhance with proper IDs and data attributes, then export.</p>
+                    <p>Upload or paste SVG color palettes, enhance with proper IDs and data attributes, then export or share.</p>
                 </header>
                 
                 <div class="input-group">
@@ -292,6 +292,8 @@
             
             <div class="palette-actions">
                 <button type="button" class="btn" id="download-btn" disabled>Download Enhanced SVG</button>
+                <button type="button" class="btn" id="share-btn" disabled>Generate Share URL</button>
+                <div id="share-url" style="word-break: break-all; font-family: monospace; font-size: 0.9em; width: 100%;"></div>
             </div>
         </section>
         
@@ -312,7 +314,7 @@
                     <li>Upload an SVG file or paste SVG code containing color swatches</li>
                     <li>Click "Process Palette" to extract and analyze colors</li>
                     <li>Configure each swatch with meaningful names and categories</li>
-                    <li>Download the enhanced SVG</li>
+                    <li>Download the enhanced SVG or share via URL</li>
                 </ol>
             </div>
             
@@ -385,6 +387,8 @@ const colorData = Array.from(
             processBtn: document.getElementById('process-btn'),
             paletteDisplay: document.getElementById('palette-display'),
             downloadBtn: document.getElementById('download-btn'),
+            shareBtn: document.getElementById('share-btn'),
+            shareUrl: document.getElementById('share-url'),
             swatchControls: document.getElementById('swatch-controls')
         };
 
@@ -398,17 +402,7 @@ const colorData = Array.from(
         }
 
         function hexToRgb(hex) {
-            // Clean up hex value
-            hex = hex.replace('#', '');
-            
-            // Handle 3-digit hex
-            if (hex.length === 3) {
-                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-            }
-            
-            if (hex.length !== 6) return null;
-            
-            var result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
                 r: parseInt(result[1], 16),
                 g: parseInt(result[2], 16),
@@ -458,23 +452,14 @@ const colorData = Array.from(
 
         function getColorData(hex) {
             var rgb = hexToRgb(hex);
-            if (!rgb) {
-                // Fallback for invalid colors
-                return {
-                    hex: hex || '#000000',
-                    rgb: 'rgb(0, 0, 0)',
-                    hsl: 'hsl(0, 0%, 0%)',
-                    oklch: 'oklch(0.00 0.00 0)',
-                    lab: 'lab(0.00 0.00 0.00)'
-                };
-            }
+            if (!rgb) return {};
             
             var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
             var oklch = rgbToOklch(rgb.r, rgb.g, rgb.b);
             var lab = rgbToLab(rgb.r, rgb.g, rgb.b);
             
             return {
-                hex: hex.startsWith('#') ? hex : '#' + hex,
+                hex: hex,
                 rgb: 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')',
                 hsl: 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)',
                 oklch: 'oklch(' + oklch.l.toFixed(2) + ' ' + oklch.c.toFixed(2) + ' ' + oklch.h + ')',
@@ -493,22 +478,19 @@ const colorData = Array.from(
                     throw new Error('Invalid SVG format');
                 }
 
-                // More selective color element detection - focus on actual color swatches
-                var colorElements = svg.querySelectorAll('rect[fill], circle[fill], ellipse[fill], polygon[fill], path[fill]');
+                var colorElements = svg.querySelectorAll('[fill]:not([fill="none"]), [color], [style*="fill:"]');
                 var colors = [];
                 var colorIndex = 1;
 
                 for (var i = 0; i < colorElements.length; i++) {
                     var el = colorElements[i];
                     var color = extractColorFromElement(el);
-                    
-                    if (color && color !== 'none' && isValidColor(color)) {
-                        // Skip white and transparent colors
+                    if (color && color !== 'none') {
+                        // Skip white colors (various representations)
                         var normalizedColor = color.toLowerCase();
                         if (normalizedColor === '#ffffff' || 
                             normalizedColor === '#fff' || 
                             normalizedColor === 'white' ||
-                            normalizedColor === 'transparent' ||
                             normalizedColor === 'rgb(255,255,255)' ||
                             normalizedColor === 'rgb(255, 255, 255)') {
                             continue;
@@ -521,7 +503,6 @@ const colorData = Array.from(
                             index: i,
                             id: 'color-' + colorIndex,
                             name: 'Color ' + colorIndex,
-                            category: '',
                             hex: colorData.hex,
                             rgb: colorData.rgb,
                             hsl: colorData.hsl,
@@ -538,58 +519,24 @@ const colorData = Array.from(
             }
         }
 
-        function isValidColor(color) {
-            // Check if color is a valid hex color
-            if (color.startsWith('#')) {
-                return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
-            }
-            // Add more color format validation as needed
-            return color !== 'none' && color !== 'transparent';
-        }
-
         function enhanceSVG(originalSvg, swatchData) {
             var svg = originalSvg.cloneNode(true);
+            var colorElements = svg.querySelectorAll('[fill]:not([fill="none"]), [color], [style*="fill:"]');
             
-            // Get the same elements we processed initially
-            var colorElements = svg.querySelectorAll('rect[fill], circle[fill], ellipse[fill], polygon[fill], path[fill]');
-            var validElements = [];
-            
-            // Filter to only valid color elements (same logic as processSVG)
-            for (var i = 0; i < colorElements.length; i++) {
-                var el = colorElements[i];
-                var color = extractColorFromElement(el);
-                
-                if (color && color !== 'none' && isValidColor(color)) {
-                    var normalizedColor = color.toLowerCase();
-                    if (!(normalizedColor === '#ffffff' || 
-                          normalizedColor === '#fff' || 
-                          normalizedColor === 'white' ||
-                          normalizedColor === 'transparent' ||
-                          normalizedColor === 'rgb(255,255,255)' ||
-                          normalizedColor === 'rgb(255, 255, 255)')) {
-                        validElements.push(el);
-                    }
-                }
-            }
-            
-            // Apply enhancements to matching elements
-            for (var i = 0; i < swatchData.length && i < validElements.length; i++) {
-                var element = validElements[i];
+            for (var i = 0; i < swatchData.length && i < colorElements.length; i++) {
+                var element = colorElements[i];
                 var swatch = swatchData[i];
                 
-                // Set attributes with fallbacks
-                element.id = swatch.id || 'color-' + (i + 1);
-                element.setAttribute('data-color-hex', swatch.hex || '#000000');
-                element.setAttribute('data-color-rgb', swatch.rgb || 'rgb(0, 0, 0)');
-                element.setAttribute('data-color-hsl', swatch.hsl || 'hsl(0, 0%, 0%)');
-                element.setAttribute('data-color-oklch', swatch.oklch || 'oklch(0.00 0.00 0)');
-                element.setAttribute('data-color-lab', swatch.lab || 'lab(0.00 0.00 0.00)');
+                element.id = swatch.id || 'color-' + i;
+                element.setAttribute('data-color-hex', swatch.hex);
+                element.setAttribute('data-color-rgb', swatch.rgb);
+                element.setAttribute('data-color-hsl', swatch.hsl);
+                element.setAttribute('data-color-oklch', swatch.oklch);
+                element.setAttribute('data-color-lab', swatch.lab);
                 element.setAttribute('data-color-name', swatch.name || 'Color ' + (i + 1));
                 
-                if (swatch.category && swatch.category.trim()) {
-                    element.setAttribute('data-color-category', swatch.category.trim());
-                    // Also add as class for CSS targeting
-                    element.classList.add(swatch.category.trim());
+                if (swatch.category) {
+                    element.setAttribute('data-color-category', swatch.category);
                 }
             }
 
@@ -750,6 +697,7 @@ const colorData = Array.from(
                 updateSwatchControls();
                 
                 elements.downloadBtn.disabled = false;
+                elements.shareBtn.disabled = false;
                 
                 console.log('Processed ' + swatchData.length + ' colors');
             } catch (error) {
@@ -775,6 +723,50 @@ const colorData = Array.from(
             URL.revokeObjectURL(url);
         }
 
+        function generateShareURL() {
+            if (!currentPalette) return;
+
+            var shareData = {
+                svg: new XMLSerializer().serializeToString(currentPalette.svg),
+                swatches: swatchData
+            };
+            
+            var encoded = btoa(JSON.stringify(shareData));
+            var shareURL = window.location.origin + window.location.pathname + '?data=' + encoded;
+            
+            elements.shareUrl.innerHTML = '<p>Share URL:</p><div style="background: #f0f0f0; padding: 0.5rem; border-radius: 2px;">' + shareURL + '</div>';
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareURL).then(function() {
+                    alert('Share URL copied to clipboard!');
+                }).catch(function() {
+                    console.log('Could not copy to clipboard');
+                });
+            }
+        }
+
+        // Load from URL
+        function loadFromURL() {
+            var params = new URLSearchParams(window.location.search);
+            var data = params.get('data');
+            
+            if (data) {
+                try {
+                    var decoded = JSON.parse(atob(data));
+                    elements.svgInput.value = decoded.svg;
+                    processCurrentInput();
+                    
+                    if (decoded.swatches) {
+                        swatchData = decoded.swatches;
+                        updateSwatchControls();
+                        updatePaletteDisplay();
+                    }
+                } catch (error) {
+                    console.error('Failed to load shared data:', error);
+                }
+            }
+        }
+
         // Event listeners
         elements.fileInput.addEventListener('change', function(e) {
             var file = e.target.files[0];
@@ -783,6 +775,7 @@ const colorData = Array.from(
 
         elements.processBtn.addEventListener('click', processCurrentInput);
         elements.downloadBtn.addEventListener('click', downloadSVG);
+        elements.shareBtn.addEventListener('click', generateShareURL);
 
         // Drag and drop
         elements.paletteDisplay.addEventListener('dragover', function(e) {
@@ -797,9 +790,7 @@ const colorData = Array.from(
         });
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('SVG Color Palette Tool initialized');
-        });
+        loadFromURL();
     </script>
 </body>
 </html>

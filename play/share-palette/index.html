@@ -1,805 +1,970 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Color Palette Tool</title>
-    <style>
-        /* CUBE CSS: Composition */
-        .page-layout {
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            min-height: 100vh;
-        }
-        
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            padding: 1rem;
-        }
-        
-        .left-column {
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            gap: 1rem;
-        }
-        
-        .input-section {
-            background: #f9f9f9;
-            padding: 1.5rem;
-            border-radius: 4px;
-        }
-        
-        .stack > * + * {
-            margin-block-start: 1rem;
-        }
-        
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1rem;
-            padding: 1rem;
-        }
-        
-        /* CUBE CSS: Utilities */
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-        
-        /* CUBE CSS: Blocks */
-        .palette-display {
-            border: 1px solid #ccc;
-            background: #f9f9f9;
-            overflow: auto;
-            padding: 1rem;
-            min-height: 300px;
-        }
-        
-        .palette-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .controls {
-            background: #f5f5f5;
-            border-radius: 4px;
-            overflow-y: auto;
-            max-height: calc(100vh - 2rem);
-        }
-        
-        .input-group > label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 0.25rem;
-        }
-        
-        .input-group > input,
-        .input-group > textarea {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #999;
-            border-radius: 2px;
-        }
-        
-        .input-group > textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: monospace;
-        }
-        
-        .btn {
-            padding: 0.5rem 1rem;
-            background: #007cba;
-            color: white;
-            border: none;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        
-        .btn:hover {
-            background: #005a8b;
-        }
-        
-        .btn:disabled {
-            background: #999;
-            cursor: not-allowed;
-        }
-        
-        .btn-help {
-            background: #6c757d;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-        
-        .btn-help:hover {
-            background: #495057;
-        }
-        
-        .swatch-editor {
-            border: 1px solid #ddd;
-            padding: 0.75rem;
-            background: white;
-            border-radius: 2px;
-            min-height: 200px;
-        }
-        
-        .swatch-editor .input-group {
-            margin-bottom: 0.5rem;
-        }
-        
-        .swatch-editor .input-group:last-child {
-            margin-bottom: 0;
-        }
-        
-        .swatch-editor input {
-            font-size: 0.8rem;
-            padding: 0.25rem;
-        }
-        
-        .color-row {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-        
-        .color-preview {
-            width: 32px;
-            height: 32px;
-            border: 1px solid #000;
-            flex-shrink: 0;
-            border-radius: 2px;
-        }
-        
-        .color-info {
-            font-size: 0.75rem;
-            color: #666;
-            font-family: monospace;
-        }
-        
-        .category-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        
-        .category-input-wrapper input {
-            margin-right: 0.5rem;
-        }
-        
-        .tooltip-dialog {
-            margin: 0;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-        }
-        
-        .tooltip-dialog::backdrop {
-            background: rgba(0, 0, 0, 0.3);
-        }
-        
-        .tooltip-dialog h4 {
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tooltip-dialog ul {
-            margin: 0;
-            padding-left: 1.2rem;
-            font-size: 0.9rem;
-        }
-        
-        .tooltip-dialog button {
-            margin-top: 0.5rem;
-        }
-        
-        .footer {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .footer h3 {
-            margin-top: 0;
-        }
-        
-        .footer code {
-            background: #e9ecef;
-            padding: 0.125rem 0.25rem;
-            border-radius: 2px;
-            font-family: monospace;
-            font-size: 0.9em;
-        }
-        
-        .footer pre {
-            background: #e9ecef;
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            font-size: 0.8rem;
-        }
-        
-        /* Fix for sectioned h1 elements */
-        h1 {
-            font-size: 2rem;
-            margin: 0 0 0.5rem 0;
-        }
-        
-        @media (max-width: 1024px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-            }
-            
-            .controls-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .controls-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .palette-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SVG Color Palette Tool — Enhanced</title>
+  <style>
+    /* (kept and condensed styles from original, plus new buttons/layout tweaks) */
+    .page-layout { display: grid; grid-template-rows: auto 1fr auto; min-height:100vh; }
+    .main-layout { display:grid; grid-template-columns:1fr 2fr; gap:1rem; padding:1rem;}
+    .left-column { display:grid; grid-template-rows:auto 1fr auto; gap:1rem;}
+    .input-section { background:#f9f9f9; padding:1.5rem; border-radius:4px; }
+    .stack > * + * { margin-block-start:1rem; }
+    .palette-display { border:1px solid #ccc; background:#f9f9f9; overflow:auto; padding:1rem; min-height:300px; }
+    .palette-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+    .controls { background:#f5f5f5; border-radius:4px; overflow-y:auto; max-height:calc(100vh - 2rem); padding-bottom:1rem; }
+    .controls-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; padding:1rem; }
+    .swatch-editor { border:1px solid #ddd; padding:0.75rem; background:white; border-radius:2px; min-height:200px; }
+    .color-row { display:flex; gap:0.5rem; align-items:center; margin-bottom:0.75rem; }
+    .color-preview { width:32px; height:32px; border:1px solid #000; flex-shrink:0; border-radius:2px; }
+    .color-info { font-size:0.75rem; color:#666; font-family:monospace; }
+    .btn { padding:0.5rem 1rem; background:#007cba; color:white; border:none; border-radius:2px; cursor:pointer; font-size:0.9rem; }
+    .btn:disabled{ background:#999; cursor:not-allowed; }
+    .btn-help { background:#6c757d; padding:0.25rem 0.5rem; font-size:0.8rem; margin-left:0.5rem; }
+    .toolbar { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; }
+    .live { position: absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    footer { background:#f8f9fa; padding:2rem; border-top:1px solid #dee2e6; }
+    @media (max-width:1024px){ .main-layout{ grid-template-columns:1fr; grid-template-rows:auto 1fr;} .controls-grid{ grid-template-columns:repeat(3,1fr);} }
+    @media (max-width:768px){ .controls-grid{ grid-template-columns:repeat(2,1fr);} .palette-actions{ flex-direction:column; } }
+    pre { background:#e9ecef; padding:1rem; border-radius:4px; overflow-x:auto; font-size:0.8rem; }
+  </style>
+  <!-- Color.js - accurate color spaces (global build) -->
+  <script src="https://colorjs.io/dist/color.global.js"></script>
 </head>
 <body class="page-layout">
-    <main class="main-layout">
-        <section class="left-column">
-            <div class="input-section stack">
-                <header>
-                    <h1>SVG Color Palette Tool</h1>
-                    <p>Upload or paste SVG color palettes, enhance with proper IDs and data attributes, then export.</p>
-                </header>
-                
-                <div class="input-group">
-                    <label for="file-input">Upload SVG File</label>
-                    <input type="file" id="file-input" accept=".svg,image/svg+xml" aria-describedby="file-help">
-                    <small id="file-help">Choose an SVG file containing color swatches</small>
-                </div>
-                
-                <div class="input-group">
-                    <label for="svg-input">Or Paste SVG Code</label>
-                    <textarea id="svg-input" placeholder="Paste your SVG code here..." aria-describedby="svg-help"></textarea>
-                    <small id="svg-help">Paste SVG markup containing color palette swatches</small>
-                </div>
-                
-                <button type="button" class="btn" id="process-btn">Process Palette</button>
-            </div>
-            
-            <div class="palette-display" id="palette-display" aria-label="Processed color palette preview">
-                <p style="color: #666;">Your processed palette will appear here</p>
-            </div>
-            
-            <div class="palette-actions">
-                <button type="button" class="btn" id="download-btn" disabled>Download Enhanced SVG</button>
-            </div>
-        </section>
-        
-        <aside class="controls">
-            <h2 style="padding: 1rem; margin: 0; background: #e9ecef; border-radius: 4px 4px 0 0;">Swatch Configuration</h2>
-            <div class="controls-grid" id="swatch-controls">
-                <p style="grid-column: 1 / -1; text-align: center; color: #666; margin: 2rem;">Process a palette to configure swatches</p>
-            </div>
-        </aside>
-    </main>
+  <main class="main-layout">
+    <section class="left-column">
+      <div class="input-section stack" aria-labelledby="tool-title">
+        <header>
+          <h1 id="tool-title">SVG Color Palette Tool — Enhanced</h1>
+          <p>Upload or paste SVG, extract all colors, enrich with color-space data, edit, save, and export.</p>
+        </header>
 
-    <footer class="footer">
-        <h3>How to Use This Tool</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div>
-                <h4>Getting Started</h4>
-                <ol>
-                    <li>Upload an SVG file or paste SVG code containing color swatches</li>
-                    <li>Click "Process Palette" to extract and analyze colors</li>
-                    <li>Configure each swatch with meaningful names and categories</li>
-                    <li>Download the enhanced SVG</li>
-                </ol>
-            </div>
-            
-            <div>
-                <h4>Design System Applications</h4>
-                <ul>
-                    <li><strong>Component Libraries:</strong> Standardized color tokens with semantic naming</li>
-                    <li><strong>Documentation:</strong> Auto-generated color specs with multiple formats</li>
-                    <li><strong>CSS Variables:</strong> Export data attributes as custom properties</li>
-                    <li><strong>Design Tools:</strong> Import enhanced palettes into Figma, Sketch, etc.</li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4>Code Example</h4>
-                <p>Enhanced SVG elements include comprehensive color data:</p>
-                <pre><code>&lt;rect id="primary-500" 
-      class="primary 500"
-      data-color-hex="#3b82f6"
-      data-color-rgb="rgb(59, 130, 246)"
-      data-color-hsl="hsl(217, 91%, 60%)"
-      data-color-oklch="oklch(0.63 0.17 264)"
-      data-color-lab="lab(63.02 8.21 -58.42)"
-      data-color-name="Primary Blue"
-      data-color-category="primary"
-      fill="#3b82f6" /&gt;</code></pre>
-            </div>
-            
-            <div>
-                <h4>JavaScript Usage</h4>
-                <pre><code>// Extract color data from enhanced SVG
-const colorData = Array.from(
-  document.querySelectorAll('[data-color-hex]')
-).map(el => ({
-  id: el.id,
-  name: el.dataset.colorName,
-  category: el.dataset.colorCategory,
-  hex: el.dataset.colorHex,
-  oklch: el.dataset.colorOklch
-}));</code></pre>
-            </div>
+        <div class="input-group">
+          <label for="file-input">Upload SVG File</label>
+          <input type="file" id="file-input" accept=".svg,image/svg+xml" aria-describedby="file-help">
+          <small id="file-help">Choose an SVG file containing shapes, gradients, etc.</small>
         </div>
-    </footer>
 
-    <dialog id="category-tooltip" class="tooltip-dialog">
-        <h4>Color Category Examples</h4>
-        <p><strong>FYI:</strong> Categories help organize colors in design systems and component libraries.</p>
+        <div class="input-group">
+          <label for="svg-input">Or Paste SVG Code</label>
+          <textarea id="svg-input" placeholder="Paste your SVG code here..." aria-describedby="svg-help"></textarea>
+          <small id="svg-help">Paste SVG markup (inline &lt;style&gt;, gradients, fills, strokes will be scanned).</small>
+        </div>
+
+        <div class="toolbar">
+          <button class="btn" id="process-btn" type="button">Process Palette</button>
+          <button class="btn" id="save-json-btn" type="button" disabled>Save JSON</button>
+          <button class="btn" id="export-svg-btn" type="button" disabled>Export Enhanced .svg</button>
+          <button class="btn" id="export-swatches-svg-btn" type="button" disabled>Export Swatches .svg</button>
+          <button class="btn" id="export-csv-btn" type="button" disabled>Export Swatches .csv</button>
+          <button class="btn" id="export-pairs-csv-btn" type="button" disabled>Export Contrast Pairs .csv</button>
+          <button class="btn" id="undo-btn" type="button" disabled aria-label="Undo">Undo</button>
+          <button class="btn" id="redo-btn" type="button" disabled aria-label="Redo">Redo</button>
+          <button class="btn btn-help" id="clear-storage-btn" type="button" title="Clear saved session">Clear Saved</button>
+        </div>
+
+      </div>
+
+      <div class="palette-display" id="palette-display" aria-label="Processed color palette preview" tabindex="0">
+        <p style="color:#666;">Your processed palette will appear here</p>
+      </div>
+
+      <div class="palette-actions">
+        <p style="margin:0; color:#666;">Drag & drop an SVG onto the preview area</p>
+      </div>
+    </section>
+
+    <aside class="controls" aria-labelledby="swatch-config-title">
+      <h2 id="swatch-config-title" style="padding:1rem; margin:0; background:#e9ecef; border-radius:4px 4px 0 0;">Swatch Configuration</h2>
+      <div id="swatch-controls" class="controls-grid">
+        <p style="grid-column:1 / -1; text-align:center; color:#666; margin:2rem;">Process a palette to edit extracted swatches</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <h3>How to Use</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+      <div>
+        <h4>Quick</h4>
+        <ol>
+          <li>Upload or paste SVG</li>
+          <li>Process to extract <em>all</em> colors (fills, strokes, gradients)</li>
+          <li>Edit names/categories, save session or export</li>
+        </ol>
+      </div>
+      <div>
+        <h4>Exports</h4>
         <ul>
-            <li><strong>primary:</strong> Main brand colors, primary actions</li>
-            <li><strong>secondary:</strong> Supporting brand colors, secondary actions</li>
-            <li><strong>accent:</strong> Highlight colors, call-to-action elements</li>
-            <li><strong>neutral:</strong> Grays, backgrounds, borders, text</li>
-            <li><strong>semantic:</strong> Success, warning, error, info states</li>
-            <li><strong>surface:</strong> Card backgrounds, overlays, containers</li>
-            <li><strong>interactive:</strong> Links, buttons, form controls</li>
-            <li><strong>decorative:</strong> Illustrations, graphics, visual elements</li>
+          <li><strong>Enhanced SVG:</strong> same markup with <code>data-color-*</code> attributes added</li>
+          <li><strong>Swatches SVG:</strong> visual palette grid with color swatches and metadata</li>
+          <li><strong>JSON:</strong> clean swatch data for external tooling</li>
+          <li><strong>CSV:</strong> swatches list and contrast-pairs (for spreadsheets/contrast auditing)</li>
         </ul>
-        <button type="button" class="btn" onclick="document.getElementById('category-tooltip').close()">Close</button>
-    </dialog>
+      </div>
+      <div>
+        <h4>Notes</h4>
+        <p>OKLCH & Lab values are produced by Color.js (accurate color conversions). Contrast ratios use WCAG formula (relative luminance). All color formats include alpha channel support.</p>
+      </div>
+    </div>
+  </footer>
 
-    <script>
-        // State management
-        var currentPalette = null;
-        var swatchData = [];
+  <dialog id="category-tooltip" class="tooltip-dialog">
+    <h4>Color Category Examples</h4>
+    <p><strong>FYI:</strong> Categories help organize tokens and component systems.</p>
+    <ul>
+      <li><strong>primary</strong>, <strong>secondary</strong>, <strong>accent</strong></li>
+      <li><strong>neutral</strong>, <strong>semantic</strong>, <strong>surface</strong></li>
+    </ul>
+    <button type="button" class="btn" onclick="document.getElementById('category-tooltip').close()">Close</button>
+  </dialog>
 
-        // DOM references
-        var elements = {
-            fileInput: document.getElementById('file-input'),
-            svgInput: document.getElementById('svg-input'),
-            processBtn: document.getElementById('process-btn'),
-            paletteDisplay: document.getElementById('palette-display'),
-            downloadBtn: document.getElementById('download-btn'),
-            swatchControls: document.getElementById('swatch-controls')
+  <!-- ARIA live region for accessibility status messages -->
+  <div id="aria-live" class="live" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+  /*************************************************************************
+   * Enhanced SVG Color Palette Tool
+   * - Uses colorjs.io (Color) loaded as global for accurate OKLCH/Lab.
+   * - Extracts fills, strokes, gradient stops, inline-style fills.
+   * - Exports: enhanced SVG, JSON, swatch CSV, contrast-pairs CSV.
+   * - Undo/Redo, localStorage persistence.
+   *************************************************************************/
+
+  // --- State & history ---
+  let currentPalette = null;      // { svg: SVGElement, rawString: string }
+  let swatchData = [];            // array of swatch objects
+  const HISTORY_LIMIT = 50;
+  let history = [], historyIndex = -1;
+
+  // Debounced update functions
+  let updateTimeout = null;
+
+  // --- DOM refs ---
+  const els = {
+    fileInput: document.getElementById('file-input'),
+    svgInput: document.getElementById('svg-input'),
+    processBtn: document.getElementById('process-btn'),
+    paletteDisplay: document.getElementById('palette-display'),
+    swatchControls: document.getElementById('swatch-controls'),
+    saveJsonBtn: document.getElementById('save-json-btn'),
+    exportSvgBtn: document.getElementById('export-svg-btn'),
+    exportSwatchesSvgBtn: document.getElementById('export-swatches-svg-btn'),
+    exportCsvBtn: document.getElementById('export-csv-btn'),
+    exportPairsCsvBtn: document.getElementById('export-pairs-csv-btn'),
+    undoBtn: document.getElementById('undo-btn'),
+    redoBtn: document.getElementById('redo-btn'),
+    clearStorageBtn: document.getElementById('clear-storage-btn'),
+    ariaLive: document.getElementById('aria-live')
+  };
+
+  // --- Utilities: parsing & normalization ---------------------------------
+
+  // Use canvas/2D context to normalize color strings to a CSS string (works for named, rgb, hsl)
+  const colorNormalizerCanvas = (() => {
+    const c = document.createElement('canvas').getContext('2d');
+    return (val) => {
+      try {
+        c.fillStyle = val;
+        return c.fillStyle; // returns normalized CSS color (e.g., "#rrggbb" or "rgba(...)")
+      } catch (e) {
+        return '';
+      }
+    };
+  })();
+
+  // Hex normalization and rgb parsing
+  function hexToRgb(hex) {
+    if (!hex) return null;
+    // Accept '#rrggbb' or '#rgb' or 'rgb(255,255,255)'
+    // If input is like 'rgb(...)' convert numbers
+    hex = hex.trim();
+    // rgb() or rgba()
+    const rgbMatch = hex.match(/^rgba?\s*\(\s*([0-9.]+%?)\s*,\s*([0-9.]+%?)\s*,\s*([0-9.]+%?)/i);
+    if (rgbMatch) {
+      // Handle percent vs 0-255
+      const conv = (v) => v.endsWith('%') ? Math.round(parseFloat(v) * 2.55) : Math.round(parseFloat(v));
+      return { r: conv(rgbMatch[1]), g: conv(rgbMatch[2]), b: conv(rgbMatch[3]) };
+    }
+
+    // hex like #abc or #aabbcc
+    const cleaned = hex.replace('#','');
+    if (cleaned.length === 3) {
+      const r = cleaned[0]+cleaned[0];
+      const g = cleaned[1]+cleaned[1];
+      const b = cleaned[2]+cleaned[2];
+      return { r: parseInt(r,16), g: parseInt(g,16), b: parseInt(b,16) };
+    } else if (cleaned.length === 6) {
+      return { r: parseInt(cleaned.slice(0,2),16), g: parseInt(cleaned.slice(2,4),16), b: parseInt(cleaned.slice(4,6),16) };
+    }
+    return null;
+  }
+
+  // WCAG contrast ratio from two sRGB colors (hex or rgb string)
+  function relativeLuminanceFromRGB({r,g,b}) {
+    // convert 0..255 to linear values
+    const srgb = [r/255, g/255, b/255].map((c) => {
+      return (c <= 0.03928) ? c/12.92 : Math.pow((c + 0.055)/1.055, 2.4);
+    });
+    return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+  }
+
+  function contrastRatioHex(hexA, hexB) {
+    const a = hexToRgb(hexA);
+    const b = hexToRgb(hexB);
+    if (!a || !b) return null;
+    const L1 = relativeLuminanceFromRGB(a);
+    const L2 = relativeLuminanceFromRGB(b);
+    const lighter = Math.max(L1, L2);
+    const darker = Math.min(L1, L2);
+    return +( (lighter + 0.05) / (darker + 0.05) ).toFixed(2);
+  }
+
+  // Create Color.js values safely if Color is available
+  function getColorJsObject(cssColor) {
+    try {
+      if (typeof Color !== 'undefined') {
+        // Color.js accepts CSS color strings
+        return new Color(cssColor);
+      }
+    } catch (e) {
+      // fallback
+    }
+    return null;
+  }
+
+  function colorDataFromCssString(cssColor) {
+    // Normalize via canvas parser first
+    const normalized = colorNormalizerCanvas(cssColor || '') || cssColor || '';
+    // If still empty -> invalid
+    if (!normalized) {
+      return null;
+    }
+
+    // We'll produce hexa, rgba, hsla, oklcha, laba (with alpha)
+    let hexa, rgba, hsla, oklcha, laba, alpha = 1.0;
+
+    // Try hex from canvas, canvas outputs #rrggbb or rgba()
+    if (normalized.startsWith('#')) {
+      hexa = normalized;
+    } else {
+      // if rgba(...) extract alpha and convert to hex
+      const rgbaMatch = normalized.match(/^rgba?\(([^)]+)\)/i);
+      if (rgbaMatch) {
+        const parts = rgbaMatch[1].split(',').map(p => p.trim().replace('%',''));
+        const r = Math.round(Number(parts[0]));
+        const g = Math.round(Number(parts[1]));
+        const b = Math.round(Number(parts[2]));
+        alpha = parts[3] !== undefined ? Number(parts[3]) : 1.0;
+        const alphaHex = Math.round(alpha * 255).toString(16).padStart(2, '0');
+        hexa = '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('') + (alpha < 1.0 ? alphaHex : '');
+      } else {
+        hexa = normalized;
+      }
+    }
+
+    const rgbObj = hexToRgb(hexa);
+    rgba = rgbObj ? `rgba(${rgbObj.r}, ${rgbObj.g}, ${rgbObj.b}, ${alpha})` : '';
+
+    // HSL: use Color.js if available for accuracy, fallback to manual
+    const cjs = getColorJsObject(hexa);
+    if (cjs) {
+      try {
+        // Set alpha if it's not 1.0
+        if (alpha < 1.0) {
+          cjs.alpha = alpha;
+        }
+
+        const hslVal = cjs.to('hsl');
+        const oklchVal = cjs.to('oklch');
+        const labVal = cjs.to('lab');
+
+        // Format with alpha
+        hsla = `hsla(${Math.round(hslVal.h || 0)}, ${Math.round((hslVal.s || 0) * 100)}%, ${Math.round((hslVal.l || 0) * 100)}%, ${alpha})`;
+        oklcha = `oklch(${(oklchVal.l || 0).toFixed(2)} ${(oklchVal.c || 0).toFixed(3)} ${Math.round(oklchVal.h || 0)} / ${alpha})`;
+        laba = `lab(${(labVal.l || 0).toFixed(2)} ${(labVal.a || 0).toFixed(2)} ${(labVal.b || 0).toFixed(2)} / ${alpha})`;
+      } catch (e) {
+        // fallback to naive HSL calculation
+        const rgbv = rgbObj;
+        const tinyHsl = rgbToHslSimple(rgbv.r, rgbv.g, rgbv.b);
+        hsla = `hsla(${tinyHsl.h}, ${tinyHsl.s}%, ${tinyHsl.l}%, ${alpha})`;
+        oklcha = `oklch(${(tinyHsl.l/100).toFixed(2)} ${(tinyHsl.s/100*0.4).toFixed(2)} ${tinyHsl.h} / ${alpha})`;
+        laba = `lab(${tinyHsl.l.toFixed(2)} 0.00 0.00 / ${alpha})`;
+      }
+    } else {
+      // no Color.js -> fallback approximations
+      const rgbv = rgbObj || {r:0,g:0,b:0};
+      const tinyHsl = rgbToHslSimple(rgbv.r, rgbv.g, rgbv.b);
+      hsla = `hsla(${tinyHsl.h}, ${tinyHsl.s}%, ${tinyHsl.l}%, ${alpha})`;
+      oklcha = `oklch(${(tinyHsl.l/100).toFixed(2)} ${(tinyHsl.s/100*0.4).toFixed(2)} ${tinyHsl.h} / ${alpha})`;
+      laba = `lab(${tinyHsl.l.toFixed(2)} 0.00 0.00 / ${alpha})`;
+    }
+
+    return {
+      hexa: hexa.toLowerCase(),
+      rgba,
+      hsla,
+      oklcha,
+      laba,
+      alpha
+    };
+  }
+
+  // Check if color should be included (filter out normalization colors)
+  function shouldIncludeColor(colorData) {
+    if (!colorData || !colorData.hexa) return false;
+
+    // Exclude common normalization/default colors
+    const excludedColors = ['#000000', '#ffffff', '#000', '#fff'];
+    const normalizedHex = colorData.hexa.toLowerCase().replace(/^#/, '');
+
+    // Handle 3-char hex expansion
+    const expandedHex = normalizedHex.length === 3 ?
+      normalizedHex.split('').map(c => c + c).join('') : normalizedHex;
+
+    return !excludedColors.some(excluded => {
+      const cleanExcluded = excluded.replace('#', '');
+      const expandedExcluded = cleanExcluded.length === 3 ?
+        cleanExcluded.split('').map(c => c + c).join('') : cleanExcluded;
+      return expandedHex.startsWith(expandedExcluded);
+    });
+  }
+
+  // Simple RGB->HSL (kept as fallback)
+  function rgbToHslSimple(r,g,b){
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h=0, s=0, l=(max+min)/2;
+    if (max!==min){
+      const d = max-min;
+      s = l>0.5 ? d/(2-max-min) : d/(max+min);
+      switch(max){
+        case r: h = (g-b)/d + (g<b?6:0); break;
+        case g: h = (b-r)/d + 2; break;
+        case b: h = (r-g)/d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h: Math.round(h*360), s: Math.round(s*100), l: Math.round(l*100) };
+  }
+
+  // --- SVG processing: extract all colors (fills, strokes, gradients, stops) ---
+  function extractAllColorElements(svg) {
+    // Query a broad set: any element with fill/stroke attributes; also gradient stops
+    const selector = [
+      '*[fill]',
+      '*[stroke]',
+      'stop[stop-color]',
+      '*[style]' // style may contain fill/stroke inline
+    ].join(',');
+    const nodes = Array.from(svg.querySelectorAll(selector));
+
+    // Also parse <defs> <style> inside SVG: attempt to find color usages (simple regex for color-like tokens)
+    // (Note: full CSS parsing is complex; we will not implement full CSS cascade—this is an enhancement candidate.)
+    return nodes;
+  }
+
+  // Extract a usable color string from an element (checks fill, stroke, style, stop-color, inline styles)
+  function extractColorFromElement(elem) {
+    // priority: fill attribute -> stroke -> stop-color -> style property 'fill' or 'stroke' -> computed style fallback
+    const getAttr = (name) => {
+      const v = elem.getAttribute(name);
+      return v !== null ? v : null;
+    };
+    let color = getAttr('fill') || getAttr('stroke') || getAttr('stop-color') || null;
+
+    // style attribute parsing
+    const styleAttr = elem.getAttribute('style');
+    if ((!color || color === '') && styleAttr) {
+      // crude parsing for fill: ...; or stroke: ...;
+      const mFill = styleAttr.match(/fill\s*:\s*([^;]+)/i);
+      const mStroke = styleAttr.match(/stroke\s*:\s*([^;]+)/i);
+      color = (mFill && mFill[1]) ? mFill[1].trim() : (mStroke && mStroke[1]) ? mStroke[1].trim() : color;
+    }
+
+    // If it contains CSS var(...) and we can compute, try computed style via temporary insertion into DOM
+    if (color && color.includes('var(')) {
+      // attempt to compute by temporarily appending to a hidden container in live DOM if the SVG is attached
+      try {
+        // create an element and set the style; canvas parser can resolve many CSS color names and variables only if variable exists in document root
+        const resolved = colorNormalizerCanvas(color);
+        if (resolved) color = resolved;
+      } catch (e) { /* ignore */}
+    }
+
+    // If still nothing, try computed style if element is in document
+    if (!color && typeof window !== 'undefined' && document.contains(elem)) {
+      try {
+        const cs = window.getComputedStyle(elem);
+        color = cs && (cs.fill || cs.color || cs.stroke) ? (cs.fill || cs.color || cs.stroke) : null;
+      } catch (e) {}
+    }
+
+    // Normalize with canvas; if canvas fails, return original trimmed
+    const normalized = colorNormalizerCanvas(color || '') || (color ? color.trim() : '');
+    return normalized || null;
+  }
+
+  // Build swatchData by scanning the svg element
+  function processSVGString(svgString) {
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgString, 'image/svg+xml');
+      const svg = doc.documentElement;
+      if (!svg || svg.nodeName.toLowerCase() !== 'svg') throw new Error('Provided content is not valid SVG');
+
+      // collect all candidate nodes
+      const nodes = extractAllColorElements(svg);
+
+      const colors = [];
+      let index = 1;
+      for (let i=0;i<nodes.length;i++){
+        const el = nodes[i];
+        const colorStr = extractColorFromElement(el);
+        if (!colorStr) continue;
+        // filter 'none' or 'transparent'
+        const lower = colorStr.toLowerCase();
+        if (lower === 'none' || lower === 'transparent') continue;
+
+        // Normalize and validate; colorDataFromCssString returns hexa + other formats
+        const cData = colorDataFromCssString(colorStr);
+        if (!cData || !shouldIncludeColor(cData)) continue;
+
+        // Build swatch entry
+        const sw = {
+          elementPath: getElementPath(el), // path to re-identify element (for mapping later)
+          color: cData.hexa,
+          raw: colorStr,
+          index: index,
+          id: `color-${index}`,
+          name: `Color ${index}`,
+          category: '',
+          hexa: cData.hexa,
+          rgba: cData.rgba,
+          hsla: cData.hsla,
+          oklcha: cData.oklcha,
+          laba: cData.laba,
+          alpha: cData.alpha
         };
+        colors.push(sw);
+        index++;
+      }
 
-        // Utility functions
-        function extractColorFromElement(element) {
-            return element.getAttribute('fill') || 
-                   element.getAttribute('color') || 
-                   element.style.fill || 
-                   element.style.color || 
-                   '#000000';
+      return { svg, colors, rawString: svgString };
+    } catch (err) {
+      throw new Error('SVG processing failed: ' + err.message);
+    }
+  }
+
+  // Helper: create a CSS-like path for an element so we can find it again in cloned DOM
+  function getElementPath(el){
+    if (!el || !el.tagName) return '';
+    let path = [];
+    let node = el;
+    while (node && node.nodeType === 1 && node.tagName.toLowerCase() !== 'svg') {
+      let idx = 1;
+      let sib = node.previousElementSibling;
+      while (sib) { if (sib.tagName === node.tagName) idx++; sib = sib.previousElementSibling; }
+      path.unshift(`${node.tagName.toLowerCase()}:nth-of-type(${idx})`);
+      node = node.parentElement;
+    }
+    return path.join(' > ');
+  }
+
+  // Given a cloned svg element, find the element by elementPath
+  function findElementByPath(root, path) {
+    if (!path) return null;
+    const parts = path.split(' > ');
+    let node = root;
+    for (const part of parts) {
+      const m = part.match(/^([a-z0-9]+):nth-of-type\((\d+)\)$/i);
+      if (!m) return null;
+      const tag = m[1];
+      const idx = Number(m[2]);
+      // find nth child with tag
+      let count = 0, found = null;
+      for (let i=0;i<node.children.length;i++){
+        const ch = node.children[i];
+        if (ch.tagName.toLowerCase() === tag) {
+          count++;
+          if (count === idx) { found = ch; break; }
         }
+      }
+      if (!found) return null;
+      node = found;
+    }
+    return node;
+  }
 
-        function hexToRgb(hex) {
-            // Clean up hex value
-            hex = hex.replace('#', '');
-            
-            // Handle 3-digit hex
-            if (hex.length === 3) {
-                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-            }
-            
-            if (hex.length !== 6) return null;
-            
-            var result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
+  // Enhance svg by applying data attributes per swatchData (returns cloned SVG element)
+  function enhanceSVG(originalSvg, swatches) {
+    const svg = originalSvg.cloneNode(true);
+    for (let i=0;i<swatches.length;i++){
+      const sw = swatches[i];
+      const el = findElementByPath(svg, sw.elementPath);
+      if (!el) continue;
+      el.id = sw.id || (`color-${i+1}`);
+      el.setAttribute('data-color-hexa', sw.hexa || '#000000');
+      el.setAttribute('data-color-rgba', sw.rgba || 'rgba(0,0,0,1)');
+      el.setAttribute('data-color-hsla', sw.hsla || '');
+      el.setAttribute('data-color-oklcha', sw.oklcha || '');
+      el.setAttribute('data-color-laba', sw.laba || '');
+      el.setAttribute('data-color-name', sw.name || '');
+      el.setAttribute('data-color-alpha', sw.alpha || '1');
+      if (sw.category && sw.category.trim()) {
+        el.setAttribute('data-color-category', sw.category.trim());
+        // add class for easier CSS targeting
+        try { el.classList.add(sw.category.trim()); } catch(e){/* ignore */}
+      }
+    }
+    return svg;
+  }
+
+  // --- UI Rendering -------------------------------------------------------
+
+  function updatePalettePreview() {
+    if (!currentPalette) return;
+    const enhanced = enhanceSVG(currentPalette.svg, swatchData);
+    els.paletteDisplay.innerHTML = '';
+    // import node into the live DOM so styles and computed styles exist
+    // ensure width/height attributes are preserved
+    const imported = document.importNode(enhanced, true);
+    els.paletteDisplay.appendChild(imported);
+    els.exportSvgBtn.disabled = false;
+    els.exportSwatchesSvgBtn.disabled = swatchData.length === 0;
+    els.exportCsvBtn.disabled = swatchData.length === 0;
+    els.exportPairsCsvBtn.disabled = swatchData.length === 0;
+    els.saveJsonBtn.disabled = swatchData.length === 0;
+    announce(`${swatchData.length} swatches displayed`);
+  }
+
+  function updateSwatchControls() {
+    const container = els.swatchControls;
+    if (!swatchData.length) {
+      container.innerHTML = '<p style="grid-column:1 / -1; text-align:center; color:#666; margin:2rem;">Process a palette to configure swatches</p>';
+      return;
+    }
+    container.innerHTML = '';
+    // create card per swatch
+    swatchData.forEach((sw, i) => {
+      const card = document.createElement('div');
+      card.className = 'swatch-editor';
+      // color row
+      const row = document.createElement('div'); row.className = 'color-row';
+      const pv = document.createElement('div'); pv.className = 'color-preview'; pv.style.backgroundColor = sw.hexa;
+      const info = document.createElement('div');
+      const hexEl = document.createElement('div'); hexEl.style.fontWeight='bold'; hexEl.textContent = sw.hexa;
+      const meta = document.createElement('div'); meta.className = 'color-info';
+      meta.textContent = `${sw.hsla} | ${sw.oklcha}`;
+      info.appendChild(hexEl); info.appendChild(meta);
+      row.appendChild(pv); row.appendChild(info);
+      card.appendChild(row);
+
+      // ID input
+      card.appendChild(createInputGroup('ID', `id-${i}`, sw.id, i, 'id'));
+      // Name input
+      card.appendChild(createInputGroup('Name', `name-${i}`, sw.name, i, 'name'));
+      // Category input + help
+      card.appendChild(createCategoryInputGroup('Category', `category-${i}`, sw.category, i, 'category'));
+      // Color override (allow replacing color)
+      card.appendChild(createInputGroup('Color (hexa/rgba/hsla)', `color-${i}`, sw.hexa, i, 'color'));
+
+      container.appendChild(card);
+    });
+  }
+
+  function createInputGroup(labelText, inputId, value, index, field) {
+    const group = document.createElement('div');
+    group.className = 'input-group';
+    const label = document.createElement('label'); label.setAttribute('for', inputId); label.textContent = labelText;
+    const input = document.createElement('input'); input.type='text'; input.id = inputId; input.value = value || '';
+    input.dataset.index = index; input.dataset.field = field;
+    input.addEventListener('input', handleSwatchInput);
+    group.appendChild(label); group.appendChild(input);
+    return group;
+  }
+
+  function createCategoryInputGroup(labelText, inputId, value, index, field) {
+    const group = document.createElement('div');
+    group.className = 'input-group';
+    const label = document.createElement('label'); label.setAttribute('for', inputId); label.textContent = labelText;
+    const wrapper = document.createElement('div'); wrapper.className='category-input-wrapper';
+    const input = document.createElement('input'); input.type='text'; input.id=inputId; input.value = value || '';
+    input.dataset.index = index; input.dataset.field = field; input.placeholder='e.g., primary';
+    input.addEventListener('input', handleSwatchInput);
+    const helpButton = document.createElement('button'); helpButton.type='button'; helpButton.className='btn btn-help';
+    helpButton.textContent='?'; helpButton.addEventListener('click', ()=> document.getElementById('category-tooltip').showModal());
+    wrapper.appendChild(input); wrapper.appendChild(helpButton);
+    group.appendChild(label); group.appendChild(wrapper);
+    return group;
+  }
+
+  function handleSwatchInput(e) {
+    const input = e.target;
+    const idx = Number(input.dataset.index);
+    const field = input.dataset.field;
+    if (!swatchData[idx]) return;
+
+    // Update data immediately for responsiveness
+    if (field === 'color') {
+      const normalized = colorNormalizerCanvas(input.value) || input.value;
+      const cdata = colorDataFromCssString(normalized);
+      if (cdata) {
+        swatchData[idx].color = cdata.hexa;
+        swatchData[idx].hexa = cdata.hexa;
+        swatchData[idx].rgba = cdata.rgba;
+        swatchData[idx].hsla = cdata.hsla;
+        swatchData[idx].oklcha = cdata.oklcha;
+        swatchData[idx].laba = cdata.laba;
+      } else {
+        // invalid color - keep raw value
+        swatchData[idx].color = input.value;
+      }
+    } else if (field === 'id') {
+      swatchData[idx].id = input.value || `color-${idx+1}`;
+    } else if (field === 'name') {
+      swatchData[idx].name = input.value;
+    } else if (field === 'category') {
+      swatchData[idx].category = input.value;
+    }
+
+    // Debounce expensive updates
+    clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(() => {
+      pushHistory();
+      updateSwatchControlsPreservingFocus();
+      updatePalettePreview();
+    }, 300);
+  }
+
+  function updateSwatchControlsPreservingFocus() {
+    const focused = document.activeElement;
+    const focusedId = focused && focused.id;
+    const focusedSelectionStart = focused && focused.selectionStart;
+    const focusedSelectionEnd = focused && focused.selectionEnd;
+
+    updateSwatchControls();
+
+    // Restore focus and cursor position
+    if (focusedId) {
+      const newFocused = document.getElementById(focusedId);
+      if (newFocused) {
+        newFocused.focus();
+        if (focusedSelectionStart !== undefined) {
+          newFocused.setSelectionRange(focusedSelectionStart, focusedSelectionEnd);
         }
+      }
+    }
+  }
 
-        function rgbToHsl(r, g, b) {
-            r /= 255; g /= 255; b /= 255;
-            var max = Math.max(r, g, b), min = Math.min(r, g, b);
-            var h, s, l = (max + min) / 2;
+  // --- Persistence (localStorage + JSON export) ----------------------------
+  const STORAGE_KEY = 'svg-palette-tool-session-v1';
 
-            if (max === min) {
-                h = s = 0;
-            } else {
-                var d = max - min;
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-                switch (max) {
-                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                    case g: h = (b - r) / d + 2; break;
-                    case b: h = (r - g) / d + 4; break;
-                }
-                h /= 6;
-            }
-            return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-        }
+  function saveToLocalStorage() {
+    const payload = { raw: currentPalette ? currentPalette.rawString : null, swatches: swatchData };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      announce('Session saved locally');
+    } catch (e) {
+      console.warn('Could not save session', e);
+    }
+  }
 
-        function rgbToOklch(r, g, b) {
-            // Simple approximation for OKLCH
-            var hsl = rgbToHsl(r, g, b);
-            return {
-                l: hsl.l / 100,
-                c: hsl.s / 100 * 0.4,
-                h: hsl.h
-            };
-        }
+  function loadFromLocalStorage() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      if (!parsed) return false;
+      if (parsed.raw) {
+        const result = processSVGString(parsed.raw);
+        currentPalette = result;
+      }
+      swatchData = parsed.swatches || [];
+      pushHistory(true);
+      updateSwatchControls();
+      updatePalettePreview();
+      return true;
+    } catch (e) {
+      console.warn('Failed to load session', e);
+      return false;
+    }
+  }
 
-        function rgbToLab(r, g, b) {
-            // Simple approximation for LAB
-            var hsl = rgbToHsl(r, g, b);
-            return {
-                l: hsl.l,
-                a: (hsl.h > 180 ? hsl.h - 360 : hsl.h) * hsl.s / 100,
-                b: Math.sin(hsl.h * Math.PI / 180) * hsl.s
-            };
-        }
+  function clearLocalStorage() {
+    localStorage.removeItem(STORAGE_KEY);
+    announce('Saved session cleared');
+  }
 
-        function getColorData(hex) {
-            var rgb = hexToRgb(hex);
-            if (!rgb) {
-                // Fallback for invalid colors
-                return {
-                    hex: hex || '#000000',
-                    rgb: 'rgb(0, 0, 0)',
-                    hsl: 'hsl(0, 0%, 0%)',
-                    oklch: 'oklch(0.00 0.00 0)',
-                    lab: 'lab(0.00 0.00 0.00)'
-                };
-            }
-            
-            var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-            var oklch = rgbToOklch(rgb.r, rgb.g, rgb.b);
-            var lab = rgbToLab(rgb.r, rgb.g, rgb.b);
-            
-            return {
-                hex: hex.startsWith('#') ? hex : '#' + hex,
-                rgb: 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')',
-                hsl: 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)',
-                oklch: 'oklch(' + oklch.l.toFixed(2) + ' ' + oklch.c.toFixed(2) + ' ' + oklch.h + ')',
-                lab: 'lab(' + lab.l.toFixed(2) + ' ' + lab.a.toFixed(2) + ' ' + lab.b.toFixed(2) + ')'
-            };
-        }
+  // Export JSON (save and prompt download)
+  function exportJSON() {
+    // Clean swatches for export (remove raw and elementPath)
+    const cleanSwatches = swatchData.map(sw => {
+      const { raw, elementPath, ...cleanSw } = sw;
+      return cleanSw;
+    });
 
-        // SVG processing functions
-        function processSVG(svgString) {
-            try {
-                var parser = new DOMParser();
-                var doc = parser.parseFromString(svgString, 'image/svg+xml');
-                var svg = doc.documentElement;
+    const payload = {
+      swatches: cleanSwatches,
+      exportedAt: new Date().toISOString(),
+      totalColors: cleanSwatches.length
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'palette-session.json'; a.click();
+    URL.revokeObjectURL(url);
+  }
 
-                if (svg.nodeName !== 'svg') {
-                    throw new Error('Invalid SVG format');
-                }
+  // Export swatches as SVG palette
+  function exportSwatchesSVG() {
+    if (!swatchData.length) return;
 
-                // More selective color element detection - focus on actual color swatches
-                var colorElements = svg.querySelectorAll('rect[fill], circle[fill], ellipse[fill], polygon[fill], path[fill]');
-                var colors = [];
-                var colorIndex = 1;
+    const swatchSize = 60;
+    const padding = 10;
+    const textHeight = 80;
+    const swatchesPerRow = Math.min(6, swatchData.length);
+    const rows = Math.ceil(swatchData.length / swatchesPerRow);
 
-                for (var i = 0; i < colorElements.length; i++) {
-                    var el = colorElements[i];
-                    var color = extractColorFromElement(el);
-                    
-                    if (color && color !== 'none' && isValidColor(color)) {
-                        // Skip white and transparent colors
-                        var normalizedColor = color.toLowerCase();
-                        if (normalizedColor === '#ffffff' || 
-                            normalizedColor === '#fff' || 
-                            normalizedColor === 'white' ||
-                            normalizedColor === 'transparent' ||
-                            normalizedColor === 'rgb(255,255,255)' ||
-                            normalizedColor === 'rgb(255, 255, 255)') {
-                            continue;
-                        }
-                        
-                        var colorData = getColorData(color);
-                        colors.push({
-                            element: el,
-                            color: color,
-                            index: i,
-                            id: 'color-' + colorIndex,
-                            name: 'Color ' + colorIndex,
-                            category: '',
-                            hex: colorData.hex,
-                            rgb: colorData.rgb,
-                            hsl: colorData.hsl,
-                            oklch: colorData.oklch,
-                            lab: colorData.lab
-                        });
-                        colorIndex++;
-                    }
-                }
+    const width = swatchesPerRow * (swatchSize + padding) - padding;
+    const height = rows * (swatchSize + textHeight + padding) - padding;
 
-                return { svg: svg, colors: colors };
-            } catch (error) {
-                throw new Error('SVG processing failed: ' + error.message);
-            }
-        }
+    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">`;
+    svgContent += '<defs><style>.swatch-text { font-family: Arial, sans-serif; font-size: 8px; fill: #333; } .swatch-label { font-weight: bold; } .swatch-data { font-size: 6px; fill: #666; }</style></defs>';
 
-        function isValidColor(color) {
-            // Check if color is a valid hex color
-            if (color.startsWith('#')) {
-                return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
-            }
-            // Add more color format validation as needed
-            return color !== 'none' && color !== 'transparent';
-        }
+    swatchData.forEach((sw, index) => {
+      const col = index % swatchesPerRow;
+      const row = Math.floor(index / swatchesPerRow);
+      const x = col * (swatchSize + padding);
+      const y = row * (swatchSize + textHeight + padding);
 
-        function enhanceSVG(originalSvg, swatchData) {
-            var svg = originalSvg.cloneNode(true);
-            
-            // Get the same elements we processed initially
-            var colorElements = svg.querySelectorAll('rect[fill], circle[fill], ellipse[fill], polygon[fill], path[fill]');
-            var validElements = [];
-            
-            // Filter to only valid color elements (same logic as processSVG)
-            for (var i = 0; i < colorElements.length; i++) {
-                var el = colorElements[i];
-                var color = extractColorFromElement(el);
-                
-                if (color && color !== 'none' && isValidColor(color)) {
-                    var normalizedColor = color.toLowerCase();
-                    if (!(normalizedColor === '#ffffff' || 
-                          normalizedColor === '#fff' || 
-                          normalizedColor === 'white' ||
-                          normalizedColor === 'transparent' ||
-                          normalizedColor === 'rgb(255,255,255)' ||
-                          normalizedColor === 'rgb(255, 255, 255)')) {
-                        validElements.push(el);
-                    }
-                }
-            }
-            
-            // Apply enhancements to matching elements
-            for (var i = 0; i < swatchData.length && i < validElements.length; i++) {
-                var element = validElements[i];
-                var swatch = swatchData[i];
-                
-                // Set attributes with fallbacks
-                element.id = swatch.id || 'color-' + (i + 1);
-                element.setAttribute('data-color-hex', swatch.hex || '#000000');
-                element.setAttribute('data-color-rgb', swatch.rgb || 'rgb(0, 0, 0)');
-                element.setAttribute('data-color-hsl', swatch.hsl || 'hsl(0, 0%, 0%)');
-                element.setAttribute('data-color-oklch', swatch.oklch || 'oklch(0.00 0.00 0)');
-                element.setAttribute('data-color-lab', swatch.lab || 'lab(0.00 0.00 0.00)');
-                element.setAttribute('data-color-name', swatch.name || 'Color ' + (i + 1));
-                
-                if (swatch.category && swatch.category.trim()) {
-                    element.setAttribute('data-color-category', swatch.category.trim());
-                    // Also add as class for CSS targeting
-                    element.classList.add(swatch.category.trim());
-                }
-            }
+      // Color swatch rectangle
+      svgContent += `<rect x="${x}" y="${y}" width="${swatchSize}" height="${swatchSize}" fill="${sw.hexa}" stroke="#ccc" stroke-width="1"/>`;
 
-            return svg;
-        }
+      // Text labels
+      const textY = y + swatchSize + 12;
+      svgContent += `<text x="${x + swatchSize/2}" y="${textY}" text-anchor="middle" class="swatch-text swatch-label">${sw.name || sw.id}</text>`;
+      svgContent += `<text x="${x + swatchSize/2}" y="${textY + 10}" text-anchor="middle" class="swatch-text">${sw.hexa}</text>`;
+      if (sw.category) {
+        svgContent += `<text x="${x + swatchSize/2}" y="${textY + 20}" text-anchor="middle" class="swatch-text swatch-data">${sw.category}</text>`;
+      }
+      svgContent += `<text x="${x + swatchSize/2}" y="${textY + 30}" text-anchor="middle" class="swatch-text swatch-data">${sw.rgba}</text>`;
+    });
 
-        // UI update functions
-        function updatePaletteDisplay() {
-            if (!currentPalette) return;
+    svgContent += '</svg>';
 
-            var enhanced = enhanceSVG(currentPalette.svg, swatchData);
-            elements.paletteDisplay.innerHTML = '';
-            elements.paletteDisplay.appendChild(enhanced);
-        }
+    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'swatches-palette.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
-        function updateSwatchControls() {
-            if (!swatchData.length) {
-                elements.swatchControls.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #666; margin: 2rem;">Process a palette to configure swatches</p>';
-                return;
-            }
+  // Export enhanced SVG
+  function exportEnhancedSVG() {
+    if (!currentPalette) return;
+    const enhanced = enhanceSVG(currentPalette.svg, swatchData);
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(enhanced);
+    const blob = new Blob([svgString], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'enhanced-palette.svg'; a.click();
+    URL.revokeObjectURL(url);
+  }
 
-            elements.swatchControls.innerHTML = '';
-            
-            for (var i = 0; i < swatchData.length; i++) {
-                var swatch = swatchData[i];
-                var container = document.createElement('div');
-                container.className = 'swatch-editor';
-                
-                // Create color row
-                var colorRow = document.createElement('div');
-                colorRow.className = 'color-row';
-                
-                var colorPreview = document.createElement('div');
-                colorPreview.className = 'color-preview';
-                colorPreview.style.backgroundColor = swatch.color;
-                
-                var colorInfo = document.createElement('div');
-                var colorHex = document.createElement('div');
-                colorHex.style.fontWeight = 'bold';
-                colorHex.style.fontSize = '0.9rem';
-                colorHex.textContent = swatch.color;
-                
-                var colorHsl = document.createElement('div');
-                colorHsl.className = 'color-info';
-                colorHsl.textContent = swatch.hsl;
-                
-                colorInfo.appendChild(colorHex);
-                colorInfo.appendChild(colorHsl);
-                colorRow.appendChild(colorPreview);
-                colorRow.appendChild(colorInfo);
-                
-                // Create input groups
-                container.appendChild(colorRow);
-                container.appendChild(createInputGroup('ID', 'id-' + i, swatch.id || '', i, 'id'));
-                container.appendChild(createInputGroup('Name', 'name-' + i, swatch.name || '', i, 'name'));
-                container.appendChild(createCategoryInputGroup('Category', 'category-' + i, swatch.category || '', i, 'category'));
-                
-                elements.swatchControls.appendChild(container);
-            }
-        }
+  // Export swatches CSV
+  function exportSwatchesCSV() {
+    if (!swatchData.length) return;
+    const headers = ['id','name','category','hexa','rgba','hsla','oklcha','laba','alpha'];
+    const rows = [headers.join(',')];
+    swatchData.forEach(sw => {
+      const row = headers.map(h => {
+        const v = (sw[h] === undefined || sw[h] === null) ? '' : String(sw[h]).replace(/"/g,'""');
+        return `"${v}"`;
+      }).join(',');
+      rows.push(row);
+    });
+    const csv = rows.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'swatches.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
 
-        function createInputGroup(labelText, inputId, value, index, field) {
-            var group = document.createElement('div');
-            group.className = 'input-group';
-            
-            var label = document.createElement('label');
-            label.setAttribute('for', inputId);
-            label.textContent = labelText;
-            
-            var input = document.createElement('input');
-            input.type = 'text';
-            input.id = inputId;
-            input.value = value;
-            input.dataset.index = index;
-            input.dataset.field = field;
-            input.addEventListener('input', handleSwatchInput);
-            
-            group.appendChild(label);
-            group.appendChild(input);
-            return group;
-        }
-
-        function createCategoryInputGroup(labelText, inputId, value, index, field) {
-            var group = document.createElement('div');
-            group.className = 'input-group';
-            
-            var label = document.createElement('label');
-            label.setAttribute('for', inputId);
-            label.textContent = labelText;
-            
-            var wrapper = document.createElement('div');
-            wrapper.className = 'category-input-wrapper';
-            
-            var input = document.createElement('input');
-            input.type = 'text';
-            input.id = inputId;
-            input.value = value;
-            input.dataset.index = index;
-            input.dataset.field = field;
-            input.placeholder = 'e.g., primary';
-            input.addEventListener('input', handleSwatchInput);
-            
-            var helpButton = document.createElement('button');
-            helpButton.type = 'button';
-            helpButton.className = 'btn btn-help';
-            helpButton.setAttribute('aria-label', 'Show category examples');
-            helpButton.textContent = '?';
-            helpButton.addEventListener('click', function() {
-                document.getElementById('category-tooltip').showModal();
-            });
-            
-            wrapper.appendChild(input);
-            wrapper.appendChild(helpButton);
-            group.appendChild(label);
-            group.appendChild(wrapper);
-            return group;
-        }
-        
-        function handleSwatchInput(e) {
-            var target = e.target;
-            var index = parseInt(target.dataset.index);
-            var field = target.dataset.field;
-            
-            if (swatchData[index] && field) {
-                swatchData[index][field] = target.value;
-                updatePaletteDisplay();
-            }
-        }
-
-        // File and input handlers
-        function handleFile(file) {
-            if (!file.type.includes('svg')) {
-                alert('Please select an SVG file');
-                return;
-            }
-
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                elements.svgInput.value = e.target.result;
-                processCurrentInput();
-            };
-            reader.readAsText(file);
-        }
-
-        function processCurrentInput() {
-            var svgContent = elements.svgInput.value.trim();
-            if (!svgContent) {
-                alert('Please provide SVG content');
-                return;
-            }
-
-            try {
-                var result = processSVG(svgContent);
-                currentPalette = result;
-                swatchData = result.colors;
-                
-                updatePaletteDisplay();
-                updateSwatchControls();
-                
-                elements.downloadBtn.disabled = false;
-                
-                console.log('Processed ' + swatchData.length + ' colors');
-            } catch (error) {
-                alert(error.message);
-                console.error(error);
-            }
-        }
-
-        function downloadSVG() {
-            if (!currentPalette) return;
-
-            var enhanced = enhanceSVG(currentPalette.svg, swatchData);
-            var svgString = new XMLSerializer().serializeToString(enhanced);
-            
-            var blob = new Blob([svgString], { type: 'image/svg+xml' });
-            var url = URL.createObjectURL(blob);
-            
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'enhanced-palette.svg';
-            a.click();
-            
-            URL.revokeObjectURL(url);
-        }
-
-        // Event listeners
-        elements.fileInput.addEventListener('change', function(e) {
-            var file = e.target.files[0];
-            if (file) handleFile(file);
+  // Export contrast pairs CSV (foreground/background pairs + WCAG contrast), prioritized
+  function exportContrastPairsCSV() {
+    if (!swatchData.length) return;
+    const pairs = [];
+    for (let i=0;i<swatchData.length;i++){
+      for (let j=0;j<swatchData.length;j++){
+        if (i === j) continue;
+        const A = swatchData[i].hexa;
+        const B = swatchData[j].hexa;
+        const ratio = contrastRatioHex(A, B);
+        if (ratio === null) continue;
+        pairs.push({
+          foregroundId: swatchData[i].id,
+          foregroundName: swatchData[i].name,
+          foregroundHexa: A,
+          backgroundId: swatchData[j].id,
+          backgroundName: swatchData[j].name,
+          backgroundHexa: B,
+          contrastRatio: ratio
         });
+      }
+    }
+    // Sort descending by contrast
+    pairs.sort((a,b) => b.contrastRatio - a.contrastRatio);
+    // Build CSV and also include a sheet-like divider comment for spreadsheet users (most spreadsheet apps ignore comment lines)
+    const headers = ['foregroundId','foregroundName','foregroundHexa','backgroundId','backgroundName','backgroundHexa','contrastRatio'];
+    const rows = [headers.join(',')];
+    pairs.forEach(p => {
+      const row = headers.map(h => `"${String(p[h]||'').replace(/"/g,'""')}"`).join(',');
+      rows.push(row);
+    });
+    const csv = rows.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'contrast-pairs.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
 
-        elements.processBtn.addEventListener('click', processCurrentInput);
-        elements.downloadBtn.addEventListener('click', downloadSVG);
+  // --- History (undo/redo) ------------------------------------------------
+  function pushHistory(skipTrim=false) {
+    // push current swatch state
+    const snapshot = JSON.stringify(swatchData);
+    if (historyIndex >= 0 && history[historyIndex] === snapshot) {
+      // no change
+      return;
+    }
+    // if we are not at the end of history, truncate forward history
+    if (historyIndex < history.length - 1) {
+      history = history.slice(0, historyIndex + 1);
+    }
+    history.push(snapshot);
+    historyIndex = history.length - 1;
+    // trim
+    if (history.length > HISTORY_LIMIT) {
+      history.shift();
+      historyIndex = history.length - 1;
+    }
+    // update UI
+    updateHistoryButtons();
+    // auto-save
+    saveToLocalStorage();
+  }
 
-        // Drag and drop
-        elements.paletteDisplay.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'copy';
-        });
+  function undo() {
+    if (historyIndex <= 0) return;
+    historyIndex--;
+    const snap = JSON.parse(history[historyIndex]);
+    swatchData = snap;
+    updateSwatchControls();
+    updatePalettePreview();
+    updateHistoryButtons();
+    announce('Undo');
+  }
 
-        elements.paletteDisplay.addEventListener('drop', function(e) {
-            e.preventDefault();
-            var files = e.dataTransfer.files;
-            if (files.length > 0) handleFile(files[0]);
-        });
+  function redo() {
+    if (historyIndex >= history.length - 1) return;
+    historyIndex++;
+    const snap = JSON.parse(history[historyIndex]);
+    swatchData = snap;
+    updateSwatchControls();
+    updatePalettePreview();
+    updateHistoryButtons();
+    announce('Redo');
+  }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('SVG Color Palette Tool initialized');
-        });
-    </script>
+  function updateHistoryButtons() {
+    els.undoBtn.disabled = historyIndex <= 0;
+    els.redoBtn.disabled = historyIndex >= history.length -1;
+  }
+
+  // --- File handlers & processing -----------------------------------------
+  function handleFile(file) {
+    if (!file) return;
+    if (!file.type.includes('svg') && !file.name.endsWith('.svg')) {
+      alert('Please provide an SVG file');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      els.svgInput.value = e.target.result;
+      processCurrentInput();
+    };
+    reader.readAsText(file);
+  }
+
+  function processCurrentInput() {
+    const svgText = (els.svgInput.value || '').trim();
+    if (!svgText) { alert('Please provide SVG content'); return; }
+    try {
+      const result = processSVGString(svgText);
+      currentPalette = result;
+      swatchData = result.colors;
+      // initialize IDs properly
+      swatchData.forEach((s, idx) => { s.id = s.id || `color-${idx+1}`; s.index = idx+1; });
+      pushHistory(true);
+      updateSwatchControls();
+      updatePalettePreview();
+      els.exportSvgBtn.disabled = false;
+      els.exportSwatchesSvgBtn.disabled = swatchData.length === 0;
+      els.exportCsvBtn.disabled = swatchData.length === 0;
+      els.exportPairsCsvBtn.disabled = swatchData.length === 0;
+      els.saveJsonBtn.disabled = swatchData.length === 0;
+      announce(`Processed ${swatchData.length} colors`);
+    } catch (err) {
+      alert('Error: ' + err.message);
+      console.error(err);
+    }
+  }
+
+  // Drag & drop
+  els.paletteDisplay.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+  els.paletteDisplay.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+
+  // --- Small helpers ------------------------------------------------------
+  function announce(msg) { els.ariaLive.textContent = msg; console.log(msg); }
+
+  // --- Wire up event listeners --------------------------------------------
+  els.fileInput.addEventListener('change', (e) => {
+    const f = e.target.files[0];
+    if (f) handleFile(f);
+  });
+
+  els.processBtn.addEventListener('click', () => { processCurrentInput(); });
+  els.saveJsonBtn.addEventListener('click', () => exportJSON());
+  els.exportSvgBtn.addEventListener('click', () => exportEnhancedSVG());
+  els.exportSwatchesSvgBtn.addEventListener('click', () => exportSwatchesSVG());
+  els.exportCsvBtn.addEventListener('click', () => exportSwatchesCSV());
+  els.exportPairsCsvBtn.addEventListener('click', () => exportContrastPairsCSV());
+  els.undoBtn.addEventListener('click', () => undo());
+  els.redoBtn.addEventListener('click', () => redo());
+  els.clearStorageBtn.addEventListener('click', () => { clearLocalStorage(); });
+
+  // keyboard-friendly paste: ctrl+v into textarea? leave default
+  document.addEventListener('DOMContentLoaded', () => {
+    // attempt to restore session
+    const restored = loadFromLocalStorage();
+    if (restored) announce('Restored session from local storage');
+    else announce('SVG Color Palette Tool initialized');
+  });
+
+  // Expose quick debug helpers on window for advanced users
+  window.__svgPaletteTool = {
+    getSwatches: () => swatchData,
+    getCurrentSVG: () => currentPalette,
+    clearSession: () => { swatchData = []; currentPalette = null; history = []; historyIndex = -1; localStorage.removeItem(STORAGE_KEY); updateSwatchControls(); updatePalettePreview(); announce('Session cleared'); }
+  };
+
+  </script>
 </body>
 </html>

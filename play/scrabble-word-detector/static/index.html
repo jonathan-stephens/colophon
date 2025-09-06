@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scrabble Word Detector</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    table { border-collapse: collapse; margin-top: 20px; }
+    td { border: 1px solid #ccc; width: 30px; height: 30px; text-align: center; font-weight: bold; }
+    td.empty { background: #f9f9f9; }
+    td.filled { background: #dff0d8; }
+  </style>
+</head>
+<body>
+  <h1>Scrabble Word Detector</h1>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept="image/*" />
+    <button type="submit">Process Board</button>
+  </form>
+
+  <button id="downloadBtn" style="margin-top:10px;">Download CSV</button>
+
+  <div id="results"></div>
+  <div id="boardPreview"></div>
+
+  <script>
+    document.getElementById("uploadForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let formData = new FormData();
+      formData.append("file", document.getElementById("fileInput").files[0]);
+
+      let response = await fetch("/process/", { method: "POST", body: formData });
+      if (response.ok) {
+        let data = await response.json();
+
+        // Word buckets
+        let results = "<h2>Words Detected</h2>";
+        for (let len in data.words_by_length) {
+          results += `<p><b>${len}-letter words:</b> ${data.words_by_length[len].join(", ")}</p>`;
+        }
+        document.getElementById("results").innerHTML = results;
+
+        // Board preview
+        let table = "<h2>Board Preview</h2><table>";
+        data.board.forEach(row => {
+          table += "<tr>";
+          row.forEach(cell => {
+            if (cell) {
+              table += `<td class="filled">${cell}</td>`;
+            } else {
+              table += `<td class="empty"></td>`;
+            }
+          });
+          table += "</tr>";
+        });
+        table += "</table>";
+        document.getElementById("boardPreview").innerHTML = table;
+
+      } else {
+        alert("Error processing board!");
+      }
+    };
+
+    document.getElementById("downloadBtn").onclick = async () => {
+      let response = await fetch("/download/");
+      if (response.ok) {
+        let blob = await response.blob();
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "scrabble_games.csv";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        alert("No CSV available yet.");
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Color System Assignment — Prototype (Web Components)</title>
+
+<!-- Color.js global build (oklch/oklab support) -->
+<script src="https://colorjs.io/dist/color.global.js"></script>
+
+<style>
+  body{ font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:16px; background:#f4f6f8; color:#111;}
+  h1{font-size:18px;margin:0 0 12px 0}
+  color-system-app{ display:block; }
+  .topbar{ display:flex; gap:8px; align-items:center; margin-bottom:12px;}
+  .btn{ padding:8px 10px; border-radius:6px; border:1px solid #cfcfcf; background:#fff; cursor:pointer; font-size:13px;}
+  input[type="file"]{ font-size:13px;}
+  .tabs{ display:flex; gap:6px; margin-bottom:10px;}
+  .tab{ padding:8px 10px; border-radius:6px; border:1px solid transparent; background:transparent; cursor:pointer; font-size:13px;}
+  .tab.active{ background:#111;color:#fff; border-color:#111; }
+  .panel{ background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px;}
+  .row{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+  .swatch{ width:36px;height:24px;border-radius:4px;border:1px solid #ddd; }
+  .color-list{ max-height:220px; overflow:auto; border:1px dashed #eee; padding:8px; }
+  label{ font-size:13px; margin-bottom:4px; display:block; }
+  select,input[type="text"]{ padding:6px;border-radius:6px;border:1px solid #d0d0d0;font-size:13px; }
+  pre{ background:#0b1220;color:#cfe8ff;padding:10px;border-radius:6px; max-height:360px; overflow:auto;font-size:12px;}
+  .small{ font-size:12px;color:#666 }
+  .badge{ padding:4px 6px;border-radius:6px;font-size:12px; }
+  .badge.pass{ background:#e6fbf0;color:#0b6b3a;border:1px solid #bff0cf; }
+  .badge.warn{ background:#fff8e6;color:#7a5600;border:1px solid #ffe2a1; }
+  .badge.fail{ background:#fff0f0;color:#850000;border:1px solid #f3b7b7; }
+  .assign-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .compact{ font-size:13px;}
+  .preview-surface{ padding:12px;border-radius:8px;border:1px solid #eee; display:flex; gap:8px; align-items:center; justify-content:space-between; }
+</style>
+</head>
+<body>
+<h1>Color System Assignment — Prototype (Web Components)</h1>
+
+<color-system-app></color-system-app>
+
+<script>
+/* =========================
+   Color System Web Component
+   ========================= */
+
+class ColorSystemApp extends HTMLElement{
+  constructor(){
+    super();
+    this.attachShadow({mode:'open'});
+    // app state
+    this.state = {
+      detected: [], // [{ color, occurrences, ids:[], data:[] }]
+      variables: {}, // name -> { value: hexOrColorString, original }
+      assignments: {}, // role -> subrole -> varName
+      components: {}, // selector -> mapping
+      threshold: { aa: 4.5, aaa: 7.0 }
+    };
+    // roles/subroles per spec
+    this.roles = ['primary','secondary','tertiary','quaternary'];
+    this.subroles = ['foreground','background','frills','border','highlight'];
+    // bind
+    this.handleFile = this.handleFile.bind(this);
+    this.handlePaste = this.handlePaste.bind(this);
+    this.adoptColor = this.adoptColor.bind(this);
+    this.generateCSS = this.generateCSS.bind(this);
+    this.downloadCSS = this.downloadCSS.bind(this);
+    this.changeTab = this.changeTab.bind(this);
+    // init DOM
+    this.render();
+  }
+
+  connectedCallback(){
+    // no-op
+  }
+
+  /* --------- Utilities --------- */
+
+  // Minimal color to hex helper using Color.js if available, else simple parsing
+  toHex(val){
+    try{
+      if(window.Color){
+        const c = new Color(val);
+        const srgb = c.to('srgb');
+        const r = Math.round(srgb.r*255), g = Math.round(srgb.g*255), b = Math.round(srgb.b*255);
+        const hx = ((1<<24) + (r<<16) + (g<<8) + b).toString(16).slice(1);
+        return '#'+hx;
+      }
+    }catch(e){}
+    // fallback: if already hex or rgb
+    if(typeof val === 'string' && val.startsWith('#')) return val;
+    const m = String(val).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+    if(m) return '#'+ [m[1],m[2],m[3]].map(n=>{ const h = parseInt(n).toString(16); return h.length===1 ? '0'+h : h}).join('');
+    return val;
+  }
+
+  // WCAG contrast ratio (sRGB linear)
+  _srgbToLinear(c){
+    if(c <= 0.04045) return c/12.92;
+    return Math.pow((c+0.055)/1.055, 2.4);
+  }
+  _hexToRgb(hex){
+    hex = String(hex).replace('#','');
+    if(hex.length===3) hex = hex.split('').map(ch=>ch+ch).join('');
+    const int = parseInt(hex,16);
+    return { r: (int>>16)&255, g: (int>>8)&255, b: int&255 };
+  }
+  contrastRatio(a,b){
+    try{
+      const ha = this.toHex(a);
+      const hb = this.toHex(b);
+      const ra = this._hexToRgb(ha), rb = this._hexToRgb(hb);
+      const As = ra.r/255, Bs = ra.g/255, Cs = ra.b/255;
+      const Ds = rb.r/255, Es = rb.g/255, Fs = rb.b/255;
+      const Al = this._srgbToLinear(As), Bl = this._srgbToLinear(Bs), Cl = this._srgbToLinear(Cs);
+      const Dl = this._srgbToLinear(Ds), El = this._srgbToLinear(Es), Fl = this._srgbToLinear(Fs);
+      const La = 0.2126*Al + 0.7152*Bl + 0.0722*Cl;
+      const Lb = 0.2126*Dl + 0.7152*El + 0.0722*Fl;
+      const L1 = Math.max(La,Lb), L2 = Math.min(La,Lb);
+      const ratio = (L1 + 0.05) / (L2 + 0.05);
+      return Math.round(ratio*100)/100;
+    }catch(e){
+      return NaN;
+    }
+  }
+
+  // perceptual dark variant generator using Color.js mix; increases mixing if needed
+  generateDarkPair(bg, fg){
+    // returns { darkBg, darkFg } as hex strings
+    try{
+      if(!window.Color) throw new Error('Color.js missing');
+      const baseBg = new Color(bg);
+      const baseFg = new Color(fg);
+      // start mixing ratios
+      let mixBg = 0.7, mixFg = 0.8;
+      let darkBg = baseBg.mix(new Color('black'), mixBg);
+      let darkFg = baseFg.mix(new Color('white'), mixFg);
+      let tries = 0;
+      while(tries < 8){
+        const ratio = this.contrastRatio(darkBg.toString(), darkFg.toString());
+        if(!Number.isFinite(ratio)) break;
+        if(ratio >= this.state.threshold.aaa) break; // good enough
+        mixBg = Math.min(0.95, mixBg + 0.06);
+        mixFg = Math.min(0.95, mixFg + 0.03);
+        darkBg = baseBg.mix(new Color('black'), mixBg);
+        darkFg = baseFg.mix(new Color('white'), mixFg);
+        tries++;
+      }
+      return { darkBg: this.toHex(darkBg), darkFg: this.toHex(darkFg) };
+    }catch(e){
+      // fallback: simple invert-ish
+      try{
+        return { darkBg: '#111111', darkFg: '#ffffff' };
+      }catch(_) { return { darkBg: bg, darkFg: fg }; }
+    }
+  }
+
+  // create variant that meets target contrast with counterpart by altering lightness in OKLCH via Color.js
+  generateVariantForContrast(baseColor, counterpartColor, targetRatio){
+    try{
+      if(!window.Color) throw new Error('Color.js missing');
+      const base = new Color(baseColor).to('oklch');
+      const cp = new Color(counterpartColor).to('srgb');
+      // binary search on L in [0,100] to find value where contrast meets target (limited steps)
+      let lower = 0, upper = 100;
+      // initial guess: base.l
+      let lastGood = null;
+      for(let iter=0; iter<24; iter++){
+        const mid = (lower + upper)/2;
+        const cand = new Color({ space: 'oklch', coords: [mid/100, base.coords[1], base.coords[2]] }).to('srgb');
+        const candHex = this.toHex(cand);
+        const cpHex = this.toHex(cp);
+        const ratio = this.contrastRatio(candHex, cpHex);
+        if(!Number.isFinite(ratio)) break;
+        if(ratio >= targetRatio){ lastGood = candHex; /* try narrower */ upper = mid; }
+        else { lower = mid; }
+      }
+      if(lastGood) return lastGood;
+      // fallback using mix
+      return this.toHex(new Color(baseColor).mix(new Color(targetRatio>4.5 ? 'black' : 'white'), 0.6));
+    }catch(e){
+      return baseColor;
+    }
+  }
+
+  /* --------- SVG parsing (fill-only) --------- */
+
+  parseSVGText(svgText){
+    try{
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, 'image/svg+xml');
+      // find elements with fill attribute or inline style fill
+      const nodes = Array.from(doc.querySelectorAll('*'));
+      const map = {};
+      nodes.forEach(el=>{
+        let fill = el.getAttribute('fill') || (el.style && el.style.fill);
+        if(!fill) return;
+        fill = fill.trim();
+        if(fill === 'none') return;
+        const id = el.id || null;
+        const dataAttrs = {};
+        Array.from(el.attributes).forEach(attr=>{
+          if(attr.name.startsWith('data-')) dataAttrs[attr.name] = attr.value;
+        });
+        const key = fill;
+        if(!map[key]) map[key] = { color: key, occurrences: 0, ids: [], data: [] };
+        map[key].occurrences++;
+        if(id) map[key].ids.push(id);
+        if(Object.keys(dataAttrs).length) map[key].data.push(dataAttrs);
+      });
+      return Object.values(map);
+    }catch(e){
+      return [];
+    }
+  }
+
+  /* --------- DOM / Rendering --------- */
+
+  render(){
+    const root = this.shadowRoot;
+    root.innerHTML = `
+      <div class="topbar">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <label class="small">Upload SVG</label>
+          <input id="file" type="file" accept=".svg" />
+          <button id="paste" class="btn">Paste SVG</button>
+        </div>
+        <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+          <button id="exportCss" class="btn">Export CSS</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="naming">Color Naming</button>
+        <button class="tab" data-tab="assignment">Color Assignment</button>
+        <button class="tab" data-tab="output">Generated Output</button>
+        <button class="tab" data-tab="components">Components</button>
+      </div>
+
+      <div id="panels">
+        <section id="naming" class="panel">
+          <div class="row">
+            <div style="flex:1">
+              <label>Detected fill colors (click Adopt)</label>
+              <div id="detected" class="color-list"></div>
+            </div>
+            <div style="width:320px">
+              <label>Variables (click color to edit value)</label>
+              <div id="variables"></div>
+              <div style="margin-top:8px;">
+                <button id="addVar" class="btn">Add variable</button>
+                <button id="autoName" class="btn">Adopt all</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="assignment" class="panel" style="display:none;">
+          <label class="small">Assign variables to roles / subroles</label>
+          <div id="assignmentArea"></div>
+          <div style="margin-top:8px;" class="small">Suffix scaffolding: for each assigned role-subrole we generate -aaa (contrast ≥ 7.0), -aa (contrast ≥ 4.5), and -Aa18 (variant reserved)</div>
+        </section>
+
+        <section id="output" class="panel" style="display:none;">
+          <div class="row">
+            <div style="flex:1">
+              <label>Generated CSS</label>
+              <pre id="cssOutput">/* CSS will appear here */</pre>
+              <div style="margin-top:8px;">
+                <button id="regenCss" class="btn">Regenerate</button>
+              </div>
+            </div>
+            <div style="width:300px">
+              <label>Preview (sample)</label>
+              <div id="preview" class="preview-surface">
+                <div>
+                  <p style="margin:0">Sample text <a href="#" id="sampleLink">link</a></p>
+                </div>
+                <div>
+                  <button id="sampleBtn" class="btn">Primary</button>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <label class="small">Contrast thresholds</label>
+                <div class="row">
+                  <label class="small">AA (normal)</label>
+                  <input id="aaThresh" type="text" value="${this.state.threshold.aa}" style="width:60px" />
+                  <label class="small">AAA (normal)</label>
+                  <input id="aaaThresh" type="text" value="${this.state.threshold.aaa}" style="width:60px" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="components" class="panel" style="display:none;">
+          <label class="small">Component presets (built-in)</label>
+          <div style="margin-top:8px;" class="small">
+            Presets: button (variants: filled, outlined, ghost), link (hover/active/focus/visited states).
+          </div>
+          <div style="margin-top:10px;">
+            <button id="applyPresets" class="btn">Apply built-in presets to CSS</button>
+          </div>
+        </section>
+      </div>
+    `;
+
+    // wire events
+    root.getElementById('file').addEventListener('change', this.handleFile);
+    root.getElementById('paste').addEventListener('click', this.handlePaste);
+    root.getElementById('addVar').addEventListener('click', ()=>{
+      const name = prompt('Variable name (no leading --):','color-new');
+      if(!name) return;
+      this.state.variables[name] = { value: '#cccccc', original: '#cccccc' };
+      this.renderVariables();
+      this.renderAssignmentArea();
+      this.renderCSS();
+    });
+    root.getElementById('autoName').addEventListener('click', ()=>{
+      this.state.detected.forEach((c,i)=>{
+        const base = 'palette-' + (i+1);
+        let name = base; let k=1; while(this.state.variables[name]){ name = base + '-' + k; k++; }
+        this.state.variables[name] = { value: this.toHex(c.color), original: c.color };
+      });
+      this.renderVariables();
+      this.renderAssignmentArea();
+      this.renderCSS();
+    });
+    root.getElementById('exportCss').addEventListener('click', this.downloadCSS);
+    root.getElementById('regenCss').addEventListener('click', this.renderCSS);
+    root.getElementById('applyPresets').addEventListener('click', ()=> {
+      // mark that presets should be applied in CSS generation (flag)
+      this.applyPresets = true;
+      this.renderCSS();
+      alert('Built-in presets included in generated CSS.');
+    });
+
+    // tabs
+    root.querySelectorAll('.tab').forEach(btn=>{
+      btn.addEventListener('click', (e)=> this.changeTab(e.target.dataset.tab, e.target));
+    });
+
+    // initial render of variable + assignment areas
+    this.renderDetected();
+    this.renderVariables();
+    this.renderAssignmentArea();
+    this.renderCSS();
+  }
+
+  changeTab(tabName, btnEl){
+    const root = this.shadowRoot;
+    root.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    btnEl.classList.add('active');
+    const panels = ['naming','assignment','output','components'];
+    panels.forEach(p=>{
+      const el = root.getElementById(p);
+      if(!el) return;
+      el.style.display = (p === tabName) ? 'block' : 'none';
+    });
+    // re-render preview when switching
+    if(tabName === 'output') this.renderCSS();
+  }
+
+  /* --------- File handlers --------- */
+
+  async handleFile(ev){
+    const f = ev.target.files && ev.target.files[0];
+    if(!f) return;
+    const txt = await f.text();
+    this.handleSvgText(txt);
+  }
+
+  async handlePaste(){
+    const txt = prompt('Paste SVG text here:');
+    if(txt) this.handleSvgText(txt);
+  }
+
+  handleSvgText(text){
+    const parsed = this.parseSVGText(text);
+    this.state.detected = parsed;
+    this.renderDetected();
+  }
+
+  /* --------- Rendering helpers --------- */
+
+  renderDetected(){
+    const root = this.shadowRoot;
+    const container = root.getElementById('detected');
+    container.innerHTML = '';
+    if(!this.state.detected.length){
+      container.innerHTML = '<div class="small">No detected fills yet. Upload or paste an SVG with fills.</div>';
+      return;
+    }
+    this.state.detected.forEach(item=>{
+      const row = document.createElement('div');
+      row.className = 'row';
+      const left = document.createElement('div'); left.style.display='flex'; left.style.gap='8px'; left.style.alignItems='center';
+      const sw = document.createElement('div'); sw.className='swatch'; sw.style.background = item.color;
+      const meta = document.createElement('div'); meta.innerHTML = `<div style="font-weight:600">${item.color}</div><div class="small">${item.occurrences} occurrence(s)</div>`;
+      left.appendChild(sw); left.appendChild(meta);
+      const btn = document.createElement('button'); btn.className='btn'; btn.textContent='Adopt';
+      btn.addEventListener('click', ()=> this.adoptColor(item.color));
+      row.appendChild(left);
+      row.appendChild(btn);
+      container.appendChild(row);
+    });
+  }
+
+  adoptColor(colorStr){
+    // generate safe name
+    const base = String(colorStr).replace(/[^a-z0-9]+/ig,'-').replace(/^-+|-+$/g,'').toLowerCase() || 'color';
+    let name = base; let i=1;
+    while(this.state.variables[name]){ name = base + '-' + i; i++; }
+    const hex = this.toHex(colorStr);
+    this.state.variables[name] = { value: hex, original: colorStr };
+    this.renderVariables();
+    this.renderAssignmentArea();
+    this.renderCSS();
+  }
+
+  renderVariables(){
+    const root = this.shadowRoot;
+    const container = root.getElementById('variables');
+    container.innerHTML = '';
+    const vars = this.state.variables;
+    if(!Object.keys(vars).length){
+      container.innerHTML = '<div class="small">No variables yet. Adopt colors from the left or add new variables.</div>';
+      return;
+    }
+    Object.entries(vars).forEach(([name,obj])=>{
+      const row = document.createElement('div');
+      row.className = 'row';
+      const sw = document.createElement('div'); sw.className='swatch'; sw.style.background = obj.value;
+      const nameInput = document.createElement('input'); nameInput.type='text'; nameInput.value = name; nameInput.style.width='110px';
+      nameInput.addEventListener('change', ()=>{
+        const newName = nameInput.value.trim();
+        if(!newName) return;
+        delete this.state.variables[name];
+        this.state.variables[newName] = obj;
+        this.renderVariables();
+        this.renderAssignmentArea();
+        this.renderCSS();
+      });
+      const colorInput = document.createElement('input'); colorInput.type='text'; colorInput.value = obj.value; colorInput.style.width='120px';
+      colorInput.addEventListener('change', ()=> {
+        const v = colorInput.value.trim();
+        obj.value = v;
+        sw.style.background = v;
+        this.renderAssignmentArea();
+        this.renderCSS();
+      });
+      const rm = document.createElement('button'); rm.className='btn'; rm.textContent='Remove';
+      rm.addEventListener('click', ()=>{
+        if(confirm('Remove variable --'+name+' ?')){
+          delete this.state.variables[name];
+          // remove from assignments
+          Object.keys(this.state.assignments).forEach(r=>{
+            this.subroles.forEach(s=>{
+              if(this.state.assignments[r] && this.state.assignments[r][s] === name) this.state.assignments[r][s] = null;
+            });
+          });
+          this.renderVariables();
+          this.renderAssignmentArea();
+          this.renderCSS();
+        }
+      });
+      row.appendChild(sw);
+      row.appendChild(nameInput);
+      row.appendChild(colorInput);
+      row.appendChild(rm);
+      container.appendChild(row);
+    });
+  }
+
+  renderAssignmentArea(){
+    const root = this.shadowRoot;
+    const container = root.getElementById('assignmentArea');
+    container.innerHTML = '';
+    // grid of roles
+    this.roles.forEach(role=>{
+      const block = document.createElement('div');
+      block.style.borderTop = '1px solid #f0f0f0';
+      block.style.paddingTop = '8px';
+      const title = document.createElement('div'); title.innerHTML = `<strong>${role}</strong>`;
+      block.appendChild(title);
+      this.subroles.forEach(sub=>{
+        const row = document.createElement('div'); row.className='row';
+        const label = document.createElement('div'); label.style.width='160px'; label.textContent = `${role}-${sub}`;
+        const sel = document.createElement('select'); sel.style.width='200px';
+        const empty = document.createElement('option'); empty.value=''; empty.textContent='(none)'; sel.appendChild(empty);
+        Object.keys(this.state.variables).forEach(v=>{
+          const opt = document.createElement('option'); opt.value = v; opt.textContent = `--${v} (${this.state.variables[v].value})`; sel.appendChild(opt);
+        });
+        sel.value = (this.state.assignments[role] && this.state.assignments[role][sub]) || '';
+        sel.addEventListener('change', ()=>{
+          this.state.assignments[role] = this.state.assignments[role] || {};
+          this.state.assignments[role][sub] = sel.value || null;
+          // when assigning, generate -aaa and -aa variants for the pair when both fg & bg present
+          this.ensureVariantsForRole(role);
+          this.renderCSS();
+          this.renderAssignmentArea(); // re-render to update contrast badges
+        });
+        row.appendChild(label);
+        row.appendChild(sel);
+        // contrast badge area
+        const badgeWrap = document.createElement('div'); badgeWrap.style.marginLeft='8px';
+        // compute contrast for foreground/background for this role (only show for foreground row)
+        if(sub === 'foreground'){
+          const bgVar = (this.state.assignments[role] && this.state.assignments[role].background) ? this.state.assignments[role].background : null;
+          const fgVar = sel.value || null;
+          if(bgVar && fgVar){
+            const bgCol = this.state.variables[bgVar].value;
+            const fgCol = this.state.variables[fgVar].value;
+            const ratio = this.contrastRatio(bgCol, fgCol);
+            const badge = document.createElement('span');
+            if(ratio >= this.state.threshold.aaa) { badge.className='badge pass'; badge.textContent = `AAA ${ratio}:1`; }
+            else if(ratio >= this.state.threshold.aa) { badge.className='badge warn'; badge.textContent = `AA ${ratio}:1`; }
+            else { badge.className='badge fail'; badge.textContent = `Fail ${ratio}:1`; }
+            badgeWrap.appendChild(badge);
+            // Fix button (auto-suggest) - applies to background variable (generate variant)
+            const fix = document.createElement('button'); fix.className='btn'; fix.style.marginLeft='8px'; fix.textContent='Auto-fix bg';
+            fix.addEventListener('click', ()=>{
+              const suggested = this.generateVariantForContrast(this.state.variables[bgVar].value, this.state.variables[fgVar].value, this.state.threshold.aaa);
+              // create new variable for fixed background
+              const nameBase = bgVar + '-auto';
+              let newName = nameBase; let idx = 1;
+              while(this.state.variables[newName]){ newName = nameBase + '-' + idx; idx++; }
+              this.state.variables[newName] = { value: suggested, original: suggested };
+              // reassign
+              this.state.assignments[role] = this.state.assignments[role] || {};
+              this.state.assignments[role].background = newName;
+              this.renderVariables();
+              this.renderAssignmentArea();
+              this.renderCSS();
+            });
+            badgeWrap.appendChild(fix);
+          } else {
+            const note = document.createElement('div'); note.className='small'; note.textContent = 'assign background to enable contrast checks';
+            badgeWrap.appendChild(note);
+          }
+        }
+        row.appendChild(badgeWrap);
+        block.appendChild(row);
+      });
+      container.appendChild(block);
+    });
+  }
+
+  ensureVariantsForRole(role){
+    // when both bg and fg defined for a role, generate -aaa and -aa variants and attach to variables map
+    const map = this.state.assignments[role] || {};
+    const bgVar = map.background, fgVar = map.foreground;
+    if(!bgVar || !fgVar) return;
+    const bgCol = this.state.variables[bgVar].value;
+    const fgCol = this.state.variables[fgVar].value;
+    // generate -aaa variant for background that meets AAA vs foreground
+    const bgAaa = this.generateVariantForContrast(bgCol, fgCol, this.state.threshold.aaa);
+    const bgAa = this.generateVariantForContrast(bgCol, fgCol, this.state.threshold.aa);
+    // create variable names if not already present
+    const baseName = `${role}-background`;
+    const nameAaa = `${baseName}-aaa`;
+    const nameAa = `${baseName}-aa`;
+    if(!this.state.variables[nameAaa]) this.state.variables[nameAaa] = { value: bgAaa, original: bgAaa };
+    else this.state.variables[nameAaa].value = bgAaa;
+    if(!this.state.variables[nameAa]) this.state.variables[nameAa] = { value: bgAa, original: bgAa };
+    else this.state.variables[nameAa].value = bgAa;
+    // wire them into assignments so they exist for export as well
+    this.state.assignments[role] = this.state.assignments[role] || {};
+    this.state.assignments[role]['background-aaa'] = nameAaa;
+    this.state.assignments[role]['background-aa'] = nameAa;
+  }
+
+  /* --------- CSS generation & export --------- */
+
+  generateCSS(){
+    // :root base variables from state.variables
+    let css = `:root{\n`;
+    Object.entries(this.state.variables).forEach(([name,obj])=>{
+      css += `  --${name}: ${obj.value};\n`;
+    });
+    // Also synthesize semantic role variables mapping to assigned variables
+    Object.entries(this.state.assignments).forEach(([role,map])=>{
+      if(!map) return;
+      Object.entries(map).forEach(([sub,val])=>{
+        if(!val) return;
+        css += `  --${role}-${sub}: var(--${val});\n`;
+      });
+    });
+    css += `}\n\n`;
+
+    // generate dark theme overrides using generateDarkPair for each role that has fg/bg
+    css += `@media (prefers-color-scheme: dark){\n  :root{\n`;
+    Object.entries(this.state.assignments).forEach(([role,map])=>{
+      const bgVar = map.background ? this.state.variables[map.background].value : null;
+      const fgVar = map.foreground ? this.state.variables[map.foreground].value : null;
+      if(bgVar && fgVar){
+        const pair = this.generateDarkPair(bgVar, fgVar);
+        css += `    --${role}-background: ${pair.darkBg};\n`;
+        css += `    --${role}-foreground: ${pair.darkFg};\n`;
+      }
+    });
+    css += `  }\n}\n\n`;
+
+    // component presets (per spec): button variants and link states
+    if(this.applyPresets){
+      // button filled
+      css += `/* Components presets: button filled / outlined / ghost */\n`;
+      css += `.button[data-variant="filled"], button[data-variant="filled"]{ color: var(--primary-foreground); background: var(--primary-background); border: 1px solid var(--primary-border); }\n`;
+      css += `.button[data-variant="filled"]:hover{ background: color-mix(in srgb, var(--primary-background) 85%, black 15%); }\n`;
+      css += `.button[data-variant="outlined"], button[data-variant="outlined"]{ background: transparent; color: var(--primary-foreground); border: 1px solid var(--primary-border); }\n`;
+      css += `.button[data-variant="ghost"], button[data-variant="ghost"]{ background: transparent; color: var(--primary-frills); border: none; }\n`;
+      css += `a{ color: var(--primary-frills); }\n`;
+      css += `a:hover{ color: color-mix(in srgb, var(--primary-frills) 85%, black 15%); }\n`;
+      css += `a:visited{ color: color-mix(in srgb, var(--primary-frills) 60%, black 40%); }\n`;
+      css += `a:focus{ outline: 2px solid var(--primary-border); }\n\n`;
+    } else {
+      // include base component examples anyway but minimal
+      css += `/* Components (enable presets UI to include full variants) */\n`;
+      css += `.button{ color: var(--primary-foreground); background: var(--primary-background); border: 1px solid var(--primary-border); }\n`;
+      css += `a{ color: var(--primary-frills); }\n\n`;
+    }
+
+    // Include comment mapping assignments summary
+    css = `/* Generated CSS — semantic variable mappings follow. */\n` + css;
+    return css;
+  }
+
+  renderCSS(){
+    const root = this.shadowRoot;
+    const out = root.getElementById('cssOutput');
+    out.textContent = this.generateCSS();
+    // apply to preview: use inline style element in main document (not shadow) for simplicity
+    let styleEl = document.getElementById('__color_system_preview_style');
+    if(!styleEl){ styleEl = document.createElement('style'); styleEl.id = '__color_system_preview_style'; document.head.appendChild(styleEl); }
+    styleEl.textContent = this.generateCSS();
+    // update preview sample colors if primary present
+    const sampleBtn = this.shadowRoot.getElementById('sampleBtn');
+    const sampleLink = this.shadowRoot.getElementById('sampleLink');
+    const primBg = this.state.assignments.primary && this.state.assignments.primary.background ? `var(--${this.state.assignments.primary.background})` : null;
+    const primFg = this.state.assignments.primary && this.state.assignments.primary.foreground ? `var(--${this.state.assignments.primary.foreground})` : null;
+    // set inline css variables on preview element to ensure visibility
+    const preview = this.shadowRoot.getElementById('preview');
+    if(primBg) preview.style.background = primBg; else preview.style.background = '';
+    if(primFg) preview.style.color = primFg; else preview.style.color = '';
+    // sample button style via data-variant
+    if(sampleBtn) sampleBtn.setAttribute('data-variant','filled');
+  }
+
+  downloadCSS(){
+    const css = this.generateCSS();
+    const blob = new Blob([css], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'color-system.css';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+} // end class
+
+customElements.define('color-system-app', ColorSystemApp);
+
+</script>
+</body>
+</html>

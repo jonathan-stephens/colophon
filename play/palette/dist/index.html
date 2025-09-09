@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Accessible Palette Generator</title>
+
+  <!-- Canonical + SEO -->
+  <link rel="canonical" href="https://yourdomain.com/palette" />
+  <meta name="description" content="Accessible color palette generator with WCAG compliance checks, multi-space exports (CSS, SVG, CSV), and responsive design." />
+
+  <!-- Social (Open Graph) -->
+  <meta property="og:title" content="Accessible Palette Generator" />
+  <meta property="og:description" content="Build, audit, and export color palettes with full WCAG contrast compliance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/palette" />
+  <meta property="og:image" content="https://yourdomain.com/social-preview.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Accessible Palette Generator" />
+  <meta name="twitter:description" content="WCAG-compliant color palette generator with export options." />
+  <meta name="twitter:image" content="https://yourdomain.com/social-preview.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Styles -->
+  <script type="module" crossorigin src="/assets/index-CcWwgoEa.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CcCuOk97.css">
+</head>
+<body>
+  <div class="layout">
+    <main class="main-col">
+      <!-- Base Colors -->
+      <section class="panel b-bases" aria-labelledby="bases-heading">
+        <h2 id="bases-heading" class="panel__title">Base Colors</h2>
+        <div id="basesContainer" class="bases-list"></div>
+        <div class="controls-row">
+          <button id="addBaseBtn" type="button">+ Add Base</button>
+          <button id="randomizeBtn" type="button">Randomize</button>
+        </div>
+      </section>
+
+      <!-- Palette Grid -->
+      <section class="panel b-palette" aria-labelledby="palette-heading">
+        <h2 id="palette-heading" class="panel__title">Palette Grid</h2>
+        <div id="paletteGrid" class="palette"></div>
+      </section>
+
+      <!-- Generated CSS -->
+      <section class="panel b-output" aria-labelledby="css-heading">
+        <details>
+          <summary id="css-heading" class="panel__title">Generated CSS</summary>
+          <pre id="cssOutput" class="output" tabindex="0"></pre>
+          <div class="output__controls">
+            <button id="copyCssBtn" type="button">Copy CSS</button>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <!-- Sticky Controls -->
+    <aside class="panel b-controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading" class="panel__title">Controls</h2>
+      <form id="controlsForm" class="controls-fieldset">
+        <div class="controls-row">
+          <label for="gridSize">Grid mode:</label>
+          <select id="gridSize" class="select">
+            <option value="3">3 columns</option>
+            <option value="5">5 columns</option>
+            <option value="7">7 columns</option>
+          </select>
+        </div>
+
+        <fieldset class="controls-row">
+          <legend class="u-cap u-small">Anchors</legend>
+          <div class="base-item__left">
+            <input id="anchorWhiteText" class="color-text" type="text" value="#ffffff" />
+            <input id="anchorWhiteColor" type="color" value="#ffffff" />
+          </div>
+          <div class="base-item__left">
+            <input id="anchorBlackText" class="color-text" type="text" value="#000000" />
+            <input id="anchorBlackColor" type="color" value="#000000" />
+          </div>
+        </fieldset>
+
+        <fieldset class="controls-row">
+          <legend class="u-cap u-small">Show spaces</legend>
+          <label><input type="checkbox" data-space="hex" checked /> HEX</label>
+          <label><input type="checkbox" data-space="rgba" /> RGBA</label>
+          <label><input type="checkbox" data-space="oklch" checked /> OKLCH</label>
+          <label><input type="checkbox" data-space="oklab" /> OKLAB</label>
+        </fieldset>
+
+        <div class="controls-row">
+          <button id="downloadCssBtn" type="button">CSS</button>
+          <button id="downloadSvgBtn" type="button">SVG</button>
+          <button id="downloadCsvBtn" type="button">CSV</button>
+          <button id="downloadCsvPairsBtn" type="button">CSV (Pairs)</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+
+  <!-- Toast for notifications -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>

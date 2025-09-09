@@ -1,0 +1,16 @@
+{
+  "name": "palette-generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "colorjs.io": "^0.5.2"
+  }
+}

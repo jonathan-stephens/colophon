@@ -36,6 +36,17 @@ tabs:
                 type: tags
                 options: query
                 query: site.index.pluck("tags", ",", true)
+                width: 1/2
+              author:
+                label: Author
+                type: tags
+                options: query
+                query: site.index.pluck("author", ",", true)
+                width: 1/4
+              author_url:
+                label: Author's URL
+                type: url
+                width: 1/4
               text:
                 label: Description, quotes, etc.
                 type: textarea

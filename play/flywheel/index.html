@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Flywheel Generator — Single Page App</title>
+<style>
+  /* Baseline Widely Supported modern CSS.
+     Minimal visual polish, accessible contrast, flexible layout.
+  */
+  :root{
+    --surface:#fff;
+    --muted:#666;
+    --accent:#0b74de;
+    --accent-2:#0b5fbd;
+    --bg:#f6f8fb;
+    --node-bg:#ffffff;
+    --node-stroke:#d0d7e1;
+    --node-selected:#0b74de;
+    --radius:42px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  html,body{height:100%;margin:0;background:var(--bg);color:#111}
+  .app {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 12px;
+    height: 100vh;
+    padding: 14px;
+    box-sizing:border-box;
+  }
+
+  /* Left: canvas + controls */
+  .canvas-area {
+    background: linear-gradient(180deg,#fbfdff,#f2f6fb);
+    border-radius:10px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    box-shadow: 0 2px 8px rgba(16,24,40,0.05);
+  }
+
+  .toolbar {
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .toolbar button, .toolbar label {
+    background:var(--node-bg);
+    border:1px solid var(--node-stroke);
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:13px;
+    transition: all 0.15s ease;
+  }
+  .toolbar button:hover {
+    background: #f8fafc;
+    border-color: var(--accent-2);
+  }
+  .toolbar button:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .toolbar button:active {
+    background: #e2e8f0;
+    transform: translateY(1px);
+  }
+  .toolbar button[aria-pressed="true"]{
+    background:linear-gradient(#eaf3ff,#d9efff);
+    border-color:var(--accent);
+    box-shadow: inset 0 1px 2px rgba(11,116,222,0.1);
+  }
+  .toolbar .controls { margin-left:auto; display:flex; gap:8px; align-items:center; }
+
+  /* Canvas container for SVG */
+  .canvas {
+    background:transparent;
+    border-radius:8px;
+    flex:1;
+    overflow:hidden;
+    position:relative;
+    min-height: 360px;
+  }
+  svg { width:100%; height:100%; display:block; }
+
+  /* Sidebar */
+  aside.sidebar {
+    background:var(--surface);
+    border-radius:10px;
+    padding:12px;
+    box-shadow: 0 2px 8px rgba(16,24,40,0.04);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-width:260px;
+  }
+  h2{font-size:15px;margin:0 0 6px 0}
+  .field{display:flex;flex-direction:column;gap:6px}
+  label{font-size:12px;color:var(--muted)}
+  input[type="text"], textarea, select {
+    padding:8px;border-radius:8px;border:1px solid var(--node-stroke);
+    font-size:14px;background:transparent;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  input[type="text"]:hover, textarea:hover, select:hover {
+    border-color: var(--accent-2);
+  }
+  input[type="text"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(11,116,222,0.1);
+  }
+  textarea{min-height:88px;resize:vertical}
+  .sidebar .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .small {
+    font-size:13px;padding:6px 10px;border-radius:8px;
+    background:#f8fafc;border:1px solid var(--node-stroke);
+    transition: all 0.15s ease;
+  }
+  .small:hover {
+    background: #e2e8f0;
+    border-color: var(--accent-2);
+  }
+  .small:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .small:active {
+    background: #cbd5e1;
+    transform: translateY(1px);
+  }
+
+  /* Node styles inside SVG (styles applied to <g> elements via class) */
+  .node {
+    cursor:grab;
+    transition: all 0.15s ease;
+  }
+  .node:active { cursor:grabbing; }
+  .node:hover .node-circle {
+    stroke: var(--accent-2);
+    stroke-width: 2;
+  }
+  .node:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .node-circle {
+    fill: var(--node-bg);
+    stroke: var(--node-stroke);
+    stroke-width:2;
+    transition: all 0.15s ease;
+  }
+  .node-selected .node-circle {
+    stroke: var(--node-selected);
+    stroke-width: 3;
+    filter: drop-shadow(0 2px 4px rgba(11,116,222,0.2));
+  }
+  .node-text {
+    font: 600 12px/1.1 system-ui, -apple-system;
+    text-anchor:middle;
+    pointer-events:none;
+    fill: #111;
+  }
+
+  /* Outline */
+  .outline { font-size:13px; color:var(--muted); display:block; max-height:160px; overflow:auto; border:1px dashed var(--node-stroke); padding:8px; border-radius:6px; background:#fff}
+
+  footer.note { font-size:12px; color:var(--muted); margin-top:auto; }
+
+  /* responsive */
+  @media (max-width:900px){
+    .app{ grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    aside.sidebar { order:2; width:auto; }
+  }
+
+  /* Dragging state */
+  .dragging {
+    cursor: grabbing !important;
+  }
+  body.dragging {
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+<main class="app" id="app">
+  <section class="canvas-area" aria-labelledby="canvasLabel">
+    <div class="toolbar" role="toolbar" aria-label="Flywheel controls">
+      <strong id="canvasLabel">Flywheel Canvas</strong>
+
+      <button id="addNodeBtn" title="Add node" aria-label="Add node">＋ Add node</button>
+      <button id="autoArrangeBtn" aria-pressed="true" title="Auto arrange nodes in a circle">Auto-arrange</button>
+      <button id="toggleDragBtn" aria-pressed="true" title="Toggle drag">Drag</button>
+
+      <div class="controls" role="group" aria-label="Export and save controls">
+        <button id="exportSvg">Export .svg</button>
+        <button id="exportPng">Export .png</button>
+        <button id="exportJson">Export .json</button>
+        <button id="exportCsv">Export .csv</button>
+        <label class="small"><input id="autosaveToggle" type="checkbox" checked> Autosave</label>
+        <button id="saveLocal" class="small">Save to browser</button>
+        <button id="clearBtn" class="small" title="Clear all">Clear</button>
+      </div>
+    </div>
+
+    <div class="canvas" id="canvas" tabindex="0" aria-label="Flywheel drawing area">
+      <!-- The SVG will be injected here -->
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="small" id="helpText" role="status" aria-live="polite">Tip: select a node to edit it in the sidebar. Drag nodes to reposition or use Auto-arrange for a perfect circle.</div>
+    </div>
+  </section>
+
+  <aside class="sidebar" aria-labelledby="sidebarLabel">
+    <h2 id="sidebarLabel">Node inspector</h2>
+
+    <div class="field">
+      <label for="nodeTitle">Selected node text</label>
+      <input id="nodeTitle" type="text" placeholder="Enter node name" />
+    </div>
+
+    <div class="field">
+      <label for="nodeDesc">Description / notes</label>
+      <textarea id="nodeDesc" placeholder="Optional longer description"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="nodeLoop">Loops to (target node)</label>
+      <select id="nodeLoop"><option value="">— pick a target —</option></select>
+      <div style="font-size:12px;color:var(--muted)">Use this to create an arrow from this node to another (allows branching & loops).</div>
+    </div>
+
+    <div class="actions">
+      <button id="applyNode" class="small">Apply</button>
+      <button id="deleteNode" class="small">Delete</button>
+      <button id="newChild" class="small">Add child node</button>
+    </div>
+
+    <h2 style="margin-top:8px">Outline</h2>
+    <div class="outline" id="outline" aria-live="polite"></div>
+
+    <footer class="note">
+      Exports: SVG includes &lt;title&gt; and &lt;desc&gt;. PNG generated from SVG to preserve layout. Data kept locally (localStorage). No uploads.
+    </footer>
+  </aside>
+</main>
+
+<script>
+/*
+  Flywheel Generator — single-file implementation (vanilla JS)
+  - clean, modular-ish code with comments
+  - nodes stored as {id, label, desc, x, y}
+  - edges stored as {from, to}
+  - circular auto-arrange places nodes evenly on a ring
+  - drag via pointer events; when auto-arrange toggled on, dragging will disable re-snapping until re-enabled
+  - exports: svg, png, json, csv
+  - accessibility: ARIA labels & outline view
+*/
+
+(() => {
+  // UTIL
+  const q = sel => document.querySelector(sel);
+  const id = n => document.getElementById(n);
+  const download = (filename, content, type='application/octet-stream') => {
+    const a = document.createElement('a');
+    if (content instanceof Blob) {
+      a.href = URL.createObjectURL(content);
+    } else {
+      a.href = URL.createObjectURL(new Blob([content], {type}));
+    }
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+  const sanitizeFilename = s => s.replace(/[^\w\-_. ]+/g, '_').slice(0,160);
+
+  // STATE
+  let nodes = []; // {id, label, desc, x, y}
+  let edges = []; // {from, to}
+  let nextId = 1;
+  let selectedNodeId = null;
+  let dragging = true;
+  let autoArrange = true;
+  let autosave = true;
+
+  // DOM refs
+  const canvasEl = id('canvas');
+  const addNodeBtn = id('addNodeBtn');
+  const autoArrangeBtn = id('autoArrangeBtn');
+  const toggleDragBtn = id('toggleDragBtn');
+  const autosaveToggle = id('autosaveToggle');
+  const saveLocal = id('saveLocal');
+  const clearBtn = id('clearBtn');
+  const exportSvgBtn = id('exportSvg');
+  const exportPngBtn = id('exportPng');
+  const exportJsonBtn = id('exportJson');
+  const exportCsvBtn = id('exportCsv');
+
+  const nodeTitle = id('nodeTitle');
+  const nodeDesc = id('nodeDesc');
+  const nodeLoop = id('nodeLoop');
+  const applyNode = id('applyNode');
+  const deleteNode = id('deleteNode');
+  const newChild = id('newChild');
+  const outlineEl = id('outline');
+
+  const autoArrangeToggle = () => {
+    autoArrange = !autoArrange;
+    autoArrangeBtn.setAttribute('aria-pressed', String(autoArrange));
+    render();
+  };
+
+  // STORAGE KEYS
+  const STORAGE_KEY = 'flywheel_v1';
+
+  // Initialize SVG
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svgRoot = document.createElementNS(svgNS, 'svg');
+  svgRoot.setAttribute('role', 'img');
+  svgRoot.setAttribute('aria-labelledby', 'svgTitle svgDesc');
+  svgRoot.setAttribute('viewBox', '0 0 1200 800'); // fixed internal coordinates for consistent export
+  canvasEl.appendChild(svgRoot);
+
+  const defs = document.createElementNS(svgNS, 'defs');
+  svgRoot.appendChild(defs);
+
+  // markers (arrowheads) - made more prominent
+  (function makeMarker(){
+    const marker = document.createElementNS(svgNS,'marker');
+    marker.setAttribute('id','arrow');
+    marker.setAttribute('markerWidth','12');
+    marker.setAttribute('markerHeight','12');
+    marker.setAttribute('refX','11');
+    marker.setAttribute('refY','6');
+    marker.setAttribute('orient','auto');
+    marker.setAttribute('markerUnits','strokeWidth');
+    const path = document.createElementNS(svgNS,'path');
+    path.setAttribute('d','M2,2 L10,6 L2,10 z');
+    path.setAttribute('fill','#0b5fbd');
+    path.setAttribute('stroke','#0b5fbd');
+    path.setAttribute('stroke-width','1');
+    marker.appendChild(path);
+    defs.appendChild(marker);
+  })();
+
+  // accessibility title/desc
+  const svgTitle = document.createElementNS(svgNS,'title'); svgTitle.id = 'svgTitle'; svgTitle.textContent = 'Flywheel export';
+  const svgDesc = document.createElementNS(svgNS,'desc'); svgDesc.id = 'svgDesc'; svgDesc.textContent = 'A generated flywheel diagram.';
+  svgRoot.append(svgTitle, svgDesc);
+
+  // group layers
+  const edgesLayer = document.createElementNS(svgNS,'g'); edgesLayer.setAttribute('aria-hidden','true');
+  const nodesLayer = document.createElementNS(svgNS,'g');
+  svgRoot.append(edgesLayer, nodesLayer);
+
+  // Sizing helpers — keep consistent internal coordinate system based on svg viewBox
+  const viewW = 1200, viewH = 800;
+  const center = { x: viewW/2, y: viewH/2 };
+  const ringRadiusBase = Math.min(viewW, viewH) * 0.28; // base radius for primary ring
+
+  // Add initial node if empty
+  function ensureInitial() {
+    if (nodes.length === 0) {
+      createNode({ label: 'Acquisition', desc: 'Acquire users/customers' });
+      createNode({ label: 'Activation', desc: 'Activate and onboard' });
+      createNode({ label: 'Retention', desc: 'Keep customers engaged' });
+      createNode({ label: 'Monetization', desc: 'Convert value to revenue' });
+      // connect in circle
+      edges.push({ from: 1, to: 2 }, { from: 2, to: 3 }, { from: 3, to: 4 }, { from: 4, to: 1 });
+      saveIfNeeded();
+    }
+  }
+
+  // Node creation
+  function createNode({label='New node', desc='', x=null, y=null} = {}) {
+    const nid = nextId++;
+    const p = { id: nid, label, desc, x, y };
+    nodes.push(p);
+    // when user creates a node, if they have a selected node, create edge from selected to new
+    if (selectedNodeId) edges.push({ from: selectedNodeId, to: nid });
+    saveIfNeeded();
+    render();
+    selectNode(nid);
+    return p;
+  }
+
+  function deleteNodeById(nid) {
+    nodes = nodes.filter(n => n.id !== nid);
+    edges = edges.filter(e => e.from !== nid && e.to !== nid);
+    if (selectedNodeId === nid) selectedNodeId = null;
+    saveIfNeeded();
+    render();
+  }
+
+  // selection
+  function selectNode(nid) {
+    selectedNodeId = nid;
+    updateInspector();
+    render();
+  }
+
+  // layout: compute positions if null or autoArrange==true
+  function computeLayout() {
+    const count = nodes.length;
+    if (count === 0) return;
+    const r = ringRadiusBase; // radius
+    // compute evenly spaced angles
+    nodes.forEach((n, i) => {
+      if (autoArrange || n.x == null || n.y == null) {
+        const angle = -Math.PI/2 + (i / count) * (Math.PI*2); // start at top
+        n.x = center.x + Math.cos(angle) * r;
+        n.y = center.y + Math.sin(angle) * r;
+      }
+    });
+  }
+
+  // render to SVG
+  function render() {
+    computeLayout();
+
+    // clear layers
+    while (edgesLayer.firstChild) edgesLayer.removeChild(edgesLayer.firstChild);
+    while (nodesLayer.firstChild) nodesLayer.removeChild(nodesLayer.firstChild);
+
+    // create edges (paths with arrow marker) - CONVEX curves
+    for (const e of edges) {
+      const from = nodes.find(n => n.id === e.from);
+      const to = nodes.find(n => n.id === e.to);
+      if (!from || !to) continue;
+      const path = document.createElementNS(svgNS,'path');
+
+      // compute convex curved path (quadratic) for nicer branching
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const distance = Math.sqrt(dx*dx + dy*dy);
+
+      // Calculate midpoint
+      const mx = (from.x + to.x)/2;
+      const my = (from.y + to.y)/2;
+
+      // Calculate control point to create convex curve (away from center)
+      const centerDx = mx - center.x;
+      const centerDy = my - center.y;
+      const centerDistance = Math.sqrt(centerDx*centerDx + centerDy*centerDy);
+
+      // Normalize and scale the offset for convexity
+      const offsetMagnitude = Math.min(distance * 0.2, 80);
+      const offsetX = centerDistance > 0 ? (centerDx / centerDistance) * offsetMagnitude : 0;
+      const offsetY = centerDistance > 0 ? (centerDy / centerDistance) * offsetMagnitude : 0;
+
+      const d = `M ${from.x} ${from.y} Q ${mx + offsetX} ${my + offsetY} ${to.x} ${to.y}`;
+      path.setAttribute('d', d);
+      path.setAttribute('fill','none');
+      path.setAttribute('stroke','#0b74de');
+      path.setAttribute('stroke-width','3');
+      path.setAttribute('marker-end','url(#arrow)');
+      path.setAttribute('data-from', String(e.from));
+      path.setAttribute('data-to', String(e.to));
+      path.setAttribute('aria-hidden','true');
+      edgesLayer.appendChild(path);
+    }
+
+    // create nodes
+    for (const n of nodes) {
+      const g = document.createElementNS(svgNS,'g');
+      g.classList.add('node');
+      if (selectedNodeId === n.id) {
+        g.classList.add('node-selected');
+      }
+      g.setAttribute('data-id', String(n.id));
+      g.setAttribute('role','button');
+      g.setAttribute('tabindex','0');
+      g.setAttribute('aria-pressed', String(selectedNodeId === n.id));
+
+      // title for accessibility
+      const t = document.createElementNS(svgNS,'title'); t.textContent = n.label;
+      g.appendChild(t);
+
+      // circle
+      const circle = document.createElementNS(svgNS,'circle');
+      circle.classList.add('node-circle');
+      circle.setAttribute('cx', String(n.x));
+      circle.setAttribute('cy', String(n.y));
+      circle.setAttribute('r', '44');
+      circle.setAttribute('data-id', String(n.id));
+      g.appendChild(circle);
+
+      // text: main label
+      const text = document.createElementNS(svgNS,'text');
+      text.classList.add('node-text');
+      text.setAttribute('x', String(n.x));
+      text.setAttribute('y', String(n.y+4));
+      text.textContent = n.label;
+      g.appendChild(text);
+
+      // data attributes for export semantics
+      g.setAttribute('data-label', n.label);
+      if (n.desc) g.setAttribute('data-desc', n.desc);
+
+      // event bindings (pointer)
+      g.addEventListener('pointerdown', onNodePointerDown);
+      g.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        selectNode(n.id);
+      });
+      g.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          selectNode(n.id);
+        }
+      });
+
+      nodesLayer.appendChild(g);
+    }
+
+    updateInspector();
+    updateOutline();
+    // save
+    saveIfNeeded();
+  }
+
+  // Outline view (linear)
+  function updateOutline() {
+    // show nodes and their outgoing edges
+    const lines = nodes.map(n => {
+      const outs = edges.filter(e => e.from === n.id).map(e => {
+        const t = nodes.find(x => x.id === e.to);
+        return t ? t.label : `#${e.to}`;
+      });
+      return `• ${n.label}${n.desc ? ' — ' + n.desc : ''}\n   → ${outs.length ? outs.join(', ') : '(no outgoing)'}`;
+    });
+    outlineEl.textContent = lines.join('\n\n');
+  }
+
+  // Update inspector dropdown & inputs for selected node
+  function updateInspector() {
+    // populate select
+    while (nodeLoop.firstChild) nodeLoop.removeChild(nodeLoop.firstChild);
+    const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.textContent = '— pick a target —';
+    nodeLoop.appendChild(emptyOpt);
+    for (const n of nodes) {
+      const o = document.createElement('option');
+      o.value = String(n.id);
+      o.textContent = n.label;
+      nodeLoop.appendChild(o);
+    }
+
+    if (selectedNodeId) {
+      const n = nodes.find(x => x.id === selectedNodeId);
+      if (n) {
+        nodeTitle.value = n.label;
+        nodeDesc.value = n.desc || '';
+        // if there's an outgoing, preselect first outgoing in select (for editing convenience)
+        const firstOut = edges.find(e => e.from === n.id);
+        nodeLoop.value = firstOut ? String(firstOut.to) : '';
+      } else {
+        nodeTitle.value = nodeDesc.value = '';
+      }
+    } else {
+      nodeTitle.value = nodeDesc.value = '';
+      nodeLoop.value = '';
+    }
+  }
+
+  // Fixed pointer dragging system
+  let activeDrag = null;
+
+  function onNodePointerDown(ev) {
+    if (!dragging) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    const g = ev.currentTarget;
+    const nid = Number(g.getAttribute('data-id'));
+    const node = nodes.find(n => n.id === nid);
+    if (!node) return;
+
+    // Get initial SVG coordinates
+    const svgRect = svgRoot.getBoundingClientRect();
+    const startSvgPoint = clientToSvgPoint(ev.clientX, ev.clientY);
+
+    activeDrag = {
+      id: nid,
+      offsetX: startSvgPoint.x - node.x,
+      offsetY: startSvgPoint.y - node.y
+    };
+
+    // Add dragging class for cursor
+    document.body.classList.add('dragging');
+    g.classList.add('dragging');
+
+    // Set up move and end handlers
+    const handlePointerMove = (moveEv) => {
+      if (!activeDrag || activeDrag.id !== nid) return;
+      moveEv.preventDefault();
+
+      const currentSvgPoint = clientToSvgPoint(moveEv.clientX, moveEv.clientY);
+      node.x = currentSvgPoint.x - activeDrag.offsetX;
+      node.y = currentSvgPoint.y - activeDrag.offsetY;
+
+      // Keep nodes within bounds
+      node.x = Math.max(50, Math.min(viewW - 50, node.x));
+      node.y = Math.max(50, Math.min(viewH - 50, node.y));
+
+      render();
+    };
+
+    const handlePointerUp = (upEv) => {
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener('pointercancel', handlePointerUp);
+
+      document.body.classList.remove('dragging');
+      g.classList.remove('dragging');
+
+      activeDrag = null;
+      saveIfNeeded();
+    };
+
+    // Attach to document to catch moves outside the node
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerup', handlePointerUp);
+    document.addEventListener('pointercancel', handlePointerUp);
+  }
+
+  function clientToSvgPoint(clientX, clientY) {
+    const rect = svgRoot.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * viewW;
+    const y = ((clientY - rect.top) / rect.height) * viewH;
+    return { x, y };
+  }
+
+  // Export SVG string with proper styling
+  function getSvgString() {
+    const clone = svgRoot.cloneNode(true);
+
+    // Add inline styles to ensure proper rendering
+    const style = document.createElementNS(svgNS, 'style');
+    style.textContent = `
+      .node-circle {
+        fill: #ffffff;
+        stroke: #d0d7e1;
+        stroke-width: 2;
+      }
+      .node-selected .node-circle {
+        stroke: #0b74de;
+        stroke-width: 3;
+      }
+      .node-text {
+        font: 600 12px system-ui, -apple-system, sans-serif;
+        text-anchor: middle;
+        fill: #111111;
+      }
+      .node { cursor: default; }
+    `;
+
+    const defs = clone.querySelector('defs');
+    if (defs) {
+      defs.appendChild(style);
+    } else {
+      clone.insertBefore(style, clone.firstChild);
+    }
+
+    // Update metadata
+    const metaTitle = clone.querySelector('title');
+    if (metaTitle) metaTitle.textContent = `Flywheel export — ${new Date().toISOString()}`;
+    const metaDesc = clone.querySelector('desc');
+    if (metaDesc) metaDesc.textContent = `Generated flywheel diagram exported on ${new Date().toLocaleString()}.`;
+
+    // Set explicit dimensions
+    clone.setAttribute('width', String(viewW));
+    clone.setAttribute('height', String(viewH));
+
+    const s = new XMLSerializer().serializeToString(clone);
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + s;
+  }
+
+  // PNG export via drawing SVG on canvas
+  function exportPng() {
+    const svgStr = getSvgString();
+    const blob = new Blob([svgStr], {type: 'image/svg+xml;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = viewW;
+      canvas.height = viewH;
+      const ctx = canvas.getContext('2d');
+
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob((b) => {
+        download(`flywheel-${sanitizeFilename(new Date().toISOString())}.png`, b, 'image/png');
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    };
+
+    img.onerror = (e) => {
+      console.error('Error drawing SVG to image', e);
+      URL.revokeObjectURL(url);
+      alert('Failed to render PNG (browser limitation). Try exporting SVG.');
+    };
+
+    img.src = url;
+  }
+
+  // Enhanced JSON export with better structure
+  function exportJson() {
+    const payload = {
+      nodes: nodes.map(n => ({
+        id: n.id,
+        label: n.label,
+        description: n.desc || '',
+        position: { x: Math.round(n.x), y: Math.round(n.y) }
+      })),
+      edges: edges.map(e => {
+        const fromNode = nodes.find(n => n.id === e.from);
+        const toNode = nodes.find(n => n.id === e.to);
+        return {
+          from: e.from,
+          to: e.to,
+          fromLabel: fromNode ? fromNode.label : `Node ${e.from}`,
+          toLabel: toNode ? toNode.label : `Node ${e.to}`
+        };
+      }),
+      metadata: {
+        exportedAt: new Date().toISOString(),
+        totalNodes: nodes.length,
+        totalEdges: edges.length,
+        version: '1.0'
+      }
+    };
+    download(`flywheel-${sanitizeFilename(new Date().toISOString())}.json`, JSON.stringify(payload, null, 2), 'application/json');
+  }
+
+  // Enhanced CSV export with meaningful data
+  function exportCsv() {
+    // Enhanced nodes.csv: id,label,description,x,y,outgoing_connections,incoming_connections
+    const nodesCsvData = nodes.map(n => {
+      const outgoing = edges.filter(e => e.from === n.id).map(e => {
+        const target = nodes.find(tn => tn.id === e.to);
+        return target ? target.label : `Node ${e.to}`;
+      });
+      const incoming = edges.filter(e => e.to === n.id).map(e => {
+        const source = nodes.find(sn => sn.id === e.from);
+        return source ? source.label : `Node ${e.from}`;
+      });
+
+      const esc = v => `"${String(v || '').replace(/"/g,'""')}"`;
+      return [
+        n.id,
+        esc(n.label),
+        esc(n.desc || ''),
+        Math.round(n.x || 0),
+        Math.round(n.y || 0),
+        esc(outgoing.join('; ')),
+        esc(incoming.join('; '))
+      ].join(',');
+    });
+
+    const nodesCsv = [
+      'id,label,description,x,y,outgoing_connections,incoming_connections',
+      ...nodesCsvData
+    ].join('\n');
+
+    // Enhanced edges.csv: from_id,from_label,to_id,to_label,relationship_type
+    const edgesCsvData = edges.map(e => {
+      const fromNode = nodes.find(n => n.id === e.from);
+      const toNode = nodes.find(n => n.id === e.to);
+      const esc = v => `"${String(v || '').replace(/"/g,'""')}"`;
+      return [
+        e.from,
+        esc(fromNode ? fromNode.label : `Node ${e.from}`),
+        e.to,
+        esc(toNode ? toNode.label : `Node ${e.to}`),
+        esc('flows_to')
+      ].join(',');
+    });
+
+    const edgesCsv = [
+      'from_id,from_label,to_id,to_label,relationship_type',
+      ...edgesCsvData
+    ].join('\n');
+
+    const timestamp = sanitizeFilename(new Date().toISOString());
+    download(`flywheel-nodes-${timestamp}.csv`, nodesCsv, 'text/csv');
+    download(`flywheel-edges-${timestamp}.csv`, edgesCsv, 'text/csv');
+  }
+
+  // Save to browser (localStorage)
+  function saveToLocal() {
+    const payload = { nodes, edges, nextId, savedAt: new Date().toISOString() };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      showTempMessage('Saved to browser storage');
+    } catch (e) {
+      console.warn('Failed to save', e);
+      alert('Failed to save to browser storage (quota?).');
+    }
+  }
+
+  function loadFromLocal() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      nodes = parsed.nodes || [];
+      edges = parsed.edges || [];
+      nextId = parsed.nextId || (Math.max(0, ...nodes.map(n=>n.id)) + 1);
+      return true;
+    } catch (e) {
+      console.warn('Failed to load', e);
+      return false;
+    }
+  }
+
+  function clearAll() {
+    if (!confirm('Clear all nodes and edges? This cannot be undone.')) return;
+    nodes = []; edges = []; nextId = 1; selectedNodeId = null;
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+
+  // Autosave logic: toggled by user
+  function saveIfNeeded() {
+    if (autosave) {
+      const payload = { nodes, edges, nextId, savedAt: new Date().toISOString() };
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch(e){}
+    }
+  }
+
+  // Utility: show small transient message in helpText
+  function showTempMessage(msg, timeout = 1900) {
+    const el = id('helpText');
+    const prev = el.textContent;
+    el.textContent = msg;
+    setTimeout(()=> el.textContent = prev, timeout);
+  }
+
+  // Inspector apply/update
+  applyNode.addEventListener('click', () => {
+    if (!selectedNodeId) return alert('Select a node first');
+    const n = nodes.find(x => x.id === selectedNodeId);
+    if (!n) return;
+    n.label = nodeTitle.value || 'Untitled';
+    n.desc = nodeDesc.value || '';
+    // update loop edge (make first outgoing point to selected 'to' or create new one)
+    const to = nodeLoop.value ? Number(nodeLoop.value) : null;
+    // Remove all existing outgoing edges from this node (simple UX: single loop control)
+    edges = edges.filter(e => e.from !== n.id);
+    if (to) edges.push({ from: n.id, to });
+    saveIfNeeded();
+    render();
+  });
+
+  deleteNode.addEventListener('click', () => {
+    if (!selectedNodeId) return alert('Select a node to delete.');
+    deleteNodeById(selectedNodeId);
+  });
+
+  newChild.addEventListener('click', () => {
+    if (!selectedNodeId) return alert('Select a parent node first.');
+    // create child node with a name and connect
+    const child = createNode({ label: 'Child', desc: '', x: null, y: null });
+    edges.push({ from: selectedNodeId, to: child.id });
+    saveIfNeeded();
+    render();
+  });
+
+  // Canvas controls
+  addNodeBtn.addEventListener('click', () => createNode({ label: 'New Node', desc: '' }));
+  autoArrangeBtn.addEventListener('click', () => {
+    autoArrange = !autoArrange;
+    autoArrangeBtn.setAttribute('aria-pressed', String(autoArrange));
+    render();
+  });
+  toggleDragBtn.addEventListener('click', () => {
+    dragging = !dragging;
+    toggleDragBtn.setAttribute('aria-pressed', String(dragging));
+    showTempMessage(dragging ? 'Drag enabled' : 'Drag disabled');
+  });
+
+  autosaveToggle.addEventListener('change', (e) => {
+    autosave = e.target.checked;
+    showTempMessage(autosave ? 'Autosave on' : 'Autosave off');
+  });
+
+  saveLocal.addEventListener('click', saveToLocal);
+  clearBtn.addEventListener('click', clearAll);
+
+  exportSvgBtn.addEventListener('click', () => {
+    const svgStr = getSvgString();
+    download(`flywheel-${sanitizeFilename(new Date().toISOString())}.svg`, svgStr, 'image/svg+xml');
+  });
+  exportPngBtn.addEventListener('click', exportPng);
+  exportJsonBtn.addEventListener('click', exportJson);
+  exportCsvBtn.addEventListener('click', exportCsv);
+
+  // allow clicking empty canvas to deselect
+  svgRoot.addEventListener('click', (ev) => {
+    if (ev.target === svgRoot) {
+      selectedNodeId = null;
+      updateInspector();
+      render();
+    }
+  });
+
+  // Fixed keyboard event handling - prevent interference with input fields
+  document.addEventListener('keydown', (e) => {
+    // Only handle global shortcuts when not focused on input elements
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+      return; // Let the input handle its own events
+    }
+
+    // Global keyboard shortcut for auto-arrange: Cmd/Ctrl + A
+    if (e.key === 'a' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      autoArrange = !autoArrange;
+      autoArrangeBtn.setAttribute('aria-pressed', String(autoArrange));
+      showTempMessage(`Auto-arrange ${autoArrange ? 'enabled' : 'disabled'}`);
+      render();
+    }
+  });
+
+  // load previously saved content
+  if (!loadFromLocal()) {
+    ensureInitial();
+  } else {
+    render();
+  }
+
+  // Public: when window resized, re-render for correct scaling
+  window.addEventListener('resize', () => { render(); });
+
+  // initial render (ensures layout computed)
+  render();
+
+  // Expose a minimal debug handle for dev console (optional)
+  window._flywheel = {
+    getState: () => ({ nodes, edges, nextId }),
+    setState: (s) => { nodes = s.nodes||[]; edges = s.edges||[]; nextId = s.nextId||1; render(); },
+  };
+
+})();
+</script>
+</body>
+</html>

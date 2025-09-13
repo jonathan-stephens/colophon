@@ -1,9 +1,12 @@
 label: Affiliate Links
 type: structure
 fields:
-  site:
+  affiliate:
     label: Affiliate Site
-    type: text
+    type: tags
+    options: query
+    query: site.index.pluck("affiliate", ",", true)
+    max: 1
   url:
     label: Affiliate Link
     type: url

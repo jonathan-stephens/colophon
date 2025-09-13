@@ -24,6 +24,6 @@ tabs:
         status: listed
         layout: table
         columns:
-          - hed: true
-          - tags: true
-          - authors: true
+          - hed
+          - dek
+          - tags

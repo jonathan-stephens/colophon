@@ -15,14 +15,11 @@ tabs:
       drafts:
         headline: Draft Books
         type: pages
+        template: book
         status: draft
         sortBy: date desc
       listed:
         headline: Listed Books
         type: pages
         status: listed
-        layout: table
-        columns:
-          - hed: true
-          - dek: true
-          - tags: true
+        template: book

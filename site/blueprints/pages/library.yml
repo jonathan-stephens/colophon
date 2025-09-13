@@ -6,32 +6,24 @@ options:
   changeStatus: true
 
 pages:
-  template: book
+  template:
+    - book
 
 tabs:
   books:
-    label: Library Books
-    icon: book
+    label: Books
     sections:
       drafts:
         headline: Draft Books
         type: pages
         status: draft
-        template: book
-        sortBy: date desc      
-      bookshelf:
-        extends: sections/books
-        headline: My Book Collection
-
-
-  add:
-    label: Add New
-    icon: add
-    sections:
-      addBook:
+        sortBy: date desc
+      listed:
+        headline: Listed Books
         type: pages
-        headline: Add a New Book
-        template: book
-        empty: Click the "Add" button to create a new book
-        create: true
-        info: false
+        status: listed
+        layout: table
+        columns:
+          - hed: true
+          - tags: true
+          - authors: true

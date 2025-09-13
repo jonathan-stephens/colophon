@@ -1,0 +1,9 @@
+label: Affiliate Links
+type: structure
+fields:
+  site:
+    label: Affiliate Site
+    type: text
+  url:
+    label: Affiliate Link
+    type: url

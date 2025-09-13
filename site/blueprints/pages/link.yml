@@ -43,8 +43,8 @@ tabs:
                 options: query
                 query: site.index.pluck("author", ",", true)
                 width: 1/4
-              author_url:
-                label: Author's URL
+              authorURL:
+                label: Author's Website
                 type: url
                 width: 1/4
               text:

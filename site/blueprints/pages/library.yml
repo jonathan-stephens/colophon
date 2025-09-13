@@ -6,8 +6,7 @@ options:
   changeStatus: true
 
 pages:
-  template:
-    - book
+  template: book
 
 tabs:
   books:

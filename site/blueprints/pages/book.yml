@@ -24,7 +24,9 @@ columns:
         fields:
           author:
             label: Name
-            type: text
+            type: tags
+            options: query
+            query: site.index.pluck("author", ",", true)            
           authorURL:
             label: Author's Website
             type: url

@@ -1,39 +1,9 @@
-<script>
-// Theme initialization to prevent flickering
-// Theme init - check user preference first, fallback to system
-(function() {
-    const getUserTheme = () => {
-        try {
-            return localStorage.getItem('theme-preference') || 'system';
-        } catch {
-            return 'system';
-        }
-    };
-
-    const getSystemMode = () => window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-    const getAppliedTheme = (userPref) => {
-        if (userPref === 'light') return 'light';
-        if (userPref === 'dark') return 'dark';
-        return getSystemMode();
-    };
-
-    const userPref = getUserTheme();
-    const appliedTheme = getAppliedTheme(userPref);
-    document.documentElement.dataset.theme = appliedTheme;
-    document.documentElement.dataset.themeIcon = appliedTheme;
-})();
-</script>
-
-<?= css([
-  'assets/css/main.css',
-]) ?>
-<?= css('/media/plugins/mauricerenck/komments/komments.css', ['defer' => true]) ?>
-
-<noscript>
-  <style>
-    #theme-picker {
-      display: none;
-    }
-  </style>
-</noscript>
+  <!-- Styles -->
+    <link rel="preload" href="/assets/fonts/ibm-plex-sans/variable-roman.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/ibm-plex-sans/variable-italic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/ibm-plex-serif/serif-medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/ibm-plex-serif/serif-bold.woff2" as="font" type="font/woff2" crossorigin>
+    <?= css([
+      'assets/css/main.css',
+    ]) ?>
+    <?= css('/media/plugins/mauricerenck/komments/komments.css', ['defer' => true]) ?>

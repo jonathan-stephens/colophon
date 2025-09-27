@@ -244,3 +244,9 @@ td, math, time[datetime*=":"] {
 :lang(en) > * { quotes: '“' '”' '‘' '’' ; } /* “Generic English ‘style’” */
 :lang(en-GB) > * { quotes: '‘' '’' '“' '”'; } /* ‘British “style”’ */
 :lang(fr) > * { quotes: '«?0202F' '?0202F»' '“' '”'; } /* « French “style” » */
+
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:var(--small);
+}

@@ -1,51 +1,99 @@
+<?php
+  $books = $page->children()->listed()->filterBy('template', 'book');
+?>
+
 <?php snippet('site-header') ?>
   <div class="wrapper">
-    <?php if($library = $page->children()->listed()): ?>
-        <?php foreach($library as $book): ?>
-          <article class="book">
-            <h2 class="title"><?= $book->hed()->html() ?></h2>
 
-            <?php if ($cover = $book->coverImage()): ?>
-              <div class="book-cover">
-                <img src="<?= $cover->url() ?>" alt="<?= $cover->alt()->esc() ?>">
-              </div>
-            <?php else: ?>
-              <p class="no-cover">No cover image available</p>
+    <?php foreach($books as $book): ?>
+      <article class="book">
+        <?php
+        $cats = $book->category()->split(', ');
+
+        if (!empty($cats)): ?>
+          <header class="eyebrow">
+            <?php
+            $visibleTags = array_slice($cats, 0, 5);
+            $totalVisible = count($visibleTags);
+            ?>
+            <?php foreach ($visibleTags as $i => $cat): ?>
+              <span rel="tag" class="p-category">
+                <?= trim($cat) ?><?php if ($i < $totalVisible - 1): ?>,<?php endif ?>
+              </span>
+            <?php endforeach ?>
+            <?php if (count($cats) > 5): ?>
+              <span class="tag-more">+<?= count($cats) - 5 ?> more</span>
             <?php endif ?>
+          </header>
+        <?php endif ?>
+        <div class="content">
+          <h3 class="hed"><?= $book->hed()->html() ?></h3>
 
+          <?php if($book->dek()->isNotEmpty()): ?>
+            <p class="dek"><?= $book->dek()->html() ?></p>
+          <?php endif ?>
 
-            <?php if($book->dek()->isNotEmpty()): ?>
-              <p class="dek"><?= $book->dek()->html() ?></p>
-            <?php endif ?>
+          <?php
+          $authors = $book->authors()->toStructure();
+          if ($authors->isNotEmpty()): ?>
+            <div class="authors">
+              <?php
+              $authorLinks = [];
+              foreach ($authors as $authorData):
+                $authorNames = $authorData->author()->split(',');
+                $authorRole = $authorData->authorRole()->split(',');
+                $authorURL = $authorData->authorURL();
 
-                <?php if($book->authors()->isNotEmpty()): ?>
-                  <p class="author"><strong>Author<?= $book->authors()->toStructure()->count() > 1 ? 's' : '' ?> </strong></p>
-
-                    <?php
-                    $authors = $book->authors()->toStructure();
-                    $totalAuthors = $authors->count();
-                    foreach($authors as $index => $author): ?>
-                        <span class="author-name">
-                            <?= $author->name()->html() ?><?php if($index < $totalAuthors - 1): ?>, <?php endif ?>
-                        </span>
-                    <?php endforeach ?>
-                  </p>
+                foreach ($authorNames as $name):
+                  $name = trim($name);
+                  if ($authorURL->isNotEmpty()):
+                    $authorLinks[] = '<a href="' . $authorURL . '" target="_blank" rel="noopener">' . $name . '</a>';
+                  else:
+                    $authorLinks[] = $name;
+                  endif;
+                endforeach;
+              endforeach;
+              echo implode(', ', $authorLinks);
+              ?>
+            </div>
+          <?php endif ?>
+        </div>
+          <?php
+          $affiliates = $book->affiliates()->toStructure();
+          if ($affiliates->isNotEmpty()): ?>
+            <footer class="outlinks">
+              <?php foreach ($affiliates->limit(5) as $affiliateData): ?>
+                <?php
+                $affiliateNames = $affiliateData->affiliate()->split(',');
+                $affiliateURL = $affiliateData->url();
+                if ($affiliateURL->isNotEmpty()): ?>
+                  <a href="<?= $affiliateURL ?>" target="_blank" rel="noopener nofollow" class="button with-icon" data-button-variant="ghost">
+                    <?= !empty($affiliateNames) ? trim($affiliateNames[0]) : 'Buy' ?>
+                    <?= asset('assets/svg/icons/launch.svg')->read() ?>
+                  </a>
                 <?php endif ?>
-
-                <footer>
-                  <?php if($book->purchaseLink()->isNotEmpty()): ?>
-                    <a href="<?= $book->purchaseLink() ?>">Buy via Bookshop.org <em>(affiliate link)</em></a>
-                  <?php endif ?>
-
-                  <?php if($book->children()->listed()): ?>
-                    <a href="<?= $book->url() ?>">Some favorite quotes</a>
-                  <?php endif ?>
-                </footer>
-              </article>
-        <?php endforeach ?>
-    <?php else: ?>
-      <p class="no-books">No books have been added yet.</p>
-    <?php endif ?>
+              <?php endforeach ?>
+              <?php if ($affiliates->count() > 5): ?>
+                <a href="<?= $book->url() ?>" class="more-options">+<?= $affiliates->count() - 5 ?> more</a>
+              <?php endif ?>
+            </footer>
+          <?php endif ?>
+      </article>
+    <?php endforeach ?>
   </div>
 
+  <script>
+  // Auto-submit form when filters change
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('libraryFilters');
+    const selects = form.querySelectorAll('select');
+
+    selects.forEach(select => {
+      select.addEventListener('change', function() {
+        // Auto-submit when any dropdown changes
+        form.submit();
+      });
+    });
+  });
+  </script>
 <?php snippet('site-footer') ?>

@@ -34,7 +34,7 @@ button, .button {
   line-height: var(--leading-fine); /* Set or buttons will be different sizes (<a>/<button>) */
 
   cursor: pointer;
-  transition: color var(--duration-fastest) ease-in-out, border var(--duration-fastest) ease-in-out, background var(--duration-fastest) ease-in-out, fill var(--duration-fastest) ease-in-out;
+  transition: color var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out, background var(--duration-base) ease-in-out, fill var(--duration-faster) ease-in-out, padding var(--duration-base) ease-in-out;
 }
 
 button svg, .button svg {
@@ -92,8 +92,18 @@ button:active, .button:active {
 /* Ghost buttons */
 .button[data-button-variant="ghost"] {
   --button-bg: transparent;
-  --button-border-color: currentColor;
+  --button-border-color: transparent;
   --button-color: currentColor;
+  --button-border-style: none;
+  --button-padding: var(--flow-3) 0;
+  align-items: flex-start;
+  font-weight:var(--weight-text);
+
+
+  &:hover{
+    --button-padding: var(--flow-3) var(--flow-3);
+  }
+
 }
 
 /* Radius variants */

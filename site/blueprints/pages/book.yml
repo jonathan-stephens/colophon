@@ -26,18 +26,37 @@ columns:
             label: Name
             type: tags
             options: query
-            query: site.index.pluck("author", ",", true)            
+            query: site.index.pluck("author", ",", true)
+          authorRole:
+            label: Role
+            type: multiselect
+            default: author
+            options:
+              author: Author
+              illustrator: Illustrator
+              editor: Editor
+              publisher: Publisher
           authorURL:
-            label: Author's Website
+            label: Website
             type: url
       affiliates:
         extends: fields/affiliates
+      category:
+        label: Primary Category
+        type: tags
+        options:
+          type: query
+          query: site.children.published
+        required: true
+        width: 1/2
+        max: 1
       tags:
         label: Tags
         type: tags
         options: query
         query: site.index.pluck("tags", ",", true)
-        required: true
+        required: false
+        width: 1/2
       description:
         label: Description
         type: textarea

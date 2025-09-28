@@ -4,35 +4,49 @@
 
 <?php snippet('site-header') ?>
   <header class="wrapper">
-    <div class="category-filters cluster" id="categoryFilters">
-      <button class="p-category button" data-category="all">All</button>
-        <?php
-          // Get all unique categories and their counts
-          $categories = [];
-          $categoryCounts = [];
-          foreach ($books as $book) {
-            $bookCategories = $book->category()->split(',');
-            foreach ($bookCategories as $cat) {
-                $cat = trim($cat);
-                if ($cat) {
-                    if (!in_array($cat, $categories)) {
-                        $categories[] = $cat;
-                        $categoryCounts[$cat] = 1;
-                    } else {
-                        $categoryCounts[$cat]++;
-                    }
-                }
-            }
-        }
-          sort($categories);
-          foreach ($categories as $category): ?>
-            <button class="p-category button" data-category="<?= esc($category) ?>">
-                <span class="count"><?= $categoryCounts[$category] ?></span><?= esc($category) ?>
-            </button>
-        <?php endforeach; ?>
-    </div>
+    <form class="category-filters cluster" id="categoryFilters" role="radiogroup" aria-label="Filter books by category">
+      <input type="radio"
+             id="filter-all"
+             name="category-filter"
+             value="all"
+             class="filter-radio"
+             checked>
+      <label for="filter-all" class="p-category button">All</label>
+
+      <?php
+        // Get all unique categories and their counts
+        $categories = [];
+        $categoryCounts = [];
+        foreach ($books as $book) {
+          $bookCategories = $book->category()->split(',');
+          foreach ($bookCategories as $cat) {
+              $cat = trim($cat);
+              if ($cat) {
+                  if (!in_array($cat, $categories)) {
+                      $categories[] = $cat;
+                      $categoryCounts[$cat] = 1;
+                  } else {
+                      $categoryCounts[$cat]++;
+                  }
+              }
+          }
+      }
+        sort($categories);
+        foreach ($categories as $category):
+          $radioId = 'filter-' . Str::slug($category);
+      ?>
+          <input type="radio"
+                 id="<?= $radioId ?>"
+                 name="category-filter"
+                 value="<?= esc($category) ?>"
+                 class="filter-radio">
+          <label for="<?= $radioId ?>" class="p-category button">
+              <span class="count"><?= $categoryCounts[$category] ?></span><?= esc($category) ?>
+          </label>
+      <?php endforeach; ?>
+    </form>
     <p class="books-count" id="booksCount">
-      Showing <span class="count-number"><?= $books->count() ?> of <?= $books->count() ?> books</span>
+      Showing <span class="count-number"><?= $books->count() ?></span> of <?= $books->count() ?> books
     </p>
   </header>
 
@@ -123,68 +137,54 @@
       </article>
     <?php endforeach ?>
     </div>
-  </div>
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.p-category.button');
+    const filterForm = document.getElementById('categoryFilters');
+    const radioButtons = filterForm.querySelectorAll('.filter-radio');
     const bookArticles = document.querySelectorAll('.book');
     const booksCount = document.getElementById('booksCount');
     const totalBooks = <?= $books->count() ?>;
 
-    let selectedCategories = new Set();
-
     // Initialize from URL params
     function initFromURL() {
       const urlParams = new URLSearchParams(window.location.search);
-      const filters = urlParams.get('filters');
+      const filter = urlParams.get('filter');
 
-      if (filters) {
-        selectedCategories = new Set(filters.split(',').filter(f => f !== 'all' && f));
-        updateUI();
-        filterBooks();
+      if (filter) {
+        const radio = filterForm.querySelector(`input[value="${filter}"]`);
+        if (radio) {
+          radio.checked = true;
+          filterBooks();
+        }
       }
     }
 
     // Update URL without page reload
-    function updateURL() {
+    function updateURL(category) {
       const url = new URL(window.location);
-      if (selectedCategories.size > 0) {
-        url.searchParams.set('filters', Array.from(selectedCategories).join(','));
+      if (category !== 'all') {
+        url.searchParams.set('filter', category);
       } else {
-        url.searchParams.delete('filters');
+        url.searchParams.delete('filter');
       }
       window.history.replaceState({}, '', url);
     }
 
-    // Update button states
-    function updateUI() {
-      // Update button states
-      filterBtns.forEach(btn => {
-        const category = btn.dataset.category;
-        if (category === 'all') {
-          btn.classList.toggle('active', selectedCategories.size === 0);
-        } else {
-          btn.classList.toggle('active', selectedCategories.has(category));
-        }
-      });
-    }
-
-    // Filter books based on selected categories
+    // Filter books based on selected category
     function filterBooks() {
+      const checkedRadio = filterForm.querySelector('input[name="category-filter"]:checked');
+      const currentCategory = checkedRadio ? checkedRadio.value : 'all';
       let visibleCount = 0;
 
       bookArticles.forEach(article => {
         const articleCategories = article.dataset.categories.split(',').map(c => c.trim());
 
         let shouldShow = false;
-        if (selectedCategories.size === 0) {
+        if (currentCategory === 'all') {
           shouldShow = true;
         } else {
-          // ANY logic - show if book has any of the selected categories
-          shouldShow = Array.from(selectedCategories).some(cat =>
-            articleCategories.includes(cat)
-          );
+          shouldShow = articleCategories.includes(currentCategory);
         }
 
         if (shouldShow) {
@@ -206,24 +206,13 @@
       `;
     }
 
-    // Handle filter button clicks
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const category = this.dataset.category;
-
-        if (category === 'all') {
-          selectedCategories.clear();
-        } else {
-          if (selectedCategories.has(category)) {
-            selectedCategories.delete(category);
-          } else {
-            selectedCategories.add(category);
-          }
+    // Handle radio button changes
+    radioButtons.forEach(radio => {
+      radio.addEventListener('change', function() {
+        if (this.checked) {
+          filterBooks();
+          updateURL(this.value);
         }
-
-        updateUI();
-        filterBooks();
-        updateURL();
       });
     });
 

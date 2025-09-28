@@ -27,17 +27,15 @@
   gap: var(--rhythm-vivace);
 
   &:focus{
-    outline-offset: var(--flow-1);
+    outline-offset: var(
+      --button-outline-offset,
+      calc(var(--button-border-width) * 1)
+    );
   }
 
   &:hover{
-
   }
   &:active, &.active{
-    --button-bg:var(--background-tertiary);
-    --button-color:var(--color-distinct);
-    --button-border-color:var(--border-color-distinct);
-
     :has(.count){
       .count{
         color:var(--background-primary);
@@ -68,6 +66,17 @@
       background: var(--color-quiet);
       color:var(--color-emphasis);
     }
+  }
+}
+.filter-radio:checked + label.p-category.button{
+  background: var(--background-secondary);
+  color:var(--color-distinct);
+  outline-color:var(--color-nuance);
+  border-color:var(--color-prominent);
+
+  .count{
+    background:var(--background-tertiary);
+    color:var(--color-prominent);
   }
 }
 

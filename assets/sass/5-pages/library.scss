@@ -100,9 +100,66 @@ article.book {
 .category-filters {
   gap:var(--rhythm-vivace);
   margin-block-end:var(--rhythm-vivace);
+  flex-flow:row;
+
   .button{
     min-width:var(--rhythm-adagio);
+    height:100%;
   }
+}
+
+/* Hide radio buttons but keep them accessible */
+.filter-radio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Style labels as buttons */
+.category-filters label.button {
+  cursor: pointer;
+}
+
+/* Active state when radio is checked */
+.filter-radio:checked + label.button {
+  /* Add your active styling here - the radio provides the 'active' state */
+}
+
+/* Focus styles for accessibility */
+.filter-radio:focus + label.button {
+  outline-width: var(--button-outline-width, var(--button-border-width));
+  outline-style: var(--button-outline-style, var(--button-border-style));
+  outline-color: var(--button-outline-color, var(--button-border-color));
+  outline-offset: var(
+    --button-outline-offset,
+    calc(var(--button-border-width) * 1)
+  );
+
+}
+
+/* Hover states */
+.category-filters label.button:hover {
+  /* Add hover styling here */
+}
+
+/* Book filtering animations */
+.books-container .book {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.books-container .book.filtering-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.books-container .book.hidden {
+  display: none;
 }
 
 .tmpl-library{

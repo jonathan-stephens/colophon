@@ -3,10 +3,45 @@
 ?>
 
 <?php snippet('site-header') ?>
-  <div class="wrapper">
+  <header class="wrapper">
+    <div class="category-filters cluster" id="categoryFilters">
+      <button class="p-category button" data-category="all">All</button>
+        <?php
+          // Get all unique categories and their counts
+          $categories = [];
+          $categoryCounts = [];
+          foreach ($books as $book) {
+            $bookCategories = $book->category()->split(',');
+            foreach ($bookCategories as $cat) {
+                $cat = trim($cat);
+                if ($cat) {
+                    if (!in_array($cat, $categories)) {
+                        $categories[] = $cat;
+                        $categoryCounts[$cat] = 1;
+                    } else {
+                        $categoryCounts[$cat]++;
+                    }
+                }
+            }
+        }
+          sort($categories);
+          foreach ($categories as $category): ?>
+            <button class="p-category button" data-category="<?= esc($category) ?>">
+                <span class="count"><?= $categoryCounts[$category] ?></span><?= esc($category) ?>
+            </button>
+        <?php endforeach; ?>
+    </div>
+    <p class="books-count" id="booksCount">
+      Showing <span class="count-number"><?= $books->count() ?> of <?= $books->count() ?> books</span>
+    </p>
+  </header>
 
+    <div class="books-container wrapper" id="booksContainer">
     <?php foreach($books as $book): ?>
-      <article class="book">
+      <article class="book"
+               data-categories="<?= esc($book->category()) ?>"
+               itemscope
+               itemtype="https://schema.org/Book">
         <?php
         $cats = $book->category()->split(', ');
 
@@ -17,7 +52,7 @@
             $totalVisible = count($visibleTags);
             ?>
             <?php foreach ($visibleTags as $i => $cat): ?>
-              <span rel="tag" class="p-category">
+              <span rel="tag" class="p-category" itemprop="genre">
                 <?= trim($cat) ?><?php if ($i < $totalVisible - 1): ?>,<?php endif ?>
               </span>
             <?php endforeach ?>
@@ -27,10 +62,10 @@
           </header>
         <?php endif ?>
         <div class="content">
-          <h3 class="hed"><?= $book->hed()->html() ?></h3>
+          <h3 class="hed" itemprop="name"><?= $book->hed()->html() ?></h3>
 
           <?php if($book->dek()->isNotEmpty()): ?>
-            <p class="dek"><?= $book->dek()->html() ?></p>
+            <p class="dek" itemprop="alternateName"><?= $book->dek()->html() ?></p>
           <?php endif ?>
 
           <?php
@@ -47,9 +82,9 @@
                 foreach ($authorNames as $name):
                   $name = trim($name);
                   if ($authorURL->isNotEmpty()):
-                    $authorLinks[] = '<a href="' . $authorURL . '" target="_blank" rel="noopener">' . $name . '</a>';
+                    $authorLinks[] = '<a href="' . $authorURL . '" target="_blank" rel="noopener" itemprop="author">' . $name . '</a>';
                   else:
-                    $authorLinks[] = $name;
+                    $authorLinks[] = '<span itemprop="author">' . $name . '</span>';
                   endif;
                 endforeach;
               endforeach;
@@ -67,8 +102,15 @@
                 $affiliateNames = $affiliateData->affiliate()->split(',');
                 $affiliateURL = $affiliateData->url();
                 if ($affiliateURL->isNotEmpty()): ?>
-                  <a href="<?= $affiliateURL ?>" target="_blank" rel="noopener nofollow" class="button with-icon" data-button-variant="ghost">
-                    <?= !empty($affiliateNames) ? trim($affiliateNames[0]) : 'Buy' ?>
+                  <a href="<?= $affiliateURL ?>"
+                     target="_blank"
+                     rel="noopener nofollow"
+                     class="button with-icon"
+                     data-button-variant="ghost"
+                     itemprop="offers"
+                     itemscope
+                     itemtype="https://schema.org/Offer">
+                    <span itemprop="seller"><?= !empty($affiliateNames) ? trim($affiliateNames[0]) : 'Buy' ?></span>
                     <?= asset('assets/svg/icons/launch.svg')->read() ?>
                   </a>
                 <?php endif ?>
@@ -80,20 +122,113 @@
           <?php endif ?>
       </article>
     <?php endforeach ?>
+    </div>
   </div>
 
   <script>
-  // Auto-submit form when filters change
   document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('libraryFilters');
-    const selects = form.querySelectorAll('select');
+    const filterBtns = document.querySelectorAll('.p-category.button');
+    const bookArticles = document.querySelectorAll('.book');
+    const booksCount = document.getElementById('booksCount');
+    const totalBooks = <?= $books->count() ?>;
 
-    selects.forEach(select => {
-      select.addEventListener('change', function() {
-        // Auto-submit when any dropdown changes
-        form.submit();
+    let selectedCategories = new Set();
+
+    // Initialize from URL params
+    function initFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filters = urlParams.get('filters');
+
+      if (filters) {
+        selectedCategories = new Set(filters.split(',').filter(f => f !== 'all' && f));
+        updateUI();
+        filterBooks();
+      }
+    }
+
+    // Update URL without page reload
+    function updateURL() {
+      const url = new URL(window.location);
+      if (selectedCategories.size > 0) {
+        url.searchParams.set('filters', Array.from(selectedCategories).join(','));
+      } else {
+        url.searchParams.delete('filters');
+      }
+      window.history.replaceState({}, '', url);
+    }
+
+    // Update button states
+    function updateUI() {
+      // Update button states
+      filterBtns.forEach(btn => {
+        const category = btn.dataset.category;
+        if (category === 'all') {
+          btn.classList.toggle('active', selectedCategories.size === 0);
+        } else {
+          btn.classList.toggle('active', selectedCategories.has(category));
+        }
+      });
+    }
+
+    // Filter books based on selected categories
+    function filterBooks() {
+      let visibleCount = 0;
+
+      bookArticles.forEach(article => {
+        const articleCategories = article.dataset.categories.split(',').map(c => c.trim());
+
+        let shouldShow = false;
+        if (selectedCategories.size === 0) {
+          shouldShow = true;
+        } else {
+          // ANY logic - show if book has any of the selected categories
+          shouldShow = Array.from(selectedCategories).some(cat =>
+            articleCategories.includes(cat)
+          );
+        }
+
+        if (shouldShow) {
+          article.classList.remove('filtering-out', 'hidden');
+          visibleCount++;
+        } else {
+          article.classList.add('filtering-out');
+          setTimeout(() => {
+            if (article.classList.contains('filtering-out')) {
+              article.classList.add('hidden');
+            }
+          }, 300);
+        }
+      });
+
+      // Update count
+      booksCount.innerHTML = `
+        Showing <span class="count-number">${visibleCount}</span> of ${totalBooks} books
+      `;
+    }
+
+    // Handle filter button clicks
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const category = this.dataset.category;
+
+        if (category === 'all') {
+          selectedCategories.clear();
+        } else {
+          if (selectedCategories.has(category)) {
+            selectedCategories.delete(category);
+          } else {
+            selectedCategories.add(category);
+          }
+        }
+
+        updateUI();
+        filterBooks();
+        updateURL();
       });
     });
+
+    // Initialize
+    initFromURL();
   });
   </script>
 <?php snippet('site-footer') ?>

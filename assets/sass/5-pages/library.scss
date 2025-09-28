@@ -1,12 +1,20 @@
-.tmpl-library main .wrapper{
+.books-container.wrapper{
   display:flex;
   flex-direction: column;
   gap: var(--rhythm-andante);
+  margin-block:var(--rhythm-moderato);
+}
+
+main header.wrapper{
+  display:flex;
+  flex-direction:column;
+  gap:var(--rhythm-moderato);
 }
 article.book {
   background:var(--background-primary);
   padding:var(--rhythm-moderato);
-  border: var(--border-fine) solid var(--border-color-subtle);
+  border: var(--border-fine) solid var(--border-color-nuance);
+  border-radius:var(--radii-square);
 
   display: flex;
   gap: var(--rhythm-vivace);
@@ -57,8 +65,62 @@ article.book {
   }
 }
 
+.books-container .book {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.books-container .book.filtering-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.books-container .book.hidden {
+  display: none;
+}
+.books-count{
+  font-family:var(--font-mono);
+  font-size:var(--small);
+  color:var(--color-nuance);
+  margin-block-end: var(--rhythm-moderato);
+  border-block-start: var(--border-fine) solid;
+  border-block-end: var(--border-fine) dashed;
+  border-color:var(--border-color-distinct);
+  padding-block:var(--rhythm-vivace);
+  max-inline-size:none;
+
+  .count-number{
+    font-weight:var(--weight-medium);
+  }
+}
+
+.category-filters {
+  gap:var(--rhythm-vivace);
+  margin-block-end:var(--rhythm-vivace);
+  .button{
+    min-width:var(--rhythm-adagio);
+  }
+}
+
+.tmpl-library{
+  .filter-btn{
+    --button-bg: var(--background-secondary);
+    border-radius: var(--radii-circle);
+
+    &:hover{
+      --button-bg: var(--background-tertiary);
+    }
+  }
+
+  .filter-btn.active{
+    --button-bg: var(--background-tertiary);
+  }
+}
+
 @media screen and (min-width:30rem){
-  .tmpl-library main .wrapper{
+  .books-container.wrapper{
     display:grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
@@ -75,7 +137,7 @@ article.book {
 }
 
 @media screen and (min-width:50em){
-  .tmpl-library main .wrapper{
+  .books-container.wrapper{
     grid-template-columns: repeat(3, 1fr);
   }
 }

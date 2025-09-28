@@ -8,7 +8,7 @@ button, .button {
   --button-border-width: var(--border-thin);
   --button-border-style: solid;
   --button-border-color: var(--border-color-nuance);
-  --button-hover-border-color: var(--border-color-prominent);
+  --button-hover-border-color: var(--border-color-distinct);
   --button-radius: var(--radii-square);
   --button-outline-color: var(--color-prominent);
   --button-outline-style: solid;
@@ -63,9 +63,11 @@ button:focus, .button:focus {
   );
 }
 
-button:active, .button:active {
+button:active, .button:active{
   transform: scale(99%);
   transform: translateY(2px);
+  outline-color:var(--color-prominent);
+  border-color:var(--color-prominent);
 }
 
 /* Variants */

@@ -12,6 +12,8 @@
 }
 
 .p-category.button{
+  --button-border-color:var(--border-color-nuance);
+
   padding-inline: var(--rhythm-allegro);
   padding-block: var(--rhythm-presto);
   border-radius: var(--radii-circle);
@@ -20,17 +22,52 @@
   position:relative;
   bottom:-2px;
   cursor: pointer;
+  transition: color var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out, background var(--duration-base) ease-in-out, fill var(--duration-faster) ease-in-out;
+  display:inline-flex;
+  gap: var(--rhythm-vivace);
 
   &:focus{
     outline-offset: var(--flow-1);
   }
 
-  &:active{
-    background:var(--background-secondary-inverse);
-    color:var(--background-secondary);
+  &:hover{
+
+  }
+  &:active, &.active{
+    --button-bg:var(--background-tertiary);
+    --button-color:var(--color-distinct);
+    --button-border-color:var(--border-color-distinct);
+
+    :has(.count){
+      .count{
+        color:var(--background-primary);
+      }
+    }
   }
   &:has(.count){
     padding-inline-start: var(--rhythm-presto);
+
+    .count{
+      background: var(--background-tertiary);
+      border-radius: var(--radii-circle);
+      padding-inline: var(--flow-3);
+      padding-block: var(--flow-1);
+      display:inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width:var(--flow-6);
+      color:var(--color-distinct);
+
+      transition: color var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out, background var(--duration-base) ease-in-out, fill var(--duration-faster) ease-in-out;
+    }
+    &:hover .count, &:focus .count{
+      background:var(--background-quaternary);
+      color:var(--color-prominent);
+    }
+    &:active .count, &.active .count{
+      background: var(--color-quiet);
+      color:var(--color-emphasis);
+    }
   }
 }
 
@@ -48,23 +85,5 @@
   a{
     gap:var(--flow-3);
   }
-  .count{
-    background: var(--background-secondary);
-    border-radius: var(--radii-circle);
-    padding-inline: var(--flow-1);
-    padding-block: var(--flow-1);
-    display:inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-width:var(--flow-6);
-  }
 
-  a:hover .count, a:focus .count{
-    background:var(--link-color-hover);
-    color:var(--color-prominent-inverse);
-  }
-  a:active .count{
-    background: var(--link-color);
-    color:var(--link-color-active);
-  }
 }

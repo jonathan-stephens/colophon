@@ -41,7 +41,8 @@
                  value="<?= esc($category) ?>"
                  class="filter-radio">
           <label for="<?= $radioId ?>" class="p-category button">
-              <span class="count"><?= $categoryCounts[$category] ?></span><?= esc($category) ?>
+              <span class="count"><?= $categoryCounts[$category] ?></span>
+              <?= esc($category) ?>
           </label>
       <?php endforeach; ?>
     </form>

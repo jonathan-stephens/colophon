@@ -26,6 +26,7 @@ article.book {
     display:flex;
     flex-flow:column;
     gap: var(--rhythm-vivace);
+    height:100%;
   }
   .hed{
     font-size: var(--hed-quaternary);

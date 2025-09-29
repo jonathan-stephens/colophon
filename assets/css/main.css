@@ -3538,15 +3538,34 @@ article.book .outlinks a, article.book .authors a {
 }
 
 .books-container .book {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0) scale(1);
+  max-height: 100vh; /* Large enough to accommodate content */
+  overflow: hidden;
+  margin-bottom: varr(--rhythm-moderato);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 100vh;
 }
 
 .books-container .book.filtering-out {
   opacity: 0;
-  transform: scale(0.95);
+  transform: translateY(calc(-1 * var(--rhythm-andante))) scale(0.95);
   pointer-events: none;
+}
+
+.books-container .book.collapsed {
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transform: translateY(-20px) scale(0.95);
+  opacity: 0;
+}
+
+.books-container .book.filtering-in {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .books-container .book.hidden {
@@ -3630,6 +3649,25 @@ article.book .outlinks a, article.book .authors a {
   display: none;
 }
 
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    max-height: 0;
+    margin-bottom: 0;
+  }
+  50% {
+    opacity: 0.7;
+    max-height: 100vh;
+    margin-bottom: 2rem;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 100vh;
+    margin-bottom: 2rem;
+  }
+}
 .tmpl-library .filter-btn {
   --button-bg: var(--background-secondary);
   border-radius: var(--radii-circle);
@@ -3655,6 +3693,23 @@ article.book .outlinks a, article.book .authors a {
 @media screen and (min-width: 50em) {
   .books-container.wrapper {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .books-container .book {
+    transition: opacity 0.2s ease;
+  }
+  .books-container .book.filtering-out {
+    transform: none;
+  }
+  .books-container .book.filtering-in {
+    animation: none;
+  }
+  @keyframes slideInUp {
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 div.case-studies {

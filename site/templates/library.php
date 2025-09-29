@@ -187,7 +187,7 @@
       const currentCategory = checkedRadio ? checkedRadio.value : 'all';
       let visibleCount = 0;
 
-      bookArticles.forEach(article => {
+      bookArticles.forEach((article, index) => {
         const articleCategories = article.dataset.categories.split(',').map(c => c.trim());
 
         let shouldShow = false;
@@ -198,15 +198,27 @@
         }
 
         if (shouldShow) {
-          article.classList.remove('filtering-out', 'hidden');
+          // Show with staggered animation
+          article.classList.remove('filtering-out', 'collapsed');
+          article.classList.add('filtering-in');
+
+          // Remove animation class after it completes
+          setTimeout(() => {
+            article.classList.remove('filtering-in');
+          }, 600);
+
           visibleCount++;
         } else {
+          // Hide with two-stage process
+          article.classList.remove('filtering-in');
           article.classList.add('filtering-out');
+
+          // After fade out, collapse the space
           setTimeout(() => {
             if (article.classList.contains('filtering-out')) {
-              article.classList.add('hidden');
+              article.classList.add('collapsed');
             }
-          }, 300);
+          }, 250); // Halfway through the transition
         }
       });
 

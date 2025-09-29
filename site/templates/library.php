@@ -4,6 +4,16 @@
 
 <?php snippet('site-header') ?>
   <header class="wrapper">
+    <?php if($page->hed()->isNotEmpty()): ?>
+      <h1 class="p-name" itemprop="name headline"><?= $page->hed()->html() ?></h1>
+    <?php else: ?>
+      <h1 class="p-name" itemprop="name headline"><?= $page->title() ?></h1>
+    <?php endif ?>
+
+    <?php if($page->dek()->isNotEmpty()): ?>
+      <?= $page->dek()->kt() ?>
+    <?php endif?>
+
     <form class="category-filters cluster" id="categoryFilters" role="radiogroup" aria-label="Filter books by category">
       <input type="radio"
              id="filter-all"

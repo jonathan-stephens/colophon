@@ -23,3 +23,46 @@ tabs:
         type: pages
         status: listed
         template: book
+  listing:
+    label: Listing Page
+    sections:
+      content:
+        type: fields
+        fields:
+          hed:
+            type: text
+            label: Header
+            max: 36
+          dek:
+            type: text
+            label: Subtitle
+            max: 72
+          text:
+            label: Content
+            type: textarea
+            size: large
+            buttons:
+              - headlines
+              - bold
+              - italic
+              - link
+              - email
+              - file
+              - code
+              - ul
+              - ol
+              - abbr
+              - cite
+              - dfn
+              - ins
+              - mark
+              - q
+              - s
+              - samp
+              - smallcaps
+              - sub
+              - sup
+      metadata:
+        type: fields
+        fields:
+          metadata: fields/metadata

@@ -892,6 +892,10 @@ strong, b, th {
   padding-block-start: var(--rhythm-vivace);
 }
 
+h1.p-name + p {
+  max-width: 42ch;
+}
+
 @supports (text-wrap: pretty) {
   .prose {
     text-wrap: pretty;

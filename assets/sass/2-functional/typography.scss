@@ -98,7 +98,6 @@ ol, ul{
   }
 }
 
-
 li{
   padding-block:var(--rhythm-presto);
   text-wrap: balance;
@@ -192,6 +191,9 @@ strong, b, th {
   }
 }
 
+h1.p-name + p{
+  max-width:42ch;
+}
 @supports (text-wrap: pretty){
   .prose{text-wrap: pretty;}
 

@@ -101,6 +101,9 @@ article.book {
   gap:var(--rhythm-vivace);
   margin-block-end:var(--rhythm-vivace);
   flex-flow:row;
+  max-inline-size: none;
+  flex-wrap: wrap;
+
 
   .button{
     min-width:var(--rhythm-adagio);

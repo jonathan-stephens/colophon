@@ -3572,6 +3572,8 @@ article.book .outlinks a, article.book .authors a {
   gap: var(--rhythm-vivace);
   margin-block-end: var(--rhythm-vivace);
   flex-flow: row;
+  max-inline-size: none;
+  flex-wrap: wrap;
 }
 .category-filters .button {
   min-width: var(--rhythm-adagio);

@@ -148,6 +148,7 @@
     const totalBooks = <?= $books->count() ?>;
 
     let lastChecked = null;
+    let isFiltering = false;
 
     // Initialize from URL params
     function initFromURL() {
@@ -159,10 +160,9 @@
         if (radio) {
           radio.checked = true;
           lastChecked = radio;
-          filterBooks();
+          filterBooks(false); // No animation on initial load
         }
       } else {
-        // Default to "all" being checked
         const allRadio = filterForm.querySelector('input[value="all"]');
         if (allRadio) {
           lastChecked = allRadio;
@@ -181,46 +181,99 @@
       window.history.replaceState({}, '', url);
     }
 
-    // Filter books based on selected category
-    function filterBooks() {
+    // Filter books with smooth animations
+    function filterBooks(animate = true) {
+      if (isFiltering) return;
+      isFiltering = true;
+
       const checkedRadio = filterForm.querySelector('input[name="category-filter"]:checked');
       const currentCategory = checkedRadio ? checkedRadio.value : 'all';
+
+      // Determine which books should be visible
+      const toHide = [];
+      const visibilityMap = new Map();
       let visibleCount = 0;
 
-      bookArticles.forEach((article, index) => {
+      bookArticles.forEach(article => {
         const articleCategories = article.dataset.categories.split(',').map(c => c.trim());
+        const shouldShow = currentCategory === 'all' || articleCategories.includes(currentCategory);
+        const isCurrentlyVisible = !article.classList.contains('hidden');
 
-        let shouldShow = false;
-        if (currentCategory === 'all') {
-          shouldShow = true;
-        } else {
-          shouldShow = articleCategories.includes(currentCategory);
-        }
+        visibilityMap.set(article, shouldShow);
 
         if (shouldShow) {
-          // Show with staggered animation
-          article.classList.remove('filtering-out', 'collapsed');
-          article.classList.add('filtering-in');
-
-          // Remove animation class after it completes
-          setTimeout(() => {
-            article.classList.remove('filtering-in');
-          }, 600);
-
           visibleCount++;
-        } else {
-          // Hide with two-stage process
-          article.classList.remove('filtering-in');
-          article.classList.add('filtering-out');
-
-          // After fade out, collapse the space
-          setTimeout(() => {
-            if (article.classList.contains('filtering-out')) {
-              article.classList.add('collapsed');
-            }
-          }, 250); // Halfway through the transition
+        } else if (isCurrentlyVisible) {
+          toHide.push(article);
         }
       });
+
+      if (animate) {
+        // Phase 1: Fade out cards that should be hidden
+        toHide.forEach(article => {
+          article.classList.add('exiting');
+        });
+
+        // Phase 2: After exit animation completes
+        setTimeout(() => {
+          // Hide the exited cards
+          toHide.forEach(article => {
+            article.classList.add('hidden');
+            article.classList.remove('exiting');
+          });
+
+          // Show all cards that should be visible (but keep them invisible)
+          bookArticles.forEach(article => {
+            if (visibilityMap.get(article)) {
+              article.classList.remove('hidden');
+              article.classList.add('entering');
+            }
+          });
+
+          // Phase 3: Wait for layout to settle, then animate in sequentially
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              // Get only the visible cards in DOM order
+              const visibleCards = Array.from(bookArticles).filter(article =>
+                visibilityMap.get(article)
+              );
+
+              // Animate each card in sequence
+              visibleCards.forEach((article, index) => {
+                setTimeout(() => {
+                  article.classList.remove('entering');
+                  article.classList.add('animate-in');
+
+                  // Clean up animation class after it completes
+                  setTimeout(() => {
+                    article.classList.remove('animate-in');
+                  }, 1000);
+                }, index * 150); // 60ms stagger between each card
+              });
+
+              // Mark filtering as complete after all animations start
+              setTimeout(() => {
+                isFiltering = false;
+              }, visibleCards.length * 60 + 100);
+            });
+          });
+
+        }, 600); // Match CSS exit transition duration
+
+      } else {
+        // No animation - instant filter
+        bookArticles.forEach(article => {
+          const shouldShow = visibilityMap.get(article);
+
+          if (shouldShow) {
+            article.classList.remove('hidden', 'exiting', 'entering', 'animate-in');
+          } else {
+            article.classList.add('hidden');
+            article.classList.remove('exiting', 'entering', 'animate-in');
+          }
+        });
+        isFiltering = false;
+      }
 
       // Update count
       booksCount.innerHTML = `
@@ -228,12 +281,12 @@
       `;
     }
 
-    // Handle radio button clicks (for deselect functionality)
+    // Handle radio button clicks
     radioButtons.forEach(radio => {
       radio.addEventListener('click', function(e) {
-        // If clicking the already checked radio (and it's not "All")
+        if (isFiltering) return;
+
         if (this === lastChecked && this.value !== 'all') {
-          // Deselect it and select "All" instead
           this.checked = false;
           const allRadio = filterForm.querySelector('input[value="all"]');
           if (allRadio) {
@@ -243,16 +296,14 @@
           filterBooks();
           updateURL('all');
         } else {
-          // Normal selection
           lastChecked = this;
           filterBooks();
           updateURL(this.value);
         }
       });
 
-      // Also handle change events for keyboard navigation
       radio.addEventListener('change', function() {
-        if (this.checked && this !== lastChecked) {
+        if (this.checked && this !== lastChecked && !isFiltering) {
           lastChecked = this;
           filterBooks();
           updateURL(this.value);
@@ -263,5 +314,5 @@
     // Initialize
     initFromURL();
   });
-    </script>
+</script>
 <?php snippet('site-footer') ?>

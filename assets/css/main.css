@@ -3495,6 +3495,7 @@ article.book {
   align-content: baseline;
   flex-flow: column;
   justify-content: space-between;
+  position: relative;
 }
 article.book .content {
   display: flex;
@@ -3537,41 +3538,54 @@ article.book .outlinks a, article.book .authors a {
   align-self: baseline;
 }
 
+/* Smooth filtering animations - optimized for performance */
 .books-container .book {
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   opacity: 1;
-  transform: translateY(0) scale(1);
-  max-height: 100vh; /* Large enough to accommodate content */
-  overflow: hidden;
-  margin-bottom: varr(--rhythm-moderato);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  perspective: 100vh;
+  transform: scale(1) translateZ(0);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
-.books-container .book.filtering-out {
+/* Exiting state - fade out and scale down */
+.books-container .book.exiting {
   opacity: 0;
-  transform: translateY(calc(-1 * var(--rhythm-andante))) scale(0.95);
+  transform: scale(0.9) translateZ(0);
   pointer-events: none;
 }
 
-.books-container .book.collapsed {
-  max-height: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  transform: translateY(-20px) scale(0.95);
-  opacity: 0;
-}
-
-.books-container .book.filtering-in {
-  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
+/* Hidden state - completely removed from layout */
 .books-container .book.hidden {
   display: none;
 }
 
+/* Entering state - completely hidden until animation */
+.books-container .book.entering {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.9) translateZ(0);
+}
+
+/* Staggered entrance animation */
+@keyframes smoothEnter {
+  0% {
+    visibility: visible;
+    opacity: 0;
+    transform: scale(0.9) translateZ(0);
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+.books-container .book.animate-in {
+  animation: smoothEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Book count styling */
 .books-count {
   font-family: var(--font-mono);
   font-size: var(--small);
@@ -3585,8 +3599,10 @@ article.book .outlinks a, article.book .authors a {
 }
 .books-count .count-number {
   font-weight: var(--weight-medium);
+  transition: all 0.3s ease;
 }
 
+/* Category filter styling */
 .category-filters {
   gap: var(--rhythm-vivace);
   margin-block-end: var(--rhythm-vivace);
@@ -3614,11 +3630,6 @@ article.book .outlinks a, article.book .authors a {
   cursor: pointer;
 }
 
-/* Active state when radio is checked */
-.filter-radio:checked + label.button {
-  /* Add your active styling here - the radio provides the 'active' state */
-}
-
 /* Focus styles for accessibility */
 .filter-radio:focus + label.button {
   outline-width: var(--button-outline-width, var(--button-border-width));
@@ -3627,47 +3638,7 @@ article.book .outlinks a, article.book .authors a {
   outline-offset: var(--button-outline-offset, calc(var(--button-border-width) * 1));
 }
 
-/* Hover states */
-.category-filters label.button:hover {
-  /* Add hover styling here */
-}
-
-/* Book filtering animations */
-.books-container .book {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 1;
-  transform: scale(1);
-}
-
-.books-container .book.filtering-out {
-  opacity: 0;
-  transform: scale(0.95);
-  pointer-events: none;
-}
-
-.books-container .book.hidden {
-  display: none;
-}
-
-@keyframes slideInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    max-height: 0;
-    margin-bottom: 0;
-  }
-  50% {
-    opacity: 0.7;
-    max-height: 100vh;
-    margin-bottom: 2rem;
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    max-height: 100vh;
-    margin-bottom: 2rem;
-  }
-}
+/* Template-specific styling */
 .tmpl-library .filter-btn {
   --button-bg: var(--background-secondary);
   border-radius: var(--radii-circle);
@@ -3679,12 +3650,18 @@ article.book .outlinks a, article.book .authors a {
   --button-bg: var(--background-tertiary);
 }
 
+/* Responsive flexbox layouts - smoother for animations */
 @media screen and (min-width: 30rem) {
   .books-container.wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: var(--rhythm-andante);
+  }
+  article.book {
+    flex: 1 1 calc(50% - var(--rhythm-andante) / 2);
+    min-width: calc(50% - var(--rhythm-andante) / 2);
+    max-width: calc(50% - var(--rhythm-andante) / 2);
   }
   article.book .hed {
     font-size: var(--hed-tertiary);
@@ -3692,24 +3669,22 @@ article.book .outlinks a, article.book .authors a {
 }
 @media screen and (min-width: 50em) {
   .books-container.wrapper {
-    grid-template-columns: repeat(3, 1fr);
+    gap: var(--rhythm-andante);
+  }
+  article.book {
+    flex: 1 1 calc(33.333% - var(--rhythm-andante) * 2 / 3);
+    min-width: calc(33.333% - var(--rhythm-andante) * 2 / 3);
+    max-width: calc(33.333% - var(--rhythm-andante) * 2 / 3);
   }
 }
+/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .books-container .book {
     transition: opacity 0.2s ease;
+    will-change: auto;
   }
-  .books-container .book.filtering-out {
-    transform: none;
-  }
-  .books-container .book.filtering-in {
+  .books-container .book.animate-in {
     animation: none;
-  }
-  @keyframes slideInUp {
-    to {
-      opacity: 1;
-      transform: none;
-    }
   }
 }
 div.case-studies {

@@ -147,6 +147,8 @@
     const booksCount = document.getElementById('booksCount');
     const totalBooks = <?= $books->count() ?>;
 
+    let lastChecked = null;
+
     // Initialize from URL params
     function initFromURL() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -156,7 +158,14 @@
         const radio = filterForm.querySelector(`input[value="${filter}"]`);
         if (radio) {
           radio.checked = true;
+          lastChecked = radio;
           filterBooks();
+        }
+      } else {
+        // Default to "all" being checked
+        const allRadio = filterForm.querySelector('input[value="all"]');
+        if (allRadio) {
+          lastChecked = allRadio;
         }
       }
     }
@@ -207,10 +216,32 @@
       `;
     }
 
-    // Handle radio button changes
+    // Handle radio button clicks (for deselect functionality)
     radioButtons.forEach(radio => {
+      radio.addEventListener('click', function(e) {
+        // If clicking the already checked radio (and it's not "All")
+        if (this === lastChecked && this.value !== 'all') {
+          // Deselect it and select "All" instead
+          this.checked = false;
+          const allRadio = filterForm.querySelector('input[value="all"]');
+          if (allRadio) {
+            allRadio.checked = true;
+            lastChecked = allRadio;
+          }
+          filterBooks();
+          updateURL('all');
+        } else {
+          // Normal selection
+          lastChecked = this;
+          filterBooks();
+          updateURL(this.value);
+        }
+      });
+
+      // Also handle change events for keyboard navigation
       radio.addEventListener('change', function() {
-        if (this.checked) {
+        if (this.checked && this !== lastChecked) {
+          lastChecked = this;
           filterBooks();
           updateURL(this.value);
         }
@@ -220,5 +251,5 @@
     // Initialize
     initFromURL();
   });
-  </script>
+    </script>
 <?php snippet('site-footer') ?>

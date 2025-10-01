@@ -1,5 +1,5 @@
 <?php
-  $books = $page->children()->listed()->filterBy('template', 'book');
+  $books = $page->children()->listed()->filterBy('template', 'book')->shuffle();
 ?>
 
 <?php snippet('site-header') ?>
@@ -41,7 +41,9 @@
               }
           }
       }
-        sort($categories);
+        // Sort categories by count (descending), then alphabetically
+        arsort($categoryCounts);
+        $categories = array_keys($categoryCounts);
         foreach ($categories as $category):
           $radioId = 'filter-' . Str::slug($category);
       ?>

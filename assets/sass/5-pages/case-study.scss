@@ -23,6 +23,29 @@
     aside{
       order:2;
       margin-block-start: var(--rhythm-andante);
+
+      ul{
+        background:var(--background-secondary);
+        border-radius:var(--radii-square);
+        height: max-content;
+        padding-inline:var(--rhythm-moderato);
+        box-sizing:content-box;
+      }
+      li{
+        font-size:var(--small);
+        font-family: var(--font-mono);
+        list-style-type:none;
+        display:flex;
+        flex-direction:column;
+        margin-block-end:var(--rhythm-presto);
+      }
+      .label{
+        text-transform: uppercase;
+        font-size:var(--caption);
+        letter-spacing: 1.25%;
+        font-feature-settings: "smcp";
+        font-weight: var(--weight-bold);
+      }
     }
     .table-of-contents{
       order:3;
@@ -52,31 +75,6 @@
 
     h2{
       padding-top:var(--rhythm-andante);
-    }
-  }
-
-  ul{
-    background:var(--background-secondary);
-    border-radius:var(--radii-square);
-    height: max-content;
-    padding-inline:var(--rhythm-moderato);
-    box-sizing:content-box;
-
-    li{
-      font-size:var(--small);
-      font-family: var(--font-mono);
-      list-style-type:none;
-      display:flex;
-      flex-direction:column;
-      margin-block-end:var(--rhythm-presto);
-
-    }
-    .label{
-      text-transform: uppercase;
-      font-size:var(--caption);
-      letter-spacing: 1.25%;
-      font-feature-settings: "smcp";
-      font-weight: var(--weight-bold);
     }
   }
   .overview, .prose{

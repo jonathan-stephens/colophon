@@ -129,11 +129,11 @@ p + time{
   color:var(--color-subtle);
 }
 
-p :not(pre)>code, li code{
+p :not(pre)>code, li code, code{
   font-size: var(--small);
   display:inline-flex;
   border-radius:var(--radii-square);
-  color:var(--color-prominent);
+  color:var(--color-distinct);
   white-space:nowrap;
   overflow-y:hidden;
   overflow-x:hidden;

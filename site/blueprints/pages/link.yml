@@ -31,22 +31,22 @@ tabs:
                 type: text
                 required: true
                 width: 1/2
-              tags:
-                label: Tags
-                type: tags
-                options: query
-                query: site.index.pluck("tags", ",", true)
-                width: 1/2
               author:
                 label: Author
                 type: tags
                 options: query
                 query: site.index.pluck("author", ",", true)
-                width: 1/4
+                width: 1/2
               authorURL:
                 label: Author's Website
                 type: url
-                width: 1/4
+                width: 1/2
+              tags:
+                label: Tags
+                type: tags
+                options: query
+                query: site.index.pluck("tags", ",", true)
+                width: 1/1
               text:
                 label: Description, quotes, etc.
                 type: textarea

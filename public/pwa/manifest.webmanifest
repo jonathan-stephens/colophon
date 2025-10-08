@@ -1,0 +1,32 @@
+{
+  "name": "Kirby Link Saver",
+  "short_name": "KirbyLinks",
+  "description": "Quickly save and share links to Kirby CMS",
+  "start_url": "/pwa/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "share_target": {
+    "action": "/pwa/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "token": "supercalifragilisticexpialidocious"
+    }
+  }
+}

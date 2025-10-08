@@ -5,7 +5,7 @@ use Kirby\Toolkit\Str;
 
 return [
   [
-    'pattern' => './pwa/share',
+    'pattern' => '/pwa/share',
     'method'  => 'POST',
     'action'  => function () {
       $configToken = option('pwa.share.token');

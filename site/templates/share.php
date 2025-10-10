@@ -7,88 +7,91 @@
 
 snippet('site-header') ?>
 
-<main class="share-page">
-    <div class="container">
-        <h1>Save Bookmark</h1>
+<section class="share-page">
+  <div class="container">
+      <h1>Save Bookmark</h1>
 
-        <form id="bookmark-form" class="bookmark-form">
-            <div class="form-group">
-                <label for="website">URL *</label>
-                <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    required
-                    value="<?= esc(get('url', '')) ?>"
-                >
-            </div>
+      <form id="bookmark-form" class="bookmark-form">
+          <div class="form-group">
+              <label for="website">URL *</label>
+              <input
+                  type="url"
+                  id="website"
+                  name="website"
+                  required
+                  value="<?= esc(get('url', '')) ?>"
+              >
+          </div>
 
-            <div class="form-row">
-                <div class="form-group half">
-                    <label for="tld">Top Level Domain *</label>
-                    <input
-                        type="text"
-                        id="tld"
-                        name="tld"
-                        required
-                    >
-                </div>
+          <div class="form-group">
+              <label for="page-title">Page Title *</label>
+              <input
+                  type="text"
+                  id="page-title"
+                  name="page-title"
+                  required
+                  value="<?= esc(get('title', '')) ?>"
+                  placeholder="Title of the page you're bookmarking"
+              >
+          </div>
 
-                <div class="form-group half">
-                    <label for="author">Author</label>
-                    <input
-                        type="text"
-                        id="author"
-                        name="author"
-                        placeholder="Optional"
-                    >
-                </div>
-            </div>
+          <div class="form-row">
+              <div class="form-group half">
+                  <label for="tld">Domain *</label>
+                  <input
+                      type="text"
+                      id="tld"
+                      name="tld"
+                      required
+                      placeholder="e.g., example.com"
+                  >
+              </div>
 
-            <div class="form-group">
-                <label for="authorURL">Author's Website</label>
-                <input
-                    type="url"
-                    id="authorURL"
-                    name="authorURL"
-                    placeholder="Optional"
-                >
-            </div>
+              <div class="form-group half">
+                  <label for="author">Author</label>
+                  <input
+                      type="text"
+                      id="author"
+                      name="author"
+                      placeholder="Optional"
+                  >
+              </div>
+          </div>
 
-            <div class="form-group">
-                <label for="tags">Tags</label>
-                <input
-                    type="text"
-                    id="tags"
-                    name="tags"
-                    placeholder="Comma-separated tags"
-                    value="<?= esc(get('text', '')) ?>"
-                >
-            </div>
+          <div class="form-group">
+              <label for="tags">Tags</label>
+              <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  placeholder="Comma-separated tags"
+                  value="<?= esc(get('text', '')) ?>"
+              >
+          </div>
 
-            <div class="form-group">
-                <label for="text">Description</label>
-                <textarea
-                    id="text"
-                    name="text"
-                    rows="6"
-                    placeholder="Add notes, quotes, or description..."
-                ><?= esc(get('title', '')) ?></textarea>
-            </div>
+          <div class="form-group">
+              <label for="text">Description</label>
+              <textarea
+                  id="text"
+                  name="text"
+                  rows="6"
+                  placeholder="Add notes, quotes, or description..."
+              ></textarea>
+          </div>
 
-            <div class="form-actions">
-                <button type="button" id="quick-save-btn" class="btn btn-secondary">
-                    Quick Save (Read Later)
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    Save Bookmark
-                </button>
-            </div>
+          <div class="form-actions">
+              <button type="button" id="quick-save-btn" class="btn btn-secondary">
+                  Quick Save (Read Later)
+              </button>
+              <button type="submit" class="btn btn-primary">
+                  Save Bookmark
+              </button>
+          </div>
 
-            <div id="message" class="message" style="display: none;"></div>
-        </form>
-    </div>
-</main>
+          <div id="message" class="message" style="display: none;"></div>
+      </form>
+  </div>
+</section>
 
 <style>
 .share-page {
@@ -192,23 +195,43 @@ textarea {
 </style>
 
 <script>
-// Auto-extract TLD when URL changes
+// Auto-extract domain when URL changes
 document.getElementById('website').addEventListener('blur', function() {
     const url = this.value;
     if (url) {
         try {
             const urlObj = new URL(url);
             const host = urlObj.hostname;
-            const tld = host.substring(host.lastIndexOf('.') + 1);
-            document.getElementById('tld').value = tld;
+            // Remove www. if present
+            const domain = host.replace(/^www\./, '');
+            document.getElementById('tld').value = domain;
         } catch (e) {
             console.error('Invalid URL');
         }
     }
 });
 
-// Get API credentials from memory
+// Check if user is logged in via Kirby session
+async function checkAuth() {
+    try {
+        const response = await fetch('/api/users/<?= $kirby->user() ? $kirby->user()->email() : "" ?>', {
+            credentials: 'include'
+        });
+        return response.ok;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Get API credentials
 function getApiAuth() {
+    // Check if we have a Kirby session first
+    <?php if ($kirby->user()): ?>
+    return {
+        email: '<?= $kirby->user()->email() ?>',
+        password: localStorage.getItem('kirby_api_password_temp') || ''
+    };
+    <?php else: ?>
     const email = localStorage.getItem('kirby_api_email');
     const password = localStorage.getItem('kirby_api_password');
 
@@ -225,6 +248,7 @@ function getApiAuth() {
     }
 
     return { email, password };
+    <?php endif; ?>
 }
 
 function showMessage(text, type) {
@@ -250,9 +274,9 @@ document.getElementById('bookmark-form').addEventListener('submit', async functi
 
     const formData = {
         website: document.getElementById('website').value,
+        title: document.getElementById('page-title').value,
         tld: document.getElementById('tld').value,
         author: document.getElementById('author').value,
-        authorURL: document.getElementById('authorURL').value,
         tags: document.getElementById('tags').value,
         text: document.getElementById('text').value
     };
@@ -271,9 +295,8 @@ document.getElementById('bookmark-form').addEventListener('submit', async functi
 
         if (result.status === 'success') {
             showMessage('Bookmark saved successfully!', 'success');
-            setTimeout(() => {
-                window.location.href = '/links';
-            }, 1500);
+            // Clear the form
+            document.getElementById('bookmark-form').reset();
         } else {
             showMessage(result.message || 'Error saving bookmark', 'error');
         }
@@ -291,6 +314,8 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
     }
 
     const url = document.getElementById('website').value;
+    const title = document.getElementById('page-title').value;
+
     if (!url) {
         showMessage('URL is required', 'error');
         return;
@@ -298,7 +323,7 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
 
     const data = {
         url: url,
-        title: document.getElementById('text').value,
+        title: title,
         text: ''
     };
 
@@ -315,10 +340,9 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
         const result = await response.json();
 
         if (result.status === 'success') {
-            showMessage('Quickly saved! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = '/links';
-            }, 1000);
+            showMessage('Quickly saved!', 'success');
+            // Clear the form
+            document.getElementById('bookmark-form').reset();
         } else {
             showMessage(result.message || 'Error saving bookmark', 'error');
         }
@@ -327,7 +351,7 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
     }
 });
 
-// Auto-fill TLD on page load if URL is present
+// Auto-fill domain on page load if URL is present
 window.addEventListener('DOMContentLoaded', function() {
     const websiteInput = document.getElementById('website');
     if (websiteInput.value) {

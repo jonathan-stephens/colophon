@@ -45,12 +45,12 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
 
                         // Prepare content
                         $content = [
+                            'title' => $data['title'] ?? '',
                             'website' => $url,
                             'tld' => $tld,
                             'text' => $data['text'] ?? '',
                             'tags' => $data['tags'] ?? '',
                             'author' => $data['author'] ?? '',
-                            'authorURL' => $data['authorURL'] ?? '',
                         ];
 
                         // Create the bookmark page
@@ -60,6 +60,9 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'content' => $content,
                             'num' => date('YmdHis') // date-based numbering
                         ]);
+
+                        // Publish the page immediately
+                        $bookmark->changeStatus('listed');
 
                         return [
                             'status' => 'success',

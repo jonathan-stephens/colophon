@@ -16,7 +16,6 @@ return [
             ]
         ];
     },
-    'pwa.share.token' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
     'mauricerenck.indieConnector.send.url-fields' => [

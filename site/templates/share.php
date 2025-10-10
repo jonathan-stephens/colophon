@@ -65,7 +65,6 @@ snippet('site-header') ?>
                   id="tags"
                   name="tags"
                   placeholder="Comma-separated tags"
-                  value="<?= esc(get('text', '')) ?>"
               >
           </div>
 
@@ -224,14 +223,27 @@ async function checkAuth() {
 }
 
 // Get API credentials
-function getApiAuth() {
-    // Check if we have a Kirby session first
+async function getApiAuth() {
     <?php if ($kirby->user()): ?>
+    // User is logged into Kirby Panel
+    // We still need the password for Basic Auth to the API
+    let password = localStorage.getItem('kirby_api_password');
+
+    if (!password) {
+        password = prompt('Please enter your Kirby password for API access:');
+        if (password) {
+            localStorage.setItem('kirby_api_password', password);
+        } else {
+            return null;
+        }
+    }
+
     return {
         email: '<?= $kirby->user()->email() ?>',
-        password: localStorage.getItem('kirby_api_password_temp') || ''
+        password: password
     };
     <?php else: ?>
+    // User is not logged in, need both email and password
     const email = localStorage.getItem('kirby_api_email');
     const password = localStorage.getItem('kirby_api_password');
 
@@ -266,8 +278,8 @@ function showMessage(text, type) {
 document.getElementById('bookmark-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const auth = getApiAuth();
-    if (!auth) {
+    const auth = await getApiAuth();
+    if (!auth || !auth.password) {
         showMessage('Authentication required', 'error');
         return;
     }
@@ -298,7 +310,13 @@ document.getElementById('bookmark-form').addEventListener('submit', async functi
             // Clear the form
             document.getElementById('bookmark-form').reset();
         } else {
-            showMessage(result.message || 'Error saving bookmark', 'error');
+            // If authentication failed, clear stored password
+            if (result.message && result.message.includes('authentication')) {
+                localStorage.removeItem('kirby_api_password');
+                showMessage('Authentication failed. Please try again.', 'error');
+            } else {
+                showMessage(result.message || 'Error saving bookmark', 'error');
+            }
         }
     } catch (error) {
         showMessage('Network error: ' + error.message, 'error');
@@ -307,8 +325,8 @@ document.getElementById('bookmark-form').addEventListener('submit', async functi
 
 // Quick save
 document.getElementById('quick-save-btn').addEventListener('click', async function() {
-    const auth = getApiAuth();
-    if (!auth) {
+    const auth = await getApiAuth();
+    if (!auth || !auth.password) {
         showMessage('Authentication required', 'error');
         return;
     }
@@ -344,7 +362,13 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
             // Clear the form
             document.getElementById('bookmark-form').reset();
         } else {
-            showMessage(result.message || 'Error saving bookmark', 'error');
+            // If authentication failed, clear stored password
+            if (result.message && result.message.includes('authentication')) {
+                localStorage.removeItem('kirby_api_password');
+                showMessage('Authentication failed. Please try again.', 'error');
+            } else {
+                showMessage(result.message || 'Error saving bookmark', 'error');
+            }
         }
     } catch (error) {
         showMessage('Network error: ' + error.message, 'error');
@@ -359,5 +383,4 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
 <?php snippet('site-footer') ?>

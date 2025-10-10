@@ -71,12 +71,12 @@ button:active, .button:active, .filter-radio:checked + label.button{
 }
 
 /* Variants */
-.button[data-button-variant="primary"] {
-  --button-bg: #f3de8a;
-  --button-color: #342a21;
-  --button-border-color: currentColor;
-  --button-hover-bg: #f1d979;
-  --button-hover-color: #342a21;
+button[data-button-variant="primary"], .button[data-button-variant="primary"] {
+  --button-bg: var(--background-quaternary);
+  --button-color: var(--color-prominent-inverse);
+  --button-border-color: var(--background-quinary);
+  --button-hover-bg: var(--button-hover-bg);
+  --button-hover-color: var(--button-hover-color);
 }
 
 .button[data-button-variant="positive"] {

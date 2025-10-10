@@ -1,5 +1,5 @@
 {
-  "name": "My Bookmarks",
+  "name": "Bookmarks",
   "short_name": "Bookmarks",
   "description": "Save and manage your bookmarks",
   "start_url": "/",
@@ -20,8 +20,8 @@
   ],
   "share_target": {
     "action": "/share",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
+    "method": "POST",
+    "enctype": "multipart/form-data",
     "params": {
       "title": "title",
       "text": "text",

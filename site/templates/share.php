@@ -1,106 +1,113 @@
 <?php
 /**
  * Share Target Page Template
- * Place in site/templates/share.php
- * Create a page in Kirby Panel at /share using this template
  */
+
+// Handle both GET and POST for share target
+$sharedUrl = get('url') ?? $_POST['url'] ?? '';
+$sharedTitle = get('title') ?? $_POST['title'] ?? '';
+$sharedText = get('text') ?? $_POST['text'] ?? '';
 
 snippet('site-header') ?>
 
-<section class="share-page">
-  <div class="container">
-      <h1>Save Bookmark</h1>
+<div class="share-page">
+    <div class="container">
+        <h1>Save Bookmark</h1>
 
-      <form id="bookmark-form" class="bookmark-form">
-          <div class="form-group">
-              <label for="website">URL *</label>
-              <input
-                  type="url"
-                  id="website"
-                  name="website"
-                  required
-                  value="<?= esc(get('url', '')) ?>"
-              >
-          </div>
+        <form id="bookmark-form" class="bookmark-form">
+            <div class="form-group">
+                <label for="website">URL *</label>
+                <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    required
+                    value="<?= esc($sharedUrl) ?>"
+                >
+                <?php if ($sharedUrl): ?>
+                <button type="button" id="fetch-metadata-btn" class="btn-link">
+                    Fetch metadata from URL
+                </button>
+                <?php endif; ?>
+            </div>
 
-          <div class="form-group">
-              <label for="page-title">Page Title *</label>
-              <input
-                  type="text"
-                  id="page-title"
-                  name="page-title"
-                  required
-                  value="<?= esc(get('title', '')) ?>"
-                  placeholder="Title of the page you're bookmarking"
-              >
-          </div>
+            <div class="form-group">
+                <label for="page-title">Page Title *</label>
+                <input
+                    type="text"
+                    id="page-title"
+                    name="page-title"
+                    required
+                    value="<?= esc($sharedTitle) ?>"
+                    placeholder="Title of the page you're bookmarking"
+                >
+            </div>
 
-          <div class="form-row">
-              <div class="form-group half">
-                  <label for="tld">Domain *</label>
-                  <input
-                      type="text"
-                      id="tld"
-                      name="tld"
-                      required
-                      placeholder="e.g., example.com"
-                  >
-              </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="tld">Domain *</label>
+                    <input
+                        type="text"
+                        id="tld"
+                        name="tld"
+                        required
+                        placeholder="e.g., example.com"
+                    >
+                </div>
 
-              <div class="form-group half">
-                  <label for="author">Author</label>
-                  <input
-                      type="text"
-                      id="author"
-                      name="author"
-                      placeholder="Optional"
-                  >
-              </div>
-          </div>
+                <div class="form-group half">
+                    <label for="author">Author</label>
+                    <input
+                        type="text"
+                        id="author"
+                        name="author"
+                        placeholder="Optional"
+                    >
+                </div>
+            </div>
 
-          <div class="form-group">
-              <label for="tags">Tags</label>
-              <input
-                  type="text"
-                  id="tags"
-                  name="tags"
-                  placeholder="Comma-separated tags"
-              >
-          </div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input
+                    type="text"
+                    id="tags"
+                    name="tags"
+                    placeholder="Comma-separated tags"
+                >
+            </div>
 
-          <div class="form-group">
-              <label for="text">Description</label>
-              <textarea
-                  id="text"
-                  name="text"
-                  rows="6"
-                  placeholder="Add notes, quotes, or description..."
-              ></textarea>
-          </div>
+            <div class="form-group">
+                <label for="text">Description</label>
+                <textarea
+                    id="text"
+                    name="text"
+                    rows="6"
+                    placeholder="Add notes, quotes, or description..."
+                ></textarea>
+            </div>
 
-          <div class="form-actions">
-              <button type="button" id="quick-save-btn" class="btn btn-secondary">
-                  Quick Save (Read Later)
-              </button>
-              <button type="submit" class="btn btn-primary">
-                  Save Bookmark
-              </button>
-          </div>
+            <div class="form-actions">
+                <button type="button" id="quick-save-btn" class="btn" data-button-variant="ghost">
+                    Quick Save (Read Later)
+                </button>
+                <button type="submit" class="button" data-button-variant="primary">
+                    Save Bookmark
+                </button>
+            </div>
 
-          <div id="message" class="message" style="display: none;"></div>
-      </form>
-  </div>
-</section>
+            <div id="message" class="message" style="display: none;"></div>
+        </form>
+    </div>
+</div>
 
 <style>
 .share-page {
-    padding: 2rem 1rem;
     max-width: 800px;
     margin: 0 auto;
 }
 
 .bookmark-form {
-    background: var(--background-secondary);
+    background: var(--background-primary);
     padding: 2rem;
     border-radius: var(--radii-square);
 }
@@ -133,6 +140,7 @@ textarea {
     border-radius: var(--radii-square);
     font-size: 1rem;
     font-family: inherit;
+    background:var(--background-secondary);
 }
 
 textarea {
@@ -201,7 +209,6 @@ document.getElementById('website').addEventListener('blur', function() {
         try {
             const urlObj = new URL(url);
             const host = urlObj.hostname;
-            // Remove www. if present
             const domain = host.replace(/^www\./, '');
             document.getElementById('tld').value = domain;
         } catch (e) {
@@ -210,23 +217,65 @@ document.getElementById('website').addEventListener('blur', function() {
     }
 });
 
-// Check if user is logged in via Kirby session
-async function checkAuth() {
+// Fetch metadata from URL
+async function fetchMetadata(url) {
+    showMessage('Fetching metadata...', 'info');
+
     try {
-        const response = await fetch('/api/users/<?= $kirby->user() ? $kirby->user()->email() : "" ?>', {
-            credentials: 'include'
+        const response = await fetch('/api/bookmarks/fetch-metadata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ url: url })
         });
-        return response.ok;
-    } catch (e) {
-        return false;
+
+        const result = await response.json();
+
+        if (result.status === 'success' && result.data) {
+            const data = result.data;
+
+            if (data.author && !document.getElementById('author').value) {
+                document.getElementById('author').value = data.author;
+            }
+
+            if (data.tags && !document.getElementById('tags').value) {
+                document.getElementById('tags').value = data.tags;
+            }
+
+            if (data.title && !document.getElementById('page-title').value) {
+                document.getElementById('page-title').value = data.title;
+            }
+
+            showMessage('Metadata fetched successfully!', 'success');
+        } else {
+            showMessage('Could not fetch metadata', 'info');
+        }
+    } catch (error) {
+        showMessage('Error fetching metadata: ' + error.message, 'error');
     }
 }
+
+// Fetch metadata button
+document.getElementById('fetch-metadata-btn')?.addEventListener('click', function() {
+    const url = document.getElementById('website').value;
+    if (url) {
+        fetchMetadata(url);
+    }
+});
+
+// Auto-fetch metadata on page load if URL is present
+window.addEventListener('DOMContentLoaded', function() {
+    const websiteInput = document.getElementById('website');
+    if (websiteInput.value) {
+        websiteInput.dispatchEvent(new Event('blur'));
+        fetchMetadata(websiteInput.value);
+    }
+});
 
 // Get API credentials
 async function getApiAuth() {
     <?php if ($kirby->user()): ?>
-    // User is logged into Kirby Panel
-    // We still need the password for Basic Auth to the API
     let password = localStorage.getItem('kirby_api_password');
 
     if (!password) {
@@ -243,7 +292,6 @@ async function getApiAuth() {
         password: password
     };
     <?php else: ?>
-    // User is not logged in, need both email and password
     const email = localStorage.getItem('kirby_api_email');
     const password = localStorage.getItem('kirby_api_password');
 
@@ -307,10 +355,8 @@ document.getElementById('bookmark-form').addEventListener('submit', async functi
 
         if (result.status === 'success') {
             showMessage('Bookmark saved successfully!', 'success');
-            // Clear the form
             document.getElementById('bookmark-form').reset();
         } else {
-            // If authentication failed, clear stored password
             if (result.message && result.message.includes('authentication')) {
                 localStorage.removeItem('kirby_api_password');
                 showMessage('Authentication failed. Please try again.', 'error');
@@ -359,10 +405,8 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
 
         if (result.status === 'success') {
             showMessage('Quickly saved!', 'success');
-            // Clear the form
             document.getElementById('bookmark-form').reset();
         } else {
-            // If authentication failed, clear stored password
             if (result.message && result.message.includes('authentication')) {
                 localStorage.removeItem('kirby_api_password');
                 showMessage('Authentication failed. Please try again.', 'error');
@@ -374,13 +418,6 @@ document.getElementById('quick-save-btn').addEventListener('click', async functi
         showMessage('Network error: ' + error.message, 'error');
     }
 });
-
-// Auto-fill domain on page load if URL is present
-window.addEventListener('DOMContentLoaded', function() {
-    const websiteInput = document.getElementById('website');
-    if (websiteInput.value) {
-        websiteInput.dispatchEvent(new Event('blur'));
-    }
-});
 </script>
+
 <?php snippet('site-footer') ?>

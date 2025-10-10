@@ -19,7 +19,7 @@ snippet('header') ?>
                     id="website"
                     name="website"
                     required
-                    value="<?= esc(get('url')) ?>"
+                    value="<?= esc(get('url', '')) ?>"
                 >
             </div>
 
@@ -62,7 +62,7 @@ snippet('header') ?>
                     id="tags"
                     name="tags"
                     placeholder="Comma-separated tags"
-                    value="<?= esc(get('text')) ?>"
+                    value="<?= esc(get('text', '')) ?>"
                 >
             </div>
 
@@ -73,7 +73,7 @@ snippet('header') ?>
                     name="text"
                     rows="6"
                     placeholder="Add notes, quotes, or description..."
-                ><?= esc(get('title')) ?></textarea>
+                ><?= esc(get('title', '')) ?></textarea>
             </div>
 
             <div class="form-actions">

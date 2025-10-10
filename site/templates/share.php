@@ -4,100 +4,135 @@
  */
 
 // Handle both GET and POST for share target
-$sharedUrl = get('url') ?? $_POST['url'] ?? '';
-$sharedTitle = get('title') ?? $_POST['title'] ?? '';
-$sharedText = get('text') ?? $_POST['text'] ?? '';
+// Try multiple ways to get the data
+$sharedUrl = '';
+$sharedTitle = '';
+$sharedText = '';
+
+// Method 1: GET parameters
+if (get('url')) {
+    $sharedUrl = get('url');
+    $sharedTitle = get('title', '');
+    $sharedText = get('text', '');
+}
+// Method 2: POST parameters
+elseif (isset($_POST['url'])) {
+    $sharedUrl = $_POST['url'];
+    $sharedTitle = $_POST['title'] ?? '';
+    $sharedText = $_POST['text'] ?? '';
+}
+// Method 3: Check request body
+elseif ($kirby->request()->method() === 'POST') {
+    $body = $kirby->request()->body();
+    if (isset($body['url'])) {
+        $sharedUrl = $body['url'];
+        $sharedTitle = $body['title'] ?? '';
+        $sharedText = $body['text'] ?? '';
+    }
+}
 
 snippet('site-header') ?>
 
 <div class="share-page">
-    <div class="container">
-        <h1>Save Bookmark</h1>
+  <div class="container">
+      <h1>Save Bookmark</h1>
 
-        <form id="bookmark-form" class="bookmark-form">
-            <div class="form-group">
-                <label for="website">URL *</label>
-                <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    required
-                    value="<?= esc($sharedUrl) ?>"
-                >
-                <?php if ($sharedUrl): ?>
-                <button type="button" id="fetch-metadata-btn" class="btn-link">
-                    Fetch metadata from URL
-                </button>
-                <?php endif; ?>
-            </div>
+      <?php if (option('debug', false)): ?>
+      <!-- Debug info - only shows if debug mode is on -->
+      <div style="background: #fff3cd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; font-size: 0.85rem;">
+          <strong>Debug Info:</strong><br>
+          Method: <?= $kirby->request()->method() ?><br>
+          GET url: <?= get('url') ? 'YES' : 'NO' ?><br>
+          POST url: <?= isset($_POST['url']) ? 'YES' : 'NO' ?><br>
+          Shared URL: <?= $sharedUrl ?: 'EMPTY' ?><br>
+          Shared Title: <?= $sharedTitle ?: 'EMPTY' ?><br>
+      </div>
+      <?php endif; ?>
 
-            <div class="form-group">
-                <label for="page-title">Page Title *</label>
-                <input
-                    type="text"
-                    id="page-title"
-                    name="page-title"
-                    required
-                    value="<?= esc($sharedTitle) ?>"
-                    placeholder="Title of the page you're bookmarking"
-                >
-            </div>
+      <form id="bookmark-form" class="bookmark-form">
+          <div class="form-group">
+              <label for="website">URL *</label>
+              <input
+                  type="url"
+                  id="website"
+                  name="website"
+                  required
+                  value="<?= esc($sharedUrl) ?>"
+              >
+              <?php if ($sharedUrl): ?>
+              <button type="button" id="fetch-metadata-btn" class="btn-link">
+                  Fetch metadata from URL
+              </button>
+              <?php endif; ?>
+          </div>
 
-            <div class="form-row">
-                <div class="form-group half">
-                    <label for="tld">Domain *</label>
-                    <input
-                        type="text"
-                        id="tld"
-                        name="tld"
-                        required
-                        placeholder="e.g., example.com"
-                    >
-                </div>
+          <div class="form-group">
+              <label for="page-title">Page Title *</label>
+              <input
+                  type="text"
+                  id="page-title"
+                  name="page-title"
+                  required
+                  value="<?= esc($sharedTitle) ?>"
+                  placeholder="Title of the page you're bookmarking"
+              >
+          </div>
 
-                <div class="form-group half">
-                    <label for="author">Author</label>
-                    <input
-                        type="text"
-                        id="author"
-                        name="author"
-                        placeholder="Optional"
-                    >
-                </div>
-            </div>
+          <div class="form-row">
+              <div class="form-group half">
+                  <label for="tld">Domain *</label>
+                  <input
+                      type="text"
+                      id="tld"
+                      name="tld"
+                      required
+                      placeholder="e.g., example.com"
+                  >
+              </div>
 
-            <div class="form-group">
-                <label for="tags">Tags</label>
-                <input
-                    type="text"
-                    id="tags"
-                    name="tags"
-                    placeholder="Comma-separated tags"
-                >
-            </div>
+              <div class="form-group half">
+                  <label for="author">Author</label>
+                  <input
+                      type="text"
+                      id="author"
+                      name="author"
+                      placeholder="Optional"
+                  >
+              </div>
+          </div>
 
-            <div class="form-group">
-                <label for="text">Description</label>
-                <textarea
-                    id="text"
-                    name="text"
-                    rows="6"
-                    placeholder="Add notes, quotes, or description..."
-                ></textarea>
-            </div>
+          <div class="form-group">
+              <label for="tags">Tags</label>
+              <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  placeholder="Comma-separated tags"
+              >
+          </div>
 
-            <div class="form-actions">
-                <button type="button" id="quick-save-btn" class="btn" data-button-variant="ghost">
-                    Quick Save (Read Later)
-                </button>
-                <button type="submit" class="button" data-button-variant="primary">
-                    Save Bookmark
-                </button>
-            </div>
+          <div class="form-group">
+              <label for="text">Description</label>
+              <textarea
+                  id="text"
+                  name="text"
+                  rows="6"
+                  placeholder="Add notes, quotes, or description..."
+              ></textarea>
+          </div>
 
-            <div id="message" class="message" style="display: none;"></div>
-        </form>
-    </div>
+          <div class="form-actions">
+              <button type="button" id="quick-save-btn" class="btn btn-secondary">
+                  Quick Save (Read Later)
+              </button>
+              <button type="submit" class="btn btn-primary">
+                  Save Bookmark
+              </button>
+          </div>
+
+          <div id="message" class="message" style="display: none;"></div>
+      </form>
+  </div>
 </div>
 
 <style>

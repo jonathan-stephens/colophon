@@ -5,7 +5,7 @@
  * Create a page in Kirby Panel at /share using this template
  */
 
-snippet('header') ?>
+snippet('site-header') ?>
 
 <main class="share-page">
     <div class="container">
@@ -98,9 +98,9 @@ snippet('header') ?>
 }
 
 .bookmark-form {
-    background: #f5f5f5;
+    background: var(--background-secondary);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: var(--radii-square);
 }
 
 .form-group {
@@ -127,8 +127,8 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid var(--border-color-distinct);
+    border-radius: var(--radii-square);
     font-size: 1rem;
     font-family: inherit;
 }
@@ -146,20 +146,18 @@ textarea {
 .btn {
     padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: var(--button-radius);
     cursor: pointer;
-    font-weight: 600;
 }
 
 .btn-primary {
-    background: #000;
-    color: #fff;
+    background: var(--button-bg);
+    color: var(--button-color);
 }
 
 .btn-secondary {
-    background: #666;
-    color: #fff;
+    background: var(--button-hover-bg);
+    color: var(--button-hover-color);
 }
 
 .btn:hover {
@@ -169,17 +167,17 @@ textarea {
 .message {
     margin-top: 1rem;
     padding: 1rem;
-    border-radius: 4px;
+    border-radius: var(--radii-square)
 }
 
 .message.success {
-    background: #d4edda;
-    color: #155724;
+    background: var(--success-background);
+    color: var(--success-color);
 }
 
 .message.error {
-    background: #f8d7da;
-    color: #721c24;
+    background: var(--error-background);
+    color: var(--error-color);
 }
 
 @media (max-width: 600px) {
@@ -338,4 +336,4 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php snippet('footer') ?>
+<?php snippet('site-footer') ?>

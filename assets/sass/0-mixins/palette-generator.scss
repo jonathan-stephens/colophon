@@ -28,4 +28,5 @@
 }
 :root{
   @include generate-palette("red", oklch(0.4471 0.1585 29.82));
+  @include generate-palette("green", oklch(0.5928 0.151 137.92));
 }

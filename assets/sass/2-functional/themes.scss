@@ -34,7 +34,10 @@
   --border-color-prominent: var(--palette-ash-60);
   --border-color-emphasis:  var(--palette-ash-80);
 
-  --error-color: var(--palette-red-50);
+  --error-background: var(--palette-red-50);
+  --error-color: var(--palette-red-10);
+  --success-background: var(--palette-green-50);
+  --success-color: var(--palette-green-10);
   --background-nav-panel: var(--palette-tint-70);
 }
 
@@ -72,8 +75,10 @@
   --border-color-prominent: var(--palette-ash-40);
   --border-color-emphasis:  var(--palette-ash-20);
 
-  --error-color: var(--palette-red-30);
-
+  --error-background: var(--palette-red-20);
+  --error-color: var(--palette-red-60);
+  --success-background: var(--palette-green-60);
+  --success-color: var(--palette-green-20);
   --background-nav-panel: var(--palette-shade-70);
 }
 

@@ -1,0 +1,341 @@
+<?php
+/**
+ * Share Target Page Template
+ * Place in site/templates/share.php
+ * Create a page in Kirby Panel at /share using this template
+ */
+
+snippet('header') ?>
+
+<main class="share-page">
+    <div class="container">
+        <h1>Save Bookmark</h1>
+
+        <form id="bookmark-form" class="bookmark-form">
+            <div class="form-group">
+                <label for="website">URL *</label>
+                <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    required
+                    value="<?= esc(get('url')) ?>"
+                >
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="tld">Top Level Domain *</label>
+                    <input
+                        type="text"
+                        id="tld"
+                        name="tld"
+                        required
+                    >
+                </div>
+
+                <div class="form-group half">
+                    <label for="author">Author</label>
+                    <input
+                        type="text"
+                        id="author"
+                        name="author"
+                        placeholder="Optional"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="authorURL">Author's Website</label>
+                <input
+                    type="url"
+                    id="authorURL"
+                    name="authorURL"
+                    placeholder="Optional"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input
+                    type="text"
+                    id="tags"
+                    name="tags"
+                    placeholder="Comma-separated tags"
+                    value="<?= esc(get('text')) ?>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="text">Description</label>
+                <textarea
+                    id="text"
+                    name="text"
+                    rows="6"
+                    placeholder="Add notes, quotes, or description..."
+                ><?= esc(get('title')) ?></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="quick-save-btn" class="btn btn-secondary">
+                    Quick Save (Read Later)
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    Save Bookmark
+                </button>
+            </div>
+
+            <div id="message" class="message" style="display: none;"></div>
+        </form>
+    </div>
+</main>
+
+<style>
+.share-page {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bookmark-form {
+    background: #f5f5f5;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-group.half {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input[type="url"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #000;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #666;
+    color: #fff;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+// Auto-extract TLD when URL changes
+document.getElementById('website').addEventListener('blur', function() {
+    const url = this.value;
+    if (url) {
+        try {
+            const urlObj = new URL(url);
+            const host = urlObj.hostname;
+            const tld = host.substring(host.lastIndexOf('.') + 1);
+            document.getElementById('tld').value = tld;
+        } catch (e) {
+            console.error('Invalid URL');
+        }
+    }
+});
+
+// Get API credentials from memory
+function getApiAuth() {
+    const email = localStorage.getItem('kirby_api_email');
+    const password = localStorage.getItem('kirby_api_password');
+
+    if (!email || !password) {
+        const newEmail = prompt('Please enter your Kirby email:');
+        const newPassword = prompt('Please enter your Kirby password:');
+
+        if (newEmail && newPassword) {
+            localStorage.setItem('kirby_api_email', newEmail);
+            localStorage.setItem('kirby_api_password', newPassword);
+            return { email: newEmail, password: newPassword };
+        }
+        return null;
+    }
+
+    return { email, password };
+}
+
+function showMessage(text, type) {
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = text;
+    messageEl.className = 'message ' + type;
+    messageEl.style.display = 'block';
+
+    setTimeout(() => {
+        messageEl.style.display = 'none';
+    }, 5000);
+}
+
+// Regular save
+document.getElementById('bookmark-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const auth = getApiAuth();
+    if (!auth) {
+        showMessage('Authentication required', 'error');
+        return;
+    }
+
+    const formData = {
+        website: document.getElementById('website').value,
+        tld: document.getElementById('tld').value,
+        author: document.getElementById('author').value,
+        authorURL: document.getElementById('authorURL').value,
+        tags: document.getElementById('tags').value,
+        text: document.getElementById('text').value
+    };
+
+    try {
+        const response = await fetch('/api/bookmarks/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password)
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            showMessage('Bookmark saved successfully!', 'success');
+            setTimeout(() => {
+                window.location.href = '/links';
+            }, 1500);
+        } else {
+            showMessage(result.message || 'Error saving bookmark', 'error');
+        }
+    } catch (error) {
+        showMessage('Network error: ' + error.message, 'error');
+    }
+});
+
+// Quick save
+document.getElementById('quick-save-btn').addEventListener('click', async function() {
+    const auth = getApiAuth();
+    if (!auth) {
+        showMessage('Authentication required', 'error');
+        return;
+    }
+
+    const url = document.getElementById('website').value;
+    if (!url) {
+        showMessage('URL is required', 'error');
+        return;
+    }
+
+    const data = {
+        url: url,
+        title: document.getElementById('text').value,
+        text: ''
+    };
+
+    try {
+        const response = await fetch('/api/bookmarks/quick-add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password)
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            showMessage('Quickly saved! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = '/links';
+            }, 1000);
+        } else {
+            showMessage(result.message || 'Error saving bookmark', 'error');
+        }
+    } catch (error) {
+        showMessage('Network error: ' + error.message, 'error');
+    }
+});
+
+// Auto-fill TLD on page load if URL is present
+window.addEventListener('DOMContentLoaded', function() {
+    const websiteInput = document.getElementById('website');
+    if (websiteInput.value) {
+        websiteInput.dispatchEvent(new Event('blur'));
+    }
+});
+</script>
+
+<?php snippet('footer') ?>

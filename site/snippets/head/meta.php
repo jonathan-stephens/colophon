@@ -25,3 +25,10 @@
     <meta name="twitter:title" content="Jonathan Stephens">
     <meta name="twitter:description" content="Personal site & portfolio of Jonathan Stephens: designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
     <meta name="twitter:image" content="<?= $site->url() ?>/assets/png/og-image.webp">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Bookmarks">
+    <link rel="apple-touch-icon" href="/assets/assets/android-chrome-192x192.png">

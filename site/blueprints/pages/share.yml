@@ -1,0 +1,5 @@
+title: Share
+num: date
+icon: url
+sorting: zero                   # This sets zero-based numbering
+reference: sorting             # This references the automatic sorting

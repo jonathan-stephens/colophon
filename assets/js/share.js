@@ -1,5 +1,10 @@
-// share.js — Kirby bookmark/share logic
+// assets/js/share.js
+// Handles bookmark saving, metadata fetching, and Android Share Target logic
+
 window.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ share.js loaded");
+
+  // --- Element references ---
   const websiteInput = document.getElementById("website");
   const tldInput = document.getElementById("tld");
   const authorInput = document.getElementById("author");
@@ -11,8 +16,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const quickSaveBtn = document.getElementById("quick-save-btn");
   const messageEl = document.getElementById("message");
 
-  // --- Helper: show messages ---
-  function showMessage(text, type) {
+  // --- Utility: Show message ---
+  function showMessage(text, type = "info") {
     if (!messageEl) return;
     messageEl.textContent = text;
     messageEl.className = "message " + type;
@@ -20,23 +25,29 @@ window.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => (messageEl.style.display = "none"), 5000);
   }
 
-  // --- Auto-extract domain when URL loses focus ---
+  // --- Extract domain from URL ---
+  function extractDomain(url) {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.hostname.replace(/^www\./, "");
+    } catch {
+      return "";
+    }
+  }
+
+  // --- Auto-extract domain on blur ---
   websiteInput?.addEventListener("blur", () => {
     const url = websiteInput.value.trim();
     if (!url) return;
-
-    try {
-      const urlObj = new URL(url);
-      const host = urlObj.hostname;
-      const domain = host.replace(/^www\./, "");
+    const domain = extractDomain(url);
+    if (domain) {
       tldInput.value = domain;
-    } catch {
-      console.warn("Invalid URL entered");
     }
   });
 
   // --- Fetch metadata from backend ---
   async function fetchMetadata(url) {
+    if (!url) return;
     showMessage("Fetching metadata...", "info");
 
     try {
@@ -63,19 +74,24 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- Metadata button ---
+  // --- Fetch metadata button ---
   fetchBtn?.addEventListener("click", () => {
     const url = websiteInput.value.trim();
     if (url) fetchMetadata(url);
   });
 
-  // --- Auto-fetch metadata when page pre-filled (e.g. from Android Share) ---
-  if (websiteInput?.value) {
-    websiteInput.dispatchEvent(new Event("blur"));
-    fetchMetadata(websiteInput.value);
-  }
+  // --- Auto-fetch when prefilled (e.g. from Android Share) ---
+  setTimeout(() => {
+    if (websiteInput?.value) {
+      console.log("🌐 Prefilled URL detected:", websiteInput.value);
+      websiteInput.dispatchEvent(new Event("blur"));
+      fetchMetadata(websiteInput.value);
+    } else {
+      console.log("ℹ️ No prefilled URL found.");
+    }
+  }, 300); // allow Android to finish autofilling
 
-  // --- Kirby API Authentication ---
+  // --- Authentication ---
   async function getApiAuth() {
     const userEmail = document.body.dataset.userEmail || null;
 
@@ -84,11 +100,8 @@ window.addEventListener("DOMContentLoaded", () => {
       let password = localStorage.getItem("kirby_api_password");
       if (!password) {
         password = prompt("Enter your Kirby password for API access:");
-        if (password) {
-          localStorage.setItem("kirby_api_password", password);
-        } else {
-          return null;
-        }
+        if (password) localStorage.setItem("kirby_api_password", password);
+        else return null;
       }
       return { email: userEmail, password };
     }
@@ -100,7 +113,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!email || !password) {
       const newEmail = prompt("Enter your Kirby email:");
       const newPassword = prompt("Enter your Kirby password:");
-
       if (newEmail && newPassword) {
         localStorage.setItem("kirby_api_email", newEmail);
         localStorage.setItem("kirby_api_password", newPassword);
@@ -112,12 +124,11 @@ window.addEventListener("DOMContentLoaded", () => {
     return { email, password };
   }
 
-  // --- Handle regular save ---
+  // --- Regular Save (full form) ---
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const auth = await getApiAuth();
-    if (!auth || !auth.password) {
+    if (!auth?.password) {
       showMessage("Authentication required", "error");
       return;
     }
@@ -162,13 +173,14 @@ window.addEventListener("DOMContentLoaded", () => {
   // --- Quick Save ---
   quickSaveBtn?.addEventListener("click", async () => {
     const auth = await getApiAuth();
-    if (!auth || !auth.password) {
+    if (!auth?.password) {
       showMessage("Authentication required", "error");
       return;
     }
 
     const url = websiteInput.value.trim();
     const title = titleInput.value.trim();
+
     if (!url) {
       showMessage("URL is required", "error");
       return;

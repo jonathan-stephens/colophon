@@ -1,6 +1,6 @@
 <?php snippet('head') ?>
 
-<body class="<?= $page->slug() ?> tmpl-<?= $page->template() ?> <?php if ($kirby->user()): ?>logged-in<?php endif ?>" data-color-mode="system" data-theme="design">
+<body class="<?= $page->slug() ?> tmpl-<?= $page->template() ?> <?php if ($kirby->user()): ?>logged-in<?php endif ?>" data-color-mode="system" data-theme="design" data-user-email="<?= $kirby->user()?->email() ?? '' ?>">
   <a href="#main" class="skip-link visually-hidden">Skip to main content</a>
 
   <header class="site-header" role="banner"  <?php if ($kirby->user()): ?>style="top:var(--admin-bar--height)"<?php endif ?>>

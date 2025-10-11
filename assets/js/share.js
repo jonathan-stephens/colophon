@@ -34,6 +34,9 @@ window.addEventListener("DOMContentLoaded", () => {
     jsTest.style.color = "#155724";
   }
 
+  // In-memory storage for credentials (session-only)
+  let cachedCredentials = null;
+
   // Show message to user
   function showMessage(text, type = "info") {
     if (!messageDiv) {
@@ -167,46 +170,50 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Get authentication credentials
   async function getAuthCredentials() {
-    // Check if user email is in page (for logged-in users)
-    const userEmail = document.body.dataset.userEmail || null;
+    // Check if user is already logged in via session
+    const userEmail = document.body.dataset.userEmail;
 
     if (userEmail) {
-      let password = localStorage.getItem("kirby_api_password");
-
-      if (!password) {
-        password = prompt(
-          "Enter your Kirby password for API access:\n(This is your panel login password)"
-        );
-        if (!password) return null;
-        localStorage.setItem("kirby_api_password", password);
+      console.log("✅ User logged in via session:", userEmail);
+      
+      // If we have cached password from this session, use it
+      if (cachedCredentials && cachedCredentials.email === userEmail) {
+        console.log("Using cached credentials");
+        return cachedCredentials;
       }
 
-      console.log("Using stored auth for:", userEmail);
-      return { email: userEmail, password: password };
+      // Otherwise prompt for password (one-time per session)
+      const password = prompt(
+        `Enter your Kirby password for: ${userEmail}\n\n(This is your panel login password)`
+      );
+      
+      if (!password) {
+        return null;
+      }
+
+      cachedCredentials = { email: userEmail, password: password };
+      return cachedCredentials;
     }
 
-    // Try stored credentials
-    let email = localStorage.getItem("kirby_api_email");
-    let password = localStorage.getItem("kirby_api_password");
+    // No session - need full login
+    console.log("⚠️ No session found - full login required");
 
-    if (!email || !password) {
-      // Ask for email
-      email = prompt("Enter your Kirby email:\n(Your panel login email)");
-      if (!email) return null;
-
-      // Ask for password
-      password = prompt("Enter your Kirby password:\n(Your panel login password)");
-      if (!password) return null;
-
-      localStorage.setItem("kirby_api_email", email);
-      localStorage.setItem("kirby_api_password", password);
-      console.log("Stored new credentials for:", email);
-
-      return { email: email, password: password };
+    // If we have cached credentials from this page session, use them
+    if (cachedCredentials) {
+      console.log("Using cached credentials from this session");
+      return cachedCredentials;
     }
 
-    console.log("Using stored credentials for:", email);
-    return { email: email, password: password };
+    const email = prompt("Enter your Kirby email:\n(Your panel login email)");
+    if (!email) return null;
+
+    const password = prompt("Enter your Kirby password:\n(Your panel login password)");
+    if (!password) return null;
+
+    cachedCredentials = { email: email, password: password };
+    console.log("Stored credentials for this session:", email);
+    
+    return cachedCredentials;
   }
 
   // Form submission handler
@@ -215,12 +222,10 @@ window.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       console.log("Form submitted");
 
-      const auth = await getAuthCredentials();
-      if (!auth || !auth.password) {
-        showMessage("Authentication required", "error");
-        return;
-      }
+      // Check if user is logged in
+      const userEmail = document.body.dataset.userEmail;
 
+      // Prepare bookmark data
       const bookmarkData = {
         website: websiteInput ? websiteInput.value : "",
         title: titleInput ? titleInput.value : "",
@@ -233,7 +238,45 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("Submitting bookmark:", bookmarkData);
 
       try {
-        const response = await fetch("/api/bookmarks/add", {
+        let response;
+
+        // If logged in via session, try session auth first
+        if (userEmail) {
+          console.log("Attempting save with session auth...");
+          response = await fetch("/api/bookmarks/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: "same-origin", // Include session cookie
+            body: JSON.stringify(bookmarkData)
+          });
+
+          const result = await response.json();
+
+          // If session auth worked, we're done
+          if (result.status === "success") {
+            console.log("✅ Saved with session auth");
+            showMessage("Bookmark saved successfully!", "success");
+            setTimeout(() => {
+              window.location.href = "/links";
+            }, 1500);
+            return;
+          }
+
+          // Session auth failed, fall through to Basic auth
+          console.log("Session auth failed, trying Basic auth...");
+        }
+
+        // Get credentials (either for no-session or session-auth-failed)
+        const auth = await getAuthCredentials();
+        if (!auth || !auth.password) {
+          showMessage("Authentication required", "error");
+          return;
+        }
+
+        // Try with Basic auth
+        response = await fetch("/api/bookmarks/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -247,9 +290,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if (result.status === "success") {
           showMessage("Bookmark saved successfully!", "success");
-          form.reset();
+          setTimeout(() => {
+            window.location.href = "/links";
+          }, 1500);
         } else if (result.message && result.message.includes("authentication")) {
-          localStorage.removeItem("kirby_api_password");
+          // Clear cached credentials if auth failed
+          cachedCredentials = null;
           showMessage("Authentication failed. Please try again.", "error");
         } else {
           showMessage(result.message || "Error saving bookmark", "error");
@@ -267,44 +313,34 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("Quick save button clicked");
 
       const url = websiteInput ? websiteInput.value.trim() : "";
-      const title = titleInput ? titleInput.value.trim() : "";
-      const tags = tagsInput ? tagsInput.value.trim() : "";
 
       if (!url) {
         showMessage("URL is required", "error");
         return;
       }
 
-      console.log("Quick saving:", { url, title, tags });
-
-      try {
-        const response = await fetch("/api/bookmarks/quick-add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: "same-origin",
-          body: JSON.stringify({
-            url: url,
-            title: title,
-            text: "",
-            tags: tags
-          })
-        });
-
-        const result = await response.json();
-        console.log("Quick save response:", result);
-
-        if (result.status === "success") {
-          showMessage("Saved to Read Later!", "success");
-          form.reset();
-        } else {
-          showMessage(result.message || "Error saving bookmark", "error");
-        }
-      } catch (err) {
-        console.error("Network error:", err);
-        showMessage("Network error: " + err.message, "error");
+      // Auto-fill title if empty
+      if (titleInput && !titleInput.value) {
+        titleInput.value = "Read Later";
       }
+
+      // Auto-fill domain if empty
+      if (tldInput && !tldInput.value) {
+        const domain = extractDomain(url);
+        if (domain) {
+          tldInput.value = domain;
+        }
+      }
+
+      // Add "read-later" tag if tags are empty
+      if (tagsInput && !tagsInput.value) {
+        tagsInput.value = "read-later";
+      }
+
+      console.log("Quick saving - submitting form");
+      
+      // Submit the main form
+      form.dispatchEvent(new Event('submit'));
     });
   }
 

@@ -398,9 +398,57 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         $url = $data['website'];
                         $parsed = parse_url($url);
                         $host = $parsed['host'] ?? '';
+                        $path = $parsed['path'] ?? '';
                         $tld = substr($host, strrpos($host, '.') + 1);
 
-                        $slug = Str::slug($host . '-' . time());
+                        // =====================================================
+                        // GENERATE SLUG FROM URL
+                        // =====================================================
+                        $slug = '';
+                        
+                        // If path exists and is not just root
+                        if ($path && $path !== '/') {
+                            // Get the last segment of the path
+                            $pathSegments = array_filter(explode('/', trim($path, '/')));
+                            $lastSegment = end($pathSegments);
+                            
+                            // Remove file extensions if present
+                            $lastSegment = preg_replace('/\.(html|htm|php|asp|aspx)$/i', '', $lastSegment);
+                            
+                            // Use the last path segment as slug if it's substantial
+                            if (strlen($lastSegment) > 0) {
+                                $slug = Str::slug($lastSegment);
+                            }
+                        }
+                        
+                        // Fallback: if no good path slug, use domain name (without TLD)
+                        if (empty($slug)) {
+                            // Remove www. and TLD from host
+                            $domainWithoutWww = preg_replace('/^www\./', '', $host);
+                            $domainParts = explode('.', $domainWithoutWww);
+                            // Get everything except the TLD (last part)
+                            array_pop($domainParts);
+                            $domainName = implode('-', $domainParts);
+                            $slug = Str::slug($domainName);
+                        }
+                        
+                        // Ensure slug is unique by checking if it exists
+                        $linksPage = page('links');
+                        if (!$linksPage) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Links parent page not found'
+                            ];
+                        }
+                        
+                        $originalSlug = $slug;
+                        $counter = 1;
+                        
+                        // Check for existing pages with same slug
+                        while ($linksPage->find($slug)) {
+                            $slug = $originalSlug . '-' . $counter;
+                            $counter++;
+                        }
 
                         $linksPage = page('links');
                         if (!$linksPage) {

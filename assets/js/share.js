@@ -4,6 +4,14 @@
 window.addEventListener("DOMContentLoaded", () => {
   console.log("✅ share.js loaded");
 
+  // Update test div to show JS is working
+  const testDiv = document.getElementById("js-test");
+  if (testDiv) {
+    testDiv.textContent = "✅ JavaScript loaded and working!";
+    testDiv.style.background = "#d4edda";
+    testDiv.style.color = "#155724";
+  }
+
   // --- Element references ---
   const websiteInput = document.getElementById("website");
   const tldInput = document.getElementById("tld");
@@ -16,9 +24,26 @@ window.addEventListener("DOMContentLoaded", () => {
   const quickSaveBtn = document.getElementById("quick-save-btn");
   const messageEl = document.getElementById("message");
 
+  // Debug: Log all elements
+  console.log("Element check:", {
+    websiteInput: !!websiteInput,
+    tldInput: !!tldInput,
+    authorInput: !!authorInput,
+    tagsInput: !!tagsInput,
+    titleInput: !!titleInput,
+    textInput: !!textInput,
+    form: !!form,
+    fetchBtn: !!fetchBtn,
+    quickSaveBtn: !!quickSaveBtn,
+    messageEl: !!messageEl
+  });
+
   // --- Utility: Show message ---
   function showMessage(text, type = "info") {
-    if (!messageEl) return;
+    if (!messageEl) {
+      console.error("Message element not found");
+      return;
+    }
     messageEl.textContent = text;
     messageEl.className = "message " + type;
     messageEl.style.display = "block";
@@ -30,20 +55,24 @@ window.addEventListener("DOMContentLoaded", () => {
     try {
       const urlObj = new URL(url);
       return urlObj.hostname.replace(/^www\./, "");
-    } catch {
+    } catch (e) {
+      console.error("Error extracting domain:", e);
       return "";
     }
   }
 
   // --- Auto-extract domain on blur ---
-  websiteInput?.addEventListener("blur", () => {
-    const url = websiteInput.value.trim();
-    if (!url) return;
-    const domain = extractDomain(url);
-    if (domain) {
-      tldInput.value = domain;
-    }
-  });
+  if (websiteInput) {
+    websiteInput.addEventListener("blur", () => {
+      const url = websiteInput.value.trim();
+      if (!url) return;
+      const domain = extractDomain(url);
+      if (domain && tldInput) {
+        tldInput.value = domain;
+        console.log("Domain extracted:", domain);
+      }
+    });
+  }
 
   // --- Fetch metadata from backend ---
   async function fetchMetadata(url) {
@@ -58,31 +87,40 @@ window.addEventListener("DOMContentLoaded", () => {
       });
 
       const result = await response.json();
+      console.log("Metadata response:", result);
 
       if (result.status === "success" && result.data) {
         const data = result.data;
-        if (data.author && !authorInput.value) authorInput.value = data.author;
-        if (data.tags && !tagsInput.value) tagsInput.value = data.tags;
-        if (data.title && !titleInput.value) titleInput.value = data.title;
+        if (data.author && authorInput && !authorInput.value) authorInput.value = data.author;
+        if (data.tags && tagsInput && !tagsInput.value) tagsInput.value = data.tags;
+        if (data.title && titleInput && !titleInput.value) titleInput.value = data.title;
 
         showMessage("Metadata fetched successfully!", "success");
       } else {
         showMessage("Could not fetch metadata", "info");
       }
     } catch (err) {
+      console.error("Metadata fetch error:", err);
       showMessage("Error fetching metadata: " + err.message, "error");
     }
   }
 
   // --- Fetch metadata button ---
-  fetchBtn?.addEventListener("click", () => {
-    const url = websiteInput.value.trim();
-    if (url) fetchMetadata(url);
-  });
+  if (fetchBtn) {
+    fetchBtn.addEventListener("click", () => {
+      console.log("Fetch metadata button clicked");
+      const url = websiteInput ? websiteInput.value.trim() : "";
+      if (url) {
+        fetchMetadata(url);
+      } else {
+        showMessage("Please enter a URL first", "error");
+      }
+    });
+  }
 
   // --- Auto-fetch when prefilled (e.g. from Android Share) ---
   setTimeout(() => {
-    if (websiteInput?.value) {
+    if (websiteInput && websiteInput.value) {
       console.log("🌐 Prefilled URL detected:", websiteInput.value);
       websiteInput.dispatchEvent(new Event("blur"));
       fetchMetadata(websiteInput.value);
@@ -125,92 +163,110 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Regular Save (full form) ---
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const auth = await getApiAuth();
-    if (!auth?.password) {
-      showMessage("Authentication required", "error");
-      return;
-    }
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      console.log("Form submitted");
 
-    const formData = {
-      website: websiteInput.value,
-      title: titleInput.value,
-      tld: tldInput.value,
-      author: authorInput.value,
-      tags: tagsInput.value,
-      text: textInput.value
-    };
-
-    try {
-      const response = await fetch("/api/bookmarks/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-
-      if (result.status === "success") {
-        showMessage("Bookmark saved successfully!", "success");
-        form.reset();
-      } else {
-        if (result.message?.includes("authentication")) {
-          localStorage.removeItem("kirby_api_password");
-          showMessage("Authentication failed. Please try again.", "error");
-        } else {
-          showMessage(result.message || "Error saving bookmark", "error");
-        }
+      const auth = await getApiAuth();
+      if (!auth || !auth.password) {
+        showMessage("Authentication required", "error");
+        return;
       }
-    } catch (err) {
-      showMessage("Network error: " + err.message, "error");
-    }
-  });
+
+      const formData = {
+        website: websiteInput ? websiteInput.value : "",
+        title: titleInput ? titleInput.value : "",
+        tld: tldInput ? tldInput.value : "",
+        author: authorInput ? authorInput.value : "",
+        tags: tagsInput ? tagsInput.value : "",
+        text: textInput ? textInput.value : ""
+      };
+
+      console.log("Submitting bookmark:", formData);
+
+      try {
+        const response = await fetch("/api/bookmarks/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        console.log("Save response:", result);
+
+        if (result.status === "success") {
+          showMessage("Bookmark saved successfully!", "success");
+          form.reset();
+        } else {
+          if (result.message && result.message.includes("authentication")) {
+            localStorage.removeItem("kirby_api_password");
+            showMessage("Authentication failed. Please try again.", "error");
+          } else {
+            showMessage(result.message || "Error saving bookmark", "error");
+          }
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+        showMessage("Network error: " + err.message, "error");
+      }
+    });
+  }
 
   // --- Quick Save ---
-  quickSaveBtn?.addEventListener("click", async () => {
-    const auth = await getApiAuth();
-    if (!auth?.password) {
-      showMessage("Authentication required", "error");
-      return;
-    }
+  if (quickSaveBtn) {
+    quickSaveBtn.addEventListener("click", async () => {
+      console.log("Quick save button clicked");
 
-    const url = websiteInput.value.trim();
-    const title = titleInput.value.trim();
-
-    if (!url) {
-      showMessage("URL is required", "error");
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/bookmarks/quick-add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
-        },
-        body: JSON.stringify({ url, title, text: "" })
-      });
-
-      const result = await response.json();
-
-      if (result.status === "success") {
-        showMessage("Quickly saved!", "success");
-        form.reset();
-      } else {
-        if (result.message?.includes("authentication")) {
-          localStorage.removeItem("kirby_api_password");
-          showMessage("Authentication failed. Please try again.", "error");
-        } else {
-          showMessage(result.message || "Error saving bookmark", "error");
-        }
+      const auth = await getApiAuth();
+      if (!auth || !auth.password) {
+        showMessage("Authentication required", "error");
+        return;
       }
-    } catch (err) {
-      showMessage("Network error: " + err.message, "error");
-    }
-  });
+
+      const url = websiteInput ? websiteInput.value.trim() : "";
+      const title = titleInput ? titleInput.value.trim() : "";
+
+      if (!url) {
+        showMessage("URL is required", "error");
+        return;
+      }
+
+      console.log("Quick saving:", { url, title });
+
+      try {
+        const response = await fetch("/api/bookmarks/quick-add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
+          },
+          body: JSON.stringify({ url, title, text: "" })
+        });
+
+        const result = await response.json();
+        console.log("Quick save response:", result);
+
+        if (result.status === "success") {
+          showMessage("Quickly saved!", "success");
+          form.reset();
+        } else {
+          if (result.message && result.message.includes("authentication")) {
+            localStorage.removeItem("kirby_api_password");
+            showMessage("Authentication failed. Please try again.", "error");
+          } else {
+            showMessage(result.message || "Error saving bookmark", "error");
+          }
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+        showMessage("Network error: " + err.message, "error");
+      }
+    });
+  }
+
+  console.log("🎉 All event listeners attached successfully");
 });

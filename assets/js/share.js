@@ -38,41 +38,6 @@ window.addEventListener("DOMContentLoaded", () => {
     messageEl: !!messageEl
   });
 
-  // --- CHECK URL PARAMETERS FIRST ---
-  // This handles the case where Service Worker redirected POST to GET
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlFromParam = urlParams.get('url');
-  const titleFromParam = urlParams.get('title');
-  const textFromParam = urlParams.get('text');
-
-  console.log("🔍 URL Parameters detected:", {
-    url: urlFromParam,
-    title: titleFromParam,
-    text: textFromParam,
-    fullSearch: window.location.search
-  });
-
-  // If we have URL parameters, populate the form IMMEDIATELY
-  if (urlFromParam && websiteInput && !websiteInput.value) {
-    console.log("📝 Populating from URL parameters");
-    websiteInput.value = urlFromParam;
-
-    if (titleFromParam && titleInput && !titleInput.value) {
-      titleInput.value = titleFromParam;
-    }
-
-    if (textFromParam && textInput && !textInput.value) {
-      textInput.value = textFromParam;
-    }
-
-    // Extract domain immediately
-    const domain = extractDomain(urlFromParam);
-    if (domain && tldInput) {
-      tldInput.value = domain;
-      console.log("Domain extracted from URL param:", domain);
-    }
-  }
-
   // --- Utility: Show message ---
   function showMessage(text, type = "info") {
     if (!messageEl) {
@@ -153,25 +118,16 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Auto-fetch when URL is present ---
-  // Use a slightly longer delay to ensure all form population is complete
+  // --- Auto-fetch when prefilled (e.g. from Android Share) ---
   setTimeout(() => {
     if (websiteInput && websiteInput.value) {
-      console.log("🌐 URL detected in form:", websiteInput.value);
-      console.log("Source: " + (urlFromParam ? "URL parameter" : "Server-side render"));
-
-      // Only auto-fetch if we have a URL but missing other data
-      const needsMetadata = !authorInput.value || !titleInput.value || !tagsInput.value;
-      if (needsMetadata) {
-        console.log("🔄 Auto-fetching metadata...");
-        fetchMetadata(websiteInput.value);
-      } else {
-        console.log("ℹ️ Form already populated, skipping auto-fetch");
-      }
+      console.log("🌐 Prefilled URL detected:", websiteInput.value);
+      websiteInput.dispatchEvent(new Event("blur"));
+      fetchMetadata(websiteInput.value);
     } else {
-      console.log("ℹ️ No URL found in form.");
+      console.log("ℹ️ No prefilled URL found.");
     }
-  }, 500); // Increased delay to 500ms
+  }, 300); // allow Android to finish autofilling
 
   // --- Authentication ---
   async function getApiAuth() {

@@ -312,14 +312,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 2000);
 });
 </script>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistration().then(reg => {
-    console.log('SW Registration:', reg);
-    console.log('SW Active:', reg?.active?.state);
-  });
-}
-</script>
 
 <?= js('assets/js/share.js') ?>
 

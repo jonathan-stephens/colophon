@@ -95,9 +95,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                                 $authorText = trim($metaAuthor->item(0)->textContent);
 
                                 // Skip if it's a Twitter handle
-                                if ($authorText[0] === '@') {
-                                    // Skip this one
-                                } else {
+                                if ($authorText[0] !== '@') {
                                     // Check if multiple authors separated by common delimiters
                                     if (strpos($authorText, ',') !== false) {
                                         $authors = array_map('trim', explode(',', $authorText));
@@ -341,7 +339,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                 }
             ],
 
-            // Add full bookmark - FIXED SESSION AUTH
+            // Add full bookmark - IMPROVED SESSION AUTH
             [
                 'pattern' => 'bookmarks/add',
                 'method' => 'POST',
@@ -356,7 +354,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         // Method 1: Check existing session FIRST (most common for web users)
                         $user = $kirby->user();
                         if ($user) {
-                            error_log('Session user found: ' . $user->email());
+                            error_log('✅ Session user found: ' . $user->email());
                         }
 
                         // Method 2: Try Basic Auth if no session
@@ -367,19 +365,22 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                                 list($email, $password) = explode(':', $credentials, 2);
 
                                 try {
+                                    // Try to authenticate but don't start a session
                                     $user = $kirby->auth()->login($email, $password, false);
-                                    error_log('Basic Auth success: ' . $email);
+                                    error_log('✅ Basic Auth success: ' . $email);
                                 } catch (Exception $e) {
-                                    error_log('Basic Auth failed: ' . $e->getMessage());
+                                    error_log('❌ Basic Auth failed: ' . $e->getMessage());
                                 }
+                            } else {
+                                error_log('⚠️ No Authorization header found');
                             }
                         }
 
                         if (!$user) {
-                            error_log('No authenticated user found');
+                            error_log('❌ No authenticated user found');
                             return [
                                 'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.'
+                                'message' => 'Authentication required. Please log in to the panel first, or provide credentials.'
                             ];
                         }
 
@@ -430,7 +431,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
 
                         $bookmark->changeStatus('listed');
 
-                        error_log('Bookmark created: ' . $bookmark->id());
+                        error_log('✅ Bookmark created: ' . $bookmark->id());
 
                         return [
                             'status' => 'success',
@@ -442,117 +443,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
-                        error_log('Bookmark error: ' . $e->getMessage());
-                        return [
-                            'status' => 'error',
-                            'message' => $e->getMessage()
-                        ];
-                    }
-                }
-            ],
-
-            // Add full bookmark - FIXED SESSION AUTH
-            [
-                'pattern' => 'bookmarks/add',
-                'method' => 'POST',
-                'auth' => false,
-                'action' => function () {
-                    try {
-                        $kirby = kirby();
-                        $user = null;
-
-                        error_log('=== BOOKMARK ADD ===');
-
-                        // Method 1: Check existing session FIRST (most common for web users)
-                        $user = $kirby->user();
-                        if ($user) {
-                            error_log('Session user found: ' . $user->email());
-                        }
-
-                        // Method 2: Try Basic Auth if no session
-                        if (!$user) {
-                            $authHeader = $kirby->request()->header('Authorization');
-                            if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
-                                $credentials = base64_decode(substr($authHeader, 6));
-                                list($email, $password) = explode(':', $credentials, 2);
-
-                                try {
-                                    $user = $kirby->auth()->login($email, $password, false);
-                                    error_log('Basic Auth success: ' . $email);
-                                } catch (Exception $e) {
-                                    error_log('Basic Auth failed: ' . $e->getMessage());
-                                }
-                            }
-                        }
-
-                        if (!$user) {
-                            error_log('No authenticated user found');
-                            return [
-                                'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.'
-                            ];
-                        }
-
-                        error_log('Proceeding with user: ' . $user->email());
-
-                        $data = $kirby->request()->data();
-
-                        if (empty($data['website'])) {
-                            return [
-                                'status' => 'error',
-                                'message' => 'URL is required'
-                            ];
-                        }
-
-                        $url = $data['website'];
-                        $parsed = parse_url($url);
-                        $host = $parsed['host'] ?? '';
-                        $tld = substr($host, strrpos($host, '.') + 1);
-
-                        $slug = Str::slug($host . '-' . time());
-
-                        $linksPage = page('links');
-                        if (!$linksPage) {
-                            return [
-                                'status' => 'error',
-                                'message' => 'Links parent page not found'
-                            ];
-                        }
-
-                        $content = [
-                            'title' => $data['title'] ?? '',
-                            'website' => $url,
-                            'tld' => $data['tld'] ?? $tld,
-                            'text' => $data['text'] ?? '',
-                            'tags' => $data['tags'] ?? '',
-                            'author' => $data['author'] ?? '',
-                        ];
-
-                        // Impersonate for content creation
-                        $kirby->impersonate('kirby');
-
-                        $bookmark = $linksPage->createChild([
-                            'slug' => $slug,
-                            'template' => 'link',
-                            'content' => $content,
-                            'num' => date('YmdHis')
-                        ]);
-
-                        $bookmark->changeStatus('listed');
-
-                        error_log('Bookmark created: ' . $bookmark->id());
-
-                        return [
-                            'status' => 'success',
-                            'message' => 'Bookmark added successfully',
-                            'data' => [
-                                'id' => $bookmark->id(),
-                                'url' => $bookmark->url()
-                            ]
-                        ];
-
-                    } catch (Exception $e) {
-                        error_log('Bookmark error: ' . $e->getMessage());
+                        error_log('❌ Bookmark error: ' . $e->getMessage());
                         return [
                             'status' => 'error',
                             'message' => $e->getMessage()

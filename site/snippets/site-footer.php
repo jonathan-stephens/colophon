@@ -120,15 +120,66 @@
   'assets/js/header-min.js',
 ]) ?>
 
+<!-- Service Worker Registration - Add this to your site footer or header -->
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/assets/sw.js')
-      .then(reg => console.log('Service Worker registered'))
-      .catch(err => console.log('Service Worker registration failed', err));
-  });
-}
-</script>
+  console.log('✅ Service Worker supported');
 
+  window.addEventListener('load', async () => {
+    try {
+      console.log('🔧 Registering Service Worker...');
+
+      // IMPORTANT: Make sure sw.js is at the ROOT of your site
+      const registration = await navigator.serviceWorker.register('/sw.js', {
+        scope: '/',
+        updateViaCache: 'none'
+      });
+
+      console.log('✅ Service Worker registered with scope:', registration.scope);
+
+      // Check if SW is controlling the page
+      if (navigator.serviceWorker.controller) {
+        console.log('✅ Page is controlled by Service Worker');
+      } else {
+        console.log('⚠️ Page NOT controlled yet - REFRESH THE PAGE');
+        console.log('   (This is normal on first visit)');
+      }
+
+      // Handle updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        console.log('🆕 Service Worker update found');
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            console.log('⏳ New version available - refresh to activate');
+          }
+        });
+      });
+
+      // Reload when new SW takes control
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('🔄 New Service Worker activated - reloading');
+        window.location.reload();
+      });
+
+    } catch (err) {
+      console.error('❌ Service Worker registration failed:', err);
+    }
+  });
+} else {
+  console.error('❌ Service Workers not supported');
+}
+
+// Debug helper
+window.checkSW = async () => {
+  const reg = await navigator.serviceWorker.getRegistration();
+  console.log('SW Registered:', !!reg);
+  console.log('SW Active:', !!reg?.active);
+  console.log('SW Controlling:', !!navigator.serviceWorker.controller);
+  console.log('Scope:', reg?.scope);
+  return reg;
+};
+</script>
 </body>
 </html>

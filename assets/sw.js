@@ -1,9 +1,9 @@
 // Service Worker for PWA with Share Target support
-const CACHE_NAME = 'bookmarks-pwa-v2';
+const CACHE_NAME = 'bookmarks-pwa-v3';
 const urlsToCache = [
   '/',
-  '/share',
   '/links'
+  // Don't pre-cache /share - it needs fresh data
 ];
 
 // Install event

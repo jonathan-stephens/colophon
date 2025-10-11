@@ -4,7 +4,6 @@
  */
 
 // Handle both GET and POST for share target
-// Try multiple ways to get the data
 $sharedUrl = '';
 $sharedTitle = '';
 $sharedText = '';
@@ -48,6 +47,11 @@ snippet('site-header') ?>
           Shared Title: <?= $sharedTitle ?: 'EMPTY' ?><br>
       </div>
       <?php endif; ?>
+
+      <!-- JavaScript Loading Test -->
+      <div id="js-test" style="background: #f8d7da; color: #721c24; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+          ⚠️ JavaScript not loaded yet
+      </div>
 
       <form id="bookmark-form" class="bookmark-form">
           <div class="form-group">
@@ -118,7 +122,7 @@ snippet('site-header') ?>
                   name="text"
                   rows="6"
                   placeholder="Add notes, quotes, or description..."
-              ></textarea>
+              ><?= esc($sharedText) ?></textarea>
           </div>
 
           <div class="form-actions">
@@ -139,12 +143,18 @@ snippet('site-header') ?>
 .share-page {
     max-width: 800px;
     margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.container {
+    width: 100%;
 }
 
 .bookmark-form {
-    background: var(--background-primary);
+    background: var(--background-primary, #ffffff);
     padding: 2rem;
-    border-radius: var(--radii-square);
+    border-radius: var(--radii-square, 8px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .form-group {
@@ -164,6 +174,7 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    color: var(--text-color, #333);
 }
 
 input[type="url"],
@@ -171,15 +182,30 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--border-color-distinct);
-    border-radius: var(--radii-square);
+    border: 1px solid var(--border-color-distinct, #ddd);
+    border-radius: var(--radii-square, 4px);
     font-size: 1rem;
     font-family: inherit;
-    background:var(--background-secondary);
+    background: var(--background-secondary, #f9f9f9);
+    box-sizing: border-box;
 }
 
 textarea {
     resize: vertical;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--link-color, #0066cc);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.btn-link:hover {
+    opacity: 0.8;
 }
 
 .form-actions {
@@ -191,18 +217,21 @@ textarea {
 .btn {
     padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: var(--button-radius);
+    border-radius: var(--button-radius, 4px);
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
 }
 
 .btn-primary {
-    background: var(--button-bg);
-    color: var(--button-color);
+    background: var(--button-bg, #0066cc);
+    color: var(--button-color, #ffffff);
 }
 
 .btn-secondary {
-    background: var(--button-hover-bg);
-    color: var(--button-hover-color);
+    background: var(--button-hover-bg, #6c757d);
+    color: var(--button-hover-color, #ffffff);
 }
 
 .btn:hover {
@@ -212,17 +241,26 @@ textarea {
 .message {
     margin-top: 1rem;
     padding: 1rem;
-    border-radius: var(--radii-square)
+    border-radius: var(--radii-square, 4px);
+    font-weight: 500;
 }
 
 .message.success {
-    background: var(--success-background);
-    color: var(--success-color);
+    background: var(--success-background, #d4edda);
+    color: var(--success-color, #155724);
+    border: 1px solid #c3e6cb;
 }
 
 .message.error {
-    background: var(--error-background);
-    color: var(--error-color);
+    background: var(--error-background, #f8d7da);
+    color: var(--error-color, #721c24);
+    border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
 }
 
 @media (max-width: 600px) {
@@ -233,9 +271,50 @@ textarea {
     .form-actions {
         flex-direction: column;
     }
+
+    .share-page {
+        padding: 1rem 0.5rem;
+    }
+
+    .bookmark-form {
+        padding: 1rem;
+    }
 }
 </style>
 
-<?= js('assets/js/share-min.js', ['defer' => true]) ?>
+<!-- Load JavaScript with error handling -->
+<script>
+console.log('🔍 Inline script loaded - checking for share.js...');
+
+// Test if elements exist
+window.addEventListener('DOMContentLoaded', () => {
+    const testDiv = document.getElementById('js-test');
+    if (testDiv) {
+        testDiv.textContent = '⏳ DOMContentLoaded fired, waiting for share.js...';
+        testDiv.style.background = '#fff3cd';
+        testDiv.style.color = '#856404';
+    }
+
+    // Check if elements exist
+    console.log('Form element:', document.getElementById('bookmark-form'));
+    console.log('Website input:', document.getElementById('website'));
+    console.log('Submit button:', document.querySelector('button[type="submit"]'));
+
+    // If share.js doesn't load within 2 seconds, show error
+    setTimeout(() => {
+        if (testDiv && testDiv.textContent.includes('waiting')) {
+            testDiv.textContent = '❌ share.js failed to load or execute';
+            testDiv.style.background = '#f8d7da';
+            testDiv.style.color = '#721c24';
+            console.error('share.js did not execute within 2 seconds');
+        }
+    }, 2000);
+});
+</script>
+
+<?= js('assets/js/share.js') ?>
+
+<!-- Fallback: Try alternative path -->
+<script src="/assets/js/share.js" onerror="console.error('Failed to load /assets/js/share.js')"></script>
 
 <?php snippet('site-footer') ?>

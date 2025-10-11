@@ -137,10 +137,14 @@ window.addEventListener("DOMContentLoaded", () => {
       // Logged-in user path
       let password = localStorage.getItem("kirby_api_password");
       if (!password) {
-        password = prompt("Enter your Kirby password for API access:");
-        if (password) localStorage.setItem("kirby_api_password", password);
-        else return null;
+        password = prompt("Enter your Kirby password for API access:\n(This is your panel login password)");
+        if (password) {
+          localStorage.setItem("kirby_api_password", password);
+        } else {
+          return null;
+        }
       }
+      console.log("Using stored auth for:", userEmail);
       return { email: userEmail, password };
     }
 
@@ -149,16 +153,19 @@ window.addEventListener("DOMContentLoaded", () => {
     let password = localStorage.getItem("kirby_api_password");
 
     if (!email || !password) {
-      const newEmail = prompt("Enter your Kirby email:");
-      const newPassword = prompt("Enter your Kirby password:");
-      if (newEmail && newPassword) {
-        localStorage.setItem("kirby_api_email", newEmail);
-        localStorage.setItem("kirby_api_password", newPassword);
-        return { email: newEmail, password: newPassword };
-      }
-      return null;
+      const newEmail = prompt("Enter your Kirby email:\n(Your panel login email)");
+      if (!newEmail) return null;
+
+      const newPassword = prompt("Enter your Kirby password:\n(Your panel login password)");
+      if (!newPassword) return null;
+
+      localStorage.setItem("kirby_api_email", newEmail);
+      localStorage.setItem("kirby_api_password", newPassword);
+      console.log("Stored new credentials for:", newEmail);
+      return { email: newEmail, password: newPassword };
     }
 
+    console.log("Using stored credentials for:", email);
     return { email, password };
   }
 
@@ -221,12 +228,6 @@ window.addEventListener("DOMContentLoaded", () => {
     quickSaveBtn.addEventListener("click", async () => {
       console.log("Quick save button clicked");
 
-      const auth = await getApiAuth();
-      if (!auth || !auth.password) {
-        showMessage("Authentication required", "error");
-        return;
-      }
-
       const url = websiteInput ? websiteInput.value.trim() : "";
       const title = titleInput ? titleInput.value.trim() : "";
 
@@ -241,9 +242,9 @@ window.addEventListener("DOMContentLoaded", () => {
         const response = await fetch("/api/bookmarks/quick-add", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
+            "Content-Type": "application/json"
           },
+          credentials: "same-origin", // Include session cookies
           body: JSON.stringify({ url, title, text: "" })
         });
 
@@ -254,12 +255,7 @@ window.addEventListener("DOMContentLoaded", () => {
           showMessage("Quickly saved!", "success");
           form.reset();
         } else {
-          if (result.message && result.message.includes("authentication")) {
-            localStorage.removeItem("kirby_api_password");
-            showMessage("Authentication failed. Please try again.", "error");
-          } else {
-            showMessage(result.message || "Error saving bookmark", "error");
-          }
+          showMessage(result.message || "Error saving bookmark", "error");
         }
       } catch (err) {
         console.error("Network error:", err);

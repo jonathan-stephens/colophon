@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Kirby Bookmarks API Plugin
+ * Kirby Bookmarks API Plugin - With Session Auth Support
  */
 
 Kirby::plugin('jonathan-stephens/bookmarks-api', [
@@ -144,14 +144,41 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                 }
             ],
 
-            // Add full bookmark
+            // Add full bookmark - USES SESSION OR BASIC AUTH
             [
                 'pattern' => 'bookmarks/add',
                 'method' => 'POST',
-                'auth' => true,
+                'auth' => false, // We'll check auth manually to support both session and Basic
                 'action' => function () {
                     try {
                         $kirby = kirby();
+
+                        // Check if user is logged in via panel session
+                        $user = $kirby->user();
+
+                        // If no session user, try Basic Auth
+                        if (!$user) {
+                            $authHeader = $kirby->request()->header('Authorization');
+                            if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
+                                $credentials = base64_decode(substr($authHeader, 6));
+                                list($email, $password) = explode(':', $credentials, 2);
+
+                                try {
+                                    $user = $kirby->auth()->login($email, $password, false);
+                                } catch (Exception $e) {
+                                    // Login failed
+                                }
+                            }
+                        }
+
+                        // If still no user, return error
+                        if (!$user) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Authentication required. Please log in to the panel first.'
+                            ];
+                        }
+
                         $data = $kirby->request()->data();
 
                         if (empty($data['website'])) {
@@ -213,14 +240,41 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                 }
             ],
 
-            // Quick add bookmark
+            // Quick add bookmark - USES SESSION OR BASIC AUTH
             [
                 'pattern' => 'bookmarks/quick-add',
                 'method' => 'POST',
-                'auth' => true,
+                'auth' => false, // We'll check auth manually to support both session and Basic
                 'action' => function () {
                     try {
                         $kirby = kirby();
+
+                        // Check if user is logged in via panel session
+                        $user = $kirby->user();
+
+                        // If no session user, try Basic Auth
+                        if (!$user) {
+                            $authHeader = $kirby->request()->header('Authorization');
+                            if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
+                                $credentials = base64_decode(substr($authHeader, 6));
+                                list($email, $password) = explode(':', $credentials, 2);
+
+                                try {
+                                    $user = $kirby->auth()->login($email, $password, false);
+                                } catch (Exception $e) {
+                                    // Login failed
+                                }
+                            }
+                        }
+
+                        // If still no user, return error
+                        if (!$user) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Authentication required. Please log in to the panel first.'
+                            ];
+                        }
+
                         $data = $kirby->request()->data();
 
                         if (empty($data['url'])) {

@@ -5,10 +5,12 @@ return [
         'debug' => true,
     ],
     'session' => [
-    'cookie' => [
-        'secure' => true, // Set to true if using HTTPS
-        'samesite' => 'Lax' // Changed from 'Strict' for better compatibility
+      'cookie' => [
+          'secure' => true, // Set to true if using HTTPS
+          'samesite' => 'Lax' // Changed from 'Strict' for better compatibility
+      ]
     ],
+
     // API settings
     'api' => [
         'allowInsecure' => false, // Set to true only for local testing

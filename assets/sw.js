@@ -54,17 +54,19 @@ self.addEventListener('fetch', event => {
   // Handle share target POST requests from Android
   if (request.method === 'POST' && url.pathname === '/share') {
     console.log('Service Worker: 🎯 Share POST request detected');
+    console.log('Service Worker: Full URL:', request.url);
+    console.log('Service Worker: Request headers:', [...request.headers.entries()]);
 
     event.respondWith(
       (async () => {
         try {
-          // Extract form data from POST request
+          // Clone request to read body
           const formData = await request.formData();
           const title = formData.get('title') || '';
           const text = formData.get('text') || '';
           const sharedUrl = formData.get('url') || '';
 
-          console.log('Service Worker: 📦 Share data:', {
+          console.log('Service Worker: 📦 Share data extracted:', {
             title,
             text,
             url: sharedUrl
@@ -76,16 +78,19 @@ self.addEventListener('fetch', event => {
           if (title) params.set('title', title);
           if (text) params.set('text', text);
 
-          // Redirect to share page with GET parameters
-          const redirectUrl = `/share?${params.toString()}`;
-          console.log('Service Worker: ➡️ Redirecting to:', redirectUrl);
+          // Build full redirect URL with proper origin
+          const redirectUrl = `${url.origin}/share?${params.toString()}`;
+          console.log('Service Worker: ➡️ Full redirect URL:', redirectUrl);
 
           // Use 303 redirect to convert POST to GET
-          return Response.redirect(redirectUrl, 303);
+          const response = Response.redirect(redirectUrl, 303);
+          console.log('Service Worker: ✅ Redirect response created');
+          return response;
         } catch (error) {
           console.error('Service Worker: ❌ Error processing share:', error);
+          console.error('Service Worker: Error stack:', error.stack);
           // Fallback: just redirect to share page without data
-          return Response.redirect('/share', 303);
+          return Response.redirect(`${url.origin}/share`, 303);
         }
       })()
     );
@@ -93,34 +98,42 @@ self.addEventListener('fetch', event => {
   }
 
   // Handle all other requests (GET, etc.)
+  // NEVER cache /share page - it needs authentication and fresh data
+  if (url.pathname === '/share' || url.pathname.startsWith('/api/')) {
+    console.log('Service Worker: 🌐 Network-only for:', request.url);
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // For everything else, try network first, then cache
   event.respondWith(
-    caches.match(request)
+    fetch(request)
       .then(response => {
-        if (response) {
-          console.log('Service Worker: 📦 Serving from cache:', request.url);
+        console.log('Service Worker: 🌐 Network response for:', request.url);
+
+        // Don't cache non-successful responses or non-GET requests
+        if (!response || response.status !== 200 || request.method !== 'GET') {
           return response;
         }
 
-        console.log('Service Worker: 🌐 Fetching from network:', request.url);
-        const fetchRequest = request.clone();
+        // Only cache basic responses (same-origin)
+        if (response.type === 'basic') {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, responseToCache);
+          });
+        }
 
-        return fetch(fetchRequest).then(response => {
-          // Don't cache non-successful responses
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
+        return response;
+      })
+      .catch(err => {
+        console.log('Service Worker: ⚠️ Network failed, trying cache for:', request.url);
+        return caches.match(request).then(cachedResponse => {
+          if (cachedResponse) {
+            console.log('Service Worker: 📦 Serving from cache:', request.url);
+            return cachedResponse;
           }
-
-          // Cache successful GET requests
-          if (request.method === 'GET') {
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(request, responseToCache);
-            });
-          }
-
-          return response;
-        }).catch(err => {
-          console.error('Service Worker: Fetch failed:', err);
+          console.error('Service Worker: ❌ No cache available for:', request.url);
           throw err;
         });
       })

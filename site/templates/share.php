@@ -50,6 +50,8 @@ snippet('site-header') ?>
           POST url: <?= isset($_POST['url']) ? 'YES' : 'NO' ?><br>
           Shared URL: <?= $sharedUrl ?: 'EMPTY' ?><br>
           Shared Title: <?= $sharedTitle ?: 'EMPTY' ?><br>
+          Full GET params: <?= json_encode($_GET) ?><br>
+          Full POST params: <?= json_encode($_POST) ?><br>
       </div>
       <?php endif; ?>
 

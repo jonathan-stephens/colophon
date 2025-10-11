@@ -1,4 +1,4 @@
-const CACHE_NAME = "bookmarks-pwa-v6";
+const CACHE_NAME = "bookmarks-pwa-v7";
 const urlsToCache = ["/", "/share"];
 
 self.addEventListener("install", (e) => {

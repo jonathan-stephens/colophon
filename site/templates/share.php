@@ -24,15 +24,6 @@ elseif (isset($_POST['url'])) {
     $sharedTitle = $_POST['title'] ?? '';
     $sharedText = $_POST['text'] ?? '';
 }
-// Method 3: Check request body
-elseif ($kirby->request()->method() === 'POST') {
-    $body = $kirby->request()->body();
-    if (isset($body['url'])) {
-        $sharedUrl = $body['url'];
-        $sharedTitle = $body['title'] ?? '';
-        $sharedText = $body['text'] ?? '';
-    }
-}
 
 snippet('site-header') ?>
 

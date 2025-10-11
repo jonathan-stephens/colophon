@@ -190,9 +190,11 @@ window.addEventListener("DOMContentLoaded", () => {
     let password = localStorage.getItem("kirby_api_password");
 
     if (!email || !password) {
+      // Ask for email
       email = prompt("Enter your Kirby email:\n(Your panel login email)");
       if (!email) return null;
 
+      // Ask for password
       password = prompt("Enter your Kirby password:\n(Your panel login password)");
       if (!password) return null;
 
@@ -266,13 +268,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
       const url = websiteInput ? websiteInput.value.trim() : "";
       const title = titleInput ? titleInput.value.trim() : "";
+      const tags = tagsInput ? tagsInput.value.trim() : "";
 
       if (!url) {
         showMessage("URL is required", "error");
         return;
       }
 
-      console.log("Quick saving:", { url, title });
+      console.log("Quick saving:", { url, title, tags });
 
       try {
         const response = await fetch("/api/bookmarks/quick-add", {
@@ -284,7 +287,8 @@ window.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify({
             url: url,
             title: title,
-            text: ""
+            text: "",
+            tags: tags
           })
         });
 
@@ -292,7 +296,7 @@ window.addEventListener("DOMContentLoaded", () => {
         console.log("Quick save response:", result);
 
         if (result.status === "success") {
-          showMessage("Quickly saved!", "success");
+          showMessage("Saved to Read Later!", "success");
           form.reset();
         } else {
           showMessage(result.message || "Error saving bookmark", "error");

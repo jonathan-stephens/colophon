@@ -61,7 +61,11 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         // Schema.org author with name
                         $authorNodes = $xpath->query('//*[@itemprop="author"]//*[@itemprop="name"]');
                         foreach ($authorNodes as $node) {
-                            $authors[] = trim($node->textContent);
+                            $authorText = trim($node->textContent);
+                            // Skip if it looks like a Twitter handle
+                            if (!empty($authorText) && $authorText[0] !== '@') {
+                                $authors[] = $authorText;
+                            }
                         }
 
                         // Direct itemprop="author"
@@ -70,10 +74,14 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             foreach ($authorNodes as $authorNode) {
                                 $nameNode = $xpath->query('.//*[@itemprop="name"]', $authorNode);
                                 if ($nameNode->length > 0) {
-                                    $authors[] = trim($nameNode->item(0)->textContent);
+                                    $authorText = trim($nameNode->item(0)->textContent);
+                                    if (!empty($authorText) && $authorText[0] !== '@') {
+                                        $authors[] = $authorText;
+                                    }
                                 } else {
                                     $text = trim($authorNode->textContent);
-                                    if (!empty($text) && strlen($text) < 100) { // Reasonable author name length
+                                    // Reasonable author name length and not a Twitter handle
+                                    if (!empty($text) && strlen($text) < 100 && $text[0] !== '@') {
                                         $authors[] = $text;
                                     }
                                 }
@@ -85,43 +93,55 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             $metaAuthor = $xpath->query('//meta[@name="author"]/@content');
                             if ($metaAuthor->length > 0) {
                                 $authorText = trim($metaAuthor->item(0)->textContent);
-                                // Check if multiple authors separated by common delimiters
-                                if (strpos($authorText, ',') !== false) {
-                                    $authors = array_map('trim', explode(',', $authorText));
-                                } elseif (strpos($authorText, ' and ') !== false) {
-                                    $authors = array_map('trim', explode(' and ', $authorText));
-                                } elseif (strpos($authorText, '&') !== false) {
-                                    $authors = array_map('trim', explode('&', $authorText));
+
+                                // Skip if it's a Twitter handle
+                                if ($authorText[0] === '@') {
+                                    // Skip this one
                                 } else {
+                                    // Check if multiple authors separated by common delimiters
+                                    if (strpos($authorText, ',') !== false) {
+                                        $authors = array_map('trim', explode(',', $authorText));
+                                    } elseif (strpos($authorText, ' and ') !== false) {
+                                        $authors = array_map('trim', explode(' and ', $authorText));
+                                    } elseif (strpos($authorText, '&') !== false) {
+                                        $authors = array_map('trim', explode('&', $authorText));
+                                    } else {
+                                        $authors[] = $authorText;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Open Graph article:author (but not Twitter handles)
+                        if (empty($authors)) {
+                            $ogAuthor = $xpath->query('//meta[@property="article:author"]/@content');
+                            foreach ($ogAuthor as $node) {
+                                $authorText = trim($node->textContent);
+                                // Skip URLs and Twitter handles
+                                if (strpos($authorText, 'http') === false && $authorText[0] !== '@') {
                                     $authors[] = $authorText;
                                 }
                             }
                         }
 
-                        // Open Graph article:author
+                        // Microformats: p-author or h-card (but not Twitter handles)
                         if (empty($authors)) {
-                            $ogAuthor = $xpath->query('//meta[@property="article:author"]/@content');
-                            foreach ($ogAuthor as $node) {
-                                $authors[] = trim($node->textContent);
+                            $mfAuthor = $xpath->query('//*[contains(@class, "p-author")]');
+                            foreach ($mfAuthor as $node) {
+                                $authorText = trim($node->textContent);
+                                if (!empty($authorText) && $authorText[0] !== '@') {
+                                    $authors[] = $authorText;
+                                }
                             }
                         }
 
-                        // Twitter creator
-                        if (empty($authors)) {
-                            $twitterCreator = $xpath->query('//meta[@name="twitter:creator"]/@content');
-                            if ($twitterCreator->length > 0) {
-                                $authors[] = trim($twitterCreator->item(0)->textContent);
-                            }
-                        }
+                        // Clean up authors - remove Twitter handles and empty values
+                        $authors = array_filter($authors, function($author) {
+                            return !empty($author) && $author[0] !== '@';
+                        });
 
-                        // Microformats: p-author or h-card
-                        $mfAuthor = $xpath->query('//*[contains(@class, "p-author")]');
-                        foreach ($mfAuthor as $node) {
-                            $authors[] = trim($node->textContent);
-                        }
+                        $authors = array_unique($authors);
 
-                        // Clean up authors
-                        $authors = array_filter(array_unique($authors));
                         if (!empty($authors)) {
                             $metadata['author'] = implode(', ', $authors);
                         }
@@ -321,7 +341,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                 }
             ],
 
-            // Add full bookmark - IMPROVED SESSION HANDLING
+            // Add full bookmark - FIXED SESSION AUTH
             [
                 'pattern' => 'bookmarks/add',
                 'method' => 'POST',
@@ -331,55 +351,35 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         $kirby = kirby();
                         $user = null;
 
-                        // DEBUG: Log authentication attempts
-                        error_log('=== BOOKMARK ADD DEBUG ===');
+                        error_log('=== BOOKMARK ADD ===');
 
-                        // Method 1: Check existing session FIRST
+                        // Method 1: Check existing session FIRST (most common for web users)
                         $user = $kirby->user();
-                        error_log('Session user: ' . ($user ? $user->email() : 'NONE'));
+                        if ($user) {
+                            error_log('Session user found: ' . $user->email());
+                        }
 
-                        // Method 2: Try Basic Auth header if no session
+                        // Method 2: Try Basic Auth if no session
                         if (!$user) {
                             $authHeader = $kirby->request()->header('Authorization');
-                            error_log('Auth header present: ' . ($authHeader ? 'YES' : 'NO'));
-
                             if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
                                 $credentials = base64_decode(substr($authHeader, 6));
                                 list($email, $password) = explode(':', $credentials, 2);
-                                error_log('Attempting Basic Auth for: ' . $email);
 
                                 try {
-                                    // Don't persist the session for API calls
                                     $user = $kirby->auth()->login($email, $password, false);
-                                    error_log('Basic Auth SUCCESS for: ' . $email);
+                                    error_log('Basic Auth success: ' . $email);
                                 } catch (Exception $e) {
-                                    error_log('Basic Auth FAILED: ' . $e->getMessage());
+                                    error_log('Basic Auth failed: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                        // Method 3: Try to impersonate if we're in a trusted environment
-                        // This is a fallback for testing - REMOVE IN PRODUCTION
-                        if (!$user && option('debug', false)) {
-                            $firstUser = $kirby->users()->first();
-                            if ($firstUser) {
-                                $user = $firstUser;
-                                error_log('DEBUG MODE: Using first user: ' . $user->email());
-                            }
-                        }
-
-                        // If still no user, return detailed error
                         if (!$user) {
-                            error_log('Authentication FAILED - no valid user found');
-
+                            error_log('No authenticated user found');
                             return [
                                 'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.',
-                                'debug' => option('debug', false) ? [
-                                    'session_user' => 'none',
-                                    'auth_header' => isset($authHeader) ? 'present' : 'missing',
-                                    'cookies' => array_keys($_COOKIE),
-                                ] : null
+                                'message' => 'Authentication required. Please log in to the panel first.'
                             ];
                         }
 
@@ -418,7 +418,7 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'author' => $data['author'] ?? '',
                         ];
 
-                        // Impersonate the authenticated user for content creation
+                        // Impersonate for content creation
                         $kirby->impersonate('kirby');
 
                         $bookmark = $linksPage->createChild([
@@ -428,10 +428,9 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'num' => date('YmdHis')
                         ]);
 
-                        // Publish immediately
                         $bookmark->changeStatus('listed');
 
-                        error_log('Bookmark created successfully: ' . $bookmark->id());
+                        error_log('Bookmark created: ' . $bookmark->id());
 
                         return [
                             'status' => 'success',
@@ -443,19 +442,18 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
-                        error_log('Bookmark creation ERROR: ' . $e->getMessage());
+                        error_log('Bookmark error: ' . $e->getMessage());
                         return [
                             'status' => 'error',
-                            'message' => $e->getMessage(),
-                            'trace' => option('debug', false) ? $e->getTraceAsString() : null
+                            'message' => $e->getMessage()
                         ];
                     }
                 }
             ],
 
-            // Quick add bookmark - IMPROVED SESSION HANDLING
+            // Add full bookmark - FIXED SESSION AUTH
             [
-                'pattern' => 'bookmarks/quick-add',
+                'pattern' => 'bookmarks/add',
                 'method' => 'POST',
                 'auth' => false,
                 'action' => function () {
@@ -463,54 +461,35 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         $kirby = kirby();
                         $user = null;
 
-                        // DEBUG: Log authentication attempts
-                        error_log('=== QUICK ADD DEBUG ===');
+                        error_log('=== BOOKMARK ADD ===');
 
-                        // Method 1: Check existing session FIRST
+                        // Method 1: Check existing session FIRST (most common for web users)
                         $user = $kirby->user();
-                        error_log('Session user: ' . ($user ? $user->email() : 'NONE'));
+                        if ($user) {
+                            error_log('Session user found: ' . $user->email());
+                        }
 
-                        // Method 2: Try Basic Auth header if no session
+                        // Method 2: Try Basic Auth if no session
                         if (!$user) {
                             $authHeader = $kirby->request()->header('Authorization');
-                            error_log('Auth header present: ' . ($authHeader ? 'YES' : 'NO'));
-
                             if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
                                 $credentials = base64_decode(substr($authHeader, 6));
                                 list($email, $password) = explode(':', $credentials, 2);
-                                error_log('Attempting Basic Auth for: ' . $email);
 
                                 try {
                                     $user = $kirby->auth()->login($email, $password, false);
-                                    error_log('Basic Auth SUCCESS for: ' . $email);
+                                    error_log('Basic Auth success: ' . $email);
                                 } catch (Exception $e) {
-                                    error_log('Basic Auth FAILED: ' . $e->getMessage());
+                                    error_log('Basic Auth failed: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                        // Method 3: Try to impersonate if we're in a trusted environment
-                        // This is a fallback for testing - REMOVE IN PRODUCTION
-                        if (!$user && option('debug', false)) {
-                            $firstUser = $kirby->users()->first();
-                            if ($firstUser) {
-                                $user = $firstUser;
-                                error_log('DEBUG MODE: Using first user: ' . $user->email());
-                            }
-                        }
-
-                        // If still no user, return detailed error
                         if (!$user) {
-                            error_log('Authentication FAILED - no valid user found');
-
+                            error_log('No authenticated user found');
                             return [
                                 'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.',
-                                'debug' => option('debug', false) ? [
-                                    'session_user' => 'none',
-                                    'auth_header' => isset($authHeader) ? 'present' : 'missing',
-                                    'cookies' => array_keys($_COOKIE),
-                                ] : null
+                                'message' => 'Authentication required. Please log in to the panel first.'
                             ];
                         }
 
@@ -518,17 +497,14 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
 
                         $data = $kirby->request()->data();
 
-                        if (empty($data['url'])) {
+                        if (empty($data['website'])) {
                             return [
                                 'status' => 'error',
                                 'message' => 'URL is required'
                             ];
                         }
 
-                        $url = $data['url'];
-                        $title = $data['title'] ?? '';
-                        $text = $data['text'] ?? '';
-
+                        $url = $data['website'];
                         $parsed = parse_url($url);
                         $host = $parsed['host'] ?? '';
                         $tld = substr($host, strrpos($host, '.') + 1);
@@ -544,14 +520,15 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         }
 
                         $content = [
-                            'title' => $title,
+                            'title' => $data['title'] ?? '',
                             'website' => $url,
-                            'tld' => $tld,
-                            'text' => $text ?: $title,
-                            'tags' => 'read-later'
+                            'tld' => $data['tld'] ?? $tld,
+                            'text' => $data['text'] ?? '',
+                            'tags' => $data['tags'] ?? '',
+                            'author' => $data['author'] ?? '',
                         ];
 
-                        // Impersonate the authenticated user for content creation
+                        // Impersonate for content creation
                         $kirby->impersonate('kirby');
 
                         $bookmark = $linksPage->createChild([
@@ -561,25 +538,24 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'num' => date('YmdHis')
                         ]);
 
-                        // Publish immediately
                         $bookmark->changeStatus('listed');
 
-                        error_log('Quick bookmark created successfully: ' . $bookmark->id());
+                        error_log('Bookmark created: ' . $bookmark->id());
 
                         return [
                             'status' => 'success',
-                            'message' => 'Bookmark saved',
+                            'message' => 'Bookmark added successfully',
                             'data' => [
-                                'id' => $bookmark->id()
+                                'id' => $bookmark->id(),
+                                'url' => $bookmark->url()
                             ]
                         ];
 
                     } catch (Exception $e) {
-                        error_log('Quick add ERROR: ' . $e->getMessage());
+                        error_log('Bookmark error: ' . $e->getMessage());
                         return [
                             'status' => 'error',
-                            'message' => $e->getMessage(),
-                            'trace' => option('debug', false) ? $e->getTraceAsString() : null
+                            'message' => $e->getMessage()
                         ];
                     }
                 }

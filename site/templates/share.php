@@ -4,8 +4,11 @@ header('Pragma: no-cache');
 header('Expires: 0');
 
 /**
- * Share Target Page Template - Enhanced with Debug
+ * Share Target Page Template - With User Detection
  */
+
+// Get current user if logged in
+$currentUser = $kirby->user();
 
 // Capture ALL possible data sources
 $sharedUrl = '';
@@ -47,14 +50,12 @@ snippet('site-header') ?>
       <!-- ALWAYS VISIBLE DEBUG PANEL -->
       <div class="debug-panel">
           <strong>🔍 Debug Info:</strong><br>
+          <strong>Logged in:</strong> <?= $currentUser ? '✅ ' . $currentUser->email() : '❌ Not logged in' ?><br>
           <strong>Request Method:</strong> <?= $kirby->request()->method() ?><br>
           <strong>Data Source:</strong> <?= $dataSource ?><br>
           <strong>Shared URL:</strong> <?= $sharedUrl ?: '❌ EMPTY' ?><br>
           <strong>Shared Title:</strong> <?= $sharedTitle ?: '❌ EMPTY' ?><br>
           <strong>Shared Text:</strong> <?= $sharedText ?: '❌ EMPTY' ?><br>
-          <strong>GET params:</strong> <?= !empty($_GET) ? json_encode($_GET) : '[]' ?><br>
-          <strong>POST params:</strong> <?= !empty($_POST) ? json_encode($_POST) : '[]' ?><br>
-          <strong>Referer:</strong> <?= $_SERVER['HTTP_REFERER'] ?? 'none' ?><br>
           <button type="button" onclick="testServiceWorker()" class="btn-link">
               Test Service Worker Status
           </button>
@@ -310,6 +311,16 @@ textarea {
     }
 }
 </style>
+
+<!-- Pass user email to JavaScript if logged in -->
+<script>
+<?php if ($currentUser): ?>
+document.body.dataset.userEmail = '<?= esc($currentUser->email()) ?>';
+console.log('✅ User logged in:', '<?= esc($currentUser->email()) ?>');
+<?php else: ?>
+console.log('ℹ️ No user logged in - will prompt for credentials');
+<?php endif; ?>
+</script>
 
 <!-- Service Worker Status Test -->
 <script>

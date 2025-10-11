@@ -8,14 +8,11 @@ return [
     'cookie' => [
         'secure' => true, // Set to true if using HTTPS
         'samesite' => 'Lax' // Changed from 'Strict' for better compatibility
-    ]
     ],
-
     // API settings
     'api' => [
         'allowInsecure' => false, // Set to true only for local testing
         'basicAuth' => true,
-        'csrf' => 'auth' // Only require CSRF for authenticated routes
     ],
     'date.timezone' => 'America/New_York',
     'jonathanstephens.template-handler' => [

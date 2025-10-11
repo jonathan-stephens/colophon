@@ -2,7 +2,7 @@
 return [
     'panel' => [
         'install' => false,
-        'debug' => false,
+        'debug' => true,
     ],
     'date.timezone' => 'America/New_York',
     'jonathanstephens.template-handler' => [

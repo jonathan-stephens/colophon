@@ -1,18 +1,7 @@
-// assets/js/share.js
-// Handles bookmark saving, metadata fetching, and Android Share Target logic
-
 window.addEventListener("DOMContentLoaded", () => {
   console.log("✅ share.js loaded");
 
-  // Update test div to show JS is working
-  const testDiv = document.getElementById("js-test");
-  if (testDiv) {
-    testDiv.textContent = "✅ JavaScript loaded and working!";
-    testDiv.style.background = "#d4edda";
-    testDiv.style.color = "#155724";
-  }
-
-  // --- Element references ---
+  // Get all form elements
   const websiteInput = document.getElementById("website");
   const tldInput = document.getElementById("tld");
   const authorInput = document.getElementById("author");
@@ -20,11 +9,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("page-title");
   const textInput = document.getElementById("text");
   const form = document.getElementById("bookmark-form");
-  const fetchBtn = document.getElementById("fetch-metadata-btn");
+  const fetchMetadataBtn = document.getElementById("fetch-metadata-btn");
   const quickSaveBtn = document.getElementById("quick-save-btn");
-  const messageEl = document.getElementById("message");
+  const messageDiv = document.getElementById("message");
 
-  // Debug: Log all elements
   console.log("Element check:", {
     websiteInput: !!websiteInput,
     tldInput: !!tldInput,
@@ -33,39 +21,113 @@ window.addEventListener("DOMContentLoaded", () => {
     titleInput: !!titleInput,
     textInput: !!textInput,
     form: !!form,
-    fetchBtn: !!fetchBtn,
+    fetchBtn: !!fetchMetadataBtn,
     quickSaveBtn: !!quickSaveBtn,
-    messageEl: !!messageEl
+    messageDiv: !!messageDiv
   });
 
-  // --- Utility: Show message ---
+  // Test indicator
+  const jsTest = document.getElementById("js-test");
+  if (jsTest) {
+    jsTest.textContent = "✅ JavaScript loaded and working!";
+    jsTest.style.background = "#d4edda";
+    jsTest.style.color = "#155724";
+  }
+
+  // Show message to user
   function showMessage(text, type = "info") {
-    if (!messageEl) {
+    if (!messageDiv) {
       console.error("Message element not found");
       return;
     }
-    messageEl.textContent = text;
-    messageEl.className = "message " + type;
-    messageEl.style.display = "block";
-    setTimeout(() => (messageEl.style.display = "none"), 5000);
+    messageDiv.textContent = text;
+    messageDiv.className = "message " + type;
+    messageDiv.style.display = "block";
+
+    setTimeout(() => {
+      messageDiv.style.display = "none";
+    }, 5000);
   }
 
-  // --- Extract domain from URL ---
+  // Extract domain from URL
   function extractDomain(url) {
     try {
-      const urlObj = new URL(url);
-      return urlObj.hostname.replace(/^www\./, "");
-    } catch (e) {
-      console.error("Error extracting domain:", e);
+      const hostname = new URL(url).hostname;
+      return hostname.replace(/^www\./, "");
+    } catch (err) {
+      console.error("Error extracting domain:", err);
       return "";
     }
   }
 
-  // --- Auto-extract domain on blur ---
+  // Fetch metadata from URL
+  async function fetchMetadata(url) {
+    if (!url) return;
+
+    showMessage("Fetching metadata...", "info");
+    console.log("📡 Fetching metadata for:", url);
+
+    try {
+      const response = await fetch("/api/bookmarks/fetch-metadata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url: url })
+      });
+
+      const result = await response.json();
+      console.log("Metadata response:", result);
+
+      if (result.status === "success" && result.data) {
+        const data = result.data;
+        let updated = [];
+
+        // Update author (only if empty)
+        if (data.author && authorInput && !authorInput.value) {
+          authorInput.value = data.author;
+          updated.push("author");
+          console.log("✅ Author set:", data.author);
+        }
+
+        // Update tags (only if empty)
+        if (data.tags && tagsInput && !tagsInput.value) {
+          tagsInput.value = data.tags;
+          updated.push("tags");
+          console.log("✅ Tags set:", data.tags);
+        }
+
+        // Update title (only if empty)
+        if (data.title && titleInput && !titleInput.value) {
+          titleInput.value = data.title;
+          updated.push("title");
+          console.log("✅ Title set:", data.title);
+        }
+
+        if (updated.length > 0) {
+          showMessage(
+            `Metadata fetched! Updated: ${updated.join(", ")}`,
+            "success"
+          );
+        } else {
+          showMessage("Metadata fetched (no empty fields to fill)", "info");
+        }
+      } else {
+        showMessage("Could not fetch metadata", "info");
+        console.log("Metadata fetch returned no data");
+      }
+    } catch (err) {
+      console.error("Metadata fetch error:", err);
+      showMessage("Error fetching metadata: " + err.message, "error");
+    }
+  }
+
+  // Auto-extract domain when URL changes
   if (websiteInput) {
     websiteInput.addEventListener("blur", () => {
       const url = websiteInput.value.trim();
       if (!url) return;
+
       const domain = extractDomain(url);
       if (domain && tldInput) {
         tldInput.value = domain;
@@ -74,40 +136,9 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Fetch metadata from backend ---
-  async function fetchMetadata(url) {
-    if (!url) return;
-    showMessage("Fetching metadata...", "info");
-
-    try {
-      const response = await fetch("/api/bookmarks/fetch-metadata", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
-      });
-
-      const result = await response.json();
-      console.log("Metadata response:", result);
-
-      if (result.status === "success" && result.data) {
-        const data = result.data;
-        if (data.author && authorInput && !authorInput.value) authorInput.value = data.author;
-        if (data.tags && tagsInput && !tagsInput.value) tagsInput.value = data.tags;
-        if (data.title && titleInput && !titleInput.value) titleInput.value = data.title;
-
-        showMessage("Metadata fetched successfully!", "success");
-      } else {
-        showMessage("Could not fetch metadata", "info");
-      }
-    } catch (err) {
-      console.error("Metadata fetch error:", err);
-      showMessage("Error fetching metadata: " + err.message, "error");
-    }
-  }
-
-  // --- Fetch metadata button ---
-  if (fetchBtn) {
-    fetchBtn.addEventListener("click", () => {
+  // Manual fetch metadata button
+  if (fetchMetadataBtn) {
+    fetchMetadataBtn.addEventListener("click", () => {
       console.log("Fetch metadata button clicked");
       const url = websiteInput ? websiteInput.value.trim() : "";
       if (url) {
@@ -118,70 +149,77 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Auto-fetch when prefilled (e.g. from Android Share) ---
+  // Auto-fetch metadata on page load if URL is prefilled
   setTimeout(() => {
     if (websiteInput && websiteInput.value) {
       console.log("🌐 Prefilled URL detected:", websiteInput.value);
+
+      // Trigger blur to extract domain
       websiteInput.dispatchEvent(new Event("blur"));
+
+      // Auto-fetch metadata
+      console.log("🔄 Auto-fetching metadata for shared URL...");
       fetchMetadata(websiteInput.value);
     } else {
       console.log("ℹ️ No prefilled URL found.");
     }
-  }, 300); // allow Android to finish autofilling
+  }, 300);
 
-  // --- Authentication ---
-  async function getApiAuth() {
+  // Get authentication credentials
+  async function getAuthCredentials() {
+    // Check if user email is in page (for logged-in users)
     const userEmail = document.body.dataset.userEmail || null;
 
     if (userEmail) {
-      // Logged-in user path
       let password = localStorage.getItem("kirby_api_password");
+
       if (!password) {
-        password = prompt("Enter your Kirby password for API access:\n(This is your panel login password)");
-        if (password) {
-          localStorage.setItem("kirby_api_password", password);
-        } else {
-          return null;
-        }
+        password = prompt(
+          "Enter your Kirby password for API access:\n(This is your panel login password)"
+        );
+        if (!password) return null;
+        localStorage.setItem("kirby_api_password", password);
       }
+
       console.log("Using stored auth for:", userEmail);
-      return { email: userEmail, password };
+      return { email: userEmail, password: password };
     }
 
-    // Guest path
+    // Try stored credentials
     let email = localStorage.getItem("kirby_api_email");
     let password = localStorage.getItem("kirby_api_password");
 
     if (!email || !password) {
-      const newEmail = prompt("Enter your Kirby email:\n(Your panel login email)");
-      if (!newEmail) return null;
+      email = prompt("Enter your Kirby email:\n(Your panel login email)");
+      if (!email) return null;
 
-      const newPassword = prompt("Enter your Kirby password:\n(Your panel login password)");
-      if (!newPassword) return null;
+      password = prompt("Enter your Kirby password:\n(Your panel login password)");
+      if (!password) return null;
 
-      localStorage.setItem("kirby_api_email", newEmail);
-      localStorage.setItem("kirby_api_password", newPassword);
-      console.log("Stored new credentials for:", newEmail);
-      return { email: newEmail, password: newPassword };
+      localStorage.setItem("kirby_api_email", email);
+      localStorage.setItem("kirby_api_password", password);
+      console.log("Stored new credentials for:", email);
+
+      return { email: email, password: password };
     }
 
     console.log("Using stored credentials for:", email);
-    return { email, password };
+    return { email: email, password: password };
   }
 
-  // --- Regular Save (full form) ---
+  // Form submission handler
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       console.log("Form submitted");
 
-      const auth = await getApiAuth();
+      const auth = await getAuthCredentials();
       if (!auth || !auth.password) {
         showMessage("Authentication required", "error");
         return;
       }
 
-      const formData = {
+      const bookmarkData = {
         website: websiteInput ? websiteInput.value : "",
         title: titleInput ? titleInput.value : "",
         tld: tldInput ? tldInput.value : "",
@@ -190,16 +228,16 @@ window.addEventListener("DOMContentLoaded", () => {
         text: textInput ? textInput.value : ""
       };
 
-      console.log("Submitting bookmark:", formData);
+      console.log("Submitting bookmark:", bookmarkData);
 
       try {
         const response = await fetch("/api/bookmarks/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Basic " + btoa(auth.email + ":" + auth.password)
+            "Authorization": "Basic " + btoa(auth.email + ":" + auth.password)
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(bookmarkData)
         });
 
         const result = await response.json();
@@ -208,13 +246,11 @@ window.addEventListener("DOMContentLoaded", () => {
         if (result.status === "success") {
           showMessage("Bookmark saved successfully!", "success");
           form.reset();
+        } else if (result.message && result.message.includes("authentication")) {
+          localStorage.removeItem("kirby_api_password");
+          showMessage("Authentication failed. Please try again.", "error");
         } else {
-          if (result.message && result.message.includes("authentication")) {
-            localStorage.removeItem("kirby_api_password");
-            showMessage("Authentication failed. Please try again.", "error");
-          } else {
-            showMessage(result.message || "Error saving bookmark", "error");
-          }
+          showMessage(result.message || "Error saving bookmark", "error");
         }
       } catch (err) {
         console.error("Network error:", err);
@@ -223,7 +259,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Quick Save ---
+  // Quick save button handler
   if (quickSaveBtn) {
     quickSaveBtn.addEventListener("click", async () => {
       console.log("Quick save button clicked");
@@ -244,8 +280,12 @@ window.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json"
           },
-          credentials: "same-origin", // Include session cookies
-          body: JSON.stringify({ url, title, text: "" })
+          credentials: "same-origin",
+          body: JSON.stringify({
+            url: url,
+            title: title,
+            text: ""
+          })
         });
 
         const result = await response.json();

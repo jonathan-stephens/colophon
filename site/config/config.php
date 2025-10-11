@@ -2,11 +2,7 @@
 return [
     'panel' => [
         'install' => false,
-        'debug' => true,
-    ],
-    // API settings
-    'api' => [
-        'basicAuth' => true,
+        'debug' => false,
     ],
     'date.timezone' => 'America/New_York',
     'jonathanstephens.template-handler' => [
@@ -20,6 +16,10 @@ return [
             ]
         ];
     },
+    'api' => [
+      'basicAuth' => true,
+      'allowInsecure' => false, // Only for local development - set to false in production!
+    ],
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
     'mauricerenck.indieConnector.send.url-fields' => [

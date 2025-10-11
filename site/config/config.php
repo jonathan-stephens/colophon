@@ -6,7 +6,6 @@ return [
     ],
     // API settings
     'api' => [
-        'allowInsecure' => false, // Set to true only for local testing
         'basicAuth' => true,
     ],
     'date.timezone' => 'America/New_York',

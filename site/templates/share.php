@@ -4,29 +4,28 @@ header('Pragma: no-cache');
 header('Expires: 0');
 
 /**
- * Share Target Page Template
+ * Share Target Page Template - Enhanced with Debug
  */
 
-// Handle both GET and POST for share target
+// Capture ALL possible data sources
 $sharedUrl = '';
 $sharedTitle = '';
 $sharedText = '';
+$dataSource = 'none';
 
-// Method 1: GET parameters
+// Method 1: GET parameters (from service worker redirect)
 if (get('url')) {
     $sharedUrl = get('url');
     $sharedTitle = get('title', '');
     $sharedText = get('text', '');
+    $dataSource = 'GET';
 }
-// Method 2: POST parameters
+// Method 2: POST parameters (direct POST, SW not active)
 elseif (isset($_POST['url'])) {
     $sharedUrl = $_POST['url'];
     $sharedTitle = $_POST['title'] ?? '';
     $sharedText = $_POST['text'] ?? '';
-}
-// Method 3: Check request body
-elseif ($kirby->request()->method() === 'POST') {
-    $body = $kirby->request()->body();
+    $dataSource = 'POST';
 }
 
 snippet('site-header') ?>
@@ -35,19 +34,22 @@ snippet('site-header') ?>
   <div class="container">
       <h1>Save Bookmark</h1>
 
-      <?php if (option('debug', false)): ?>
-      <!-- Debug info - only shows if debug mode is on -->
-      <div style="background: #fff3cd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; font-size: 0.85rem;">
-          <strong>Debug Info:</strong><br>
-          Method: <?= $kirby->request()->method() ?><br>
-          GET url: <?= get('url') ? 'YES' : 'NO' ?><br>
-          POST url: <?= isset($_POST['url']) ? 'YES' : 'NO' ?><br>
-          Shared URL: <?= $sharedUrl ?: 'EMPTY' ?><br>
-          Shared Title: <?= $sharedTitle ?: 'EMPTY' ?><br>
-          Full GET params: <?= json_encode($_GET) ?><br>
-          Full POST params: <?= json_encode($_POST) ?><br>
+      <!-- ALWAYS VISIBLE DEBUG PANEL -->
+      <div class="debug-panel">
+          <strong>🔍 Debug Info:</strong><br>
+          <strong>Request Method:</strong> <?= $kirby->request()->method() ?><br>
+          <strong>Data Source:</strong> <?= $dataSource ?><br>
+          <strong>Shared URL:</strong> <?= $sharedUrl ?: '❌ EMPTY' ?><br>
+          <strong>Shared Title:</strong> <?= $sharedTitle ?: '❌ EMPTY' ?><br>
+          <strong>Shared Text:</strong> <?= $sharedText ?: '❌ EMPTY' ?><br>
+          <strong>GET params:</strong> <?= !empty($_GET) ? json_encode($_GET) : '[]' ?><br>
+          <strong>POST params:</strong> <?= !empty($_POST) ? json_encode($_POST) : '[]' ?><br>
+          <strong>Referer:</strong> <?= $_SERVER['HTTP_REFERER'] ?? 'none' ?><br>
+          <button type="button" onclick="testServiceWorker()" class="btn-link">
+              Test Service Worker Status
+          </button>
+          <div id="sw-status" style="margin-top: 0.5rem; padding: 0.5rem; background: #f0f0f0; border-radius: 4px; font-size: 0.85rem;"></div>
       </div>
-      <?php endif; ?>
 
       <!-- JavaScript Loading Test -->
       <div id="js-test" style="background: #f8d7da; color: #721c24; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
@@ -63,6 +65,7 @@ snippet('site-header') ?>
                   name="website"
                   required
                   value="<?= esc($sharedUrl) ?>"
+                  placeholder="https://example.com"
               >
               <?php if ($sharedUrl): ?>
               <button type="button" id="fetch-metadata-btn" class="btn-link">
@@ -149,6 +152,21 @@ snippet('site-header') ?>
 
 .container {
     width: 100%;
+}
+
+.debug-panel {
+    background: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    border: 2px solid #ffc107;
+}
+
+.debug-panel strong {
+    display: inline-block;
+    min-width: 120px;
 }
 
 .bookmark-form {
@@ -283,11 +301,61 @@ textarea {
 }
 </style>
 
+<!-- Service Worker Status Test -->
+<script>
+async function testServiceWorker() {
+    const statusDiv = document.getElementById('sw-status');
+    statusDiv.innerHTML = '⏳ Checking...';
+
+    if (!('serviceWorker' in navigator)) {
+        statusDiv.innerHTML = '❌ Service Worker not supported in this browser';
+        return;
+    }
+
+    try {
+        const registration = await navigator.serviceWorker.getRegistration();
+
+        if (!registration) {
+            statusDiv.innerHTML = '❌ No Service Worker registered<br><em>The PWA share target will not work!</em>';
+            return;
+        }
+
+        const status = {
+            scope: registration.scope,
+            state: registration.active ? registration.active.state : 'none',
+            installing: !!registration.installing,
+            waiting: !!registration.waiting,
+            active: !!registration.active,
+            controlling: !!navigator.serviceWorker.controller
+        };
+
+        let html = '✅ Service Worker found:<br>';
+        html += `<strong>Scope:</strong> ${status.scope}<br>`;
+        html += `<strong>State:</strong> ${status.state}<br>`;
+        html += `<strong>Controlling page:</strong> ${status.controlling ? '✅ YES' : '❌ NO (refresh needed)'}<br>`;
+        html += `<strong>Active:</strong> ${status.active ? '✅' : '❌'}<br>`;
+
+        if (status.waiting) {
+            html += '<br>⚠️ Update waiting - refresh to activate';
+        }
+
+        statusDiv.innerHTML = html;
+
+    } catch (err) {
+        statusDiv.innerHTML = '❌ Error checking Service Worker: ' + err.message;
+    }
+}
+
+// Auto-run on page load
+window.addEventListener('load', () => {
+    setTimeout(testServiceWorker, 500);
+});
+</script>
+
 <!-- Load JavaScript with error handling -->
 <script>
 console.log('🔍 Inline script loaded - checking for share.js...');
 
-// Test if elements exist
 window.addEventListener('DOMContentLoaded', () => {
     const testDiv = document.getElementById('js-test');
     if (testDiv) {
@@ -296,12 +364,10 @@ window.addEventListener('DOMContentLoaded', () => {
         testDiv.style.color = '#856404';
     }
 
-    // Check if elements exist
     console.log('Form element:', document.getElementById('bookmark-form'));
     console.log('Website input:', document.getElementById('website'));
-    console.log('Submit button:', document.querySelector('button[type="submit"]'));
+    console.log('Website input VALUE:', document.getElementById('website')?.value);
 
-    // If share.js doesn't load within 2 seconds, show error
     setTimeout(() => {
         if (testDiv && testDiv.textContent.includes('waiting')) {
             testDiv.textContent = '❌ share.js failed to load or execute';
@@ -315,7 +381,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <?= js('assets/js/share.js') ?>
 
-<!-- Fallback: Try alternative path -->
 <script src="/assets/js/share.js" onerror="console.error('Failed to load /assets/js/share.js')"></script>
 
 <?php snippet('site-footer') ?>

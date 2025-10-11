@@ -4,6 +4,19 @@ return [
         'install' => false,
         'debug' => true,
     ],
+    'session' => [
+    'cookie' => [
+        'secure' => true, // Set to true if using HTTPS
+        'samesite' => 'Lax' // Changed from 'Strict' for better compatibility
+    ]
+    ],
+
+    // API settings
+    'api' => [
+        'allowInsecure' => false, // Set to true only for local testing
+        'basicAuth' => true,
+        'csrf' => 'auth' // Only require CSRF for authenticated routes
+    ],
     'date.timezone' => 'America/New_York',
     'jonathanstephens.template-handler' => [
         'cache' => true,
@@ -16,10 +29,6 @@ return [
             ]
         ];
     },
-    'api' => [
-      'basicAuth' => true,
-      'allowInsecure' => false, // Only for local development - set to false in production!
-    ],
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
     'mauricerenck.indieConnector.send.url-fields' => [

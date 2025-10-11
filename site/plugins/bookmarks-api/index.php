@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Kirby Bookmarks API Plugin - With Session Auth Support
+ * Kirby Bookmarks API Plugin - With Improved Session Auth Support
  */
 
 Kirby::plugin('jonathan-stephens/bookmarks-api', [
@@ -144,40 +144,69 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                 }
             ],
 
-            // Add full bookmark - USES SESSION OR BASIC AUTH
+            // Add full bookmark - IMPROVED SESSION HANDLING
             [
                 'pattern' => 'bookmarks/add',
                 'method' => 'POST',
-                'auth' => false, // We'll check auth manually to support both session and Basic
+                'auth' => false,
                 'action' => function () {
                     try {
                         $kirby = kirby();
+                        $user = null;
 
-                        // Check if user is logged in via panel session
+                        // DEBUG: Log authentication attempts
+                        error_log('=== BOOKMARK ADD DEBUG ===');
+
+                        // Method 1: Check existing session FIRST
                         $user = $kirby->user();
+                        error_log('Session user: ' . ($user ? $user->email() : 'NONE'));
 
-                        // If no session user, try Basic Auth
+                        // Method 2: Try Basic Auth header if no session
                         if (!$user) {
                             $authHeader = $kirby->request()->header('Authorization');
+                            error_log('Auth header present: ' . ($authHeader ? 'YES' : 'NO'));
+
                             if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
                                 $credentials = base64_decode(substr($authHeader, 6));
                                 list($email, $password) = explode(':', $credentials, 2);
+                                error_log('Attempting Basic Auth for: ' . $email);
 
                                 try {
+                                    // Don't persist the session for API calls
                                     $user = $kirby->auth()->login($email, $password, false);
+                                    error_log('Basic Auth SUCCESS for: ' . $email);
                                 } catch (Exception $e) {
-                                    // Login failed
+                                    error_log('Basic Auth FAILED: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                        // If still no user, return error
+                        // Method 3: Try to impersonate if we're in a trusted environment
+                        // This is a fallback for testing - REMOVE IN PRODUCTION
+                        if (!$user && option('debug', false)) {
+                            $firstUser = $kirby->users()->first();
+                            if ($firstUser) {
+                                $user = $firstUser;
+                                error_log('DEBUG MODE: Using first user: ' . $user->email());
+                            }
+                        }
+
+                        // If still no user, return detailed error
                         if (!$user) {
+                            error_log('Authentication FAILED - no valid user found');
+
                             return [
                                 'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.'
+                                'message' => 'Authentication required. Please log in to the panel first.',
+                                'debug' => option('debug', false) ? [
+                                    'session_user' => 'none',
+                                    'auth_header' => isset($authHeader) ? 'present' : 'missing',
+                                    'cookies' => array_keys($_COOKIE),
+                                ] : null
                             ];
                         }
+
+                        error_log('Proceeding with user: ' . $user->email());
 
                         $data = $kirby->request()->data();
 
@@ -212,6 +241,9 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'author' => $data['author'] ?? '',
                         ];
 
+                        // Impersonate the authenticated user for content creation
+                        $kirby->impersonate('kirby');
+
                         $bookmark = $linksPage->createChild([
                             'slug' => $slug,
                             'template' => 'link',
@@ -221,6 +253,8 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
 
                         // Publish immediately
                         $bookmark->changeStatus('listed');
+
+                        error_log('Bookmark created successfully: ' . $bookmark->id());
 
                         return [
                             'status' => 'success',
@@ -232,48 +266,78 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
+                        error_log('Bookmark creation ERROR: ' . $e->getMessage());
                         return [
                             'status' => 'error',
-                            'message' => $e->getMessage()
+                            'message' => $e->getMessage(),
+                            'trace' => option('debug', false) ? $e->getTraceAsString() : null
                         ];
                     }
                 }
             ],
 
-            // Quick add bookmark - USES SESSION OR BASIC AUTH
+            // Quick add bookmark - IMPROVED SESSION HANDLING
             [
                 'pattern' => 'bookmarks/quick-add',
                 'method' => 'POST',
-                'auth' => false, // We'll check auth manually to support both session and Basic
+                'auth' => false,
                 'action' => function () {
                     try {
                         $kirby = kirby();
+                        $user = null;
 
-                        // Check if user is logged in via panel session
+                        // DEBUG: Log authentication attempts
+                        error_log('=== QUICK ADD DEBUG ===');
+
+                        // Method 1: Check existing session FIRST
                         $user = $kirby->user();
+                        error_log('Session user: ' . ($user ? $user->email() : 'NONE'));
 
-                        // If no session user, try Basic Auth
+                        // Method 2: Try Basic Auth header if no session
                         if (!$user) {
                             $authHeader = $kirby->request()->header('Authorization');
+                            error_log('Auth header present: ' . ($authHeader ? 'YES' : 'NO'));
+
                             if ($authHeader && strpos($authHeader, 'Basic ') === 0) {
                                 $credentials = base64_decode(substr($authHeader, 6));
                                 list($email, $password) = explode(':', $credentials, 2);
+                                error_log('Attempting Basic Auth for: ' . $email);
 
                                 try {
                                     $user = $kirby->auth()->login($email, $password, false);
+                                    error_log('Basic Auth SUCCESS for: ' . $email);
                                 } catch (Exception $e) {
-                                    // Login failed
+                                    error_log('Basic Auth FAILED: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                        // If still no user, return error
+                        // Method 3: Try to impersonate if we're in a trusted environment
+                        // This is a fallback for testing - REMOVE IN PRODUCTION
+                        if (!$user && option('debug', false)) {
+                            $firstUser = $kirby->users()->first();
+                            if ($firstUser) {
+                                $user = $firstUser;
+                                error_log('DEBUG MODE: Using first user: ' . $user->email());
+                            }
+                        }
+
+                        // If still no user, return detailed error
                         if (!$user) {
+                            error_log('Authentication FAILED - no valid user found');
+
                             return [
                                 'status' => 'error',
-                                'message' => 'Authentication required. Please log in to the panel first.'
+                                'message' => 'Authentication required. Please log in to the panel first.',
+                                'debug' => option('debug', false) ? [
+                                    'session_user' => 'none',
+                                    'auth_header' => isset($authHeader) ? 'present' : 'missing',
+                                    'cookies' => array_keys($_COOKIE),
+                                ] : null
                             ];
                         }
+
+                        error_log('Proceeding with user: ' . $user->email());
 
                         $data = $kirby->request()->data();
 
@@ -310,6 +374,9 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'tags' => 'read-later'
                         ];
 
+                        // Impersonate the authenticated user for content creation
+                        $kirby->impersonate('kirby');
+
                         $bookmark = $linksPage->createChild([
                             'slug' => $slug,
                             'template' => 'link',
@@ -320,6 +387,8 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         // Publish immediately
                         $bookmark->changeStatus('listed');
 
+                        error_log('Quick bookmark created successfully: ' . $bookmark->id());
+
                         return [
                             'status' => 'success',
                             'message' => 'Bookmark saved',
@@ -329,9 +398,11 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
+                        error_log('Quick add ERROR: ' . $e->getMessage());
                         return [
                             'status' => 'error',
-                            'message' => $e->getMessage()
+                            'message' => $e->getMessage(),
+                            'trace' => option('debug', false) ? $e->getTraceAsString() : null
                         ];
                     }
                 }

@@ -1,88 +1,85 @@
-const CACHE_NAME = "bookmarks-pwa-v5"; // Increment to force update
+const CACHE_NAME = "bookmarks-pwa-v6";
 const urlsToCache = ["/", "/share"];
 
-// Log everything during install
 self.addEventListener("install", (e) => {
-  console.log("🔧 SW v5: INSTALLING");
+  console.log("🔧 SW v6: Installing");
   e.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log("✅ SW v5: Cache opened");
-        return cache.addAll(urlsToCache);
-      })
-      .then(() => {
-        console.log("⏭️ SW v5: Skip waiting");
-        return self.skipWaiting();
-      })
-      .catch((err) => {
-        console.error("❌ SW v5: Install error:", err);
-      })
+      .then((cache) => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", (e) => {
-  console.log("🚀 SW v5: ACTIVATING");
+  console.log("🚀 SW v6: Activating");
   e.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
-              console.log("🗑️ SW v5: Deleting old cache:", cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
-      .then(() => {
-        console.log("👑 SW v5: Claiming clients");
-        return self.clients.claim();
-      })
+      .then(() => self.clients.claim())
   );
 });
 
-// THE CRITICAL FETCH HANDLER
 self.addEventListener("fetch", (e) => {
   const { request } = e;
   const url = new URL(request.url);
 
-  // Log EVERY fetch request
-  console.log("📡 SW v5 FETCH:", {
-    method: request.method,
-    url: request.url,
-    pathname: url.pathname,
-    origin: url.origin,
-    destination: request.destination,
-    mode: request.mode
-  });
-
   // =====================================================
-  // SHARE TARGET POST HANDLER - MOST CRITICAL
+  // SHARE TARGET POST HANDLER - WITH URL FIELD DETECTION
   // =====================================================
   if (request.method === "POST" && url.pathname === "/share") {
-    console.log("🎯🎯🎯 SHARE POST DETECTED! 🎯🎯🎯");
-    console.log("Full URL:", request.url);
-    console.log("Headers:", [...request.headers.entries()]);
+    console.log("🎯 SW v6: Share POST detected");
 
     e.respondWith(
       (async () => {
         try {
-          console.log("📦 SW v5: Reading form data...");
+          const formData = await request.clone().formData();
 
-          // Clone before reading (body can only be read once)
-          const clonedRequest = request.clone();
-          const formData = await clonedRequest.formData();
-
-          console.log("📦 SW v5: FormData entries:");
+          // Log what we received
+          console.log("📦 SW v6: Raw form data:");
           for (const [key, value] of formData.entries()) {
-            console.log(`  - ${key}: ${value}`);
+            console.log(`  ${key}: ${value}`);
           }
 
-          const sharedUrl = formData.get("url") || "";
-          const sharedTitle = formData.get("title") || "";
-          const sharedText = formData.get("text") || "";
+          // Extract data from form
+          let sharedUrl = formData.get("url") || "";
+          let sharedTitle = formData.get("title") || "";
+          let sharedText = formData.get("text") || "";
 
-          console.log("📦 SW v5: Extracted data:", {
+          console.log("📦 SW v6: Initial extraction:", {
+            url: sharedUrl,
+            title: sharedTitle,
+            text: sharedText
+          });
+
+          // FIX: If url is empty but text looks like a URL, use text as url
+          if (!sharedUrl && sharedText) {
+            // Check if text looks like a URL
+            if (sharedText.startsWith("http://") || sharedText.startsWith("https://")) {
+              console.log("🔧 SW v6: URL found in text field, swapping");
+              sharedUrl = sharedText;
+              sharedText = ""; // Clear text since it was actually the URL
+            }
+          }
+
+          // FIX: If still no URL but text contains a URL, try to extract it
+          if (!sharedUrl && sharedText) {
+            const urlMatch = sharedText.match(/(https?:\/\/[^\s]+)/);
+            if (urlMatch) {
+              console.log("🔧 SW v6: URL extracted from text");
+              sharedUrl = urlMatch[1];
+              sharedText = sharedText.replace(urlMatch[1], "").trim();
+            }
+          }
+
+          console.log("📦 SW v6: After processing:", {
             url: sharedUrl,
             title: sharedTitle,
             text: sharedText
@@ -96,68 +93,32 @@ self.addEventListener("fetch", (e) => {
 
           const redirectUrl = `${url.origin}/share?${params.toString()}`;
 
-          console.log("➡️ SW v5: Redirecting to:", redirectUrl);
-          console.log("➡️ SW v5: Params string:", params.toString());
+          console.log("➡️ SW v6: Redirecting to:", redirectUrl);
 
-          // Create redirect response with 303 See Other
-          const response = Response.redirect(redirectUrl, 303);
-
-          console.log("✅ SW v5: Redirect response created");
-          console.log("Response type:", response.type);
-          console.log("Response status:", response.status);
-          console.log("Response URL:", response.url);
-
-          return response;
+          return Response.redirect(redirectUrl, 303);
 
         } catch (err) {
-          console.error("❌ SW v5: Error in share handler:", err);
-          console.error("Error name:", err.name);
-          console.error("Error message:", err.message);
-          console.error("Error stack:", err.stack);
-
-          // Fallback
-          const fallbackUrl = `${url.origin}/share?error=processing_failed`;
-          console.log("⚠️ SW v5: Fallback redirect to:", fallbackUrl);
-          return Response.redirect(fallbackUrl, 303);
+          console.error("❌ SW v6: Share handler error:", err);
+          return Response.redirect(`${url.origin}/share`, 303);
         }
       })()
-    );
-
-    console.log("🎯 SW v5: Share POST handler completed");
-    return; // Exit early
-  }
-
-  // =====================================================
-  // Handle GET /share - Network only
-  // =====================================================
-  if (url.pathname === "/share") {
-    console.log("🌐 SW v5: GET /share - fetching from network");
-    e.respondWith(
-      fetch(request)
-        .then((response) => {
-          console.log("✅ SW v5: /share network response:", response.status);
-          return response;
-        })
-        .catch((err) => {
-          console.error("❌ SW v5: /share network error:", err);
-          throw err;
-        })
     );
     return;
   }
 
-  // =====================================================
-  // Handle API calls - Network only
-  // =====================================================
-  if (url.pathname.startsWith("/api/")) {
-    console.log("🌐 SW v5: API call - network only");
+  // Handle GET /share - Network only
+  if (url.pathname === "/share") {
     e.respondWith(fetch(request));
     return;
   }
 
-  // =====================================================
+  // Handle API calls - Network only
+  if (url.pathname.startsWith("/api/")) {
+    e.respondWith(fetch(request));
+    return;
+  }
+
   // All other requests - Network first, cache fallback
-  // =====================================================
   e.respondWith(
     fetch(request)
       .then((response) => {
@@ -169,25 +130,14 @@ self.addEventListener("fetch", (e) => {
         }
         return response;
       })
-      .catch(() => {
-        return caches.match(request);
-      })
+      .catch(() => caches.match(request))
   );
 });
 
 self.addEventListener("message", (e) => {
-  console.log("💬 SW v5: Message received:", e.data);
-
   if (e.data && e.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
-
-  if (e.data && e.data.type === "CLEAR_CACHE") {
-    caches.delete(CACHE_NAME).then(() => {
-      console.log("🗑️ SW v5: Cache cleared");
-      e.ports[0].postMessage({ cleared: true });
-    });
-  }
 });
 
-console.log("✅ SW v5 script loaded and ready");
+console.log("✅ SW v6 loaded");

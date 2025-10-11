@@ -28,6 +28,16 @@ elseif (isset($_POST['url'])) {
     $dataSource = 'POST';
 }
 
+// FIX: Some browsers send URL in the 'text' field instead of 'url' field
+if (empty($sharedUrl) && !empty($sharedText)) {
+    // Check if text looks like a URL
+    if (preg_match('/^https?:\/\//', $sharedText)) {
+        $sharedUrl = $sharedText;
+        $sharedText = ''; // Clear text since it was the URL
+        $dataSource .= ' (URL from text field)';
+    }
+}
+
 snippet('site-header') ?>
 
 <div class="share-page">

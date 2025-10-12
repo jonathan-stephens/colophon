@@ -289,8 +289,17 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             return $len >= 2 && $len <= 50;
                         });
 
-                        // Remove duplicates (case-insensitive)
-                        $tags = array_unique(array_map('strtolower', $tags));
+                        // Remove duplicates (case-insensitive) while keeping original capitalization
+$tags = array_values(array_intersect_key(
+    $tags,
+    array_unique(array_map('strtolower', $tags))
+));
+
+// Normalize capitalization (make each word's first letter uppercase)
+$tags = array_map(function($tag) {
+    return ucwords($tag);
+}, $tags);
+
 
                         // Limit to reasonable number
                         $tags = array_slice($tags, 0, 20);

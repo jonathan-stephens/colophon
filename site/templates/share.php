@@ -47,7 +47,8 @@ snippet('site-header') ?>
   <div class="container">
       <h1>Save Bookmark</h1>
 
-      <!-- ALWAYS VISIBLE DEBUG PANEL -->
+      <?php if ($kirby->option('debug', false)): ?>
+      <!-- DEBUG PANEL - Only visible when debug mode is enabled -->
       <div class="debug-panel">
           <strong>🔍 Debug Info:</strong><br>
           <strong>Logged in:</strong> <?= $currentUser ? '✅ ' . $currentUser->email() : '❌ Not logged in' ?><br>
@@ -66,6 +67,7 @@ snippet('site-header') ?>
       <div id="js-test" style="background: #f8d7da; color: #721c24; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
           ⚠️ JavaScript not loaded yet
       </div>
+      <?php endif; ?>
 
       <form id="bookmark-form" class="bookmark-form">
           <div class="form-group">
@@ -110,14 +112,26 @@ snippet('site-header') ?>
               </div>
 
               <div class="form-group half">
-                  <label for="author">Author</label>
+                  <label for="slug">Slug *</label>
                   <input
                       type="text"
-                      id="author"
-                      name="author"
-                      placeholder="Optional"
+                      id="slug"
+                      name="slug"
+                      required
+                      placeholder="e.g., article-slug"
                   >
+                  <small class="field-help">Auto-generated from URL, but you can edit it</small>
               </div>
+          </div>
+
+          <div class="form-group">
+              <label for="author">Author</label>
+              <input
+                  type="text"
+                  id="author"
+                  name="author"
+                  placeholder="Optional"
+              >
           </div>
 
           <div class="form-group">
@@ -126,8 +140,9 @@ snippet('site-header') ?>
                   type="text"
                   id="tags"
                   name="tags"
-                  placeholder="Comma-separated tags"
+                  placeholder="Start typing for suggestions..."
               >
+              <div id="tag-suggestions" class="tag-suggestions"></div>
           </div>
 
           <div class="form-group">
@@ -207,6 +222,14 @@ label {
     color: var(--text-color, #333);
 }
 
+.field-help {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
 input[type="url"],
 input[type="text"],
 textarea {
@@ -268,6 +291,11 @@ textarea {
     opacity: 0.9;
 }
 
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .message {
     margin-top: 1rem;
     padding: 1rem;
@@ -293,6 +321,75 @@ textarea {
     border: 1px solid #bee5eb;
 }
 
+.message.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* Tag Autocomplete Styles */
+.tag-suggestions {
+    position: relative;
+    margin-top: 0.5rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tag-suggestions.active {
+    display: block;
+}
+
+.tag-suggestion {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tag-suggestion:hover,
+.tag-suggestion.selected {
+    background: #f0f0f0;
+}
+
+.tag-suggestion mark {
+    background: #ffd700;
+    font-weight: 600;
+}
+
+/* Offline Indicator */
+.offline-indicator {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: #ff9800;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: none;
+}
+
+.offline-indicator.show {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 @media (max-width: 600px) {
     .form-row {
         flex-direction: column;
@@ -312,6 +409,11 @@ textarea {
 }
 </style>
 
+<!-- Offline Indicator -->
+<div id="offline-indicator" class="offline-indicator">
+    📡 You're offline. Bookmarks will be saved locally and synced when you're back online.
+</div>
+
 <!-- Pass user email to JavaScript if logged in -->
 <script>
 <?php if ($currentUser): ?>
@@ -320,10 +422,9 @@ console.log('✅ User logged in:', '<?= esc($currentUser->email()) ?>');
 <?php else: ?>
 console.log('ℹ️ No user logged in - will prompt for credentials');
 <?php endif; ?>
-</script>
 
-<!-- Service Worker Status Test -->
-<script>
+<?php if ($kirby->option('debug', false)): ?>
+// Debug mode enabled - load service worker test
 async function testServiceWorker() {
     const statusDiv = document.getElementById('sw-status');
     statusDiv.innerHTML = '⏳ Checking...';
@@ -371,12 +472,8 @@ async function testServiceWorker() {
 window.addEventListener('load', () => {
     setTimeout(testServiceWorker, 500);
 });
-</script>
 
-<!-- Load JavaScript with error handling -->
-<script>
-console.log('🔍 Inline script loaded - checking for share.js...');
-
+// Test indicator
 window.addEventListener('DOMContentLoaded', () => {
     const testDiv = document.getElementById('js-test');
     if (testDiv) {
@@ -384,10 +481,6 @@ window.addEventListener('DOMContentLoaded', () => {
         testDiv.style.background = '#fff3cd';
         testDiv.style.color = '#856404';
     }
-
-    console.log('Form element:', document.getElementById('bookmark-form'));
-    console.log('Website input:', document.getElementById('website'));
-    console.log('Website input VALUE:', document.getElementById('website')?.value);
 
     setTimeout(() => {
         if (testDiv && testDiv.textContent.includes('waiting')) {
@@ -398,10 +491,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }, 2000);
 });
+<?php endif; ?>
 </script>
 
 <?= js('assets/js/share.js') ?>
-
-<script src="/assets/js/share.js" onerror="console.error('Failed to load /assets/js/share.js')"></script>
 
 <?php snippet('site-footer') ?>

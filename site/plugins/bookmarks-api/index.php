@@ -7,6 +7,56 @@
 Kirby::plugin('jonathan-stephens/bookmarks-api', [
     'api' => [
         'routes' => [
+            // Get all tags used across the site
+            [
+                'pattern' => 'bookmarks/tags',
+                'method' => 'GET',
+                'auth' => false,
+                'action' => function () {
+                    try {
+                        $kirby = kirby();
+                        $linksPage = page('links');
+                        
+                        if (!$linksPage) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Links page not found'
+                            ];
+                        }
+
+                        $allTags = [];
+                        
+                        // Collect all tags from all bookmarks
+                        foreach ($linksPage->children()->listed() as $link) {
+                            if ($link->tags()->isNotEmpty()) {
+                                $tags = $link->tags()->split(',');
+                                foreach ($tags as $tag) {
+                                    $tag = trim($tag);
+                                    if (!empty($tag)) {
+                                        $allTags[] = $tag;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Remove duplicates and sort
+                        $allTags = array_unique($allTags);
+                        sort($allTags);
+
+                        return [
+                            'status' => 'success',
+                            'data' => array_values($allTags)
+                        ];
+
+                    } catch (Exception $e) {
+                        return [
+                            'status' => 'error',
+                            'message' => $e->getMessage()
+                        ];
+                    }
+                }
+            ],
+
             // Fetch metadata from URL
             [
                 'pattern' => 'bookmarks/fetch-metadata',
@@ -289,17 +339,8 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             return $len >= 2 && $len <= 50;
                         });
 
-                        // Remove duplicates (case-insensitive) while keeping original capitalization
-$tags = array_values(array_intersect_key(
-    $tags,
-    array_unique(array_map('strtolower', $tags))
-));
-
-// Normalize capitalization (make each word's first letter uppercase)
-$tags = array_map(function($tag) {
-    return ucwords($tag);
-}, $tags);
-
+                        // Remove duplicates (case-insensitive)
+                        $tags = array_unique(array_map('strtolower', $tags));
 
                         // Limit to reasonable number
                         $tags = array_slice($tags, 0, 20);
@@ -467,17 +508,45 @@ $tags = array_map(function($tag) {
                             ];
                         }
 
+                        
+                        // =====================================================
+                        // CAPITALIZE TAGS
+                        // =====================================================
+                        $tagsInput = $data['tags'] ?? '';
+                        $formattedTags = '';
+                        
+                        if (!empty($tagsInput)) {
+                            // Split by comma
+                            $tagArray = array_map('trim', explode(',', $tagsInput));
+                            
+                            // Capitalize first letter of each word in each tag
+                            $tagArray = array_map(function($tag) {
+                                return ucwords(strtolower($tag));
+                            }, $tagArray);
+                            
+                            // Join back with commas
+                            $formattedTags = implode(', ', $tagArray);
+                        }
+
                         $content = [
                             'title' => $data['title'] ?? '',
                             'website' => $url,
                             'tld' => $data['tld'] ?? $tld,
                             'text' => $data['text'] ?? '',
-                            'tags' => $data['tags'] ?? '',
+                            'tags' => $formattedTags,
                             'author' => $data['author'] ?? '',
                         ];
 
                         // Impersonate for content creation
                         $kirby->impersonate('kirby');
+
+                        $linksPage = page('links');
+                        if (!$linksPage) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Links parent page not found'
+                            ];
+                        }
 
                         $bookmark = $linksPage->createChild([
                             'slug' => $slug,

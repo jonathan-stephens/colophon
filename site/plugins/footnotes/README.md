@@ -1,12 +1,12 @@
 # Kirby Footnotes
 
-This plugin extends [Kirby 3 and 4](http://getkirby.com) with some basic, extremely easy and unopinionated footnote functionalities.
+This plugin extends [Kirby 3, 4 and 5](http://getkirby.com) with some basic, extremely easy and unopinionated footnote functionalities.
 
 ![footnotes-screenshot](https://user-images.githubusercontent.com/14079751/76997929-79cf0080-6954-11ea-87ce-bcb86b9d959f.jpg)
 
 ## Overview
 
-> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, please consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
+> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, you can consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
 
 - [1. Installation](#1-installation)
 - [2. Basic usage](#2-basic-usage)
@@ -103,18 +103,18 @@ Here is a reference of the outputted markup and classes to grab for styling:
 
 ```html
 <p>
-    This is a footnote.<sup class="footnote"><a id="fnref-1" href="#fn-1">1</a></sup> Here is a test with a footnote that contains a link.<sup class="footnote"><a id="fnref-2" href="#fn-2">2</a></sup> And, well, just to be sure things are working I'm throwing a third footnote in here.<sup class="footnote"><a id="fnref-3" href="#fn-3">3</a></sup>
+    This is a footnote.<sup class="footnote"><a id="fnref-1" href="#fn-1" aria-describedby="fn-1">1</a></sup> Here is a test with a footnote that contains a link.<sup class="footnote"><a id="fnref-2" href="#fn-2" aria-describedby="fn-2">2</a></sup> And, well, just to be sure things are working I'm throwing a third footnote in here.<sup class="footnote"><a id="fnref-3" href="#fn-3" aria-describedby="fn-3">3</a></sup>
 </p>
 <div id="footnotes" class="footnotes-container">
     <ol class="footnotes-list">
         <li id="fn-1" value="1">
-            Right here! <span class="footnotereverse"><a href="#fnref-1">↩</a></span>
+            Right here! <span class="footnotereverse"><a href="#fnref-1" title="Back to content 1">↩</a></span>
         </li>
         <li id="fn-2" value="2">
-            Yes, there is indeed <a href="https://getkirby.com">a link.</a><span class="footnotereverse"><a href="#fnref-2">↩</a></span>
+            Yes, there is indeed <a href="https://getkirby.com">a link.</a><span class="footnotereverse"><a href="#fnref-2" title="Back to content 2">↩</a></span>
         </li>
         <li id="fn-3" value="3">
-            All good! <span class="footnotereverse"><a href="#fnref-3">↩</a></span>
+            All good! <span class="footnotereverse"><a href="#fnref-3" title="Back to content 3">↩</a></span>
         </li>
     </ol>
 </div>
@@ -154,7 +154,18 @@ The string displayed at the end of a footnote, linking to its reference within t
 
 If you don't want any return link to appear, set this value to `false`.
 
-### 5.3. Links
+### 5.3. Back title
+
+The title attribute set on the return link for accessibility purposes. Default is `Back to content {{index}}` (in english, see [this folder](https://github.com/sylvainjule/kirby-footnotes/tree/master/lib/languages) for all available translations — don’t hesitate to PR one if missing). Your custom title will be suffixed with the `{{index}}` of the footnote.
+
+```php
+'sylvainjule.footnotes.back.title'  => 'Back to content', // -> 'Back to content 1', 'Back to content 2', etc.
+'sylvainjule.footnotes.back.title'  => 'Custom title',    // -> 'Custom title 1', 'Custom title 2', etc.
+```
+
+If you don't want any return link to appear, set this value to `false`.
+
+### 5.4. Links
 
 If you don't want the footnote references and footnotes to be links, for example if you are displaying them as sidenotes instead of footnotes, set this to `false`. Default is `true`.
 
@@ -173,6 +184,24 @@ If set to `false`, the footnote's _back_ link won't be appended to the footnote,
 <!-- to -->
 <sup id="fnref-1" class="footnote" data-ref="#fn-1">1</sup>
 ```
+
+### 5.5. Snippets
+
+If you want to overwrite one of [the default snippets](https://github.com/sylvainjule/kirby-footnotes/tree/master/snippets), you can place a file sharing the same name in your `site/snippets` folder.
+If you want to register a custom name / path for one of these 3 snippets, you can do so from your config file:
+
+```php
+'sylvainjule.footnotes.snippet.container' => 'footnotes_container',
+'sylvainjule.footnotes.snippet.entry'     => 'footnotes_entry',
+'sylvainjule.footnotes.snippet.reference' => 'footnotes_reference'
+
+↓
+
+'sylvainjule.footnotes.snippet.container' => 'custom/path/to/footnotes_container',
+'sylvainjule.footnotes.snippet.entry'     => 'custom/path/to/footnotes_entry',
+'sylvainjule.footnotes.snippet.reference' => 'custom/path/to/footnotes_reference'
+```
+
 
 <br/>
 

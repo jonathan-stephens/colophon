@@ -15,6 +15,8 @@ namespace Kirby\Cms;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://getkirby.com/license
+ *
+ * @extends \Kirby\Cms\Collection<\Kirby\Cms\Role>
  */
 class Roles extends Collection
 {
@@ -25,15 +27,19 @@ class Roles extends Collection
 
 	/**
 	 * Returns a filtered list of all
-	 * roles that can be created by the
+	 * roles that can be changed by the
 	 * current user
+	 *
+	 * Use with `$kirby->roles()`. For retrieving
+	 * which roles are available for a specific user,
+	 * use `$user->roles()` without additional filters.
 	 *
 	 * @return $this|static
 	 * @throws \Exception
 	 */
 	public function canBeChanged(): static
 	{
-		if (App::instance()->user()) {
+		if (App::instance()->user()?->isAdmin() !== true) {
 			return $this->filter(function ($role) {
 				$newUser = new User([
 					'email' => 'test@getkirby.com',
@@ -50,14 +56,16 @@ class Roles extends Collection
 	/**
 	 * Returns a filtered list of all
 	 * roles that can be created by the
-	 * current user
+	 * current user.
+	 *
+	 * Use with `$kirby->roles()`.
 	 *
 	 * @return $this|static
 	 * @throws \Exception
 	 */
 	public function canBeCreated(): static
 	{
-		if (App::instance()->user()) {
+		if (App::instance()->user()?->isAdmin() !== true) {
 			return $this->filter(function ($role) {
 				$newUser = new User([
 					'email' => 'test@getkirby.com',
@@ -83,21 +91,21 @@ class Roles extends Collection
 
 		// always include the admin role
 		if ($collection->find('admin') === null) {
-			$collection->set('admin', Role::admin());
+			$collection->set('admin', Role::defaultAdmin());
 		}
 
 		// return the collection sorted by name
 		return $collection->sort('name', 'asc');
 	}
 
-	public static function load(string $root = null, array $inject = []): static
+	public static function load(string|null $root = null, array $inject = []): static
 	{
 		$kirby = App::instance();
 		$roles = new static();
 
 		// load roles from plugins
-		foreach ($kirby->extensions('blueprints') as $blueprintName => $blueprint) {
-			if (substr($blueprintName, 0, 6) !== 'users/') {
+		foreach ($kirby->extensions('blueprints') as $name => $blueprint) {
+			if (str_starts_with($name, 'users/') === false) {
 				continue;
 			}
 
@@ -106,11 +114,10 @@ class Roles extends Collection
 				$blueprint = $blueprint($kirby);
 			}
 
-			if (is_array($blueprint) === true) {
-				$role = Role::factory($blueprint, $inject);
-			} else {
-				$role = Role::load($blueprint, $inject);
-			}
+			$role = match (is_array($blueprint)) {
+				true  => Role::factory($blueprint, $inject),
+				false => Role::load($blueprint, $inject)
+			};
 
 			$roles->set($role->id(), $role);
 		}
@@ -131,7 +138,7 @@ class Roles extends Collection
 
 		// always include the admin role
 		if ($roles->find('admin') === null) {
-			$roles->set('admin', Role::admin($inject));
+			$roles->set('admin', Role::defaultAdmin($inject));
 		}
 
 		// return the collection sorted by name

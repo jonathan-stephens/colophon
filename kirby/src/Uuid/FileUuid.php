@@ -3,6 +3,7 @@
 namespace Kirby\Uuid;
 
 use Generator;
+use Kirby\Cms\App;
 use Kirby\Cms\File;
 
 /**
@@ -82,5 +83,27 @@ class FileUuid extends ModelUuid
 			'parent'   => $parent->toString(),
 			'filename' => $model->filename()
 		];
+	}
+
+	/**
+	 * Returns permalink url
+	 */
+	public function toPermalink(): string
+	{
+		// make sure UUID is cached because the permalink
+		// route only looks up UUIDs from cache
+		if ($this->isCached() === false) {
+			$this->populate();
+		}
+
+		return App::instance()->url() . '/@/' . static::TYPE . '/' . $this->id();
+	}
+
+	/**
+	 * @deprecated 5.1.0 Use `::toPermalink()` instead
+	 */
+	public function url(): string
+	{
+		return $this->toPermalink();
 	}
 }

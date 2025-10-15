@@ -54,4 +54,33 @@ class PageUuid extends ModelUuid
 			yield from static::index($page);
 		}
 	}
+
+	/**
+	 * Returns permalink url
+	 */
+	public function toPermalink(): string
+	{
+		// make sure UUID is cached because the permalink
+		// route only looks up UUIDs from cache
+		if ($this->isCached() === false) {
+			$this->populate();
+		}
+
+		$kirby = App::instance();
+		$url   = $kirby->url();
+
+		if ($language = $kirby->language('current')) {
+			$url = $language->url();
+		}
+
+		return $url . '/@/' . static::TYPE . '/' . $this->id();
+	}
+
+	/**
+	 * @deprecated 5.1.0 Use `::toPermalink()` instead
+	 */
+	public function url(): string
+	{
+		return $this->toPermalink();
+	}
 }

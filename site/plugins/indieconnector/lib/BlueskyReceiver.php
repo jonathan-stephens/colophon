@@ -5,9 +5,10 @@ namespace mauricerenck\IndieConnector;
 use Exception;
 use cjrasmussen\BlueskyApi\BlueskyApi;
 
-class BlueskyReceiver
+class BlueskyReceiver extends Bluesky
 {
     private $bskClient = null;
+    private $connected = false;
 
     public function __construct(
         private ?bool $enabled = null,
@@ -28,7 +29,12 @@ class BlueskyReceiver
         }
 
         $this->bskClient = $bskClient ?: new BlueskyApi();
+    }
+
+    public function connect()
+    {
         $this->bskClient->auth($this->handle, $this->password);
+        $this->connected = true;
     }
 
     public function getResponses(string $did, string $type, array $knownIds)
@@ -108,6 +114,10 @@ class BlueskyReceiver
         try {
             if ($cursor) {
                 $args['cursor'] = $cursor;
+            }
+
+            if (!$this->connected) {
+                $this->connect();
             }
 
             $response = $this->bskClient->request('GET', 'app.bsky.feed.' . $endpoint, $args);

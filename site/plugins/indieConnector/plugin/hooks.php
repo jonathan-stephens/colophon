@@ -7,9 +7,11 @@ use Kirby\Cms\Page;
 return [
     'page.update:after' => function ($newPage, $oldPage) {
         $responseCollector = new ResponseCollector();
-        $webmentions = new WebmentionSender();
 
-        $webmentions->sendWebmentions($newPage);
+        if (option('mauricerenck.indieConnector.send.automatically', true)) {
+            $webmentions = new WebmentionSender();
+            $webmentions->sendWebmentions($newPage);
+        }
 
         if ($mastodonUrl = $newPage->mastodonStatusUrl()) {
             if ($oldPage->mastodonStatusUrl() === $mastodonUrl || $mastodonUrl->isEmpty()) {
@@ -32,8 +34,8 @@ return [
         $webmentions = new WebmentionSender();
         $webmentions->sendWebmentions($newPage);
 
-        if (!$newPage->isDraft() && $oldPage->isDraft()) {
 
+        if (option('mauricerenck.indieConnector.post.automatically', true) && !$newPage->isDraft() && $oldPage->isDraft()) {
             $postResults = [];
 
             $mastodonSender = new MastodonSender();
@@ -125,7 +127,9 @@ return [
                 $webmention['type'],
                 $webmention['author']['avatar'],
                 $webmention['author']['name'],
-                $webmention['title']
+                $webmention['author']['url'],
+                $webmention['title'],
+                $webmention['service'],
             );
         }
     },

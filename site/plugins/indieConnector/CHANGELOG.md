@@ -1,3 +1,74 @@
+## [2.12.1](https://github.com/mauricerenck/indieConnector/compare/v2.12.0...v2.12.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* copy and paste error ([4c35b93](https://github.com/mauricerenck/indieConnector/commit/4c35b93af30d52e493e158e052bae87cd352df0a))
+
+# [2.12.0](https://github.com/mauricerenck/indieConnector/compare/v2.11.0...v2.12.0) (2025-08-27)
+
+
+### Features
+
+* mastodonpost kirby tag ([043aaf4](https://github.com/mauricerenck/indieConnector/commit/043aaf4cdcf61e50faec4472648e3086943ea308))
+
+# [2.11.0](https://github.com/mauricerenck/indieConnector/compare/v2.10.0...v2.11.0) (2025-08-11)
+
+
+### Bug Fixes
+
+* bluesky detect hashtags  [#28](https://github.com/mauricerenck/indieConnector/issues/28) ([90625bb](https://github.com/mauricerenck/indieConnector/commit/90625bbe36a73390b01814d1c493303c7c940f3e))
+* mastodon text length option not considered ([c6d8e9f](https://github.com/mauricerenck/indieConnector/commit/c6d8e9fac26940965b4a1b534c697f6405f26192))
+
+
+### Features
+
+* include alt text when posting images ([63e6510](https://github.com/mauricerenck/indieConnector/commit/63e6510aae12626da3ecc56524295c5693b8adb7)), closes [#29](https://github.com/mauricerenck/indieConnector/issues/29)
+* use tags from tagfield when posting [#28](https://github.com/mauricerenck/indieConnector/issues/28) ([1187392](https://github.com/mauricerenck/indieConnector/commit/11873925443db03b37655caf62ba232e2e7307d6)), closes [#30](https://github.com/mauricerenck/indieConnector/issues/30)
+
+# [2.10.0](https://github.com/mauricerenck/indieConnector/compare/v2.9.2...v2.10.0) (2025-07-06)
+
+
+### Bug Fixes
+
+* allow duplicate ids from different mastodon instances ([14834d0](https://github.com/mauricerenck/indieConnector/commit/14834d0d027c2fa7abb94c0d8557ce322cfad8c8))
+* dark mode in panel view ([ec0f49c](https://github.com/mauricerenck/indieConnector/commit/ec0f49c26ea243d37b6191e074347698856dfd7b))
+
+
+### Features
+
+* disable automatic sending of webmentions ([62a0b7c](https://github.com/mauricerenck/indieConnector/commit/62a0b7c2aae4f311631f91bb154e9c471b0a1843))
+* post manually panel button ([eccf12a](https://github.com/mauricerenck/indieConnector/commit/eccf12a9c10a660e775a5b6a83a4da4495e71970))
+* trigger sending webmentions from view button ([2c07f00](https://github.com/mauricerenck/indieConnector/commit/2c07f00f1e56d4003706840daee2ab48d8e7b11d))
+
+## [2.9.2](https://github.com/mauricerenck/indieConnector/compare/v2.9.1...v2.9.2) (2025-06-20)
+
+
+### Bug Fixes
+
+* handle empty string secrets ([2892f14](https://github.com/mauricerenck/indieConnector/commit/2892f14a3cd6f37a1479ae9e76c2efc89a2ffa8f))
+
+## [2.9.1](https://github.com/mauricerenck/indieConnector/compare/v2.9.0...v2.9.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* removed missed debug code ([ff16b79](https://github.com/mauricerenck/indieConnector/commit/ff16b79537340a7f47a0967e531f162ecc51577b))
+
+# [2.9.0](https://github.com/mauricerenck/indieConnector/compare/v2.8.0...v2.9.0) (2025-06-15)
+
+
+### Bug Fixes
+
+* author urls in panel and redirect for processed response urls ([8870111](https://github.com/mauricerenck/indieConnector/commit/887011148400dc0fba62f8189385eeed952f8d07))
+* move bluesky connect to prevent performance issues ([fdf67bb](https://github.com/mauricerenck/indieConnector/commit/fdf67bb90e3c69c1be1beb679db76d08991b999f))
+* response collector - handle deleted posts ([d9e5069](https://github.com/mauricerenck/indieConnector/commit/d9e5069b4978bc5230234dd3519c4b48c128483b)), closes [#27](https://github.com/mauricerenck/indieConnector/issues/27)
+
+
+### Features
+
+* detect service types like mastodon and bluesky [#25](https://github.com/mauricerenck/indieConnector/issues/25) ([efd1d08](https://github.com/mauricerenck/indieConnector/commit/efd1d0878a4587d581693a49733df9d700fe7a25))
+
 # [2.8.0](https://github.com/mauricerenck/indieConnector/compare/v2.7.3...v2.8.0) (2025-05-27)
 
 

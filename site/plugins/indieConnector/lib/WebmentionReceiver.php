@@ -112,6 +112,7 @@ class WebmentionReceiver extends Receiver
         $data['published'] = $mf2->getPublishDate($microformats);
         $data['author'] = $mf2->getAuthor($microformats);
         $data['title'] = $mf2->getTitle($microformats);
+        $data['service'] = $mf2->getService($microformats);
 
         return $data;
     }

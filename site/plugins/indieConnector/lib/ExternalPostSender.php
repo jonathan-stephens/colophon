@@ -9,6 +9,8 @@ class ExternalPostSender extends Sender
     public function __construct(
         public ?array $textfields = null,
         public ?string $imagefield = null,
+        public ?string $imageAltField = null,
+        public ?string $tagsField = null,
         public ?string $prefereLanguage = null,
         public ?bool $usePermalinkUrl = null,
         public ?bool $skipUrl = null,
@@ -21,11 +23,13 @@ class ExternalPostSender extends Sender
 
         $this->textfields = $textfields ?? option('mauricerenck.indieConnector.post.textfields', ['description']);
         $this->imagefield = $imagefield ?? option('mauricerenck.indieConnector.post.imagefield', false);
-        $this->prefereLanguage = $prefereLanguage ?? option('mauricerenck.indieConnector.post.prefereLanguage', false);
+        $this->imageAltField = $imageAltField ?? option('mauricerenck.indieConnector.post.imagealtfield', 'alt');
+        $this->tagsField = $tagsField ?? option('mauricerenck.indieConnector.post.tagsfield', null);
+        $this->prefereLanguage = $prefereLanguage ?? option('mauricerenck.indieConnector.post.prefereLanguage', null);
         $this->usePermalinkUrl = $usePermalinkUrl ?? option('mauricerenck.indieConnector.post.usePermalinkUrl', false);
         $this->skipUrl = $skipUrl ?? option('mauricerenck.indieConnector.post.skipUrl', false);
         $this->skipUrlTemplates = $skipUrlTemplates ?? option('mauricerenck.indieConnector.post.skipUrlTemplates', []);
-        $this->maxPostLength = $maxPostLength ?? 300;
+        $this->maxPostLength = $maxPostLength ?? option('mauricerenck.indieConnector.mastodon.text-length', 300);
 
         $this->urlChecks = $urlChecks ?? new UrlChecks();
         $this->pageChecks = $pageChecks ?? new PageChecks();
@@ -49,22 +53,35 @@ class ExternalPostSender extends Sender
     {
         $pageOfLanguage = !$this->prefereLanguage ? null : $page->translation($this->prefereLanguage);
         $content = !is_null($pageOfLanguage) ? $pageOfLanguage->content() : $page->content()->toArray();
+        $tagString = '';
+
+        if (!is_null($this->tagsField)) {
+            $lowercaseTagField = strtolower($this->tagsField);
+            if ($page->{$lowercaseTagField}()->isNotEmpty()) {
+                $tags = $page->{$lowercaseTagField}()->split();
+
+                if (count($tags) > 0) {
+                    $tagString = ' #' . implode(' #', $tags);
+                }
+            }
+        }
 
         if (is_array($this->textfields)) {
             foreach ($this->textfields as $field) {
                 $lowercaseField = strtolower($field);
                 if (isset($content[$lowercaseField]) && !empty($content[$lowercaseField])) {
-                    return Str::short($content[$lowercaseField], $trimTextPosition);
+                    return Str::short($content[$lowercaseField] . $tagString, $trimTextPosition);
                 }
             }
         }
 
         $field = $this->textfields;
         if (!is_array($this->textfields) && isset($content[$field]) && !empty($content[$field])) {
-            return Str::short($content[$field], $trimTextPosition);
+            return Str::short($content[$field] . $tagString, $trimTextPosition);
         }
 
-        return Str::short($content['title'], $trimTextPosition);
+        $title = isset($content['title']) ? $content['title'] : '';
+        return Str::short($title . $tagString, $trimTextPosition);
     }
 
     public function getPostUrl($page)
@@ -116,5 +133,100 @@ class ExternalPostSender extends Sender
         }
 
         return false;
+    }
+
+    public function getActiveServices($page)
+    {
+        $services = [];
+
+        if (option('mauricerenck.indieConnector.mastodon.enabled', false)) {
+            $postData = $this->getPostTargetUrlAndStatus('mastodon', $page);
+
+            $services[] = [
+                'name' => 'mastodon',
+                'label' => 'Mastodon',
+                'icon' => 'mastodon',
+                'url' => $postData['url'],
+                'status' => $postData['status']
+            ];
+        }
+
+        if (option('mauricerenck.indieConnector.bluesky.enabled', false)) {
+            $postData = $this->getPostTargetUrlAndStatus('bluesky', $page);
+
+            if (!is_null($postData['url'])) {
+                $bluesky = new Bluesky();
+                $url = $bluesky->getUrlFromDid($postData['url']);
+            } else {
+                $url = null;
+            }
+
+            $services[] = [
+                'name' => 'bluesky',
+                'label' => 'Bluesky',
+                'icon' => 'bluesky',
+                'url' => $url,
+                'status' => $postData['status']
+            ];
+        }
+
+        return $services;
+    }
+
+    public function getServicesDialogFields($page)
+    {
+        $fields = [];
+
+        $services = $this->getActiveServices($page);
+        $fields['text'] = [
+            'label' => 'Text',
+            'type' => 'textarea',
+            'buttons' => false,
+            'size' => 'small',
+            'maxlength' => 500,
+            'required' => true,
+        ];
+
+        $fields['skipUrl'] = [
+            'label' => 'Skip posting URL',
+            'type' => 'toggle',
+            'width' => '1/3'
+        ];
+
+        $sentData = [];
+        foreach ($services as $service) {
+            $sentDataEntry = [
+                'text' => $service['label'],
+                'selecting' => true,
+                'selectable' => true,
+                'value' => $service['name'],
+                'link' => false,
+                'image' => [
+                    'icon' => $service['name'],
+                    'ratio' => '1/1',
+                    'back' => 'transparent'
+                ]
+            ];
+
+            if (!is_null($service['url']) && $service['status'] === 'success') {
+                $sentDataEntry['info'] = 'Published';
+                $sentDataEntry['selecting'] = false;
+                $sentDataEntry['selectable'] = false;
+                $sentDataEntry['buttons'] = [['icon' => 'open', 'link' => $service['url'], 'target' => '_blank']];
+            } else if (!is_null($service['url']) && $service['status'] === 'error') {
+                $sentDataEntry['info'] = 'Error';
+            }
+
+            $sentData[] = $sentDataEntry;
+        }
+
+        if (count($sentData) > 0) {
+            $fields['services'] = [
+                'type' => 'icPostStatus',
+                'serviceItems' => $sentData
+            ];
+        }
+
+        return $fields;
     }
 }

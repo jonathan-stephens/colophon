@@ -52,7 +52,7 @@ class Receiver
 
     public function hasValidSecret($postBody)
     {
-        return isset($postBody['secret']) && $postBody['secret'] === option('mauricerenck.indieConnector.secret', '');
+        return isset($postBody['secret']) && $postBody['secret'] === option('mauricerenck.indieConnector.secret', '') && $postBody['secret'] !== '';
     }
 
     public function getPostDataUrls($postBody): array|bool
@@ -101,6 +101,7 @@ class Receiver
             'published' => $data['published'],
             'title' => $data['title'],
             'content' => $data['content'],
+            'service' => $data['service'],
             'author' => [
                 'type' => 'card',
                 'name' => $data['author']['name'],

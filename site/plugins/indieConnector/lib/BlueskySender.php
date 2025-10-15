@@ -4,6 +4,7 @@ namespace mauricerenck\IndieConnector;
 
 use Exception;
 use Kirby\Filesystem\F;
+use Kirby\Toolkit\Str;
 use cjrasmussen\BlueskyApi\BlueskyApi;
 
 class BlueskySender extends ExternalPostSender
@@ -20,7 +21,7 @@ class BlueskySender extends ExternalPostSender
         $this->password = $password ?? option('mauricerenck.indieConnector.bluesky.password', false);
     }
 
-    public function sendPost($page)
+    public function sendPost($page, string | null $manualTextMessage = null)
     {
         if (!$this->enabled) {
             return false;
@@ -52,8 +53,10 @@ class BlueskySender extends ExternalPostSender
             $pageUrl = $this->getPostUrl($page);
             $trimTextPosition = $this->calculatePostTextLength($pageUrl);
             $language = 'en';
+            $altField = $this->imageAltField;
 
             $message = $this->getTextFieldContent($page, $trimTextPosition);
+            $message = is_null($manualTextMessage) ? $this->getTextFieldContent($page, $trimTextPosition) : Str::short($manualTextMessage, $trimTextPosition);
             $message .= "\n" . $pageUrl;
 
             if ($defaultLanguage = kirby()->defaultLanguage()) {
@@ -86,6 +89,7 @@ class BlueskySender extends ExternalPostSender
                     }
 
                     $mediaAttachment = $this->getMediaAttachment($image);
+                    $altText = $image->{$altField}()->isNotEmpty() ? $image->{$altField}()->value() : '';
 
                     if (!$mediaAttachment) {
                         continue;
@@ -101,7 +105,7 @@ class BlueskySender extends ExternalPostSender
 
                     $image = $response->blob;
                     $imageList[] = [
-                        'alt' => $page->title()->value(),
+                        'alt' => $altText ?? '',
                         'image' => $image,
                         'aspectRatio' => [
                             'width'  => $mediaAttachment['width'],
@@ -117,7 +121,7 @@ class BlueskySender extends ExternalPostSender
             }
 
             $args['repo'] = $bluesky->getAccountDid();
-            $args['record']['facets'] = $this->getLinks($message);
+            $args['record']['facets'] = array_merge($this->getLinks($message), $this->getHashtags($message));
 
             $response = $bluesky->request('POST', 'com.atproto.repo.createRecord', $args);
 
@@ -168,6 +172,39 @@ class BlueskySender extends ExternalPostSender
         }
 
         return $links;
+    }
+
+    public function getHashtags($message)
+    {
+        $hashtags = [];
+        $regex = '/(^|\s)#(\p{L}[\p{L}\p{N}_]*)/u'; // captures #tag with letters/numbers/underscore
+
+        preg_match_all($regex, $message, $matches, PREG_OFFSET_CAPTURE);
+
+        foreach ($matches[0] as $index => $match) {
+            $fullMatch = $match[0];
+            $start = $match[1] + (substr($fullMatch, 0, 1) === '#' ? 0 : 1); // skip space if present
+            $tagText = $matches[2][$index][0]; // without the '#'
+
+            // Bluesky wants byte offsets, not character positions
+            $byteStart = strlen(mb_strcut($message, 0, $start, 'UTF-8'));
+            $byteEnd   = $byteStart + strlen($fullMatch) - ($fullMatch[0] === '#' ? 0 : 1);
+
+            $hashtags[] = [
+                'index' => [
+                    'byteStart' => $byteStart,
+                    'byteEnd'   => $byteEnd,
+                ],
+                'features' => [
+                    [
+                        '$type' => 'app.bsky.richtext.facet#tag',
+                        'tag'   => $tagText,
+                    ],
+                ],
+            ];
+        }
+
+        return $hashtags;
     }
 
     public function getMediaAttachment($image)

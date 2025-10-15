@@ -13,6 +13,7 @@
 | Option                    | Default                                                        | Description                                                                                                        |
 | ------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `send.enabled`            | `true`                                                         | Enable sending webmentions                                                                                         |
+| `send.automatically`      | `true`                                                         | Enable sending webmentions automatically on page save                                                              |
 | `send.hook.enabled`       | `false`                                                        | Allow sending webmentions from Kirby hook triggered by other plugins                                               |
 | `send.maxRetries`         | `3`                                                            | How often should indieconnector try to send a mention if it failes                                                 |
 | `send.markDeleted`        | `false`                                                        | When you delete a page, mark it as gone, so webmention targets can get informed about that - **Needs a database!** |
@@ -59,16 +60,19 @@
 
 ## Posting to external services
 
-| Option                  | Default           | Description                                                          |
-| ----------------------- | ----------------- | -------------------------------------------------------------------- |
-| `post.prefereLanguage`  | `-`               | Use another language than your default language to use the text from |
-| `post.usePermalinkUrl`  | `false`           | Use the permalink url instead of the page url                        |
-| `post.skipUrl`          | `false`           | NEVER add the url to the post                                        |
-| `post.skipUrlTemplates` | `[]`              | Do not add the url to the post when using the given templates        |
-| `post.textfields`       | `['description']` | Text source fields for posting elsewhere                             |
-| `post.imagefield`       | `''`              | Image source field for posting elsewhere, must be one image          |
-| `post.allowedTemplates` | `[]`              | Set templates allowed to send webmentions                            |
-| `post.blockedTemplates` | `[]`              | Block templates from sending webmentions                             |
+| Option                  | Default           | Description                                                                    |
+| ----------------------- | ----------------- | ------------------------------------------------------------------------------ |
+| `post.prefereLanguage`  | `-`               | Use another language than your default language to use the text from           |
+| `post.usePermalinkUrl`  | `false`           | Use the permalink url instead of the page url                                  |
+| `post.skipUrl`          | `false`           | NEVER add the url to the post                                                  |
+| `post.skipUrlTemplates` | `[]`              | Do not add the url to the post when using the given templates                  |
+| `post.textfields`       | `['description']` | Text source fields for posting elsewhere                                       |
+| `post.imagefield`       | `''`              | Image source field for posting elsewhere, must be one image                    |
+| `post.imagealtfield`    | `alt`             | Name of the field containing the alt text for the image in your file blueprint |
+| `post.tagsfield`        | `tags`            | A Kirby tag field to use for hashtags on mastodon and bluesky                  |
+| `post.allowedTemplates` | `[]`              | Set templates allowed to send webmentions                                      |
+| `post.blockedTemplates` | `[]`              | Block templates from sending webmentions                                       |
+| `post.automatically`    | `true`            | Send posts automatically when a page is published                              |
 
 ### Mastodon ([details](mastodon.md))
 
@@ -81,7 +85,7 @@
 | `sendMastodon`          | `false`         | **DEPRECATED**                        |
 | `mastodon-bearer`       | `‘‘`            | **DEPRECATED**                        |
 | `mastodon-instance-url` | `‘‘`            | **DEPRECATED**                        |
-| `mastodon.text-length`  | `500`           | **DEPRECATED**                        |
+| `mastodon-text-length`  | `500`           | **DEPRECATED**                        |
 | `mastodon-text-field`   | `‘description‘` | **DEPRECATED**                        |
 
 ### Bluesky ([details](bluesky.md))

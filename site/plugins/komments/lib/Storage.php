@@ -7,7 +7,8 @@ use Kirby\Content\Content;
 use Kirby\Toolkit\Obj;
 use Kirby\Toolkit\Collection;
 
-class Storage {
+class Storage
+{
 
     public function __construct() {}
 
@@ -48,7 +49,6 @@ class Storage {
         string $createdAt,
         string | null $updatedAt
     ): Content {
-
         return new Content([
             'id' => $id,
             'pageUuid' => $pageUuid,

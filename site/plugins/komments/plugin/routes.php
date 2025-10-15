@@ -14,7 +14,7 @@ return [
         'action' => function () {
             $headers = kirby()->request()->headers();
             $formData = kirby()->request()->data();
-            $shouldReturnJson = ($headers['X-Return-Type'] === 'json');
+            $shouldReturnJson = (array_key_exists('X-Return-Type', $headers) && $headers['X-Return-Type'] === 'json');
 
             $page = page($formData['pageUuid']);
 
@@ -77,7 +77,11 @@ return [
 
             $storage->saveComment($comment);
 
-            kirby()->trigger('komments.comment.received', []);
+            kirby()->trigger('komments.comment.received', ['comment' => $comment]);
+
+            if ($comment->parentId()->isNotEmpty()) {
+                kirby()->trigger('komments.comment.replied', ['comment' => $comment]);
+            }
 
             if ($shouldReturnJson) {
                 $response = [
@@ -95,7 +99,7 @@ return [
         'pattern' => 'komments/cron/notification/(:any)',
         'method' => 'GET',
         'action' => function ($secret) {
-            if (option('mauricerenck.komments.notifications.cronSecret', '') === $secret) {
+            if (option('mauricerenck.komments.notifications.cronSecret', '') === $secret && $secret !== '') {
                 $notifications = new KommentNotifications();
                 $notifications->sendNotifications();
 

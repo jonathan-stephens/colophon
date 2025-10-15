@@ -1,6 +1,6 @@
 <template>
   <k-dialog
-    class="cite-dialog"
+    class="datetime-dialog"
     ref="dialog"
     :visible="true"
     :submit-button="true"
@@ -17,10 +17,10 @@
 </template>
 
 <script>
-// console.log('Citation Dialog loaded...');
+// console.log('Datetime Dialog loaded...');
 
 export default {
-  name: "cite-dialog",
+  name: "datetime-dialog",
   props: {
     editor: {
       type: Object,
@@ -29,8 +29,8 @@ export default {
     value: {
       type: Object,
       default: () => ({
-        class: '',
-        cite: ''
+        cite: '',
+        datetime: ''
       })
     }
   },
@@ -38,15 +38,15 @@ export default {
     return {
       values: this.value,
       fields: {
-        class: {
-          label: "Class",
-          type: "text",
-          placeholder: "Enter one or more CSS classes"
-        },
         cite: {
-          label: "Citation",
+          label: "Cite",
           type: "text",
-          placeholder: "Enter a citation source"
+          placeholder: "Enter a URI for a resource that explains the change"
+        },
+        datetime: {
+          label: "Date",
+          type: "date",
+          time: true
         }
       }
     };

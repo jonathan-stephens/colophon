@@ -1,16 +1,22 @@
 # Semantic Markup Kirbytags
 
-A collection of kirbytags for Textarea and marks for Writer fields providing advanced options for semantic markup in the panel. Includes tags for: `abbr`, `cite`, `dfn`, `ins`, `mark`, `q`, `s`, `samp`, `sub`, `sup` along with a special shortcut for handling `small caps`.
+![Plugin Preview](src/assets/semantic-markup-plugin.jpg)
+
+A collection of kirbytags for Textarea and marks for Writer fields providing advanced options for semantic markup in the panel. Includes tags for: `abbr`, `cite`, `del`, `dfn`, `ins`, `mark`, `q`, `s`, `samp`, `sub`, `sup` along with a special shortcut for handling `small caps`.
 
 ## Installation
 
 ### [Kirby CLI](https://github.com/getkirby/cli)
 
-    kirby plugin:install scottboms/kirby-markup
+```
+kirby plugin:install scottboms/kirby-markup
+```
 
 ### Git submodule
 
-    git submodule add https://github.com/scottboms/kirby-markup.git site/plugins/kirby-markup
+```
+git submodule add https://github.com/scottboms/kirby-markup.git site/plugins/kirby-markup
+```
 
 ### Copy and Paste
 
@@ -21,41 +27,47 @@ A collection of kirbytags for Textarea and marks for Writer fields providing adv
 
 The following Textarea and Writer Field marks are included. To enable these in the panel, you need to add them explicitly to [your blueprints](https://getkirby.com/docs/reference/panel/fields/textarea). For example:
 
-    text:
-      label: Content
-      type: textarea
-      buttons:
-        - abbr
-        - cite
-        - dfn
-        - ins
-        - mark
-        - q
-        - s
-        - samp
-        - smallcaps
-        - sub
-        - sup
+```yml
+text:
+  label: Content
+  type: textarea
+  buttons:
+    - abbr
+    - cite
+    - del
+    - dfn
+    - ins
+    - mark
+    - q
+    - s
+    - samp
+    - smallcaps
+    - sub
+    - sup
 
-    description:
-        type: writer
-        inline: true
-        marks:
-          - abbr
-          - cite
-          - dfn
-          - ins
-          - mark
-          - q
-          - samp
-          - smallcaps
+description:
+  type: writer
+  inline: true
+  marks:
+    - abbr
+    - cite
+    - del
+    - dfn
+    - ins
+    - mark
+    - q
+    - samp
+    - smallcaps
+```
 
 ### Optional Tag Attributes
 
-All Textarea tags provide a convenience `class` attribute. The `abbr` and `dfn` tags also provide an optional `title` attribute per HTML markup standards. The `q` tag provides both a `class` and `cite` attributes.
+Most Textarea tags provide a convenience `class` attribute. The `abbr` and `dfn` tags also provide an optional `title` attribute per HTML markup standards. The `q` tag provides both a `class` and `cite` attributes and the `del` tag provides `cite` and `datetime` attributes.
 
 * `class`: A CSS class/classes to append to the element [optional]
 * `title`: A title attribute for `abbr`, `dfn`, and `` [optional]
+* `cite`: A citation attribute for `del` [recommended]
+* `datetime`: A date/time attribute for `del` [optional]
 
 ### [abbr](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr)
 
@@ -64,6 +76,10 @@ All Textarea tags provide a convenience `class` attribute. The `abbr` and `dfn` 
 ### [cite](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite)
 
 `(cite: Nineteen Eighty-Four class: markup__cite) by George Orwell`
+
+### [del](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/del)
+
+`A (del: represents a range of text that has been deleted from a document)`
 
 ### [dfn](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn)
 

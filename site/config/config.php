@@ -1,7 +1,7 @@
 <?php
 return [
     'panel' => [
-        'install' => false,
+        'install' => true,
         'debug' => false,
     ],
     'date.timezone' => 'America/New_York',

@@ -1,14 +1,10 @@
 <?php
 return [
     'panel' => [
-        'install' => true,
+        'install' => false,
         'debug' => false,
     ],
     'date.timezone' => 'America/New_York',
-    'jonathanstephens.template-handler' => [
-        'cache' => true,
-        'defaultTemplate' => 'default'
-    ],
     'ready' => function ($kirby) {
         return [
            'pechente.kirby-admin-bar' => [

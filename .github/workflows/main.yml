@@ -22,7 +22,6 @@ jobs:
         server: ftp.poetandscribe.com
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        dry-run: true
         exclude: |
           **/.git*
           **/.git*/**
@@ -30,3 +29,4 @@ jobs:
           **/node_modules/**
           **/.DS_Store
           **/Thumbs.db
+        git-ftp-args: "--create-dirs --syncroot=."

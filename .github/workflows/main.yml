@@ -29,3 +29,4 @@ jobs:
           **/node_modules/**
           **/.DS_Store
           **/Thumbs.db
+        git-ftp-args: "--create-dirs --syncroot=."

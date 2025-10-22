@@ -1,0 +1,16 @@
+{
+  "name": "oklch-color-pipeline",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generate OKLCH color tokens with WCAG contrast levels for CSS/SCSS themes.",
+  "scripts": {
+    "build:colors": "node build-colors.mjs",
+    "watch:colors": "nodemon --watch colors.config.json --exec \"npm run build:colors\""
+  },
+  "dependencies": {
+    "colorjs.io": "^0.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

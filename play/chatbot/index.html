@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethics AI Assistant</title>
+  <link href="/assets/style.css" rel="stylesheet">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Theme Switcher (visible, preserved from original) -->
+  <div class="theme-selector">
+    <label for="theme-select" class="visually-hidden">Select theme</label>
+    <select id="theme-select" class="theme-select" aria-label="Theme selector">
+      <option value="">Auto (System)</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="high-contrast">High Contrast</option>
+      <option value="blue">Blue</option>
+      <option value="warm">Warm</option>
+      <option value="purple">Purple</option>
+    </select>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar" data-open="false" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <button
+          class="sidebar-toggle-btn"
+          id="sidebar-toggle-btn"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="sidebar-content"
+        >
+          <span class="sidebar-toggle-line"></span>
+          <span class="sidebar-toggle-line"></span>
+          <span class="sidebar-toggle-line"></span>
+        </button>
+      </div>
+      <div class="sidebar-content" id="sidebar-content">
+        <h2 class="visually-hidden">Navigation Menu</h2>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" role="button" aria-label="New chat">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+              <span class="nav-label">New Chat</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" role="button" aria-label="Home">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </span>
+              <span class="nav-label">Home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" role="button" aria-label="History">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3h18v18H3zM21 9H3M9 21V9"/>
+                </svg>
+              </span>
+              <span class="nav-label">History</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" role="button" aria-label="Settings">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24m-12.72 0l4.24-4.24m4.24-4.24l4.24-4.24"/>
+                </svg>
+              </span>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" role="button" aria-label="Help and FAQ">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 16v-4m0-4h.01"/>
+                </svg>
+              </span>
+              <span class="nav-label">Help & FAQ</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <span>Ethics AI</span>
+          <span class="beta-badge" aria-label="Beta version">Beta</span>
+        </div>
+      </header>
+
+      <!-- Chat Container -->
+      <div class="chat-container" id="main-content">
+        <!-- Prompt Header -->
+        <div class="prompt-header" id="prompt-header">
+          <h1 class="prompt-text">What ethics related questions can I help answer?</h1>
+        </div>
+
+        <!-- Starter Cards -->
+        <div class="starter-cards" id="starter-cards">
+          <button class="starter-card" data-question="How do I handle a conflict of interest at work?">
+            <h2 class="card-title">Conflict of Interest</h2>
+            <p class="card-description">How do I handle a conflict of interest at work?</p>
+          </button>
+
+          <button class="starter-card" data-question="What are the ethical implications of AI in healthcare?">
+            <h2 class="card-title">AI Ethics</h2>
+            <p class="card-description">What are the ethical implications of AI in healthcare?</p>
+          </button>
+
+          <button class="starter-card" data-question="How should I approach whistleblowing?">
+            <h2 class="card-title">Whistleblowing</h2>
+            <p class="card-description">How should I approach whistleblowing?</p>
+          </button>
+
+          <button class="starter-card" data-question="What is the difference between ethics and compliance?">
+            <h2 class="card-title">Ethics vs Compliance</h2>
+            <p class="card-description">What is the difference between ethics and compliance?</p>
+          </button>
+        </div>
+
+        <!-- Messages Area (initially hidden) -->
+        <div class="messages-area" id="messages-area" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions text" aria-label="Conversation messages">
+          <!-- Messages will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-area">
+        <form class="input-container" id="chat-form" aria-label="Send message">
+          <div class="input-wrapper">
+            <label for="message-input" class="visually-hidden">Type your message</label>
+            <textarea
+              id="message-input"
+              class="message-input"
+              placeholder="Ask a follow-up question..."
+              rows="1"
+              aria-label="Message input"
+              aria-describedby="bot-status"
+            ></textarea>
+          </div>
+          <button type="submit" class="send-btn" id="send-btn" aria-label="Send message" disabled>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2.5 10L17.5 3.75L11.25 18.75L10 12.5L2.5 10Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <!-- Visible status for sighted users + visually-hidden live region for AT -->
+          <div id="bot-status" class="status-indicator" aria-hidden="true" style="display:none">Bot is generating response…</div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Screen-reader-only status (announces to assistive tech) -->
+  <div id="sr-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    (function () {
+      // Elements
+      const htmlEl = document.documentElement;
+      const themeSelect = document.getElementById('theme-select');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+      const chatForm = document.getElementById('chat-form');
+      const messageInput = document.getElementById('message-input');
+      const sendBtn = document.getElementById('send-btn');
+      const messagesArea = document.getElementById('messages-area');
+      const starterCards = document.getElementById('starter-cards');
+      const promptHeader = document.getElementById('prompt-header');
+      const botStatusVisible = document.getElementById('bot-status');
+      const srStatus = document.getElementById('sr-status');
+
+      // Respect user/system preferences
+      const prefersDarkMQ = window.matchMedia('(prefers-color-scheme: dark)');
+      const prefersReducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const prefersContrastMQ = window.matchMedia('(prefers-contrast: more)');
+
+      function applyTheme(theme) {
+        if (theme) {
+          htmlEl.setAttribute('data-theme', theme);
+        } else {
+          htmlEl.removeAttribute('data-theme');
+        }
+        try { localStorage.setItem('chat-theme', theme || ''); } catch (e) { /* ignore */ }
+      }
+
+      function loadTheme() {
+        const saved = localStorage.getItem('chat-theme');
+        if (saved) {
+          if (themeSelect) themeSelect.value = saved;
+          applyTheme(saved);
+        } else {
+          // set default from system
+          applyTheme(prefersDarkMQ.matches ? 'dark' : '');
+        }
+        // If user prefers high contrast and no explicit choice, apply it
+        if (prefersContrastMQ.matches && !htmlEl.hasAttribute('data-theme')) {
+          applyTheme('high-contrast');
+          if (themeSelect) themeSelect.value = 'high-contrast';
+        }
+      }
+
+      if (themeSelect) {
+        themeSelect.addEventListener('change', (e) => applyTheme(e.target.value || ''));
+        // Keep in sync with system if user hasn't explicitly chosen
+        prefersDarkMQ.addEventListener('change', (e) => {
+          const saved = localStorage.getItem('chat-theme');
+          if (!saved) applyTheme(e.matches ? 'dark' : '');
+        });
+      }
+      loadTheme();
+
+      // Sidebar control + keyboard shortcut (Alt+M) and ESC to close
+      function setSidebar(open) {
+        sidebar.setAttribute('data-open', String(Boolean(open)));
+        sidebarToggleBtn.setAttribute('aria-expanded', String(Boolean(open)));
+      }
+      function toggleSidebar() {
+        const isOpen = sidebar.getAttribute('data-open') === 'true';
+        setSidebar(!isOpen);
+      }
+      sidebarToggleBtn.addEventListener('click', toggleSidebar);
+      document.addEventListener('keydown', (e) => {
+        if (e.altKey && (e.key === 'm' || e.key === 'M')) {
+          e.preventDefault();
+          toggleSidebar();
+          sidebarToggleBtn.focus();
+        }
+        if (e.key === 'Escape') {
+          const isOpen = sidebar.getAttribute('data-open') === 'true';
+          if (isOpen) {
+            setSidebar(false);
+            sidebarToggleBtn.focus();
+          }
+        }
+      });
+
+      // Input behaviour
+      function updateSendState() {
+        sendBtn.disabled = !messageInput.value.trim();
+      }
+      messageInput.addEventListener('input', () => {
+        updateSendState();
+        // auto-size but respect max height
+        messageInput.style.height = 'auto';
+        messageInput.style.height = Math.min(messageInput.scrollHeight, 200) + 'px';
+      });
+
+      // Starter cards click
+      starterCards.addEventListener('click', (e) => {
+        const card = e.target.closest('.starter-card');
+        if (card) {
+          const question = card.getAttribute('data-question');
+          if (question) sendMessage(question);
+        }
+      });
+
+      // Form submit
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (message) sendMessage(message);
+      });
+
+      // Accessibility helpers for status
+      function announceForAT(message) {
+        if (srStatus) {
+          srStatus.textContent = message;
+        }
+      }
+      function showVisibleStatus(show, text) {
+        if (!botStatusVisible) return;
+        if (show) {
+          botStatusVisible.style.display = 'inline-block';
+          botStatusVisible.textContent = text || 'Bot is generating response…';
+        } else {
+          botStatusVisible.style.display = 'none';
+          botStatusVisible.textContent = '';
+        }
+      }
+
+      // Message rendering helpers
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function addMessage(text, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message message-${type}`;
+
+        if (type === 'user') {
+          messageDiv.innerHTML = `<div role="article" aria-roledescription="user message" class="message-bubble">${escapeHtml(text)}</div>`;
+        } else if (type === 'assistant') {
+          // Accept HTML for assistant content (trusted here because it's your placeholder)
+          messageDiv.innerHTML = `<div role="article" aria-roledescription="assistant message" class="message-content">${text}</div>`;
+        }
+
+        messagesArea.appendChild(messageDiv);
+
+        // Scroll with respect for reduced-motion preference
+        if (prefersReducedMotionMQ.matches) {
+          messagesArea.scrollTop = messagesArea.scrollHeight;
+        } else {
+          // smooth scroll: use element.scrollIntoView for consistency
+          messageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        return messageDiv;
+      }
+
+      // Attach followup handlers inside assistant messages
+      function attachFollowups(container) {
+        const followupBtns = container.querySelectorAll ? container.querySelectorAll('.followup-btn') : [];
+        followupBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const question = btn.getAttribute('data-followup');
+            if (question) sendMessage(question);
+          });
+        });
+      }
+
+      // Send message flow
+      function sendMessage(text) {
+        // hide starter UI
+        starterCards.style.display = 'none';
+        promptHeader.style.display = 'none';
+        messagesArea.setAttribute('data-active', 'true');
+
+        // add user message
+        addMessage(text, 'user');
+
+        // clear/resize input
+        messageInput.value = '';
+        messageInput.style.height = 'auto';
+        updateSendState();
+
+        // show visible and SR status
+        announceForAT('Bot is generating response...');
+        showVisibleStatus(true, 'Bot is generating response…');
+
+        // simulate network/processing delay (same behavior as original but with status)
+        setTimeout(() => {
+          // original assistant content preserved:
+          const assistantHtml = `
+            <p>This is a placeholder response. The bot functionality will be implemented in the future. This interface demonstrates the structure for displaying responses with citations and follow-up questions.</p>
+
+            <div class="citations">
+              <h3 class="citations-title">Sources</h3>
+              <ul class="citations-list">
+                <li>
+                  <a href="#" class="citation-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M8 1L3 6h3v6h4V6h3L8 1z"/>
+                    </svg>
+                    Ethics Guidelines Document
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="citation-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M8 1L3 6h3v6h4V6h3L8 1z"/>
+                    </svg>
+                    Professional Standards Handbook
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="citation-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M8 1L3 6h3v6h4V6h3L8 1z"/>
+                    </svg>
+                    Case Studies in Ethics
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="followup-questions">
+              <h3 class="followup-title">Related Questions</h3>
+              <ul class="followup-list">
+                <li>
+                  <button class="followup-btn" data-followup="Tell me more about ethical frameworks">
+                    Tell me more about ethical frameworks
+                  </button>
+                </li>
+                <li>
+                  <button class="followup-btn" data-followup="How do I report ethical violations?">
+                    How do I report ethical violations?
+                  </button>
+                </li>
+                <li>
+                  <button class="followup-btn" data-followup="What are common ethical dilemmas?">
+                    What are common ethical dilemmas?
+                  </button>
+                </li>
+              </ul>
+            </div>
+          `;
+
+          // hide status
+          announceForAT('');
+          showVisibleStatus(false);
+
+          // insert assistant message preserving content
+          const assistantNode = addMessage(assistantHtml, 'assistant');
+
+          // attach followups inside this assistant node
+          attachFollowups(assistantNode);
+
+          // restore focus to composer
+          messageInput.focus();
+        }, 1000);
+      }
+
+      // Initialize
+      function init() {
+        // ensure ARIA attributes on messages area (explicit)
+        messagesArea.setAttribute('aria-live', 'polite');
+        messagesArea.setAttribute('aria-atomic', 'false');
+        messagesArea.setAttribute('aria-relevant', 'additions text');
+
+        // set initial send button state
+        updateSendState();
+
+        // focus composer for keyboard users
+        messageInput.focus();
+
+        // Observe new messages for potential future behaviors (e.g. trimming)
+        const observer = new MutationObserver((mutations) => {
+          // placeholder for future trimming/analytics etc.
+        });
+        observer.observe(messagesArea, { childList: true, subtree: true });
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

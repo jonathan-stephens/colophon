@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Palette Test Sheet</title>
+  <style>
+  :root {
+    /* MONO-LIGHTEST - Full Spectrum with WCAG Contrast
+    Contrast ratios - lightest:darkest 19.12:1, lighter:darker 12.50:1, light:dark 6.43:1 */
+    --mono-lightest-darkest: oklch(15.0000% 0.0123 91.5200);
+    --mono-lightest-darker: oklch(30.0000% 0.0123 91.5200);
+    --mono-lightest-dark: oklch(45.0000% 0.0123 91.5200);
+    --mono-lightest-base: oklch(97.9000% 0.0123 91.5200);
+    --mono-lightest-light: oklch(95.0000% 0.0123 91.5200);
+    --mono-lightest-lighter: oklch(97.0000% 0.0123 91.5200);
+    --mono-lightest-lightest: oklch(99.0000% 0.0123 91.5200);
+
+      /*  MONO-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 18.43:1, lighter:darker 11.71:1, light:dark 5.66:1 */
+    --mono-lighter-darkest: oklch(15.0000% 0.0105 58.1900);
+    --mono-lighter-darker: oklch(30.0000% 0.0105 58.1900);
+    --mono-lighter-dark: oklch(45.0000% 0.0105 58.1900);
+    --mono-lighter-base: oklch(82.7700% 0.0105 58.1900);
+    --mono-lighter-light: oklch(90.7700% 0.0105 58.1900);
+    --mono-lighter-lighter: oklch(94.7700% 0.0105 58.1900);
+    --mono-lighter-lightest: oklch(97.7700% 0.0105 58.1900);
+
+      /*  MONO-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.39:1, lighter:darker 7.48:1, light:dark 4.67:1*/
+    --mono-core-darkest: oklch(15.2100% 0.0074 5.7700);
+    --mono-core-darker: oklch(27.2100% 0.0074 5.7700);
+    --mono-core-dark: oklch(36.2100% 0.0074 5.7700);
+    --mono-core-base: oklch(60.2100% 0.0074 5.7700);
+    --mono-core-light: oklch(74.0000% 0.0074 5.7700);
+    --mono-core-lighter: oklch(78.0000% 0.0074 5.7700);
+    --mono-core-lightest: oklch(85.0000% 0.0074 5.7700);
+
+      /*  MONO-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.58:1, lighter:darker 7.26:1, light:dark 4.51:1*/
+    --mono-darker-darkest: oklch(13.0000% 0.0021 325.6200);
+    --mono-darker-darker: oklch(20.5000% 0.0021 325.6200);
+    --mono-darker-dark: oklch(25.0000% 0.0021 325.6200);
+    --mono-darker-base: oklch(37.6600% 0.0021 325.6200);
+    --mono-darker-light: oklch(62.6600% 0.0021 325.6200);
+    --mono-darker-lighter: oklch(72.1600% 0.0021 325.6200);
+    --mono-darker-lightest: oklch(84.6600% 0.0021 325.6200);
+
+      /* // MONO-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 13.28:1, lighter:darker 7.86:1, light:dark 4.61:1*/
+    --mono-darkest-darkest: oklch(1.0000% 0.0000 0.0000);
+    --mono-darkest-darker: oklch(3.0000% 0.0000 0.0000);
+    --mono-darkest-dark: oklch(10.0000% 0.0000 0.0000);
+    --mono-darkest-base: oklch(14.9600% 0.0000 0.0000);
+    --mono-darkest-light: oklch(57.0000% 0.0000 0.0000);
+    --mono-darkest-lighter: oklch(70.0000% 0.0000 0.0000);
+    --mono-darkest-lightest: oklch(85.0000% 0.0000 0.0000);
+
+      /* // SUNLIGHT-LIGHTEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.43:1, lighter:darker 7.48:1, light:dark 4.56:1*/
+    --sunlight-lightest-darkest: oklch(15.0000% 0.0051 0.1200);
+    --sunlight-lightest-darker: oklch(25.4700% 0.0051 0.1200);
+    --sunlight-lightest-dark: oklch(34.9700% 0.0051 0.1200);
+    --sunlight-lightest-base: oklch(56.9700% 0.0051 0.1200);
+    --sunlight-lightest-light: oklch(72.0000% 0.0051 0.1200);
+    --sunlight-lightest-lighter: oklch(76.5000% 0.0051 0.1200);
+    --sunlight-lightest-lightest: oklch(85.0000% 0.0051 0.1200);
+
+      /* // SUNLIGHT-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 13.07:1, lighter:darker 7.14:1, light:dark 4.86:1 */
+    --sunlight-lighter-darkest: oklch(18.0000% 0.1500 230.0000);
+    --sunlight-lighter-darker: oklch(30.5000% 0.1500 230.0000);
+    --sunlight-lighter-dark: oklch(38.0000% 0.1500 230.0000);
+    --sunlight-lighter-base: oklch(65.0000% 0.1500 230.0000);
+    --sunlight-lighter-light: oklch(77.0000% 0.1500 230.0000);
+    --sunlight-lighter-lighter: oklch(79.5000% 0.1500 230.0000);
+    --sunlight-lighter-lightest: oklch(87.0000% 0.1500 230.0000);
+
+      /* // SUNLIGHT-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.70:1, lighter:darker 8.41:1, light:dark 4.76:1 */
+    --sunlight-core-darkest: oklch(15.0000% 0.1800 340.0000);
+    --sunlight-core-darker: oklch(30.0000% 0.1800 340.0000);
+    --sunlight-core-dark: oklch(43.0000% 0.1800 340.0000);
+    --sunlight-core-base: oklch(72.0000% 0.1800 340.0000);
+    --sunlight-core-light: oklch(82.0000% 0.1800 340.0000);
+    --sunlight-core-lighter: oklch(84.0000% 0.1800 340.0000);
+    --sunlight-core-lightest: oklch(87.0000% 0.1800 340.0000);
+
+      /* // SUNLIGHT-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.13:1, lighter:darker 12.51:1, light:dark 6.43:1*/
+    --sunlight-darker-darkest: oklch(15.0000% 0.0277 88.7500);
+    --sunlight-darker-darker: oklch(30.0000% 0.0277 88.7500);
+    --sunlight-darker-dark: oklch(45.0000% 0.0277 88.7500);
+    --sunlight-darker-base: oklch(96.2100% 0.0277 88.7500);
+    --sunlight-darker-light: oklch(95.0000% 0.0277 88.7500);
+    --sunlight-darker-lighter: oklch(97.0000% 0.0277 88.7500);
+    --sunlight-darker-lightest: oklch(99.0000% 0.0277 88.7500);
+
+      /* // SUNLIGHT-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.16:1, lighter:darker 12.56:1, light:dark 6.45:1*/
+    --sunlight-darkest-darkest: oklch(15.0000% 0.0702 84.4200);
+    --sunlight-darkest-darker: oklch(30.0000% 0.0702 84.4200);
+    --sunlight-darkest-dark: oklch(45.0000% 0.0702 84.4200);
+    --sunlight-darkest-base: oklch(91.2200% 0.0702 84.4200);
+    --sunlight-darkest-light: oklch(95.0000% 0.0702 84.4200);
+    --sunlight-darkest-lighter: oklch(97.0000% 0.0702 84.4200);
+    --sunlight-darkest-lightest: oklch(99.0000% 0.0702 84.4200);
+
+      /* // FOREST-LIGHTEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.15:1, lighter:darker 12.50:1, light:dark 6.43:1*/
+    --forest-lightest-darkest: oklch(15.0000% 0.0255 97.1200);
+    --forest-lightest-darker: oklch(30.0000% 0.0255 97.1200);
+    --forest-lightest-dark: oklch(45.0000% 0.0255 97.1200);
+    --forest-lightest-base: oklch(94.4100% 0.0255 97.1200);
+    --forest-lightest-light: oklch(95.0000% 0.0255 97.1200);
+    --forest-lightest-lighter: oklch(97.0000% 0.0255 97.1200);
+    --forest-lightest-lightest: oklch(99.0000% 0.0255 97.1200);
+
+      /* // FOREST-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.18:1, lighter:darker 12.11:1, light:dark 5.84:1*/
+    --forest-lighter-darkest: oklch(15.0000% 0.0625 108.6900);
+    --forest-lighter-darker: oklch(30.0000% 0.0625 108.6900);
+    --forest-lighter-dark: oklch(45.0000% 0.0625 108.6900);
+    --forest-lighter-base: oklch(83.8800% 0.0625 108.6900);
+    --forest-lighter-light: oklch(91.8800% 0.0625 108.6900);
+    --forest-lighter-lighter: oklch(95.8800% 0.0625 108.6900);
+    --forest-lighter-lightest: oklch(98.8800% 0.0625 108.6900);
+
+      /* // FOREST-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.70:1, lighter:darker 8.41:1, light:dark 4.76:1*/
+    --forest-core-darkest: oklch(15.0000% 0.1800 340.0000);
+    --forest-core-darker: oklch(30.0000% 0.1800 340.0000);
+    --forest-core-dark: oklch(43.0000% 0.1800 340.0000);
+    --forest-core-base: oklch(72.0000% 0.1800 340.0000);
+    --forest-core-light: oklch(82.0000% 0.1800 340.0000);
+    --forest-core-lighter: oklch(84.0000% 0.1800 340.0000);
+    --forest-core-lightest: oklch(87.0000% 0.1800 340.0000);
+
+      /* // FOREST-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.69:1, lighter:darker 7.03:1, light:dark 4.75:1*/
+    --forest-darker-darkest: oklch(15.0000% 0.0793 181.6500);
+    --forest-darker-darker: oklch(25.0000% 0.0793 181.6500);
+    --forest-darker-dark: oklch(28.0000% 0.0793 181.6500);
+    --forest-darker-base: oklch(44.1900% 0.0793 181.6500);
+    --forest-darker-light: oklch(66.1900% 0.0793 181.6500);
+    --forest-darker-lighter: oklch(74.1900% 0.0793 181.6500);
+    --forest-darker-lightest: oklch(85.0000% 0.0793 181.6500);
+
+      /* // FOREST-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.95:1, lighter:darker 7.43:1, light:dark 4.57:1*/
+    --forest-darkest-darkest: oklch(11.9200% 0.0409 228.4300);
+    --forest-darkest-darker: oklch(14.9200% 0.0409 228.4300);
+    --forest-darkest-dark: oklch(15.9200% 0.0409 228.4300);
+    --forest-darkest-base: oklch(26.9200% 0.0409 228.4300);
+    --forest-darkest-light: oklch(58.0000% 0.0409 228.4300);
+    --forest-darkest-lighter: oklch(70.0000% 0.0409 228.4300);
+    --forest-darkest-lightest: oklch(85.0000% 0.0409 228.4300);
+
+      /* // OCEAN-LIGHTEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.14:1, lighter:darker 12.50:1, light:dark 6.43:1*/
+    --ocean-lightest-darkest: oklch(15.0000% 0.0174 99.6100);
+    --ocean-lightest-darker: oklch(30.0000% 0.0174 99.6100);
+    --ocean-lightest-dark: oklch(45.0000% 0.0174 99.6100);
+    --ocean-lightest-base: oklch(92.9000% 0.0174 99.6100);
+    --ocean-lightest-light: oklch(95.0000% 0.0174 99.6100);
+    --ocean-lightest-lighter: oklch(97.0000% 0.0174 99.6100);
+    --ocean-lightest-lightest: oklch(99.0000% 0.0174 99.6100);
+
+      /* // OCEAN-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 16.10:1, lighter:darker 10.11:1, light:dark 4.85:1*/
+    --ocean-lighter-darkest: oklch(15.0000% 0.0354 127.3500);
+    --ocean-lighter-darker: oklch(30.0000% 0.0354 127.3500);
+    --ocean-lighter-dark: oklch(45.0000% 0.0354 127.3500);
+    --ocean-lighter-base: oklch(78.0000% 0.0354 127.3500);
+    --ocean-lighter-light: oklch(86.0000% 0.0354 127.3500);
+    --ocean-lighter-lighter: oklch(90.0000% 0.0354 127.3500);
+    --ocean-lighter-lightest: oklch(93.0000% 0.0354 127.3500);
+
+      /* // OCEAN-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.66:1, lighter:darker 7.39:1, light:dark 4.51:1*/
+    --ocean-core-darkest: oklch(15.0000% 0.0738 190.9100);
+    --ocean-core-darker: oklch(23.5000% 0.0738 190.9100);
+    --ocean-core-dark: oklch(28.0000% 0.0738 190.9100);
+    --ocean-core-base: oklch(42.8700% 0.0738 190.9100);
+    --ocean-core-light: oklch(64.8700% 0.0738 190.9100);
+    --ocean-core-lighter: oklch(74.3700% 0.0738 190.9100);
+    --ocean-core-lightest: oklch(85.0000% 0.0738 190.9100);
+
+      /* // OCEAN-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.65:1, lighter:darker 7.18:1, light:dark 4.52:1*/
+    --ocean-darker-darkest: oklch(9.0000% 0.0466 217.6600);
+    --ocean-darker-darker: oklch(17.5000% 0.0466 217.6600);
+    --ocean-darker-dark: oklch(22.0000% 0.0466 217.6600);
+    --ocean-darker-base: oklch(32.5700% 0.0466 217.6600);
+    --ocean-darker-light: oklch(60.5700% 0.0466 217.6600);
+    --ocean-darker-lighter: oklch(70.0700% 0.0466 217.6600);
+    --ocean-darker-lightest: oklch(83.5700% 0.0466 217.6600);
+
+      /* // OCEAN-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 13.07:1, lighter:darker 7.56:1, light:dark 4.66:1 */
+    --ocean-darkest-darkest: oklch(10.1200% 0.0266 235.6400);
+    --ocean-darkest-darker: oklch(13.1200% 0.0266 235.6400);
+    --ocean-darkest-dark: oklch(14.1200% 0.0266 235.6400);
+    --ocean-darkest-base: oklch(25.1200% 0.0266 235.6400);
+    --ocean-darkest-light: oklch(58.0000% 0.0266 235.6400);
+    --ocean-darkest-lighter: oklch(70.0000% 0.0266 235.6400);
+    --ocean-darkest-lightest: oklch(85.0000% 0.0266 235.6400);
+
+      /* // MOONLIGHT-LIGHTEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.11:1, lighter:darker 12.51:1, light:dark 6.43:1*/
+    --moonlight-lightest-darkest: oklch(15.0000% 0.0155 77.0700);
+    --moonlight-lightest-darker: oklch(30.0000% 0.0155 77.0700);
+    --moonlight-lightest-dark: oklch(45.0000% 0.0155 77.0700);
+    --moonlight-lightest-base: oklch(91.2500% 0.0155 77.0700);
+    --moonlight-lightest-light: oklch(95.0000% 0.0155 77.0700);
+    --moonlight-lightest-lighter: oklch(97.0000% 0.0155 77.0700);
+    --moonlight-lightest-lightest: oklch(99.0000% 0.0155 77.0700);
+
+      /* // MOONLIGHT-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.80:1, lighter:darker 8.09:1, light:dark 4.51:1*/
+    --moonlight-lighter-darkest: oklch(15.0000% 0.0237 14.2700);
+    --moonlight-lighter-darker: oklch(30.0000% 0.0237 14.2700);
+    --moonlight-lighter-dark: oklch(43.0000% 0.0237 14.2700);
+    --moonlight-lighter-base: oklch(71.0500% 0.0237 14.2700);
+    --moonlight-lighter-light: oklch(81.0500% 0.0237 14.2700);
+    --moonlight-lighter-lighter: oklch(83.0500% 0.0237 14.2700);
+    --moonlight-lighter-lightest: oklch(86.0500% 0.0237 14.2700);
+
+      /* // MOONLIGHT-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.57:1, lighter:darker 7.26:1, light:dark 4.51:1*/
+    --moonlight-core-darkest: oklch(13.0000% 0.0400 274.8200);
+    --moonlight-core-darker: oklch(20.5000% 0.0400 274.8200);
+    --moonlight-core-dark: oklch(25.0000% 0.0400 274.8200);
+    --moonlight-core-base: oklch(37.6700% 0.0400 274.8200);
+    --moonlight-core-light: oklch(62.6700% 0.0400 274.8200);
+    --moonlight-core-lighter: oklch(72.1700% 0.0400 274.8200);
+    --moonlight-core-lightest: oklch(84.6700% 0.0400 274.8200);
+
+      /* // MOONLIGHT-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.53:1, lighter:darker 7.11:1, light:dark 4.62:1*/
+    --moonlight-darker-darkest: oklch(14.4000% 0.0248 268.4200);
+    --moonlight-darker-darker: oklch(17.4000% 0.0248 268.4200);
+    --moonlight-darker-dark: oklch(17.4000% 0.0248 268.4200);
+    --moonlight-darker-base: oklch(29.4000% 0.0248 268.4200);
+    --moonlight-darker-light: oklch(59.0000% 0.0248 268.4200);
+    --moonlight-darker-lighter: oklch(70.0000% 0.0248 268.4200);
+    --moonlight-darker-lightest: oklch(85.0000% 0.0248 268.4200);
+
+    /*   // MOONLIGHT-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 13.22:1, lighter:darker 7.74:1, light:dark 4.57:1*/
+    --moonlight-darkest-darkest: oklch(6.2500% 0.0109 260.6700);
+    --moonlight-darkest-darker: oklch(9.2500% 0.0109 260.6700);
+    --moonlight-darkest-dark: oklch(11.2500% 0.0109 260.6700);
+    --moonlight-darkest-base: oklch(21.2500% 0.0109 260.6700);
+    --moonlight-darkest-light: oklch(57.0000% 0.0109 260.6700);
+    --moonlight-darkest-lighter: oklch(70.0000% 0.0109 260.6700);
+    --moonlight-darkest-lightest: oklch(85.0000% 0.0109 260.6700);
+
+    /*   // STARRY-LIGHTEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.25:1, lighter:darker 12.52:1, light:dark 6.42:1*/
+    --starry-lightest-darkest: oklch(15.0000% 0.0620 109.4600);
+    --starry-lightest-darker: oklch(30.0000% 0.0620 109.4600);
+    --starry-lightest-dark: oklch(45.0000% 0.0620 109.4600);
+    --starry-lightest-base: oklch(97.4700% 0.0620 109.4600);
+    --starry-lightest-light: oklch(95.0000% 0.0620 109.4600);
+    --starry-lightest-lighter: oklch(97.0000% 0.0620 109.4600);
+    --starry-lightest-lightest: oklch(99.0000% 0.0620 109.4600);
+
+    /*// STARRY-LIGHTER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 19.23:1, lighter:darker 12.70:1, light:dark 6.18:1*/
+    --starry-lighter-darkest: oklch(15.0000% 0.1452 85.8300);
+    --starry-lighter-darker: oklch(30.0000% 0.1452 85.8300);
+    --starry-lighter-dark: oklch(45.0000% 0.1452 85.8300);
+    --starry-lighter-base: oklch(85.2800% 0.1452 85.8300);
+    --starry-lighter-light: oklch(93.2800% 0.1452 85.8300);
+    --starry-lighter-lighter: oklch(97.0000% 0.1452 85.8300);
+    --starry-lighter-lightest: oklch(99.0000% 0.1452 85.8300);
+
+      /* // STARRY-CORE - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.54:1, lighter:darker 7.23:1, light:dark 4.69:1*/
+    --starry-core-darkest: oklch(15.0000% 0.0641 245.4300);
+    --starry-core-darker: oklch(25.0000% 0.0641 245.4300);
+    --starry-core-dark: oklch(32.3900% 0.0641 245.4300);
+    --starry-core-base: oklch(52.3900% 0.0641 245.4300);
+    --starry-core-light: oklch(70.0000% 0.0641 245.4300);
+    --starry-core-lighter: oklch(75.0000% 0.0641 245.4300);
+    --starry-core-lightest: oklch(85.0000% 0.0641 245.4300);
+
+      /* // STARRY-DARKER - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 12.84:1, lighter:darker 7.37:1, light:dark 4.77:1*/
+    --starry-darker-darkest: oklch(11.0000% 0.0391 248.9700);
+    --starry-darker-darker: oklch(19.0000% 0.0391 248.9700);
+    --starry-darker-dark: oklch(23.0000% 0.0391 248.9700);
+    --starry-darker-base: oklch(35.6400% 0.0391 248.9700);
+    --starry-darker-light: oklch(62.6400% 0.0391 248.9700);
+    --starry-darker-lighter: oklch(71.6400% 0.0391 248.9700);
+    --starry-darker-lightest: oklch(84.6400% 0.0391 248.9700);
+
+      /* // STARRY-DARKEST - Full Spectrum with WCAG Contrast
+    // Contrast ratios - lightest:darkest 13.22:1, lighter:darker 7.81:1, light:dark 4.59:1*/
+    --starry-darkest-darkest: oklch(1.5500% 0.0394 278.8900);
+    --starry-darkest-darker: oklch(4.5500% 0.0394 278.8900);
+    --starry-darkest-dark: oklch(10.0000% 0.0394 278.8900);
+    --starry-darkest-base: oklch(16.5500% 0.0394 278.8900);
+    --starry-darkest-light: oklch(57.0000% 0.0394 278.8900);
+    --starry-darkest-lighter: oklch(70.0000% 0.0394 278.8900);
+    --starry-darkest-lightest: oklch(85.0000% 0.0394 278.8900);
+  }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem;
+      background: #fafafa;
+      color: #222;
+    }
+
+    h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .palette-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .palette-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contrast-badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      background: #f0f0f0;
+      border-radius: 6px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .color-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+      background: white;
+    }
+
+    .color-swatch {
+      height: 100px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.05);
+    }
+
+    .color-swatch::after {
+      content: attr(data-variant);
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .color-info {
+      padding: 0.75rem;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      background: #fafafa;
+    }
+
+    .color-value {
+      font-family: 'Courier New', monospace;
+      color: #666;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .color-value:hover {
+      overflow: visible;
+      white-space: normal;
+    }
+
+    .contrast-matrix {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f8f8f8;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .contrast-matrix h4 {
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .contrast-item {
+      padding: 0.5rem;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .contrast-item strong {
+      font-family: monospace;
+      color: #333;
+    }
+
+    .contrast-pass {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    .contrast-fail {
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    .contrast-aa {
+      color: #ea580c;
+      font-weight: 600;
+    }
+
+    .color-combinations {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: #f8f8f8;
+      border-radius: 8px;
+    }
+
+    .color-combinations h4 {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .combo-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .load-message {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+      font-size: 1.1rem;
+    }
+
+    .copy-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #222;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Color Palette Test Sheet</h1>
+  <p class="subtitle">Generated from OKLCH tokens • Click any swatch to copy its value</p>
+
+  <div id="palettes"></div>
+  <div id="loading" class="load-message">Loading color palettes...</div>
+
+  <div id="copyToast" class="copy-toast">Copied to clipboard!</div>
+
+  <script>
+    // Parse CSS variables from the generated tokens file
+    async function loadColorPalettes() {
+      try {
+        // Try to load the generated CSS file
+        const response = await fetch('./src/styles/tokens-generated.css');
+        const cssText = await response.text();
+
+        // Parse CSS variables
+        const varPattern = /--([a-z]+)-(darkest|darker|dark|mid|light|lighter|lightest|base):\s*([^;]+);/g;
+        const palettes = {};
+
+        let match;
+        while ((match = varPattern.exec(cssText)) !== null) {
+          const [, colorName, variant, value] = match;
+          if (!palettes[colorName]) {
+            palettes[colorName] = {};
+          }
+          palettes[colorName][variant] = value.trim();
+        }
+
+        return palettes;
+      } catch (error) {
+        console.error('Error loading palettes:', error);
+        // Fallback: try to read from CSS custom properties if file can't be loaded
+        return parseCSSVariables();
+      }
+    }
+
+    // Fallback: Parse from computed styles
+    function parseCSSVariables() {
+      const root = document.documentElement;
+      const styles = getComputedStyle(root);
+      const palettes = {};
+
+      // Get all CSS variables
+      for (let i = 0; i < styles.length; i++) {
+        const prop = styles[i];
+        if (prop.startsWith('--')) {
+          const value = styles.getPropertyValue(prop).trim();
+          const match = prop.match(/--([a-z]+)-(darkest|darker|dark|mid|light|lighter|lightest|base)/);
+          if (match) {
+            const [, colorName, variant] = match;
+            if (!palettes[colorName]) {
+              palettes[colorName] = {};
+            }
+            palettes[colorName][variant] = value;
+          }
+        }
+      }
+
+      return palettes;
+    }
+
+    // Calculate contrast ratio between two colors
+    function getContrast(rgb1, rgb2) {
+      const getLuminance = (rgb) => {
+        const [r, g, b] = rgb.match(/\d+/g).map(Number);
+        const [rs, gs, bs] = [r, g, b].map(val => {
+          val = val / 255;
+          return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+      };
+
+      const lum1 = getLuminance(rgb1);
+      const lum2 = getLuminance(rgb2);
+      const brightest = Math.max(lum1, lum2);
+      const darkest = Math.min(lum1, lum2);
+
+      return (brightest + 0.05) / (darkest + 0.05);
+    }
+
+    // Format contrast ratio with color coding
+    function formatContrast(ratio) {
+      const rounded = ratio.toFixed(2);
+      if (ratio >= 7) return `<span class="contrast-pass">${rounded}:1 AAA</span>`;
+      if (ratio >= 4.5) return `<span class="contrast-aa">${rounded}:1 AA</span>`;
+      return `<span class="contrast-fail">${rounded}:1</span>`;
+    }
+
+    // Show copy toast
+    function showCopyToast(text) {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = `Copied: ${text}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Copy to clipboard
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showCopyToast(text);
+      });
+    }
+
+    // Render palettes
+    async function renderPalettes() {
+      const palettes = await loadColorPalettes();
+      const container = document.getElementById('palettes');
+      const loading = document.getElementById('loading');
+
+      if (Object.keys(palettes).length === 0) {
+        loading.textContent = 'No palettes found. Run npm run build:colors first.';
+        return;
+      }
+
+      loading.style.display = 'none';
+
+      const variantOrder = ['darkest', 'darker', 'dark', 'mid', 'base', 'light', 'lighter', 'lightest'];
+
+      for (const [name, colors] of Object.entries(palettes)) {
+        const section = document.createElement('div');
+        section.className = 'palette-section';
+
+        // Calculate max contrast
+        const variants = Object.keys(colors);
+        let maxContrast = 0;
+        if (colors.lightest && colors.darkest) {
+          maxContrast = getContrast(colors.lightest, colors.darkest);
+        }
+
+        section.innerHTML = `
+          <div class="palette-name">
+            ${name}
+            <span class="contrast-badge">Max Contrast: ${maxContrast.toFixed(2)}:1</span>
+          </div>
+          <div class="color-grid" id="grid-${name}"></div>
+          <div class="color-combinations">
+            <h4>Text on Background Examples</h4>
+            <div class="combo-grid" id="combos-${name}"></div>
+          </div>
+          <div class="contrast-matrix">
+            <h4>Contrast Matrix</h4>
+            <div class="contrast-grid" id="matrix-${name}"></div>
+          </div>
+        `;
+
+        container.appendChild(section);
+
+        const grid = document.getElementById(`grid-${name}`);
+        const comboGrid = document.getElementById(`combos-${name}`);
+        const matrix = document.getElementById(`matrix-${name}`);
+
+        // Render color cards in order
+        variantOrder.forEach(variant => {
+          if (!colors[variant]) return;
+
+          const value = colors[variant];
+          const card = document.createElement('div');
+          card.className = 'color-card';
+          card.innerHTML = `
+            <div class="color-swatch"
+                 style="background: ${value};"
+                 data-variant="${variant}"
+                 onclick="copyToClipboard('${value}')"></div>
+            <div class="color-info">
+              <span class="color-value">${value}</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        // Render text combinations
+        const combos = [
+          { bg: 'lightest', fg: 'darkest', label: 'Lightest + Darkest' },
+          { bg: 'lighter', fg: 'darker', label: 'Lighter + Darker' },
+          { bg: 'light', fg: 'dark', label: 'Light + Dark' },
+          { bg: 'darkest', fg: 'lightest', label: 'Darkest + Lightest' }
+        ];
+
+        combos.forEach(({ bg, fg, label }) => {
+          if (colors[bg] && colors[fg]) {
+            const contrast = getContrast(colors[bg], colors[fg]);
+            const combo = document.createElement('div');
+            combo.className = 'combo-card';
+            combo.style.background = colors[bg];
+            combo.style.color = colors[fg];
+            combo.innerHTML = `
+              ${label}<br>
+              <small>${formatContrast(contrast)}</small>
+            `;
+            comboGrid.appendChild(combo);
+          }
+        });
+
+        // Render contrast matrix
+        const variantsInPalette = variantOrder.filter(v => colors[v]);
+        for (let i = 0; i < variantsInPalette.length; i++) {
+          for (let j = i + 1; j < variantsInPalette.length; j++) {
+            const v1 = variantsInPalette[i];
+            const v2 = variantsInPalette[j];
+            const contrast = getContrast(colors[v1], colors[v2]);
+
+            const item = document.createElement('div');
+            item.className = 'contrast-item';
+            item.innerHTML = `
+              <strong>${v1}</strong> × <strong>${v2}</strong><br>
+              ${formatContrast(contrast)}
+            `;
+            matrix.appendChild(item);
+          }
+        }
+      }
+    }
+
+    // Initialize
+    renderPalettes();
+  </script>
+</body>
+</html>

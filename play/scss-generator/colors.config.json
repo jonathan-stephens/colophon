@@ -5,15 +5,15 @@
   "mono-darker": "oklch(0.3766 0.0021 325.62)",
   "mono-darkest": "oklch(0.1496 0 0)",
 
-  "sunlight-lightest": "oklch(56.9700% 0.0051 0.1200)",
-  "sunlight-lighter": "oklch(65.0000% 0.1500 230.0000)",
-  "sunlight-core": "oklch(72.0000% 0.1800 340.0000)",
+  "sunlight-lightest": "oklch(0.9621 0.0277 88.75)",
+  "sunlight-lighter": "oklch(0.9122 0.0702 84.42)",
+  "sunlight-core": "oklch(0.7945 0.1709 71.19)",
   "sunlight-darker": "oklch(0.9621 0.0277 88.75)",
   "sunlight-darkest": "oklch(0.9122 0.0702 84.42)",
 
   "forest-lightest": "oklch(0.9441 0.0255 97.12)",
   "forest-lighter": "oklch(0.8388 0.0625 108.69)",
-  "forest-core": "oklch(72.0000% 0.1800 340.0000)",
+  "forest-core": "oklch(0.5928 0.151 137.92)",
   "forest-darker": "oklch(0.4419 0.0793 181.65)",
   "forest-darkest": "oklch(0.2692 0.0409 228.43)",
 

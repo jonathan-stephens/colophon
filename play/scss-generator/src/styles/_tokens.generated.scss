@@ -1,303 +1,303 @@
-// Auto-generated OKLCH tokens (Refined semantic v5)
+// Auto-generated OKLCH tokens (Enhanced: adaptive + smooth + harmonic)
 :root {
-  // MONO-LIGHTEST - Ordered Spectrum
-  --mono-lightest-darkest: oklch(40.0000% 0.0100 88.2310);
-  --mono-lightest-darker: oklch(51.3640% 0.0100 88.9330);
-  --mono-lightest-dark: oklch(61.2060% 0.0100 89.5280);
-  --mono-lightest-mid: oklch(69.0000% 0.0152 90.5920);
-  --mono-lightest-light: oklch(88.3740% 0.0172 91.0680);
-  --mono-lightest-lighter: oklch(97.0000% 0.0180 91.4860);
-  --mono-lightest-lightest: oklch(98.0000% 0.0129 91.5200);
+  // MONO-LIGHTEST
+  --mono-lightest-darkest: oklch(12.0000% 0.0182 94.6860);
+  --mono-lightest-darker: oklch(31.8000% 0.0215 93.6580);
+  --mono-lightest-dark: oklch(45.6600% 0.0220 92.5180);
+  --mono-lightest-mid: oklch(65.0640% 0.0215 91.5200);
+  --mono-lightest-light: oklch(85.0000% 0.0214 91.3050);
+  --mono-lightest-lighter: oklch(89.0000% 0.0208 91.1670);
+  --mono-lightest-lightest: oklch(95.0000% 0.0180 90.9500);
   --mono-lightest-base: oklch(97.9000% 0.0123 91.5200);
 
-  // MONO-LIGHTER - Ordered Spectrum
-  --mono-lighter-darkest: oklch(37.7700% 0.0100 55.6970);
-  --mono-lighter-darker: oklch(49.5790% 0.0100 56.4060);
-  --mono-lighter-dark: oklch(59.8060% 0.0104 57.0010);
-  --mono-lighter-mid: oklch(64.3300% 0.0165 58.0220);
-  --mono-lighter-light: oklch(82.8910% 0.0173 58.1900);
-  --mono-lighter-lighter: oklch(86.8910% 0.0125 58.1900);
-  --mono-lighter-lightest: oklch(90.8910% 0.0180 58.4250);
+  // MONO-LIGHTER
+  --mono-lighter-darkest: oklch(12.0000% 0.0180 54.3910);
+  --mono-lighter-darker: oklch(31.8000% 0.0184 55.6240);
+  --mono-lighter-dark: oklch(45.6600% 0.0188 56.9930);
+  --mono-lighter-mid: oklch(65.0640% 0.0184 58.1900);
+  --mono-lighter-light: oklch(85.0000% 0.0182 58.4580);
+  --mono-lighter-lighter: oklch(89.0000% 0.0180 58.6310);
+  --mono-lighter-lightest: oklch(95.0000% 0.0180 58.9020);
   --mono-lighter-base: oklch(82.7700% 0.0105 58.1900);
 
-  // MONO-CORE - Ordered Spectrum
-  --mono-core-darkest: oklch(15.2100% 0.0100 3.2772);
-  --mono-core-darker: oklch(31.5170% 0.0100 4.2505);
-  --mono-core-dark: oklch(45.6390% 0.0109 5.0489);
-  --mono-core-mid: oklch(49.9160% 0.0147 5.7700);
-  --mono-core-light: oklch(64.2100% 0.0100 5.7700);
-  --mono-core-lighter: oklch(71.9930% 0.0170 6.3409);
-  --mono-core-lightest: oklch(84.6220% 0.0180 7.0421);
+  // MONO-CORE
+  --mono-core-darkest: oklch(25.2100% 0.0180 7.0305);
+  --mono-core-darker: oklch(35.7100% 0.0180 6.6214);
+  --mono-core-dark: oklch(45.9600% 0.0180 6.1672);
+  --mono-core-mid: oklch(60.2100% 0.0180 5.7700);
+  --mono-core-light: oklch(73.6870% 0.0180 6.2321);
+  --mono-core-lighter: oklch(83.1630% 0.0180 6.7606);
+  --mono-core-lightest: oklch(93.0000% 0.0180 7.2365);
   --mono-core-base: oklch(60.2100% 0.0074 5.7700);
 
-  // MONO-DARKER - Ordered Spectrum
-  --mono-darker-darkest: oklch(3.0000% 0.0100 323.7500);
-  --mono-darker-darker: oklch(18.8820% 0.0100 324.6700);
-  --mono-darker-dark: oklch(32.6370% 0.0109 325.4000);
-  --mono-darker-mid: oklch(36.8020% 0.0122 325.6200);
-  --mono-darker-light: oklch(41.6600% 0.0100 325.6200);
-  --mono-darker-lighter: oklch(58.3040% 0.0170 326.6800);
-  --mono-darker-lightest: oklch(70.6050% 0.0180 327.3900);
+  // MONO-DARKER
+  --mono-darker-darkest: oklch(12.6600% 0.0080 325.6200);
+  --mono-darker-darker: oklch(20.1600% 0.0080 325.6200);
+  --mono-darker-dark: oklch(28.9100% 0.0080 325.6200);
+  --mono-darker-mid: oklch(37.6600% 0.0080 325.6200);
+  --mono-darker-light: oklch(57.3790% 0.0080 325.6200);
+  --mono-darker-lighter: oklch(77.0980% 0.0080 325.6200);
+  --mono-darker-lightest: oklch(94.0000% 0.0080 325.6200);
   --mono-darker-base: oklch(37.6600% 0.0021 325.6200);
 
-  // MONO-DARKEST - Ordered Spectrum
-  --mono-darkest-darkest: oklch(2.0000% 0.0100 -0.6339);
-  --mono-darkest-darker: oklch(14.1590% 0.0100 -0.0297);
-  --mono-darkest-dark: oklch(18.1590% 0.0100 0.0000);
-  --mono-darkest-mid: oklch(29.5060% 0.0100 0.0000);
-  --mono-darkest-light: oklch(26.1590% 0.0109 0.5079);
-  --mono-darkest-lighter: oklch(46.8210% 0.0170 1.7050);
-  --mono-darkest-lightest: oklch(57.0120% 0.0180 2.3137);
+  // MONO-DARKEST
+  --mono-darkest-darkest: oklch(10.0000% 0.0080 0.0000);
+  --mono-darkest-darker: oklch(16.6000% 0.0080 0.0000);
+  --mono-darkest-dark: oklch(24.0000% 0.0080 0.0000);
+  --mono-darkest-mid: oklch(32.0000% 0.0080 0.0000);
+  --mono-darkest-light: oklch(45.0200% 0.0080 0.0000);
+  --mono-darkest-lighter: oklch(63.2480% 0.0080 0.0000);
+  --mono-darkest-lightest: oklch(81.6990% 0.0080 0.0000);
   --mono-darkest-base: oklch(14.9600% 0.0000 0.0000);
 
-  // SUNLIGHT-LIGHTEST - Ordered Spectrum
-  --sunlight-lightest-darkest: oklch(40.0000% 0.0100 85.5660);
-  --sunlight-lightest-darker: oklch(51.3640% 0.0117 86.2670);
-  --sunlight-lightest-dark: oklch(61.2060% 0.0191 86.8590);
-  --sunlight-lightest-mid: oklch(69.0000% 0.0328 87.9160);
-  --sunlight-lightest-light: oklch(88.3740% 0.0370 88.3860);
-  --sunlight-lightest-lighter: oklch(96.2100% 0.0230 88.7500);
-  --sunlight-lightest-lightest: oklch(98.0000% 0.0332 88.7500);
+  // SUNLIGHT-LIGHTEST
+  --sunlight-lightest-darkest: oklch(12.0000% 0.0228 84.9510);
+  --sunlight-lightest-darker: oklch(31.8000% 0.0300 86.1840);
+  --sunlight-lightest-dark: oklch(45.6600% 0.0280 87.5530);
+  --sunlight-lightest-mid: oklch(65.0640% 0.0280 88.7500);
+  --sunlight-lightest-light: oklch(85.0000% 0.0280 88.9110);
+  --sunlight-lightest-lighter: oklch(89.0000% 0.0300 89.0150);
+  --sunlight-lightest-lightest: oklch(95.0000% 0.0224 89.1770);
   --sunlight-lightest-base: oklch(96.2100% 0.0277 88.7500);
 
-  // SUNLIGHT-LIGHTER - Ordered Spectrum
-  --sunlight-lighter-darkest: oklch(40.0000% 0.0180 81.5460);
-  --sunlight-lighter-darker: oklch(51.3640% 0.0299 82.2390);
-  --sunlight-lighter-dark: oklch(61.2060% 0.0494 82.8230);
-  --sunlight-lighter-mid: oklch(68.1870% 0.0848 83.8560);
-  --sunlight-lighter-light: oklch(88.3740% 0.0665 84.3000);
-  --sunlight-lighter-lighter: oklch(92.3740% 0.0517 84.4200);
-  --sunlight-lighter-lightest: oklch(96.3740% 0.0842 84.4200);
+  // SUNLIGHT-LIGHTER
+  --sunlight-lighter-darkest: oklch(12.0000% 0.0242 80.6210);
+  --sunlight-lighter-darker: oklch(31.8000% 0.0649 81.8540);
+  --sunlight-lighter-dark: oklch(45.6600% 0.0699 83.2230);
+  --sunlight-lighter-mid: oklch(65.0640% 0.0682 84.4200);
+  --sunlight-lighter-light: oklch(85.0000% 0.0677 84.5810);
+  --sunlight-lighter-lighter: oklch(89.0000% 0.0661 84.6850);
+  --sunlight-lighter-lightest: oklch(95.0000% 0.0494 84.8470);
   --sunlight-lighter-base: oklch(91.2200% 0.0702 84.4200);
 
-  // SUNLIGHT-CORE - Ordered Spectrum
-  --sunlight-core-darkest: oklch(34.4500% 0.0399 68.6970);
-  --sunlight-core-darker: oklch(46.9210% 0.0658 69.4460);
-  --sunlight-core-dark: oklch(57.7210% 0.1237 70.0710);
-  --sunlight-core-mid: oklch(62.1630% 0.1127 71.1280);
-  --sunlight-core-light: oklch(81.8760% 0.1095 71.1900);
-  --sunlight-core-lighter: oklch(85.8760% 0.2033 71.1900);
-  --sunlight-core-lightest: oklch(89.8760% 0.0693 71.5670);
+  // SUNLIGHT-CORE
+  --sunlight-core-darkest: oklch(12.0000% 0.0394 67.2990);
+  --sunlight-core-darker: oklch(32.2350% 0.0696 68.5620);
+  --sunlight-core-dark: oklch(45.7990% 0.1187 69.9640);
+  --sunlight-core-mid: oklch(65.9900% 0.1659 71.1900);
+  --sunlight-core-light: oklch(77.9960% 0.1168 71.3150);
+  --sunlight-core-lighter: oklch(89.0000% 0.0822 71.4170);
+  --sunlight-core-lightest: oklch(95.0000% 0.0360 71.5770);
   --sunlight-core-base: oklch(79.4500% 0.1709 71.1900);
 
-  // SUNLIGHT-DARKER - Ordered Spectrum
-  --sunlight-darker-darkest: oklch(40.0000% 0.0100 85.5660);
-  --sunlight-darker-darker: oklch(51.3640% 0.0117 86.2670);
-  --sunlight-darker-dark: oklch(61.2060% 0.0191 86.8590);
-  --sunlight-darker-mid: oklch(69.0000% 0.0328 87.9160);
-  --sunlight-darker-light: oklch(88.3740% 0.0370 88.3860);
-  --sunlight-darker-lighter: oklch(96.2100% 0.0230 88.7500);
-  --sunlight-darker-lightest: oklch(98.0000% 0.0332 88.7500);
+  // SUNLIGHT-DARKER
+  --sunlight-darker-darkest: oklch(12.0000% 0.0228 84.9510);
+  --sunlight-darker-darker: oklch(31.8000% 0.0300 86.1840);
+  --sunlight-darker-dark: oklch(45.6600% 0.0280 87.5530);
+  --sunlight-darker-mid: oklch(65.0640% 0.0280 88.7500);
+  --sunlight-darker-light: oklch(85.0000% 0.0280 88.9110);
+  --sunlight-darker-lighter: oklch(89.0000% 0.0300 89.0150);
+  --sunlight-darker-lightest: oklch(95.0000% 0.0224 89.1770);
   --sunlight-darker-base: oklch(96.2100% 0.0277 88.7500);
 
-  // SUNLIGHT-DARKEST - Ordered Spectrum
-  --sunlight-darkest-darkest: oklch(40.0000% 0.0180 81.5460);
-  --sunlight-darkest-darker: oklch(51.3640% 0.0299 82.2390);
-  --sunlight-darkest-dark: oklch(61.2060% 0.0494 82.8230);
-  --sunlight-darkest-mid: oklch(68.1870% 0.0848 83.8560);
-  --sunlight-darkest-light: oklch(88.3740% 0.0665 84.3000);
-  --sunlight-darkest-lighter: oklch(92.3740% 0.0517 84.4200);
-  --sunlight-darkest-lightest: oklch(96.3740% 0.0842 84.4200);
+  // SUNLIGHT-DARKEST
+  --sunlight-darkest-darkest: oklch(12.0000% 0.0242 80.6210);
+  --sunlight-darkest-darker: oklch(31.8000% 0.0649 81.8540);
+  --sunlight-darkest-dark: oklch(45.6600% 0.0699 83.2230);
+  --sunlight-darkest-mid: oklch(65.0640% 0.0682 84.4200);
+  --sunlight-darkest-light: oklch(85.0000% 0.0677 84.5810);
+  --sunlight-darkest-lighter: oklch(89.0000% 0.0661 84.6850);
+  --sunlight-darkest-lightest: oklch(95.0000% 0.0494 84.8470);
   --sunlight-darkest-base: oklch(91.2200% 0.0702 84.4200);
 
-  // FOREST-LIGHTEST - Ordered Spectrum
-  --forest-lightest-darkest: oklch(40.0000% 0.0100 94.0480);
-  --forest-lightest-darker: oklch(51.3640% 0.0107 94.7460);
-  --forest-lightest-dark: oklch(61.2060% 0.0176 95.3360);
-  --forest-lightest-mid: oklch(69.0000% 0.0302 96.3840);
-  --forest-lightest-light: oklch(88.3740% 0.0341 96.8460);
-  --forest-lightest-lighter: oklch(94.4100% 0.0347 97.1200);
-  --forest-lightest-lightest: oklch(98.0000% 0.0306 97.1200);
+  // FOREST-LIGHTEST
+  --forest-lightest-darkest: oklch(12.0000% 0.0210 100.2900);
+  --forest-lightest-darker: oklch(31.8000% 0.0300 99.2580);
+  --forest-lightest-dark: oklch(45.6600% 0.0280 98.1180);
+  --forest-lightest-mid: oklch(65.0640% 0.0280 97.1200);
+  --forest-lightest-light: oklch(85.0000% 0.0280 96.9050);
+  --forest-lightest-lighter: oklch(89.0000% 0.0300 96.7670);
+  --forest-lightest-lightest: oklch(95.0000% 0.0207 96.5500);
   --forest-lightest-base: oklch(94.4100% 0.0255 97.1200);
 
-  // FOREST-LIGHTER - Ordered Spectrum
-  --forest-lighter-darkest: oklch(38.8800% 0.0156 106.2000);
-  --forest-lighter-darker: oklch(50.4670% 0.0266 106.8900);
-  --forest-lighter-dark: oklch(60.5030% 0.0462 107.4800);
-  --forest-lighter-mid: oklch(65.3800% 0.0796 108.4800);
-  --forest-lighter-light: oklch(83.8800% 0.0983 108.6900);
-  --forest-lighter-lighter: oklch(87.8800% 0.0743 108.6900);
-  --forest-lighter-lightest: oklch(91.8800% 0.0760 108.8800);
+  // FOREST-LIGHTER
+  --forest-lighter-darkest: oklch(12.0000% 0.0264 111.8600);
+  --forest-lighter-darker: oklch(31.8000% 0.0608 110.8300);
+  --forest-lighter-dark: oklch(45.6600% 0.0622 109.6900);
+  --forest-lighter-mid: oklch(65.0640% 0.0607 108.6900);
+  --forest-lighter-light: oklch(85.0000% 0.0603 108.4800);
+  --forest-lighter-lighter: oklch(89.0000% 0.0588 108.3400);
+  --forest-lighter-lightest: oklch(95.0000% 0.0506 108.1200);
   --forest-lighter-base: oklch(83.8800% 0.0625 108.6900);
 
-  // FOREST-CORE - Ordered Spectrum
-  --forest-core-darkest: oklch(14.2800% 0.0329 135.4300);
-  --forest-core-darker: oklch(30.7720% 0.0430 136.4100);
-  --forest-core-dark: oklch(45.0550% 0.0799 137.2200);
-  --forest-core-mid: oklch(49.3810% 0.1813 137.9200);
-  --forest-core-light: oklch(63.2800% 0.1560 137.9200);
-  --forest-core-lighter: oklch(71.7090% 0.1789 138.5300);
-  --forest-core-lightest: oklch(84.4820% 0.1052 139.2400);
+  // FOREST-CORE
+  --forest-core-darkest: oklch(24.2800% 0.0767 139.5000);
+  --forest-core-darker: oklch(34.7800% 0.1085 138.9800);
+  --forest-core-dark: oklch(45.0300% 0.1430 138.4200);
+  --forest-core-mid: oklch(59.2800% 0.1496 137.9200);
+  --forest-core-light: oklch(73.0820% 0.1478 137.5400);
+  --forest-core-lighter: oklch(82.8840% 0.1436 137.1000);
+  --forest-core-lightest: oklch(93.0000% 0.0792 136.7100);
   --forest-core-base: oklch(59.2800% 0.1510 137.9200);
 
-  // FOREST-DARKER - Ordered Spectrum
-  --forest-darker-darkest: oklch(3.0000% 0.0173 179.3900);
-  --forest-darker-darker: oklch(20.1840% 0.0218 180.4000);
-  --forest-darker-dark: oklch(35.0660% 0.0337 181.2200);
-  --forest-darker-mid: oklch(39.5730% 0.0580 181.6500);
-  --forest-darker-light: oklch(48.1900% 0.0749 181.6500);
-  --forest-darker-lighter: oklch(62.8380% 0.1160 182.6000);
-  --forest-darker-lightest: oklch(76.1470% 0.1290 183.3600);
+  // FOREST-DARKER
+  --forest-darker-darkest: oklch(12.0000% 0.0234 179.3500);
+  --forest-darker-darker: oklch(21.6570% 0.0390 180.1000);
+  --forest-darker-dark: oklch(30.9230% 0.0573 180.9300);
+  --forest-darker-mid: oklch(44.1900% 0.0788 181.6500);
+  --forest-darker-light: oklch(58.4400% 0.0788 181.6500);
+  --forest-darker-lighter: oklch(68.6900% 0.0771 181.6500);
+  --forest-darker-lightest: oklch(79.1900% 0.0667 181.6500);
   --forest-darker-base: oklch(44.1900% 0.0793 181.6500);
 
-  // FOREST-DARKEST - Ordered Spectrum
-  --forest-darkest-darkest: oklch(3.0000% 0.0100 227.1900);
-  --forest-darkest-darker: oklch(16.7410% 0.0112 227.9400);
-  --forest-darkest-dark: oklch(26.9200% 0.0181 228.4300);
-  --forest-darkest-mid: oklch(32.2450% 0.0316 228.4300);
-  --forest-darkest-light: oklch(34.9200% 0.0228 228.5000);
-  --forest-darkest-lighter: oklch(50.8480% 0.0476 229.6700);
-  --forest-darkest-lightest: oklch(61.4900% 0.0624 230.3000);
+  // FOREST-DARKEST
+  --forest-darkest-darkest: oklch(10.0000% 0.0191 226.9200);
+  --forest-darkest-darker: oklch(16.6000% 0.0316 227.4100);
+  --forest-darkest-dark: oklch(24.0000% 0.0398 227.9300);
+  --forest-darkest-mid: oklch(32.0000% 0.0402 228.4300);
+  --forest-darkest-light: oklch(45.0200% 0.0408 229.5500);
+  --forest-darkest-lighter: oklch(63.2480% 0.0393 230.8300);
+  --forest-darkest-lightest: oklch(81.6990% 0.0332 231.9800);
   --forest-darkest-base: oklch(26.9200% 0.0409 228.4300);
 
-  // OCEAN-LIGHTEST - Ordered Spectrum
-  --ocean-lightest-darkest: oklch(40.0000% 0.0100 96.6320);
-  --ocean-lightest-darker: oklch(51.3640% 0.0100 97.3270);
-  --ocean-lightest-dark: oklch(61.2060% 0.0122 97.9150);
-  --ocean-lightest-mid: oklch(68.4500% 0.0209 98.9560);
-  --ocean-lightest-light: oklch(88.3740% 0.0235 99.4110);
-  --ocean-lightest-lighter: oklch(92.9000% 0.0282 99.6100);
-  --ocean-lightest-lightest: oklch(96.9000% 0.0209 99.6100);
+  // OCEAN-LIGHTEST
+  --ocean-lightest-darkest: oklch(12.0000% 0.0245 102.7800);
+  --ocean-lightest-darker: oklch(31.8000% 0.0305 101.7500);
+  --ocean-lightest-dark: oklch(45.6600% 0.0312 100.6100);
+  --ocean-lightest-mid: oklch(65.0640% 0.0304 99.6100);
+  --ocean-lightest-light: oklch(85.0000% 0.0302 99.3950);
+  --ocean-lightest-lighter: oklch(89.0000% 0.0295 99.2570);
+  --ocean-lightest-lightest: oklch(95.0000% 0.0254 99.0400);
   --ocean-lightest-base: oklch(92.9000% 0.0174 99.6100);
 
-  // OCEAN-LIGHTER - Ordered Spectrum
-  --ocean-lighter-darkest: oklch(33.0000% 0.0100 124.8600);
-  --ocean-lighter-darker: oklch(45.7600% 0.0132 125.6200);
-  --ocean-lighter-dark: oklch(56.8110% 0.0253 126.2600);
-  --ocean-lighter-mid: oklch(61.2160% 0.0459 127.3300);
-  --ocean-lighter-light: oklch(81.4320% 0.0558 127.3500);
-  --ocean-lighter-lighter: oklch(85.4320% 0.0421 127.3500);
-  --ocean-lighter-lightest: oklch(89.4320% 0.0578 127.7900);
+  // OCEAN-LIGHTER
+  --ocean-lighter-darkest: oklch(12.0000% 0.0292 130.5200);
+  --ocean-lighter-darker: oklch(31.8000% 0.0344 129.4900);
+  --ocean-lighter-dark: oklch(45.6600% 0.0352 128.3500);
+  --ocean-lighter-mid: oklch(65.0640% 0.0344 127.3500);
+  --ocean-lighter-light: oklch(85.0000% 0.0342 127.1400);
+  --ocean-lighter-lighter: oklch(89.0000% 0.0333 127.0000);
+  --ocean-lighter-lightest: oklch(95.0000% 0.0287 126.7800);
   --ocean-lighter-base: oklch(78.0000% 0.0354 127.3500);
 
-  // OCEAN-CORE - Ordered Spectrum
-  --ocean-core-darkest: oklch(3.0000% 0.0161 188.7300);
-  --ocean-core-darker: oklch(19.9210% 0.0203 189.7200);
-  --ocean-core-dark: oklch(34.5750% 0.0312 190.5200);
-  --ocean-core-mid: oklch(39.0130% 0.0513 190.9100);
-  --ocean-core-light: oklch(46.8700% 0.0690 190.9100);
-  --ocean-core-lighter: oklch(61.9210% 0.1071 191.8800);
-  --ocean-core-lightest: oklch(75.0260% 0.1199 192.6300);
+  // OCEAN-CORE
+  --ocean-core-darkest: oklch(12.0000% 0.0218 188.7100);
+  --ocean-core-darker: oklch(21.2610% 0.0362 189.4300);
+  --ocean-core-dark: oklch(30.0660% 0.0533 190.2200);
+  --ocean-core-mid: oklch(42.8700% 0.0733 190.9100);
+  --ocean-core-light: oklch(57.1200% 0.0734 190.9100);
+  --ocean-core-lighter: oklch(67.3700% 0.0719 190.9100);
+  --ocean-core-lightest: oklch(77.8700% 0.0623 190.9100);
   --ocean-core-base: oklch(42.8700% 0.0738 190.9100);
 
-  // OCEAN-DARKER - Ordered Spectrum
-  --ocean-darker-darkest: oklch(3.0000% 0.0101 216.0900);
-  --ocean-darker-darker: oklch(17.8670% 0.0128 216.9300);
-  --ocean-darker-dark: oklch(30.7430% 0.0190 217.5900);
-  --ocean-darker-mid: oklch(34.6430% 0.0250 217.6600);
-  --ocean-darker-light: oklch(38.7430% 0.0411 217.6600);
-  --ocean-darker-lighter: oklch(54.7700% 0.0602 218.8100);
-  --ocean-darker-lightest: oklch(66.2850% 0.0738 219.4700);
+  // OCEAN-DARKER
+  --ocean-darker-darkest: oklch(10.0000% 0.0177 216.1000);
+  --ocean-darker-darker: oklch(16.7710% 0.0294 216.6100);
+  --ocean-darker-dark: oklch(24.5700% 0.0431 217.1600);
+  --ocean-darker-mid: oklch(32.5700% 0.0458 217.6600);
+  --ocean-darker-light: oklch(45.4700% 0.0464 218.7700);
+  --ocean-darker-lighter: oklch(63.5310% 0.0448 220.0300);
+  --ocean-darker-lightest: oklch(81.8120% 0.0378 221.1700);
   --ocean-darker-base: oklch(32.5700% 0.0466 217.6600);
 
-  // OCEAN-DARKEST - Ordered Spectrum
-  --ocean-darkest-darkest: oklch(3.0000% 0.0100 234.5000);
-  --ocean-darkest-darker: oklch(16.3820% 0.0100 235.2300);
-  --ocean-darkest-dark: oklch(25.1200% 0.0113 235.6400);
-  --ocean-darkest-mid: oklch(31.4810% 0.0199 235.6400);
-  --ocean-darkest-light: oklch(33.1200% 0.0144 235.7600);
-  --ocean-darkest-lighter: oklch(49.5980% 0.0298 236.9200);
-  --ocean-darkest-lightest: oklch(59.9620% 0.0398 237.5200);
+  // OCEAN-DARKEST
+  --ocean-darkest-darkest: oklch(10.0000% 0.0207 234.1300);
+  --ocean-darkest-darker: oklch(16.6000% 0.0300 234.6200);
+  --ocean-darkest-dark: oklch(24.0000% 0.0280 235.1400);
+  --ocean-darkest-mid: oklch(32.0000% 0.0280 235.6400);
+  --ocean-darkest-light: oklch(45.0200% 0.0280 236.7600);
+  --ocean-darkest-lighter: oklch(63.2480% 0.0300 238.0400);
+  --ocean-darkest-lightest: oklch(81.6990% 0.0216 239.1900);
   --ocean-darkest-base: oklch(25.1200% 0.0266 235.6400);
 
-  // MOONLIGHT-LIGHTEST - Ordered Spectrum
-  --moonlight-lightest-darkest: oklch(40.0000% 0.0100 74.1940);
-  --moonlight-lightest-darker: oklch(51.3640% 0.0100 74.8870);
-  --moonlight-lightest-dark: oklch(61.2060% 0.0109 75.4720);
-  --moonlight-lightest-mid: oklch(68.1870% 0.0187 76.5050);
-  --moonlight-lightest-light: oklch(88.3740% 0.0210 76.9490);
-  --moonlight-lightest-lighter: oklch(92.3740% 0.0251 77.0700);
-  --moonlight-lightest-lightest: oklch(96.3740% 0.0186 77.0700);
+  // MOONLIGHT-LIGHTEST
+  --moonlight-lightest-darkest: oklch(12.0000% 0.0230 73.2710);
+  --moonlight-lightest-darker: oklch(31.8000% 0.0271 74.5040);
+  --moonlight-lightest-dark: oklch(45.6600% 0.0278 75.8730);
+  --moonlight-lightest-mid: oklch(65.0640% 0.0271 77.0700);
+  --moonlight-lightest-light: oklch(85.0000% 0.0269 77.2310);
+  --moonlight-lightest-lighter: oklch(89.0000% 0.0263 77.3350);
+  --moonlight-lightest-lightest: oklch(95.0000% 0.0226 77.4970);
   --moonlight-lightest-base: oklch(91.2500% 0.0155 77.0700);
 
-  // MOONLIGHT-LIGHTER - Ordered Spectrum
-  --moonlight-lighter-darkest: oklch(26.0500% 0.0100 11.7770);
-  --moonlight-lighter-darker: oklch(40.1950% 0.0100 12.6240);
-  --moonlight-lighter-dark: oklch(52.4460% 0.0157 13.3270);
-  --moonlight-lighter-mid: oklch(56.1560% 0.0344 14.2700);
-  --moonlight-lighter-light: oklch(75.0500% 0.0269 14.2700);
-  --moonlight-lighter-lighter: oklch(79.0500% 0.0376 14.4560);
-  --moonlight-lighter-lightest: oklch(86.2630% 0.0387 15.0260);
+  // MOONLIGHT-LIGHTER
+  --moonlight-lighter-darkest: oklch(12.0000% 0.0200 16.5110);
+  --moonlight-lighter-darker: oklch(29.7150% 0.0300 15.7840);
+  --moonlight-lighter-dark: oklch(42.1160% 0.0280 14.9760);
+  --moonlight-lighter-mid: oklch(59.4760% 0.0280 14.2700);
+  --moonlight-lighter-light: oklch(79.4320% 0.0280 14.5970);
+  --moonlight-lighter-lighter: oklch(87.8150% 0.0300 14.9710);
+  --moonlight-lighter-lightest: oklch(95.0000% 0.0200 15.3080);
   --moonlight-lighter-base: oklch(71.0500% 0.0237 14.2700);
 
-  // MOONLIGHT-CORE - Ordered Spectrum
-  --moonlight-core-darkest: oklch(3.0000% 0.0100 272.9500);
-  --moonlight-core-darker: oklch(18.8840% 0.0110 273.8700);
-  --moonlight-core-dark: oklch(32.6410% 0.0166 274.6000);
-  --moonlight-core-mid: oklch(36.8070% 0.0233 274.8200);
-  --moonlight-core-light: oklch(41.6700% 0.0356 274.8200);
-  --moonlight-core-lighter: oklch(58.3110% 0.0554 275.8800);
-  --moonlight-core-lightest: oklch(70.6130% 0.0644 276.5900);
+  // MOONLIGHT-CORE
+  --moonlight-core-darkest: oklch(12.6700% 0.0330 273.7300);
+  --moonlight-core-darker: oklch(20.1700% 0.0382 274.0800);
+  --moonlight-core-dark: oklch(28.9200% 0.0392 274.4800);
+  --moonlight-core-mid: oklch(37.6700% 0.0395 274.8200);
+  --moonlight-core-light: oklch(57.3860% 0.0397 276.1600);
+  --moonlight-core-lighter: oklch(77.1010% 0.0384 277.6900);
+  --moonlight-core-lightest: oklch(94.0000% 0.0278 279.0800);
   --moonlight-core-base: oklch(37.6700% 0.0400 274.8200);
 
-  // MOONLIGHT-DARKER - Ordered Spectrum
-  --moonlight-darker-darkest: oklch(3.0000% 0.0100 267.0300);
-  --moonlight-darker-darker: oklch(17.2350% 0.0100 267.8300);
-  --moonlight-darker-dark: oklch(29.4000% 0.0117 268.4200);
-  --moonlight-darker-mid: oklch(33.2970% 0.0199 268.4200);
-  --moonlight-darker-light: oklch(37.4000% 0.0143 268.4300);
-  --moonlight-darker-lighter: oklch(52.5700% 0.0303 269.6200);
-  --moonlight-darker-lightest: oklch(63.5950% 0.0386 270.2600);
+  // MOONLIGHT-DARKER
+  --moonlight-darker-darkest: oklch(10.0000% 0.0203 266.9100);
+  --moonlight-darker-darker: oklch(16.6000% 0.0300 267.4000);
+  --moonlight-darker-dark: oklch(24.0000% 0.0280 267.9200);
+  --moonlight-darker-mid: oklch(32.0000% 0.0280 268.4200);
+  --moonlight-darker-light: oklch(45.0200% 0.0280 269.5400);
+  --moonlight-darker-lighter: oklch(63.2480% 0.0300 270.8200);
+  --moonlight-darker-lightest: oklch(81.6990% 0.0201 271.9700);
   --moonlight-darker-base: oklch(29.4000% 0.0248 268.4200);
 
-  // MOONLIGHT-DARKEST - Ordered Spectrum
-  --moonlight-darkest-darkest: oklch(2.0000% 0.0100 259.6900);
-  --moonlight-darkest-darker: oklch(14.6090% 0.0100 260.3700);
-  --moonlight-darkest-dark: oklch(21.2500% 0.0100 260.6700);
-  --moonlight-darkest-mid: oklch(29.6500% 0.0100 260.6700);
-  --moonlight-darkest-light: oklch(29.2500% 0.0119 260.8800);
-  --moonlight-darkest-lighter: oklch(47.1470% 0.0170 262.0300);
-  --moonlight-darkest-lightest: oklch(57.3000% 0.0180 262.6200);
+  // MOONLIGHT-DARKEST
+  --moonlight-darkest-darkest: oklch(10.0000% 0.0180 259.1600);
+  --moonlight-darkest-darker: oklch(16.6000% 0.0186 259.6500);
+  --moonlight-darkest-dark: oklch(24.0000% 0.0191 260.1700);
+  --moonlight-darkest-mid: oklch(32.0000% 0.0193 260.6700);
+  --moonlight-darkest-light: oklch(45.0200% 0.0196 261.7900);
+  --moonlight-darkest-lighter: oklch(63.2480% 0.0189 263.0700);
+  --moonlight-darkest-lightest: oklch(81.6990% 0.0180 264.2200);
   --moonlight-darkest-base: oklch(21.2500% 0.0109 260.6700);
 
-  // STARRY-LIGHTEST - Ordered Spectrum
-  --starry-lightest-darkest: oklch(40.0000% 0.0159 106.2000);
-  --starry-lightest-darker: oklch(51.3640% 0.0261 106.9000);
-  --starry-lightest-dark: oklch(61.2060% 0.0428 107.4900);
-  --starry-lightest-mid: oklch(69.0000% 0.0735 108.5600);
-  --starry-lightest-light: oklch(88.3740% 0.0718 109.0300);
-  --starry-lightest-lighter: oklch(97.0000% 0.0196 109.4400);
-  --starry-lightest-lightest: oklch(98.0000% 0.0165 109.4600);
+  // STARRY-LIGHTEST
+  --starry-lightest-darkest: oklch(12.0000% 0.0262 112.6300);
+  --starry-lightest-darker: oklch(31.8000% 0.0603 111.6000);
+  --starry-lightest-dark: oklch(45.6600% 0.0617 110.4600);
+  --starry-lightest-mid: oklch(65.0640% 0.0603 109.4600);
+  --starry-lightest-light: oklch(85.0000% 0.0598 109.2500);
+  --starry-lightest-lighter: oklch(89.0000% 0.0584 109.1100);
+  --starry-lightest-lightest: oklch(95.0000% 0.0502 108.8900);
   --starry-lightest-base: oklch(97.4700% 0.0620 109.4600);
 
-  // STARRY-LIGHTER - Ordered Spectrum
-  --starry-lighter-darkest: oklch(40.0000% 0.0372 83.3200);
-  --starry-lighter-darker: oklch(51.3640% 0.0629 84.0040);
-  --starry-lighter-dark: oklch(61.2060% 0.1063 84.5770);
-  --starry-lighter-mid: oklch(66.6400% 0.1079 85.5730);
-  --starry-lighter-light: oklch(85.2800% 0.0841 85.8300);
-  --starry-lighter-lighter: oklch(89.2800% 0.1726 85.8300);
-  --starry-lighter-lightest: oklch(93.2800% 0.0692 85.9610);
+  // STARRY-LIGHTER
+  --starry-lighter-darkest: oklch(12.0000% 0.0421 82.0310);
+  --starry-lighter-darker: oklch(31.8000% 0.0622 83.2640);
+  --starry-lighter-dark: oklch(45.6600% 0.1118 84.6330);
+  --starry-lighter-mid: oklch(65.0640% 0.1411 85.8300);
+  --starry-lighter-light: oklch(85.0000% 0.1401 85.9910);
+  --starry-lighter-lighter: oklch(89.0000% 0.1078 86.0950);
+  --starry-lighter-lightest: oklch(95.0000% 0.0497 86.2570);
   --starry-lighter-base: oklch(85.2800% 0.1452 85.8300);
 
-  // STARRY-CORE - Ordered Spectrum
-  --starry-core-darkest: oklch(7.3900% 0.0140 242.9400);
-  --starry-core-darker: oklch(25.2560% 0.0178 244.0000);
-  --starry-core-dark: oklch(40.7290% 0.0302 244.8700);
-  --starry-core-mid: oklch(45.4140% 0.0626 245.4300);
-  --starry-core-light: oklch(56.3900% 0.0625 245.4300);
-  --starry-core-lighter: oklch(69.6020% 0.0975 246.3000);
-  --starry-core-lightest: oklch(83.4390% 0.0843 247.0900);
+  // STARRY-CORE
+  --starry-core-darkest: oklch(17.3900% 0.0414 242.9100);
+  --starry-core-darker: oklch(27.8900% 0.0620 243.7300);
+  --starry-core-dark: oklch(39.1400% 0.0635 244.6400);
+  --starry-core-mid: oklch(52.3900% 0.0640 245.4300);
+  --starry-core-light: oklch(65.6400% 0.0632 246.0300);
+  --starry-core-lighter: oklch(76.8900% 0.0615 246.7100);
+  --starry-core-lightest: oklch(87.3900% 0.0529 247.3200);
   --starry-core-base: oklch(52.3900% 0.0641 245.4300);
 
-  // STARRY-DARKER - Ordered Spectrum
-  --starry-darker-darkest: oklch(3.0000% 0.0100 247.2200);
-  --starry-darker-darker: oklch(18.4790% 0.0107 248.1100);
-  --starry-darker-dark: oklch(31.8850% 0.0161 248.8100);
-  --starry-darker-mid: oklch(35.9450% 0.0216 248.9700);
-  --starry-darker-light: oklch(39.8850% 0.0342 248.9700);
-  --starry-darker-lighter: oklch(56.9020% 0.0528 250.0600);
-  --starry-darker-lightest: oklch(68.8900% 0.0626 250.7600);
+  // STARRY-DARKER
+  --starry-darker-darkest: oklch(10.6400% 0.0275 247.2300);
+  --starry-darker-darker: oklch(18.1400% 0.0372 247.7900);
+  --starry-darker-dark: oklch(26.8900% 0.0382 248.4200);
+  --starry-darker-mid: oklch(35.6400% 0.0385 248.9700);
+  --starry-darker-light: oklch(47.8960% 0.0389 250.0200);
+  --starry-darker-lighter: oklch(65.0530% 0.0376 251.2100);
+  --starry-darker-lightest: oklch(82.4210% 0.0286 252.2900);
   --starry-darker-base: oklch(35.6400% 0.0391 248.9700);
 
-  // STARRY-DARKEST - Ordered Spectrum
-  --starry-darkest-darkest: oklch(2.0000% 0.0100 278.1700);
-  --starry-darkest-darker: oklch(14.2680% 0.0106 278.8000);
-  --starry-darkest-dark: oklch(18.2680% 0.0140 278.8900);
-  --starry-darkest-mid: oklch(29.7390% 0.0250 278.8900);
-  --starry-darkest-light: oklch(26.2680% 0.0183 279.3300);
-  --starry-darkest-lighter: oklch(47.2030% 0.0408 280.5200);
-  --starry-darkest-lightest: oklch(57.4790% 0.0568 281.1400);
+  // STARRY-DARKEST
+  --starry-darkest-darkest: oklch(10.0000% 0.0323 277.9400);
+  --starry-darkest-darker: oklch(16.6000% 0.0374 278.2500);
+  --starry-darkest-dark: oklch(24.0000% 0.0384 278.5800);
+  --starry-darkest-mid: oklch(32.0000% 0.0387 278.8900);
+  --starry-darkest-light: oklch(45.0200% 0.0393 280.3800);
+  --starry-darkest-lighter: oklch(63.2480% 0.0379 282.0800);
+  --starry-darkest-lightest: oklch(81.6990% 0.0289 283.6200);
   --starry-darkest-base: oklch(16.5500% 0.0394 278.8900);
 
 }

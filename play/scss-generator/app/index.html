@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OKLCH Palette Generator with Validation</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 0.75rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafafa;
+      padding: var(--spacing-lg);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+      color: #0a0a0a;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .controls {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .control-group {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+      font-size: 0.875rem;
+      color: #333;
+    }
+
+    .input-row {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+
+    input[type="color"] {
+      width: 80px;
+      height: 48px;
+      border: 2px solid #e5e5e5;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 2px solid #e5e5e5;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .radio-option label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    button:active {
+      background: #1d4ed8;
+    }
+
+    .palette-output {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Validation Score Card */
+    .score-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      color: white;
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .score-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .score-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .score-value {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-top: 0.25rem;
+    }
+
+    .score-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--spacing-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .score-item {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+    }
+
+    .score-item-label {
+      font-size: 0.75rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .score-item-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .score-item-status {
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      opacity: 0.85;
+    }
+
+    /* Issues and Recommendations */
+    .validation-section {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .validation-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .validation-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #0a0a0a;
+    }
+
+    .validation-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      min-width: 1.5rem;
+    }
+
+    .validation-badge.success {
+      background: #10b981;
+    }
+
+    .validation-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .validation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+      background: #f9fafb;
+      border-radius: var(--radius-md);
+      border-left: 4px solid transparent;
+    }
+
+    .validation-item.error {
+      border-left-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .validation-item.warning {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .validation-item.success {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .validation-item.info {
+      border-left-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .validation-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .validation-item.error .validation-icon {
+      background: #ef4444;
+      color: white;
+    }
+
+    .validation-item.warning .validation-icon {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .validation-item.success .validation-icon {
+      background: #10b981;
+      color: white;
+    }
+
+    .validation-item.info .validation-icon {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .validation-content {
+      flex: 1;
+    }
+
+    .validation-message {
+      font-size: 0.875rem;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .validation-detail {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .palette-grid {
+      display: grid;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .color-swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .swatch-color {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: transform 0.2s;
+    }
+
+    .swatch-color:hover {
+      transform: scale(1.02);
+    }
+
+    .swatch-info {
+      background: #f9fafb;
+      padding: var(--spacing-md);
+    }
+
+    .swatch-name {
+      font-weight: 700;
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-xs);
+      text-transform: capitalize;
+    }
+
+    .swatch-values {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .swatch-value {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .copy-btn {
+      background: transparent;
+      color: #3b82f6;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7rem;
+      border: 1px solid #3b82f6;
+      margin-left: var(--spacing-xs);
+    }
+
+    .copy-btn:hover {
+      background: #eff6ff;
+    }
+
+    .info-section {
+      background: #f0f9ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+
+    .info-title {
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+      color: #1e40af;
+    }
+
+    .info-list {
+      list-style: none;
+      font-size: 0.875rem;
+      color: #1e3a8a;
+    }
+
+    .info-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: var(--spacing-md);
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .input-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      input[type="color"] {
+        width: 100%;
+      }
+
+      .score-breakdown {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>OKLCH Palette Generator</h1>
+      <p class="subtitle">Create accessible, perceptually uniform color palettes with comprehensive validation</p>
+    </header>
+
+    <section class="controls">
+      <div class="control-group">
+        <label for="colorInput">Base Color</label>
+        <div class="input-row">
+          <input type="color" id="colorPicker" value="#3b82f6" aria-label="Color picker">
+          <input type="text" id="colorInput" value="#3b82f6" placeholder="#000000 or rgb(0,0,0)" aria-label="Color hex input">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Palette Size</label>
+        <div class="radio-group" role="radiogroup" aria-label="Palette size selection">
+          <div class="radio-option">
+            <input type="radio" id="size3" name="paletteSize" value="3">
+            <label for="size3">3 colors</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="size5" name="paletteSize" value="5">
+            <label for="size5">5 colors</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="size7" name="paletteSize" value="7" checked>
+            <label for="size7">7 colors</label>
+          </div>
+        </div>
+      </div>
+
+      <button id="generateBtn">Generate Palette</button>
+    </section>
+
+    <section class="palette-output" id="paletteOutput" style="display: none;">
+      <div id="scoreCard"></div>
+      <div id="validationSections"></div>
+      <div class="palette-grid" id="paletteGrid"></div>
+      <div id="infoSection"></div>
+    </section>
+  </div>
+
+  <script type="module">
+    import Color from 'https://colorjs.io/dist/color.js';
+
+    const CONTRAST_ALGO = 'WCAG21';
+    const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
+
+    function createColorOKLCH(l, c, h) {
+      return new Color('oklch', [l, c, h]);
+    }
+
+    function getContrast(c1, c2) {
+      return Color.contrast(c1, c2, CONTRAST_ALGO);
+    }
+
+    function isInGamut(color) {
+      try {
+        const srgb = color.to('srgb');
+        return srgb.inGamut();
+      } catch {
+        return false;
+      }
+    }
+
+    function gamutClipOKLCH(l, c, h, maxAttempts = 20) {
+      let currentC = c;
+      let color = createColorOKLCH(l, currentC, h);
+
+      let attempts = 0;
+      while (!isInGamut(color) && attempts < maxAttempts && currentC > 0.001) {
+        currentC *= 0.95;
+        color = createColorOKLCH(l, currentC, h);
+        attempts++;
+      }
+
+      return { color, clipped: attempts > 0, finalChroma: currentC };
+    }
+
+    function getMaxChromaForHue(h, l) {
+      const hueNorm = ((h || 0) % 360) / 360;
+      const hueFactor = Math.sin((hueNorm - 0.167) * Math.PI * 2) * 0.3 + 1;
+      const lightnessFactor = 1 - Math.pow(Math.abs(l - 0.5) * 2, 1.2);
+      return 0.37 * hueFactor * lightnessFactor;
+    }
+
+    function getHueShift(baseHue, targetL, baseL, dirSign) {
+      const h = ((baseHue || 0) % 360 + 360) % 360;
+
+      const isRed = (h >= 0 && h < 30) || h >= 330;
+      const isOrange = h >= 30 && h < 60;
+      const isYellow = h >= 60 && h < 90;
+      const isGreen = h >= 90 && h < 150;
+      const isCyan = h >= 150 && h < 210;
+      const isBlue = h >= 210 && h < 270;
+      const isPurple = h >= 270 && h < 330;
+
+      const dist = Math.abs(targetL - baseL);
+      let hueRotation = 0;
+
+      if (dirSign < 0) {
+        if (isBlue || isCyan) hueRotation = -8 * Math.pow(dist, 1.1);
+        else if (isGreen) hueRotation = 5 * Math.pow(dist, 1.1);
+        else if (isYellow || isOrange) hueRotation = -6 * Math.pow(dist, 1.1);
+        else if (isRed) hueRotation = 4 * Math.pow(dist, 1.1);
+        else if (isPurple) hueRotation = -5 * Math.pow(dist, 1.1);
+      } else {
+        if (isBlue) hueRotation = 6 * Math.pow(dist, 1.1);
+        else if (isGreen) hueRotation = -4 * Math.pow(dist, 1.1);
+        else if (isYellow) hueRotation = 3 * Math.pow(dist, 1.1);
+        else if (isRed || isOrange) hueRotation = 5 * Math.pow(dist, 1.1);
+        else if (isPurple) hueRotation = 8 * Math.pow(dist, 1.1);
+      }
+
+      return hueRotation;
+    }
+
+    function adaptChromaHue(baseColor, targetL, baseL, variant) {
+      const { c: bC, h: bH } = baseColor.oklch;
+      const dirSign = targetL < baseL ? -1 : 1;
+
+      const isAchromatic = bC < 0.005;
+      if (isAchromatic) return { c: 0.008, h: bH || 0 };
+
+      const targetDistFromMid = Math.abs(targetL - 0.5);
+
+      let chromaFactor;
+      if (variant === 'darkest' || variant === 'lightest') {
+        chromaFactor = 0.7 + 0.2 * (1 - targetDistFromMid);
+      } else if (variant === 'darker' || variant === 'lighter') {
+        chromaFactor = Math.max(0.9, 1 - targetDistFromMid * 0.15);
+      } else if (variant === 'dark' || variant === 'light' || variant === 'mid') {
+        chromaFactor = Math.max(0.95, 1 - targetDistFromMid * 0.1);
+      } else {
+        chromaFactor = 1 - targetDistFromMid * 0.3;
+      }
+
+      const isNearGray = bC < 0.02 && !isAchromatic;
+      if (isNearGray) chromaFactor *= 1.8;
+      else if (baseL > 0.85) chromaFactor = Math.max(chromaFactor, 0.85);
+      else if (baseL < 0.20) chromaFactor = Math.max(chromaFactor, 0.82);
+
+      let c = bC * chromaFactor;
+
+      let minChroma;
+      if (isNearGray) minChroma = 0.018;
+      else if (variant === 'darker' || variant === 'lighter') minChroma = 0.03;
+      else if (variant === 'mid' || variant === 'dark' || variant === 'light') minChroma = 0.028;
+      else minChroma = 0.02;
+
+      c = clamp(c, minChroma, getMaxChromaForHue(bH, targetL));
+
+      const harmonicShift = getHueShift(bH, targetL, baseL, dirSign);
+      const h = ((bH + harmonicShift) % 360 + 360) % 360;
+
+      return { c, h };
+    }
+
+    function generateContrastPairs(baseL) {
+      let midL = baseL;
+
+      if (baseL < 0.30) midL = Math.max(baseL, 0.32);
+      else if (baseL > 0.80) midL = Math.min(baseL, 0.78);
+
+      let darkestL = 0.15;
+      let lightestL = 0.92;
+
+      if (midL < 0.40) {
+        darkestL = Math.max(0.10, midL - 0.25);
+        lightestL = 0.94;
+      } else if (midL > 0.70) {
+        darkestL = 0.12;
+        lightestL = Math.min(0.95, midL + 0.25);
+      } else {
+        darkestL = Math.max(0.12, midL - 0.35);
+        lightestL = Math.min(0.93, midL + 0.35);
+      }
+
+      const darkRange = midL - darkestL;
+      const lightRange = lightestL - midL;
+
+      const darkL = clamp(midL - darkRange * 0.35, darkestL + 0.10, midL - 0.08);
+      const lightL = clamp(midL + lightRange * 0.35, midL + 0.08, lightestL - 0.10);
+
+      const darkerL = clamp(midL - darkRange * 0.70, darkestL + 0.06, darkL - 0.06);
+      const lighterL = clamp(midL + lightRange * 0.70, lightL + 0.06, lightestL - 0.06);
+
+      return {
+        darkest: darkestL,
+        darker: darkerL,
+        dark: darkL,
+        mid: midL,
+        light: lightL,
+        lighter: lighterL,
+        lightest: lightestL
+      };
+    }
+
+    function enforceContrastPairs(colorsObj, paletteSize) {
+      const AAA = 7;
+      const AA = 4.5;
+
+      if (paletteSize === 3) {
+        if (colorsObj.darker && colorsObj.mid) {
+          let attempts = 0;
+          while (getContrast(colorsObj.darker, colorsObj.mid) < AA && attempts < 25) {
+            const darkL = Math.max(0.08, colorsObj.darker.oklch.l - 0.02);
+            colorsObj.darker = createColorOKLCH(darkL, colorsObj.darker.oklch.c, colorsObj.darker.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.mid && colorsObj.lighter) {
+          let attempts = 0;
+          while (getContrast(colorsObj.mid, colorsObj.lighter) < AA && attempts < 25) {
+            const lightL = Math.min(0.97, colorsObj.lighter.oklch.l + 0.02);
+            colorsObj.lighter = createColorOKLCH(lightL, colorsObj.lighter.oklch.c, colorsObj.lighter.oklch.h);
+            attempts++;
+          }
+        }
+      } else if (paletteSize === 5) {
+        if (colorsObj.darkest && colorsObj.mid) {
+          let attempts = 0;
+          while (getContrast(colorsObj.darkest, colorsObj.mid) < AAA && attempts < 25) {
+            const darkL = Math.max(0.08, colorsObj.darkest.oklch.l - 0.02);
+            colorsObj.darkest = createColorOKLCH(darkL, colorsObj.darkest.oklch.c, colorsObj.darkest.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.mid && colorsObj.lightest) {
+          let attempts = 0;
+          while (getContrast(colorsObj.mid, colorsObj.lightest) < AAA && attempts < 25) {
+            const lightL = Math.min(0.97, colorsObj.lightest.oklch.l + 0.02);
+            colorsObj.lightest = createColorOKLCH(lightL, colorsObj.lightest.oklch.c, colorsObj.lightest.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.darker && colorsObj.mid) {
+          let attempts = 0;
+          while (getContrast(colorsObj.darker, colorsObj.mid) < AA && attempts < 20) {
+            const darkL = Math.max(0.10, colorsObj.darker.oklch.l - 0.015);
+            colorsObj.darker = createColorOKLCH(darkL, colorsObj.darker.oklch.c, colorsObj.darker.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.mid && colorsObj.lighter) {
+          let attempts = 0;
+          while (getContrast(colorsObj.mid, colorsObj.lighter) < AA && attempts < 20) {
+            const lightL = Math.min(0.95, colorsObj.lighter.oklch.l + 0.015);
+            colorsObj.lighter = createColorOKLCH(lightL, colorsObj.lighter.oklch.c, colorsObj.lighter.oklch.h);
+            attempts++;
+          }
+        }
+      } else {
+        if (colorsObj.darkest && colorsObj.lightest) {
+          let attempts = 0;
+          while (getContrast(colorsObj.darkest, colorsObj.lightest) < AAA && attempts < 25) {
+            const darkL = Math.max(0.08, colorsObj.darkest.oklch.l - 0.02);
+            const lightL = Math.min(0.97, colorsObj.lightest.oklch.l + 0.02);
+
+            colorsObj.darkest = createColorOKLCH(darkL, colorsObj.darkest.oklch.c, colorsObj.darkest.oklch.h);
+            colorsObj.lightest = createColorOKLCH(lightL, colorsObj.lightest.oklch.c, colorsObj.lightest.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.darker && colorsObj.lighter) {
+          let attempts = 0;
+          while (getContrast(colorsObj.darker, colorsObj.lighter) < AA && attempts < 20) {
+            const darkL = Math.max(0.10, colorsObj.darker.oklch.l - 0.015);
+            const lightL = Math.min(0.95, colorsObj.lighter.oklch.l + 0.015);
+
+            colorsObj.darker = createColorOKLCH(darkL, colorsObj.darker.oklch.c, colorsObj.darker.oklch.h);
+            colorsObj.lighter = createColorOKLCH(lightL, colorsObj.lighter.oklch.c, colorsObj.lighter.oklch.h);
+            attempts++;
+          }
+        }
+
+        if (colorsObj.dark && colorsObj.light) {
+          let attempts = 0;
+          while (getContrast(colorsObj.dark, colorsObj.light) < 3 && attempts < 15) {
+            const darkL = Math.max(0.15, colorsObj.dark.oklch.l - 0.01);
+            const lightL = Math.min(0.90, colorsObj.light.oklch.l + 0.01);
+
+            colorsObj.dark = createColorOKLCH(darkL, colorsObj.dark.oklch.c, colorsObj.dark.oklch.h);
+            colorsObj.light = createColorOKLCH(lightL, colorsObj.light.oklch.c, colorsObj.light.oklch.h);
+            attempts++;
+          }
+        }
+      }
+
+      return colorsObj;
+    }
+
+    function validatePalette(palette, constrained, paletteSize) {
+      const validation = {
+        score: 100,
+        accessibility: { score: 100, issues: [], passes: [] },
+        gamut: { score: 100, issues: [], passes: [] },
+        perceptual: { score: 100, issues: [], passes: [] },
+        recommendations: []
+      };
+
+      // Accessibility validation
+      const contrastChecks = [];
+
+      if (paletteSize === 3) {
+        contrastChecks.push({ pair: ['darker', 'mid'], target: 4.5, level: 'AA' });
+        contrastChecks.push({ pair: ['mid', 'lighter'], target: 4.5, level: 'AA' });
+      } else if (paletteSize === 5) {
+        contrastChecks.push({ pair: ['darkest', 'mid'], target: 7, level: 'AAA' });
+        contrastChecks.push({ pair: ['mid', 'lightest'], target: 7, level: 'AAA' });
+        contrastChecks.push({ pair: ['darker', 'mid'], target: 4.5, level: 'AA' });
+        contrastChecks.push({ pair: ['mid', 'lighter'], target: 4.5, level: 'AA' });
+      } else {
+        contrastChecks.push({ pair: ['darkest', 'lightest'], target: 7, level: 'AAA' });
+        contrastChecks.push({ pair: ['darker', 'lighter'], target: 4.5, level: 'AA' });
+        contrastChecks.push({ pair: ['dark', 'light'], target: 3, level: 'AA Large' });
+      }
+
+      contrastChecks.forEach(check => {
+        const [c1, c2] = check.pair;
+        if (constrained[c1] && constrained[c2]) {
+          const ratio = getContrast(constrained[c1], constrained[c2]);
+          if (ratio >= check.target) {
+            validation.accessibility.passes.push({
+              message: `${c1} ↔ ${c2}: ${ratio.toFixed(2)}:1`,
+              detail: `Passes ${check.level} (${check.target}:1 required)`
+            });
+          } else {
+            validation.accessibility.issues.push({
+              type: 'error',
+              message: `${c1} ↔ ${c2}: ${ratio.toFixed(2)}:1`,
+              detail: `Fails ${check.level} (${check.target}:1 required, ${(check.target - ratio).toFixed(2)} short)`
+            });
+            validation.accessibility.score -= 15;
+          }
+        }
+      });
+
+      // Gamut validation
+      let gamutIssues = 0;
+      Object.entries(constrained).forEach(([variant, color]) => {
+        if (!isInGamut(color)) {
+          validation.gamut.issues.push({
+            type: 'warning',
+            message: `${variant} is out of sRGB gamut`,
+            detail: 'Color may appear differently across devices'
+          });
+          gamutIssues++;
+        }
+      });
+
+      if (gamutIssues > 0) {
+        validation.gamut.score = Math.max(0, 100 - (gamutIssues * 10));
+      } else {
+        validation.gamut.passes.push({
+          message: 'All colors in sRGB gamut',
+          detail: 'Colors will render consistently across devices'
+        });
+      }
+
+      // Perceptual uniformity validation
+      const variants = Object.keys(constrained).sort((a, b) => {
+        const order = ['darkest', 'darker', 'dark', 'mid', 'light', 'lighter', 'lightest'];
+        return order.indexOf(a) - order.indexOf(b);
+      });
+
+      const lightnessSteps = [];
+      for (let i = 1; i < variants.length; i++) {
+        const step = constrained[variants[i]].oklch.l - constrained[variants[i - 1]].oklch.l;
+        lightnessSteps.push({ from: variants[i - 1], to: variants[i], step });
+      }
+
+      const avgStep = lightnessSteps.reduce((sum, s) => sum + s.step, 0) / lightnessSteps.length;
+      let unevenSteps = 0;
+
+      lightnessSteps.forEach(({ from, to, step }) => {
+        const deviation = Math.abs(step - avgStep) / avgStep;
+        if (deviation > 0.5) {
+          validation.perceptual.issues.push({
+            type: 'warning',
+            message: `Uneven step between ${from} and ${to}`,
+            detail: `Step size: ${(step * 100).toFixed(1)}% (avg: ${(avgStep * 100).toFixed(1)}%)`
+          });
+          unevenSteps++;
+        }
+      });
+
+      if (unevenSteps > 0) {
+        validation.perceptual.score = Math.max(70, 100 - (unevenSteps * 10));
+      } else {
+        validation.perceptual.passes.push({
+          message: 'Smooth lightness progression',
+          detail: `Average step: ${(avgStep * 100).toFixed(1)}%`
+        });
+      }
+
+      // Chroma consistency check
+      const chromas = variants.map(v => constrained[v].oklch.c);
+      const maxChroma = Math.max(...chromas);
+      const minChroma = Math.min(...chromas);
+      const chromaRange = maxChroma - minChroma;
+
+      if (chromaRange > 0.15) {
+        validation.perceptual.issues.push({
+          type: 'info',
+          message: 'Wide chroma variation detected',
+          detail: `Range: ${minChroma.toFixed(3)} to ${maxChroma.toFixed(3)} (natural for lightness extremes)`
+        });
+      }
+
+      // Generate recommendations
+      if (validation.accessibility.score < 100) {
+        validation.recommendations.push({
+          type: 'error',
+          message: 'Improve contrast ratios',
+          detail: 'Consider using darker or lighter variants for better accessibility'
+        });
+      }
+
+      if (validation.gamut.score < 100) {
+        validation.recommendations.push({
+          type: 'warning',
+          message: 'Reduce chroma to stay in gamut',
+          detail: 'Lower saturation for out-of-gamut colors to ensure consistent rendering'
+        });
+      }
+
+      if (validation.perceptual.score < 90) {
+        validation.recommendations.push({
+          type: 'info',
+          message: 'Adjust lightness distribution',
+          detail: 'Consider more even spacing between color variants'
+        });
+      }
+
+      // Calculate overall score
+      validation.score = Math.round(
+        (validation.accessibility.score * 0.5) +
+        (validation.gamut.score * 0.3) +
+        (validation.perceptual.score * 0.2)
+      );
+
+      return validation;
+    }
+
+    function generatePalette(baseColorInput, paletteSize) {
+      const baseColor = new Color(baseColorInput);
+      const baseL = baseColor.oklch.l;
+
+      const fullScale = generateContrastPairs(baseL);
+
+      let selectedVariants;
+      if (paletteSize === 3) {
+        selectedVariants = ['darker', 'mid', 'lighter'];
+      } else if (paletteSize === 5) {
+        selectedVariants = ['darkest', 'darker', 'mid', 'lighter', 'lightest'];
+      } else {
+        selectedVariants = ['darkest', 'darker', 'dark', 'mid', 'light', 'lighter', 'lightest'];
+      }
+
+      const colorsObj = {};
+
+      for (const variant of selectedVariants) {
+        const targetL = fullScale[variant];
+        const { c, h } = adaptChromaHue(baseColor, targetL, fullScale.mid, variant);
+        const result = gamutClipOKLCH(targetL, c, h);
+        colorsObj[variant] = result.color;
+      }
+
+      const constrained = enforceContrastPairs(colorsObj, paletteSize);
+
+      const palette = {};
+      for (const variant of selectedVariants) {
+        const col = constrained[variant];
+        palette[variant] = {
+          oklch: col.toString({ format: 'oklch' }),
+          hex: col.to('srgb').toString({ format: 'hex' }),
+          rgb: col.to('srgb').toString({ format: 'rgb' })
+        };
+      }
+
+      const validation = validatePalette(palette, constrained, paletteSize);
+
+      return { palette, validation };
+    }
+
+    function getContrastColor(bgColor) {
+      const color = new Color(bgColor);
+      const l = color.oklch.l;
+      return l > 0.5 ? '#000000' : '#ffffff';
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        console.log('Copied to clipboard:', text);
+      });
+    }
+
+    function renderScoreCard(validation) {
+      const scoreCard = document.getElementById('scoreCard');
+
+      const getScoreGrade = (score) => {
+        if (score >= 95) return 'Excellent';
+        if (score >= 85) return 'Good';
+        if (score >= 70) return 'Fair';
+        return 'Needs Work';
+      };
+
+      scoreCard.innerHTML = `
+        <div class="score-card">
+          <div class="score-header">
+            <div class="score-title">Palette Quality Score</div>
+            <div>
+              <div class="score-value">${validation.score}</div>
+              <div class="score-label">${getScoreGrade(validation.score)}</div>
+            </div>
+          </div>
+          <div class="score-breakdown">
+            <div class="score-item">
+              <div class="score-item-label">Accessibility</div>
+              <div class="score-item-value">${validation.accessibility.score}</div>
+              <div class="score-item-status">${validation.accessibility.issues.length === 0 ? '✓ All checks passed' : `${validation.accessibility.issues.length} issue(s)`}</div>
+            </div>
+            <div class="score-item">
+              <div class="score-item-label">Gamut Coverage</div>
+              <div class="score-item-value">${validation.gamut.score}</div>
+              <div class="score-item-status">${validation.gamut.issues.length === 0 ? '✓ All in gamut' : `${validation.gamut.issues.length} out of gamut`}</div>
+            </div>
+            <div class="score-item">
+              <div class="score-item-label">Perceptual</div>
+              <div class="score-item-value">${validation.perceptual.score}</div>
+              <div class="score-item-status">${validation.perceptual.issues.length === 0 ? '✓ Smooth progression' : `${validation.perceptual.issues.length} issue(s)`}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderValidationSections(validation) {
+      const container = document.getElementById('validationSections');
+      let html = '';
+
+      // Render issues
+      const allIssues = [
+        ...validation.accessibility.issues,
+        ...validation.gamut.issues,
+        ...validation.perceptual.issues
+      ];
+
+      if (allIssues.length > 0) {
+        html += `
+          <div class="validation-section">
+            <div class="validation-header">
+              <div class="validation-title">Issues Found</div>
+              <div class="validation-badge">${allIssues.length}</div>
+            </div>
+            <ul class="validation-list">
+        `;
+
+        allIssues.forEach(issue => {
+          const icon = issue.type === 'error' ? '✕' : issue.type === 'warning' ? '⚠' : 'ℹ';
+          html += `
+            <li class="validation-item ${issue.type}">
+              <div class="validation-icon">${icon}</div>
+              <div class="validation-content">
+                <div class="validation-message">${issue.message}</div>
+                <div class="validation-detail">${issue.detail}</div>
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </div>
+        `;
+      }
+
+      // Render passes
+      const allPasses = [
+        ...validation.accessibility.passes,
+        ...validation.gamut.passes,
+        ...validation.perceptual.passes
+      ];
+
+      if (allPasses.length > 0) {
+        html += `
+          <div class="validation-section">
+            <div class="validation-header">
+              <div class="validation-title">Passed Checks</div>
+              <div class="validation-badge success">${allPasses.length}</div>
+            </div>
+            <ul class="validation-list">
+        `;
+
+        allPasses.forEach(pass => {
+          html += `
+            <li class="validation-item success">
+              <div class="validation-icon">✓</div>
+              <div class="validation-content">
+                <div class="validation-message">${pass.message}</div>
+                <div class="validation-detail">${pass.detail}</div>
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </div>
+        `;
+      }
+
+      // Render recommendations
+      if (validation.recommendations.length > 0) {
+        html += `
+          <div class="validation-section">
+            <div class="validation-header">
+              <div class="validation-title">Recommendations</div>
+              <div class="validation-badge">${validation.recommendations.length}</div>
+            </div>
+            <ul class="validation-list">
+        `;
+
+        validation.recommendations.forEach(rec => {
+          const icon = rec.type === 'error' ? '💡' : rec.type === 'warning' ? '💡' : '💡';
+          html += `
+            <li class="validation-item ${rec.type}">
+              <div class="validation-icon">${icon}</div>
+              <div class="validation-content">
+                <div class="validation-message">${rec.message}</div>
+                <div class="validation-detail">${rec.detail}</div>
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function renderPalette(palette, validation, paletteSize) {
+      const grid = document.getElementById('paletteGrid');
+      grid.innerHTML = '';
+
+      for (const [variant, data] of Object.entries(palette)) {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+
+        const textColor = getContrastColor(data.hex);
+
+        swatch.innerHTML = `
+          <div class="swatch-color" style="background: ${data.hex}; color: ${textColor}">
+            ${variant}
+          </div>
+          <div class="swatch-info">
+            <div class="swatch-name">${variant}</div>
+            <div class="swatch-values">
+              <div class="swatch-value">
+                <span>OKLCH: ${data.oklch}</span>
+                <button class="copy-btn" data-copy="${data.oklch}">Copy</button>
+              </div>
+              <div class="swatch-value">
+                <span>HEX: ${data.hex}</span>
+                <button class="copy-btn" data-copy="${data.hex}">Copy</button>
+              </div>
+              <div class="swatch-value">
+                <span>RGB: ${data.rgb}</span>
+                <button class="copy-btn" data-copy="${data.rgb}">Copy</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(swatch);
+      }
+
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          copyToClipboard(e.target.dataset.copy);
+          e.target.textContent = 'Copied!';
+          setTimeout(() => e.target.textContent = 'Copy', 1500);
+        });
+      });
+
+      renderScoreCard(validation);
+      renderValidationSections(validation);
+
+      document.getElementById('paletteOutput').style.display = 'block';
+    }
+
+    const colorPicker = document.getElementById('colorPicker');
+    const colorInput = document.getElementById('colorInput');
+    const generateBtn = document.getElementById('generateBtn');
+
+    colorPicker.addEventListener('input', (e) => {
+      colorInput.value = e.target.value;
+    });
+
+    colorInput.addEventListener('input', (e) => {
+      const value = e.target.value.trim();
+      if (!value) return;
+
+      try {
+        const color = new Color(value);
+        colorPicker.value = color.to('srgb').toString({ format: 'hex' });
+      } catch (err) {
+        // Invalid color, ignore
+      }
+    });
+
+    generateBtn.addEventListener('click', () => {
+      const baseColor = colorInput.value.trim();
+
+      if (!baseColor) {
+        alert('Please enter a color value.');
+        return;
+      }
+
+      try {
+        const testColor = new Color(baseColor);
+        const paletteSize = parseInt(document.querySelector('input[name="paletteSize"]:checked').value);
+
+        const { palette, validation } = generatePalette(baseColor, paletteSize);
+        renderPalette(palette, validation, paletteSize);
+      } catch (err) {
+        alert('Invalid color input. Please use a valid hex, rgb, or oklch format.');
+        console.error('Color parsing error:', err);
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        generateBtn.click();
+      }, 100);
+    });
+  </script>
+</body>
+</html>

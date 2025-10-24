@@ -622,6 +622,7 @@ let htmlReport = `<!DOCTYPE html>
     .swatch-value { font-family: 'SF Mono', Monaco, monospace; font-size: 0.7rem; color: #6b7280; margin-bottom: 0.25rem; }
     .contrast-matrix { background: #f9fafb; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem; }
     .contrast-matrix-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; }
+    .matrix-description { font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem; }
     .contrast-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
     .contrast-pair { background: white; padding: 0.75rem; border-radius: 0.5rem; border-left: 4px solid #e5e7eb; }
     .contrast-pair.pass { border-left-color: #10b981; }
@@ -631,6 +632,26 @@ let htmlReport = `<!DOCTYPE html>
     .contrast-pair-status { font-size: 0.7rem; margin-top: 0.25rem; font-weight: 600; }
     .contrast-pair.pass .contrast-pair-status { color: #10b981; }
     .contrast-pair.fail .contrast-pair-status { color: #ef4444; }
+    .contrast-table-wrapper { overflow-x: auto; margin-bottom: 1rem; }
+    .contrast-table { width: 100%; border-collapse: collapse; background: white; border-radius: 0.5rem; overflow: hidden; }
+    .contrast-table th, .contrast-table td { padding: 0.75rem; text-align: center; border: 1px solid #e5e7eb; }
+    .contrast-table thead th { background: #f9fafb; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #374151; }
+    .contrast-table tbody th { background: #f9fafb; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #374151; text-align: left; }
+    .corner-cell { background: #f3f4f6 !important; }
+    .variant-header { white-space: nowrap; }
+    .same-color { background: #f9fafb; color: #9ca3af; font-weight: 700; }
+    .contrast-cell { padding: 0.5rem !important; }
+    .contrast-value { font-size: 0.875rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.25rem; }
+    .contrast-badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .contrast-badge.aaa { background: #d1fae5; color: #065f46; }
+    .contrast-badge.aa { background: #dbeafe; color: #1e40af; }
+    .contrast-badge.aa18 { background: #fef3c7; color: #92400e; }
+    .contrast-badge.dne { background: #fee2e2; color: #991b1b; }
+    .matrix-legend { background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e5e7eb; }
+    .legend-title { font-weight: 700; font-size: 0.875rem; margin-bottom: 0.5rem; color: #374151; }
+    .legend-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #6b7280; }
+    .legend-badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
     .validation-section { margin-top: 1.5rem; }
     .validation-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     .validation-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -768,6 +789,74 @@ allResults.forEach(({ name, palette, validation, edgeCases, info }) => {
   }
 
   htmlReport += `</div></div>`;
+
+  // Add comprehensive contrast grid
+  const variantOrder = ["darkest", "darker", "dark", "mid", "light", "lighter", "lightest"];
+  const availableVariants = variantOrder.filter(v => palette[v]);
+
+  htmlReport += `
+    <div class="contrast-matrix">
+      <div class="contrast-matrix-title">📊 Full Contrast Matrix</div>
+      <div class="matrix-description">Each cell shows the contrast ratio when using the row color as background and column color as foreground.</div>
+      <div class="contrast-table-wrapper">
+        <table class="contrast-table">
+          <thead>
+            <tr>
+              <th class="corner-cell">BG → FG ↓</th>`;
+
+  availableVariants.forEach(variant => {
+    htmlReport += `<th class="variant-header">${variant}</th>`;
+  });
+
+  htmlReport += `</tr></thead><tbody>`;
+
+  availableVariants.forEach(bgVariant => {
+    htmlReport += `<tr><th class="variant-header">${bgVariant}</th>`;
+
+    availableVariants.forEach(fgVariant => {
+      if (bgVariant === fgVariant) {
+        htmlReport += `<td class="same-color">—</td>`;
+      } else {
+        const bgColor = new Color(palette[bgVariant].hex);
+        const fgColor = new Color(palette[fgVariant].hex);
+        const ratio = getContrast(bgColor, fgColor);
+
+        let badge = 'DNE';
+        let badgeClass = 'dne';
+
+        if (ratio >= 7) {
+          badge = 'AAA';
+          badgeClass = 'aaa';
+        } else if (ratio >= 4.5) {
+          badge = 'AA';
+          badgeClass = 'aa';
+        } else if (ratio >= 3) {
+          badge = 'AA18';
+          badgeClass = 'aa18';
+        }
+
+        htmlReport += `
+          <td class="contrast-cell">
+            <div class="contrast-value">${ratio.toFixed(2)}</div>
+            <div class="contrast-badge ${badgeClass}">${badge}</div>
+          </td>`;
+      }
+    });
+
+    htmlReport += `</tr>`;
+  });
+
+  htmlReport += `</tbody></table></div>
+    <div class="matrix-legend">
+      <div class="legend-title">Legend:</div>
+      <div class="legend-items">
+        <div class="legend-item"><span class="legend-badge aaa">AAA</span> ≥7:1 (Best)</div>
+        <div class="legend-item"><span class="legend-badge aa">AA</span> ≥4.5:1 (Normal text)</div>
+        <div class="legend-item"><span class="legend-badge aa18">AA18</span> ≥3:1 (Large text 18pt+)</div>
+        <div class="legend-item"><span class="legend-badge dne">DNE</span> &lt;3:1 (Does Not Meet)</div>
+      </div>
+    </div>
+  </div>`;
 
   const allPasses = [...validation.accessibility.passes, ...validation.gamut.passes, ...validation.perceptual.passes];
   if (allPasses.length > 0) {

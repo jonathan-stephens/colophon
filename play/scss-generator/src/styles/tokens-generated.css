@@ -1,303 +1,363 @@
-/* Auto-generated OKLCH tokens (Enhanced: adaptive + smooth + harmonic + validated) */
+/* Auto-generated OKLCH tokens (Symmetric contrast matrix) */
 :root {
   /* MONO-LIGHTEST */
-  --mono-lightest-darkest: oklch(12.0000% 0.0182 94.6860);
-  --mono-lightest-darker: oklch(31.8000% 0.0215 93.6580);
-  --mono-lightest-dark: oklch(45.6600% 0.0220 92.5180);
-  --mono-lightest-mid: oklch(65.0640% 0.0215 91.5200);
-  --mono-lightest-light: oklch(85.0000% 0.0214 91.3050);
-  --mono-lightest-lighter: oklch(89.0000% 0.0208 91.1670);
-  --mono-lightest-lightest: oklch(95.0000% 0.0180 90.9500);
+  --mono-lightest-darkest: oklch(15.8000% 0.0182 94.3080);
+  --mono-lightest-darker: oklch(30.8000% 0.0215 93.3050);
+  --mono-lightest-dark: oklch(45.0000% 0.0220 92.6080);
+  --mono-lightest-mid: oklch(62.5000% 0.0217 91.5200);
+  --mono-lightest-light: oklch(78.2500% 0.0214 91.0240);
+  --mono-lightest-lighter: oklch(94.0000% 0.0207 90.6880);
+  --mono-lightest-lightest: oklch(97.0000% 0.0180 90.6110);
   --mono-lightest-base: oklch(97.9000% 0.0123 91.5200);
+  --mono-lightest-black: oklch(0% 0 0);
+  --mono-lightest-white: oklch(100% 0 0);
 
   /* MONO-LIGHTER */
-  --mono-lighter-darkest: oklch(12.0000% 0.0180 54.3910);
-  --mono-lighter-darker: oklch(31.8000% 0.0184 55.6240);
-  --mono-lighter-dark: oklch(45.6600% 0.0188 56.9930);
-  --mono-lighter-mid: oklch(65.0640% 0.0184 58.1900);
-  --mono-lighter-light: oklch(85.0000% 0.0182 58.4580);
-  --mono-lighter-lighter: oklch(89.0000% 0.0180 58.6310);
-  --mono-lighter-lightest: oklch(95.0000% 0.0180 58.9020);
+  --mono-lighter-darkest: oklch(14.8000% 0.0180 54.8440);
+  --mono-lighter-darker: oklch(30.8000% 0.0184 56.0480);
+  --mono-lighter-dark: oklch(45.0000% 0.0188 56.8840);
+  --mono-lighter-mid: oklch(62.5000% 0.0185 58.1900);
+  --mono-lighter-light: oklch(78.2500% 0.0182 58.8100);
+  --mono-lighter-lighter: oklch(94.0000% 0.0180 59.2300);
+  --mono-lighter-lightest: oklch(97.0000% 0.0180 59.3260);
   --mono-lighter-base: oklch(82.7700% 0.0105 58.1900);
+  --mono-lighter-black: oklch(0% 0 0);
+  --mono-lighter-white: oklch(100% 0 0);
 
   /* MONO-CORE */
-  --mono-core-darkest: oklch(25.2100% 0.0180 7.0305);
-  --mono-core-darker: oklch(35.7100% 0.0180 6.6214);
-  --mono-core-dark: oklch(45.9600% 0.0180 6.1672);
+  --mono-core-darkest: oklch(8.8000% 0.0180 7.6597);
+  --mono-core-darker: oklch(26.4920% 0.0180 6.9798);
+  --mono-core-dark: oklch(43.3510% 0.0180 6.3344);
   --mono-core-mid: oklch(60.2100% 0.0180 5.7700);
-  --mono-core-light: oklch(73.6870% 0.0180 6.2321);
-  --mono-core-lighter: oklch(83.1630% 0.0180 6.7606);
-  --mono-core-lightest: oklch(93.0000% 0.0180 7.2365);
+  --mono-core-light: oklch(77.0690% 0.0180 6.4755);
+  --mono-core-lighter: oklch(93.9280% 0.0180 7.2822);
+  --mono-core-lightest: oklch(97.0000% 0.0180 7.3848);
   --mono-core-base: oklch(60.2100% 0.0074 5.7700);
+  --mono-core-black: oklch(0% 0 0);
+  --mono-core-white: oklch(100% 0 0);
 
   /* MONO-DARKER */
-  --mono-darker-darkest: oklch(12.6600% 0.0080 325.6200);
-  --mono-darker-darker: oklch(20.1600% 0.0080 325.6200);
-  --mono-darker-dark: oklch(28.9100% 0.0080 325.6200);
-  --mono-darker-mid: oklch(37.6600% 0.0080 325.6200);
-  --mono-darker-light: oklch(57.3790% 0.0080 325.6200);
-  --mono-darker-lighter: oklch(77.0980% 0.0080 325.6200);
-  --mono-darker-lightest: oklch(94.0000% 0.0080 325.6200);
+  --mono-darker-darkest: oklch(8.0000% 0.0080 325.6200);
+  --mono-darker-darker: oklch(19.8000% 0.0080 325.6200);
+  --mono-darker-dark: oklch(32.4000% 0.0080 325.6200);
+  --mono-darker-mid: oklch(45.0000% 0.0080 325.6200);
+  --mono-darker-light: oklch(60.0000% 0.0080 325.6200);
+  --mono-darker-lighter: oklch(75.0000% 0.0080 325.6200);
+  --mono-darker-lightest: oklch(89.0000% 0.0080 325.6200);
   --mono-darker-base: oklch(37.6600% 0.0021 325.6200);
+  --mono-darker-black: oklch(0% 0 0);
+  --mono-darker-white: oklch(100% 0 0);
 
   /* MONO-DARKEST */
-  --mono-darkest-darkest: oklch(10.0000% 0.0080 0.0000);
-  --mono-darkest-darker: oklch(16.6000% 0.0080 0.0000);
-  --mono-darkest-dark: oklch(24.0000% 0.0080 0.0000);
-  --mono-darkest-mid: oklch(32.0000% 0.0080 0.0000);
-  --mono-darkest-light: oklch(45.0200% 0.0080 0.0000);
-  --mono-darkest-lighter: oklch(63.2480% 0.0080 0.0000);
-  --mono-darkest-lightest: oklch(81.6990% 0.0080 0.0000);
+  --mono-darkest-darkest: oklch(8.0000% 0.0080 0.0000);
+  --mono-darkest-darker: oklch(17.6000% 0.0080 0.0000);
+  --mono-darkest-dark: oklch(28.8000% 0.0080 0.0000);
+  --mono-darkest-mid: oklch(40.0000% 0.0080 0.0000);
+  --mono-darkest-light: oklch(60.0000% 0.0080 0.0000);
+  --mono-darkest-lighter: oklch(75.0000% 0.0080 0.0000);
+  --mono-darkest-lightest: oklch(89.0000% 0.0080 0.0000);
   --mono-darkest-base: oklch(14.9600% 0.0000 0.0000);
+  --mono-darkest-black: oklch(0% 0 0);
+  --mono-darkest-white: oklch(100% 0 0);
 
   /* SUNLIGHT-LIGHTEST */
-  --sunlight-lightest-darkest: oklch(12.0000% 0.0228 84.9510);
-  --sunlight-lightest-darker: oklch(31.8000% 0.0300 86.1840);
-  --sunlight-lightest-dark: oklch(45.6600% 0.0280 87.5530);
-  --sunlight-lightest-mid: oklch(65.0640% 0.0280 88.7500);
-  --sunlight-lightest-light: oklch(85.0000% 0.0280 88.9110);
-  --sunlight-lightest-lighter: oklch(89.0000% 0.0300 89.0150);
-  --sunlight-lightest-lightest: oklch(95.0000% 0.0224 89.1770);
+  --sunlight-lightest-darkest: oklch(15.8000% 0.0228 85.4040);
+  --sunlight-lightest-darker: oklch(30.8000% 0.0300 86.6080);
+  --sunlight-lightest-dark: oklch(45.0000% 0.0280 87.4440);
+  --sunlight-lightest-mid: oklch(62.5000% 0.0280 88.7500);
+  --sunlight-lightest-light: oklch(78.2500% 0.0280 89.1220);
+  --sunlight-lightest-lighter: oklch(94.0000% 0.0300 89.3740);
+  --sunlight-lightest-lightest: oklch(97.0000% 0.0224 89.4320);
   --sunlight-lightest-base: oklch(96.2100% 0.0277 88.7500);
+  --sunlight-lightest-black: oklch(0% 0 0);
+  --sunlight-lightest-white: oklch(100% 0 0);
 
   /* SUNLIGHT-LIGHTER */
-  --sunlight-lighter-darkest: oklch(12.0000% 0.0242 80.6210);
-  --sunlight-lighter-darker: oklch(31.8000% 0.0649 81.8540);
-  --sunlight-lighter-dark: oklch(45.6600% 0.0699 83.2230);
-  --sunlight-lighter-mid: oklch(65.0640% 0.0682 84.4200);
-  --sunlight-lighter-light: oklch(85.0000% 0.0677 84.5810);
-  --sunlight-lighter-lighter: oklch(89.0000% 0.0661 84.6850);
-  --sunlight-lighter-lightest: oklch(95.0000% 0.0494 84.8470);
+  --sunlight-lighter-darkest: oklch(14.8000% 0.0229 81.0740);
+  --sunlight-lighter-darker: oklch(30.8000% 0.0615 82.2780);
+  --sunlight-lighter-dark: oklch(45.0000% 0.0698 83.1140);
+  --sunlight-lighter-mid: oklch(62.5000% 0.0688 84.4200);
+  --sunlight-lighter-light: oklch(78.2500% 0.0677 84.7920);
+  --sunlight-lighter-lighter: oklch(94.0000% 0.0591 85.0440);
+  --sunlight-lighter-lightest: oklch(97.0000% 0.0396 85.1020);
   --sunlight-lighter-base: oklch(91.2200% 0.0702 84.4200);
+  --sunlight-lighter-black: oklch(0% 0 0);
+  --sunlight-lighter-white: oklch(100% 0 0);
 
   /* SUNLIGHT-CORE */
-  --sunlight-core-darkest: oklch(12.0000% 0.0394 67.2990);
-  --sunlight-core-darker: oklch(32.2350% 0.0696 68.5620);
-  --sunlight-core-dark: oklch(45.7990% 0.1187 69.9640);
-  --sunlight-core-mid: oklch(65.9900% 0.1659 71.1900);
-  --sunlight-core-light: oklch(77.9960% 0.1168 71.3150);
-  --sunlight-core-lighter: oklch(89.0000% 0.0822 71.4170);
-  --sunlight-core-lightest: oklch(95.0000% 0.0360 71.5770);
+  --sunlight-core-darkest: oklch(13.0000% 0.0368 67.8440);
+  --sunlight-core-darker: oklch(30.8000% 0.0659 69.0480);
+  --sunlight-core-dark: oklch(45.0000% 0.0967 69.8840);
+  --sunlight-core-mid: oklch(62.5000% 0.1436 71.1900);
+  --sunlight-core-light: oklch(78.2500% 0.1168 71.5620);
+  --sunlight-core-lighter: oklch(94.0000% 0.0453 71.8140);
+  --sunlight-core-lightest: oklch(97.0000% 0.0288 71.8720);
   --sunlight-core-base: oklch(79.4500% 0.1709 71.1900);
+  --sunlight-core-black: oklch(0% 0 0);
+  --sunlight-core-white: oklch(100% 0 0);
 
   /* SUNLIGHT-DARKER */
-  --sunlight-darker-darkest: oklch(12.0000% 0.0228 84.9510);
-  --sunlight-darker-darker: oklch(31.8000% 0.0300 86.1840);
-  --sunlight-darker-dark: oklch(45.6600% 0.0280 87.5530);
-  --sunlight-darker-mid: oklch(65.0640% 0.0280 88.7500);
-  --sunlight-darker-light: oklch(85.0000% 0.0280 88.9110);
-  --sunlight-darker-lighter: oklch(89.0000% 0.0300 89.0150);
-  --sunlight-darker-lightest: oklch(95.0000% 0.0224 89.1770);
+  --sunlight-darker-darkest: oklch(15.8000% 0.0228 85.4040);
+  --sunlight-darker-darker: oklch(30.8000% 0.0300 86.6080);
+  --sunlight-darker-dark: oklch(45.0000% 0.0280 87.4440);
+  --sunlight-darker-mid: oklch(62.5000% 0.0280 88.7500);
+  --sunlight-darker-light: oklch(78.2500% 0.0280 89.1220);
+  --sunlight-darker-lighter: oklch(94.0000% 0.0300 89.3740);
+  --sunlight-darker-lightest: oklch(97.0000% 0.0224 89.4320);
   --sunlight-darker-base: oklch(96.2100% 0.0277 88.7500);
+  --sunlight-darker-black: oklch(0% 0 0);
+  --sunlight-darker-white: oklch(100% 0 0);
 
   /* SUNLIGHT-DARKEST */
-  --sunlight-darkest-darkest: oklch(12.0000% 0.0242 80.6210);
-  --sunlight-darkest-darker: oklch(31.8000% 0.0649 81.8540);
-  --sunlight-darkest-dark: oklch(45.6600% 0.0699 83.2230);
-  --sunlight-darkest-mid: oklch(65.0640% 0.0682 84.4200);
-  --sunlight-darkest-light: oklch(85.0000% 0.0677 84.5810);
-  --sunlight-darkest-lighter: oklch(89.0000% 0.0661 84.6850);
-  --sunlight-darkest-lightest: oklch(95.0000% 0.0494 84.8470);
+  --sunlight-darkest-darkest: oklch(14.8000% 0.0229 81.0740);
+  --sunlight-darkest-darker: oklch(30.8000% 0.0615 82.2780);
+  --sunlight-darkest-dark: oklch(45.0000% 0.0698 83.1140);
+  --sunlight-darkest-mid: oklch(62.5000% 0.0688 84.4200);
+  --sunlight-darkest-light: oklch(78.2500% 0.0677 84.7920);
+  --sunlight-darkest-lighter: oklch(94.0000% 0.0591 85.0440);
+  --sunlight-darkest-lightest: oklch(97.0000% 0.0396 85.1020);
   --sunlight-darkest-base: oklch(91.2200% 0.0702 84.4200);
+  --sunlight-darkest-black: oklch(0% 0 0);
+  --sunlight-darkest-white: oklch(100% 0 0);
 
   /* FOREST-LIGHTEST */
-  --forest-lightest-darkest: oklch(12.0000% 0.0210 100.2900);
-  --forest-lightest-darker: oklch(31.8000% 0.0300 99.2580);
-  --forest-lightest-dark: oklch(45.6600% 0.0280 98.1180);
-  --forest-lightest-mid: oklch(65.0640% 0.0280 97.1200);
-  --forest-lightest-light: oklch(85.0000% 0.0280 96.9050);
-  --forest-lightest-lighter: oklch(89.0000% 0.0300 96.7670);
-  --forest-lightest-lightest: oklch(95.0000% 0.0207 96.5500);
+  --forest-lightest-darkest: oklch(15.8000% 0.0210 99.9080);
+  --forest-lightest-darker: oklch(30.8000% 0.0300 98.9050);
+  --forest-lightest-dark: oklch(45.0000% 0.0280 98.2080);
+  --forest-lightest-mid: oklch(62.5000% 0.0280 97.1200);
+  --forest-lightest-light: oklch(78.2500% 0.0280 96.6240);
+  --forest-lightest-lighter: oklch(94.0000% 0.0300 96.2880);
+  --forest-lightest-lightest: oklch(97.0000% 0.0206 96.2110);
   --forest-lightest-base: oklch(94.4100% 0.0255 97.1200);
+  --forest-lightest-black: oklch(0% 0 0);
+  --forest-lightest-white: oklch(100% 0 0);
 
   /* FOREST-LIGHTER */
-  --forest-lighter-darkest: oklch(12.0000% 0.0264 111.8600);
-  --forest-lighter-darker: oklch(31.8000% 0.0608 110.8300);
-  --forest-lighter-dark: oklch(45.6600% 0.0622 109.6900);
-  --forest-lighter-mid: oklch(65.0640% 0.0607 108.6900);
-  --forest-lighter-light: oklch(85.0000% 0.0603 108.4800);
-  --forest-lighter-lighter: oklch(89.0000% 0.0588 108.3400);
-  --forest-lighter-lightest: oklch(95.0000% 0.0506 108.1200);
+  --forest-lighter-darkest: oklch(16.6000% 0.0238 111.4800);
+  --forest-lighter-darker: oklch(30.8000% 0.0607 110.4700);
+  --forest-lighter-dark: oklch(45.0000% 0.0622 109.7800);
+  --forest-lighter-mid: oklch(62.5000% 0.0612 108.6900);
+  --forest-lighter-light: oklch(78.2500% 0.0603 108.1900);
+  --forest-lighter-lighter: oklch(94.0000% 0.0584 107.8600);
+  --forest-lighter-lightest: oklch(97.0000% 0.0432 107.7800);
   --forest-lighter-base: oklch(83.8800% 0.0625 108.6900);
+  --forest-lighter-black: oklch(0% 0 0);
+  --forest-lighter-white: oklch(100% 0 0);
 
   /* FOREST-CORE */
-  --forest-core-darkest: oklch(24.2800% 0.0767 139.5000);
-  --forest-core-darker: oklch(34.7800% 0.1085 138.9800);
-  --forest-core-dark: oklch(45.0300% 0.1430 138.4200);
+  --forest-core-darkest: oklch(8.8000% 0.0383 140.2400);
+  --forest-core-darker: oklch(26.0830% 0.0828 139.4100);
+  --forest-core-dark: oklch(42.6820% 0.1285 138.6100);
   --forest-core-mid: oklch(59.2800% 0.1496 137.9200);
-  --forest-core-light: oklch(73.0820% 0.1478 137.5400);
-  --forest-core-lighter: oklch(82.8840% 0.1436 137.1000);
-  --forest-core-lightest: oklch(93.0000% 0.0792 136.7100);
+  --forest-core-light: oklch(75.8780% 0.1471 137.3700);
+  --forest-core-lighter: oklch(92.4770% 0.0850 136.7300);
+  --forest-core-lightest: oklch(97.0000% 0.0456 136.5900);
   --forest-core-base: oklch(59.2800% 0.1510 137.9200);
+  --forest-core-black: oklch(0% 0 0);
+  --forest-core-white: oklch(100% 0 0);
 
   /* FOREST-DARKER */
-  --forest-darker-darkest: oklch(12.0000% 0.0234 179.3500);
-  --forest-darker-darker: oklch(21.6570% 0.0390 180.1000);
-  --forest-darker-dark: oklch(30.9230% 0.0573 180.9300);
-  --forest-darker-mid: oklch(44.1900% 0.0788 181.6500);
-  --forest-darker-light: oklch(58.4400% 0.0788 181.6500);
-  --forest-darker-lighter: oklch(68.6900% 0.0771 181.6500);
-  --forest-darker-lightest: oklch(79.1900% 0.0667 181.6500);
+  --forest-darker-darkest: oklch(8.0000% 0.0232 178.9700);
+  --forest-darker-darker: oklch(19.8000% 0.0351 179.8900);
+  --forest-darker-dark: oklch(32.4000% 0.0573 180.8300);
+  --forest-darker-mid: oklch(45.0000% 0.0789 181.6500);
+  --forest-darker-light: oklch(60.0000% 0.0785 181.6500);
+  --forest-darker-lighter: oklch(75.0000% 0.0763 181.6500);
+  --forest-darker-lightest: oklch(90.0000% 0.0653 181.6500);
   --forest-darker-base: oklch(44.1900% 0.0793 181.6500);
+  --forest-darker-black: oklch(0% 0 0);
+  --forest-darker-white: oklch(100% 0 0);
 
   /* FOREST-DARKEST */
-  --forest-darkest-darkest: oklch(10.0000% 0.0191 226.9200);
-  --forest-darkest-darker: oklch(16.6000% 0.0316 227.4100);
-  --forest-darkest-dark: oklch(24.0000% 0.0398 227.9300);
-  --forest-darkest-mid: oklch(32.0000% 0.0402 228.4300);
-  --forest-darkest-light: oklch(45.0200% 0.0408 229.5500);
-  --forest-darkest-lighter: oklch(63.2480% 0.0393 230.8300);
-  --forest-darkest-lightest: oklch(81.6990% 0.0332 231.9800);
+  --forest-darkest-darkest: oklch(8.0000% 0.0155 226.1500);
+  --forest-darkest-darker: oklch(17.6000% 0.0334 226.8900);
+  --forest-darkest-dark: oklch(28.8000% 0.0400 227.7100);
+  --forest-darkest-mid: oklch(40.0000% 0.0405 228.4300);
+  --forest-darkest-light: oklch(60.0000% 0.0405 229.4500);
+  --forest-darkest-lighter: oklch(75.0000% 0.0394 230.3200);
+  --forest-darkest-lightest: oklch(89.0000% 0.0337 231.1100);
   --forest-darkest-base: oklch(26.9200% 0.0409 228.4300);
+  --forest-darkest-black: oklch(0% 0 0);
+  --forest-darkest-white: oklch(100% 0 0);
 
   /* OCEAN-LIGHTEST */
-  --ocean-lightest-darkest: oklch(12.0000% 0.0245 102.7800);
-  --ocean-lightest-darker: oklch(31.8000% 0.0305 101.7500);
-  --ocean-lightest-dark: oklch(45.6600% 0.0312 100.6100);
-  --ocean-lightest-mid: oklch(65.0640% 0.0304 99.6100);
-  --ocean-lightest-light: oklch(85.0000% 0.0302 99.3950);
-  --ocean-lightest-lighter: oklch(89.0000% 0.0295 99.2570);
-  --ocean-lightest-lightest: oklch(95.0000% 0.0254 99.0400);
+  --ocean-lightest-darkest: oklch(15.8000% 0.0232 102.4000);
+  --ocean-lightest-darker: oklch(30.8000% 0.0304 101.3900);
+  --ocean-lightest-dark: oklch(45.0000% 0.0312 100.7000);
+  --ocean-lightest-mid: oklch(62.5000% 0.0307 99.6100);
+  --ocean-lightest-light: oklch(78.2500% 0.0302 99.1140);
+  --ocean-lightest-lighter: oklch(94.0000% 0.0293 98.7780);
+  --ocean-lightest-lightest: oklch(97.0000% 0.0253 98.7010);
   --ocean-lightest-base: oklch(92.9000% 0.0174 99.6100);
+  --ocean-lightest-black: oklch(0% 0 0);
+  --ocean-lightest-white: oklch(100% 0 0);
 
   /* OCEAN-LIGHTER */
-  --ocean-lighter-darkest: oklch(12.0000% 0.0292 130.5200);
-  --ocean-lighter-darker: oklch(31.8000% 0.0344 129.4900);
-  --ocean-lighter-dark: oklch(45.6600% 0.0352 128.3500);
-  --ocean-lighter-mid: oklch(65.0640% 0.0344 127.3500);
-  --ocean-lighter-light: oklch(85.0000% 0.0342 127.1400);
-  --ocean-lighter-lighter: oklch(89.0000% 0.0333 127.0000);
-  --ocean-lighter-lightest: oklch(95.0000% 0.0287 126.7800);
+  --ocean-lighter-darkest: oklch(15.8000% 0.0291 130.1400);
+  --ocean-lighter-darker: oklch(30.8000% 0.0344 129.1300);
+  --ocean-lighter-dark: oklch(45.0000% 0.0352 128.4400);
+  --ocean-lighter-mid: oklch(62.5000% 0.0347 127.3500);
+  --ocean-lighter-light: oklch(78.2500% 0.0342 126.8500);
+  --ocean-lighter-lighter: oklch(94.0000% 0.0331 126.5200);
+  --ocean-lighter-lightest: oklch(97.0000% 0.0286 126.4400);
   --ocean-lighter-base: oklch(78.0000% 0.0354 127.3500);
+  --ocean-lighter-black: oklch(0% 0 0);
+  --ocean-lighter-white: oklch(100% 0 0);
 
   /* OCEAN-CORE */
-  --ocean-core-darkest: oklch(12.0000% 0.0218 188.7100);
-  --ocean-core-darker: oklch(21.2610% 0.0362 189.4300);
-  --ocean-core-dark: oklch(30.0660% 0.0533 190.2200);
-  --ocean-core-mid: oklch(42.8700% 0.0733 190.9100);
-  --ocean-core-light: oklch(57.1200% 0.0734 190.9100);
-  --ocean-core-lighter: oklch(67.3700% 0.0719 190.9100);
-  --ocean-core-lightest: oklch(77.8700% 0.0623 190.9100);
+  --ocean-core-darkest: oklch(8.0000% 0.0216 188.2300);
+  --ocean-core-darker: oklch(19.8000% 0.0326 189.1500);
+  --ocean-core-dark: oklch(32.4000% 0.0533 190.0900);
+  --ocean-core-mid: oklch(45.0000% 0.0734 190.9100);
+  --ocean-core-light: oklch(60.0000% 0.0731 190.9100);
+  --ocean-core-lighter: oklch(75.0000% 0.0710 190.9100);
+  --ocean-core-lightest: oklch(89.0000% 0.0608 190.9100);
   --ocean-core-base: oklch(42.8700% 0.0738 190.9100);
+  --ocean-core-black: oklch(0% 0 0);
+  --ocean-core-white: oklch(100% 0 0);
 
   /* OCEAN-DARKER */
-  --ocean-darker-darkest: oklch(10.0000% 0.0177 216.1000);
-  --ocean-darker-darker: oklch(16.7710% 0.0294 216.6100);
-  --ocean-darker-dark: oklch(24.5700% 0.0431 217.1600);
-  --ocean-darker-mid: oklch(32.5700% 0.0458 217.6600);
-  --ocean-darker-light: oklch(45.4700% 0.0464 218.7700);
-  --ocean-darker-lighter: oklch(63.5310% 0.0448 220.0300);
-  --ocean-darker-lightest: oklch(81.8120% 0.0378 221.1700);
+  --ocean-darker-darkest: oklch(8.0000% 0.0136 215.3800);
+  --ocean-darker-darker: oklch(17.6000% 0.0310 216.1200);
+  --ocean-darker-dark: oklch(28.8000% 0.0456 216.9400);
+  --ocean-darker-mid: oklch(40.0000% 0.0461 217.6600);
+  --ocean-darker-light: oklch(60.0000% 0.0461 218.6800);
+  --ocean-darker-lighter: oklch(75.0000% 0.0449 219.5500);
+  --ocean-darker-lightest: oklch(89.0000% 0.0384 220.3400);
   --ocean-darker-base: oklch(32.5700% 0.0466 217.6600);
+  --ocean-darker-black: oklch(0% 0 0);
+  --ocean-darker-white: oklch(100% 0 0);
 
   /* OCEAN-DARKEST */
-  --ocean-darkest-darkest: oklch(10.0000% 0.0207 234.1300);
-  --ocean-darkest-darker: oklch(16.6000% 0.0300 234.6200);
-  --ocean-darkest-dark: oklch(24.0000% 0.0280 235.1400);
-  --ocean-darkest-mid: oklch(32.0000% 0.0280 235.6400);
-  --ocean-darkest-light: oklch(45.0200% 0.0280 236.7600);
-  --ocean-darkest-lighter: oklch(63.2480% 0.0300 238.0400);
-  --ocean-darkest-lightest: oklch(81.6990% 0.0216 239.1900);
+  --ocean-darkest-darkest: oklch(8.0000% 0.0168 233.3600);
+  --ocean-darkest-darker: oklch(17.6000% 0.0300 234.1000);
+  --ocean-darkest-dark: oklch(28.8000% 0.0280 234.9200);
+  --ocean-darkest-mid: oklch(40.0000% 0.0280 235.6400);
+  --ocean-darkest-light: oklch(60.0000% 0.0280 236.6600);
+  --ocean-darkest-lighter: oklch(75.0000% 0.0300 237.5300);
+  --ocean-darkest-lightest: oklch(89.0000% 0.0219 238.3200);
   --ocean-darkest-base: oklch(25.1200% 0.0266 235.6400);
+  --ocean-darkest-black: oklch(0% 0 0);
+  --ocean-darkest-white: oklch(100% 0 0);
 
   /* MOONLIGHT-LIGHTEST */
-  --moonlight-lightest-darkest: oklch(12.0000% 0.0230 73.2710);
-  --moonlight-lightest-darker: oklch(31.8000% 0.0271 74.5040);
-  --moonlight-lightest-dark: oklch(45.6600% 0.0278 75.8730);
-  --moonlight-lightest-mid: oklch(65.0640% 0.0271 77.0700);
-  --moonlight-lightest-light: oklch(85.0000% 0.0269 77.2310);
-  --moonlight-lightest-lighter: oklch(89.0000% 0.0263 77.3350);
-  --moonlight-lightest-lightest: oklch(95.0000% 0.0226 77.4970);
+  --moonlight-lightest-darkest: oklch(15.6000% 0.0229 73.7240);
+  --moonlight-lightest-darker: oklch(30.8000% 0.0271 74.9280);
+  --moonlight-lightest-dark: oklch(45.0000% 0.0278 75.7640);
+  --moonlight-lightest-mid: oklch(62.5000% 0.0273 77.0700);
+  --moonlight-lightest-light: oklch(78.2500% 0.0269 77.4420);
+  --moonlight-lightest-lighter: oklch(94.0000% 0.0261 77.6940);
+  --moonlight-lightest-lightest: oklch(97.0000% 0.0225 77.7520);
   --moonlight-lightest-base: oklch(91.2500% 0.0155 77.0700);
+  --moonlight-lightest-black: oklch(0% 0 0);
+  --moonlight-lightest-white: oklch(100% 0 0);
 
   /* MOONLIGHT-LIGHTER */
-  --moonlight-lighter-darkest: oklch(12.0000% 0.0200 16.5110);
-  --moonlight-lighter-darker: oklch(29.7150% 0.0300 15.7840);
-  --moonlight-lighter-dark: oklch(42.1160% 0.0280 14.9760);
-  --moonlight-lighter-mid: oklch(59.4760% 0.0280 14.2700);
-  --moonlight-lighter-light: oklch(79.4320% 0.0280 14.5970);
-  --moonlight-lighter-lighter: oklch(87.8150% 0.0300 14.9710);
-  --moonlight-lighter-lightest: oklch(95.0000% 0.0200 15.3080);
+  --moonlight-lighter-darkest: oklch(9.6000% 0.0200 16.3260);
+  --moonlight-lighter-darker: oklch(28.6000% 0.0300 15.5860);
+  --moonlight-lighter-dark: oklch(45.0000% 0.0280 14.9510);
+  --moonlight-lighter-mid: oklch(65.0000% 0.0280 14.2700);
+  --moonlight-lighter-light: oklch(83.2000% 0.0280 15.0370);
+  --moonlight-lighter-lighter: oklch(94.0000% 0.0300 15.5510);
+  --moonlight-lighter-lightest: oklch(97.0000% 0.0190 15.6490);
   --moonlight-lighter-base: oklch(71.0500% 0.0237 14.2700);
+  --moonlight-lighter-black: oklch(0% 0 0);
+  --moonlight-lighter-white: oklch(100% 0 0);
 
   /* MOONLIGHT-CORE */
-  --moonlight-core-darkest: oklch(12.6700% 0.0330 273.7300);
-  --moonlight-core-darker: oklch(20.1700% 0.0382 274.0800);
-  --moonlight-core-dark: oklch(28.9200% 0.0392 274.4800);
-  --moonlight-core-mid: oklch(37.6700% 0.0395 274.8200);
-  --moonlight-core-light: oklch(57.3860% 0.0397 276.1600);
-  --moonlight-core-lighter: oklch(77.1010% 0.0384 277.6900);
-  --moonlight-core-lightest: oklch(94.0000% 0.0278 279.0800);
+  --moonlight-core-darkest: oklch(8.0000% 0.0326 273.1500);
+  --moonlight-core-darker: oklch(19.8000% 0.0382 273.7200);
+  --moonlight-core-dark: oklch(32.4000% 0.0393 274.3100);
+  --moonlight-core-mid: oklch(45.0000% 0.0398 274.8200);
+  --moonlight-core-light: oklch(60.0000% 0.0396 275.8100);
+  --moonlight-core-lighter: oklch(75.0000% 0.0385 276.9500);
+  --moonlight-core-lightest: oklch(89.0000% 0.0330 277.9800);
   --moonlight-core-base: oklch(37.6700% 0.0400 274.8200);
+  --moonlight-core-black: oklch(0% 0 0);
+  --moonlight-core-white: oklch(100% 0 0);
 
   /* MOONLIGHT-DARKER */
-  --moonlight-darker-darkest: oklch(10.0000% 0.0203 266.9100);
-  --moonlight-darker-darker: oklch(16.6000% 0.0300 267.4000);
-  --moonlight-darker-dark: oklch(24.0000% 0.0280 267.9200);
-  --moonlight-darker-mid: oklch(32.0000% 0.0280 268.4200);
-  --moonlight-darker-light: oklch(45.0200% 0.0280 269.5400);
-  --moonlight-darker-lighter: oklch(63.2480% 0.0300 270.8200);
-  --moonlight-darker-lightest: oklch(81.6990% 0.0201 271.9700);
+  --moonlight-darker-darkest: oklch(8.0000% 0.0202 266.1400);
+  --moonlight-darker-darker: oklch(17.6000% 0.0300 266.8800);
+  --moonlight-darker-dark: oklch(28.8000% 0.0280 267.7000);
+  --moonlight-darker-mid: oklch(40.0000% 0.0280 268.4200);
+  --moonlight-darker-light: oklch(60.0000% 0.0280 269.4400);
+  --moonlight-darker-lighter: oklch(75.0000% 0.0300 270.3100);
+  --moonlight-darker-lightest: oklch(89.0000% 0.0204 271.1000);
   --moonlight-darker-base: oklch(29.4000% 0.0248 268.4200);
+  --moonlight-darker-black: oklch(0% 0 0);
+  --moonlight-darker-white: oklch(100% 0 0);
 
   /* MOONLIGHT-DARKEST */
-  --moonlight-darkest-darkest: oklch(10.0000% 0.0180 259.1600);
-  --moonlight-darkest-darker: oklch(16.6000% 0.0186 259.6500);
-  --moonlight-darkest-dark: oklch(24.0000% 0.0191 260.1700);
-  --moonlight-darkest-mid: oklch(32.0000% 0.0193 260.6700);
-  --moonlight-darkest-light: oklch(45.0200% 0.0196 261.7900);
-  --moonlight-darkest-lighter: oklch(63.2480% 0.0189 263.0700);
-  --moonlight-darkest-lightest: oklch(81.6990% 0.0180 264.2200);
+  --moonlight-darkest-darkest: oklch(8.0000% 0.0180 258.3900);
+  --moonlight-darkest-darker: oklch(17.6000% 0.0187 259.1300);
+  --moonlight-darkest-dark: oklch(28.8000% 0.0192 259.9500);
+  --moonlight-darkest-mid: oklch(40.0000% 0.0194 260.6700);
+  --moonlight-darkest-light: oklch(60.0000% 0.0194 261.6900);
+  --moonlight-darkest-lighter: oklch(75.0000% 0.0189 262.5600);
+  --moonlight-darkest-lightest: oklch(89.0000% 0.0180 263.3500);
   --moonlight-darkest-base: oklch(21.2500% 0.0109 260.6700);
+  --moonlight-darkest-black: oklch(0% 0 0);
+  --moonlight-darkest-white: oklch(100% 0 0);
 
   /* STARRY-LIGHTEST */
-  --starry-lightest-darkest: oklch(12.0000% 0.0262 112.6300);
-  --starry-lightest-darker: oklch(31.8000% 0.0603 111.6000);
-  --starry-lightest-dark: oklch(45.6600% 0.0617 110.4600);
-  --starry-lightest-mid: oklch(65.0640% 0.0603 109.4600);
-  --starry-lightest-light: oklch(85.0000% 0.0598 109.2500);
-  --starry-lightest-lighter: oklch(89.0000% 0.0584 109.1100);
-  --starry-lightest-lightest: oklch(95.0000% 0.0502 108.8900);
+  --starry-lightest-darkest: oklch(16.6000% 0.0249 112.2500);
+  --starry-lightest-darker: oklch(30.8000% 0.0602 111.2400);
+  --starry-lightest-dark: oklch(45.0000% 0.0617 110.5500);
+  --starry-lightest-mid: oklch(62.5000% 0.0608 109.4600);
+  --starry-lightest-light: oklch(78.2500% 0.0598 108.9600);
+  --starry-lightest-lighter: oklch(94.0000% 0.0579 108.6300);
+  --starry-lightest-lightest: oklch(97.0000% 0.0432 108.5500);
   --starry-lightest-base: oklch(97.4700% 0.0620 109.4600);
+  --starry-lightest-black: oklch(0% 0 0);
+  --starry-lightest-white: oklch(100% 0 0);
 
   /* STARRY-LIGHTER */
-  --starry-lighter-darkest: oklch(12.0000% 0.0421 82.0310);
-  --starry-lighter-darker: oklch(31.8000% 0.0622 83.2640);
-  --starry-lighter-dark: oklch(45.6600% 0.1118 84.6330);
-  --starry-lighter-mid: oklch(65.0640% 0.1411 85.8300);
-  --starry-lighter-light: oklch(85.0000% 0.1401 85.9910);
-  --starry-lighter-lighter: oklch(89.0000% 0.1078 86.0950);
-  --starry-lighter-lightest: oklch(95.0000% 0.0497 86.2570);
+  --starry-lighter-darkest: oklch(14.8000% 0.0393 82.4840);
+  --starry-lighter-darker: oklch(30.8000% 0.0621 83.6880);
+  --starry-lighter-dark: oklch(45.0000% 0.0911 84.5240);
+  --starry-lighter-mid: oklch(62.5000% 0.1423 85.8300);
+  --starry-lighter-light: oklch(78.2500% 0.1401 86.2020);
+  --starry-lighter-lighter: oklch(94.0000% 0.0595 86.4540);
+  --starry-lighter-lightest: oklch(97.0000% 0.0398 86.5120);
   --starry-lighter-base: oklch(85.2800% 0.1452 85.8300);
+  --starry-lighter-black: oklch(0% 0 0);
+  --starry-lighter-white: oklch(100% 0 0);
 
   /* STARRY-CORE */
-  --starry-core-darkest: oklch(17.3900% 0.0414 242.9100);
-  --starry-core-darker: oklch(27.8900% 0.0620 243.7300);
-  --starry-core-dark: oklch(39.1400% 0.0635 244.6400);
+  --starry-core-darkest: oklch(8.0000% 0.0198 242.1900);
+  --starry-core-darker: oklch(23.0520% 0.0555 243.3500);
+  --starry-core-dark: oklch(37.7210% 0.0633 244.4600);
   --starry-core-mid: oklch(52.3900% 0.0640 245.4300);
-  --starry-core-light: oklch(65.6400% 0.0632 246.0300);
-  --starry-core-lighter: oklch(76.8900% 0.0615 246.7100);
-  --starry-core-lightest: oklch(87.3900% 0.0529 247.3200);
+  --starry-core-light: oklch(67.0590% 0.0630 246.1600);
+  --starry-core-lighter: oklch(81.7280% 0.0611 246.9900);
+  --starry-core-lightest: oklch(97.0000% 0.0277 247.7400);
   --starry-core-base: oklch(52.3900% 0.0641 245.4300);
+  --starry-core-black: oklch(0% 0 0);
+  --starry-core-white: oklch(100% 0 0);
 
   /* STARRY-DARKER */
-  --starry-darker-darkest: oklch(10.6400% 0.0275 247.2300);
-  --starry-darker-darker: oklch(18.1400% 0.0372 247.7900);
-  --starry-darker-dark: oklch(26.8900% 0.0382 248.4200);
-  --starry-darker-mid: oklch(35.6400% 0.0385 248.9700);
-  --starry-darker-light: oklch(47.8960% 0.0389 250.0200);
-  --starry-darker-lighter: oklch(65.0530% 0.0376 251.2100);
-  --starry-darker-lightest: oklch(82.4210% 0.0286 252.2900);
+  --starry-darker-darkest: oklch(8.0000% 0.0201 246.2900);
+  --starry-darker-darker: oklch(19.8000% 0.0373 247.2100);
+  --starry-darker-dark: oklch(32.4000% 0.0384 248.1500);
+  --starry-darker-mid: oklch(45.0000% 0.0389 248.9700);
+  --starry-darker-light: oklch(60.0000% 0.0387 249.7100);
+  --starry-darker-lighter: oklch(75.0000% 0.0376 250.5700);
+  --starry-darker-lightest: oklch(89.0000% 0.0322 251.3400);
   --starry-darker-base: oklch(35.6400% 0.0391 248.9700);
+  --starry-darker-black: oklch(0% 0 0);
+  --starry-darker-white: oklch(100% 0 0);
 
   /* STARRY-DARKEST */
-  --starry-darkest-darkest: oklch(10.0000% 0.0323 277.9400);
-  --starry-darkest-darker: oklch(16.6000% 0.0374 278.2500);
-  --starry-darkest-dark: oklch(24.0000% 0.0384 278.5800);
-  --starry-darkest-mid: oklch(32.0000% 0.0387 278.8900);
-  --starry-darkest-light: oklch(45.0200% 0.0393 280.3800);
-  --starry-darkest-lighter: oklch(63.2480% 0.0379 282.0800);
-  --starry-darkest-lightest: oklch(81.6990% 0.0289 283.6200);
+  --starry-darkest-darkest: oklch(8.0000% 0.0321 277.4600);
+  --starry-darkest-darker: oklch(17.6000% 0.0375 277.9300);
+  --starry-darkest-dark: oklch(28.8000% 0.0386 278.4400);
+  --starry-darkest-mid: oklch(40.0000% 0.0390 278.8900);
+  --starry-darkest-light: oklch(60.0000% 0.0390 280.2500);
+  --starry-darkest-lighter: oklch(75.0000% 0.0379 281.4100);
+  --starry-darkest-lightest: oklch(89.0000% 0.0325 282.4600);
   --starry-darkest-base: oklch(16.5500% 0.0394 278.8900);
+  --starry-darkest-black: oklch(0% 0 0);
+  --starry-darkest-white: oklch(100% 0 0);
 
 }

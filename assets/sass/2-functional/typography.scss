@@ -239,6 +239,10 @@ blockquote{
     }
 }
 
+sup, sub{
+  padding:0 .25rem;
+}
+
 td, math, time[datetime*=":"] {
     font-variant-numeric: tabular-nums lining-nums slashed-zero;
 }

@@ -71,7 +71,7 @@ snippet('site-header') ?>
 
       <form id="bookmark-form" class="bookmark-form">
           <div class="form-group">
-              <label for="website">URL *</label>
+              <label for="website">URL<sup>*</sup></label>
               <input
                   type="url"
                   id="website"
@@ -80,15 +80,13 @@ snippet('site-header') ?>
                   value="<?= esc($sharedUrl) ?>"
                   placeholder="https://example.com"
               >
-              <?php if ($sharedUrl): ?>
-              <button type="button" id="fetch-metadata-btn" class="btn-link">
+              <button type="button" id="fetch-metadata-btn" class="button">
                   Fetch metadata from URL
               </button>
-              <?php endif; ?>
           </div>
 
           <div class="form-group">
-              <label for="page-title">Page Title *</label>
+              <label for="page-title">Page Title<sup>*</sup></label>
               <input
                   type="text"
                   id="page-title"
@@ -101,7 +99,7 @@ snippet('site-header') ?>
 
           <div class="form-row">
               <div class="form-group half">
-                  <label for="tld">Domain *</label>
+                  <label for="tld">Domain<sup>*</sup></label>
                   <input
                       type="text"
                       id="tld"
@@ -112,7 +110,7 @@ snippet('site-header') ?>
               </div>
 
               <div class="form-group half">
-                  <label for="slug">Slug *</label>
+                  <label for="slug">Slug<sup>*</sup></label>
                   <input
                       type="text"
                       id="slug"
@@ -156,15 +154,15 @@ snippet('site-header') ?>
           </div>
 
           <div class="form-actions">
-              <button type="button" id="quick-save-btn" class="btn btn-secondary">
+              <button type="button" id="quick-save-btn" class="button">
                   Quick Save (Read Later)
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="button" data-button-variant="primary">
                   Save Bookmark
               </button>
           </div>
 
-          <div id="message" class="message" style="display: none;"></div>
+          <textarea id="message" class="message" style="display: none;"></textarea>
       </form>
   </div>
 </div>
@@ -215,18 +213,11 @@ snippet('site-header') ?>
     flex: 1;
 }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--text-color, #333);
-}
 
 .field-help {
     display: block;
     margin-top: 0.25rem;
-    font-size: 0.85rem;
-    color: #666;
+    color: var(--color-subtle);
     font-style: italic;
 }
 
@@ -245,55 +236,6 @@ textarea {
 
 textarea {
     resize: vertical;
-}
-
-.btn-link {
-    background: none;
-    border: none;
-    color: var(--link-color, #0066cc);
-    cursor: pointer;
-    text-decoration: underline;
-    padding: 0.5rem 0;
-    font-size: 0.9rem;
-}
-
-.btn-link:hover {
-    opacity: 0.8;
-}
-
-.form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: var(--button-radius, 4px);
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: opacity 0.2s;
-}
-
-.btn-primary {
-    background: var(--button-bg, #0066cc);
-    color: var(--button-color, #ffffff);
-}
-
-.btn-secondary {
-    background: var(--button-hover-bg, #6c757d);
-    color: var(--button-hover-color, #ffffff);
-}
-
-.btn:hover {
-    opacity: 0.9;
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .message {

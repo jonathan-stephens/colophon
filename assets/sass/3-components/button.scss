@@ -72,23 +72,28 @@ button:active, .button:active, .filter-radio:checked + label.button{
 
 /* Variants */
 button[data-button-variant="primary"], .button[data-button-variant="primary"] {
-  --button-bg: var(--background-quaternary);
-  --button-color: var(--color-prominent-inverse);
-  --button-border-color: var(--background-quinary);
-  --button-hover-bg: var(--button-hover-bg);
+  --button-bg: var(--background-tertiary);
+  --button-color: var(--color-distinct-inverse);
+  --button-border-color: var(--background-tertiary);
+  --button-hover-bg: var(--background-quaternary);
+  --button-hover-border-color: var(--background-quaternary);
   --button-hover-color: var(--button-hover-color);
 }
 
 .button[data-button-variant="positive"] {
-  --button-bg: #2d936c;
-  --button-border-color: #107350;
-  --button-hover-bg: #359d75;
+  --button-bg: var(--success-background);
+  --button-border-color: var(--success-background);
+  --button-hover-bg: color-mix(in oklab, var(--success-background), var(--color-prominent-inverse) 35%);
+  --button-hover-border-color: color-mix(in oklab, var(--success-background), var(--color-prominent-inverse) 35%);
+  --button-color: var(--success-color);
 }
 
 .button[data-button-variant="negative"] {
-  --button-bg: #b33c48;
-  --button-border-color: #a62f3d;
-  --button-hover-bg: #c24a56;
+  --button-bg: var(--error-background);
+  --button-border-color: var(--error-background);
+  --button-hover-bg: color-mix(in oklab, var(--error-background), var(--color-prominent-inverse) 35%);
+  --button-hover-border-color: color-mix(in oklab, var(--error-background), var(--color-prominent-inverse) 35%);
+  --button-color: var(--error-color);
 }
 
 /* Ghost buttons */

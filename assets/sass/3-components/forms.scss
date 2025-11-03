@@ -19,7 +19,7 @@ textarea, input, button{
   color: var(--color-prominent);
 
   &::placeholder{
-    color:var(--color-distinct-inverse);
+    color:var(--color-subtle-inverse);
   }
   &:focus, &:active{
     background: var(--background-primary);
@@ -47,15 +47,30 @@ footer[role="contentinfo"]{
     }
   }
   button{
-    --button-bg:var(--background-tertiary);
-    --button-border-color:var(--border-color-distinct);
+    mix-blend-mode: normal;
+    height:100%;
+    --button-bg:red;
+    --button-border-color: var(--background-quaternary);
     --button-border-width:var(--border-thin);
   }
 }
 
 label{
   font-weight:var(--weight-medium);
-  font-size:var(--prose);
+  font-size:var(--caption);
+  color: var(--color-distinct);
+  font-family: var(--font-mono);
+}
+
+input + button{
+  margin-block-start:var(--rhythm-vivace);
+  align-self: flex-end;
+}
+
+.form-actions{
+  display:flex;
+  gap:var(--rhythm-moderato);
+  justify-content: flex-end;
 }
 
 form.error{

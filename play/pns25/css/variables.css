@@ -1,0 +1,9 @@
+/* Global */
+:root{
+  --color-light: red;
+  --color-dark: black;
+}
+
+html{
+  background:red;
+}

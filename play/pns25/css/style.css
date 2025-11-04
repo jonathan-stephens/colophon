@@ -1,0 +1,275 @@
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src:
+    url('/fonts/BricolageGrotesque.woff2') format('woff2-variations');
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-variation-settings: "WDTH" var(--bricolage-wdth), "OPSZ" var(--bricolage-opsz), "wght" var(--bricolage-wght);
+}
+
+@font-face {
+  font-family: 'Recursive';
+  src:
+    url('/fonts/Recursive_VF_1.085--subset-GF_latin_basic.woff2') format('woff2-variations');
+  font-weight: 300 1000;
+  font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
+}
+
+:root{
+  color-scheme: light-dark;
+
+  --theme-lightest: #F1EDDA;
+  --theme-lighter:  #CDCE9F;
+  --theme-light:    #836147;
+  --theme-mid:      #4C922F;
+  --theme-dark:     #664C72;
+  --theme-darker:   #006156;
+  --theme-darkest:  #0D2A36;
+
+  --font-base: "Recursive";
+  --recursive-mono:0;
+  --recursive-casl:0;
+  --recursive-wght:400;
+  --recursive-slnt:0;
+  --recursive-CRSV:0.5;
+
+  --font-headings: "Bricolage Grotesque";
+  --bricolage-wdth: 100;
+  --bricolage-opsz: .5;
+  --bricolage-wght: 800;
+
+  --measure: 65ch;
+
+  --kerning: normal;
+  --kerning-loose: .05ch;
+  --kerning-tight: -.04ch;
+  --kerning-caps: .1ch;
+
+  --leading: 1.45;
+  --leading-tight: .8;
+  --leading-short: 1.36;
+  --leading-slim: 1.18;
+  --leading-fine: 1.09;
+  --leading-flat: 1;
+  --leading-loose: 1.7;
+
+  --focus-ring: 2px solid currentColor;
+  --focus-ring-offset: 2px;
+
+  --step--2: clamp(0.7813rem, 0.7736rem + 0.0341vw, 0.8rem);
+  --step--1: clamp(0.9375rem, 0.9119rem + 0.1136vw, 1rem);
+  --step-0: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+  --step-1: clamp(1.35rem, 1.2631rem + 0.3864vw, 1.5625rem);
+  --step-2: clamp(1.62rem, 1.4837rem + 0.6057vw, 1.9531rem);
+  --step-3: clamp(1.944rem, 1.7405rem + 0.9044vw, 2.4414rem);
+  --step-4: clamp(2.3328rem, 2.0387rem + 1.3072vw, 3.0518rem);
+  --step-5: clamp(2.7994rem, 2.384rem + 1.8461vw, 3.8147rem);
+
+  --space-2xs: clamp(0.5625rem, 0.5369rem + 0.1136vw, 0.625rem);
+  --space-xs: clamp(0.875rem, 0.8494rem + 0.1136vw, 0.9375rem);
+  --space-s: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+  --space-m: clamp(1.6875rem, 1.6108rem + 0.3409vw, 1.875rem);
+  --space-l: clamp(2.25rem, 2.1477rem + 0.4545vw, 2.5rem);
+  --space-xl: clamp(3.375rem, 3.2216rem + 0.6818vw, 3.75rem);
+  --space-2xl: clamp(4.5rem, 4.2955rem + 0.9091vw, 5rem);
+
+  --wrapper-max-width: var(--measure);
+  --gutter: var(--step-0);
+}
+
+/* Modern reset: https://piccalil.li/blog/a-more-modern-css-reset/ */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+
+/* Compositions */
+.wrapper {
+  margin-inline: auto;
+  max-width: clamp(16rem, var(--wrapper-max-width, 100vw), 80rem);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  position: relative;
+}
+
+/* Utilities */
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+
+/*
+VISUALLY HIDDEN UTILITY
+Info: https://piccalil.li/quick-tip/visually-hidden/
+*/
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+html{
+  background:light-dark(var(--theme-lightest), var(--theme-darkest));
+  color: light-dark(var(--theme-darkest), var(--theme-lightest));
+  font-family: var(--font-base);
+  line-height:var(--leading);
+  font-size:var(--step-0);
+}
+body{
+  background:light-dark(var(--theme-lighter), var(--theme-darker));
+  margin:var(--gutter);
+  padding:var(--gutter);
+  border-radius:var(--gutter);
+}
+
+h1, h2, h3, h4, .lede{
+  font-family: var(--font-headings);
+  font-variation-settings:
+    "wdth" var(--bricolage-wdth),
+    "opsz" var(--bricolage-opsz),
+    "wght" var(--bricolage-wght);
+}
+
+h1{
+  --bricolage-width:75;
+  --bricolage-wght: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--gutter)/2);
+  font-size: var(--step-4);
+  letter-spacing:var(--kerning-tight);
+  color:light-dark(var(--theme-darkest), var(--theme-lightest));
+}
+
+h2, h3{
+  color:light-dark(var(--theme-darker), var(--theme-lighter));
+}
+
+svg.circle{
+  fill:light-dark(var(--theme-darkest), var(--theme-lightest));
+}
+
+svg.shape{
+  fill:light-dark(var(--theme-lightest), var(--theme-darkest));
+}
+
+h2{
+  --bricolage-wdth: 84;
+  --bricolage-wght: 600;
+  font-size:var(--step-2);
+}
+h3{
+  --bricolage-wdth:84;
+  --bricolage-wght:450;
+  color:light-dark(var(--theme-darker), var(--theme-lighter));
+  font-size:var(--step-1);
+}
+
+body{
+
+}
+
+p{
+  font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
+}
+
+.lede{
+  --bricolage-wdth: 100;
+  --bricolage-wght: 420;
+  font-size:var(--step-1);
+  line-height:var(--leading);
+  color:light-dark(var(--theme-darkest), var(--theme-lightest));
+}

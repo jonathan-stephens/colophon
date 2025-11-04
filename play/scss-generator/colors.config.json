@@ -1,4 +1,10 @@
 {
+  "pns-gold": "oklch(0.8959 0.1181 89.13)",
+  "pns-smoke-blue": "oklch(0.829 0.0413 192.53)",
+  "pns-magenta": "oklch(0.7314 0.1586 333.31)",
+  "pns-brown": "oklch(0.664 0.105 91.2)",
+  "pns-moss": "oklch(0.7614 0.0392 188.05)",
+
   "mono-lightest": "oklch(0.979 0.0123 91.52)",
   "mono-lighter": "oklch(0.8277 0.0105 58.19)",
   "mono-core": "oklch(0.6021 0.0074 5.77)",

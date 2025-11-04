@@ -1,0 +1,5 @@
+/* Blocks */
+
+.prose{
+  --flow-space: var(--space-m);
+}

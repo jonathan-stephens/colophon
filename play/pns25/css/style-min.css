@@ -140,6 +140,7 @@ h4 {
 
 /* A elements that don't have a class get default styles */
 a:not([class]) {
+  -webkit-text-decoration-skip: ink;
   text-decoration-skip-ink: auto;
   color: currentColor;
 }
@@ -331,6 +332,7 @@ p,ul{
     "mid mid mid"
     "dark darker darkest";
   border-radius:var(--gutter);
+  -webkit-clip-path:border-box;
   clip-path:border-box;
   padding-inline-start:0;
 

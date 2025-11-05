@@ -278,6 +278,17 @@ article{
   padding-block-end:calc(2*var(--gutter));
   max-width:var(--measure);
   color:light-dark(var(--theme-darkest),var(--theme-lightest));
+
+  & h2:first-of-type{
+    margin-block-start:0;
+  }
+  & h2 + p, & h3 + p{
+    margin-block-start:var(--space-2xs);
+  }
+  & p + p{
+    margin-block-start:var(--space-s);
+  }
+
 }
 
 @media screen and (min-width:40em){
@@ -306,8 +317,24 @@ h3{
 p,ul{
   font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
   --recursive-wght: 385;
+
+ & strong{
+   font-variation-settings: "wght" 585;
+ }
+}
+ul{
+  max-width:50ch;
 }
 
+strong + p{
+  margin-block-start:.15em;
+}
+p + p{
+
+}
+li + li{
+  margin-block-end:.55em;
+}
 .palette{
   display:flex;
   flex-flow:row;

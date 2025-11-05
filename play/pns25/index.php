@@ -20,25 +20,25 @@
     <main>
       <article>
         <h2>About us</h2>
-        <p>Poet & Scribe was founded in 2022 by product development and design systems consultant, Jonathan Stephens.</p>
+        <p>Poet & Scribe was founded in 2022 by director of product development and principal product designer, Jonathan Stephens.</p>
         <p>Through Frankly, Amy partners with trusted organisations and freelancers to provide a rounded and reliable service.</p>
 
         <h2>What we do</h2>
-        <p>We specialise in content design, content strategy, and design systems.</p>
-        <p>Whether you’re a small business, a charity, or a large organisation, if you need help with one of these areas, we’d love to work with you.</p>
+        <p>We specialize in design systems, product strategy, and team development.</p>
+        <p>It doesn’t matter if you’re a small organization, non-profit, government, or multi-national organization—if you need help in any of these areas we’d love to work with you.</p>
 
-        <h3>Content design</h3>
+        <h3>Design systems</h3>
         <p>Whether you’re looking to improve an existing product or create a new one, we’re available for short-term content design projects.</p>
         <p>We design content that’s findable, clear, and delivers genuine value to your users.</p>
 
-        <h3>Design systems consultancy</h3>
-        <p>We’ve worked on design systems for a number of teams including:</p> GOV.UK, BT Group, Springer Nature Ltd, and Babylon Health.</p>
-        <p>We’ve delivered conference talks, spoken on podcasts and written articles on the subject of design systems and patterns.</p>
-        <p>If you need advice on setting up a new design system, reinvigorating an existing one, or dealing with a thorny design systems challenge, we offer consultancy and coaching sessions to support you through the process.</p>
+        <h3>Product development consultancy</h3>
+        <p>We’ve worked in product development throughout our careers. From a decade of scaling Booking.com to consulting with: neuroinclusive productivity start-up Leantime.io; indie game development studio Trailmarks HQ; and the United States’ Space Force.</p>
+        <p>Each product and organization are unique and in their own cycle of growth & scale. We focus on understanding your context and co-creating paths forward together.</p>
+        <p>If you’re looking for a sounding board on product strategy, scaling internal processes, or growing your team, we offer consultancy and coaching sessions to support you through the process.</p>
 
         <h3>Can’t find what you need?</h3>
-        <p>If you need help with something we haven’t mentioned, let us know. We’re happy to chat.</p>
-        <p>Even if we can’t help you, we’re pretty well-connected. We’ll try to put you in touch with someone brilliant, who can.</p>
+        <p>We’re happy to chat if you need help with something we haven’t mentioned!</p>
+        <p>If we can’t help you, we’ll work to connect you with a someone else who can—we’ve met a lot of people throughout our career.  </p>
 
         <h2>Who we’ve worked with</h2>
         <p>We’ve earned our stripes working on digital products and design systems for some of the very best organisations and teams including:</p>
@@ -51,19 +51,37 @@
         </ul>
 
         <h2>Our ethos</h2>
-        <p>To be “frank” means to be open, honest and direct.</p>
+        <p>Historically, poets and scribes bring communities together.</p>
 
-        <p>If you’re looking for visionaries, revolutionaries, innovators, disrupters, trailblazers, groundbreakers, trend setters, game changers, troublemakers, shaker uppers, fast movers and thing breakers, we’re probably not for you.</p>
+        <p>Poets take what’s hard to articulate and find language for it. They make sense of experiences through patterns and meaning. Scribes preserve knowledge, ensuring continuity. They build systems that let communities grow beyond any single person’s capability.</p>
 
-        <p>Frankly is not just our name, it’s how we operate.</p>
+        <p><em>Together</em>, they create understanding.</p>
 
-        <p>We think the web should be simple, straightforward and open to everyone.</p>
+        <p>In product development, that’s most of the work. You’re constantly translating between perspectives. User research into strategy. Strategy into systems. Systems into team practices. </p>
 
-        <p>We remove complexity wherever we can, aiming for clarity and usability above all else.</p>
+        <p>We help organizations get better at this. Not through manifestos or frameworks, but working alongside you to find clarity. To understand where you’ve been, what you’ve learned, and what you’re actually trying to build. </p>
 
-        <p>We prioritise projects that make a positive difference to people’s lives.</p>
+        <p>It’s about building on what’s already there, not tearing it down to start over. It requires the poetic ability to see patterns & meaning and the scribal commitment to document, systematize, and pass it on.</p>
 
-        <p>We strive to be fair, inclusive and socially-responsible in the work we do.</p>
+        <h2>Guiding principles</h2>
+        <ul>
+          <li>
+            <strong>Coalition, not competition.</strong>
+            <p>We prioritise projects that make a positive difference to people’s lives.</p>
+          </li>
+          <li>
+            <strong>Spectrums, not binaries.</strong>
+            <p>We strive to be fair, inclusive, and socially-responsible in the work we do.</p>
+          </li>
+          <li>
+            <strong>Harmony, not hate.</strong>
+            <p>This is a simple sentence here.</p>
+          </li>
+          <li>
+            <strong>Additive, not subtractive.</strong>
+            <p>This is a simple sentence here.</p>
+          </li>
+        </ul>
 
         <h2>Let’s talk</h2>
         <p>If you’re interested in the support we offer, we’d love to chat</p>

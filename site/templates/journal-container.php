@@ -2,7 +2,10 @@
 
 <div class="wrapper">
   <header>
-      <h1><?= $page->title()->html() ?></h1>
+      <h1><?= $page->hed()->isNotEmpty()
+              ? $page->hed()->html()
+              : $page->title()->html() ?>
+      </h1>
       <?php if($page->dek()->isNotEmpty()): ?>
         <?= $page->dek()->kt() ?>
       <?php endif ?>
@@ -77,9 +80,11 @@
               </p>
             </div>
             <h2 class="p-name hed">
-              <?= $article->hed()->html() ?>
+              <?= $article->hed()->isNotEmpty()
+                  ? $article->hed()->html()
+                  : $article->title()->html() ?>
             </h2>
-            <p class="dek"><?= $article->dek()->html() ?></p>
+            <?php if($article->dek()->isNotEmpty()): ?><p class="dek"><?= $article->dek()->html() ?></p><?php endif ?>
         </box-l>
       </a>
     </article>

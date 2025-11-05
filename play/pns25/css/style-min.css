@@ -292,13 +292,13 @@ article{
 }
 
 h2{
-  --bricolage-wdth: 87.5;
+  --bricolage-wdth: 93.75;
   --bricolage-wght: 600;
   font-size:var(--step-3);
   color:light-dark(var(--theme-mid), var(--theme-mid));
 }
 h3{
-  --bricolage-wdth:81.25;
+  --bricolage-wdth:87.5;
   --bricolage-wght:500;
   color:light-dark(var(--theme-dark), var(--theme-light));
   font-size:var(--step-2);
@@ -306,15 +306,7 @@ h3{
 
 p,ul{
   font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
-  --recursive-wght: 400;
-}
-
-@media (prefers-color-scheme: dark) {
-  p,ul{--recursive-wght:300;}
-}
-
-@media (prefers-color-scheme: light) {
-  p,ul{--recursive-wght:400;}
+  --recursive-wght: 385;
 }
 
 .palette{

@@ -20,7 +20,7 @@
     <main>
       <article>
         <h2>About us</h2>
-        <p>Frankly was founded in 2020 by content design and design systems consultant, Amy Hupe.</p>
+        <p>Poet & Scribe was founded in 2022 by product development and design systems consultant, Jonathan Stephens.</p>
         <p>Through Frankly, Amy partners with trusted organisations and freelancers to provide a rounded and reliable service.</p>
 
         <h2>What we do</h2>

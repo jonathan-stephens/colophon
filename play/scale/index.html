@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale Calculator</title>
+    <style>
+      :root{
+        color-scheme: light dark;
+        --ranma-lightest: oklch(97.0000% 0.0202 2.0887);
+        --ranma-lighter: oklch(94.0000% 0.0318 1.9912);
+        --ranma-light: oklch(83.2000% 0.0962 1.4774);
+        --ranma-mid: oklch(65.0000% 0.1625 0.7100);
+        --ranma-dark: oklch(45.0000% 0.1642 1.3911);
+        --ranma-darker: oklch(28.6000% 0.1115 2.0260);
+        --ranma-darkest: oklch(8.8000% 0.0401 2.7658);
+      }
+      body {
+        font-family: sans-serif;
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        background:light-dark(var(--ranma-lightest), var(--ranma-darkest));
+        height:100vh;
+        padding: 2rem;
+      }
+      header, main, footer{
+        margin:0 auto;
+        width: clamp(20rem, 15.296vw + 16.941rem, 30rem);
+      }
+      main{
+        height:100vh;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: min-content min-content min-content;
+        gap: 1em;
+        grid-template-areas:
+          "num scale"
+          "mode generate"
+          "result result"
+      }
+      #num{             grid-area: num;}
+      #scale{           grid-area: scale;}
+      .toggle-wrapper{  grid-area: mode;}
+      button{           grid-area: generate;}
+      #result{          grid-area: result;}
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      input[type="number"] {
+        padding: 0.5rem;
+        font-size: 1rem;
+        width: 90%;
+        border: 2px solid light-dark(var(--ranma-light), var(--ranma-dark));
+        border-radius: 4px;
+        background: light-dark(white, var(--ranma-darker));
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+      }
+      input[type="number"]:focus {
+        outline: 2px solid var(--ranma-mid);
+        outline-offset: 2px;
+      }
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border: 2px solid var(--ranma-mid);
+        border-radius: 4px;
+        background: var(--ranma-mid);
+        color: light-dark(white, var(--ranma-darkest));
+        font-weight: 600;
+        transition: transform 0.1s ease;
+      }
+      button:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.1);
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      button:focus-visible {
+        outline: 2px solid var(--ranma-dark);
+        outline-offset: 2px;
+      }
+
+      /* CSS Toggle Switch */
+      .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 120px;
+        height: 36px;
+      }
+      .toggle-switch input[type="checkbox"] {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: light-dark(var(--ranma-lighter), var(--ranma-darker));
+        border: 2px solid light-dark(var(--ranma-light), var(--ranma-dark));
+        transition: 0.3s;
+        border-radius: 36px;
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+      }
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 28px;
+        width: 60px;
+        left: 2px;
+        bottom: 2px;
+        background-color: light-dark(var(--ranma-dark), var(--ranma-light));
+        transition: 0.3s;
+        border-radius: 28px;
+        z-index: 2;
+      }
+      .toggle-label-off,
+      .toggle-label-on {
+        position: absolute;
+        font-size: 0.75rem;
+        font-weight: 600;
+        user-select: none;
+        transition: 0.3s;
+        pointer-events: none;
+      }
+      .toggle-label-off {
+        z-index: 1;
+      }
+      .toggle-label-on {
+        z-index: 3;
+      }
+      .toggle-label-off {
+        left: 12px;
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+      }
+      .toggle-label-on {
+        right: 12px;
+        color: light-dark(var(--ranma-light), var(--ranma-darkest));
+        opacity: 0;
+      }
+      input[type="checkbox"]:checked + .toggle-slider {
+        background-color: var(--ranma-mid);
+        border-color: var(--ranma-mid);
+      }
+      input[type="checkbox"]:checked + .toggle-slider:before {
+        transform: translateX(54px);
+        background-color: white;
+      }
+      input[type="checkbox"]:checked + .toggle-slider .toggle-label-off {
+        opacity: 0;
+      }
+      input[type="checkbox"]:checked + .toggle-slider .toggle-label-on {
+        opacity: 1;
+        color: white;
+      }
+      input[type="checkbox"]:focus-visible + .toggle-slider {
+        outline: 2px solid var(--ranma-dark);
+        outline-offset: 2px;
+      }
+      .toggle-label-text {
+        font-size: 1rem;
+        font-weight: 500;
+        user-select: none;
+      }
+      #result {
+        margin-top: 20px;
+        margin:0 auto;
+      }
+      .result-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        margin-bottom: 0.25rem;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+      }
+      .result-row:hover {
+        background-color: light-dark(var(--ranma-lighter), var(--ranma-darker));
+      }
+      .result-num {
+        font-weight: 600;
+        color: var(--ranma-mid);
+        min-width: 3rem;
+        text-align: right;
+      }
+      .result-operator {
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        opacity: 0.6;
+      }
+      .result-scale {
+        font-weight: 500;
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        min-width: 4rem;
+        text-align: right;
+      }
+      .result-equals {
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        opacity: 0.6;
+      }
+      .result-value {
+        font-weight: 700;
+        color: light-dark(var(--ranma-darkest), var(--ranma-lightest));
+        min-width: 5rem;
+        text-align: right;
+      }
+      .result-index {
+        font-weight: 500;
+        color: var(--ranma-mid);
+        min-width: 3rem;
+        text-align: right;
+      }
+      .result-dot {
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Scale Calculator</h1>
+    </header>
+    <main>
+      <label for="num" class="sr-only">Enter number</label>
+      <input type="number" id="num" placeholder="Enter number" step="any" aria-label="Enter number">
+
+      <label for="scale" class="sr-only">Scale factor</label>
+      <input type="number" id="scale" placeholder="Scale" value="1" step="any" aria-label="Scale factor">
+
+      <div class="toggle-wrapper">
+        <label class="toggle-switch" for="mode">
+          <input type="checkbox" id="mode" onchange="updateLabel()" aria-label="Toggle between Scale and Multiply modes">
+          <span class="toggle-slider"></span>
+          <span class="toggle-label-scale">Scale</span>
+          <span class="toggle-label-multiply">Multiply</span>
+        </label>
+      </div>
+
+      <button onclick="generate()" aria-label="Generate calculation">Generate</button>
+
+      <section id="result" role="region" aria-live="polite" aria-label="Calculation results"></section>
+    </main>
+
+    <footer>
+      <script>
+        function updateLabel() {
+          const isMultMode = document.getElementById('mode').checked;
+          document.querySelector('h1').textContent = isMultMode ? 'Multiplication Table' : 'Scale Calculator';
+        }
+        function generate() {
+          const n = parseFloat(document.getElementById('num').value);
+          const scale = parseFloat(document.getElementById('scale').value) || 1;
+          const isMultMode = document.getElementById('mode').checked;
+          const result = document.getElementById('result');
+
+          if (!n) {
+            result.innerHTML = '<p>Please enter a number</p>';
+            return;
+          }
+
+          let output = '';
+
+          if (isMultMode) {
+            for (let i = 1; i <= 50; i++) {
+              const scaleValue = scale * i;
+              const value = n * scaleValue;
+              output += `
+                <div class="result-row">
+                  <span class="result-num">${n}</span>
+                  <span class="result-operator">×</span>
+                  <span class="result-scale">${scaleValue.toFixed(3)}</span>
+                  <span class="result-equals">=</span>
+                  <span class="result-value">${value.toFixed(2)}</span>
+                </div>
+              `;
+            }
+          } else {
+            // Generate smaller values (going backwards)
+            let smallerVals = [];
+            let current = n;
+            for (let i = 1; i <= 25; i++) {
+              current = current / scale;
+              smallerVals.unshift(`
+                <div class="result-row">
+                  <span class="result-index">-${i}</span>
+                  <span class="result-dot">.</span>
+                  <span class="result-value">${current.toFixed(2)}</span>
+                </div>
+              `);
+            }
+            output += smallerVals.join('');
+
+            // Base value
+            output += `
+              <div class="result-row">
+                <span class="result-index">0</span>
+                <span class="result-dot">.</span>
+                <span class="result-value">${n.toFixed(2)}</span>
+              </div>
+            `;
+
+            // Generate larger values (going forwards)
+            current = n;
+            for (let i = 1; i <= 25; i++) {
+              current = current * scale;
+              output += `
+                <div class="result-row">
+                  <span class="result-index">${i}</span>
+                  <span class="result-dot">.</span>
+                  <span class="result-value">${current.toFixed(2)}</span>
+                </div>
+              `;
+            }
+          }
+
+          result.innerHTML = output;
+        }
+      </script>
+    </footer>
+  </body>
+</html>

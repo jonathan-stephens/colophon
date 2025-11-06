@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body class="wrapper">
+    <script>
+        var app = document.getElementsByTagName("BODY")[0];
+        if (localStorage.lightMode == "dark") {
+            app.setAttribute("data-color-mode", "dark");
+        }
+    </script>
     <header>
       <section class="masthead">
         <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" title="Brandmark">
@@ -15,71 +21,76 @@
         </svg>
         <h1>Poet & Scribe</h1>
       </section>
-      <p class="lede">Helping teams create clear, accessible and straightforward digital products that put users at their heart.</p>
+      <p class="lede">Helping organizations create digital products that work for everyone through accessible design systems and thoughtful strategy.</p>
     </header>
     <main>
       <article>
         <h2>About us</h2>
-        <p>Poet & Scribe was founded in 2022 by director of product development and principal product designer, Jonathan Stephens.</p>
-        <p>Through Frankly, Amy partners with trusted organisations and freelancers to provide a rounded and reliable service.</p>
+        <p>Poet & Scribe was founded in 2022 by product development director and principal designer, Jonathan Stephens.</p>
+        <p>With P&S, <em>he/they</em> partners with trusted organizations and freelancers to provide a rounded and reliable service.</p>
 
-        <h2>What we do</h2>
-        <p>We specialize in design systems, product strategy, and team development.</p>
-        <p>It doesn’t matter if you’re a small organization, non-profit, government, or multi-national organization—if you need help in any of these areas we’d love to work with you.</p>
+        <h3>What we do</h2>
+        <p class="">We specialize in product strategy and design systems for scale-ups, non-profits, and global enterprises.</p>
 
         <h3>Design systems</h3>
-        <p>Whether you’re looking to improve an existing product or create a new one, we’re available for short-term content design projects.</p>
-        <p>We design content that’s findable, clear, and delivers genuine value to your users.</p>
+        <p>If you're looking to fix disjointed user interfaces, improve internal efficiency, or build a resilient product—we're available to help with short-to-mid-term design system projects.</p>
+        <p>We create <a href="https://designsystem.university/articles/what-is-a-design-system" title="A post by Dan Mall of Design Systems University defining six different types of design systems">all types of design systems</a> that're accessible, clear, and deliver compounding value to users and your bottom line.</p>
 
-        <h3>Product development consultancy</h3>
-        <p>We’ve worked in product development throughout our careers. From a decade of scaling Booking.com to consulting with: neuroinclusive productivity start-up Leantime.io; indie game development studio Trailmarks HQ; and the United States’ Space Force.</p>
-        <p>Each product and organization are unique and in their own cycle of growth & scale. We focus on understanding your context and co-creating paths forward together.</p>
-        <p>If you’re looking for a sounding board on product strategy, scaling internal processes, or growing your team, we offer consultancy and coaching sessions to support you through the process.</p>
+        <h3>Product strategy</h3>
+        <p>We’ve worked in product development throughout our careers—from a decade of scaling global enterprises to consulting with agencies, start-ups, and governments.</p>
+        <p>Each client is unique, in their own season of growth & scale. We focus on understanding <em>your context</em> and co-creating paths forward together.</p>
+        <p>If you’re looking for direction, optimizing features, or scaling your product, we offer consultancy and coaching sessions to support you.</p>
 
         <h3>Can’t find what you need?</h3>
-        <p>We’re happy to chat if you need help with something we haven’t mentioned!</p>
-        <p>If we can’t help you, we’ll work to connect you with a someone else who can—we’ve met a lot of people throughout our career.  </p>
+        <p>We’re happy to chat if you need help with something we haven’t mentioned.</p>
+        <p>If we can’t help, we’ll work to connect you with someone who can—we’ve met a lot of people throughout our careers.</p>
 
         <h2>Who we’ve worked with</h2>
-        <p>We’ve earned our stripes working on digital products and design systems for some of the very best organisations and teams including:</p>
+        <p>We’ve built our careers working on digital products for some local & global organizations and teams, including:</p>
         <ul>
-          <li>Government Digital Service</li>
-          <li>Springer Nature Ltd</li>
-          <li>NHS</li>
-          <li>Babylon Health</li>
-          <li>Which?</li>
+          <li>Booking.com</li>
+          <li>United States' Space Force</li>
+          <li>Leantime.io</li>
+          <li>Strategi Consulting</li>
+          <li>Trailmarks HQ</li>
+          <li>Smashing Boxes</li>
         </ul>
 
         <h2>Our ethos</h2>
-        <p>Historically, poets and scribes bring communities together.</p>
+        <p>Poet & Scribe isn't just our name, it defines how we operate.</p>
 
-        <p>Poets take what’s hard to articulate and find language for it. They make sense of experiences through patterns and meaning. Scribes preserve knowledge, ensuring continuity. They build systems that let communities grow beyond any single person’s capability.</p>
+        <p>Poets take what’s hard to articulate and find language for it. They're sensemakers of patterns and meaning. Scribes preserve knowledge, ensuring continuity. They build context, shaping how communities grow & scale beyond any one human's capability.</p>
 
-        <p><em>Together</em>, they create understanding.</p>
+        <p>They create shared understanding.</p>
 
-        <p>In product development, that’s most of the work. You’re constantly translating between perspectives. User research into strategy. Strategy into systems. Systems into team practices. </p>
+        <p>In product development, it's much of the same. Constantly translating between perspectives: user research &#8594; strategy; strategy → systems; systems → practices.</p>
 
-        <p>We help organizations get better at this. Not through manifestos or frameworks, but working alongside you to find clarity. To understand where you’ve been, what you’ve learned, and what you’re actually trying to build. </p>
+        <p>We help organizations get better at this. We work to understand where you’ve been, what you’ve learned, and what you’re actually trying to build.</p>
 
-        <p>It’s about building on what’s already there, not tearing it down to start over. It requires the poetic ability to see patterns & meaning and the scribal commitment to document, systematize, and pass it on.</p>
 
         <h2>Guiding principles</h2>
+        <p>We're not disruptors, trend-setters, revolutionaries, troublemakers, or thing-breakers.</p>
+
         <ul>
           <li>
             <strong>Coalition, not competition.</strong>
-            <p>We prioritise projects that make a positive difference to people’s lives.</p>
+            <p>We believe in collective power over individual heroics, building with others rather than against them.</p>
           </li>
           <li>
             <strong>Spectrums, not binaries.</strong>
-            <p>We strive to be fair, inclusive, and socially-responsible in the work we do.</p>
+            <p>We recognize that most decisions exist on a continuum, embracing nuance and context over rigid absolutes.</p>
           </li>
           <li>
-            <strong>Harmony, not hate.</strong>
-            <p>This is a simple sentence here.</p>
+            <strong>Curiosity, not assumptions.</strong>
+            <p>We ask questions and listen deeply, approaching each project with genuine interest rather than predetermined solutions.</p>
           </li>
           <li>
-            <strong>Additive, not subtractive.</strong>
-            <p>This is a simple sentence here.</p>
+            <strong>Sustainable, not extractive.</strong>
+            <p>We build for longevity and regeneration, creating systems that endure and improve over time rather than depleting resources for short-term gains.</p>
+          </li>
+          <li>
+            <strong>Iteration, not perfection.</strong>
+            <p>We embrace learning through doing, refining our work through cycles of testing and feedback rather than seeking flawless first attempts.</p>
           </li>
         </ul>
 
@@ -90,6 +101,11 @@
       </article>
     </main>
     <footer>
+      <button
+    		class="light-mode-button" aria-label="Toggle Light Mode" onclick="toggle_light_mode()">
+	    	<span></span>
+	    	<span></span>
+	    </button>
       <p class="wrapper">Thanks for stopping by</p>
       <ul class="palette">
         <li>lightest</li>
@@ -101,5 +117,26 @@
         <li>darkest</li>
       </ul>
     </footer>
+    <script>
+        function toggle_light_mode() {
+            var app = document.getElementsByTagName("BODY")[0];
+            if (localStorage.lightMode == "dark") {
+                localStorage.lightMode = "light";
+                app.setAttribute("data-color-mode", "light");
+            } else {
+                localStorage.lightMode = "dark";
+                app.setAttribute("data-color-mode", "dark");
+            }
+        }
+
+		window.addEventListener("storage", function () {
+			if (localStorage.lightMode == "dark") {
+				app.setAttribute("data-color-mode", "dark");
+			} else {
+				app.setAttribute("data-color-mode", "light");
+			}
+		}, false);
+
+    </script>
   </body>
 </html>

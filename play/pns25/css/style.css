@@ -10,9 +10,11 @@
 @font-face {
   font-family: 'Recursive';
   src:
-    url('/fonts/Recursive_VF_1.085--subset-GF_latin_basic.woff2') format('woff2-variations');
+    url('/fonts/Recursive_VF_1.085--subset_range_english_basic.woff2') format('woff2-variations');
   font-weight: 300 1000;
-  font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
+  font-display: swap;
+  font-style: oblique 0deg 15deg;
+  unicode-range: U+0020-007F,U+00A9,U+2190-2193,U+2018,U+2019,U+201C,U+201D,U+2022;
 }
 
 :root{
@@ -316,7 +318,7 @@ h3{
 
 p,ul{
   font-variation-settings: "MONO" var(--recursive-mono), "CASL" var(--recursive-casl), "wght" var(--recursive-wght), "slnt" var(--recursive-slnt),"CRSV" var(--recursive-CRSV);
-  --recursive-wght: 385;
+  --recursive-wght: 365;
 
  & strong{
    font-variation-settings: "wght" 585;

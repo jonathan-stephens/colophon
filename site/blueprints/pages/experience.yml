@@ -1,6 +1,9 @@
 title: Experience
 icon: document
 
+options:
+  move: true
+
 tabs:
   content:
     label: Content

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Converter</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 20px auto; padding: 0 20px; }
+    #preview { width: 100%; height: 100px; border: 1px solid #ccc; margin: 20px 0; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input { width: 100%; padding: 8px; margin-top: 5px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <h1>Color Converter</h1>
+  <div id="preview" aria-label="Color preview"></div>
+
+  <label for="hex">HEX / HEXA</label>
+  <input type="text" id="hex" placeholder="#FF5733 or #FF5733FF">
+
+  <label for="rgb">RGB / RGBA</label>
+  <input type="text" id="rgb" placeholder="255, 87, 51 or rgba(255, 87, 51, 1)">
+
+  <label for="hsl">HSL / HSLA</label>
+  <input type="text" id="hsl" placeholder="9, 100%, 60% or hsla(9, 100%, 60%, 1)">
+
+  <label for="hsv">HSV / HSVA</label>
+  <input type="text" id="hsv" placeholder="9, 80%, 100% or 9, 80%, 100%, 1">
+
+  <label for="hwb">HWB</label>
+  <input type="text" id="hwb" placeholder="9, 0%, 0% or hwb(9 0% 0% / 1)">
+
+  <label for="cmyk">CMYK</label>
+  <input type="text" id="cmyk" placeholder="0, 66, 80, 0">
+
+  <label for="lab">LAB</label>
+  <input type="text" id="lab" placeholder="62.83, 52.78, 39.78 or lab(62.83 52.78 39.78)">
+
+  <label for="lch">LCH</label>
+  <input type="text" id="lch" placeholder="62.83, 66.13, 37 or lch(62.83 66.13 37)">
+
+  <label for="oklab">OKLAB</label>
+  <input type="text" id="oklab" placeholder="0.68, 0.15, 0.10 or oklab(0.68 0.15 0.10)">
+
+  <label for="oklch">OKLCH</label>
+  <input type="text" id="oklch" placeholder="0.68, 0.18, 35 or oklch(0.68 0.18 35)">
+
+  <script>
+    // ---- your conversion functions go here (unchanged) ----
+    // (the ones you already wrote: parseHex, rgbToHsl, hsvToRgb, etc.)
+
+    // ---- Complete updateAll function ----
+    function updateAll(sourceType, rgb) {
+      if (!rgb) return;
+      const {r, g, b, a = 1} = rgb;
+
+      // preview color
+      preview.style.backgroundColor = a < 1 ? `rgba(${r},${g},${b},${a})` : `rgb(${r},${g},${b})`;
+
+      // HEX
+      if (sourceType !== 'hex') inputs.hex.value = rgbToHex(r, g, b, a);
+
+      // RGB
+      if (sourceType !== 'rgb') inputs.rgb.value = a < 1 ? `${r}, ${g}, ${b}, ${a.toFixed(2)}` : `${r}, ${g}, ${b}`;
+
+      // HSL
+      if (sourceType !== 'hsl') {
+        const hsl = rgbToHsl(r, g, b, a);
+        inputs.hsl.value = a < 1
+          ? `${hsl.h}, ${hsl.s}%, ${hsl.l}%, ${a.toFixed(2)}`
+          : `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
+      }
+
+      // HSV
+      if (sourceType !== 'hsv') {
+        const hsv = rgbToHsv(r, g, b, a);
+        inputs.hsv.value = a < 1
+          ? `${hsv.h}, ${hsv.s}%, ${hsv.v}%, ${a.toFixed(2)}`
+          : `${hsv.h}, ${hsv.s}%, ${hsv.v}%`;
+      }
+
+      // HWB
+      if (sourceType !== 'hwb') {
+        const hwb = rgbToHwb(r, g, b, a);
+        inputs.hwb.value = a < 1
+          ? `${hwb.h}, ${hwb.w}%, ${hwb.b}%, ${a.toFixed(2)}`
+          : `${hwb.h}, ${hwb.w}%, ${hwb.b}%`;
+      }
+
+      // CMYK
+      if (sourceType !== 'cmyk') {
+        const cmyk = rgbToCmyk(r, g, b);
+        inputs.cmyk.value = `${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`;
+      }
+
+      // LAB
+      const xyz = rgbToXyz(r, g, b);
+      const lab = xyzToLab(xyz.x, xyz.y, xyz.z);
+      if (sourceType !== 'lab')
+        inputs.lab.value = a < 1
+          ? `${lab.l.toFixed(2)} ${lab.a.toFixed(2)} ${lab.b.toFixed(2)} / ${a.toFixed(2)}`
+          : `${lab.l.toFixed(2)} ${lab.a.toFixed(2)} ${lab.b.toFixed(2)}`;
+
+      // LCH
+      if (sourceType !== 'lch') {
+        const lch = labToLch(lab.l, lab.a, lab.b);
+        inputs.lch.value = a < 1
+          ? `${lch.l.toFixed(2)} ${lch.c.toFixed(2)} ${lch.h.toFixed(2)} / ${a.toFixed(2)}`
+          : `${lch.l.toFixed(2)} ${lch.c.toFixed(2)} ${lch.h.toFixed(2)}`;
+      }
+
+      // OKLab
+      const oklab = rgbToOklab(r, g, b);
+      if (sourceType !== 'oklab')
+        inputs.oklab.value = a < 1
+          ? `${oklab.l.toFixed(4)} ${oklab.a.toFixed(4)} ${oklab.b.toFixed(4)} / ${a.toFixed(2)}`
+          : `${oklab.l.toFixed(4)} ${oklab.a.toFixed(4)} ${oklab.b.toFixed(4)}`;
+
+      // OKLCH
+      if (sourceType !== 'oklch') {
+        const oklch = oklabToOklch(oklab.l, oklab.a, oklab.b);
+        inputs.oklch.value = a < 1
+          ? `${oklch.l.toFixed(4)} ${oklch.c.toFixed(4)} ${oklch.h.toFixed(2)} / ${a.toFixed(2)}`
+          : `${oklch.l.toFixed(4)} ${oklch.c.toFixed(4)} ${oklch.h.toFixed(2)}`;
+      }
+    }
+
+    // ---- Hook up event listeners ----
+    const parsers = {
+      hex: parseHex,
+      rgb: parseRgb,
+      hsl: str => {
+        const hsl = parseHsl(str);
+        return hsl ? hslToRgb(hsl.h, hsl.s, hsl.l, hsl.a) : null;
+      },
+      hsv: str => {
+        const hsv = parseHsv(str);
+        return hsv ? hsvToRgb(hsv.h, hsv.s, hsv.v, hsv.a) : null;
+      },
+      hwb: str => {
+        const hwb = parseHwb(str);
+        return hwb ? hwbToRgb(hwb.h, hwb.w, hwb.b, hwb.a) : null;
+      },
+      cmyk: str => {
+        const cmyk = parseCmyk(str);
+        return cmyk ? cmykToRgb(cmyk.c, cmyk.m, cmyk.y, cmyk.k) : null;
+      },
+      lab: str => {
+        const lab = parseLab(str);
+        if (!lab) return null;
+        const xyz = labToXyz(lab.l, lab.a, lab.b);
+        const rgb = xyzToRgb(xyz.x, xyz.y, xyz.z);
+        rgb.a = lab.alpha ?? 1;
+        return rgb;
+      },
+      lch: str => {
+        const lch = parseLch(str);
+        if (!lch) return null;
+        const lab = lchToLab(lch.l, lch.c, lch.h);
+        const xyz = labToXyz(lab.l, lab.a, lab.b);
+        const rgb = xyzToRgb(xyz.x, xyz.y, xyz.z);
+        rgb.a = lch.alpha ?? 1;
+        return rgb;
+      },
+      oklab: str => {
+        const ok = parseOklab(str);
+        if (!ok) return null;
+        const rgb = oklabToRgb(ok.l, ok.a, ok.b);
+        rgb.a = ok.alpha ?? 1;
+        return rgb;
+      },
+      oklch: str => {
+        const ok = parseOklch(str);
+        if (!ok) return null;
+        const lab = oklchToOklab(ok.l, ok.c, ok.h);
+        const rgb = oklabToRgb(lab.l, lab.a, lab.b);
+        rgb.a = ok.alpha ?? 1;
+        return rgb;
+      }
+    };
+
+    for (const [type, input] of Object.entries(inputs)) {
+      input.addEventListener('input', () => {
+        const parseFn = parsers[type];
+        if (!parseFn) return;
+        const rgb = parseFn(input.value);
+        if (rgb) updateAll(type, rgb);
+      });
+    }
+  </script>
+</body>
+</html>

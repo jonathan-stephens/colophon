@@ -12,6 +12,7 @@ Icon
 assets/sass/css/*
 content/*
 config.codekit3
+*/node_modules/*
 
 # Lock files
 # ---------------

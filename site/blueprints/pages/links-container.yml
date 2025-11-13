@@ -4,22 +4,35 @@ icon: url
 tabs:
   entries:
     label: Links
-    sections:
-      drafts:
-        headline: Draft Links
-        type: pages
-        status: draft
-        templates: [link]
-        sortBy: date desc
+    columns:
+      left:
+        width: 2/3
+        sections:
+          drafts:
+            headline: Draft Links
+            type: pages
+            status: draft
+            templates: [link]
+            sortBy: date desc
+            width: 2/3
 
-      published:
-        headline: Published Links
-        type: pages
-        status: published
-        templates: [link]
-        sortBy: date desc
-        layout: table
-        columns:
-          tld: true
-          tags: true
+          published:
+            headline: Published Links
+            type: pages
+            status: published
+            templates: [link]
+            sortBy: date desc
+            layout: table
+            columns:
+              tld: true
+              tags: true
+      right:
+        width: 1/3
+        sections:
+          csvExport:
+            type: fields
+            fields:
+              csvButton:
+                type: info
+                text: <a href="/csv-export/links" class="k-button" target="_blank">Download Link data as CSV</a>
   extends: tabs/listing

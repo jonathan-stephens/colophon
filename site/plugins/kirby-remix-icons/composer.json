@@ -1,0 +1,22 @@
+{
+	"name": "estd/kirby-remix-icons",
+	"description": "A Kirby CMS plugin to use Remix Icons.",
+	"license": "MIT",
+	"type": "kirby-plugin",
+	"version": "1.0.0",
+	"authors": [
+		{
+			"name": "Robert Farrelly",
+			"email": "hi@estd.dev",
+			"homepage": "https://github.com/veryrobert/kirby-remix-icons"
+		}
+	],
+	"require": {
+		"getkirby/composer-installer": "^1.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"getkirby/composer-installer": true
+		}
+	}
+}

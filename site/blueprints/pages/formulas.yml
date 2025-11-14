@@ -1,0 +1,8 @@
+title: Formulas
+type: page
+num: date
+icon: table
+preview: dataTable
+fields:
+  table:
+    type: table

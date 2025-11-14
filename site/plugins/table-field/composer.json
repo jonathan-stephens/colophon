@@ -1,0 +1,29 @@
+{
+  "name": "bogdancondorachi/kirby-table-field",
+  "description": "Table field plugin for Kirby CMS",
+  "type": "kirby-plugin",
+  "license": "MIT",
+  "version": "2.4.2",
+  "homepage": "https://getkirby.com/plugins/bogdancondorachi/table-field",
+  "authors": [
+    {
+      "name": "Bogdan Condorachi",
+      "email": "bogdan.condorachi@gmail.com",
+      "homepage": "https://getkirby.com/plugins/bogdancondorachi"
+    }
+  ],
+  "require": {
+    "php": ">=8.1.0 <8.5.0",
+    "getkirby/cms": "^4.0 || ^5.0",
+    "getkirby/composer-installer": "^1.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  },
+  "extra": {
+    "installer-name": "table-field",
+    "kirby-cms-path": false
+  }
+}

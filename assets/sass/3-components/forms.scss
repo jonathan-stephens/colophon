@@ -26,12 +26,11 @@ textarea, input, button{
   }
 }
 
-footer[role="contentinfo"]{
-  form{
-    display:grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--rhythm-moderato);
-  }
+footer .embeddable-buttondown-form{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--rhythm-moderato);
+
   input{
     background:var(--background-secondary);
     color: var(--color-distinct);

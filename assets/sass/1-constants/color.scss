@@ -44,4 +44,13 @@
   --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
   --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
   --palette-ash-00: var(--palette-paper);
+
+  --mono-lightest: 0.9794 0.0093 62.59 /* #FDF7F2 */;
+  --mono-lighter: 0.8384 0.0167 64.63 /* #D2C8BF */;
+  --mono-light: 0.7019 0.0175 64.57 /* #A79D94 */;
+  --mono-mid: 0.5747 0.0183 52.37 /* #82766F */;
+  --mono-dark: 0.4108 0.0169 67.33 /* #514941 */;
+  --mono-darker: 0.2671 0.0175 63.16 /* #2C241D */;
+  --mono-darkest: 0.1237 0.0176 59.29 /* #0B0502 */;
+
 }

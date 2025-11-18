@@ -24,6 +24,4 @@
   </footer>
 </section>
 
-
-
 <?php snippet('site-footer') ?>

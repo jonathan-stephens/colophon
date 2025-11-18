@@ -1,5 +1,5 @@
 :root{
-  --gutter: var(--rhythm-moderato);
+  --gutter: var(--flow-5);
   --icon-color-primary: inherit;
   --icon-color-secondary: currentColor;
 }
@@ -15,7 +15,7 @@
 .cluster{
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space, var(--rhythm-moderato));
+  gap: var(--space, var(--flow-5));
   justify-content: flex-start;
   align-items: center;
 }
@@ -30,12 +30,12 @@ stack-l {
 }
 
 stack-l > * + * {
-  margin-block-start: var(--rhythm-moderato);
+  margin-block-start: var(--flow-5);
 }
 
 box-l {
   display: block;
-  padding-block: var(--rhythm-moderato);
+  padding-block: var(--flow-5);
   border-width: var(--border-thin);
   /* ↓ For high contrast mode */
   outline: var(--border-thin) solid transparent;

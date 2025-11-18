@@ -1,19 +1,19 @@
 header.work{
-  padding-block-end:var(--rhythm-andante);
+  padding-block-end:var(--flow-7);
 
   .dek{
     font-size:calc(.85*var(--hed-secondary));
     line-height: var(--leading-standard);
     color:var(--color-distinct);
-    padding-block:var(--rhythm-andantino);
+    padding-block:var(--flow-6);
     border-block: var(--border-fine) solid var(--border-color-nuance);
-    margin-block: var(--rhythm-moderato);
+    margin-block: var(--flow-5);
     span{display:block;max-width: 38ch;}
   }
   .lede{
     color:var(--color-nuance);
     max-width:84ch;
-    padding-block-end:var(--rhythm-andante);
+    padding-block-end:var(--flow-7);
 
     p{
       font-size:var(--dek-primary);
@@ -32,20 +32,20 @@ header.work{
     grid-template-rows: auto;
     grid-template-areas:
       ". .";
-    gap: var(--rhythm-moderato);
+    gap: var(--flow-5);
 
 
     li{
       margin:0;
       display:flex;
       flex-flow:column;
-      gap:var(--rhythm-vivace);
-      padding:var(--rhythm-moderato);
+      gap:var(--flow-3);
+      padding:var(--flow-5);
       background:var(--background-secondary);
       justify-items: center;
       align-items: center;
       font-size:var(--small);
-      gap: var(--rhythm-presto);
+      gap: var(--flow-2);
       text-align:center;
       border-radius:var(--radii-square);
       color:var(--color-distinct);
@@ -59,7 +59,7 @@ header.work{
 
 .work .timeline{
   h2{
-    padding-block-end:var(--rhythm-vivace);
+    padding-block-end:var(--flow-3);
   }
   ul{
     list-style-type:none;
@@ -73,8 +73,8 @@ header.work{
     justify-content:space-between;
     border-block-end:var(--border-fine) solid var(--border-color-nuance);
     align-content:baseline;
-    column-gap:var(--rhythm-moderato);
-    padding-block:var(--rhythm-vivace);
+    column-gap:var(--flow-5);
+    padding-block:var(--flow-3);
   }
 
   p{
@@ -86,18 +86,18 @@ header.work{
     color:var(--color-subtle);
   }
   .cta{
-    margin-block-end:var(--rhythm-vivace);
+    margin-block-end:var(--flow-3);
     background:var(--background-secondary);
     border-end-end-radius:var(--radii-square);
     border-end-start-radius:var(--radii-square);
-    padding:var(--rhythm-allegro);
+    padding:var(--flow-4);
     display:grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     grid-template-areas:
       "cta cta"
       "here there";
-    gap:var(--rhythm-moderato);
+    gap:var(--flow-5);
 
   p{grid-area:cta;text-align:center;color:var(--color-distinct);}
   a:first-of-type{grid-area:here;}
@@ -110,7 +110,7 @@ header.work{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, auto);
-    column-gap:var(--rhythm-moderato);
+    column-gap:var(--flow-5);
     grid-template-areas:
       "title title title"
       "dek dek dek"

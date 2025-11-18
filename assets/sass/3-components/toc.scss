@@ -16,7 +16,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding-inline: var(--rhythm-moderato);
+    padding-inline: var(--flow-5);
     color: var(--color-distinct);
     height: var(--hed-primary);
     font-size:var(--prose);
@@ -107,13 +107,13 @@
     box-sizing: border-box;
     max-height: 0;
     overflow: hidden;
-    padding: var(--rhythm-presto);
+    padding: var(--flow-2);
     border: var(--border-fine) solid transparent;
     transition: max-height var(--duration-base) ease-out, border var(--duration-faster) linear;
     margin-inline-end:0px;
   }
   ol{
-    margin-inline-start:var(--rhythm-moderato);
+    margin-inline-start:var(--flow-5);
     list-style-type:none;
     counter-reset: custom-counter;
     margin:0;
@@ -123,14 +123,14 @@
 
   }
   .toc-list{
-    padding-block:var(--rhythm-moderato);
+    padding-block:var(--flow-5);
     max-width:100%;
   }
   .toc-item{
     counter-increment: custom-counter;
     display: flex;
     align-items: center;
-    padding-inline:var(--rhythm-moderato);
+    padding-inline:var(--flow-5);
     transition: color var(--duration-faster) ease-in-out;
 
 
@@ -141,7 +141,7 @@
   }
   .toc-item::before{
     content: counter(custom-counter) ". ";
-    padding-inline-end:var(--rhythm-presto);
+    padding-inline-end:var(--flow-2);
   }
   .toc-item:has(a:focus)::before{
     content:"";

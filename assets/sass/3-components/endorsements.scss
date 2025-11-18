@@ -1,11 +1,11 @@
 /* Card Carousel Styles */
 section.endorsements{
-  padding-block:var(--rhythm-andantino);
+  padding-block:var(--flow-6);
   border-block-start: var(--border-fine) solid var(--border-color-nuance);
   position: relative;
   display:flex;
   flex-flow:column;
-  gap:var(--rhythm-moderato);
+  gap:var(--flow-5);
 }
 .carousel-container {
   position: relative;
@@ -21,7 +21,7 @@ section.endorsements{
   cursor: pointer;
   z-index: 10;
   transition: all var(--duration-faster) ease;
-  padding-inline:var(--rhythm-moderato);
+  padding-inline:var(--flow-5);
 
   .icon{
     position:inherit;
@@ -37,13 +37,13 @@ section.endorsements{
 .carousel-progress {
   display: flex;
   justify-content: center;
-  gap: var(--rhythm-vivace);
+  gap: var(--flow-3);
   align-items:center;
 }
 
 .progress-dot {
-  width: var(--rhythm-moderato);
-  height: var(--rhythm-moderato);
+  width: var(--flow-5);
+  height: var(--flow-5);
   border-radius: 50%;
   padding:0;
   background: var(--link-deco);
@@ -71,16 +71,16 @@ section.endorsements{
 .endorsements .inner{
   max-inline-size:none;
   display: flex;
-  gap: var(--rhythm-andantino);
+  gap: var(--flow-6);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  scroll-padding-left: var(--rhythm-moderato);
+  scroll-padding-left: var(--flow-5);
   /* Constrain to parent container */
   max-width: 92vw;
   border-inline-end:var(--border-fine) solid var(--border-color-nuance);
   border-inline-start:var(--border-fine) solid var(--border-color-nuance);
-  scroll-padding-right:var(--rhythm-grave);
+  scroll-padding-right:var(--flow-15);
 
   /* Hide scrollbar but maintain functionality */
   scrollbar-width: none; /* Firefox */
@@ -99,7 +99,7 @@ section.endorsements{
 /* Individual card styles */
 .endorsement.card {
   flex: 0 0 auto;
-  width: calc(1.25*var(--rhythm-grave));
+  width: calc(1.25*var(--flow-15));
   max-width: 85vw;
   box-shadow: 0 2px 8px var(--background-primary);
   scroll-snap-align: start;
@@ -110,11 +110,11 @@ section.endorsements{
   /* Smooth transitions */
   transition: transform var(--duration-faster) ease, box-shadow var(--duration-faster) ease;
   &:first-of-type{
-  margin-inline-start:var(--rhythm-andante);
+  margin-inline-start:var(--flow-7);
   }
 }
 .endorsement.card:first-of-type {
-  margin-inline-start: var(--rhythm-andante);
+  margin-inline-start: var(--flow-7);
 }
 
 .endorsement.card:hover,
@@ -128,7 +128,7 @@ section.endorsements{
 .endorsement .content {
   display: flex;
   flex-direction: column;
-  gap: var(--rhythm-moderato);
+  gap: var(--flow-5);
   height:100%;
 }
 
@@ -140,7 +140,7 @@ section.endorsements{
 }
 
 .endorsement .lede p {
-  margin: 0 0 var(--rhythm-moderato) 0;
+  margin: 0 0 var(--flow-5) 0;
 }
 
 .endorsement .lede p:last-child {
@@ -149,7 +149,7 @@ section.endorsements{
 
 .endorsement .byline {
   margin-top: auto;
-  padding-top: var(--rhythm-moderato);
+  padding-top: var(--flow-5);
   border-top: var(--border-thin) solid var(--border-color-subtle);
 }
 
@@ -168,7 +168,7 @@ section.endorsements{
 }
 
 .project-overview .endorsement.cta{
-  margin-inline-end:var(--rhythm-andante);
+  margin-inline-end:var(--flow-7);
   align-items:center;
   min-width:20ch;
   text-align:center;
@@ -183,8 +183,8 @@ section.endorsements{
   transition: all var(--duration-faster) ease;
 
   .icon, svg{
-    width:var(--rhythm-andantino);
-    height: var(--rhythm-andantino);
+    width:var(--flow-6);
+    height: var(--flow-6);
     fill: currentColor;
   }
 
@@ -199,13 +199,13 @@ section.endorsements{
 /* Responsive behavior */
 @media (min-width: 40em) {
   .endorsements {
-    gap: var(--rhythm-andante);
-    padding: var(--rhythm-andantino) 0;
+    gap: var(--flow-7);
+    padding: var(--flow-6) 0;
   }
 
   .endorsement.card, .endorsement.cta {
     width: 30ch;
-    padding: var(--rhythm-andante);
+    padding: var(--flow-7);
   }
 }
 

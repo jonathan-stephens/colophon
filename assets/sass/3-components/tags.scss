@@ -1,8 +1,8 @@
 .meta .tags {
   max-inline-size:none;
-  gap:var(--rhythm-vivace);
+  gap:var(--flow-3);
   justify-content: flex-start;
-  margin-inline-end: calc(-1*var(--rhythm-allegro));
+  margin-inline-end: calc(-1*var(--flow-4));
   font-size:var(--small);
   font-family:var(--font-mono);
 
@@ -14,8 +14,8 @@
 .p-category.button{
   --button-border-color:var(--border-color-nuance);
 
-  padding-inline: var(--rhythm-allegro);
-  padding-block: var(--rhythm-presto);
+  padding-inline: var(--flow-4);
+  padding-block: var(--flow-2);
   border-radius: var(--radii-circle);
   font-size:var(--small);
   font-family:var(--font-mono);
@@ -24,7 +24,7 @@
   cursor: pointer;
   transition: color var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out, background var(--duration-base) ease-in-out, fill var(--duration-faster) ease-in-out;
   display:inline-flex;
-  gap: var(--rhythm-vivace);
+  gap: var(--flow-3);
 
   &:focus{
     outline-offset: var(
@@ -43,7 +43,7 @@
     }
   }
   &:has(.count){
-    padding-inline-start: var(--rhythm-presto);
+    padding-inline-start: var(--flow-2);
 
     .count{
       background: var(--background-tertiary);

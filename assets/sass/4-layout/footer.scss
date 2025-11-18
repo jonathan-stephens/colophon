@@ -8,7 +8,7 @@ body > footer{
     mix-blend-mode:multiply;
 
     .wrapper{
-      padding-block: var(--rhythm-moderato);
+      padding-block: var(--flow-5);
     }
   }
   section.navigation{
@@ -22,13 +22,13 @@ body > footer{
 
     .with-icon{
       align-items:center;
-      gap:var(--rhythm-presto);
+      gap:var(--flow-2);
     }
 
     .icon{
       width: calc(1.5*var(--hed-quaternary));
       height: auto;
-      margin-block-end: var(--rhythm-vivace);
+      margin-block-end: var(--flow-3);
       fill: var(--color-prominent);
     }
 
@@ -40,7 +40,7 @@ body > footer{
       "header header"
       "description list";
       align-content:first baseline;
-      column-gap:var(--rhythm-moderato);
+      column-gap:var(--flow-5);
 
       header{grid-area: header;}
       .description{grid-area:description;align-self:start;}
@@ -106,15 +106,15 @@ body > footer{
   }
 
   .navigation h2, .socials h2{
-    padding-inline-end:var(--rhythm-moderato);
+    padding-inline-end:var(--flow-5);
   }
 
   nav ul, ul[role="list"]{
     list-style-type:none;
     display: flex;
     flex-wrap: wrap;
-    column-gap: var(--rhythm-moderato);
-    row-gap: var(--rhythm-presto);
+    column-gap: var(--flow-5);
+    row-gap: var(--flow-2);
     margin: 0;
     padding: 0;
     max-inline-size:none;
@@ -134,7 +134,7 @@ body > footer{
       flex-flow:column;
 
       ul{
-        margin-block-start:var(--rhythm-moderato);
+        margin-block-start:var(--flow-5);
       }
     }
 }
@@ -161,13 +161,13 @@ body > footer{
   }
 
   .final-info{
-    padding-block:var(--rhythm-moderato);
+    padding-block:var(--flow-5);
 
     .wrapper{
       width:100%;
       display: flex;
       flex-direction: column;
-      gap: var(--rhythm-vivace);
+      gap: var(--flow-3);
       font-size: var(--small);
     }
 
@@ -225,7 +225,7 @@ html[data-theme='dark']{
   --b1: var(--color-distinct);
   --b2: transparent;
   font-size:var(--caption);
-  margin-inline-start:calc(-1*var(--rhythm-prestissimo));
+  margin-inline-start:calc(-1*var(--flow-1));
 
   #wcb #wcb_p{
     order: 2;
@@ -246,7 +246,7 @@ html[data-theme='dark']{
     &:after{
       content:"at";
       display:inline-block;
-      padding-inline: var(--rhythm-prestissimo);
+      padding-inline: var(--flow-1);
       color: var(--color-distinct);
     }
   }

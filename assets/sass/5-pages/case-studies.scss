@@ -2,15 +2,15 @@ div.case-studies{
   display:flex;
   flex-flow: row;
   flex-wrap: wrap;
-  gap: var(--rhythm-andantino);
-  margin-block:var(--rhythm-andante);
+  gap: var(--flow-6);
+  margin-block:var(--flow-7);
 
   article{
     display:flex;
     flex-flow:column;
     justify-content:space-around;
     height:100%;
-    row-gap:var(--rhythm-presto);
+    row-gap:var(--flow-2);
   }
 }
 .selected-work{max-inline-size:none;}
@@ -47,20 +47,20 @@ div.case-studies{
     text-align:center;
     line-height:var(--leading-fine);
     color: var(--color-distinct);
-    padding-block-start:var(--rhythm-vivace);
+    padding-block-start:var(--flow-3);
   }
   .dek{
     color: var(--color-nuance);
-    padding-inline:var(--rhythm-moderato);
+    padding-inline:var(--flow-5);
     font-size:var(--prose);
     text-align:center;
-    margin-block-end:var(--rhythm-presto);
+    margin-block-end:var(--flow-2);
   }
   .info{
     display:flex;
-    margin-inline:var(--rhythm-moderato);
-    column-gap:var(--rhythm-vivace);
-    row-gap:var(--rhythm-presto);
+    margin-inline:var(--flow-5);
+    column-gap:var(--flow-3);
+    row-gap:var(--flow-2);
     font-size:var(--small);
     color: var(--color-subtle);
     border-block-start: 1px dashed var(--border-color-distinct);
@@ -68,8 +68,8 @@ div.case-studies{
 
     justify-content:space-between;
     padding:0;
-    padding-block-end:var(--rhythm-moderato);
-    padding-block-start:var(--rhythm-allegro);
+    padding-block-end:var(--flow-5);
+    padding-block-start:var(--flow-4);
   }
 
 
@@ -104,7 +104,7 @@ div.case-studies{
 @media screen and (min-width: 60em) {
   .case-study{
     img{
-      max-height: var(--rhythm-grave);
+      max-height: var(--flow-15);
     }
     .dek{
       font-size:var(--hed-quaternary);

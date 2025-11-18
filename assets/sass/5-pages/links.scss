@@ -1,7 +1,7 @@
 .links .content{
   display:flex;
   flex-flow:column;
-  gap:var(--rhythm-moderato);
+  gap:var(--flow-5);
 }
 
 @media screen and (min-width:80em){
@@ -26,20 +26,20 @@
 
 .date-header{
   font-size:var(--hed-quaternary);
-  padding-block-start:var(--rhythm-andante);
-  margin-block-start:var(--rhythm-andante);
+  padding-block-start:var(--flow-7);
+  margin-block-start:var(--flow-7);
   border-top:var(--border-thin) solid var(--border-color-subtle);
 }
 .links box-l{
   padding:0;
 
   h3{
-    margin-block-start:var(--rhythm-moderato);
+    margin-block-start:var(--flow-5);
   }
 }
 
 .day-group:has(article:nth-of-type(2)){
   article{
-    padding-block:var(--rhythm-moderato);
+    padding-block:var(--flow-5);
   }
 }

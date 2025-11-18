@@ -1,7 +1,7 @@
 .journal .content, .essays .content{
   display:flex;
   flex-flow:column;
-  gap:var(--rhythm-presto);
+  gap:var(--flow-2);
 }
 
 .journal .h-entry, .essays .h-entry, .articles .h-entry{
@@ -21,8 +21,8 @@
   }
 
   .e-content{
-    padding:var(--rhythm-moderato);
-    margin-inline-start:calc(-1*var(--rhythm-moderato));
+    padding:var(--flow-5);
+    margin-inline-start:calc(-1*var(--flow-5));
     border: var(--border-fine) solid transparent;
     transition: background var(--duration-faster) ease-in-out, border var(--duration-faster) ease-in-out;
     border-radius: var(--radii-square);
@@ -43,8 +43,8 @@
     align-items: baseline;
     font-family: var(--font-mono);
     font-size: var(--small);
-    padding-block: var(--rhythm-vivace);
-    margin-block-end: var(--rhythm-vivace);
+    padding-block: var(--flow-3);
+    margin-block-end: var(--flow-3);
     border-block: var(--border-fine) dashed var(--border-color-distinct);
     transition: border-color var(--duration-faster) ease-in-out;
     background:var(--background-primary);
@@ -83,7 +83,7 @@
     color:var(--color-distinct);
     font-weight:var(--weight-semibold);
     text-wrap:balance;
-    padding-block-start:var(--rhythm-presto);
+    padding-block-start:var(--flow-2);
     font-family:var(--font-serif);
   }
 
@@ -116,7 +116,7 @@ article {
   .on-at-in{
     border-block: var(--border-fine) dashed var(--color-quiet);
     border-block-start-style: solid;
-    padding-block: var(--rhythm-allegro);
+    padding-block: var(--flow-4);
     container-type: inline-size;
     container-name: on-at-in;
     width: 100%;
@@ -125,10 +125,10 @@ article {
     font-family:var(--font-mono);
     font-size:var(--small);
     color:var(--color-nuance);
-    margin-block:var(--rhythm-moderato) var(--rhythm-andantino);
+    margin-block:var(--flow-5) var(--flow-6);
 
     .with-icon .icon{
-      margin-inline-end:var(--rhythm-presto);
+      margin-inline-end:var(--flow-2);
       top:4px;
       fill:var(--color-nuance);
     }
@@ -151,8 +151,8 @@ article {
     color:var(--color-nuance);
     border-block: var(--border-fine) solid var(--color-quiet);
     border-block-start-style: dashed;
-    padding-block: var(--rhythm-vivace) var(--rhythm-allegro);
-    margin-top:var(--rhythm-andante);
+    padding-block: var(--flow-3) var(--flow-4);
+    margin-top:var(--flow-7);
 
     .on-at-in{
       font-size:var(--small);
@@ -172,7 +172,7 @@ article {
 @media (max-width: 40em){
   article .on-at-in {
     flex-direction: column;
-    gap: var(--rhythm-presto);
+    gap: var(--flow-2);
   }
 }
 

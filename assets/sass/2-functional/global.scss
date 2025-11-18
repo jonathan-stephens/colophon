@@ -16,14 +16,14 @@ html{
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   background-color: var(--background-primary);
-  scroll-margin-block: var(--rhythm-largo);
+  scroll-margin-block: var(--flow-13);
   scroll-behavior: smooth;
   box-sizing: border-box;
   hanging-punctuation: first last;
 }
 
 :target, [id] {
-  scroll-margin-block:var(--rhythm-largo);
+  scroll-margin-block:var(--flow-13);
 }
 
 body {

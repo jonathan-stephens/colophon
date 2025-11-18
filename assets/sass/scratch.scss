@@ -4,14 +4,14 @@
     font-size:var(--hed-primary);
   }
   h1{
-    padding-block-start:var(--rhythm-largo);
+    padding-block-start:var(--flow-13);
     font-size:var(--hed-secondary);
     font-family:var(--font-sans);
     color:var(--color-distinct);
   }
 
   p{
-    padding-block-start:var(--rhythm-andante);
+    padding-block-start:var(--flow-7);
     max-width:50ch;
   }
   .cta{
@@ -21,7 +21,7 @@
   .cluster{
     flex-direction:row;
     align-items:flex-start;
-    padding-block-start:var(--rhythm-andante);
+    padding-block-start:var(--flow-7);
     a{
       flex-grow:1;
     }
@@ -32,10 +32,10 @@
 .codex .border-thickness{
   display:flex;
   flex-direction:column;
-  gap:var(--rhythm-moderato);
+  gap:var(--flow-5);
 
   div{
-    height:var(--rhythm-largo);
+    height:var(--flow-13);
     width:100%;
     border-color:var(--color-distinct);
     border-style:solid;

@@ -2,7 +2,7 @@
   --measure: 105ch;
   display:flex;
   flex-direction:column;
-  gap: var(--rhythm-andante);
+  gap: var(--flow-7);
 
   h3{
     font-size:var(--hed-quaternary);
@@ -24,7 +24,7 @@
 }
 
 .gig {
-  padding-block: var(--rhythm-andantino);
+  padding-block: var(--flow-6);
 
   .meta{
     display:flex;
@@ -32,12 +32,12 @@
     color:var(--color-nuance);
 
     .icon{
-      margin-inline-end:var(--rhythm-vivace);
+      margin-inline-end:var(--flow-3);
     }
   }
   .meta > *{
     border-block-end: var(--border-fine) dashed var(--border-color-nuance);
-    padding-block:var(--rhythm-presto);
+    padding-block:var(--flow-2);
   }
   .time{
     border-block-start: var(--border-fine) dashed var(--border-color-nuance);
@@ -49,8 +49,8 @@
     display: grid;
     grid-template-columns:minmax(13em, 17em) 1fr ;
     grid-template-rows: repeat(2, auto);
-    column-gap: var(--rhythm-andante);
-    row-gap:var(--rhythm-presto);
+    column-gap: var(--flow-7);
+    row-gap:var(--flow-2);
     grid-auto-flow: row;
     grid-template-areas:
       "header header"

@@ -1,6 +1,6 @@
 figure{
   margin:0;
-  padding-block: var(--rhythm-moderato);
+  padding-block: var(--flow-5);
   mix-blend-mode: luminosity;
 
   &:hover{
@@ -9,7 +9,7 @@ figure{
 }
 
 figcaption{
-  margin-block: var(--rhythm-moderato);
+  margin-block: var(--flow-5);
   font-family: var(--font-mono);
   font-size: var(--caption);
   width: 75%;
@@ -18,6 +18,6 @@ figcaption{
     content:"↑";
     font-size:var(--prose);
     font-weight:bold;
-    padding-inline-end:var(--rhythm-presto);
+    padding-inline-end:var(--flow-2);
   }
 }

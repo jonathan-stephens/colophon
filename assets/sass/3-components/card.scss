@@ -4,13 +4,13 @@
   border-radius:var(--radii-square);
   width:100%;
   overflow:hidden;
-  padding:var(--rhythm-moderato);
+  padding:var(--flow-5);
   transition: border-radius var(--duration-base) ease-in-out, color var(--duration-base) ease-in-out, border-color var(--duration-base) ease-in-out, background var(--duration-base) ease-in-out;
 
   header{
     display:flex;
     flex-flow:column;
-    row-gap:var(--rhythm-vivace);
+    row-gap:var(--flow-3);
 
     h3{
       line-height:var(--leading-standard);

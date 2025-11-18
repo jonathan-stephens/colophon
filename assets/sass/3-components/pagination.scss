@@ -9,14 +9,14 @@
   "range per-page";
 
   justify-content:space-between;
-  gap:var(--rhythm-presto);
+  gap:var(--flow-2);
   color: var(--color-nuance);
 
   &.simple, &.full{
     border-block-end: var(--border-fine) solid var(--border-color-distinct);
     margin-block-start:var(--flow-8);
     background:var(--background-primary);
-    padding-block: var(--rhythm-allegro);
+    padding-block: var(--flow-4);
     border-block: var(--border-fine) solid var(--border-color-nuance);
 
     a{border-radius:var(--radii-square);}
@@ -25,8 +25,8 @@
   a{
     text-decoration:none;
     width:100%;
-    padding-block:var(--rhythm-vivace);
-    padding-inline:var(--rhythm-vivace);
+    padding-block:var(--flow-3);
+    padding-inline:var(--flow-3);
     border: var(--border-fine) solid transparent;
     margin-block:-1px;
   }
@@ -49,7 +49,7 @@
     background:var(--background-secondary);
     color:var(--color-prominent);
     border:var(--border-thin) solid var(--border-color-prominent);
-    margin-block-start:calc(-1*var(--rhythm-presto));
+    margin-block-start:calc(-1*var(--flow-2));
 
     &:hover, &:active{
       background:var(--background-tertiary);
@@ -66,7 +66,7 @@
     display:grid;
     grid-template-columns: max-content auto;
     flex-flow:row;
-    gap:var(--rhythm-vivace);
+    gap:var(--flow-3);
     align-items: baseline;
 
     label, select{
@@ -112,16 +112,16 @@
 .pagination-link{
   padding: .5em;
   display: block;
-  min-width: var(--rhythm-moderato);
+  min-width: var(--flow-5);
   align-content: center;
   text-align: center;
-  min-height: var(--rhythm-moderato);
+  min-height: var(--flow-5);
 }
 
 
 @media screen and (min-width:20em){
   .pagination{
-    gap:var(--rhythm-vivace);
+    gap:var(--flow-3);
     .pagination-link span, .pagination-link.disabled span{
     display:inline-flex;
     }
@@ -130,7 +130,7 @@
 
 @media screen and (min-width:30em){
   .pagination{
-    gap:var(--rhythm-allegro);
+    gap:var(--flow-4);
     &.full{
       .pagination-item:nth-of-type(2){display:inherit;}
       .pagination-item:nth-of-type(3){display:inherit;}
@@ -156,7 +156,7 @@
     grid-template-rows:auto;
     grid-template-areas:
     "range list per-page";
-    gap:var(--rhythm-moderato);
+    gap:var(--flow-5);
 
     &.full{
       .pagination-item:nth-of-type(7){display:inherit;}
@@ -192,7 +192,7 @@
     }
   }
   .prev, .next{
-    margin-block:var(--rhythm-prestissimo);
+    margin-block:var(--flow-1);
     max-width:42vw;
     border-radius:var(--radii-square);
   }
@@ -215,7 +215,7 @@
       display:inline;
     }
     a{
-      margin-block:calc(-1*var(--rhythm-allegro));
+      margin-block:calc(-1*var(--flow-4));
       width:max-content;
     }
   }

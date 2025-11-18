@@ -11,14 +11,14 @@ sup.footnote {
 }
 /* Footnotes ordered list */
 .footnotes-list {
-  margin-block-end:var(--rhythm-moderato);
+  margin-block-end:var(--flow-5);
 }
 
 /* Footnote entry */
 .footnotes-list li {
   font-family:var(--font-mono);
   font-size:var(--caption);
-  padding-block:var(--rhythm-allegro);
+  padding-block:var(--flow-4);
 }
 
 /* Footnote back link ↩ */

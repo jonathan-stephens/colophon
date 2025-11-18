@@ -40,13 +40,13 @@
 }
 
 .theme-toggle.floating {
-  bottom: var(--rhythm-moderato);
-  left: var(--rhythm-moderato);
+  bottom: var(--flow-5);
+  left: var(--flow-5);
 }
 
 .scroll-to-top.floating {
-  bottom: var(--rhythm-moderato);
-  right: var(--rhythm-moderato);
+  bottom: var(--flow-5);
+  right: var(--flow-5);
 }
 
 .floating-controls button.show {
@@ -70,7 +70,7 @@
   justify-content: space-between;
   align-items: center;
   transition: opacity var(--duration-base) ease;
-  padding-block: var(--rhythm-vivace);
+  padding-block: var(--flow-3);
 }
 
 .sticky-bottom.show-controls .theme-picker {
@@ -92,8 +92,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: var(--rhythm-andantino);
-  height: var(--rhythm-andantino);
+  width: var(--flow-6);
+  height: var(--flow-6);
   transition: transform var(--duration-slower) cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }

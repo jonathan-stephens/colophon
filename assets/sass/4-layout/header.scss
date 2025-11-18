@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   z-index: var(--z-header);
-  padding: var(--rhythm-moderato);
+  padding: var(--flow-5);
   background: var(--background-nav-panel);
   transition: all var(--duration-base) ease;
   -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
@@ -13,7 +13,7 @@
   overflow:visible;
   padding-block-end:var(--flow-9);
   transform: translateZ(0);
-  backdrop-filter: blur(var(--rhythm-prestissimo));
+  backdrop-filter: blur(var(--flow-1));
 
 }
 
@@ -27,7 +27,7 @@
   .buttons{
     display:flex;
     flex-flow:row;
-    gap:var(--rhythm-moderato);
+    gap:var(--flow-5);
   }
 }
 
@@ -46,12 +46,12 @@
 }
 
 .site-header .button {
-  --button-gap: var(--rhythm-vivace);
+  --button-gap: var(--flow-3);
   --button-bg: transparent;
   --button-border-color: transparent;
   --button-hover-color: var(--color-emphasis);
   --button-hover-border-color: transparent;
-  --button-padding: var(--rhythm-vivace);
+  --button-padding: var(--flow-3);
   --button-radius: 0 var(--radii-square) var(--radii-square) var(--radii-square);
 
   cursor: pointer;
@@ -60,7 +60,7 @@
   transition: all var(--duration-base) ease;
   font-size: var(--caption);
   justify-content: flex-end;
-  padding-inline-start: var(--rhythm-moderato);
+  padding-inline-start: var(--flow-5);
 }
 
 .site-header .button #nav-toggle-text em {
@@ -182,8 +182,8 @@ html[data-theme="dark"] .brandmark:focus .frills {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  padding: var(--rhythm-moderato);
-  padding-block-start: var(--rhythm-andante);
+  padding: var(--flow-5);
+  padding-block-start: var(--flow-7);
 }
 
 /* Add transitions only when the panel is ready to animate */
@@ -218,7 +218,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
   width: 100vw;
   height: 100vh;
   background: var(--background-nav-panel);
-  backdrop-filter: blur(var(--rhythm-presto));
+  backdrop-filter: blur(var(--flow-2));
   opacity: 0;
   transition: opacity var(--duration-slower) ease;
   z-index: var(--z-backdrop);
@@ -243,7 +243,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
 .nav-list {
   list-style: none;
   padding: 0;
-  margin-block-start: var(--rhythm-largo);
+  margin-block-start: var(--flow-13);
   max-width:100%;
 }
 
@@ -290,9 +290,9 @@ html[data-theme="dark"] .brandmark:focus .frills {
   display: block;
   color: var(--color-distinct);
   font-size: var(--hed-tertiary);
-  margin-inline-end: calc(var(--rhythm-moderato));
-  padding-block: var(--rhythm-vivace);
-  padding-inline-end: var(--rhythm-moderato);
+  margin-inline-end: calc(var(--flow-5));
+  padding-block: var(--flow-3);
+  padding-inline-end: var(--flow-5);
   transition: all var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-decoration-color: var(--color-quiet);
   text-align:right;
@@ -332,7 +332,7 @@ html[data-theme="dark"] .brandmark:focus .frills {
 @media (min-width: 20em) {
   .panel {
     justify-content: flex-start;
-    gap: var(--rhythm-andante);
+    gap: var(--flow-7);
   }
 }
 
@@ -342,9 +342,9 @@ html[data-theme="dark"] .brandmark:focus .frills {
     transform: translateX(100%);
     flex-flow: column;
     justify-content: flex-start;
-    gap: var(--rhythm-adagio);
-    padding: var(--rhythm-moderato);
-    padding-block-start: var(--rhythm-andante);
+    gap: var(--flow-11);
+    padding: var(--flow-5);
+    padding-block-start: var(--flow-7);
   }
 }
 

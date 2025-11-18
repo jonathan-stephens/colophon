@@ -43,3 +43,36 @@
     padding-block:var(--flow-5);
   }
 }
+
+.tag-suggestions {
+    position: relative;
+    margin-top: 0.5rem;
+    background: var(--background-secondary);
+    border: var(--border-fine) solid var(--border-color-distinct);
+    border-radius: var(--radii-square);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 var(--type-scale-2) var(--type-scale-8) var(--background-primary);
+}
+
+.tag-suggestions.active {
+    display: block;
+}
+
+.tag-suggestion {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: background var(--duration-fast);
+}
+
+.tag-suggestion:hover,
+.tag-suggestion.selected {
+    background: var(--background-tertiary);
+}
+
+.tag-suggestion mark {
+    background: var(--background-primary-inverse);
+    color:var(--color-emphasis-inverse);
+    font-weight: var(--weight-medium);
+}

@@ -197,7 +197,7 @@ snippet('site-header') ?>
     background: var(--background-primary, #ffffff);
     padding: 2rem;
     border-radius: var(--radii-square, 8px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 var(--type-scale-2) var(--type-scale-8) var(--background-primary);
 }
 
 .form-group {
@@ -270,37 +270,6 @@ textarea {
 }
 
 /* Tag Autocomplete Styles */
-.tag-suggestions {
-    position: relative;
-    margin-top: 0.5rem;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    display: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.tag-suggestions.active {
-    display: block;
-}
-
-.tag-suggestion {
-    padding: 0.5rem 0.75rem;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.tag-suggestion:hover,
-.tag-suggestion.selected {
-    background: #f0f0f0;
-}
-
-.tag-suggestion mark {
-    background: #ffd700;
-    font-weight: 600;
-}
 
 /* Offline Indicator */
 .offline-indicator {

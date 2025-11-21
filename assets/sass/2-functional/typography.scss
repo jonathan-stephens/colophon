@@ -207,6 +207,9 @@ h1.p-name + p{
     hanging-punctuation: first last;
   }
 }
+.lede, .dek, .nutgraf{
+  text-wrap:balance;
+}
 
 blockquote{
   background: var(--background-secondary);

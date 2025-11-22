@@ -154,7 +154,7 @@
       };
 
       const addColor = () => {
-        if (colors.length < 10) {
+        if (colors.length < 13) {
           setColors([...colors, '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')]);
         }
       };
@@ -267,7 +267,7 @@
                   );
                 })}
 
-                {colors.length < 10 && (
+                {colors.length < 13 && (
                   <button
                     onClick={addColor}
                     className="w-full py-2 border-2 border-dashed border-gray-400 rounded-lg text-gray-600 hover:border-gray-600 hover:text-gray-800 font-medium text-sm"

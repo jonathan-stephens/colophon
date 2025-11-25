@@ -1,0 +1,66 @@
+title: Skills
+
+sections:
+  main:
+    type: fields
+    fields:
+      skills:
+        label: Skill Trees
+        type: structure
+        fields:
+          name:
+            label: Skill Name (Level 1)
+            type: text
+            required: true
+          description:
+            label: Description
+            type: textarea
+          tags:
+            label: Tags
+            type: tags
+            help: Auto-tags added - "Skill", "Domain" (level), and skill name.
+          level2:
+            label: Level 2 Skills
+            type: structure
+            fields:
+              name:
+                label: Skill Name (Level 2)
+                type: text
+                required: true
+              description:
+                label: Description
+                type: textarea
+              tags:
+                label: Tags
+                type: tags
+                help: Auto-tags added - "Skill", "Category" (level), and skill name.
+              level3:
+                label: Level 3 Skills
+                type: structure
+                fields:
+                  name:
+                    label: Skill Name (Level 3)
+                    type: text
+                    required: true
+                  description:
+                    label: Description
+                    type: textarea
+                  tags:
+                    label: Tags
+                    type: tags
+                    help: Auto-tags added - "Skill", "Area" (level), and skill name.
+                  level4:
+                    label: Level 4 Skills
+                    type: structure
+                    fields:
+                      name:
+                        label: Skill Name (Level 4)
+                        type: text
+                        required: true
+                      description:
+                        label: Description
+                        type: textarea
+                      tags:
+                        label: Tags
+                        type: tags
+                        help: Auto-tags added - "Skill", "Specialty" (level), and skill name.

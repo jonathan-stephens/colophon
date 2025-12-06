@@ -27,7 +27,7 @@
       --svg-width-desktop: 20%;
       --svg-height-mobile: 40vh;
       --content-padding: clamp(1rem, 4vw, 2rem);
-      --gradient-height: 5vh;
+      --gradient-height: 1vh;
       
       /* Animation variables */
       --transition-speed: 0.4s;
@@ -92,11 +92,11 @@
     .svg-container::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: calc(-1 * var(--gradient-height));
       left: 0;
       right: 0;
       height: var(--gradient-height);
-      background: linear-gradient(to bottom, transparent, var(--color-bg));
+      background: linear-gradient(to bottom, var(--color-bg), transparent);
       pointer-events: none;
     }
     
@@ -266,58 +266,129 @@
         <!-- Background -->
         <rect width="400" height="400" fill="var(--color-bg)"/>
         
-        <!-- Section 1: Circle -->
+        <!-- Central nucleus (always visible) -->
+        <circle cx="200" cy="200" r="15" fill="var(--color-accent)" opacity="0.8"/>
+        <circle cx="200" cy="200" r="10" fill="var(--color-accent)"/>
+        
+        <!-- Section 1: First orbital with electron -->
         <g class="svg-group" data-section="1">
-          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <circle cx="200" cy="200" r="60" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- Orbital path -->
+          <circle cx="200" cy="200" r="50" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <!-- Electron -->
+          <circle cx="250" cy="200" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 2: Square -->
+        <!-- Section 2: Second orbital with two electrons -->
         <g class="svg-group" data-section="2">
-          <rect x="120" y="120" width="160" height="160" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <rect x="140" y="140" width="120" height="120" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- Orbital path -->
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <!-- Electrons -->
+          <circle cx="280" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="120" cy="200" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 3: Triangle -->
+        <!-- Section 3: Third orbital with three electrons -->
         <g class="svg-group" data-section="3">
-          <polygon points="200,100 320,300 80,300" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="200,140 280,270 120,270" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- Orbital path -->
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <!-- Electrons at 0°, 120°, 240° -->
+          <circle cx="310" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="104.7" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="295.3" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 4: Hexagon -->
+        <!-- Section 4: Fourth orbital with four electrons -->
         <g class="svg-group" data-section="4">
-          <polygon points="200,120 270,160 270,240 200,280 130,240 130,160" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="200,150 250,180 250,220 200,250 150,220 150,180" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- Orbital path -->
+          <circle cx="200" cy="200" r="140" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <!-- Electrons at 0°, 90°, 180°, 270° -->
+          <circle cx="340" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="200" cy="60" r="6" fill="var(--color-accent)"/>
+          <circle cx="60" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="200" cy="340" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 5: Star -->
+        <!-- Section 5: Multiple orbitals active (1st + 2nd) -->
         <g class="svg-group" data-section="5">
-          <polygon points="200,120 220,180 280,180 230,220 250,280 200,240 150,280 170,220 120,180 180,180" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="200,150 210,185 245,185 217,205 227,240 200,220 173,240 183,205 155,185 190,185" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- First orbital -->
+          <circle cx="200" cy="200" r="50" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="250" cy="200" r="6" fill="var(--color-accent)"/>
+          <!-- Second orbital -->
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="280" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="120" cy="200" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 6: Pentagon -->
+        <!-- Section 6: Multiple orbitals (1st + 2nd + 3rd) -->
         <g class="svg-group" data-section="6">
-          <polygon points="200,120 280,170 250,260 150,260 120,170" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="200,150 260,190 235,250 165,250 140,190" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- First orbital -->
+          <circle cx="200" cy="200" r="50" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="250" cy="200" r="6" fill="var(--color-accent)"/>
+          <!-- Second orbital -->
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="280" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="120" cy="200" r="6" fill="var(--color-accent)"/>
+          <!-- Third orbital -->
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="310" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="104.7" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="295.3" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 7: Octagon -->
+        <!-- Section 7: All orbitals active -->
         <g class="svg-group" data-section="7">
-          <polygon points="160,130 240,130 290,180 290,220 240,270 160,270 110,220 110,180" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="175,150 225,150 260,185 260,215 225,250 175,250 140,215 140,185" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- All orbital paths -->
+          <circle cx="200" cy="200" r="50" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="200" cy="200" r="140" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <!-- All electrons -->
+          <circle cx="250" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="280" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="120" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="310" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="104.7" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="295.3" r="6" fill="var(--color-accent)"/>
+          <circle cx="340" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="200" cy="60" r="6" fill="var(--color-accent)"/>
+          <circle cx="60" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="200" cy="340" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 8: Diamond -->
+        <!-- Section 8: Energy levels visualization (orbital + electron glow) -->
         <g class="svg-group" data-section="8">
-          <polygon points="200,100 300,200 200,300 100,200" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <polygon points="200,140 260,200 200,260 140,200" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- Orbital with glow effect -->
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="2" opacity="0.6"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="8" opacity="0.2"/>
+          <!-- Electrons with glow -->
+          <circle cx="310" cy="200" r="10" fill="var(--color-accent)" opacity="0.3"/>
+          <circle cx="310" cy="200" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="104.7" r="10" fill="var(--color-accent)" opacity="0.3"/>
+          <circle cx="145" cy="104.7" r="6" fill="var(--color-accent)"/>
+          <circle cx="145" cy="295.3" r="10" fill="var(--color-accent)" opacity="0.3"/>
+          <circle cx="145" cy="295.3" r="6" fill="var(--color-accent)"/>
         </g>
         
-        <!-- Section 9: Cross -->
+        <!-- Section 9: Complete atom (all elements combined) -->
         <g class="svg-group" data-section="9">
-          <path d="M 160,130 L 240,130 L 240,160 L 270,160 L 270,240 L 240,240 L 240,270 L 160,270 L 160,240 L 130,240 L 130,160 L 160,160 Z" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
-          <path d="M 175,150 L 225,150 L 225,175 L 250,175 L 250,225 L 225,225 L 225,250 L 175,250 L 175,225 L 150,225 L 150,175 L 175,175 Z" fill="var(--color-accent)" opacity="0.3"/>
+          <!-- All orbitals with varying opacity -->
+          <circle cx="200" cy="200" r="50" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="200" cy="200" r="140" fill="none" stroke="var(--color-accent)" stroke-width="1.5" opacity="0.3"/>
+          <!-- Outer glow ring -->
+          <circle cx="200" cy="200" r="160" fill="none" stroke="var(--color-accent)" stroke-width="15" opacity="0.1"/>
+          <!-- All electrons positioned -->
+          <circle cx="250" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="280" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="120" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="310" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="145" cy="104.7" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="145" cy="295.3" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="340" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="200" cy="60" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="60" cy="200" r="6" fill="var(--color-accent)" opacity="0.9"/>
+          <circle cx="200" cy="340" r="6" fill="var(--color-accent)" opacity="0.9"/>
         </g>
       </svg>
     </div>

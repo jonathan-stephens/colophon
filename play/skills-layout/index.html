@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: white;
+            color: black;
+            line-height: 1.4;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 1.5rem;
+        }
+
+        /* Header - minimal mobile */
+        .header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid black;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Level 1 */
+        .level-1 {
+            margin-bottom: 2rem;
+        }
+
+        .level-1-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .level-1-desc {
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Layout switcher - mobile optimized */
+        .layout-controls {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: black;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .layout-controls h3 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .layout-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .layout-btn {
+            padding: 0.5rem;
+            background: white;
+            color: black;
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .layout-btn.active {
+            background: black;
+            color: white;
+            outline: 2px solid white;
+            outline-offset: -4px;
+        }
+
+        /* Layout 1: CARD STACK - Vertical cards with spacing */
+        .layout-card-stack .level-2 {
+            background: white;
+            border: 2px solid black;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Layout 2: MINIMAL LIST - No borders, pure typography */
+        .layout-minimal-list .level-2 {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .layout-minimal-list .level-2:last-child {
+            border-bottom: none;
+        }
+
+        /* Layout 3: ACCORDION - Full width collapsible */
+        .layout-accordion .level-2 {
+            border-top: 2px solid black;
+        }
+
+        .layout-accordion .level-2-header {
+            padding: 1rem 0;
+            cursor: pointer;
+        }
+
+        .layout-accordion .level-2-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .layout-accordion .level-2-content.expanded {
+            max-height: 5000px;
+            padding-bottom: 1rem;
+        }
+
+        /* Layout 4: HORIZONTAL SCROLL - Swipeable cards */
+        .layout-h-scroll .level-2-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .layout-h-scroll .level-2 {
+            min-width: 85vw;
+            scroll-snap-align: start;
+            border: 2px solid black;
+            padding: 1.25rem;
+        }
+
+        /* Layout 5: TIMELINE - Left line with offset content */
+        .layout-timeline .level-2-container {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .layout-timeline .level-2-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: black;
+        }
+
+        .layout-timeline .level-2 {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .layout-timeline .level-2::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: black;
+            border-radius: 50%;
+        }
+
+        /* Layout 6: TABS - Top navigation with content below */
+        .layout-tabs .tab-nav {
+            display: flex;
+            border-bottom: 2px solid black;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .layout-tabs .tab-btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            background: white;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .layout-tabs .tab-btn.active {
+            border-bottom-color: black;
+        }
+
+        .layout-tabs .tab-content {
+            display: none;
+        }
+
+        .layout-tabs .tab-content.active {
+            display: block;
+        }
+
+        /* Common Level 2 styles */
+        .level-2-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .level-2-desc {
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        /* Level 3 - collapsible sections */
+        .level-3-toggle {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            border-top: 1px solid #ddd;
+        }
+
+        .level-3-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .level-3-container.expanded {
+            max-height: 3000px;
+        }
+
+        .level-3 {
+            margin-bottom: 1.25rem;
+            padding-left: 1rem;
+            border-left: 2px solid black;
+        }
+
+        .level-3-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .level-3-desc {
+            font-size: 0.8rem;
+            font-weight: 300;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        /* Level 4 - deepest detail */
+        .level-4-toggle {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 0.75rem;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            background: black;
+            color: white;
+        }
+
+        .level-4-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .level-4-container.expanded {
+            max-height: 2000px;
+        }
+
+        .level-4 {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f5f5f5;
+        }
+
+        .level-4-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .level-4-desc {
+            font-size: 0.75rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .expand-indicator {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Leadership Framework</h1>
+            <p>A comprehensive hierarchical model for developing exceptional leadership capabilities</p>
+        </div>
+
+        <div class="level-1">
+            <div class="level-1-title">Core Leadership & People Management</div>
+            <div class="level-1-desc">The foundational abilities to lead, develop, and manage people while creating organizational structures that enable teams to thrive.</div>
+
+            <!-- Layout Controls -->
+            <div class="layout-controls">
+                <h3>Mobile Layout:</h3>
+                <div class="layout-buttons">
+                    <button class="layout-btn active" onclick="changeLayout('card-stack')">Cards</button>
+                    <button class="layout-btn" onclick="changeLayout('minimal-list')">List</button>
+                    <button class="layout-btn" onclick="changeLayout('accordion')">Accordion</button>
+                    <button class="layout-btn" onclick="changeLayout('h-scroll')">Swipe</button>
+                    <button class="layout-btn" onclick="changeLayout('timeline')">Timeline</button>
+                    <button class="layout-btn" onclick="changeLayout('tabs')">Tabs</button>
+                </div>
+            </div>
+
+            <!-- Content Container -->
+            <div id="content-container" class="layout-card-stack">
+
+                <!-- TABS LAYOUT SPECIAL STRUCTURE -->
+                <div class="tab-nav" style="display: none;">
+                    <button class="tab-btn active" onclick="switchTab(0)">People-Centered</button>
+                    <button class="tab-btn" onclick="switchTab(1)">Talent Dev.</button>
+                </div>
+
+                <div class="level-2-container">
+
+                    <!-- Level 2: People-Centered Leadership -->
+                    <div class="level-2 tab-content active" data-tab="0">
+                        <div class="level-2-header">
+                            <div class="level-2-title">People-Centered Leadership</div>
+                            <div class="level-2-desc">The practice of consistently prioritizing team members' psychological safety, respect, and wellbeing while choosing empathy over hierarchical authority.</div>
+                        </div>
+
+                        <div class="level-2-content expanded">
+                            <div class="level-3-toggle" onclick="toggleSection('pcl-l3')">
+                                View Details <span class="expand-indicator">▼</span>
+                            </div>
+
+                            <div id="pcl-l3" class="level-3-container">
+                                <div class="level-3">
+                                    <div class="level-3-title">Team empowerment and psychological safety</div>
+                                    <div class="level-3-desc">Creating environments where team members feel safe to take risks, voice opinions, and contribute fully without fear of negative consequences</div>
+                                </div>
+
+                                <div class="level-3">
+                                    <div class="level-3-title">Employee well-being and engagement</div>
+                                    <div class="level-3-desc">Actively monitoring and supporting the physical, mental, and emotional health of team members while fostering meaningful connection to work</div>
+                                </div>
+
+                                <div class="level-3">
+                                    <div class="level-3-title">Trust-building and relationship management</div>
+                                    <div class="level-3-desc">Developing and maintaining authentic, reliable relationships built on mutual respect and consistent follow-through</div>
+                                </div>
+
+                                <div class="level-3">
+                                    <div class="level-3-title">Servant leadership approach</div>
+                                    <div class="level-3-desc">Prioritizing the growth and success of team members by removing obstacles and providing support rather than directing from authority</div>
+                                </div>
+
+                                <div class="level-3">
+                                    <div class="level-3-title">Creating inclusive work environments</div>
+                                    <div class="level-3-desc">Designing practices and cultural norms that ensure all team members feel valued, respected, and able to participate fully</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level 2: Talent Development & Coaching -->
+                    <div class="level-2 tab-content" data-tab="1">
+                        <div class="level-2-header">
+                            <div class="level-2-title">Talent Development & Coaching</div>
+                            <div class="level-2-desc">The exceptional ability to identify where individuals will grow and thrive, combined with providing attentive, well-resourced, and supportive mentorship.</div>
+                        </div>
+
+                        <div class="level-2-content expanded">
+                            <div class="level-3-toggle" onclick="toggleSection('tdc-l3')">
+                                View Details <span class="expand-indicator">▼</span>
+                            </div>
+
+                            <div id="tdc-l3" class="level-3-container">
+                                <div class="level-3">
+                                    <div class="level-3-title">Performance coaching and mentorship</div>
+                                    <div class="level-3-desc">Providing ongoing guidance, feedback, and support that helps individuals improve their skills and advance their capabilities</div>
+
+                                    <div class="level-4-toggle" onclick="toggleSection('pcm-l4')">
+                                        Dig Deeper ↓
+                                    </div>
+
+                                    <div id="pcm-l4" class="level-4-container">
+                                        <div class="level-4">
+                                            <div class="level-4-title">Career development planning</div>
+                                            <div class="level-4-desc">Collaborating with individuals to map career trajectories, identify growth opportunities, and create actionable plans for advancement</div>
+                                        </div>
+                                        <div class="level-4">
+                                            <div class="level-4-title">Skills assessment and gap analysis</div>
+                                            <div class="level-4-desc">Evaluating current capabilities against desired outcomes to identify specific areas for development and improvement</div>
+                                        </div>
+                                        <div class="level-4">
+                                            <div class="level-4-title">Individual growth strategies</div>
+                                            <div class="level-4-desc">Creating personalized approaches to learning and development that align with individual strengths, interests, and career aspirations</div>
+                                        </div>
+                                        <div class="level-4">
+                                            <div class="level-4-title">Succession planning</div>
+                                            <div class="level-4-desc">Identifying and preparing future leaders and key contributors to ensure organizational continuity and growth</div>
+                                        </div>
+                                        <div class="level-4">
+                                            <div class="level-4-title">Professional development programs</div>
+                                            <div class="level-4-desc">Designing and implementing structured learning opportunities that build organizational capability and individual expertise</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeLayout(layoutName) {
+            const container = document.getElementById('content-container');
+            const buttons = document.querySelectorAll('.layout-btn');
+            const tabNav = document.querySelector('.tab-nav');
+            const level2Items = document.querySelectorAll('.level-2');
+
+            // Remove all layout classes
+            container.className = 'layout-' + layoutName;
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Special handling for accordion layout
+            if (layoutName === 'accordion') {
+                level2Items.forEach(item => {
+                    const content = item.querySelector('.level-2-content');
+                    const header = item.querySelector('.level-2-header');
+                    if (content && header) {
+                        header.onclick = function() {
+                            content.classList.toggle('expanded');
+                        };
+                    }
+                });
+            } else {
+                level2Items.forEach(item => {
+                    const content = item.querySelector('.level-2-content');
+                    if (content) {
+                        content.classList.add('expanded');
+                    }
+                });
+            }
+
+            // Show/hide tab nav for tabs layout
+            if (layoutName === 'tabs') {
+                tabNav.style.display = 'flex';
+                level2Items.forEach(item => item.classList.remove('active'));
+                level2Items[0].classList.add('active');
+            } else {
+                tabNav.style.display = 'none';
+                level2Items.forEach(item => item.classList.add('active'));
+            }
+        }
+
+        function toggleSection(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        function switchTab(index) {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            tabBtns[index].classList.add('active');
+            tabContents[index].classList.add('active');
+        }
+    </script>
+</body>
+</html>

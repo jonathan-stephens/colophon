@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation Prototype</title>
+  <style>
+    /* ============================================
+       CSS CUSTOM PROPERTIES & THEME SETUP
+       ============================================ */
+    :root {
+      color-scheme: light dark;
+      
+      /* Monochromatic palette */
+      --color-dark: #3B3B3B;
+      --color-light: #FEFEFE;
+      --color-mid: #9D9D9D;
+      
+      /* Semantic colors using light-dark() */
+      --color-bg: light-dark(var(--color-light), var(--color-dark));
+      --color-text: light-dark(var(--color-dark), var(--color-light));
+      --color-text-subtle: light-dark(var(--color-mid), var(--color-mid));
+      --color-accent: light-dark(var(--color-dark), var(--color-light));
+      
+      /* Layout variables */
+      --svg-width-mobile: 100%;
+      --svg-width-desktop: 20%;
+      --svg-height-mobile: 40vh;
+      --content-padding: clamp(1rem, 4vw, 2rem);
+      --gradient-height: 5vh;
+      
+      /* Animation variables */
+      --transition-speed: 0.4s;
+      --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* ============================================
+       REDUCED MOTION SUPPORT
+       ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    
+    /* ============================================
+       BASE STYLES
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* ============================================
+       LAYOUT STRUCTURE
+       ============================================ */
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* SVG Container - Mobile First */
+    .svg-container {
+      position: sticky;
+      top: 0;
+      width: var(--svg-width-mobile);
+      height: var(--svg-height-mobile);
+      z-index: 100;
+      background-color: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    
+    /* Mobile gradient overlay */
+    .svg-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--gradient-height);
+      background: linear-gradient(to bottom, transparent, var(--color-bg));
+      pointer-events: none;
+    }
+    
+    /* Desktop layout */
+    @media (min-width: 768px) {
+      .container {
+        flex-direction: row;
+      }
+      
+      .svg-container {
+        width: var(--svg-width-desktop);
+        height: 100vh;
+        top: 0;
+      }
+      
+      .svg-container::after {
+        display: none;
+      }
+      
+      .content {
+        width: 80%;
+        margin-left: auto;
+      }
+    }
+    
+    /* SVG styling */
+    #illustration {
+      width: 100%;
+      height: 100%;
+      max-width: 400px;
+      max-height: 400px;
+    }
+    
+    /* ============================================
+       SCROLL SNAP
+       ============================================ */
+    .content {
+      scroll-snap-type: y proximity;
+      width: 100%;
+    }
+    
+    section {
+      scroll-snap-align: start;
+      min-height: 100vh;
+      padding: var(--content-padding);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    /* ============================================
+       TYPOGRAPHY & CONTENT STYLES
+       ============================================ */
+    .section-header {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+    
+    .section-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--color-text-subtle);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+    
+    .list-level-one {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .list-item-one {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity var(--transition-speed) var(--transition-ease),
+                  transform var(--transition-speed) var(--transition-ease);
+      will-change: opacity, transform;
+    }
+    
+    .list-item-one.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .item-header {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--color-text);
+    }
+    
+    .item-subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--color-text-subtle);
+      margin-bottom: 1rem;
+    }
+    
+    .list-level-two {
+      list-style: none;
+      margin-left: 1.5rem;
+      padding: 0;
+    }
+    
+    .list-item-two {
+      margin-bottom: 1rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--color-text-subtle);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity var(--transition-speed) var(--transition-ease),
+                  transform var(--transition-speed) var(--transition-ease);
+      will-change: opacity, transform;
+    }
+    
+    .list-item-two.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .subitem-header {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 500;
+      color: var(--color-text);
+    }
+    
+    .subitem-subtitle {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: var(--color-text-subtle);
+    }
+    
+    /* ============================================
+       SVG ANIMATION STATES
+       ============================================ */
+    .svg-group {
+      opacity: 0;
+      transform-origin: center;
+      transition: opacity var(--transition-speed) var(--transition-ease),
+                  transform var(--transition-speed) var(--transition-ease);
+      will-change: opacity, transform;
+    }
+    
+    .svg-group.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    .svg-group.inactive {
+      opacity: 0.2;
+      transform: scale(0.95);
+    }
+    
+    /* Individual section states */
+    .svg-group.locked {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SVG Container (Sticky) -->
+    <div class="svg-container">
+      <svg id="illustration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect width="400" height="400" fill="var(--color-bg)"/>
+        
+        <!-- Section 1: Circle -->
+        <g class="svg-group" data-section="1">
+          <circle cx="200" cy="200" r="80" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <circle cx="200" cy="200" r="60" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 2: Square -->
+        <g class="svg-group" data-section="2">
+          <rect x="120" y="120" width="160" height="160" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <rect x="140" y="140" width="120" height="120" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 3: Triangle -->
+        <g class="svg-group" data-section="3">
+          <polygon points="200,100 320,300 80,300" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="200,140 280,270 120,270" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 4: Hexagon -->
+        <g class="svg-group" data-section="4">
+          <polygon points="200,120 270,160 270,240 200,280 130,240 130,160" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="200,150 250,180 250,220 200,250 150,220 150,180" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 5: Star -->
+        <g class="svg-group" data-section="5">
+          <polygon points="200,120 220,180 280,180 230,220 250,280 200,240 150,280 170,220 120,180 180,180" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="200,150 210,185 245,185 217,205 227,240 200,220 173,240 183,205 155,185 190,185" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 6: Pentagon -->
+        <g class="svg-group" data-section="6">
+          <polygon points="200,120 280,170 250,260 150,260 120,170" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="200,150 260,190 235,250 165,250 140,190" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 7: Octagon -->
+        <g class="svg-group" data-section="7">
+          <polygon points="160,130 240,130 290,180 290,220 240,270 160,270 110,220 110,180" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="175,150 225,150 260,185 260,215 225,250 175,250 140,215 140,185" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 8: Diamond -->
+        <g class="svg-group" data-section="8">
+          <polygon points="200,100 300,200 200,300 100,200" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <polygon points="200,140 260,200 200,260 140,200" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+        
+        <!-- Section 9: Cross -->
+        <g class="svg-group" data-section="9">
+          <path d="M 160,130 L 240,130 L 240,160 L 270,160 L 270,240 L 240,240 L 240,270 L 160,270 L 160,240 L 130,240 L 130,160 L 160,160 Z" fill="none" stroke="var(--color-accent)" stroke-width="3"/>
+          <path d="M 175,150 L 225,150 L 225,175 L 250,175 L 250,225 L 225,225 L 225,250 L 175,250 L 175,225 L 150,225 L 150,175 L 175,175 Z" fill="var(--color-accent)" opacity="0.3"/>
+        </g>
+      </svg>
+    </div>
+    
+    <!-- Content Sections -->
+    <main class="content">
+      <!-- Section 1 -->
+      <section id="section-1" data-section="1">
+        <h2 class="section-header">Foundation</h2>
+        <p class="section-subtitle">Building the core principles</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="1-1">
+            <h3 class="item-header">Core Concept</h3>
+            <p class="item-subtitle">Establishing the fundamental framework</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="1-1-1">
+                <h4 class="subitem-header">Initial Setup</h4>
+                <p class="subitem-subtitle">Configuration and prerequisites</p>
+              </li>
+              <li class="list-item-two" data-subitem="1-1-2">
+                <h4 class="subitem-header">Basic Structure</h4>
+                <p class="subitem-subtitle">Organizing the foundation</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="1-2">
+            <h3 class="item-header">First Principles</h3>
+            <p class="item-subtitle">Understanding the basics</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="1-2-1">
+                <h4 class="subitem-header">Theory</h4>
+                <p class="subitem-subtitle">Conceptual understanding</p>
+              </li>
+              <li class="list-item-two" data-subitem="1-2-2">
+                <h4 class="subitem-header">Practice</h4>
+                <p class="subitem-subtitle">Hands-on application</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 2 -->
+      <section id="section-2" data-section="2">
+        <h2 class="section-header">Structure</h2>
+        <p class="section-subtitle">Creating organized systems</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="2-1">
+            <h3 class="item-header">Architecture</h3>
+            <p class="item-subtitle">Designing the framework</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="2-1-1">
+                <h4 class="subitem-header">Layout Planning</h4>
+                <p class="subitem-subtitle">Spatial organization</p>
+              </li>
+              <li class="list-item-two" data-subitem="2-1-2">
+                <h4 class="subitem-header">Component Design</h4>
+                <p class="subitem-subtitle">Modular elements</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="2-2">
+            <h3 class="item-header">Patterns</h3>
+            <p class="item-subtitle">Establishing consistency</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="2-2-1">
+                <h4 class="subitem-header">Repetition</h4>
+                <p class="subitem-subtitle">Building rhythm</p>
+              </li>
+              <li class="list-item-two" data-subitem="2-2-2">
+                <h4 class="subitem-header">Variation</h4>
+                <p class="subitem-subtitle">Creating interest</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="section-3" data-section="3">
+        <h2 class="section-header">Direction</h2>
+        <p class="section-subtitle">Moving toward goals</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="3-1">
+            <h3 class="item-header">Navigation</h3>
+            <p class="item-subtitle">Finding the path forward</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="3-1-1">
+                <h4 class="subitem-header">Waypoints</h4>
+                <p class="subitem-subtitle">Marking progress</p>
+              </li>
+              <li class="list-item-two" data-subitem="3-1-2">
+                <h4 class="subitem-header">Milestones</h4>
+                <p class="subitem-subtitle">Celebrating achievements</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="3-2">
+            <h3 class="item-header">Momentum</h3>
+            <p class="item-subtitle">Building velocity</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="3-2-1">
+                <h4 class="subitem-header">Acceleration</h4>
+                <p class="subitem-subtitle">Gaining speed</p>
+              </li>
+              <li class="list-item-two" data-subitem="3-2-2">
+                <h4 class="subitem-header">Sustaining</h4>
+                <p class="subitem-subtitle">Maintaining pace</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="section-4" data-section="4">
+        <h2 class="section-header">Balance</h2>
+        <p class="section-subtitle">Finding equilibrium</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="4-1">
+            <h3 class="item-header">Harmony</h3>
+            <p class="item-subtitle">Creating coherence</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="4-1-1">
+                <h4 class="subitem-header">Symmetry</h4>
+                <p class="subitem-subtitle">Achieving balance</p>
+              </li>
+              <li class="list-item-two" data-subitem="4-1-2">
+                <h4 class="subitem-header">Proportion</h4>
+                <p class="subitem-subtitle">Maintaining relationships</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="4-2">
+            <h3 class="item-header">Stability</h3>
+            <p class="item-subtitle">Ensuring reliability</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="4-2-1">
+                <h4 class="subitem-header">Foundation</h4>
+                <p class="subitem-subtitle">Strong base</p>
+              </li>
+              <li class="list-item-two" data-subitem="4-2-2">
+                <h4 class="subitem-header">Support</h4>
+                <p class="subitem-subtitle">Reinforcement</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 5 -->
+      <section id="section-5" data-section="5">
+        <h2 class="section-header">Excellence</h2>
+        <p class="section-subtitle">Pursuing quality</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="5-1">
+            <h3 class="item-header">Refinement</h3>
+            <p class="item-subtitle">Polishing details</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="5-1-1">
+                <h4 class="subitem-header">Precision</h4>
+                <p class="subitem-subtitle">Exact execution</p>
+              </li>
+              <li class="list-item-two" data-subitem="5-1-2">
+                <h4 class="subitem-header">Care</h4>
+                <p class="subitem-subtitle">Thoughtful attention</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="5-2">
+            <h3 class="item-header">Mastery</h3>
+            <p class="item-subtitle">Achieving expertise</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="5-2-1">
+                <h4 class="subitem-header">Skill</h4>
+                <p class="subitem-subtitle">Technical ability</p>
+              </li>
+              <li class="list-item-two" data-subitem="5-2-2">
+                <h4 class="subitem-header">Artistry</h4>
+                <p class="subitem-subtitle">Creative expression</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 6 -->
+      <section id="section-6" data-section="6">
+        <h2 class="section-header">Connection</h2>
+        <p class="section-subtitle">Building relationships</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="6-1">
+            <h3 class="item-header">Integration</h3>
+            <p class="item-subtitle">Joining elements</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="6-1-1">
+                <h4 class="subitem-header">Links</h4>
+                <p class="subitem-subtitle">Creating bonds</p>
+              </li>
+              <li class="list-item-two" data-subitem="6-1-2">
+                <h4 class="subitem-header">Networks</h4>
+                <p class="subitem-subtitle">Expanding reach</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="6-2">
+            <h3 class="item-header">Collaboration</h3>
+            <p class="item-subtitle">Working together</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="6-2-1">
+                <h4 class="subitem-header">Synergy</h4>
+                <p class="subitem-subtitle">Combined strength</p>
+              </li>
+              <li class="list-item-two" data-subitem="6-2-2">
+                <h4 class="subitem-header">Unity</h4>
+                <p class="subitem-subtitle">Shared purpose</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="section-7" data-section="7">
+        <h2 class="section-header">Expansion</h2>
+        <p class="section-subtitle">Growing possibilities</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="7-1">
+            <h3 class="item-header">Scaling</h3>
+            <p class="item-subtitle">Increasing capacity</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="7-1-1">
+                <h4 class="subitem-header">Vertical</h4>
+                <p class="subitem-subtitle">Adding depth</p>
+              </li>
+              <li class="list-item-two" data-subitem="7-1-2">
+                <h4 class="subitem-header">Horizontal</h4>
+                <p class="subitem-subtitle">Broadening scope</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="7-2">
+            <h3 class="item-header">Evolution</h3>
+            <p class="item-subtitle">Adapting over time</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="7-2-1">
+                <h4 class="subitem-header">Iteration</h4>
+                <p class="subitem-subtitle">Continuous improvement</p>
+              </li>
+              <li class="list-item-two" data-subitem="7-2-2">
+                <h4 class="subitem-header">Innovation</h4>
+                <p class="subitem-subtitle">Breaking new ground</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 8 -->
+      <section id="section-8" data-section="8">
+        <h2 class="section-header">Clarity</h2>
+        <p class="section-subtitle">Achieving understanding</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="8-1">
+            <h3 class="item-header">Focus</h3>
+            <p class="item-subtitle">Concentrating effort</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="8-1-1">
+                <h4 class="subitem-header">Priority</h4>
+                <p class="subitem-subtitle">Essential first</p>
+              </li>
+              <li class="list-item-two" data-subitem="8-1-2">
+                <h4 class="subitem-header">Simplicity</h4>
+                <p class="subitem-subtitle">Removing excess</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="8-2">
+            <h3 class="item-header">Vision</h3>
+            <p class="item-subtitle">Seeing clearly</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="8-2-1">
+                <h4 class="subitem-header">Perspective</h4>
+                <p class="subitem-subtitle">Viewing angles</p>
+              </li>
+              <li class="list-item-two" data-subitem="8-2-2">
+                <h4 class="subitem-header">Insight</h4>
+                <p class="subitem-subtitle">Deep understanding</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 9 -->
+      <section id="section-9" data-section="9">
+        <h2 class="section-header">Completion</h2>
+        <p class="section-subtitle">Bringing things together</p>
+        <ul class="list-level-one">
+          <li class="list-item-one" data-item="9-1">
+            <h3 class="item-header">Integration</h3>
+            <p class="item-subtitle">Unifying components</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="9-1-1">
+                <h4 class="subitem-header">Synthesis</h4>
+                <p class="subitem-subtitle">Combining elements</p>
+              </li>
+              <li class="list-item-two" data-subitem="9-1-2">
+                <h4 class="subitem-header">Wholeness</h4>
+                <p class="subitem-subtitle">Complete picture</p>
+              </li>
+            </ul>
+          </li>
+          <li class="list-item-one" data-item="9-2">
+            <h3 class="item-header">Reflection</h3>
+            <p class="item-subtitle">Looking back and forward</p>
+            <ul class="list-level-two">
+              <li class="list-item-two" data-subitem="9-2-1">
+                <h4 class="subitem-header">Learning</h4>
+                <p class="subitem-subtitle">Extracting lessons</p>
+              </li>
+              <li class="list-item-two" data-subitem="9-2-2">
+                <h4 class="subitem-header">Growth</h4>
+                <p class="subitem-subtitle">Continuing journey</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    /**
+     * SCROLL-DRIVEN SVG ANIMATION SYSTEM
+     * ===================================
+     * This script manages scroll-based animations with:
+     * - Intersection Observer for visibility detection
+     * - Progressive animations tied to scroll position
+     * - SVG state management with locking behavior
+     * - Performance optimizations (RAF, throttling)
+     * - Accessibility (reduced motion support)
+     */
+    
+    // ============================================
+    // CONFIGURATION
+    // ============================================
+    const CONFIG = {
+      // Intersection Observer thresholds
+      // More steps = smoother animations but more callbacks
+      observerThresholds: Array.from({ length: 20 }, (_, i) => i / 20),
+      
+      // Scroll position thresholds for SVG locking
+      sectionLockThreshold: 0.5, // Lock when 50% through section
+      
+      // Animation delays (staggered for nested items)
+      itemAnimationDelay: 100, // ms between list-level-one items
+      subitemAnimationDelay: 50, // ms between list-level-two items
+      
+      // Debounce/throttle values
+      scrollThrottle: 16, // ~60fps
+    };
+    
+    // ============================================
+    // STATE MANAGEMENT
+    // ============================================
+    const state = {
+      currentSection: null,
+      lockedSection: null,
+      isScrolling: false,
+      scrollTimeout: null,
+      animationFrameId: null,
+      reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    };
+    
+    // ============================================
+    // DOM REFERENCES
+    // ============================================
+    const elements = {
+      sections: document.querySelectorAll('section[data-section]'),
+      svgGroups: document.querySelectorAll('.svg-group'),
+      listItemsOne: document.querySelectorAll('.list-item-one'),
+      listItemsTwo: document.querySelectorAll('.list-item-two'),
+    };
+    
+    // ============================================
+    // UTILITY FUNCTIONS
+    // ============================================
+    
+    /**
+     * Throttle function to limit execution rate
+     * @param {Function} func - Function to throttle
+     * @param {number} limit - Time limit in ms
+     * @returns {Function} Throttled function
+     */
+    function throttle(func, limit) {
+      let inThrottle;
+      return function(...args) {
+        if (!inThrottle) {
+          func.apply(this, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+    
+    /**
+     * Calculate how far through an element the viewport is
+     * @param {Element} element - DOM element to measure
+     * @returns {number} Progress from 0 to 1
+     */
+    function getScrollProgress(element) {
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Element top relative to viewport bottom
+      const elementTop = rect.top;
+      const elementBottom = rect.bottom;
+      
+      // If element hasn't entered viewport yet
+      if (elementTop > viewportHeight) return 0;
+      
+      // If element has completely left viewport
+      if (elementBottom < 0) return 1;
+      
+      // Calculate progress through viewport
+      const visibleHeight = Math.min(elementBottom, viewportHeight) - Math.max(elementTop, 0);
+      const totalHeight = rect.height + viewportHeight;
+      const progress = 1 - ((elementTop + rect.height) / totalHeight);
+      
+      return Math.max(0, Math.min(1, progress));
+    }
+    
+    /**
+     * Get the currently most visible section
+     * @returns {Element|null} Most visible section element
+     */
+    function getMostVisibleSection() {
+      let maxVisibility = 0;
+      let mostVisible = null;
+      
+      elements.sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate visible area
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(viewportHeight, rect.bottom);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        
+        if (visibleHeight > maxVisibility) {
+          maxVisibility = visibleHeight;
+          mostVisible = section;
+        }
+      });
+      
+      return mostVisible;
+    }
+    
+    // ============================================
+    // SVG ANIMATION FUNCTIONS
+    // ============================================
+    
+    /**
+     * Update SVG group states based on current section
+     * @param {string} sectionNumber - Active section number
+     * @param {number} progress - Scroll progress through section (0-1)
+     */
+    function updateSVGState(sectionNumber, progress) {
+      elements.svgGroups.forEach(group => {
+        const groupSection = group.dataset.section;
+        
+        if (groupSection === sectionNumber) {
+          // Active section
+          group.classList.remove('inactive');
+          group.classList.add('active');
+          
+          // Lock if past threshold
+          if (progress >= CONFIG.sectionLockThreshold) {
+            group.classList.add('locked');
+          } else {
+            group.classList.remove('locked');
+          }
+          
+          // Scale based on progress (subtle effect)
+          if (!state.reducedMotion) {
+            const scale = 0.95 + (progress * 0.05);
+            group.style.transform = `scale(${scale})`;
+          }
+        } else {
+          // Inactive sections
+          group.classList.remove('active', 'locked');
+          group.classList.add('inactive');
+          
+          if (!state.reducedMotion) {
+            group.style.transform = 'scale(0.95)';
+          }
+        }
+      });
+    }
+    
+    /**
+     * Reset all SVG groups to initial state
+     */
+    function resetSVGState() {
+      elements.svgGroups.forEach(group => {
+        group.classList.remove('active', 'inactive', 'locked');
+        group.style.transform = '';
+      });
+    }
+    
+    // ============================================
+    // CONTENT ANIMATION FUNCTIONS
+    // ============================================
+    
+    /**
+     * Animate list items based on scroll position
+     * @param {Element} section - Section element containing items
+     * @param {number} progress - Scroll progress through section
+     */
+    function animateListItems(section, progress) {
+      const itemsOne = section.querySelectorAll('.list-item-one');
+      const itemsTwo = section.querySelectorAll('.list-item-two');
+      
+      // Animate level-one items
+      itemsOne.forEach((item, index) => {
+        const itemProgress = Math.max(0, (progress - (index * 0.1)) * 2);
+        
+        if (itemProgress > 0) {
+          item.classList.add('visible');
+          
+          // Subtle transform based on progress
+          if (!state.reducedMotion) {
+            const translateY = Math.max(0, 20 - (itemProgress * 20));
+            item.style.transform = `translateY(${translateY}px)`;
+            item.style.opacity = Math.min(1, itemProgress);
+          }
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+      
+      // Animate level-two items
+      itemsTwo.forEach((item, index) => {
+        const itemProgress = Math.max(0, (progress - 0.2 - (index * 0.05)) * 2);
+        
+        if (itemProgress > 0) {
+          item.classList.add('visible');
+          
+          if (!state.reducedMotion) {
+            const translateX = Math.max(0, -10 - (itemProgress * -10));
+            item.style.transform = `translateX(${translateX}px)`;
+            item.style.opacity = Math.min(1, itemProgress);
+          }
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+    }
+    
+    // ============================================
+    // SCROLL HANDLERS
+    // ============================================
+    
+    /**
+     * Main scroll handler - orchestrates all animations
+     */
+    function handleScroll() {
+      // Use requestAnimationFrame for smooth animations
+      if (state.animationFrameId) {
+        cancelAnimationFrame(state.animationFrameId);
+      }
+      
+      state.animationFrameId = requestAnimationFrame(() => {
+        const mostVisible = getMostVisibleSection();
+        
+        if (!mostVisible) return;
+        
+        const sectionNumber = mostVisible.dataset.section;
+        const progress = getScrollProgress(mostVisible);
+        
+        // Update current section if changed
+        if (state.currentSection !== sectionNumber) {
+          state.currentSection = sectionNumber;
+          console.log(`Entered section ${sectionNumber}`);
+        }
+        
+        // Update SVG state
+        updateSVGState(sectionNumber, progress);
+        
+        // Animate content items
+        animateListItems(mostVisible, progress);
+        
+        // Mark as scrolling
+        state.isScrolling = true;
+        
+        // Clear existing timeout
+        if (state.scrollTimeout) {
+          clearTimeout(state.scrollTimeout);
+        }
+        
+        // Set timeout to detect scroll end
+        state.scrollTimeout = setTimeout(() => {
+          state.isScrolling = false;
+          console.log('Scroll ended');
+        }, 150);
+      });
+    }
+    
+    // Throttled scroll handler
+    const throttledScrollHandler = throttle(handleScroll, CONFIG.scrollThrottle);
+    
+    // ============================================
+    // INTERSECTION OBSERVER SETUP
+    // ============================================
+    
+    /**
+     * Intersection Observer for more precise section tracking
+     */
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const section = entry.target;
+            const sectionNumber = section.dataset.section;
+            
+            // Handle initial visibility
+            if (entry.intersectionRatio > 0.1) {
+              console.log(`Section ${sectionNumber} visible`);
+            }
+          }
+        });
+      },
+      {
+        threshold: CONFIG.observerThresholds,
+        rootMargin: '-10% 0px -10% 0px', // Slight offset for better triggering
+      }
+    );
+    
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    
+    /**
+     * Initialize all observers and event listeners
+     */
+    function init() {
+      console.log('Initializing scroll animation system...');
+      
+      // Check for reduced motion preference
+      if (state.reducedMotion) {
+        console.log('Reduced motion enabled - animations simplified');
+      }
+      
+      // Observe all sections
+      elements.sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+      
+      // Add scroll listener
+      window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+      
+      // Add resize listener (debounced)
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          console.log('Window resized - recalculating');
+          handleScroll();
+        }, 250);
+      }, { passive: true });
+      
+      // Listen for reduced motion changes
+      const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      motionQuery.addEventListener('change', (e) => {
+        state.reducedMotion = e.matches;
+        console.log(`Reduced motion ${e.matches ? 'enabled' : 'disabled'}`);
+        
+        if (e.matches) {
+          // Reset transforms when reduced motion is enabled
+          elements.listItemsOne.forEach(item => {
+            item.style.transform = '';
+            item.style.opacity = '';
+          });
+          elements.listItemsTwo.forEach(item => {
+            item.style.transform = '';
+            item.style.opacity = '';
+          });
+        }
+      });
+      
+      // Initial scroll calculation
+      handleScroll();
+      
+      console.log('Scroll animation system initialized ✓');
+    }
+    
+    // ============================================
+    // START APPLICATION
+    // ============================================
+    
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      if (state.animationFrameId) {
+        cancelAnimationFrame(state.animationFrameId);
+      }
+      if (state.scrollTimeout) {
+        clearTimeout(state.scrollTimeout);
+      }
+    });
+  </script>
+</body>
+</html>

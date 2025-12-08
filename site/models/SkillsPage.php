@@ -10,7 +10,7 @@ class SkillsPage extends Page
      */
     public function skillTags()
     {
-        $tags = ['Skill', 'Domain', 'Category', 'Area', 'Specialty']; // Always include base tags
+        $tags = ['Skill', 'Domain', 'Area', 'Competency', 'Behavior']; // Always include base tags
 
         // Only try to get skills if the field exists and has content
         try {
@@ -85,9 +85,9 @@ class SkillsPage extends Page
         // Map levels to semantic hierarchy terms
         $levelTags = [
             1 => 'Domain',      // Broadest category
-            2 => 'Category',    // Sub-division
-            3 => 'Area',        // Specific area
-            4 => 'Specialty'    // Most granular
+            2 => 'Area',    // Sub-division
+            3 => 'Competency',        // Specific area
+            4 => 'Behavior'    // Most granular
         ];
 
         foreach ($items as &$item) {

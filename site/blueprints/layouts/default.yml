@@ -68,3 +68,5 @@ tabs:
             type: fields
             fields:
               uploads: fields/uploads
+          comments:
+            extends: sections/komments

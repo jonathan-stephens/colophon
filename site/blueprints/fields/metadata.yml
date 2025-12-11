@@ -8,5 +8,3 @@ fields:
     required: true
   datetime: fields/datetime
   location: fields/location
-  comments:
-    extends: sections/komments

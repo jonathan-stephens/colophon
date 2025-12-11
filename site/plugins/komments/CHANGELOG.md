@@ -1,3 +1,68 @@
+## [3.7.8](https://github.com/mauricerenck/komments/compare/v3.7.7...v3.7.8) (2025-12-08)
+
+
+### Bug Fixes
+
+* catch type error when verification disabled ([5482429](https://github.com/mauricerenck/komments/commit/5482429307dd87ab9866f0956c528e767e660817))
+* typo [#83](https://github.com/mauricerenck/komments/issues/83) ([80c4440](https://github.com/mauricerenck/komments/commit/80c4440c1f3d76bad613a0cfb500826520acf04a))
+
+## [3.7.7](https://github.com/mauricerenck/komments/compare/v3.7.6...v3.7.7) (2025-11-18)
+
+
+### Bug Fixes
+
+* migration history ([01f948c](https://github.com/mauricerenck/komments/commit/01f948c55fea08e81723dcfc924f7e45784b4aad))
+
+## [3.7.6](https://github.com/mauricerenck/komments/compare/v3.7.5...v3.7.6) (2025-11-17)
+
+
+### Bug Fixes
+
+* migrate existing comment status ([ac66a7b](https://github.com/mauricerenck/komments/commit/ac66a7b40388732c116b6edd6b549f42a58e8392))
+
+## [3.7.5](https://github.com/mauricerenck/komments/compare/v3.7.4...v3.7.5) (2025-11-13)
+
+
+### Bug Fixes
+
+* correct status for webmentions ([5980e4d](https://github.com/mauricerenck/komments/commit/5980e4daba42cda03d1c13cdb95c0ca8396067fb))
+* filter comments by new status field ([c56fae1](https://github.com/mauricerenck/komments/commit/c56fae17991b620109f8ec013f844f7f014fd503))
+
+## [3.7.4](https://github.com/mauricerenck/komments/compare/v3.7.3...v3.7.4) (2025-11-13)
+
+
+### Bug Fixes
+
+* filter unverified comments in panel and notifications ([89d5c82](https://github.com/mauricerenck/komments/commit/89d5c828f75b60196a25b2738163786a945dfb45))
+
+## [3.7.3](https://github.com/mauricerenck/komments/compare/v3.7.2...v3.7.3) (2025-11-12)
+
+
+### Bug Fixes
+
+* change field name due to issues ([fe01021](https://github.com/mauricerenck/komments/commit/fe0102182c8a50560ee84d4653fd38e5aaf3afb5))
+
+## [3.7.2](https://github.com/mauricerenck/komments/compare/v3.7.1...v3.7.2) (2025-11-12)
+
+
+### Bug Fixes
+
+* remove sqlite status check ([38280af](https://github.com/mauricerenck/komments/commit/38280afe5a73b9fc6ef208e6e2960a2b499c15ba))
+
+## [3.7.1](https://github.com/mauricerenck/komments/compare/v3.7.0...v3.7.1) (2025-11-09)
+
+
+### Bug Fixes
+
+* type mixups ([4448fec](https://github.com/mauricerenck/komments/commit/4448fece42abfc8c365acea95b53e6808deb65e5))
+
+# [3.7.0](https://github.com/mauricerenck/komments/compare/v3.6.0...v3.7.0) (2025-11-08)
+
+
+### Features
+
+* email verification ([414b04e](https://github.com/mauricerenck/komments/commit/414b04ed4fcf2cb7d39db84fa56398b43b12f079))
+
 # [3.6.0](https://github.com/mauricerenck/komments/compare/v3.5.0...v3.6.0) (2025-10-08)
 
 

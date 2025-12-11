@@ -172,6 +172,7 @@ class StorageMarkdown extends Storage
                 authorAvatar: $avatar,
                 authorEmail: $databaseResult->author_email,
                 authorUrl: $databaseResult->author_url,
+                verification_status: $databaseResult->verification_status,
                 published: $databaseResult->published,
                 verified: $databaseResult->verified,
                 spamlevel: $databaseResult->spamlevel,
@@ -196,5 +197,30 @@ class StorageMarkdown extends Storage
         $page->update([
             'kommentsInboxData' => $fieldData
         ]);
+    }
+
+    public function saveVerificationToken(string $hash, string $commentId, string $expiresAt): bool
+    {
+        return false;
+    }
+
+    public function getVerificationToken(string $hash): Collection
+    {
+        return new Collection();
+    }
+
+    public function getVerificationTokens(): Collection
+    {
+        return new Collection();
+    }
+
+    public function deleteVerificationToken(string $hash): bool
+    {
+        return false;
+    }
+
+    public function cleanupVerificationTokens(string $deletionMode): bool
+    {
+        return false;
     }
 }

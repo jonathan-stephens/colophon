@@ -8,9 +8,10 @@ class KommentModeration
 {
     private $storage;
 
-    public function __construct(private ?string $storageType = null)
+    public function __construct(private ?string $storageType = null, private ?bool $filterUnverified = null,)
     {
         $this->storage = StorageFactory::create($storageType);
+        $this->filterUnverified = $filterUnverified ?? option('mauricerenck.komments.spam.verification.filterUnverified', true);
     }
 
     public function getComment(string $id): mixed
@@ -25,17 +26,18 @@ class KommentModeration
         return $result;
     }
 
-    public function deleteCommentsInBatch(string $type): mixed
+    public function deleteCommentsInBatch(string $type, array $ids = []): mixed
     {
-        $result = $this->storage->deleteComments($type);
+        $result = $this->storage->deleteComments($type, $ids);
         return $result;
     }
+
 
     public function publishComment(string $id): mixed
     {
         $comment = $this->storage->getSingleComment($id);
         $newStatus = $comment->published()->isTrue() ? false : true;
-        $result = $this->storage->updateComment($id, ['published' => $newStatus]);
+        $result = $this->storage->updateComment($id, ['published' => $newStatus, 'verification_status' => $newStatus ? 'PUBLISHED' : 'PENDING']);
 
         kirby()->trigger('komments.comment.published', ['comment' => $comment]);
 
@@ -69,6 +71,24 @@ class KommentModeration
         return false;
     }
 
+
+    public function flagCommentsInBatch(string $flag, array $ids = []): mixed
+    {
+        switch ($flag) {
+            case 'spamlevel':
+                $result = $this->storage->updateCommentsById($ids, ['spamlevel' => 100]);
+                return $result;
+            case 'verified':
+                $result = $this->storage->updateCommentsById($ids, ['verified' => true]);
+                return $result;
+            case 'published':
+                $result = $this->storage->updateCommentsById($ids, ['published' => true, 'verification_status' => 'PUBLISHED']);
+                return $result;
+        }
+
+        return false;
+    }
+
     public function replyToComment(string $id, array $formData)
     {
 
@@ -90,6 +110,7 @@ class KommentModeration
             authorAvatar: $avatar,
             authorEmail: $author->email(),
             authorUrl: site()->url(),
+            verification_status: $publishResult ? 'PUBLISHED' : 'PENDING',
             published: $publishResult,
             verified: true,
             spamlevel: 0,
@@ -115,7 +136,10 @@ class KommentModeration
     public function getPendingComments(?bool $published = false, ?string $type = null): mixed
     {
         $comments = $this->storage->getCommentsOfSite();
-        $filteredComments = $comments->filterBy('published', $published)->sortBy('updatedAt', 'desc');
+        $filters = $this->filterUnverified ? 'VERIFIED' : 'PENDING';
+        $filters = $published ? 'PUBLISHED' : $filters;
+
+        $filteredComments = $comments->filterBy('verification_status', $filters)->sortBy('updatedAt', 'desc');
 
         if ($type) {
             $filteredComments = $filteredComments->filterBy('type', $type);

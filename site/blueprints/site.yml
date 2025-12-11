@@ -94,8 +94,62 @@ tabs:
     columns:
       - width: 1/3
           fields:
-            footer_nav:
-              label: Navigation
+            footerAbout_nav:
+              label: About Nav
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Page
+                description:
+                  type: text
+                  label: Description
+                link:
+                  type: link
+                  label: Link
+                  options:
+                    - page
+                    - url
+      - width: 1/3
+          fields:
+            footerGarden_nav:
+              label: Garden Nav
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Page
+                description:
+                  type: text
+                  label: Description
+                link:
+                  type: link
+                  label: Link
+                  options:
+                    - page
+                    - url
+      - width: 1/3
+          fields:
+            footerSoil_nav:
+              label: Soil Nav
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Page
+                description:
+                  type: text
+                  label: Description
+                link:
+                  type: link
+                  label: Link
+                  options:
+                    - page
+                    - url
+      - width: 1/3
+          fields:
+            footerWork_nav:
+              label: Work Nav
               type: structure
               fields:
                 title:
@@ -156,3 +210,21 @@ tabs:
                   label: Logo
                   type: files
                   multiple: false
+      - width: 1/3
+          fields:
+            footer_nav:
+              label: Navigation
+              type: structure
+              fields:
+                title:
+                  type: text
+                  label: Page
+                description:
+                  type: text
+                  label: Description
+                link:
+                  type: link
+                  label: Link
+                  options:
+                    - page
+                    - url

@@ -119,7 +119,6 @@ section.endorsements{
 
 .endorsement.card:hover,
 .endorsement.card:focus-within, .endorsement.card:focus{
-  transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
@@ -134,7 +133,7 @@ section.endorsements{
 
 /* Typography and content styling */
 .endorsement p:first-child {
-  font-size: var(--nutgraf-secondary);
+  font-size: var(--prose);
   flex-grow: 1;
   color:var(--color-nuance);
 }
@@ -154,13 +153,14 @@ section.endorsements{
 }
 
 .endorsement .byline p {
-  font-size: var(--small);
+  font-size: var(--caption);
+  font-family:var(--font-mono);
   color:var(--color-subtle);
   margin: 0;
 }
 
 .endorsement .role {
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-bold);
 }
 
 .endorsement .relationship{

@@ -25,7 +25,6 @@
 
 .card{
   &:hover, &:active{
-    background-color: var(--background-secondary);
     border-color: var(--color-emphasis);
     color: var(--color-emphasis);
   }

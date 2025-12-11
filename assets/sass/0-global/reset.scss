@@ -1,9 +1,13 @@
+* {
+  margin: 0;
+}
+
 /* https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Box sizing rules */
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 /* Prevent font size inflation */
@@ -30,6 +34,7 @@ ol[role='list'] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Set shorter line heights on headings and interactive elements */
@@ -45,6 +50,13 @@ h3, h4 {
   margin:0;
 }
 
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+p {
+  text-wrap: pretty;
+}
+
 /* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
@@ -55,7 +67,6 @@ a:not([class]) {
 img,
 picture {
   max-width: 100%;
-  display: block;
 }
 
 /* Inherit fonts for inputs and buttons */
@@ -90,6 +101,13 @@ input,
 button,
 textarea,
 select {
-  font-family: inherit;
-  font-size: inherit;
+  font: inherit;
+}
+img, picture, video, canvas, svg {
+  display:block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
 }

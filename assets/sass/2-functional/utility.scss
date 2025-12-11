@@ -2,6 +2,10 @@
   --gutter: var(--flow-5);
   --icon-color-primary: inherit;
   --icon-color-secondary: currentColor;
+  --scroll-bar-track-color: var(--color-quiet);
+  --scroll-bar-thumb-color: var(--color-subtle);
+  --scroll-bar-radius: 0;
+  --scroll-bar-offset: var(--flow-7);
 }
 
 .wrapper{
@@ -116,3 +120,44 @@ box-l {
 .smcp { font-variant-caps: small-caps; }
 .c2sc { font-variant-caps: unicase; }
 .hist { font-variant-alternates: historical-forms; }
+
+.breakout{
+  width: calc(50% + 50vw);
+  width: calc(50% + 50cqi);
+  margin-block:var(--flow-3) var(--flow-10);
+}
+
+.overflow{
+  overflow-x:auto;
+  padding-block-end: var(--scroll-bar-offset);
+  -webkit-overflow-scrolling: touch;
+
+ &[data-scroll="snap"]{
+   scroll-snap-type: x mandatory;
+
+   &> *{
+     scroll-snap-type: scroll-snap-align;
+   }
+  }
+}
+.overflow-grid{
+  display: grid;
+  grid-template-columns: repeat(var(--count),min(100%,85vi));
+  padding-block-end: var(--scroll-bar-offset);
+  padding-inline-end: var(--flow-10);
+  scroll-padding-left: 1px;
+  column-gap: var(--flow-7);
+  row-gap:var(--flow-5);
+
+  li{
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+}
+
+@media (min-width: 55em) {
+  .overflow-grid {
+    grid-template-columns: repeat(var(--count),calc(45% - var(--flow-7)));
+  }
+}

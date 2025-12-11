@@ -18,7 +18,7 @@
             <div class="domain-header">
               <h2 class="domain-title" itemprop="name"><?= $skill->name() ?></h2>
               <?php if ($skill->description()->isNotEmpty()): ?>
-                <p class="domain-description"><?= $skill->description()->kt() ?></p>
+                <p class="domain-description"><?= $skill->description()->html() ?></p>
               <?php endif ?>
             </div>
 
@@ -36,7 +36,7 @@
 
                     <h3 class="area-title" itemprop="name"><?= $skill2->name() ?></h3>
                     <?php if ($skill2->description()->isNotEmpty()): ?>
-                      <p class="area-description" itemprop="description"><?= $skill2->description()->kt() ?></p>
+                      <p class="area-description" itemprop="description"><?= $skill2->description()->html() ?></p>
                     <?php endif ?>
 
                     <!-- Level 3 -->
@@ -44,52 +44,54 @@
                     $level3Items = $skill2->level3()->toStructure();
                     if ($level3Items && $level3Items->isNotEmpty()):
                     ?>
-                      <div class="competencies" itemscope itemtype="https://schema.org/ItemList">
+                    <div class="breakout">
+                      <ul class="competencies overflow overflow-grid" itemscope itemtype="https://schema.org/ItemList" style="--count:<?php echo $level3Items->count(); ?>">
                         <?php foreach ($level3Items as $i3 => $skill3): ?>
-                          <details class="competency skill p-skill"
+                          <li class="competency skill p-skill card"
                                    itemscope itemtype="https://schema.org/ListItem"
                                    itemprop="itemListElement">
                             <meta itemprop="position" content="<?= $i3 + 1 ?>">
 
-                            <summary class="competency-name" itemprop="name">
-                              <span class="competency-title"><?= $skill3->name() ?></span>
-                            </summary>
+                            <h4 class="competency-name" itemprop="name">
+                              <?= $skill3->name() ?>
+                            </h4>
 
-                            <div class="competency-content" itemprop="description">
-                              <?php if ($skill3->description()->isNotEmpty()): ?>
-                                <p class="competency-description"><?= $skill3->description()->kt() ?></p>
-                              <?php endif ?>
+                            <?php if ($skill3->description()->isNotEmpty()): ?>
+                              <div class="competency-content" itemprop="description">
+                                  <p class="competency-description"><?= $skill3->description()->html() ?></p>
+                            <?php endif ?>
 
                               <!-- Level 4 -->
                               <?php
                               $level4Items = $skill3->level4()->toStructure();
                               if ($level4Items && $level4Items->isNotEmpty()):
                               ?>
-                                <h4 class="behaviors-title">Behaviors</h4>
+                                <h5 class="behaviors-title">Behaviors</h4>
                                 <div class="behavior" itemscope itemtype="https://schema.org/ItemList">
-                                  <ul>
                                     <?php foreach ($level4Items as $i4 => $skill4): ?>
-                                      <li class="behavior skill p-skill"
+                                      <details class="behavior skill p-skill"
                                           itemscope itemtype="https://schema.org/ListItem"
                                           itemprop="itemListElement">
                                         <meta itemprop="position" content="<?= $i4 + 1 ?>">
 
-                                        <strong class="behavior-name" itemprop="name">
+                                        <summary class="behavior-name" itemprop="name">
                                           <?= $skill4->name() ?>
-                                        </strong>
+                                        </summary>
                                         <?php if ($skill4->description()->isNotEmpty()): ?>
                                           <span class="behavior-description" itemprop="description">
-                                            <?= $skill4->description()->kt() ?>
+                                            <?= $skill4->description()->html() ?>
                                           </span>
                                         <?php endif ?>
-                                      </li>
+                                      </details>
                                     <?php endforeach ?>
-                                  </ul>
                                 </div>
                               <?php endif ?>
                             </div>
                           </details>
+                        </li>
                         <?php endforeach ?>
+
+                      </ul>
                       </div>
                     <?php endif ?>
 

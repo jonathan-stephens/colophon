@@ -1,0 +1,3 @@
+title: Guestbook
+icon: book-2
+extends: layouts/default

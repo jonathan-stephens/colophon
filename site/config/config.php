@@ -24,7 +24,7 @@ return [
       'website:text',
     ],
     'mauricerenck.komments.storage.type' => 'sqlite',
-    'mauricerenck.komments.storage.sqlitePath' => './content/.db/',
+    'mauricerenck.komments.storage.sqlitePath' => '../content/.db/',
     'jonathanstephens.timekeeper' => [
         'useClientTime' => true,
         'allowManualOverride' => true,

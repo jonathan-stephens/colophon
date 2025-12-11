@@ -35,4 +35,16 @@ tabs:
               csvButton:
                 type: info
                 text: <a href="/csv-export/links" class="k-button" target="_blank">Download Link data as CSV</a>
+
+              csvUpload:
+                type: files
+                headline: Import CSV to Update Links
+                layout: list
+                max: 1
+                accept: text/csv
+                query: page.files.filterBy('extension', 'csv')
+
+              csvImportInfo:
+                type: info
+                text: After uploading a CSV file above, <a href="/csv-import/links" class="k-button" target="_blank" onclick="return confirm('This will update your links based on the CSV. Continue?')">click here to import and update links</a>
   extends: tabs/listing

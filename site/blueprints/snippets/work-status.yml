@@ -1,0 +1,13 @@
+fields:
+  work-status:
+    type: multiselect
+    label: Open for Work Status
+    width: 1/3
+    options:
+      unavailable: Currently unavailable
+      fulltime: Full-time Employment
+      fractional: Fractional
+      advisor: Advisor
+      contractor: Contractor
+      consultant: Consultant
+      mentoring: Mentoring

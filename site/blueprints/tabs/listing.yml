@@ -1,7 +1,18 @@
 label: Listing Page
 fields:
   dek:
-    type: text
+    type: textarea
     label: Subtitle
     width: 1/3
+    size: small
     max: 72
+  nutgraf:
+    type: textarea
+    label: Summary
+    size: medium
+    width: 1/3
+  text:
+    type: text
+    label: Content
+    size: medium
+    width: 1/1

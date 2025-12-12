@@ -1,3 +1,5 @@
 title: Default Page
 icon: box
+changeTemplate:
+  - default-container
 extends: layouts/default

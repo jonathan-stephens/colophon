@@ -2,7 +2,25 @@ title: Work (Container)
 type: pages
 icon: map
 
+
 tabs:
+  entries:
+    label: Entries
+    sections:
+      drafts:
+        headline: Draft Entries
+        type: pages
+        status: draft
+        templates: [work, project]
+        sortBy: date desc
+
+      published:
+        headline: Published Entries
+        type: pages
+        status: published
+        templates: [work, project]
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"
   content:
     label: Content
     icon: grid-full
@@ -34,21 +52,6 @@ tabs:
       sidebar:
         width: 1/3
         sections:
-          access:
-            type: fields
-            fields:
-              security: fields/locked-pages
-          pages: true
-            type: pages
-            status: all
-            options:
-              changeTemplate:
-                - default
-                - work
-                - journal
-                - article
-                - essay
-                - link
           uploads:
             type: fields
             fields:

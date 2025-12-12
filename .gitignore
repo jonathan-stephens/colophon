@@ -56,3 +56,4 @@ voltron/*
 /site/config/.license
 config.codekit3
 *.codekit3
+/site/config/env.php

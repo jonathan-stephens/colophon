@@ -27,14 +27,7 @@ textarea, input, button{
 }
 
 .site-contact{
-  max-width:var(--measure);
-
-  #name{
-    width: calc(50% + 50cqi);
-  }
-  #email{
-    width: calc(50% + 50cqi);
-  }
+  --measure: 65ch;
 }
 
 

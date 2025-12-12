@@ -1,0 +1,3 @@
+title: Default Page
+icon: phone
+extends: layouts/default

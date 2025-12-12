@@ -12,26 +12,26 @@
     <?php endif ?>
     <form class="site-contact" method="post" action="<?= $page->url() ?>">
       <div class="honeypot">
-        <label for="website">Website<abbr title="required">*</abbr></label>
+        <label for="website">Website <abbr title="required">*</abbr></label>
         <input type="url" id="website" name="website" tabindex="-1">
       </div>
       <div class="field">
         <label for="name">
-          Name<abbr title="required">*</abbr>
+          Name <abbr title="required">*</abbr>
         </label>
         <input type="text" id="name" name="name" value="<?= esc($data['name'] ?? '', 'attr') ?>" required>
         <?= isset($alert['name']) ? '<span class="alert error">' . esc($alert['name']) . '</span>' : '' ?>
       </div>
       <div class="field">
         <label for="email">
-          Email<abbr title="required">*</abbr>
+          Email <abbr title="required">*</abbr>
         </label>
         <input type="email" id="email" name="email" value="<?= esc($data['email'] ?? '', 'attr') ?>" required>
         <?= isset($alert['email']) ? '<span class="alert error">' . esc($alert['email']) . '</span>' : '' ?>
       </div>
       <div class="field">
         <label for="text">
-          Text<abbr title="required">*</abbr>
+          Message <abbr title="required">*</abbr>
         </label>
         <textarea id="text" name="text" required>
           <?= esc($data['text'] ?? '') ?>

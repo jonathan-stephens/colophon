@@ -27,8 +27,14 @@ textarea, input, button{
 }
 
 .site-contact{
+  --measure:50ch;
   max-width:var(--measure);
+
+  input[type="text"]{
+    width: calc(50% + 50cqi);
+  }
 }
+
 
 footer .embeddable-buttondown-form{
   display:grid;

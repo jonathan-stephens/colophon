@@ -27,10 +27,12 @@ textarea, input, button{
 }
 
 .site-contact{
-  --measure:50ch;
   max-width:var(--measure);
 
-  input[type="text"]{
+  #name{
+    width: calc(50% + 50cqi);
+  }
+  #email{
     width: calc(50% + 50cqi);
   }
 }

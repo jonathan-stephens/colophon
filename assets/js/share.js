@@ -35,7 +35,7 @@ async function saveToOfflineQueue(bookmarkData) {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
-        
+
         const data = {
             ...bookmarkData,
             timestamp: Date.now(),
@@ -88,7 +88,7 @@ async function syncOfflineBookmarks() {
     }
 
     const pending = await getPendingBookmarks();
-    
+
     if (pending.length === 0) {
         console.log('✅ No pending bookmarks to sync');
         return;
@@ -137,7 +137,7 @@ async function loadExistingTags() {
     try {
         const response = await fetch('/api/bookmarks/tags');
         const result = await response.json();
-        
+
         if (result.status === 'success' && result.data) {
             allTags = result.data;
             console.log('📋 Loaded', allTags.length, 'existing tags');
@@ -151,7 +151,7 @@ async function loadExistingTags() {
 // Show tag suggestions
 function showTagSuggestions(input, suggestions) {
     const container = document.getElementById('tag-suggestions');
-    
+
     if (suggestions.length === 0) {
         container.classList.remove('active');
         return;
@@ -164,11 +164,11 @@ function showTagSuggestions(input, suggestions) {
         const div = document.createElement('div');
         div.className = 'tag-suggestion';
         if (index === 0) div.classList.add('selected');
-        
+
         // Highlight matching text
         const regex = new RegExp(`(${input})`, 'gi');
         div.innerHTML = tag.replace(regex, '<mark>$1</mark>');
-        
+
         div.addEventListener('click', () => {
             insertTag(tag);
             container.classList.remove('active');
@@ -182,16 +182,16 @@ function showTagSuggestions(input, suggestions) {
 function insertTag(tag) {
     const tagsInput = document.getElementById('tags');
     const currentValue = tagsInput.value.trim();
-    
+
     // Get the current tags
     let tags = currentValue ? currentValue.split(',').map(t => t.trim()) : [];
-    
+
     // Remove the incomplete tag (last one)
     tags.pop();
-    
+
     // Add the selected tag
     tags.push(tag);
-    
+
     // Update input
     tagsInput.value = tags.join(', ') + ', ';
     tagsInput.focus();
@@ -200,9 +200,9 @@ function insertTag(tag) {
 // Get tag suggestions based on input
 function getTagSuggestions(input) {
     if (!input || input.length < 2) return [];
-    
+
     const lowerInput = input.toLowerCase();
-    
+
     return allTags
         .filter(tag => tag.toLowerCase().includes(lowerInput))
         .slice(0, 5); // Limit to 5 suggestions
@@ -290,11 +290,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         tagsInput.addEventListener('input', (e) => {
             const value = e.target.value;
-            
+
             // Get the last tag being typed
             const tags = value.split(',');
             const currentTag = tags[tags.length - 1].trim();
-            
+
             if (currentTag.length >= 2) {
                 const suggestions = getTagSuggestions(currentTag);
                 showTagSuggestions(currentTag, suggestions);
@@ -306,7 +306,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         tagsInput.addEventListener('keydown', (e) => {
             const suggestions = suggestionsContainer.querySelectorAll('.tag-suggestion');
-            
+
             if (!suggestionsContainer.classList.contains('active')) return;
 
             if (e.key === 'ArrowDown') {
@@ -524,7 +524,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         if (userEmail) {
             console.log("✅ User logged in via session:", userEmail);
-            
+
             // If we have cached password from this session, use it
             if (cachedCredentials && cachedCredentials.email === userEmail) {
                 console.log("Using cached credentials");
@@ -535,7 +535,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             const password = prompt(
                 `Enter your Kirby password for: ${userEmail}\n\n(This is your panel login password)`
             );
-            
+
             if (!password) {
                 return null;
             }
@@ -561,7 +561,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         cachedCredentials = { email: email, password: password };
         console.log("Stored credentials for this session:", email);
-        
+
         return cachedCredentials;
     }
 
@@ -718,7 +718,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             }
 
             console.log("Quick saving - submitting form");
-            
+
             // Submit the main form
             form.dispatchEvent(new Event('submit'));
         });

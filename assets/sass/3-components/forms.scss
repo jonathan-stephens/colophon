@@ -28,6 +28,11 @@ textarea, input, button{
 
 .site-contact{
   --measure: 65ch;
+
+  input[type="submit"]{
+    max-width: var(--flow-13);
+    margin-block-start: var(--flow-4);
+  }
 }
 
 
@@ -88,7 +93,7 @@ input + button{
   justify-content: flex-end;
 }
 
-form.error{
+.error{
   input#password{
     border-color:var(--error-color);
     border-width:var(--border-thin);

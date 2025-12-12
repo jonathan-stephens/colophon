@@ -161,8 +161,3 @@ box-l {
     grid-template-columns: repeat(var(--count),calc(45% - var(--flow-7)));
   }
 }
-
-.honeypot {
-    position: absolute;
-    left: -9999px;
-}

@@ -57,7 +57,7 @@ return function($kirby, $pages, $page) {
 
             // no exception occurred, let's send a success message
             if (empty($alert) === true) {
-                $success = 'Your message has been sent, thank you. We will get back to you soon!';
+                $success = "Your message has been sent, thank you. I'll work to get back to you within the next 1–3 business days!";
                 $data = [];
             }
         }

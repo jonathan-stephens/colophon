@@ -1,6 +1,6 @@
 <?php snippet('site-header') ?>
 
-<section>
+<section class="wrapper">
   <h1><?= $page->title()->html() ?></h1>
   <?php if ($success): ?>
     <div class="alert success">

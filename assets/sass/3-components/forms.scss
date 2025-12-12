@@ -26,6 +26,10 @@ textarea, input, button{
   }
 }
 
+.site-contact{
+  max-width:var(--measure);
+}
+
 footer .embeddable-buttondown-form{
   display:grid;
   grid-template-columns: 1fr auto;
@@ -54,11 +58,22 @@ footer .embeddable-buttondown-form{
   }
 }
 
+.field{
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--flow-3);
+}
 label{
   font-weight:var(--weight-medium);
-  font-size:var(--caption);
+  font-size:var(--small);
+  text-transform: uppercase;
+  letter-spacing:var(--kerning-mono-medium);
   color: var(--color-distinct);
   font-family: var(--font-mono);
+
+  abbr{
+    font-variant: super;
+  }
 }
 
 input + button{

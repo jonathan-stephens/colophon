@@ -37,9 +37,9 @@ return function($kirby, $pages, $page) {
             try {
                 $kirby->email([
                     'template' => 'email',
-                    'from'     => 'yourcontactform@yourcompany.com',
+                    'from'     => 'hello@jonathanstephens.us',
                     'replyTo'  => $data['email'],
-                    'to'       => 'you@yourcompany.com',
+                    'to'       => 'hello@jonathanstephens.us',
                     'subject'  => esc($data['name']) . ' sent you a message from your contact form',
                     'data'     => [
                         'text'   => esc($data['text']),

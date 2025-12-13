@@ -27,9 +27,9 @@
             $level2Items = $skill->level2()->toStructure();
             if ($level2Items && $level2Items->isNotEmpty()):
             ?>
-              <div class="areas" itemprop="description" itemscope itemtype="https://schema.org/ItemList">
+              <div class="areas flow" itemprop="description" itemscope itemtype="https://schema.org/ItemList">
                 <?php foreach ($level2Items as $i2 => $skill2): ?>
-                  <article class="area skill p-skill"
+                  <article class="area flow skill p-skill"
                       itemscope itemtype="https://schema.org/ListItem"
                       itemprop="itemListElement">
                     <meta itemprop="position" content="<?= $i2 + 1 ?>">

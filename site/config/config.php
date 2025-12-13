@@ -12,17 +12,6 @@ return [
             ]
         ];
     },
-    'beebmx.x-ray' => [
-        'autoclean' => [
-            'files' => true,
-            'pages' => true,
-        ],
-        'cache' => true,
-        'icon' => 'x-ray-icon',
-        'limit' => [
-            'overview' => 5,
-            'resource' => 10,
-        ],    ],    
     'api' => [
       'basicAuth' => true,
       'allowInsecure' => false, // Only for local development - set to false in production!

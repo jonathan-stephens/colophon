@@ -24,7 +24,7 @@ return function($kirby, $pages, $page) {
 
         $messages = [
             'name'  => 'Please enter a valid name',
-            'email' => 'Please enter a valid email address2121',
+            'email' => 'Please enter a valid email address',
             'text'  => 'Please enter a text between 3 and 3000 characters'
         ];
 

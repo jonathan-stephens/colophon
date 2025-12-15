@@ -17,12 +17,15 @@ textarea, input, button{
   border-radius: var(--radii-square);
   background: var(--background-secondary);
   color: var(--color-prominent);
+  font-weight:var(--weight-medium);
 
   &::placeholder{
     color:var(--color-quiet-inverse);
+    font-weight:var(--weight-text);
   }
   &:focus, &:active{
     background: var(--background-primary);
+    color:var(--color-distinct);
   }
 }
 

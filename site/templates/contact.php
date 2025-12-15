@@ -54,8 +54,7 @@
           id="text"
           name="text"
           placeholder="Please share why you're contacting, in however many words you deem appropriate."
-          required>
-        </textarea>
+          required></textarea>
         <?= isset($alert['text']) ? '<span class="alert error">' . esc($alert['text']) . '</span>' : '' ?>
       </div>
       <input type="submit" name="submit" value="Submit">

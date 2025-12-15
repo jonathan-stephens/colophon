@@ -19,7 +19,7 @@ textarea, input, button{
   color: var(--color-prominent);
 
   &::placeholder{
-    color:var(--color-subtle-inverse);
+    color:var(--color-quiet-inverse);
   }
   &:focus, &:active{
     background: var(--background-primary);

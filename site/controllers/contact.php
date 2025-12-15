@@ -17,13 +17,13 @@ return function($kirby, $pages, $page) {
         ];
 
         $rules = [
-            'name'  => ['required', 'minLength' => 3],
+            'name'  => ['required'],
             'email' => ['required', 'email'],
             'text'  => ['required', 'minLength' => 3, 'maxLength' => 3000],
         ];
 
         $messages = [
-            'name'  => 'Please enter a valid name',
+            'name'  => 'Please share your name',
             'email' => 'Please enter a valid email address',
             'text'  => 'Please enter a text between 3 and 3000 characters'
         ];

@@ -68,6 +68,18 @@ return [
         ]
       ],
     ],
+    'afbora.kirby-minify-html' => [
+        'enabled' => true,
+        'ignore' => [
+            'sitemap',
+            'rss'
+        ],
+        'options' => [
+            'doOptimizeViaHtmlDomParser'     => true,
+            'doRemoveSpacesBetweenTags'      => false,
+            'doMakeSameDomainsLinksRelative' => ['jonathanstephens.us']
+        ]
+    ],
     'routes' => [
       // Section-specific feeds: /journal/rss, /links/rss, /journal/feed, /links/feed
       [

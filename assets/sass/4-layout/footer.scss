@@ -203,7 +203,7 @@ body > footer{
 .navigation .wrapper{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr;
   gap:var(--flow-3);
 
   .about, .garden, .soil, .labor{

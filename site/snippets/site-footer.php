@@ -2,23 +2,63 @@
   </main>
 
   <footer role="contentinfo">
-
-    <?php $menuItems = $site->footer_nav()->toStructure(); ?>
-      <?php if ($menuItems->isNotEmpty()): ?>
-      <section class="navigation">
+    <section class="navigation">
         <div class="wrapper">
-          <h2>Navigation</h2>
-          <nav>
-            <ul>
-              <?php foreach ($menuItems as $menuItem): ?>
-                <li><a <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $menuItem->link()->toUrl() ?>"><?= $menuItem->title()->or($menuItem->link()->html()) ?></a></li>
-              <?php endforeach ?>
-            </ul>
-          </nav>
-        </div>
-      </section>
-    <?php endif ?>
+          <?php $aboutMenuItems = $site->footerAbout_nav()->toStructure(); ?>
+          <?php $gardenMenuItems = $site->footerGarden_nav()->toStructure(); ?>
+          <?php $soilMenuItems = $site->footerSoil_nav()->toStructure(); ?>
+          <?php $workMenuItems = $site->footerWork_nav()->toStructure(); ?>
 
+          <?php if ($aboutMenuItems->isNotEmpty()): ?>
+            <div class="about">
+              <h2>About</h2>
+              <nav>
+                <ul>
+                  <?php foreach ($aboutMenuItems as $amenuItem): ?>
+                    <li><a <?= ($p = $amenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $amenuItem->link()->toUrl() ?>"><?= $amenuItem->title()->or($amenuItem->link()->html()) ?></a></li>
+                  <?php endforeach ?>
+                </ul>
+              </nav>
+            </div>
+          <?php endif ?>
+          <?php if ($workMenuItems->isNotEmpty()): ?>
+            <div class="labor">
+              <h2>Labor</h2>
+              <nav>
+                <ul>
+                  <?php foreach ($workMenuItems as $wmenuItem): ?>
+                    <li><a <?= ($p = $wmenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $wmenuItem->link()->toUrl() ?>"><?= $wmenuItem->title()->or($wmenuItem->link()->html()) ?></a></li>
+                  <?php endforeach ?>
+                </ul>
+              </nav>
+            </div>
+          <?php endif ?>
+          <?php if ($gardenMenuItems->isNotEmpty()): ?>
+              <div class="garden">
+                <h2>Garden</h2>
+                <nav>
+                  <ul>
+                    <?php foreach ($gardenMenuItems as $gmenuItem): ?>
+                      <li><a <?= ($p = $gmenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $gmenuItem->link()->toUrl() ?>"><?= $gmenuItem->title()->or($gmenuItem->link()->html()) ?></a></li>
+                    <?php endforeach ?>
+                  </ul>
+                </nav>
+              </div>
+            <?php endif ?>
+            <?php if ($soilMenuItems->isNotEmpty()): ?>
+              <div class="soil">
+                <h2>Soil</h2>
+                <nav>
+                  <ul>
+                    <?php foreach ($soilMenuItems as $smenuItem): ?>
+                      <li><a <?= ($p = $smenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $smenuItem->link()->toUrl() ?>"><?= $smenuItem->title()->or($smenuItem->link()->html()) ?></a></li>
+                    <?php endforeach ?>
+                  </ul>
+                </nav>
+              </div>
+            <?php endif ?>
+          </div>
+      </section>
     <section class="subscribe">
       <div class="wrapper">
         <div class="newsletter">
@@ -31,7 +71,7 @@
             </span>
           </header>
           <div class="description">
-            <p>Every week or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
+            <p>Every fortnight or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
             <p>Feel free to <a href="https://buttondown.com/jonathanstephens/archive/">browse the archives</a>...before subscribing ( • ᴗ - ).</p>
           </div>
 
@@ -75,7 +115,6 @@
         </div>
       </div>
     </section>
-
     <?php $socialLinks = $site->footer_social()->toStructure(); ?>
     <?php if ($socialLinks->isNotEmpty()): ?>
       <section class="socials">
@@ -89,8 +128,7 @@
             </div>
       </section>
     <?php endif ?>
-
-    <section class="final-info">
+      <section class="final-info">
       <div class="wrapper">
         <?php snippet('components/addenda') ?>
         <div class="carbon">
@@ -101,12 +139,11 @@
         <?php snippet('copyright') ?>
       </div>
     </section>
-    <div class="floating-controls">
-      <button class="scroll-to-top floating" id="scroll-to-top-floating" aria-label="Scroll to top of page">
-        <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>
-      </button>
-    </div>
-
+      <div class="floating-controls">
+        <button class="scroll-to-top floating" id="scroll-to-top-floating" aria-label="Scroll to top of page">
+          <?= asset('assets/svg/icons/arrow-up.svg')->read() ?>
+        </button>
+      </div>
   </footer>
 
 <!-- Fathom - beautiful, simple website analytics -->
@@ -119,67 +156,5 @@
   'assets/js/prism-min.js',
   'assets/js/header-min.js',
 ]) ?>
-
-<!-- Service Worker Registration - Add this to your site footer or header -->
-<script>
-if ('serviceWorker' in navigator) {
-  console.log('✅ Service Worker supported');
-
-  window.addEventListener('load', async () => {
-    try {
-      console.log('🔧 Registering Service Worker...');
-
-      // IMPORTANT: Make sure sw.js is at the ROOT of your site
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/',
-        updateViaCache: 'none'
-      });
-
-      console.log('✅ Service Worker registered with scope:', registration.scope);
-
-      // Check if SW is controlling the page
-      if (navigator.serviceWorker.controller) {
-        console.log('✅ Page is controlled by Service Worker');
-      } else {
-        console.log('⚠️ Page NOT controlled yet - REFRESH THE PAGE');
-        console.log('   (This is normal on first visit)');
-      }
-
-      // Handle updates
-      registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
-        console.log('🆕 Service Worker update found');
-
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            console.log('⏳ New version available - refresh to activate');
-          }
-        });
-      });
-
-      // Reload when new SW takes control
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('🔄 New Service Worker activated - reloading');
-        window.location.reload();
-      });
-
-    } catch (err) {
-      console.error('❌ Service Worker registration failed:', err);
-    }
-  });
-} else {
-  console.error('❌ Service Workers not supported');
-}
-
-// Debug helper
-window.checkSW = async () => {
-  const reg = await navigator.serviceWorker.getRegistration();
-  console.log('SW Registered:', !!reg);
-  console.log('SW Active:', !!reg?.active);
-  console.log('SW Controlling:', !!navigator.serviceWorker.controller);
-  console.log('Scope:', reg?.scope);
-  return reg;
-};
-</script>
 </body>
 </html>

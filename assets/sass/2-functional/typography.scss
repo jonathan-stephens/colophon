@@ -82,18 +82,28 @@ h3,h4{
 h5, h6{
   line-height:var(--leading-standard);
 }
-p, li{
+p, li, dt, dd{
   font-size:var(--prose);
   font-weight: var(--weight-text);
   line-height:var(--leading-standard);
 }
 
-ol, ul{
+ol, ul, dl{
   padding-inline-start: var(--flow-5);
   padding-block: var(--flow-5);
   max-width:95%;
 }
 
+dl{
+  padding-inline-start:0;
+
+  dt{
+    font-weight:var(--weight-medium);
+  }
+  dd{
+    padding-block-end:var(--flow-3);
+  }
+}
 @media screen and (min-width: 768px) {
   .about .prose ul{
     max-width:78%;
@@ -114,13 +124,16 @@ h1 + p{
   color: var(--color-subtle);
   font-size: var(--hed-tertiary);
   padding-block-start: var(--flow-3);
+  padding-block-end: var(--flow-6);
 }
 
 h2 + p{
   margin:0;
   padding-block-start:var(--flow-4);
 }
-
+h3 + ul, h3 + dl{
+  padding-block-start:0;
+}
 p+p{
   padding-block-start:var(--flow-5);
 }

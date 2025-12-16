@@ -26,15 +26,14 @@
                   <?php endif ?>
                   <?php if($review->relationship()->isNotEmpty()): ?>
                     <span class="relationship">| <?= $review->relationshipLabel() ?></span>
-                  <?php endif ?>
-                </p>
+                  <?php endif ?></p>
                 <small>
-                <?php if ($review->canonical_location()->value() == 'linkedin'): ?>
-                  <a class="button with-icon" target="_blank" href="https://www.linkedin.com/in/elnatnal/details/recommendations">Full review on LinkedIn <?= asset('assets/svg/icons/launch.svg')->read() ?></a>
-              <?php elseif ($review->canonical_location()->value() == 'adplist'): ?>
-                <a class="button with-icon" target="_blank" href="https://adplist.org/mentors/jonathan-stephens">Full review on ADPList <?= asset('assets/svg/icons/launch.svg')->read() ?></a>
-              <?php endif ?>
-            </small>
+                  <?php if ($review->canonical_location()->value() == 'linkedin'): ?>
+                    <a class="button with-icon" target="_blank" href="https://www.linkedin.com/in/elnatnal/details/recommendations">Full review on LinkedIn <?= asset('assets/svg/icons/launch.svg')->read() ?></a>
+                  <?php elseif ($review->canonical_location()->value() == 'adplist'): ?>
+                  <a class="button with-icon" target="_blank" href="https://adplist.org/mentors/jonathan-stephens">Full review on ADPList <?= asset('assets/svg/icons/launch.svg')->read() ?></a>
+                  <?php endif ?></small>
+              </div>
             </div>
           </article>
         <?php endforeach ?>

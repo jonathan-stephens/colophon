@@ -100,7 +100,7 @@ body > footer{
       color:var(--color-prominent);
     }
   }
-  .navigation .wrapper, .socials .wrapper{
+  .socials .wrapper{
     display:flex;
     align-items:baseline;
   }
@@ -200,6 +200,37 @@ body > footer{
   }
 }
 
+.navigation .wrapper{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap:var(--flow-3);
+
+  .about, .garden, .soil, .labor{
+    width: calc(100%/2);
+    grid-template-rows: subgrid;
+    grid-template-columns: subgrid;
+
+    ul{
+      display:flex;
+      flex-direction:column;
+    }
+  }
+}
+
+@media (min-width: 50em) {
+  .navigation .wrapper{
+    display:flex;
+
+    .about, .garden, .soil, .labor{
+      width: calc(100%/4);
+
+      ul{
+      }
+    }
+  }
+
+}
 html[data-theme="dark"] body > footer{
   section.navigation{background:var(--background-secondary);}
   section.subscribe{background:var(--background-tertiary);}

@@ -12,5 +12,5 @@
     <a class="button"  href="https://cal.com/jonathanstephens/book">
       Book time on my calendar
     </a>
-  <div>
+  </div>
 </section>

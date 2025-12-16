@@ -6,12 +6,15 @@
   --background-secondary: var(--palette-ash-10);
   --background-tertiary: var(--palette-ash-20);
   --background-quaternary: var(--palette-ash-30);
+  --background-quinary: var(--palette-ash-40);
 
   --background-primary-inverse:var(--palette-ash-95);
   --background-secondary-inverse: var(--palette-ash-90);
   --background-tertiary-inverse: var(--palette-ash-80);
+  --background-quaternary-inverse: var(--palette-ash-70);
+  --background-quinary-inverse: var(--palette-ash-60);
 
-  --color-quiet:    var(--palette-ash-40);
+  --color-quiet:    var(--palette-ash-50);
   --color-subtle:    var(--palette-ash-60);
   --color-nuance:    var(--palette-ash-70);
   --color-distinct:  var(--palette-ash-80);
@@ -23,7 +26,7 @@
   --color-nuance-inverse:    var(--palette-ash-30);
   --color-distinct-inverse:  var(--palette-ash-20);
   --color-prominent-inverse: var(--palette-ash-10);
-  --color-emphasis-inverse:  var(--palette-ash-05);
+  --color-emphasis-inverse:  var(--palette-ash-00);
 
   --border-color-subtle:    var(--palette-ash-10);
   --border-color-nuance:    var(--palette-ash-20);
@@ -44,17 +47,20 @@
   --background-secondary: var(--palette-ash-90);
   --background-tertiary: var(--palette-ash-80);
   --background-quaternary: var(--palette-ash-70);
+  --background-quinary: var(--palette-ash-60);
 
   --background-primary-inverse:var(--palette-ash-05);
   --background-secondary-inverse: var(--palette-ash-10);
   --background-tertiary-inverse: var(--palette-ash-20);
+  --background-quaternary-inverse: var(--palette-ash-30);
+  --background-quinary-inverse: var(--palette-ash-40);
 
-  --color-quiet:     var(--palette-ash-60);
-  --color-subtle:    var(--palette-ash-40);
-  --color-nuance:    var(--palette-ash-30);
-  --color-distinct:  var(--palette-ash-20);
-  --color-prominent: var(--palette-ash-10);
-  --color-emphasis:  var(--palette-ash-05);
+  --color-quiet:     var(--palette-ash-40);
+  --color-subtle:    var(--palette-ash-30);
+  --color-nuance:    var(--palette-ash-20);
+  --color-distinct:  var(--palette-ash-10);
+  --color-prominent: var(--palette-ash-05);
+  --color-emphasis:  var(--palette-ash-00);
 
   --color-quiet-inverse:    var(--palette-ash-40);
   --color-subtle-inverse:    var(--palette-ash-60);
@@ -63,10 +69,10 @@
   --color-prominent-inverse: var(--palette-ash-90);
   --color-emphasis-inverse:  var(--palette-ash-100);
 
-  --border-color-subtle:    var(--palette-ash-90);
-  --border-color-nuance:    var(--palette-ash-80);
-  --border-color-distinct:  var(--palette-ash-60);
-  --border-color-prominent: var(--palette-ash-40);
+  --border-color-subtle:    var(--palette-ash-60);
+  --border-color-nuance:    var(--palette-ash-50);
+  --border-color-distinct:  var(--palette-ash-40);
+  --border-color-prominent: var(--palette-ash-30);
   --border-color-emphasis:  var(--palette-ash-20);
 
   --error-background: var(--palette-red-20);

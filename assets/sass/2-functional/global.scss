@@ -44,7 +44,7 @@ main{
 }
 
 .logged-in main{
-  padding-block-start:calc(var(--admin-bar--height) + var(--flow-14));
+  padding-block-start:calc(var(--admin-bar--height, 1px) + var(--flow-14));
 }
 
 html[data-theme='dark'] body{

@@ -6,7 +6,13 @@ article:is(.review){
   background: var(--background-primary);
   border: 1px solid var(--border-color-nuance);
   --flow-space: var(--flow-6);
+  border-radius:var(--radii-square);
 
+  img{
+    border-start-start-radius: var(--radii-square);
+    border-end-start-radius: var(--radii-square);
+    border-inline-end:var(--border-fine) solid var(--border-color-distinct);
+  }
   .content{
     padding:var(--flow-5);
   }
@@ -30,6 +36,7 @@ article:is(.review){
       grid-area: small;
       width: 100%;
       margin-block-start:var(--flow-2);
+      font-family:var(--font-mono);
     }
   }
     small .icon{

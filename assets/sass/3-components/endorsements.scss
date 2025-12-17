@@ -68,7 +68,7 @@ section.endorsements{
 }
 
 
-.endorsements .inner{
+section.endorsements .inner{
   max-inline-size:none;
   display: flex;
   gap: var(--flow-6);
@@ -198,7 +198,7 @@ section.endorsements{
 
 /* Responsive behavior */
 @media (min-width: 40em) {
-  .endorsements {
+  section.endorsements {
     gap: var(--flow-7);
     padding: var(--flow-6) 0;
   }

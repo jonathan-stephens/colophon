@@ -11,7 +11,7 @@
 
           <?php if ($aboutMenuItems->isNotEmpty()): ?>
             <div class="about">
-              <h2>About</h2>
+              <h2>Info</h2>
               <nav>
                 <ul>
                   <?php foreach ($aboutMenuItems as $amenuItem): ?>
@@ -23,7 +23,7 @@
           <?php endif ?>
           <?php if ($workMenuItems->isNotEmpty()): ?>
             <div class="labor">
-              <h2>Labor</h2>
+              <h2>Work</h2>
               <nav>
                 <ul>
                   <?php foreach ($workMenuItems as $wmenuItem): ?>

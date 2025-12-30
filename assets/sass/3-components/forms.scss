@@ -29,6 +29,11 @@ textarea, input, button{
   }
 }
 
+textarea{
+  field-sizing:content;
+  min-height:var(--flow-12);
+}
+
 .site-contact{
   --measure: 65ch;
 

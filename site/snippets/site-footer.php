@@ -1,6 +1,7 @@
   <?php if ($page->isListed()): ?>
     <a href="https://brid.gy/publish/bluesky"></a>
   <?php endif ?>
+
   </main>
 
   <footer role="contentinfo">

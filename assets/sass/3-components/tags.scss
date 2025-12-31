@@ -34,6 +34,7 @@
   }
 
   &:hover{
+    background:var(--background-tertiary);
   }
   &:active, &.active{
     :has(.count){

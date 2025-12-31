@@ -38,12 +38,12 @@
 
   </header>
 
-  <section class="selected-work">
+  <section id="selected-work" class="selected-work">
     <h2>Selected Work</h2>
     <p style="--measure:60ch;font-size:var(--nutgraf-secondary);max-width:var(--measure);text-wrap:balance;">I've built a diverse career over 18 years—contributing individually as a designer to leading organizations of over 100 diverse people &amp; roles. This showcase focuses <em>(mostly)</em> on the last few years of my independent practice—running my studio and taking on select freelance and consulting projects.</p>
     <?php snippet('/components/case-studies', ['hedLevel' => 3]) ?>
   </section>
-  <section class="timeline">
+  <section id="experience" class="timeline">
     <h2>Experience</h2>
     <ul>
       <li>

@@ -92,6 +92,32 @@ snippet('header') ?>
     }
     ?>
 
+    <?php
+    // Load and run Collections Tests
+    $collectionsTestPath = kirby()->root('plugins') . '/tag-garden/tests/CollectionsTest.php';
+    if (file_exists($collectionsTestPath)) {
+        require_once $collectionsTestPath;
+        $collectionsTest = new CollectionsTest();
+        $collectionsTest->runAll();
+    } else {
+        echo "<p style='color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px;'>";
+        echo "❌ Could not find CollectionsTest.php at: <code>{$collectionsTestPath}</code>";
+        echo "</p>";
+    }
+    ?>
+    <?php
+// Load and run Sorting Tests
+$sortingTestPath = kirby()->root('plugins') . '/tag-garden/tests/SortingTest.php';
+if (file_exists($sortingTestPath)) {
+    require_once $sortingTestPath;
+    $sortingTest = new SortingTest();
+    $sortingTest->runAll();
+} else {
+    echo "<p style='color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px;'>";
+    echo "❌ Could not find SortingTest.php at: <code>{$sortingTestPath}</code>";
+    echo "</p>";
+}
+?>
 
     <div class="test-section">
         <h3>📝 Test Page Setup</h3>

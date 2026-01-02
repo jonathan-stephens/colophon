@@ -378,9 +378,10 @@ Kirby::plugin('yourusername/tag-garden', [
      * Global collections that can be accessed via $kirby->collection('name')
      * Loaded from separate file for better organization.
      */
-     /*
-    'collections' => require __DIR__ . '/collections/tags.php',
-*/
+    'collections' => file_exists(__DIR__ . '/collections/tags.php')
+        ? require __DIR__ . '/collections/tags.php'
+        : [],
+
     /**
      * ============================================================================
      * ROUTES
@@ -389,9 +390,9 @@ Kirby::plugin('yourusername/tag-garden', [
      * Custom URL routing for tag pages.
      * Loaded from separate file for better organization.
      */
-     /*
-    'routes' => require __DIR__ . '/routes/tags.php',
-    */
+    'routes' => file_exists(__DIR__ . '/routes/tags.php')
+        ? require __DIR__ . '/routes/tags.php'
+        : [],
     /**
      * ============================================================================
      * SNIPPETS
@@ -400,13 +401,14 @@ Kirby::plugin('yourusername/tag-garden', [
      * Register snippet locations for the plugin.
      * These can be called via snippet('snippet-name')
      */
+     /*
     'snippets' => [
         'tag-garden/explorer' => __DIR__ . '/snippets/tags-explorer.php',
         'tag-garden/section' => __DIR__ . '/snippets/tags-section.php',
         'tag-garden/badge' => __DIR__ . '/snippets/tag-badge.php',
         'tag-garden/reading-time' => __DIR__ . '/snippets/reading-time.php',
     ],
-
+*/
     /**
      * ============================================================================
      * TEMPLATES
@@ -414,11 +416,12 @@ Kirby::plugin('yourusername/tag-garden', [
      *
      * Register template locations for tag pages
      */
+     /*
     'templates' => [
         'tags' => __DIR__ . '/templates/tags.php',
         'tag' => __DIR__ . '/templates/tag.php',
     ],
-
+*/
     /**
      * ============================================================================
      * CONTROLLERS
@@ -428,8 +431,12 @@ Kirby::plugin('yourusername/tag-garden', [
      */
      /*
     'controllers' => [
-        'tags' => require __DIR__ . '/controllers/tags.php',
-        'tag' => require __DIR__ . '/controllers/tag.php',
-    ],*/
-
+        'tags' => file_exists(__DIR__ . '/controllers/tags.php')
+            ? require __DIR__ . '/controllers/tags.php'
+            : function() { return []; },
+        'tag' => file_exists(__DIR__ . '/controllers/tag.php')
+            ? require __DIR__ . '/controllers/tag.php'
+            : function() { return []; },
+    ],
+    */
 ]);

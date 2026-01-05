@@ -119,6 +119,33 @@ if (file_exists($sortingTestPath)) {
 }
 ?>
 
+<?php
+// Load and run Controllers Tests
+$controllersTestPath = kirby()->root('plugins') . '/tag-garden/tests/ControllersTest.php';
+if (file_exists($controllersTestPath)) {
+    require_once $controllersTestPath;
+    $controllersTest = new ControllersTest();
+    $controllersTest->runAll();
+} else {
+    echo "<p style='color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px;'>";
+    echo "❌ Could not find ControllersTest.php at: <code>{$controllersTestPath}</code>";
+    echo "</p>";
+}
+?>
+
+<?php
+// Load and run Templates Tests
+$templatesTestPath = kirby()->root('plugins') . '/tag-garden/tests/TemplatesTest.php';
+if (file_exists($templatesTestPath)) {
+    require_once $templatesTestPath;
+    $templatesTest = new TemplatesTest();
+    $templatesTest->runAll();
+} else {
+    echo "<p style='color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px;'>";
+    echo "❌ Could not find TemplatesTest.php at: <code>{$templatesTestPath}</code>";
+    echo "</p>";
+}
+?>
     <div class="test-section">
         <h3>📝 Test Page Setup</h3>
         <p>For comprehensive testing, create a test page with:</p>

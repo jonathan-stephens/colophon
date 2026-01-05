@@ -34,8 +34,7 @@ Kirby::plugin('yourusername/tag-garden', [
      * PLUGIN OPTIONS
      * ============================================================================
      *
-     * Default configuration that can be overridden in site/config/config.php
-     * Override example: 'yourusername.tag-garden.default.sort' => 'planted'
+     * Basic options. Extended options are loaded via site/config/config.php
      */
     'options' => [
         // Default number of items to show in embedded section view
@@ -52,8 +51,8 @@ Kirby::plugin('yourusername/tag-garden', [
 
         // Content groups configuration - maps template names to groups
         'content.groups' => [
-            'garden' => ['journal', 'essays', 'articles', 'books'],
-            'soil' => ['links', 'library', 'quotes'],
+            'garden' => ['journal', 'essay', 'article', 'book'],
+            'soil' => ['library', 'quote', 'link'],
             'work' => ['overview', 'experience', 'projects', 'work'],
             'about' => ['strengths', 'skills', 'about', 'now']
         ],
@@ -393,22 +392,7 @@ Kirby::plugin('yourusername/tag-garden', [
     'routes' => file_exists(__DIR__ . '/routes/tags.php')
         ? require __DIR__ . '/routes/tags.php'
         : [],
-    /**
-     * ============================================================================
-     * SNIPPETS
-     * ============================================================================
-     *
-     * Register snippet locations for the plugin.
-     * These can be called via snippet('snippet-name')
-     */
-     /*
-    'snippets' => [
-        'tag-garden/explorer' => __DIR__ . '/snippets/tags-explorer.php',
-        'tag-garden/section' => __DIR__ . '/snippets/tags-section.php',
-        'tag-garden/badge' => __DIR__ . '/snippets/tag-badge.php',
-        'tag-garden/reading-time' => __DIR__ . '/snippets/reading-time.php',
-    ],
-*/
+
     /**
      * ============================================================================
      * TEMPLATES
@@ -416,12 +400,11 @@ Kirby::plugin('yourusername/tag-garden', [
      *
      * Register template locations for tag pages
      */
-     /*
     'templates' => [
         'tags' => __DIR__ . '/templates/tags.php',
         'tag' => __DIR__ . '/templates/tag.php',
     ],
-*/
+
     /**
      * ============================================================================
      * CONTROLLERS
@@ -429,7 +412,6 @@ Kirby::plugin('yourusername/tag-garden', [
      *
      * Register controller locations for preparing data for templates
      */
-     /*
     'controllers' => [
         'tags' => file_exists(__DIR__ . '/controllers/tags.php')
             ? require __DIR__ . '/controllers/tags.php'
@@ -438,5 +420,4 @@ Kirby::plugin('yourusername/tag-garden', [
             ? require __DIR__ . '/controllers/tag.php'
             : function() { return []; },
     ],
-    */
 ]);

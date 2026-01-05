@@ -20,80 +20,21 @@ class Helpers {
      * @param string $status The status key (seedling, budding, evergreen, wilting)
      * @return array|null The status definition or null if not found
      */
-     public static function getGrowthDefinition(?string $status): ?array
-     {
-         if (empty($status)) {
-             return null;
-         }
+    public static function getGrowthDefinition(string $status): ?array {
+        $definitions = option('yourusername.tag-garden.growth.definitions', []);
+        return $definitions[$status] ?? null;
+    }
 
-         $defaults = [
-             'seedling' => [
-                 'label' => 'Seedling',
-                 'emoji' => '🌱',
-                 'sort-order' => 1,
-             ],
-             'budding' => [
-                 'label' => 'Budding',
-                 'emoji' => '🪴',
-                 'sort-order' => 2,
-             ],
-             'evergreen' => [
-                 'label' => 'Evergreen',
-                 'emoji' => '🌲',
-                 'sort-order' => 3,
-             ],
-             'wilting' => [
-                 'label' => 'Wilting',
-                 'emoji' => '🥀',
-                 'sort-order' => 4,
-             ],
-         ];
-
-         $definitions = array_merge(
-             $defaults,
-             option('yourusername.tag-garden.growth.definitions', [])
-         );
-
-         return $definitions[$status] ?? null;
-     }
     /**
      * Get a content group definition
      *
      * @param string $group The group key (garden, soil, work, about)
      * @return array|null The group definition or null if not found
      */
-     public static function getGroupDefinition(string $group): ?array
-     {
-       $defaults = [
-           'garden' => [
-               'label' => 'Garden',
-               'description' => 'Growing ideas and explorations',
-               'types' => ['journal', 'essays', 'articles', 'books'],
-           ],
-           'soil' => [
-               'label' => 'Soil',
-               'description' => 'Foundations and background thinking',
-               'types' => ['links', 'library', 'quotes'],
-           ],
-           'work' => [
-               'label' => 'Work',
-               'description' => 'Projects and case studies',
-               'types' => ['work', 'experience', 'projects'],
-           ],
-           'about' => [
-               'label' => 'About',
-               'description' => 'Context and personal information',
-               'types' => ['strengths', 'skills', 'about', 'now'],
-           ],
-       ];
-
-         $groups = array_merge(
-             $defaults,
-             option('yourusername.tag-garden.groups', [])
-         );
-
-         return $groups[$group] ?? null;
-     }
+    public static function getGroupDefinition(string $group): ?array {
+        $definitions = option('yourusername.tag-garden.group.definitions', []);
+        return $definitions[$group] ?? null;
+    }
 
     /**
      * Get a theme definition
@@ -101,62 +42,50 @@ class Helpers {
      * @param string $theme The theme key (topic, medium, status, audience)
      * @return array|null The theme definition or null if not found
      */
-     public static function getThemeDefinition(string $theme): ?array
-     {
-         $defaults = [
-             'topic' => [
-                 'label' => 'Topic',
-             ],
-             'medium' => [
-                 'label' => 'Medium',
-             ],
-             'status' => [
-                 'label' => 'Status',
-             ],
-             'audience' => [
-                 'label' => 'Audience',
-             ],
-         ];
+    public static function getThemeDefinition(string $theme): ?array {
+        $definitions = option('yourusername.tag-garden.theme.definitions', []);
+        return $definitions[$theme] ?? null;
+    }
+    /**
+     * Get the group that a content type belongs to
+     *
+     * @param string $type The content type/template name
+     * @return string|null The group name or null if not found
+     */
+    public static function getGroupForType(string $type): ?string {
+        $groupDefinitions = option('yourusername.tag-garden.group.definitions', []);
 
-         $themes = array_merge(
-             $defaults,
-             option('yourusername.tag-garden.theme.definitions', [])
-         );
+        foreach ($groupDefinitions as $groupKey => $groupDef) {
+            if (isset($groupDef['types']) && in_array($type, $groupDef['types'])) {
+                return $groupKey;
+            }
+        }
 
-         return $themes[$theme] ?? null;
-     }
-
+        return null;
+    }
     /**
      * Calculate length category from word count
      *
      * Returns a category string based on configured thresholds.
      *
      * @param int $wordCount The word count
-     * @return string The length category (quick, short, medium, long, epic)
+     * @return string The length category (quick, short, medium, long, deep)
      */
-     public static function getLengthCategory(int $wordCount): string
-     {
-         $defaults = [
-             'quick'  => 300,
-             'short'  => 600,
-             'medium' => 1200,
-             'long'   => 2500,
-         ];
+    public static function getLengthCategory(int $wordCount): string {
+        $thresholds = option('yourusername.tag-garden.length.thresholds', [
+            'quick' => 500,
+            'short' => 1500,
+            'medium' => 3000,
+            'long' => 5000,
+        ]);
 
-         $thresholds = array_merge(
-             $defaults,
-             option('yourusername.tag-garden.length.thresholds', [])
-         );
-
-         if ($wordCount <= $thresholds['quick'])  return 'quick';
-         if ($wordCount <= $thresholds['short'])  return 'short';
-         if ($wordCount <= $thresholds['medium']) return 'medium';
-         if ($wordCount <= $thresholds['long'])   return 'long';
-
-         return 'deep';
-     }
-
-    /**
+        if ($wordCount < $thresholds['quick']) return 'quick';
+        if ($wordCount < $thresholds['short']) return 'short';
+        if ($wordCount < $thresholds['medium']) return 'medium';
+        if ($wordCount < $thresholds['long']) return 'long';
+        return 'deep';
+    }
+        /**
      * Get human-readable label for length category
      *
      * @param string $category The length category (quick, short, medium, long, epic)
@@ -203,35 +132,9 @@ class Helpers {
      *
      * @return array Associative array of sort keys => labels
      */
-     public static function getSortMethods(): array
-     {
-         return [
-             'planted' => [
-                 'label' => 'Planted',
-                 'description' => 'Oldest first',
-             ],
-             'tended' => [
-                 'label' => 'Recently tended',
-                 'description' => 'Recently updated',
-             ],
-             'notable' => [
-                 'label' => 'Featured',
-                 'description' => 'Highlighted content',
-             ],
-             'length-asc' => [
-                 'label' => 'Shortest first',
-             ],
-             'length-desc' => [
-                 'label' => 'Longest first',
-             ],
-             'growth' => [
-                 'label' => 'Growth stage',
-             ],
-             'title' => [
-                 'label' => 'Title (A–Z)',
-             ],
-         ];
-     }
+    public static function getSortMethods(): array {
+        return option('yourusername.tag-garden.sort.methods', []);
+    }
 
     /**
      * Calculate font size for tag cloud based on usage count
@@ -324,7 +227,7 @@ class Helpers {
     }
 
     /**
-     * Get pages filtered by one or more tags
+     * Get pages filtered by one or more tags (CASE-INSENSITIVE)
      *
      * @param array|string $tags Single tag or array of tags
      * @param string $logic 'AND' or 'OR' - whether pages need all tags or any tag
@@ -341,19 +244,39 @@ class Helpers {
             return new \Kirby\Cms\Pages([]);
         }
 
+        // Convert search tags to lowercase for case-insensitive comparison
+        $searchTags = array_map('mb_strtolower', $tags);
+
         if ($logic === 'OR') {
-            // Pages with ANY of the tags
-            return site()->index()->filterBy('tags', 'in', $tags);
+            // Pages with ANY of the tags (case-insensitive)
+            return site()->index()->filter(function($page) use ($searchTags) {
+                $pageTags = $page->tags()->split(',');
+                foreach ($pageTags as $tag) {
+                    $tag = trim($tag);
+                    if (in_array(mb_strtolower($tag), $searchTags, true)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
         } else {
-            // Pages with ALL of the tags (AND logic)
-            $pages = site()->index();
-            foreach ($tags as $tag) {
-                $pages = $pages->filterBy('tags', '*=', $tag);
-            }
-            return $pages;
+            // Pages with ALL of the tags (AND logic, case-insensitive)
+            return site()->index()->filter(function($page) use ($searchTags) {
+                $pageTags = $page->tags()->split(',');
+                $pageTagsLower = array_map(function($tag) {
+                    return mb_strtolower(trim($tag));
+                }, $pageTags);
+
+                // Check if all search tags are present in page tags
+                foreach ($searchTags as $searchTag) {
+                    if (!in_array($searchTag, $pageTagsLower, true)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
         }
     }
-
     /**
      * Sort pages collection by specified method
      *

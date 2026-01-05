@@ -1,0 +1,42 @@
+/* For /templates/tag.php in the my tag-explorer plugin */
+.tag-page{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+  "header header header header header"
+  "section section section section aside";
+
+  header{grid-area:header;}
+  .tag-content{grid-area: section;}
+  aside{grid-area:aside;}
+
+  main{
+    padding-block-start:0;
+  }
+
+  .filter-list{
+    list-style-type:none;
+  }
+}
+
+.combine-tags, .related-tags{
+  max-inline-size:none;
+
+  h3{
+    font-size:var(--small);
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+  }
+  .tag-list{
+    --space: var(--flow-2);
+    column-gap:var(--flow-4);
+    list-style-type:none;
+    padding:0;
+    margin:0;
+
+    .p-category{
+      font-size:var(--caption);
+    }
+  }
+}

@@ -4,7 +4,7 @@
   gap:var(--flow-2);
 }
 
-.journal .h-entry, .essays .h-entry, .articles .h-entry{
+.journal .h-entry, .essays .h-entry, .articles .h-entry, .tmpl-tag .h-entry{
   --measure: 80ch;
 
   &:focus-within{

@@ -1,0 +1,6 @@
+/* For /templates/tag.php in the my tag-explorer plugin */
+.tag-page .sidebar .tag-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

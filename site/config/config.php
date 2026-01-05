@@ -1,8 +1,8 @@
 <?php
 return [
+  'debug' => false,
     'panel' => [
         'install' => false,
-        'debug' => false,
     ],
     'date.timezone' => 'America/New_York',
     'ready' => function ($kirby) {
@@ -68,6 +68,9 @@ return [
         ]
       ],
     ],
+      // Tag Garden Plugin Extended Configuration
+      'yourusername.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php',
+
     'afbora.kirby-minify-html' => [
         'enabled' => true,
         'ignore' => [

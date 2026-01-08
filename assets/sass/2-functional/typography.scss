@@ -1,18 +1,6 @@
 :root{
-  --weight-text:400;
-  --weight-medium:500;
-  --weight-semibold:700;
-  --weight-bold:800;
-
-  --leading-flat:1;
-  --leading-snug:1.125;
-  --leading-fine:1.25;
-  --leading-standard:1.5;
-  --leading-loose:1.75;
-
   --kerning-mono-medium: 3%;
 
-  --measure: 84ch;
   --hed-primary:clamp(var(--type-scale-42),1.107rem + 4.048vw,var(--type-scale-76));
   --hed-secondary:clamp(var(--type-scale-32),0.75rem + 3.333vw,var(--type-scale-60));
   --hed-tertiary:clamp(var(--type-scale-28),1.571rem + 0.476vw,var(--type-scale-32));

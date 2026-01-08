@@ -1,0 +1,60 @@
+:root {
+  --callout-color: color-mix(in srgb, currentColor, transparent 50%);
+  --callout-icon-size: 1.25rem;
+}
+
+.callout {
+  position: relative;
+  margin: 1.75rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid var(--callout-color);
+}
+
+.callout__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1em;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--callout-color);
+}
+
+.callout__icon {
+  width: var(--callout-icon-size);
+  height: var(--callout-icon-size);
+}
+
+.callout__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.callout__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.callout--note {
+  --callout-color: #0969da;
+}
+
+.callout--tip {
+  --callout-color: #1a7f37;
+}
+
+.callout--important {
+  --callout-color: #8250df;
+}
+
+.callout--warning {
+  --callout-color: #9a6700;
+}
+
+.callout--caution {
+  --callout-color: #cf222e;
+}

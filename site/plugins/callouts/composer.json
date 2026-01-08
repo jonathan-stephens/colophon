@@ -1,0 +1,31 @@
+{
+    "name": "lemmon/kirby-callouts",
+    "description": "Kirby plugin that renders GitHub-style callouts",
+    "license": "MIT",
+    "type": "kirby-plugin",
+    "authors": [
+        {
+            "name": "Jakub Pelák",
+            "email": "jpelak@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/lemmon/kirby-plugin-callouts/issues",
+        "source": "https://github.com/lemmon/kirby-plugin-callouts"
+    },
+    "require": {
+        "getkirby/composer-installer": "^1.2"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.48"
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "getkirby/composer-installer": true
+        }
+    },
+    "extra": {
+        "installer-name": "callouts"
+    }
+}

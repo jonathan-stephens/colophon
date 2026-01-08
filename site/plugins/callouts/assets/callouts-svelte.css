@@ -1,0 +1,35 @@
+:root {
+  --callout-color: #f96743;
+  --callout-icon-size: 2em;
+}
+
+.callout {
+  position: relative;
+  margin: 1.75rem 0;
+  padding-left: calc(var(--callout-icon-size) + 1rem);
+  min-height: var(--callout-icon-size);
+}
+
+.callout__header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--callout-icon-size);
+  height: var(--callout-icon-size);
+  color: var(--callout-color);
+}
+
+.callout__icon {
+  width: var(--callout-icon-size);
+  height: var(--callout-icon-size);
+}
+
+.callout__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.callout__label {
+  display: none;
+}

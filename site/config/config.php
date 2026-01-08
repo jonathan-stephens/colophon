@@ -42,14 +42,21 @@ return [
     ],
     'moinframe.loop.enabled' => false,
     'timnarr.imagex' => [
+      'cache' => true,
       'formats' => ['avif', 'webp'], // our modern formats
       'noSrcsetInImg' => false, // skip srcset in <img> with initial img-format -> less HTML
       'relativeUrls' => false, // relative URLs -> less HTML
+    ],
+    'kirbytext' => [
+      'image' => [
+        'width' => 'auto',
+      ],
     ],
     'thumbs' => [
       'driver'    => 'gd',
       'interlace' => true,
       'format'    => 'webp',
+      'blurred' => ['blur' => true],
       'srcsets' => [
         'default' => [ // preset for jpeg and png
           '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 80],
@@ -59,12 +66,12 @@ return [
         'webp' => [ // preset for webp
           '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
           '800w'  => ['width' =>  800, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
-          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 75, 'format' => 'webp', 'sharpen' => 10],
+          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 85, 'format' => 'webp', 'sharpen' => 10],
         ],
         'avif' => [ // preset for avif
           '400w'  => ['width' =>  400, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
           '800w'  => ['width' =>  800, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
-          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 65, 'format' => 'avif', 'sharpen' => 25],
+          '1200w' => ['width' => 1200, 'crop' => true, 'quality' => 85, 'format' => 'avif', 'sharpen' => 25],
         ]
       ],
     ],

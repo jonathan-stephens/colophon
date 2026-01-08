@@ -8,7 +8,7 @@
       <?php snippet('components/breadcrumb') ?>
       <div class="buttons">
         <button class="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open navigation menu">
-          <span id="nav-toggle-text">Open Navigation</span>
+          <span id="nav-toggle-text">Open Menu</span>
           <?= asset('assets/svg/icons/panel-right---to-open.svg')->read() ?>
         </button>
           <button class="theme-toggle footer" id="theme-toggle-footer" aria-label="Toggle between light and dark theme">

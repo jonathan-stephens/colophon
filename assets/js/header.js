@@ -133,7 +133,7 @@ class HeaderController {
         }
 
         if (this.navToggleText) {
-            this.navToggleText.textContent = this.isNavOpen ? 'Close Navigation' : 'Open Navigation';
+            this.navToggleText.textContent = this.isNavOpen ? 'Close Menu' : 'Open Menu';
         }
 
         this.updateIcon();

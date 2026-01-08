@@ -3,6 +3,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Personal site & portfolio of Jonathan Stephens: designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
+
     <!-- Meta — Favicons -->
     <link rel="icon" type="image/x-icon" href="<?= $site->url() ?>/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= $site->url() ?>/assets/favicon-16x16.png">

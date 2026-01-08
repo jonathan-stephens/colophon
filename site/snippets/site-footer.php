@@ -149,15 +149,12 @@
       </div>
   </footer>
 
-<!-- Fathom - beautiful, simple website analytics -->
-<script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
-<!-- / Fathom -->
+  <!-- Fathom - beautiful, simple website analytics -->
+  <script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
+  <!-- / Fathom -->
+  <?= Bnomei\Fingerprint::js('assets/js/theme-picker-min.js');?>
+  <?= Bnomei\Fingerprint::js('assets/js/toc-min.js');?>
+  <?= Bnomei\Fingerprint::js('assets/js/prism-min.js');?>
 
-<?= js([
-  'assets/js/theme-picker-min.js',
-  'assets/js/toc-min.js',
-  'assets/js/prism-min.js',
-  'assets/js/header-min.js',
-]) ?>
 </body>
 </html>

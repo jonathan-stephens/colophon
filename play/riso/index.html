@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risograph Effect - Fully Documented</title>
+<style>
+  /* ============================================
+     BASE STYLES
+     ============================================ */
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    /* Cream/off-white background mimics risograph paper stock */
+    background: #f5f0e8;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+  }
+
+  /* ============================================
+     TYPOGRAPHY
+     Change font-family to match your brand
+     ============================================ */
+  
+  h1 {
+    font-size: 36px;
+    color: #333;
+    margin: 0 0 40px 0;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  /* ============================================
+     LAYOUT GRID
+     - Responsive grid that adapts to screen size
+     - Change minmax(280px, 1fr) first value to adjust minimum card width
+     - Change gap to adjust spacing between cards
+     ============================================ */
+  
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ============================================
+     CARD STYLES
+     - White background provides contrast for riso effect
+     - Box shadow adds subtle depth
+     ============================================ */
+  
+  .riso-card {
+    background: white;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+
+  /* ============================================
+     RISOGRAPH FILTER APPLICATION
+     - Each class applies a different SVG filter
+     - To use on your own elements, add these classes
+     - Example: <div class="riso-blue">Your content</div>
+     ============================================ */
+  
+  .riso-blue {
+    filter: url(#risograph-blue);
+  }
+
+  .riso-red {
+    filter: url(#risograph-red);
+  }
+
+  .riso-yellow {
+    filter: url(#risograph-yellow);
+  }
+
+  .riso-green {
+    filter: url(#risograph-green);
+  }
+
+  /* ============================================
+     DEMO CONTENT STYLES
+     - These are just for demonstration
+     - Replace with your actual content
+     ============================================ */
+  
+  .riso-card h2 {
+    font-size: 48px;
+    margin: 0 0 20px 0;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .riso-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    color: #555;
+  }
+
+  .shape {
+    width: 120px;
+    height: 120px;
+    margin: 20px auto;
+  }
+
+  .circle {
+    border-radius: 50%;
+  }
+
+  /* Demo shape colors */
+  .bg-blue { background: #0047AB; }
+  .bg-red { background: #FF4433; }
+  .bg-yellow { background: #FFD700; }
+  .bg-green { background: #00A86B; }
+
+  /* ============================================
+     INFORMATIONAL SECTION
+     ============================================ */
+  
+  .info-section {
+    max-width: 800px;
+    margin: 60px auto 40px;
+    padding: 30px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .info-section h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+  }
+
+  .info-section p {
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .info-section code {
+    background: #f5f0e8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     SVG FILTER DEFINITIONS
+     
+     IMPORTANT: This SVG must be in the DOM for filters to work.
+     The width="0" height="0" makes it invisible but accessible.
+     
+     HOW SVG FILTERS WORK:
+     1. Filters are defined inside <defs> (definitions)
+     2. Each <filter> has a unique ID
+     3. CSS references these IDs using url(#filter-id)
+     4. Filters process graphics through a series of operations
+     
+     ============================================ -->
+
+<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    <!-- ==========================================
+         BLUE RISOGRAPH FILTER
+         
+         CUSTOMIZATION GUIDE:
+         - baseFrequency: Controls grain size (higher = finer grain)
+           Current: 0.9 (recommended range: 0.5 - 1.5)
+         - numOctaves: Grain detail level (higher = more complex)
+           Current: 4 (recommended range: 2 - 5)
+         - Color Matrix: Adjusts final color output
+           Format is a 5x4 matrix affecting RGBA channels
+         
+         HOW IT WORKS:
+         1. feTurbulence: Creates random noise pattern (the grain)
+         2. feColorMatrix (saturate): Converts noise to grayscale
+         3. feComponentTransfer: Controls grain opacity/visibility
+         4. feBlend (multiply): Combines grain with original image
+         5. feColorMatrix (matrix): Shifts colors to riso blue tones
+         ========================================== -->
+    
+    <filter id="risograph-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- Step 1: Generate grain texture using Perlin noise -->
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.9" 
+        numOctaves="4" 
+        result="noise"
+        seed="1"/>
+      
+      <!-- Step 2: Convert noise to grayscale (removes color) -->
+      <feColorMatrix 
+        in="noise" 
+        type="saturate" 
+        values="0" 
+        result="desaturatedNoise"/>
+      
+      <!-- Step 3: Control grain visibility - makes grain appear/disappear -->
+      <feComponentTransfer in="desaturatedNoise" result="grain">
+        <feFuncA type="discrete" tableValues="0 0 0 0 1 1 1"/>
+      </feComponentTransfer>
+      
+      <!-- Step 4: Blend grain with original content -->
+      <feBlend 
+        in="SourceGraphic" 
+        in2="grain" 
+        mode="multiply" 
+        result="textured"/>
+      
+      <!-- Step 5: Apply blue color shift characteristic of riso printing -->
+      <feColorMatrix 
+        in="textured" 
+        type="matrix"
+        values="0.2 0 0 0 0
+                0.3 0.5 0 0 0.1
+                0.5 0.6 1.2 0 0.25
+                0 0 0 1 0"/>
+    </filter>
+
+    <!-- ==========================================
+         RED RISOGRAPH FILTER
+         
+         Different baseFrequency (0.85) creates slightly
+         different grain pattern for variation
+         ========================================== -->
+    
+    <filter id="risograph-red" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- Red grain pattern -->
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.85" 
+        numOctaves="4" 
+        result="noise"
+        seed="2"/>
+      
+      <feColorMatrix 
+        in="noise" 
+        type="saturate" 
+        values="0" 
+        result="desaturatedNoise"/>
+      
+      <feComponentTransfer in="desaturatedNoise" result="grain">
+        <feFuncA type="discrete" tableValues="0 0 0 0 1 1 1"/>
+      </feComponentTransfer>
+      
+      <feBlend 
+        in="SourceGraphic" 
+        in2="grain" 
+        mode="multiply" 
+        result="textured"/>
+      
+      <!-- Red color matrix - emphasizes red channel -->
+      <feColorMatrix 
+        in="textured" 
+        type="matrix"
+        values="1.1 0.2 0 0 0.05
+                0.1 0.5 0 0 0
+                0.1 0.2 0.5 0 0
+                0 0 0 1 0"/>
+    </filter>
+
+    <!-- ==========================================
+         YELLOW RISOGRAPH FILTER
+         
+         Lower numOctaves (3) creates coarser grain
+         Suitable for bright colors like yellow
+         ========================================== -->
+    
+    <filter id="risograph-yellow" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- Yellow grain pattern -->
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.8" 
+        numOctaves="3" 
+        result="noise"
+        seed="3"/>
+      
+      <feColorMatrix 
+        in="noise" 
+        type="saturate" 
+        values="0" 
+        result="desaturatedNoise"/>
+      
+      <feComponentTransfer in="desaturatedNoise" result="grain">
+        <feFuncA type="discrete" tableValues="0 0 0 1 1 1"/>
+      </feComponentTransfer>
+      
+      <feBlend 
+        in="SourceGraphic" 
+        in2="grain" 
+        mode="multiply" 
+        result="textured"/>
+      
+      <!-- Yellow color matrix - boosts red and green channels -->
+      <feColorMatrix 
+        in="textured" 
+        type="matrix"
+        values="1.1 0.9 0 0 0.05
+                0.9 1.0 0 0 0.05
+                0 0 0.6 0 0
+                0 0 0 1 0"/>
+    </filter>
+
+    <!-- ==========================================
+         GREEN RISOGRAPH FILTER (BONUS)
+         
+         Example of creating additional riso colors
+         Copy this pattern to create more colors
+         ========================================== -->
+    
+    <filter id="risograph-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence 
+        type="fractalNoise" 
+        baseFrequency="0.88" 
+        numOctaves="4" 
+        result="noise"
+        seed="4"/>
+      
+      <feColorMatrix 
+        in="noise" 
+        type="saturate" 
+        values="0" 
+        result="desaturatedNoise"/>
+      
+      <feComponentTransfer in="desaturatedNoise" result="grain">
+        <feFuncA type="discrete" tableValues="0 0 0 0 1 1 1"/>
+      </feComponentTransfer>
+      
+      <feBlend 
+        in="SourceGraphic" 
+        in2="grain" 
+        mode="multiply" 
+        result="textured"/>
+      
+      <!-- Green color matrix -->
+      <feColorMatrix 
+        in="textured" 
+        type="matrix"
+        values="0.3 0.5 0 0 0
+                0.4 1.0 0 0 0.1
+                0.2 0.6 0.7 0 0.1
+                0 0 0 1 0"/>
+    </filter>
+
+  </defs>
+</svg>
+
+<!-- ============================================
+     INFORMATIONAL SECTION
+     ============================================ -->
+
+<div class="info-section">
+  <h3>📖 How to Use These Risograph Filters</h3>
+  <p><strong>Step 1:</strong> Copy the entire <code>&lt;svg&gt;</code> block (with all filters) into your HTML</p>
+  <p><strong>Step 2:</strong> Copy the filter CSS classes (<code>.riso-blue</code>, <code>.riso-red</code>, etc.)</p>
+  <p><strong>Step 3:</strong> Apply a class to any element: <code>&lt;div class="riso-blue"&gt;Your content&lt;/div&gt;</code></p>
+  <p><strong>To customize:</strong> Adjust <code>baseFrequency</code> in the SVG filters to change grain size, or modify the color matrix values to change the color tint.</p>
+</div>
+
+<h1>Risograph Print Effect - SVG Filters</h1>
+
+<!-- ============================================
+     DEMO CARDS
+     Each card demonstrates a different filter
+     ============================================ -->
+
+<div class="container">
+  
+  <!-- Blue Filter Demo -->
+  <div class="riso-card riso-blue">
+    <div class="shape circle bg-blue"></div>
+    <h2>BLUE</h2>
+    <p>Classic risograph blue with grainy texture and subtle color shift for authentic print feel.</p>
+  </div>
+
+  <!-- Red Filter Demo -->
+  <div class="riso-card riso-red">
+    <div class="shape bg-red"></div>
+    <h2>RED</h2>
+    <p>Vibrant red with characteristic grain pattern typical of risograph printing.</p>
+  </div>
+
+  <!-- Yellow Filter Demo -->
+  <div class="riso-card riso-yellow">
+    <div class="shape circle bg-yellow"></div>
+    <h2>YELLOW</h2>
+    <p>Bright yellow with texture overlay creating that distinctive handmade aesthetic.</p>
+  </div>
+
+  <!-- Green Filter Demo (Bonus) -->
+  <div class="riso-card riso-green">
+    <div class="shape bg-green"></div>
+    <h2>GREEN</h2>
+    <p>Fresh green tone demonstrating how to create additional risograph color variations.</p>
+  </div>
+
+</div>
+
+<!-- ============================================
+     TECHNICAL NOTES (Hidden in production)
+     
+     WHY FILTERS MIGHT NOT SHOW:
+     1. SVG must be in the DOM (not display:none on parent)
+     2. Filter ID must match exactly in CSS url(#filter-id)
+     3. xmlns attribute helps with XML namespace issues
+     4. Some browsers need the filter region expanded (x, y, width, height)
+     
+     PERFORMANCE CONSIDERATIONS:
+     - Filters are GPU-accelerated in modern browsers
+     - Complex filters may impact performance on older devices
+     - Consider using will-change: filter; for animated elements
+     
+     BROWSER SUPPORT:
+     - Excellent support in Chrome, Firefox, Safari, Edge
+     - IE11 has partial support (may need fallbacks)
+     
+     ============================================ -->
+
+</body>
+</html>

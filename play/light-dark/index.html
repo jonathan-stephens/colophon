@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS light-dark() Color System Demo</title>
+  <style>
+    /* === COLOR THEME DEFINITIONS === */
+    /* Each theme defines a 7-step scale from lightest to darkest */
+    
+    [data-theme="ocean"] {
+      --lightest: #eff6ff;
+      --lighter: #dbeafe;
+      --light: #93c5fd;
+      --mid: #3b82f6;
+      --dark: #1d4ed8;
+      --darker: #1e40af;
+      --darkest: #172554;
+    }
+
+    [data-theme="forest"] {
+      --lightest: #f0fdf4;
+      --lighter: #dcfce7;
+      --light: #86efac;
+      --mid: #22c55e;
+      --dark: #16a34a;
+      --darker: #15803d;
+      --darkest: #14532d;
+    }
+
+    [data-theme="sunset"] {
+      --lightest: #fff7ed;
+      --lighter: #ffedd5;
+      --light: #fdba74;
+      --mid: #f97316;
+      --dark: #ea580c;
+      --darker: #c2410c;
+      --darkest: #7c2d12;
+    }
+
+    [data-theme="lavender"] {
+      --lightest: #faf5ff;
+      --lighter: #f3e8ff;
+      --light: #d8b4fe;
+      --mid: #a855f7;
+      --dark: #9333ea;
+      --darker: #7e22ce;
+      --darkest: #581c87;
+    }
+
+    [data-theme="slate"] {
+      --lightest: #f8fafc;
+      --lighter: #e2e8f0;
+      --light: #94a3b8;
+      --mid: #64748b;
+      --dark: #475569;
+      --darker: #334155;
+      --darkest: #0f172a;
+    }
+
+    /* === SEMANTIC COLOR MAPPINGS === */
+    /* These use light-dark() to automatically swap based on color-scheme */
+    
+    :root {
+      color-scheme: light dark;
+      
+      /* Backgrounds: light colors in light mode, dark colors in dark mode */
+      --bg-base: light-dark(var(--lightest), var(--darkest));
+      --bg-subtle: light-dark(var(--lighter), var(--darker));
+      --bg-surface: light-dark(#ffffff, #1a1a1a);
+      --bg-muted: light-dark(var(--light), var(--dark));
+      
+      /* Text: dark colors in light mode, light colors in dark mode */
+      --text-primary: light-dark(var(--darkest), var(--lightest));
+      --text-secondary: light-dark(var(--darker), var(--lighter));
+      --text-tertiary: light-dark(var(--dark), var(--light));
+      
+      /* Interactive elements */
+      --interactive-base: var(--mid);
+      --interactive-hover: light-dark(var(--dark), var(--light));
+      --interactive-active: light-dark(var(--darker), var(--lighter));
+      
+      /* Borders */
+      --border-subtle: light-dark(var(--lighter), var(--darker));
+      --border-default: light-dark(var(--light), var(--dark));
+      --border-strong: light-dark(var(--mid), var(--mid));
+      
+      /* Shadows */
+      --shadow-sm: light-dark(
+        0 1px 2px 0 rgb(0 0 0 / 0.05),
+        0 1px 2px 0 rgb(0 0 0 / 0.3)
+      );
+      --shadow-md: light-dark(
+        0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 4px 6px -1px rgb(0 0 0 / 0.4)
+      );
+    }
+
+    /* === BASE STYLES === */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* === HEADER === */
+    
+    header {
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-default);
+      padding: 2rem 0;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+    }
+
+    /* === CONTROLS === */
+    
+    .controls {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-subtle);
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    select, button {
+      padding: 0.625rem 1rem;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-default);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    select:hover, select:focus {
+      border-color: var(--interactive-base);
+      outline: none;
+    }
+
+    button {
+      background: var(--interactive-base);
+      color: white;
+      border-color: var(--interactive-base);
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: var(--interactive-hover);
+      border-color: var(--interactive-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* === DOCUMENTATION === */
+    
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-default);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    code {
+      background: var(--bg-muted);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875em;
+      color: var(--text-primary);
+    }
+
+    pre {
+      background: var(--bg-subtle);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    /* === DEMO COMPONENTS === */
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--interactive-base);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--text-primary);
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--interactive-base);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--interactive-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border-default);
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--interactive-base);
+      color: var(--interactive-base);
+    }
+
+    /* === COLOR SCALE VISUALIZATION === */
+    
+    .color-scale {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .color-swatch {
+      aspect-ratio: 1;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .swatch-lightest { background: var(--lightest); color: var(--darkest); }
+    .swatch-lighter { background: var(--lighter); color: var(--darkest); }
+    .swatch-light { background: var(--light); color: var(--darkest); }
+    .swatch-mid { background: var(--mid); color: white; }
+    .swatch-dark { background: var(--dark); color: white; }
+    .swatch-darker { background: var(--darker); color: white; }
+    .swatch-darkest { background: var(--darkest); color: white; }
+
+    /* === LISTS === */
+    
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: var(--text-primary);
+    }
+
+    /* === ALERT BOX === */
+    
+    .alert {
+      background: var(--bg-subtle);
+      border-left: 4px solid var(--interactive-base);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0.375rem;
+    }
+
+    .alert p {
+      margin: 0;
+    }
+
+    /* === RESPONSIVE === */
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .color-scale {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body data-theme="ocean">
+  <header>
+    <div class="container">
+      <h1>CSS light-dark() Color System</h1>
+      <p class="subtitle">A comprehensive guide to building adaptive color themes with semantic naming</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Controls -->
+    <div class="controls">
+      <div class="control-group">
+        <label for="theme-select">Color Theme</label>
+        <select id="theme-select" aria-label="Select color theme">
+          <option value="ocean">Ocean</option>
+          <option value="forest">Forest</option>
+          <option value="sunset">Sunset</option>
+          <option value="lavender">Lavender</option>
+          <option value="slate">Slate</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="mode-toggle">Color Scheme</label>
+        <button id="mode-toggle" aria-label="Toggle dark mode">Toggle Dark Mode</button>
+      </div>
+    </div>
+
+    <!-- Current Color Scale -->
+    <section>
+      <h2>Current Color Scale</h2>
+      <p>The 7-step color scale currently active in your selected theme:</p>
+      <div class="color-scale" role="img" aria-label="Color scale visualization">
+        <div class="color-swatch swatch-lightest">Lightest</div>
+        <div class="color-swatch swatch-lighter">Lighter</div>
+        <div class="color-swatch swatch-light">Light</div>
+        <div class="color-swatch swatch-mid">Mid</div>
+        <div class="color-swatch swatch-dark">Dark</div>
+        <div class="color-swatch swatch-darker">Darker</div>
+        <div class="color-swatch swatch-darkest">Darkest</div>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section>
+      <h2>Overview</h2>
+      <p>This demo showcases a scalable color system using CSS's <code>light-dark()</code> function. The system allows you to:</p>
+      <ul>
+        <li>Define color themes with a consistent 7-step scale (lightest → darkest)</li>
+        <li>Create semantic color mappings that automatically adapt to light/dark mode</li>
+        <li>Swap entire color themes while maintaining visual hierarchy and accessibility</li>
+        <li>Write CSS once and have it work across all themes and color schemes</li>
+      </ul>
+      
+      <div class="alert">
+        <p><strong>Try it:</strong> Use the controls above to switch between themes and toggle dark mode. Notice how the interface maintains consistent contrast and hierarchy across all combinations.</p>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section>
+      <h2>How It Works</h2>
+      
+      <h3>Step 1: Define Color Scales</h3>
+      <p>Each theme defines seven color variables from lightest to darkest:</p>
+      <pre><code>[data-theme="ocean"] {
+  --lightest: #eff6ff;
+  --lighter: #dbeafe;
+  --light: #93c5fd;
+  --mid: #3b82f6;
+  --dark: #1d4ed8;
+  --darker: #1e40af;
+  --darkest: #172554;
+}</code></pre>
+
+      <h3>Step 2: Create Semantic Mappings</h3>
+      <p>Use <code>light-dark()</code> to create semantic variables that invert automatically:</p>
+      <pre><code>:root {
+  color-scheme: light dark;
+  
+  /* Backgrounds use light colors in light mode, dark in dark mode */
+  --bg-base: light-dark(var(--lightest), var(--darkest));
+  --bg-subtle: light-dark(var(--lighter), var(--darker));
+  
+  /* Text uses dark colors in light mode, light in dark mode */
+  --text-primary: light-dark(var(--darkest), var(--lightest));
+  --text-secondary: light-dark(var(--darker), var(--lighter));
+  
+  /* Interactive elements stay consistent */
+  --interactive-base: var(--mid);
+  --border-default: light-dark(var(--light), var(--dark));
+}</code></pre>
+
+      <h3>Step 3: Use Semantic Variables</h3>
+      <p>Build your components using semantic variables instead of raw colors:</p>
+      <pre><code>.card {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+button {
+  background: var(--interactive-base);
+  color: white;
+}</code></pre>
+    </section>
+
+    <!-- Demo Components -->
+    <section>
+      <h2>Component Examples</h2>
+      <p>These components use only semantic color variables, so they adapt automatically:</p>
+      
+      <div class="demo-grid">
+        <article class="card">
+          <h3>Card Component</h3>
+          <p>This card uses semantic variables for all its colors. Try switching themes and toggling dark mode to see how it adapts while maintaining proper contrast.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Primary Action</button>
+            <button class="btn-secondary">Secondary</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Consistent Hierarchy</h3>
+          <p>Notice how text colors maintain their hierarchy: primary text is most prominent, secondary text is slightly muted, and tertiary text is more subtle.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Learn More</button>
+            <button class="btn-secondary">Dismiss</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Theme Independence</h3>
+          <p>Components don't know or care which theme is active. They only reference semantic variables, making them infinitely reusable across different color palettes.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Get Started</button>
+            <button class="btn-secondary">Cancel</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Key Benefits -->
+    <section>
+      <h2>Key Benefits</h2>
+      
+      <h3>Maintainability</h3>
+      <ul>
+        <li>Change themes by swapping a single attribute (<code>data-theme</code>)</li>
+        <li>Add new themes without touching component CSS</li>
+        <li>Color logic lives in one place, not scattered across components</li>
+      </ul>
+
+      <h3>Accessibility</h3>
+      <ul>
+        <li>Respects user's OS-level dark mode preference automatically</li>
+        <li>Semantic naming ensures consistent contrast ratios</li>
+        <li>Easy to audit and maintain WCAG compliance</li>
+      </ul>
+
+      <h3>Developer Experience</h3>
+      <ul>
+        <li>Intuitive naming that's easy to remember</li>
+        <li>Write components once, they work everywhere</li>
+        <li>No color hardcoding or duplication</li>
+      </ul>
+
+      <h3>Performance</h3>
+      <ul>
+        <li>Pure CSS solution with no JavaScript required for colors</li>
+        <li>Smooth transitions between themes</li>
+        <li>Browser-native dark mode support</li>
+      </ul>
+    </section>
+
+    <!-- Implementation Guide -->
+    <section>
+      <h2>Implementation Guide</h2>
+      
+      <h3>1. Set up color-scheme</h3>
+      <p>Enable automatic dark mode detection:</p>
+      <pre><code>:root {
+  color-scheme: light dark;
+}</code></pre>
+
+      <h3>2. Define your themes</h3>
+      <p>Create a 7-step scale for each theme. Use a consistent approach to ensure proper contrast:</p>
+      <ul>
+        <li><strong>Lightest:</strong> Very subtle background tints</li>
+        <li><strong>Lighter:</strong> Secondary backgrounds, hover states</li>
+        <li><strong>Light:</strong> Borders, disabled states</li>
+        <li><strong>Mid:</strong> Interactive elements, primary actions</li>
+        <li><strong>Dark:</strong> Hover states for interactives</li>
+        <li><strong>Darker:</strong> Secondary text</li>
+        <li><strong>Darkest:</strong> Primary text, high-contrast elements</li>
+      </ul>
+
+      <h3>3. Create semantic mappings</h3>
+      <p>Map your scale to purpose-driven variables using <code>light-dark()</code>. The first argument is for light mode, the second for dark mode.</p>
+
+      <h3>4. Use semantic variables everywhere</h3>
+      <p>Never reference raw color values in components. Always use semantic variables like <code>var(--text-primary)</code> or <code>var(--bg-surface)</code>.</p>
+
+      <h3>5. Add smooth transitions</h3>
+      <p>Include transitions on color-affected properties for smooth theme changes:</p>
+      <pre><code>body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}</code></pre>
+    </section>
+
+    <!-- Browser Support -->
+    <section>
+      <h2>Browser Support</h2>
+      <p>The <code>light-dark()</code> function is supported in:</p>
+      <ul>
+        <li>Chrome/Edge 123+</li>
+        <li>Firefox 120+</li>
+        <li>Safari 17.5+</li>
+      </ul>
+      <p>For older browsers, consider using a fallback strategy with CSS custom properties and media queries, or use a PostCSS plugin to transform the syntax.</p>
+    </section>
+  </main>
+
+  <script>
+    // Theme switcher
+    const themeSelect = document.getElementById('theme-select');
+    const body = document.body;
+
+    themeSelect.addEventListener('change', (e) => {
+      body.setAttribute('data-theme', e.target.value);
+    });
+
+    // Dark mode toggle
+    const modeToggle = document.getElementById('mode-toggle');
+    
+    modeToggle.addEventListener('click', () => {
+      const currentScheme = document.documentElement.style.colorScheme;
+      const newScheme = currentScheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.style.colorScheme = newScheme;
+      modeToggle.textContent = newScheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    });
+
+    // Initialize button text based on system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    modeToggle.textContent = prefersDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+
+    // Listen for system preference changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!document.documentElement.style.colorScheme) {
+        modeToggle.textContent = e.matches ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+      }
+    });
+  </script>
+</body>
+</html>

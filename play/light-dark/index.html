@@ -652,6 +652,21 @@ button {
         modeToggle.textContent = e.matches ? 'Switch to Light Mode' : 'Switch to Dark Mode';
       }
     });
+
+    // Make demo component buttons interactive
+    const demoButtons = document.querySelectorAll('.card .btn-primary, .card .btn-secondary');
+    demoButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const originalText = e.target.textContent;
+        e.target.textContent = 'Clicked! ✓';
+        e.target.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+          e.target.textContent = originalText;
+          e.target.style.transform = '';
+        }, 1000);
+      });
+    });
   </script>
 </body>
 </html>

@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Advanced Risograph Effect - Multi-Layer Color Separation</title>
+<title>Advanced Risograph Techniques - Complete Guide</title>
 <style>
-  /* ============================================
-     BASE STYLES
-     ============================================ */
-  
   * {
     box-sizing: border-box;
   }
@@ -69,10 +65,17 @@
     margin: 0 0 20px 0;
   }
 
-  /* ============================================
-     MULTI-LAYER RISOGRAPH TECHNIQUE
-     ============================================ */
-  
+  .code-example {
+    background: #f5ebe0;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin-top: 15px;
+    white-space: pre-wrap;
+  }
+
   .riso-layers {
     position: relative;
     width: 100%;
@@ -103,10 +106,6 @@
     transform: translate(0.5px, -0.5px);
   }
 
-  /* ============================================
-     SINGLE-LAYER FILTERS
-     ============================================ */
-  
   .riso-blue {
     filter: url(#risograph-blue);
   }
@@ -115,99 +114,192 @@
     filter: url(#risograph-red);
   }
 
-  .riso-yellow {
-    filter: url(#risograph-yellow);
-  }
-
-  .riso-green {
-    filter: url(#risograph-green);
-  }
-
   .riso-enhanced {
     filter: url(#risograph-enhanced);
   }
 
-  /* ============================================
-     DEMO SHAPES
-     ============================================ */
-  
-  .shape-demo {
+  /* HALFTONE PATTERNS */
+  .halftone-basic {
+    background: radial-gradient(circle, #0078BF 3px, transparent 3px);
+    background-size: 15px 15px;
+  }
+
+  .halftone-variable {
+    background: 
+      radial-gradient(circle at 50% 50%, #FF5C5C 2px, transparent 2px),
+      radial-gradient(circle at 50% 50%, #FF5C5C 4px, transparent 4px);
+    background-size: 20px 20px, 40px 40px;
+    background-position: 0 0, 10px 10px;
+  }
+
+  .halftone-offset-1 {
+    background: radial-gradient(circle, #0078BF 2.5px, transparent 2.5px);
+    background-size: 18px 18px;
+  }
+
+  .halftone-offset-2 {
+    background: radial-gradient(circle, #FFE800 2px, transparent 2px);
+    background-size: 18px 18px;
+    background-position: 9px 9px;
+    transform: translate(0.5px, 0.5px);
+  }
+
+  .halftone-fine {
+    background: radial-gradient(circle, #00A95C 1.5px, transparent 1.5px);
+    background-size: 10px 10px;
+  }
+
+  /* MOIRÉ PATTERNS */
+  .moire-layer-1 {
+    background: repeating-linear-gradient(45deg, #0078BF, #0078BF 2px, transparent 2px, transparent 12px);
+  }
+
+  .moire-layer-2 {
+    background: repeating-linear-gradient(-45deg, #FF5C5C, #FF5C5C 2px, transparent 2px, transparent 12px);
+    transform: translate(-0.5px, 0.5px);
+  }
+
+  .moire-layer-3 {
+    background: repeating-linear-gradient(0deg, #FFE800, #FFE800 2px, transparent 2px, transparent 15px);
+    transform: translate(0.5px, -0.5px);
+  }
+
+  .moire-complex-1 {
+    background: repeating-linear-gradient(30deg, #0078BF, #0078BF 1px, transparent 1px, transparent 10px);
+  }
+
+  .moire-complex-2 {
+    background: repeating-linear-gradient(-60deg, #FF5C5C, #FF5C5C 1px, transparent 1px, transparent 10px);
+  }
+
+  .moire-complex-3 {
+    background: repeating-linear-gradient(90deg, #FFE800, #FFE800 1.5px, transparent 1.5px, transparent 12px);
+  }
+
+  /* COLOR MIXING */
+  .mix-circle-blue {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #0078BF;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+  }
+
+  .mix-circle-yellow {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #FFE800;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+  }
+
+  .mix-circle-red {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #FF5C5C;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .mix-gradient-1 {
+    background: linear-gradient(135deg, #0078BF 0%, transparent 70%);
+  }
+
+  .mix-gradient-2 {
+    background: linear-gradient(-135deg, #FFE800 0%, transparent 70%);
+  }
+
+  .mix-gradient-3 {
+    background: linear-gradient(45deg, #FF5C5C 0%, transparent 70%);
+  }
+
+  /* DUOTONE */
+  .duotone-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .duotone-image {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.2);
   }
 
-  .circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+  .duotone-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+    pointer-events: none;
   }
 
-  .square {
-    width: 150px;
-    height: 150px;
+  .duotone-blue {
+    background: linear-gradient(135deg, #0078BF, #4A9FD8);
   }
 
-  .triangle {
-    width: 0;
-    height: 0;
-    border-left: 75px solid transparent;
-    border-right: 75px solid transparent;
-    border-bottom: 130px solid;
+  .duotone-red {
+    background: linear-gradient(135deg, #FF5C5C, #FF8989);
   }
 
-  .ink-blue { background: #0078BF; }
-  .ink-red { background: #FF5C5C; }
-  .ink-yellow { background: #FFE800; }
-  .ink-green { background: #00A95C; }
-  .ink-purple { background: #765BA7; }
-  .ink-orange { background: #FF7D27; }
-  .border-blue { border-bottom-color: #0078BF; }
-
-  /* ============================================
-     COMPOSITIONS
-     ============================================ */
-  
-  .composition-1 .layer-1 {
-    background: radial-gradient(circle at 30% 40%, #0078BF 0%, #0078BF 25%, transparent 25%);
+  .duotone-green {
+    background: linear-gradient(135deg, #00A95C, #4AC989);
   }
 
-  .composition-1 .layer-2 {
-    background: radial-gradient(circle at 70% 60%, #FF5C5C 0%, #FF5C5C 30%, transparent 30%);
+  .duotone-riso {
+    filter: grayscale(100%) contrast(1.3) url(#risograph-blue);
   }
 
-  .composition-1 .layer-3 {
-    background: linear-gradient(135deg, transparent 40%, #FFE800 40%, #FFE800 60%, transparent 60%);
+  /* ANIMATIONS */
+  @keyframes registration-shift-1 {
+    0%, 100% { transform: translate(1px, 0.5px); }
+    50% { transform: translate(1.5px, 1px); }
   }
 
-  .composition-2 .layer-1 {
-    background: repeating-linear-gradient(45deg, #0078BF, #0078BF 10px, transparent 10px, transparent 20px);
+  @keyframes registration-shift-2 {
+    0%, 100% { transform: translate(-0.5px, 1px); }
+    50% { transform: translate(-1px, 0.5px); }
   }
 
-  .composition-2 .layer-2 {
-    background: repeating-linear-gradient(-45deg, #FF5C5C, #FF5C5C 15px, transparent 15px, transparent 30px);
+  @keyframes registration-shift-3 {
+    0%, 100% { transform: translate(0.5px, -0.5px); }
+    50% { transform: translate(1px, -1px); }
   }
 
-  .composition-2 .layer-3 {
-    background: radial-gradient(circle at 50% 50%, #FFE800 0%, #FFE800 20%, transparent 20%);
+  .animated-layer-1 {
+    animation: registration-shift-1 4s ease-in-out infinite;
   }
 
-  .composition-3 .layer-1 {
-    background: #0078BF;
-    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 70%);
+  .animated-layer-2 {
+    animation: registration-shift-2 3.5s ease-in-out infinite;
   }
 
-  .composition-3 .layer-2 {
-    background: #00A95C;
-    clip-path: polygon(0 50%, 100% 30%, 100% 100%, 0 100%);
+  .animated-layer-3 {
+    animation: registration-shift-3 4.5s ease-in-out infinite;
   }
 
-  /* ============================================
-     INFO SECTIONS
-     ============================================ */
-  
+  @keyframes riso-pulse {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(0.8px, 0.5px) scale(1.002); }
+    66% { transform: translate(-0.5px, 0.8px) scale(0.998); }
+  }
+
+  .pulse-animation {
+    animation: riso-pulse 6s ease-in-out infinite;
+  }
+
+  /* INFO SECTIONS */
   .info-section {
     background: white;
     padding: 30px;
@@ -276,19 +368,31 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .demo-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: 
+      linear-gradient(45deg, #ddd 25%, transparent 25%),
+      linear-gradient(-45deg, #ddd 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ddd 75%),
+      linear-gradient(-45deg, transparent 75%, #ddd 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
   }
 </style>
 </head>
 <body>
 
-<!-- ============================================
-     SVG FILTER DEFINITIONS
-     ============================================ -->
-
 <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    
-    <!-- ENHANCED BLUE FILTER -->
     <filter id="risograph-blue" x="-20%" y="-20%" width="140%" height="140%">
       <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="5" result="fineGrain" seed="10"/>
       <feTurbulence type="turbulence" baseFrequency="0.4" numOctaves="2" result="coarseGrain" seed="11"/>
@@ -311,7 +415,6 @@
                 0 0 0 1 0"/>
     </filter>
 
-    <!-- ENHANCED RED FILTER -->
     <filter id="risograph-red" x="-20%" y="-20%" width="140%" height="140%">
       <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="5" result="fineGrain" seed="20"/>
       <feTurbulence type="turbulence" baseFrequency="0.45" numOctaves="2" result="coarseGrain" seed="21"/>
@@ -334,53 +437,6 @@
                 0 0 0 1 0"/>
     </filter>
 
-    <!-- ENHANCED YELLOW FILTER -->
-    <filter id="risograph-yellow" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="1.0" numOctaves="4" result="fineGrain" seed="30"/>
-      <feTurbulence type="turbulence" baseFrequency="0.35" numOctaves="2" result="coarseGrain" seed="31"/>
-      <feBlend in="fineGrain" in2="coarseGrain" mode="multiply" result="combinedGrain"/>
-      <feColorMatrix in="combinedGrain" type="saturate" values="0" result="monoGrain"/>
-      <feComponentTransfer in="monoGrain" result="grain">
-        <feFuncA type="discrete" tableValues="0 0 0 0.6 1 1"/>
-      </feComponentTransfer>
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.25" result="softened"/>
-      <feBlend in="softened" in2="grain" mode="multiply" result="textured"/>
-      <feComponentTransfer in="textured" result="contrasted">
-        <feFuncR type="linear" slope="1.15" intercept="0"/>
-        <feFuncG type="linear" slope="1.15" intercept="0"/>
-        <feFuncB type="linear" slope="1.1" intercept="0"/>
-      </feComponentTransfer>
-      <feColorMatrix in="contrasted" type="matrix"
-        values="1.2 0.9 0 0 0.05
-                0.9 1.1 0 0 0.05
-                0 0 0.6 0 0
-                0 0 0 1 0"/>
-    </filter>
-
-    <!-- ENHANCED GREEN FILTER -->
-    <filter id="risograph-green" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="5" result="fineGrain" seed="40"/>
-      <feTurbulence type="turbulence" baseFrequency="0.4" numOctaves="2" result="coarseGrain" seed="41"/>
-      <feBlend in="fineGrain" in2="coarseGrain" mode="multiply" result="combinedGrain"/>
-      <feColorMatrix in="combinedGrain" type="saturate" values="0" result="monoGrain"/>
-      <feComponentTransfer in="monoGrain" result="grain">
-        <feFuncA type="discrete" tableValues="0 0 0 0 0.7 1 1"/>
-      </feComponentTransfer>
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" result="softened"/>
-      <feBlend in="softened" in2="grain" mode="multiply" result="textured"/>
-      <feComponentTransfer in="textured" result="contrasted">
-        <feFuncR type="linear" slope="1.2" intercept="0"/>
-        <feFuncG type="linear" slope="1.2" intercept="0"/>
-        <feFuncB type="linear" slope="1.2" intercept="0"/>
-      </feComponentTransfer>
-      <feColorMatrix in="contrasted" type="matrix"
-        values="0.3 0.5 0 0 0
-                0.4 1.1 0 0 0.05
-                0.2 0.6 0.7 0 0.05
-                0 0 0 1 0"/>
-    </filter>
-
-    <!-- GRAIN-ONLY FILTERS FOR MULTI-LAYER -->
     <filter id="riso-grain-blue" x="-20%" y="-20%" width="140%" height="140%">
       <feTurbulence type="fractalNoise" baseFrequency="1.0" numOctaves="4" result="grain" seed="50"/>
       <feColorMatrix in="grain" type="saturate" values="0" result="monoGrain"/>
@@ -408,7 +464,6 @@
       <feBlend in="SourceGraphic" in2="grainAlpha" mode="multiply"/>
     </filter>
 
-    <!-- ENHANCED FILTER WITH PAPER TEXTURE -->
     <filter id="risograph-enhanced" x="-20%" y="-20%" width="140%" height="140%">
       <feTurbulence type="fractalNoise" baseFrequency="2.5" numOctaves="6" result="paperTexture" seed="100"/>
       <feColorMatrix in="paperTexture" type="saturate" values="0" result="paperMono"/>
@@ -426,343 +481,634 @@
       <feBlend in="onPaper" in2="grain" mode="multiply" result="textured"/>
       <feGaussianBlur in="textured" stdDeviation="0.25" result="final"/>
     </filter>
-
   </defs>
 </svg>
 
-<!-- DOCUMENTATION -->
-<div class="info-section">
-  <h2>🎨 Advanced Risograph Techniques</h2>
-  
-  <h3>What Makes This More Realistic?</h3>
-  <ul>
-    <li><strong>Dual Grain Layers:</strong> Combines fine and coarse grain for authentic texture depth</li>
-    <li><strong>Ink Absorption Blur:</strong> feGaussianBlur simulates how ink spreads into paper fibers</li>
-    <li><strong>Contrast Boost:</strong> feComponentTransfer increases ink density like real riso printing</li>
-    <li><strong>Registration Shift:</strong> Subtle transform offsets mimic mechanical misalignment</li>
-    <li><strong>Mix-Blend-Mode:</strong> Accurately simulates how translucent inks overlap</li>
-    <li><strong>Paper Texture:</strong> Enhanced filter adds paper grain background</li>
-  </ul>
-
-  <h3>Multi-Layer Color Separation Technique</h3>
-  <p>This is THE technique for authentic risograph effects. Stack multiple colored divs with individual filters:</p>
-  
-  <pre>&lt;div class="riso-layers"&gt;
-  &lt;div class="riso-layer layer-blue layer-1"&gt;&lt;/div&gt;
-  &lt;div class="riso-layer layer-red layer-2"&gt;&lt;/div&gt;
-  &lt;div class="riso-layer layer-yellow layer-3"&gt;&lt;/div&gt;
-&lt;/div&gt;</pre>
-
-  <p>Each layer should have:</p>
-  <ul>
-    <li><code>position: absolute</code> to stack layers</li>
-    <li><code>mix-blend-mode: multiply</code> to blend like ink</li>
-    <li>Unique <code>filter: url(#riso-grain-color)</code> for grain</li>
-    <li>Small <code>transform: translate()</code> for registration shift</li>
-    <li>CSS gradients, shapes, or images as content</li>
-  </ul>
-</div>
-
-<h1>Advanced Risograph Effects</h1>
-<p class="subtitle">Enhanced grain, color separation, and ink overlap simulation</p>
+<h1>Advanced Risograph Techniques</h1>
+<p class="subtitle">Mastering halftones, moiré patterns, color mixing, duotones, and animated effects</p>
 
 <div class="container">
-  
-  <!-- SECTION 1 -->
+
+  <!-- SECTION 1: HALFTONE -->
+  <h2 class="section-title">1. Halftone Simulation</h2>
+  <p class="section-desc">Create authentic screen-printed dot patterns using CSS radial gradients and background-size.</p>
+
   <div class="demo-grid">
     
     <div class="demo-card">
-      <span class="technique-label">Enhanced Filter</span>
-      <h3>Advanced Blue</h3>
-      <p>Dual grain layers + ink absorption blur + contrast boost</p>
-      <div class="riso-layers" style="height: 200px;">
-        <div class="shape-demo riso-blue">
-          <div class="circle ink-blue"></div>
-        </div>
+      <span class="technique-label">Basic Halftone</span>
+      <h3>Evenly Spaced Dots</h3>
+      <p>Simple dot grid - the foundation of halftone printing</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue halftone-basic"></div>
       </div>
+      <div class="code-example">/* Basic halftone pattern */
+.halftone-basic {
+  background: radial-gradient(
+    circle, 
+    #0078BF 3px,
+    transparent 3px
+  );
+  background-size: 15px 15px;
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Enhanced Filter</span>
-      <h3>Advanced Red</h3>
-      <p>Multiple turbulence frequencies create depth and texture</p>
-      <div class="riso-layers" style="height: 200px;">
-        <div class="shape-demo riso-red">
-          <div class="square ink-red"></div>
-        </div>
+      <span class="technique-label">Variable Density</span>
+      <h3>Multiple Dot Sizes</h3>
+      <p>Layer different sized dots for tonal variation</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-red halftone-variable"></div>
       </div>
+      <div class="code-example">/* Variable density halftone */
+.halftone-variable {
+  background: 
+    radial-gradient(circle, #FF5C5C 2px, transparent 2px),
+    radial-gradient(circle, #FF5C5C 4px, transparent 4px);
+  background-size: 20px 20px, 40px 40px;
+  background-position: 0 0, 10px 10px;
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Enhanced Filter</span>
-      <h3>Advanced Green</h3>
-      <p>Fine-tuned color matrices for authentic riso green ink</p>
-      <div class="riso-layers" style="height: 200px;">
-        <div class="shape-demo riso-green">
-          <div class="triangle border-blue"></div>
-        </div>
+      <span class="technique-label">Offset Halftone</span>
+      <h3>Layered Color Dots</h3>
+      <p>Offset dot grids create depth and color mixing</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue halftone-offset-1"></div>
+        <div class="riso-layer layer-yellow halftone-offset-2"></div>
       </div>
+      <div class="code-example">/* Offset creates secondary color */
+.halftone-offset-2 {
+  background: radial-gradient(circle, #FFE800 2px, transparent 2px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+}</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Fine Halftone</span>
+      <h3>Subtle Texture</h3>
+      <p>Smaller, tighter dots for delicate effects</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue halftone-fine"></div>
+      </div>
+      <div class="code-example">/* Fine halftone */
+.halftone-fine {
+  background: radial-gradient(circle, #00A95C 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+}</div>
     </div>
 
   </div>
 
-  <!-- SECTION 2: MULTI-LAYER -->
-  <h2 class="section-title">Multi-Layer Color Separation</h2>
-  <p class="section-desc">
-    The hallmark of risograph printing: separate color layers with independent grain, slight misalignment, and natural ink overlap using CSS blend modes.
-  </p>
+  <!-- SECTION 2: MOIRÉ -->
+  <h2 class="section-title">2. Moiré Patterns</h2>
+  <p class="section-desc">Layer diagonal repeating gradients at different angles to create interference patterns.</p>
 
   <div class="demo-grid">
     
     <div class="demo-card">
-      <span class="technique-label">3-Layer Separation</span>
-      <h3>Overlapping Circles</h3>
-      <p>Blue + Red + Yellow layers with registration shift</p>
-      <div class="riso-layers composition-1">
-        <div class="riso-layer layer-blue layer-1"></div>
-        <div class="riso-layer layer-red layer-2"></div>
-        <div class="riso-layer layer-yellow layer-3"></div>
+      <span class="technique-label">Basic Moiré</span>
+      <h3>Three-Angle Lines</h3>
+      <p>Classic 45°, -45°, and 0° combination</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue moire-layer-1"></div>
+        <div class="riso-layer layer-red moire-layer-2"></div>
+        <div class="riso-layer layer-yellow moire-layer-3"></div>
       </div>
+      <div class="code-example">/* 45 degree lines */
+.moire-layer-1 {
+  background: repeating-linear-gradient(
+    45deg,
+    #0078BF,
+    #0078BF 2px,
+    transparent 2px,
+    transparent 12px
+  );
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">3-Layer Separation</span>
-      <h3>Crosshatch Pattern</h3>
-      <p>Diagonal lines at different angles create moiré effect</p>
-      <div class="riso-layers composition-2">
-        <div class="riso-layer layer-blue layer-1"></div>
-        <div class="riso-layer layer-red layer-2"></div>
-        <div class="riso-layer layer-yellow layer-3"></div>
+      <span class="technique-label">Complex Moiré</span>
+      <h3>Custom Angles</h3>
+      <p>30°, -60°, and 90° create unique interference</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue moire-complex-1"></div>
+        <div class="riso-layer layer-red moire-complex-2"></div>
+        <div class="riso-layer layer-yellow moire-complex-3"></div>
       </div>
+      <div class="code-example">/* Custom angles create unique patterns */
+.moire-complex-1 {
+  background: repeating-linear-gradient(30deg, ...);
+}
+.moire-complex-2 {
+  background: repeating-linear-gradient(-60deg, ...);
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">2-Layer Separation</span>
-      <h3>Geometric Split</h3>
-      <p>Blue + Green layers with clip-path for clean shapes</p>
-      <div class="riso-layers composition-3">
-        <div class="riso-layer layer-blue layer-1"></div>
-        <div class="riso-layer layer-yellow layer-2"></div>
+      <span class="technique-label">Moiré + Halftone</span>
+      <h3>Combined Techniques</h3>
+      <p>Mix line patterns with dot patterns</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue moire-layer-1"></div>
+        <div class="riso-layer layer-yellow halftone-basic"></div>
       </div>
+      <div class="code-example">/* Combine techniques */
+&lt;div class="riso-layer layer-blue moire-layer-1"&gt;&lt;/div&gt;
+&lt;div class="riso-layer layer-yellow halftone-basic"&gt;&lt;/div&gt;</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Subtle Moiré</span>
+      <h3>Fine Lines</h3>
+      <p>Thin lines with tight spacing for delicate effect</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue" style="background: repeating-linear-gradient(30deg, #0078BF, #0078BF 1px, transparent 1px, transparent 8px);"></div>
+        <div class="riso-layer layer-red" style="background: repeating-linear-gradient(-30deg, #FF5C5C, #FF5C5C 1px, transparent 1px, transparent 8px);"></div>
+      </div>
+      <div class="code-example">/* Subtle with fine lines */
+background: repeating-linear-gradient(
+  30deg,
+  #0078BF,
+  #0078BF 1px,
+  transparent 1px,
+  transparent 8px
+);</div>
     </div>
 
   </div>
 
-  <!-- SECTION 3: ENHANCED -->
-  <h2 class="section-title">Ultimate Enhanced Filter</h2>
-  <p class="section-desc">Includes paper texture background for maximum realism</p>
+  <!-- SECTION 3: COLOR MIXING -->
+  <h2 class="section-title">3. Color Mixing</h2>
+  <p class="section-desc">Let layers overlap naturally - mix-blend-mode: multiply does the work.</p>
 
   <div class="demo-grid">
     
     <div class="demo-card">
-      <span class="technique-label">Paper Texture Included</span>
-      <h3>Full Realism</h3>
-      <p>Paper grain + ink grain + absorption blur + contrast</p>
-      <div class="riso-layers" style="height: 200px;">
-        <div class="shape-demo riso-enhanced">
-          <div class="circle ink-purple"></div>
-        </div>
+      <span class="technique-label">Circle Overlap</span>
+      <h3>Three Primary Colors</h3>
+      <p>Blue + Yellow + Red create green, purple, orange</p>
+      <div class="riso-layers" style="height: 400px;">
+        <div class="riso-layer layer-blue mix-circle-blue"></div>
+        <div class="riso-layer layer-yellow mix-circle-yellow"></div>
+        <div class="riso-layer layer-red mix-circle-red"></div>
       </div>
+      <div class="code-example">/* Overlapping circles */
+.mix-circle-blue {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #0078BF;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Paper Texture Included</span>
-      <h3>Text Example</h3>
-      <p>Enhanced filter works beautifully with typography</p>
-      <div class="riso-layers riso-enhanced" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-        <div style="font-size: 72px; font-weight: bold; color: #FF7D27;">RISO</div>
+      <span class="technique-label">Gradient Mixing</span>
+      <h3>Soft Color Transitions</h3>
+      <p>Gradients create smooth color blends</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue mix-gradient-1"></div>
+        <div class="riso-layer layer-yellow mix-gradient-2"></div>
+        <div class="riso-layer layer-red mix-gradient-3"></div>
       </div>
+      <div class="code-example">/* Gradients from corners */
+.mix-gradient-1 {
+  background: linear-gradient(
+    135deg, 
+    #0078BF 0%, 
+    transparent 70%
+  );
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Paper Texture Included</span>
-      <h3>Complex Shapes</h3>
-      <p>Paper texture adds authenticity to any design</p>
-      <div class="riso-layers riso-enhanced" style="height: 200px; display: flex; align-items: center; justify-content: center; gap: 20px;">
-        <div class="circle" style="width: 60px; height: 60px; background: #0078BF;"></div>
-        <div class="square" style="width: 60px; height: 60px; background: #FF5C5C;"></div>
-        <div class="circle" style="width: 60px; height: 60px; background: #FFE800;"></div>
+      <span class="technique-label">Pattern Mixing</span>
+      <h3>Halftone + Solid</h3>
+      <p>Combine patterns with solids for varied density</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue halftone-basic"></div>
+        <div class="riso-layer layer-red" style="background: radial-gradient(circle at 70% 60%, #FF5C5C 0%, #FF5C5C 40%, transparent 40%);"></div>
       </div>
+      <div class="code-example">/* Halftone + solid shape */
+&lt;div class="riso-layer layer-blue halftone-basic"&gt;&lt;/div&gt;
+&lt;div class="riso-layer layer-red" 
+     style="background: radial-gradient(...)"&gt;&lt;/div&gt;</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Complex Mixing</span>
+      <h3>All Techniques Combined</h3>
+      <p>Moiré + halftone + gradient</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue moire-layer-1"></div>
+        <div class="riso-layer layer-yellow halftone-offset-2"></div>
+        <div class="riso-layer layer-red" style="background: linear-gradient(180deg, transparent 0%, #FF5C5C 50%, transparent 100%);"></div>
+      </div>
+      <div class="code-example">/* All techniques together */
+&lt;div class="riso-layer layer-blue moire-layer-1"&gt;&lt;/div&gt;
+&lt;div class="riso-layer layer-yellow halftone-offset-2"&gt;&lt;/div&gt;
+&lt;div class="riso-layer layer-red" style="..."&gt;&lt;/div&gt;</div>
     </div>
 
   </div>
 
-  <!-- SECTION 4: CUSTOM COMPOSITIONS -->
-  <h2 class="section-title">Build Your Own Compositions</h2>
-  <p class="section-desc">Use CSS gradients, shapes, images, or SVG as layer content. The possibilities are endless!</p>
+  <!-- SECTION 4: DUOTONE -->
+  <h2 class="section-title">4. Duotone Photo Effects</h2>
+  <p class="section-desc">Apply color filters to grayscale images for authentic risograph photo look.</p>
 
   <div class="demo-grid">
     
     <div class="demo-card">
-      <span class="technique-label">Custom Composition</span>
-      <h3>Radial Burst</h3>
-      <p>Overlapping radial gradients with color separation</p>
-      <div class="riso-layers" style="height: 250px;">
-        <div class="riso-layer layer-blue" style="background: radial-gradient(circle at 50% 50%, #0078BF 0%, transparent 60%);"></div>
-        <div class="riso-layer layer-red" style="background: radial-gradient(circle at 40% 40%, #FF5C5C 0%, transparent 50%); transform: translate(-1px, -1px);"></div>
-        <div class="riso-layer layer-yellow" style="background: radial-gradient(circle at 60% 60%, #FFE800 0%, transparent 50%); transform: translate(1px, 1px);"></div>
+      <span class="technique-label">Blue Duotone</span>
+      <h3>Single Color Overlay</h3>
+      <p>Grayscale + color overlay with multiply</p>
+      <div class="duotone-wrapper">
+        <div class="demo-image-placeholder">Your Image Here</div>
+        <div class="duotone-overlay duotone-blue layer-blue"></div>
       </div>
+      <div class="code-example">/* Duotone structure */
+&lt;div class="duotone-wrapper"&gt;
+  &lt;img src="photo.jpg" 
+       style="filter: grayscale(100%) contrast(1.2);"&gt;
+  &lt;div class="duotone-overlay" 
+       style="background: linear-gradient(135deg, #0078BF, #4A9FD8);
+              mix-blend-mode: multiply;"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Custom Composition</span>
-      <h3>Dotted Grid</h3>
-      <p>CSS repeating gradients create halftone-like patterns</p>
-      <div class="riso-layers" style="height: 250px;">
-        <div class="riso-layer layer-blue" style="background: radial-gradient(circle, #0078BF 2px, transparent 2px); background-size: 20px 20px;"></div>
-        <div class="riso-layer layer-red" style="background: radial-gradient(circle, #FF5C5C 2px, transparent 2px); background-size: 20px 20px; background-position: 10px 10px; transform: translate(0.5px, 0.5px);"></div>
+      <span class="technique-label">Red Duotone</span>
+      <h3>Warm Gradient</h3>
+      <p>Red to light pink creates vintage poster feel</p>
+      <div class="duotone-wrapper">
+        <div class="demo-image-placeholder">Your Image Here</div>
+        <div class="duotone-overlay duotone-red layer-red"></div>
       </div>
+      <div class="code-example">/* Red duotone */
+.duotone-red {
+  background: linear-gradient(
+    135deg, 
+    #FF5C5C,
+    #FF8989
+  );
+}</div>
     </div>
 
     <div class="demo-card">
-      <span class="technique-label">Custom Composition</span>
-      <h3>Wave Pattern</h3>
-      <p>Complex gradients with clip-path for organic shapes</p>
-      <div class="riso-layers" style="height: 250px;">
-        <div class="riso-layer layer-blue" style="background: linear-gradient(180deg, #0078BF 0%, transparent 100%); clip-path: ellipse(100% 40% at 50% 30%);"></div>
-        <div class="riso-layer layer-yellow" style="background: linear-gradient(0deg, #FFE800 0%, transparent 100%); clip-path: ellipse(100% 40% at 50% 70%); transform: translate(0, 1px);"></div>
+      <span class="technique-label">Green Duotone</span>
+      <h3>Cool Gradient</h3>
+      <p>Green tones for natural, organic feeling</p>
+      <div class="duotone-wrapper">
+        <div class="demo-image-placeholder">Your Image Here</div>
+        <div class="duotone-overlay duotone-green layer-blue"></div>
       </div>
+      <div class="code-example">/* Green duotone */
+.duotone-green {
+  background: linear-gradient(
+    135deg, 
+    #00A95C,
+    #4AC989
+  );
+}</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Duotone + Riso Filter</span>
+      <h3>Ultimate Photo Effect</h3>
+      <p>Combine duotone with grain filter</p>
+      <div class="duotone-wrapper">
+        <div class="demo-image-placeholder duotone-riso">Your Image Here</div>
+      </div>
+      <div class="code-example">/* Apply filter directly */
+.duotone-riso {
+  filter: 
+    grayscale(100%)
+    contrast(1.3)
+    url(#risograph-blue);
+}</div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 5: ANIMATED -->
+  <h2 class="section-title">5. Animated Registration Shifts</h2>
+  <p class="section-desc">Add CSS animations to layers for dynamic registration shifts.</p>
+
+  <div class="demo-grid">
+    
+    <div class="demo-card">
+      <span class="technique-label">Basic Animation</span>
+      <h3>Slow Drift</h3>
+      <p>Gentle movement creates living quality</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue animated-layer-1" style="background: radial-gradient(circle at 30% 40%, #0078BF 0%, #0078BF 30%, transparent 30%);"></div>
+        <div class="riso-layer layer-red animated-layer-2" style="background: radial-gradient(circle at 70% 60%, #FF5C5C 0%, #FF5C5C 35%, transparent 35%);"></div>
+        <div class="riso-layer layer-yellow animated-layer-3" style="background: linear-gradient(135deg, transparent 40%, #FFE800 40%, #FFE800 60%, transparent 60%);"></div>
+      </div>
+      <div class="code-example">/* Define keyframes */
+@keyframes registration-shift-1 {
+  0%, 100% { transform: translate(1px, 0.5px); }
+  50% { transform: translate(1.5px, 1px); }
+}
+
+.animated-layer-1 {
+  animation: registration-shift-1 4s ease-in-out infinite;
+}</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Pulse Animation</span>
+      <h3>Subtle Scale + Shift</h3>
+      <p>Combines movement with tiny scale changes</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue pulse-animation halftone-basic"></div>
+      </div>
+      <div class="code-example">/* Pulse with scale */
+@keyframes riso-pulse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(0.8px, 0.5px) scale(1.002); }
+  66% { transform: translate(-0.5px, 0.8px) scale(0.998); }
+}
+
+.pulse-animation {
+  animation: riso-pulse 6s ease-in-out infinite;
+}</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Multi-Layer Animation</span>
+      <h3>Independent Movement</h3>
+      <p>Each layer moves at different speeds</p>
+      <div class="riso-layers">
+        <div class="riso-layer layer-blue animated-layer-1 moire-layer-1"></div>
+        <div class="riso-layer layer-red animated-layer-2 moire-layer-2"></div>
+        <div class="riso-layer layer-yellow animated-layer-3 halftone-offset-2"></div>
+      </div>
+      <div class="code-example">/* Three independent animations */
+.animated-layer-1 {
+  animation: registration-shift-1 4s ease-in-out infinite;
+}
+.animated-layer-2 {
+  animation: registration-shift-2 3.5s ease-in-out infinite;
+}
+.animated-layer-3 {
+  animation: registration-shift-3 4.5s ease-in-out infinite;
+}</div>
+    </div>
+
+    <div class="demo-card">
+      <span class="technique-label">Hover Animation</span>
+      <h3>Interactive Shift</h3>
+      <p>Trigger animation on hover</p>
+      <div class="riso-layers" style="cursor: pointer; transition: all 0.3s ease;" onmouseover="this.querySelector('.layer-blue').style.transform='translate(2px, 1px)'; this.querySelector('.layer-red').style.transform='translate(-1px, 2px)';" onmouseout="this.querySelector('.layer-blue').style.transform='translate(1px, 0.5px)'; this.querySelector('.layer-red').style.transform='translate(-0.5px, 1px)';">
+        <div class="riso-layer layer-blue" style="background: #0078BF; clip-path: polygon(0 0, 100% 0, 100% 60%, 0 80%); transition: transform 0.3s ease;"></div>
+        <div class="riso-layer layer-red" style="background: #FF5C5C; clip-path: polygon(0 60%, 100% 40%, 100% 100%, 0 100%); transition: transform 0.3s ease;"></div>
+      </div>
+      <div class="code-example">/* Hover trigger */
+.riso-layer {
+  transition: transform 0.3s ease;
+}
+
+.riso-layers:hover .layer-blue {
+  transform: translate(2px, 1px);
+}
+
+.riso-layers:hover .layer-red {
+  transform: translate(-1px, 2px);
+}</div>
     </div>
 
   </div>
 
 </div>
 
-<!-- FINAL TIPS -->
+<!-- COMPREHENSIVE GUIDE -->
 <div class="info-section">
-  <h2>💡 Pro Tips for Maximum Realism</h2>
+  <h2>🎓 Complete Technique Guide</h2>
   
-  <h3>1. Authentic Riso Colors</h3>
-  <ul>
-    <li><strong>Blue:</strong> #0078BF</li>
-    <li><strong>Red:</strong> #FF5C5C</li>
-    <li><strong>Yellow:</strong> #FFE800</li>
-    <li><strong>Green:</strong> #00A95C</li>
-    <li><strong>Purple:</strong> #765BA7</li>
-    <li><strong>Fluorescent Pink:</strong> #FF48B0</li>
-  </ul>
+  <h3>1. Halftone Simulation</h3>
+  <p><strong>Use Case:</strong> Screen-printed look, texture, tonal variation</p>
+  <pre>/* Basic formula */
+background: radial-gradient(
+  circle,
+  [COLOR] [DOT_SIZE],
+  transparent [DOT_SIZE]
+);
+background-size: [SPACING] [SPACING];
 
-  <h3>2. Layer Registration Shifts</h3>
-  <pre>.layer-1 { transform: translate(1px, 0.5px); }
-.layer-2 { transform: translate(-0.5px, 1px); }
-.layer-3 { transform: translate(0.5px, -0.5px); }</pre>
+/* Example */
+background: radial-gradient(circle, #0078BF 1.5px, transparent 1.5px);
+background-size: 10px 10px;
 
-  <h3>3. Ink Overlap Effects</h3>
-  <p>The magic happens where colors meet. <code>mix-blend-mode: multiply</code> is essential:</p>
-  <pre>.riso-layer {
+/* Variables:
+   - DOT_SIZE: 1-4px (small to large)
+   - SPACING: 8-20px (tight to loose) */</pre>
+
+  <h3>2. Moiré Patterns</h3>
+  <p><strong>Use Case:</strong> Crosshatch, textile-like patterns, visual complexity</p>
+  <pre>/* Basic formula */
+background: repeating-linear-gradient(
+  [ANGLE]deg,
+  [COLOR],
+  [COLOR] [LINE_THICKNESS],
+  transparent [LINE_THICKNESS],
+  transparent [SPACING]
+);
+
+/* Example */
+background: repeating-linear-gradient(
+  45deg,
+  #0078BF,
+  #0078BF 2px,
+  transparent 2px,
+  transparent 12px
+);
+
+/* Tips:
+   - Use 30°, 45°, 60° for classic moiré
+   - Layer 2-3 different angles
+   - 1px lines = subtle, 3px = bold */</pre>
+
+  <h3>3. Color Mixing</h3>
+  <p><strong>Use Case:</strong> Creating secondary colors, depth, richness</p>
+  <pre>/* Required for mixing */
+.riso-layer {
+  position: absolute;
   mix-blend-mode: multiply;
-}</pre>
-  <p>Blue + Yellow = Green, Red + Yellow = Orange, Red + Blue = Purple</p>
+}
 
-  <h3>4. Grain Variation</h3>
-  <p>Each color should have slightly different grain for realism:</p>
-  <ul>
-    <li>Use different <code>seed</code> values in feTurbulence</li>
-    <li>Vary <code>baseFrequency</code> between 0.8-1.2</li>
-    <li>Lighter colors (yellow) can have less grain</li>
-  </ul>
+/* Color combinations:
+   Blue + Yellow = Green
+   Red + Blue = Purple
+   Red + Yellow = Orange */</pre>
 
-  <h3>5. Creating New Color Filters</h3>
-  <p>To create a new color filter, duplicate an existing one and modify:</p>
-  <pre>&lt;filter id="risograph-NEWCOLOR"&gt;
-  &lt;!-- Change seed values (make them unique) --&gt;
-  seed="200" 
+  <h3>4. Duotone Photos</h3>
+  <p><strong>Use Case:</strong> Vintage posters, editorial design</p>
+  <pre>/* Method 1: Direct filter */
+.photo-duotone {
+  filter: 
+    grayscale(100%)
+    contrast(1.3)
+    url(#risograph-blue);
+}
+
+/* Method 2: Overlay */
+&lt;div class="duotone-wrapper"&gt;
+  &lt;img src="photo.jpg" 
+       style="filter: grayscale(100%) contrast(1.2);"&gt;
+  &lt;div style="
+    mix-blend-mode: multiply;
+    background: linear-gradient(135deg, #0078BF, #4A9FD8);
+  "&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+
+  <h3>5. Animated Registration</h3>
+  <p><strong>Use Case:</strong> Living designs, attention-grabbing</p>
+  <pre>/* Create keyframes */
+@keyframes shift {
+  0%, 100% { transform: translate(1px, 0.5px); }
+  50% { transform: translate(1.5px, 1px); }
+}
+
+/* Apply to layer */
+.animated-layer {
+  animation: shift 4s ease-in-out infinite;
+}
+
+/* Principles:
+   - Small movements (0.5-2px)
+   - Different durations (3-5s)
+   - ease-in-out timing */</pre>
+
+  <h3>Combining Techniques</h3>
+  <pre>/* All techniques together */
+&lt;div class="riso-layers"&gt;
+  &lt;!-- Animated blue halftone --&gt;
+  &lt;div class="riso-layer layer-blue 
+              animated-layer-1 
+              halftone-basic"&gt;&lt;/div&gt;
   
-  &lt;!-- Adjust the color matrix --&gt;
-  &lt;!-- Example for orange: --&gt;
-  values="1.2 0.6 0 0 0.05    /* Red channel */
-          0.6 0.8 0 0 0.02    /* Green channel */
-          0 0.2 0.5 0 0       /* Blue channel */
-          0 0 0 1 0"          /* Alpha channel */
-&lt;/filter&gt;</pre>
-
-  <h3>6. Performance Optimization</h3>
-  <p>SVG filters can be GPU-intensive. For better performance:</p>
-  <pre>.riso-layer {
-  will-change: filter;
-  transform: translateZ(0);
-}</pre>
-
-  <h3>7. Using with Images</h3>
-  <p>Apply filters to photos for a riso duotone effect:</p>
-  <pre>&lt;img src="photo.jpg" class="riso-blue" alt="Photo"&gt;</pre>
-
-  <h3>8. Responsive Design</h3>
-  <p>Grain size stays consistent across screen sizes, but adjust height for mobile:</p>
-  <pre>@media (max-width: 768px) {
-  .riso-layers {
-    height: 200px;
-  }
-}</pre>
+  &lt;!-- Red moiré --&gt;
+  &lt;div class="riso-layer layer-red 
+              animated-layer-2 
+              moire-layer-2"&gt;&lt;/div&gt;
+  
+  &lt;!-- Yellow gradient --&gt;
+  &lt;div class="riso-layer layer-yellow 
+              animated-layer-3" 
+       style="background: radial-gradient(...);"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
 </div>
 
 <div class="info-section" style="margin-bottom: 60px;">
-  <h2>📦 Quick Start Checklist</h2>
-  <ol>
-    <li>Copy the entire <code>&lt;svg&gt;</code> block with all filter definitions</li>
-    <li>Choose your approach:
-      <ul>
-        <li><strong>Simple:</strong> Add <code>class="riso-blue"</code> to any element</li>
-        <li><strong>Advanced:</strong> Create multi-layer structure with separate color divs</li>
-      </ul>
-    </li>
-    <li>For multi-layer: Stack divs with <code>position: absolute</code> and <code>mix-blend-mode: multiply</code></li>
-    <li>Add slight <code>transform: translate()</code> offsets for registration shift</li>
-    <li>Use CSS gradients, shapes, or images as layer content</li>
-    <li>Customize grain by adjusting <code>baseFrequency</code> in filters</li>
-    <li>Test across browsers (excellent support in modern browsers)</li>
-  </ol>
-
-  <h3>Key Filter Parameters Explained</h3>
+  <h2>📋 Quick Reference</h2>
+  
+  <h3>When to Use Each Technique:</h3>
   <ul>
-    <li><strong>baseFrequency:</strong> Controls grain size (0.5 = coarse, 2.0 = fine)</li>
-    <li><strong>numOctaves:</strong> Grain complexity/detail (2-6 range)</li>
-    <li><strong>seed:</strong> Randomization value (change for different patterns)</li>
-    <li><strong>stdDeviation:</strong> Blur amount for ink absorption (0.1-0.5)</li>
-    <li><strong>tableValues:</strong> Controls grain visibility/opacity</li>
-    <li><strong>slope:</strong> Contrast adjustment (1.0 = normal, 1.3 = high contrast)</li>
+    <li><strong>Halftone:</strong> Add texture, fill large areas, tonal variation</li>
+    <li><strong>Moiré:</strong> Crosshatch effects, visual complexity, textile patterns</li>
+    <li><strong>Color Mixing:</strong> Create secondary colors, maximize palette</li>
+    <li><strong>Duotone:</strong> Photo treatments, vintage posters, editorial</li>
+    <li><strong>Animation:</strong> Premium feel, draw attention, living designs</li>
+  </ul>
+
+  <h3>Essential CSS Properties:</h3>
+  <ul>
+    <li><code>mix-blend-mode: multiply</code> - Required for color mixing</li>
+    <li><code>position: absolute</code> - Required for layer stacking</li>
+    <li><code>filter: url(#riso-grain)</code> - Adds grain texture</li>
+    <li><code>transform: translate()</code> - Registration shift</li>
+    <li><code>background-size</code> - Controls pattern density</li>
+    <li><code>clip-path</code> - Creates shapes and masks</li>
+  </ul>
+
+  <h3>Authentic Riso Colors:</h3>
+  <pre>Blue:     #0078BF
+Red:      #FF5C5C
+Yellow:   #FFE800
+Green:    #00A95C
+Purple:   #765BA7
+Pink:     #FF48B0
+Teal:     #00838A
+Orange:   #FF7D27
+Black:    #000000</pre>
+
+  <h3>Performance Tips:</h3>
+  <ul>
+    <li>Use <code>will-change: filter</code> on animated elements</li>
+    <li>Limit animations to 2-3 layers maximum</li>
+    <li>Test on mobile devices</li>
+    <li>Consider <code>prefers-reduced-motion</code> media query</li>
+    <li>Use <code>transform</code> for animations (GPU accelerated)</li>
+  </ul>
+
+  <h3>Pattern Formulas:</h3>
+  <pre>/* Halftone Dots */
+background: radial-gradient(circle, COLOR SIZE, transparent SIZE);
+background-size: SPACING SPACING;
+
+/* Moiré Lines */
+background: repeating-linear-gradient(
+  ANGLE, COLOR, COLOR THICKNESS, 
+  transparent THICKNESS, transparent SPACING
+);
+
+/* Offset Pattern */
+background-position: X Y;  /* Shift by half for secondary layer */
+
+/* Color Gradient Overlay */
+background: linear-gradient(ANGLE, COLOR1, COLOR2);
+mix-blend-mode: multiply;</pre>
+
+  <h3>Advanced Combinations:</h3>
+  <pre>/* Example 1: Halftone + Gradient */
+&lt;div class="riso-layer layer-blue"
+     style="background: 
+       radial-gradient(circle, #0078BF 2px, transparent 2px),
+       linear-gradient(180deg, #0078BF, transparent);
+       background-size: 15px 15px, 100% 100%;"&gt;
+&lt;/div&gt;
+
+/* Example 2: Moiré + Color Shift */
+&lt;div class="riso-layer layer-red"
+     style="background: repeating-linear-gradient(45deg, ...);
+            transform: translate(-1px, 1px) rotate(0.5deg);"&gt;
+&lt;/div&gt;
+
+/* Example 3: Animated Duotone */
+&lt;img src="photo.jpg" class="duotone-riso animated-layer-1"&gt;</pre>
+
+  <h3>Troubleshooting:</h3>
+  <ul>
+    <li><strong>Colors not mixing:</strong> Ensure <code>mix-blend-mode: multiply</code> is applied</li>
+    <li><strong>No grain visible:</strong> Check SVG filters are in DOM, verify filter IDs match</li>
+    <li><strong>Animation stuttering:</strong> Add <code>will-change: transform</code> for GPU acceleration</li>
+    <li><strong>Patterns not aligning:</strong> Use <code>background-position</code> to adjust offset</li>
+    <li><strong>Too much texture:</strong> Reduce grain opacity in <code>tableValues</code> in SVG filter</li>
   </ul>
 
   <p style="margin-top: 30px; padding: 20px; background: #f5ebe0; border-radius: 4px;">
-    <strong>🎯 Key Takeaway:</strong> True risograph realism comes from layering multiple filtered elements with <code>mix-blend-mode: multiply</code>, not from a single filter. Each layer should have its own grain pattern and slight positional offset. This mimics how real risograph printers apply one color at a time with mechanical imperfections.
+    <strong>🎨 Design Philosophy:</strong> Authentic risograph design embraces imperfection. The grain, registration shifts, and color overlaps aren't bugs—they're features. These "flaws" give risograph its distinctive, handcrafted character. Don't over-polish. Let the technique show through.
   </p>
 
-  <h3>What Each Filter Does:</h3>
-  <ul>
-    <li><strong>#risograph-blue/red/yellow/green:</strong> Complete enhanced filters with dual grain + blur + contrast + color shift. Use these on single elements.</li>
-    <li><strong>#riso-grain-blue/red/yellow:</strong> Lighter grain-only filters for multi-layer stacking. Use these when building color separations.</li>
-    <li><strong>#risograph-enhanced:</strong> Ultimate filter with paper texture background. Most realistic for single elements.</li>
-  </ul>
+  <h3>Next Steps:</h3>
+  <ol>
+    <li>Copy the SVG filter definitions to your project</li>
+    <li>Choose a technique (start with halftone or single-layer filters)</li>
+    <li>Experiment with color combinations using multiply blend mode</li>
+    <li>Add subtle animations for that premium feel</li>
+    <li>Combine techniques for unique compositions</li>
+    <li>Apply to real content (photos, text, shapes, illustrations)</li>
+  </ol>
 
-  <h3>Common Use Cases:</h3>
-  <pre>&lt;!-- Simple single element --&gt;
-&lt;div class="riso-blue"&gt;Your content&lt;/div&gt;
-
-&lt;!-- Multi-layer composition --&gt;
-&lt;div class="riso-layers"&gt;
-  &lt;div class="riso-layer layer-blue" 
-       style="background: radial-gradient(...)"&gt;&lt;/div&gt;
-  &lt;div class="riso-layer layer-red" 
-       style="background: linear-gradient(...)"&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Image with riso effect --&gt;
-&lt;img src="photo.jpg" class="riso-enhanced"&gt;
-
-&lt;!-- Text with riso effect --&gt;
-&lt;h1 class="riso-red"&gt;Hello World&lt;/h1&gt;</pre>
-
-  <h3>Advanced Techniques:</h3>
-  <ul>
-    <li><strong>Halftone Simulation:</strong> Use <code>radial-gradient</code> with <code>background-size</code> to create dot patterns</li>
-    <li><strong>Moiré Patterns:</strong> Layer diagonal repeating gradients at different angles</li>
-    <li><strong>Color Mixing:</strong> Let layers overlap naturally - multiply blend mode does the work</li>
-    <li><strong>Duotone Photos:</strong> Apply color filters to grayscale images for authentic riso photo look</li>
-    <li><strong>Animated Layers:</strong> Add CSS animations to layers for dynamic registration shifts</li>
-  </ul>
-
-  <p style="margin-top: 30px; font-size: 14px; color: #666; line-height: 1.6;">
-    This implementation uses pure CSS and SVG filters - no images or external dependencies. All effects are rendered in real-time by the browser, making them lightweight, scalable, and perfect for web use. The filters work on any HTML element: divs, text, images, SVG graphics, and more. Experiment with different combinations to create your own unique risograph aesthetic!
+  <p style="margin-top: 20px; font-size: 14px; color: #666;">
+    All effects use pure CSS and SVG filters - no images or external dependencies. Everything renders in real-time, making it lightweight, scalable, and perfect for web use. Works on any HTML element: divs, text, images, SVG graphics, and more!
   </p>
 </div>
 

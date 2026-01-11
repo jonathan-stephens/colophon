@@ -3,110 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS light-dark() Color System Demo</title>
+  <title>Multi-Color CSS light-dark() System Demo</title>
   <style>
-    /* === COLOR THEME DEFINITIONS === */
-    /* Each theme defines a 7-step scale from lightest to darkest */
+    /* === MULTI-COLOR THEME DEFINITIONS === */
     
-    /* Default theme variables on :root */
     :root {
       color-scheme: light dark;
       
-      /* Ocean theme as default */
-      --lightest: #eff6ff;
-      --lighter: #dbeafe;
-      --light: #93c5fd;
-      --mid: #3b82f6;
-      --dark: #1d4ed8;
-      --darker: #1e40af;
-      --darkest: #172554;
+      /* Ocean theme as default - Brand: Cobalt Blue */
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      /* Neutral: Muted Navy */
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      /* Accent: Robin's Egg */
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
     }
     
     body[data-theme="ocean"] {
-      --lightest: #eff6ff;
-      --lighter: #dbeafe;
-      --light: #93c5fd;
-      --mid: #3b82f6;
-      --dark: #1d4ed8;
-      --darker: #1e40af;
-      --darkest: #172554;
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
     }
 
     body[data-theme="forest"] {
-      --lightest: #f0fdf4;
-      --lighter: #dcfce7;
-      --light: #86efac;
-      --mid: #22c55e;
-      --dark: #16a34a;
-      --darker: #15803d;
-      --darkest: #14532d;
+      --brand-lightest: #f0fdf4;
+      --brand-lighter: #dcfce7;
+      --brand-light: #86efac;
+      --brand-mid: #22c55e;
+      --brand-dark: #16a34a;
+      --brand-darker: #15803d;
+      --brand-darkest: #14532d;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #f7fee7;
+      --accent-lighter: #ecfccb;
+      --accent-light: #d9f99d;
+      --accent-mid: #a3e635;
+      --accent-dark: #84cc16;
+      --accent-darker: #65a30d;
+      --accent-darkest: #3f6212;
     }
 
     body[data-theme="sunset"] {
-      --lightest: #fff7ed;
-      --lighter: #ffedd5;
-      --light: #fdba74;
-      --mid: #f97316;
-      --dark: #ea580c;
-      --darker: #c2410c;
-      --darkest: #7c2d12;
+      --brand-lightest: #fff7ed;
+      --brand-lighter: #ffedd5;
+      --brand-light: #fdba74;
+      --brand-mid: #f97316;
+      --brand-dark: #ea580c;
+      --brand-darker: #c2410c;
+      --brand-darkest: #7c2d12;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #fdf2f8;
+      --accent-lighter: #fce7f3;
+      --accent-light: #f9a8d4;
+      --accent-mid: #ec4899;
+      --accent-dark: #db2777;
+      --accent-darker: #be185d;
+      --accent-darkest: #831843;
     }
 
     body[data-theme="lavender"] {
-      --lightest: #faf5ff;
-      --lighter: #f3e8ff;
-      --light: #d8b4fe;
-      --mid: #a855f7;
-      --dark: #9333ea;
-      --darker: #7e22ce;
-      --darkest: #581c87;
+      --brand-lightest: #faf5ff;
+      --brand-lighter: #f3e8ff;
+      --brand-light: #d8b4fe;
+      --brand-mid: #a855f7;
+      --brand-dark: #9333ea;
+      --brand-darker: #7e22ce;
+      --brand-darkest: #581c87;
+      
+      --neutral-lightest: #f9fafb;
+      --neutral-lighter: #e5e7eb;
+      --neutral-light: #9ca3af;
+      --neutral-mid: #6b7280;
+      --neutral-dark: #4b5563;
+      --neutral-darker: #374151;
+      --neutral-darkest: #1f2937;
+      
+      --accent-lightest: #eef2ff;
+      --accent-lighter: #e0e7ff;
+      --accent-light: #a5b4fc;
+      --accent-mid: #6366f1;
+      --accent-dark: #4f46e5;
+      --accent-darker: #4338ca;
+      --accent-darkest: #312e81;
     }
 
     body[data-theme="slate"] {
-      --lightest: #f8fafc;
-      --lighter: #e2e8f0;
-      --light: #94a3b8;
-      --mid: #64748b;
-      --dark: #475569;
-      --darker: #334155;
-      --darkest: #0f172a;
+      --brand-lightest: #f8fafc;
+      --brand-lighter: #e2e8f0;
+      --brand-light: #94a3b8;
+      --brand-mid: #64748b;
+      --brand-dark: #475569;
+      --brand-darker: #334155;
+      --brand-darkest: #0f172a;
+      
+      --neutral-lightest: #f9fafb;
+      --neutral-lighter: #e5e7eb;
+      --neutral-light: #9ca3af;
+      --neutral-mid: #6b7280;
+      --neutral-dark: #4b5563;
+      --neutral-darker: #374151;
+      --neutral-darkest: #111827;
+      
+      --accent-lightest: #f0fdfa;
+      --accent-lighter: #ccfbf1;
+      --accent-light: #5eead4;
+      --accent-mid: #14b8a6;
+      --accent-dark: #0d9488;
+      --accent-darker: #0f766e;
+      --accent-darkest: #134e4a;
     }
 
     /* === SEMANTIC COLOR MAPPINGS === */
-    /* These use light-dark() to automatically swap based on color-scheme */
     
     body {
+      --bg-page: light-dark(var(--neutral-lightest), var(--neutral-darkest));
+      --bg-subtle: light-dark(var(--neutral-lighter), var(--neutral-darker));
+      --bg-surface: light-dark(#ffffff, #0a0f1a);
+      --bg-muted: light-dark(var(--neutral-light), var(--neutral-dark));
       
-      /* Backgrounds: light colors in light mode, dark colors in dark mode */
-      --bg-base: light-dark(var(--lightest), var(--darkest));
-      --bg-subtle: light-dark(var(--lighter), var(--darker));
-      --bg-surface: light-dark(#ffffff, #1a1a1a);
-      --bg-muted: light-dark(var(--light), var(--dark));
+      --text-primary: light-dark(var(--neutral-darkest), var(--neutral-lightest));
+      --text-secondary: light-dark(var(--neutral-darker), var(--neutral-lighter));
+      --text-tertiary: light-dark(var(--neutral-dark), var(--neutral-light));
       
-      /* Text: dark colors in light mode, light colors in dark mode */
-      --text-primary: light-dark(var(--darkest), var(--lightest));
-      --text-secondary: light-dark(var(--darker), var(--lighter));
-      --text-tertiary: light-dark(var(--dark), var(--light));
+      --interactive-brand: var(--brand-mid);
+      --interactive-brand-hover: light-dark(var(--brand-dark), var(--brand-light));
+      --interactive-brand-active: light-dark(var(--brand-darker), var(--brand-lighter));
+      --bg-brand-subtle: light-dark(var(--brand-lightest), var(--brand-darkest));
+      --text-on-brand: #ffffff;
       
-      /* Interactive elements */
-      --interactive-base: var(--mid);
-      --interactive-hover: light-dark(var(--dark), var(--light));
-      --interactive-active: light-dark(var(--darker), var(--lighter));
+      --interactive-accent: var(--accent-mid);
+      --interactive-accent-hover: light-dark(var(--accent-dark), var(--accent-light));
+      --bg-accent-subtle: light-dark(var(--accent-lightest), var(--accent-darkest));
+      --text-accent: light-dark(var(--accent-dark), var(--accent-light));
       
-      /* Borders */
-      --border-subtle: light-dark(var(--lighter), var(--darker));
-      --border-default: light-dark(var(--light), var(--dark));
-      --border-strong: light-dark(var(--mid), var(--mid));
+      --border-subtle: light-dark(var(--neutral-lighter), var(--neutral-darker));
+      --border-default: light-dark(var(--neutral-light), var(--neutral-dark));
+      --border-strong: light-dark(var(--neutral-mid), var(--neutral-mid));
       
-      /* Shadows */
-      --shadow-sm: light-dark(
-        0 1px 2px 0 rgb(0 0 0 / 0.05),
-        0 1px 2px 0 rgb(0 0 0 / 0.3)
-      );
-      --shadow-md: light-dark(
-        0 4px 6px -1px rgb(0 0 0 / 0.1),
-        0 4px 6px -1px rgb(0 0 0 / 0.4)
-      );
+      --shadow-sm: light-dark(0 1px 2px 0 rgb(0 0 0 / 0.05), 0 1px 2px 0 rgb(0 0 0 / 0.3));
+      --shadow-md: light-dark(0 4px 6px -1px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.4));
     }
 
     /* === BASE STYLES === */
@@ -118,9 +208,9 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
-      background: var(--bg-base);
+      background: var(--bg-page);
       color: var(--text-primary);
       transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -131,8 +221,6 @@
       padding: 2rem;
     }
 
-    /* === HEADER === */
-    
     header {
       background: var(--bg-surface);
       border-bottom: 2px solid var(--border-default);
@@ -144,12 +232,68 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
-      color: var(--text-primary);
     }
 
     .subtitle {
       color: var(--text-secondary);
       font-size: 1.125rem;
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border-default);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    code {
+      background: var(--bg-muted);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875em;
+    }
+
+    pre {
+      background: var(--bg-subtle);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: var(--text-primary);
     }
 
     /* === CONTROLS === */
@@ -179,7 +323,7 @@
       letter-spacing: 0.05em;
     }
 
-    select, button {
+    select, .mode-toggle {
       padding: 0.625rem 1rem;
       border-radius: 0.375rem;
       border: 2px solid var(--border-default);
@@ -191,81 +335,95 @@
     }
 
     select:hover, select:focus {
-      border-color: var(--interactive-base);
+      border-color: var(--interactive-brand);
       outline: none;
     }
 
-    button {
-      background: var(--interactive-base);
-      color: white;
-      border-color: var(--interactive-base);
+    .mode-toggle {
+      background: var(--interactive-brand);
+      color: var(--text-on-brand);
+      border-color: var(--interactive-brand);
       font-weight: 600;
     }
 
-    button:hover {
-      background: var(--interactive-hover);
-      border-color: var(--interactive-hover);
+    .mode-toggle:hover {
+      background: var(--interactive-brand-hover);
+      border-color: var(--interactive-brand-hover);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
 
-    button:active {
-      transform: translateY(0);
-    }
-
-    /* === DOCUMENTATION === */
+    /* === COLOR SCALES === */
     
-    section {
-      margin-bottom: 3rem;
+    .color-scales {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 2rem 0;
     }
 
-    h2 {
-      font-size: 1.875rem;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      border-bottom: 2px solid var(--border-default);
-      padding-bottom: 0.5rem;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-      margin: 1.5rem 0 0.75rem;
-      color: var(--text-primary);
-    }
-
-    p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-    }
-
-    code {
-      background: var(--bg-muted);
-      padding: 0.125rem 0.375rem;
-      border-radius: 0.25rem;
-      font-family: 'Monaco', 'Courier New', monospace;
-      font-size: 0.875em;
-      color: var(--text-primary);
-    }
-
-    pre {
-      background: var(--bg-subtle);
-      padding: 1rem;
+    .scale-group {
+      background: var(--bg-surface);
+      padding: 1.5rem;
       border-radius: 0.5rem;
-      overflow-x: auto;
       border: 1px solid var(--border-subtle);
-      margin: 1rem 0;
     }
 
-    pre code {
-      background: transparent;
-      padding: 0;
+    .scale-group h4 {
+      margin: 0 0 1rem 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
+
+    .color-scale {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+
+    .color-swatch {
+      aspect-ratio: 1;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .swatch-brand-lightest { background: var(--brand-lightest); color: var(--brand-darkest); }
+    .swatch-brand-lighter { background: var(--brand-lighter); color: var(--brand-darkest); }
+    .swatch-brand-light { background: var(--brand-light); color: var(--brand-darkest); }
+    .swatch-brand-mid { background: var(--brand-mid); color: white; }
+    .swatch-brand-dark { background: var(--brand-dark); color: white; }
+    .swatch-brand-darker { background: var(--brand-darker); color: white; }
+    .swatch-brand-darkest { background: var(--brand-darkest); color: white; }
+
+    .swatch-neutral-lightest { background: var(--neutral-lightest); color: var(--neutral-darkest); }
+    .swatch-neutral-lighter { background: var(--neutral-lighter); color: var(--neutral-darkest); }
+    .swatch-neutral-light { background: var(--neutral-light); color: var(--neutral-darkest); }
+    .swatch-neutral-mid { background: var(--neutral-mid); color: white; }
+    .swatch-neutral-dark { background: var(--neutral-dark); color: white; }
+    .swatch-neutral-darker { background: var(--neutral-darker); color: white; }
+    .swatch-neutral-darkest { background: var(--neutral-darkest); color: white; }
+
+    .swatch-accent-lightest { background: var(--accent-lightest); color: var(--accent-darkest); }
+    .swatch-accent-lighter { background: var(--accent-lighter); color: var(--accent-darkest); }
+    .swatch-accent-light { background: var(--accent-light); color: var(--accent-darkest); }
+    .swatch-accent-mid { background: var(--accent-mid); color: white; }
+    .swatch-accent-dark { background: var(--accent-dark); color: white; }
+    .swatch-accent-darker { background: var(--accent-darker); color: white; }
+    .swatch-accent-darkest { background: var(--accent-darkest); color: white; }
 
     /* === DEMO COMPONENTS === */
     
     .demo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
       margin: 2rem 0;
     }
@@ -282,28 +440,22 @@
     .card:hover {
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
-      border-color: var(--interactive-base);
     }
 
     .card h3 {
       margin-top: 0;
-      color: var(--text-primary);
-    }
-
-    .card p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
     }
 
     .card-footer {
       display: flex;
       gap: 0.75rem;
       margin-top: 1rem;
+      flex-wrap: wrap;
     }
 
     .btn-primary {
-      background: var(--interactive-base);
-      color: white;
+      background: var(--interactive-brand);
+      color: var(--text-on-brand);
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 0.375rem;
@@ -313,7 +465,9 @@
     }
 
     .btn-primary:hover {
-      background: var(--interactive-hover);
+      background: var(--interactive-brand-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-secondary {
@@ -328,72 +482,57 @@
     }
 
     .btn-secondary:hover {
-      border-color: var(--interactive-base);
-      color: var(--interactive-base);
+      border-color: var(--interactive-brand);
+      color: var(--interactive-brand);
     }
 
-    /* === COLOR SCALE VISUALIZATION === */
-    
-    .color-scale {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .color-swatch {
-      aspect-ratio: 1;
+    .btn-accent {
+      background: var(--interactive-accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
       border-radius: 0.375rem;
-      border: 2px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
+      cursor: pointer;
       font-weight: 600;
-      text-align: center;
-      padding: 0.5rem;
+      transition: all 0.2s ease;
     }
 
-    .swatch-lightest { background: var(--lightest); color: var(--darkest); }
-    .swatch-lighter { background: var(--lighter); color: var(--darkest); }
-    .swatch-light { background: var(--light); color: var(--darkest); }
-    .swatch-mid { background: var(--mid); color: white; }
-    .swatch-dark { background: var(--dark); color: white; }
-    .swatch-darker { background: var(--darker); color: white; }
-    .swatch-darkest { background: var(--darkest); color: white; }
-
-    /* === LISTS === */
-    
-    ul, ol {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--text-secondary);
+    .btn-accent:hover {
+      background: var(--interactive-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
-    li {
-      margin-bottom: 0.5rem;
+    .info-card {
+      background: var(--bg-accent-subtle);
+      border: 2px solid var(--interactive-accent);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
     }
 
-    strong {
-      color: var(--text-primary);
+    .info-card h4 {
+      color: var(--text-accent);
+      margin: 0 0 0.5rem 0;
+      font-size: 1.125rem;
     }
 
-    /* === ALERT BOX === */
-    
-    .alert {
-      background: var(--bg-subtle);
-      border-left: 4px solid var(--interactive-base);
+    .info-card p {
+      margin: 0;
+    }
+
+    .brand-highlight {
+      background: var(--bg-brand-subtle);
+      border-left: 4px solid var(--interactive-brand);
       padding: 1rem 1.5rem;
       margin: 1.5rem 0;
       border-radius: 0.375rem;
     }
 
-    .alert p {
+    .brand-highlight p {
       margin: 0;
     }
 
-    /* === RESPONSIVE === */
-    
     @media (max-width: 768px) {
       .container {
         padding: 1rem;
@@ -417,17 +556,16 @@
 <body data-theme="ocean">
   <header>
     <div class="container">
-      <h1>CSS light-dark() Color System</h1>
-      <p class="subtitle">A comprehensive guide to building adaptive color themes with semantic naming</p>
+      <h1>Multi-Color CSS light-dark() System</h1>
+      <p class="subtitle">Brand, Neutral, and Accent color scales per theme</p>
     </div>
   </header>
 
   <main class="container">
-    <!-- Controls -->
     <div class="controls">
       <div class="control-group">
         <label for="theme-select">Color Theme</label>
-        <select id="theme-select" aria-label="Select color theme">
+        <select id="theme-select">
           <option value="ocean">Ocean</option>
           <option value="forest">Forest</option>
           <option value="sunset">Sunset</option>
@@ -437,237 +575,224 @@
       </div>
       <div class="control-group">
         <label for="mode-toggle">Color Scheme</label>
-        <button id="mode-toggle" aria-label="Toggle dark mode">Toggle Dark Mode</button>
+        <button id="mode-toggle" class="mode-toggle">Toggle Dark Mode</button>
       </div>
     </div>
 
-    <!-- Current Color Scale -->
     <section>
-      <h2>Current Color Scale</h2>
-      <p>The 7-step color scale currently active in your selected theme:</p>
-      <div class="color-scale" role="img" aria-label="Color scale visualization">
-        <div class="color-swatch swatch-lightest">Lightest</div>
-        <div class="color-swatch swatch-lighter">Lighter</div>
-        <div class="color-swatch swatch-light">Light</div>
-        <div class="color-swatch swatch-mid">Mid</div>
-        <div class="color-swatch swatch-dark">Dark</div>
-        <div class="color-swatch swatch-darker">Darker</div>
-        <div class="color-swatch swatch-darkest">Darkest</div>
+      <h2>Current Color Scales</h2>
+      <p>Each theme defines three color scales with distinct purposes:</p>
+      
+      <div class="color-scales">
+        <div class="scale-group">
+          <h4>🎨 Brand Colors — Primary interactive elements</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-brand-lightest">Lightest</div>
+            <div class="color-swatch swatch-brand-lighter">Lighter</div>
+            <div class="color-swatch swatch-brand-light">Light</div>
+            <div class="color-swatch swatch-brand-mid">Mid</div>
+            <div class="color-swatch swatch-brand-dark">Dark</div>
+            <div class="color-swatch swatch-brand-darker">Darker</div>
+            <div class="color-swatch swatch-brand-darkest">Darkest</div>
+          </div>
+        </div>
+
+        <div class="scale-group">
+          <h4>⚪ Neutral Colors — Backgrounds, text, borders</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-neutral-lightest">Lightest</div>
+            <div class="color-swatch swatch-neutral-lighter">Lighter</div>
+            <div class="color-swatch swatch-neutral-light">Light</div>
+            <div class="color-swatch swatch-neutral-mid">Mid</div>
+            <div class="color-swatch swatch-neutral-dark">Dark</div>
+            <div class="color-swatch swatch-neutral-darker">Darker</div>
+            <div class="color-swatch swatch-neutral-darkest">Darkest</div>
+          </div>
+        </div>
+
+        <div class="scale-group">
+          <h4>✨ Accent Colors — Secondary actions, highlights</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-accent-lightest">Lightest</div>
+            <div class="color-swatch swatch-accent-lighter">Lighter</div>
+            <div class="color-swatch swatch-accent-light">Light</div>
+            <div class="color-swatch swatch-accent-mid">Mid</div>
+            <div class="color-swatch swatch-accent-dark">Dark</div>
+            <div class="color-swatch swatch-accent-darker">Darker</div>
+            <div class="color-swatch swatch-accent-darkest">Darkest</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Overview -->
     <section>
       <h2>Overview</h2>
-      <p>This demo showcases a scalable color system using CSS's <code>light-dark()</code> function. The system allows you to:</p>
+      <p>This system uses <strong>three complementary color scales per theme</strong>:</p>
       <ul>
-        <li>Define color themes with a consistent 7-step scale (lightest → darkest)</li>
-        <li>Create semantic color mappings that automatically adapt to light/dark mode</li>
-        <li>Swap entire color themes while maintaining visual hierarchy and accessibility</li>
-        <li>Write CSS once and have it work across all themes and color schemes</li>
+        <li><strong>Brand colors:</strong> Primary interactive elements (buttons, links, focus states)</li>
+        <li><strong>Neutral colors:</strong> Structural elements (backgrounds, text, borders)</li>
+        <li><strong>Accent colors:</strong> Secondary actions, highlights, and informational elements</li>
       </ul>
       
-      <div class="alert">
-        <p><strong>Try it:</strong> Use the controls above to switch between themes and toggle dark mode. Notice how the interface maintains consistent contrast and hierarchy across all combinations.</p>
+      <div class="brand-highlight">
+        <p><strong>Try it:</strong> Switch themes and toggle dark mode to see how the three color scales work together harmoniously.</p>
       </div>
     </section>
 
-    <!-- How It Works -->
-    <section>
-      <h2>How It Works</h2>
-      
-      <h3>Step 1: Define Color Scales</h3>
-      <p>Each theme defines seven color variables from lightest to darkest:</p>
-      <pre><code>[data-theme="ocean"] {
-  --lightest: #eff6ff;
-  --lighter: #dbeafe;
-  --light: #93c5fd;
-  --mid: #3b82f6;
-  --dark: #1d4ed8;
-  --darker: #1e40af;
-  --darkest: #172554;
-}</code></pre>
-
-      <h3>Step 2: Create Semantic Mappings</h3>
-      <p>Use <code>light-dark()</code> to create semantic variables that invert automatically:</p>
-      <pre><code>:root {
-  color-scheme: light dark;
-  
-  /* Backgrounds use light colors in light mode, dark in dark mode */
-  --bg-base: light-dark(var(--lightest), var(--darkest));
-  --bg-subtle: light-dark(var(--lighter), var(--darker));
-  
-  /* Text uses dark colors in light mode, light in dark mode */
-  --text-primary: light-dark(var(--darkest), var(--lightest));
-  --text-secondary: light-dark(var(--darker), var(--lighter));
-  
-  /* Interactive elements stay consistent */
-  --interactive-base: var(--mid);
-  --border-default: light-dark(var(--light), var(--dark));
-}</code></pre>
-
-      <h3>Step 3: Use Semantic Variables</h3>
-      <p>Build your components using semantic variables instead of raw colors:</p>
-      <pre><code>.card {
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  border: 1px solid var(--border-default);
-}
-
-button {
-  background: var(--interactive-base);
-  color: white;
-}</code></pre>
-    </section>
-
-    <!-- Demo Components -->
     <section>
       <h2>Component Examples</h2>
-      <p>These components use only semantic color variables, so they adapt automatically:</p>
       
       <div class="demo-grid">
         <article class="card">
-          <h3>Card Component</h3>
-          <p>This card uses semantic variables for all its colors. Try switching themes and toggling dark mode to see how it adapts while maintaining proper contrast.</p>
+          <h3>Multi-Color Actions</h3>
+          <p>Brand for primary, Neutral for secondary, and Accent for highlights.</p>
           <div class="card-footer">
-            <button class="btn-primary">Primary Action</button>
-            <button class="btn-secondary">Secondary</button>
+            <button class="btn-primary">Brand</button>
+            <button class="btn-secondary">Neutral</button>
+            <button class="btn-accent">Accent</button>
           </div>
         </article>
 
         <article class="card">
-          <h3>Consistent Hierarchy</h3>
-          <p>Notice how text colors maintain their hierarchy: primary text is most prominent, secondary text is slightly muted, and tertiary text is more subtle.</p>
-          <div class="card-footer">
-            <button class="btn-primary">Learn More</button>
-            <button class="btn-secondary">Dismiss</button>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3>Theme Independence</h3>
-          <p>Components don't know or care which theme is active. They only reference semantic variables, making them infinitely reusable across different color palettes.</p>
+          <h3>Visual Hierarchy</h3>
+          <p>The three scales create clear hierarchy across all themes and modes.</p>
           <div class="card-footer">
             <button class="btn-primary">Get Started</button>
+            <button class="btn-accent">Learn More</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Theme Independent</h3>
+          <p>Components use semantic variables, not specific colors.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Save</button>
             <button class="btn-secondary">Cancel</button>
           </div>
         </article>
       </div>
+
+      <div class="info-card">
+        <h4>Accent-Styled Info Card</h4>
+        <p>This uses accent colors for background and border, making it visually distinct.</p>
+      </div>
     </section>
 
-    <!-- Key Benefits -->
+    <section>
+      <h2>How It Works</h2>
+      
+      <h3>Step 1: Define Three Color Scales</h3>
+      <pre><code>body[data-theme="ocean"] {
+  /* Brand: Cobalt Blue */
+  --brand-lightest: #eff6ff;
+  --brand-mid: #3b82f6;
+  --brand-darkest: #172554;
+  
+  /* Neutral: Muted Navy */
+  --neutral-lightest: #f8fafc;
+  --neutral-mid: #64748b;
+  --neutral-darkest: #1e293b;
+  
+  /* Accent: Robin's Egg */
+  --accent-lightest: #ecfeff;
+  --accent-mid: #06b6d4;
+  --accent-darkest: #164e63;
+}</code></pre>
+
+      <h3>Step 2: Create Semantic Mappings</h3>
+      <pre><code>body {
+  color-scheme: light dark;
+  
+  /* Neutral for structure */
+  --bg-page: light-dark(
+    var(--neutral-lightest), 
+    var(--neutral-darkest)
+  );
+  
+  /* Brand for interactions */
+  --interactive-brand: var(--brand-mid);
+  --interactive-brand-hover: light-dark(
+    var(--brand-dark), 
+    var(--brand-light)
+  );
+  
+  /* Accent for highlights */
+  --interactive-accent: var(--accent-mid);
+}</code></pre>
+
+      <h3>Step 3: Use Semantic Variables</h3>
+      <pre><code>.btn-primary {
+  background: var(--interactive-brand);
+}
+
+.btn-accent {
+  background: var(--interactive-accent);
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Theme Combinations</h2>
+      <ul>
+        <li><strong>Ocean:</strong> Cobalt Blue + Muted Navy + Robin's Egg</li>
+        <li><strong>Forest:</strong> Forest Green + Warm Gray + Sage</li>
+        <li><strong>Sunset:</strong> Vibrant Orange + Warm Stone + Pink</li>
+        <li><strong>Lavender:</strong> Purple + Cool Gray + Indigo</li>
+        <li><strong>Slate:</strong> Blue Gray + True Gray + Teal</li>
+      </ul>
+    </section>
+
     <section>
       <h2>Key Benefits</h2>
       
+      <h3>Clear Visual Hierarchy</h3>
+      <p>Brand draws attention to primary actions, Accent highlights secondary information, and Neutral provides structure.</p>
+
+      <h3>Semantic Clarity</h3>
+      <p>Variables describe purpose (<code>--interactive-brand</code>) not appearance (<code>--color-blue</code>).</p>
+
       <h3>Maintainability</h3>
-      <ul>
-        <li>Change themes by swapping a single attribute (<code>data-theme</code>)</li>
-        <li>Add new themes without touching component CSS</li>
-        <li>Color logic lives in one place, not scattered across components</li>
-      </ul>
+      <p>Change themes by swapping a single attribute. Add new themes without touching component CSS.</p>
 
       <h3>Accessibility</h3>
-      <ul>
-        <li>Respects user's OS-level dark mode preference automatically</li>
-        <li>Semantic naming ensures consistent contrast ratios</li>
-        <li>Easy to audit and maintain WCAG compliance</li>
-      </ul>
-
-      <h3>Developer Experience</h3>
-      <ul>
-        <li>Intuitive naming that's easy to remember</li>
-        <li>Write components once, they work everywhere</li>
-        <li>No color hardcoding or duplication</li>
-      </ul>
-
-      <h3>Performance</h3>
-      <ul>
-        <li>Pure CSS solution with no JavaScript required for colors</li>
-        <li>Smooth transitions between themes</li>
-        <li>Browser-native dark mode support</li>
-      </ul>
+      <p>Respects OS-level dark mode preference. Consistent contrast ratios across themes.</p>
     </section>
 
-    <!-- Implementation Guide -->
-    <section>
-      <h2>Implementation Guide</h2>
-      
-      <h3>1. Set up color-scheme</h3>
-      <p>Enable automatic dark mode detection:</p>
-      <pre><code>:root {
-  color-scheme: light dark;
-}</code></pre>
-
-      <h3>2. Define your themes</h3>
-      <p>Create a 7-step scale for each theme. Use a consistent approach to ensure proper contrast:</p>
-      <ul>
-        <li><strong>Lightest:</strong> Very subtle background tints</li>
-        <li><strong>Lighter:</strong> Secondary backgrounds, hover states</li>
-        <li><strong>Light:</strong> Borders, disabled states</li>
-        <li><strong>Mid:</strong> Interactive elements, primary actions</li>
-        <li><strong>Dark:</strong> Hover states for interactives</li>
-        <li><strong>Darker:</strong> Secondary text</li>
-        <li><strong>Darkest:</strong> Primary text, high-contrast elements</li>
-      </ul>
-
-      <h3>3. Create semantic mappings</h3>
-      <p>Map your scale to purpose-driven variables using <code>light-dark()</code>. The first argument is for light mode, the second for dark mode.</p>
-
-      <h3>4. Use semantic variables everywhere</h3>
-      <p>Never reference raw color values in components. Always use semantic variables like <code>var(--text-primary)</code> or <code>var(--bg-surface)</code>.</p>
-
-      <h3>5. Add smooth transitions</h3>
-      <p>Include transitions on color-affected properties for smooth theme changes:</p>
-      <pre><code>body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}</code></pre>
-    </section>
-
-    <!-- Browser Support -->
     <section>
       <h2>Browser Support</h2>
-      <p>The <code>light-dark()</code> function is supported in:</p>
-      <ul>
-        <li>Chrome/Edge 123+</li>
-        <li>Firefox 120+</li>
-        <li>Safari 17.5+</li>
-      </ul>
-      <p>For older browsers, consider using a fallback strategy with CSS custom properties and media queries, or use a PostCSS plugin to transform the syntax.</p>
+      <p>The <code>light-dark()</code> function is supported in Chrome/Edge 123+, Firefox 120+, and Safari 17.5+.</p>
     </section>
   </main>
 
   <script>
-    // Theme switcher
     const themeSelect = document.getElementById('theme-select');
-    const body = document.body;
-
-    themeSelect.addEventListener('change', (e) => {
-      body.setAttribute('data-theme', e.target.value);
-    });
-
-    // Dark mode toggle
     const modeToggle = document.getElementById('mode-toggle');
     
+    themeSelect.addEventListener('change', (e) => {
+      document.body.setAttribute('data-theme', e.target.value);
+    });
+    
     modeToggle.addEventListener('click', () => {
-      const currentScheme = document.documentElement.style.colorScheme;
-      const newScheme = currentScheme === 'dark' ? 'light' : 'dark';
+      const current = document.documentElement.style.colorScheme;
+      const newScheme = current === 'dark' ? 'light' : 'dark';
       document.documentElement.style.colorScheme = newScheme;
       modeToggle.textContent = newScheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
     });
-
-    // Initialize button text based on system preference
+    
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     modeToggle.textContent = prefersDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-
-    // Listen for system preference changes
+    
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!document.documentElement.style.colorScheme) {
         modeToggle.textContent = e.matches ? 'Switch to Light Mode' : 'Switch to Dark Mode';
       }
     });
-
-    // Make demo component buttons interactive
-    const demoButtons = document.querySelectorAll('.card .btn-primary, .card .btn-secondary');
+    
+    const demoButtons = document.querySelectorAll('.card button');
     demoButtons.forEach(button => {
       button.addEventListener('click', (e) => {
         const originalText = e.target.textContent;

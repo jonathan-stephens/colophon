@@ -8,7 +8,21 @@
     /* === COLOR THEME DEFINITIONS === */
     /* Each theme defines a 7-step scale from lightest to darkest */
     
-    [data-theme="ocean"] {
+    /* Default theme variables on :root */
+    :root {
+      color-scheme: light dark;
+      
+      /* Ocean theme as default */
+      --lightest: #eff6ff;
+      --lighter: #dbeafe;
+      --light: #93c5fd;
+      --mid: #3b82f6;
+      --dark: #1d4ed8;
+      --darker: #1e40af;
+      --darkest: #172554;
+    }
+    
+    body[data-theme="ocean"] {
       --lightest: #eff6ff;
       --lighter: #dbeafe;
       --light: #93c5fd;
@@ -18,7 +32,7 @@
       --darkest: #172554;
     }
 
-    [data-theme="forest"] {
+    body[data-theme="forest"] {
       --lightest: #f0fdf4;
       --lighter: #dcfce7;
       --light: #86efac;
@@ -28,7 +42,7 @@
       --darkest: #14532d;
     }
 
-    [data-theme="sunset"] {
+    body[data-theme="sunset"] {
       --lightest: #fff7ed;
       --lighter: #ffedd5;
       --light: #fdba74;
@@ -38,7 +52,7 @@
       --darkest: #7c2d12;
     }
 
-    [data-theme="lavender"] {
+    body[data-theme="lavender"] {
       --lightest: #faf5ff;
       --lighter: #f3e8ff;
       --light: #d8b4fe;
@@ -48,7 +62,7 @@
       --darkest: #581c87;
     }
 
-    [data-theme="slate"] {
+    body[data-theme="slate"] {
       --lightest: #f8fafc;
       --lighter: #e2e8f0;
       --light: #94a3b8;
@@ -61,8 +75,7 @@
     /* === SEMANTIC COLOR MAPPINGS === */
     /* These use light-dark() to automatically swap based on color-scheme */
     
-    :root {
-      color-scheme: light dark;
+    body {
       
       /* Backgrounds: light colors in light mode, dark colors in dark mode */
       --bg-base: light-dark(var(--lightest), var(--darkest));

@@ -741,4 +741,167 @@ where:
     function getCombinationUse(relIdx, absIdx) {
       const uses = [
         ['Brightest highlights', 'Subtle accents', 'Light backgrounds', 'Neutral backgrounds', 'Text on light', 'Strong text', 'Maximum contrast'],
-        ['Bright highlights', 'Soft accents', 'Canvas areas', 'Light content', '
+        ['Bright highlights', 'Soft accents', 'Canvas areas', 'Light content', 'Subdued text', 'Bold text', 'Heavy emphasis'],
+        ['Soft highlights', 'Gentle accents', 'Pale fills', 'Mid-light tone', 'Medium text', 'Strong emphasis', 'Dark headers'],
+        ['Subtle emphasis', 'Muted accents', 'Washed fills', 'Balanced tone', 'Standard text', 'Dark text', 'Deep shadows'],
+        ['Gentle shadows', 'Quiet accents', 'Toned fills', 'Mid-dark tone', 'Inverted text', 'Heavy type', 'Maximum depth'],
+        ['Medium shadows', 'Dark accents', 'Shaded fills', 'Dark backgrounds', 'Light on dark', 'Reversed text', 'Near-black'],
+        ['Deep shadows', 'Darkest accents', 'Heavy fills', 'Almost black', 'Maximum contrast', 'Absolute black', 'Pure black']
+      ];
+      return uses[absIdx][relIdx];
+    }
+
+    function generateCombinations() {
+      const combinations = [];
+      relativeLightness.forEach((rel, relIdx) => {
+        absoluteLightness.forEach((abs, absIdx) => {
+          const lightness = getLightnessValue(relIdx, absIdx);
+          combinations.push({
+            name: `${rel} ${abs}`,
+            short: `${rel.slice(0, 3)}-${abs.slice(0, 3)}`,
+            relative: rel,
+            absolute: abs,
+            relIdx,
+            absIdx,
+            lightness,
+            hsl: `hsl(220, 15%, ${lightness}%)`,
+            description: `${rel} variant of ${abs} tone`,
+            use: getCombinationUse(relIdx, absIdx)
+          });
+        });
+      });
+      return combinations;
+    }
+
+    const combinations = generateCombinations();
+
+    // Build matrix table
+    const matrixBody = document.getElementById('matrix-body');
+    absoluteLightness.forEach((abs, absIdx) => {
+      const row = document.createElement('tr');
+      
+      const headerCell = document.createElement('th');
+      headerCell.scope = 'row';
+      headerCell.textContent = abs;
+      row.appendChild(headerCell);
+      
+      relativeLightness.forEach((rel, relIdx) => {
+        const combo = combinations.find(c => c.relIdx === relIdx && c.absIdx === absIdx);
+        const cell = document.createElement('td');
+        cell.className = 'color-cell';
+        
+        const button = document.createElement('button');
+        button.className = 'color-cell-button';
+        button.style.backgroundColor = combo.hsl;
+        button.setAttribute('aria-label', `Select ${combo.name}`);
+        button.addEventListener('click', () => showColorInfo(combo));
+        
+        cell.appendChild(button);
+        row.appendChild(cell);
+      });
+      
+      matrixBody.appendChild(row);
+    });
+
+    // Build swatch grid
+    const swatchGrid = document.getElementById('swatch-grid');
+    combinations.forEach(combo => {
+      const swatch = document.createElement('button');
+      swatch.className = 'swatch';
+      swatch.style.backgroundColor = combo.hsl;
+      swatch.setAttribute('aria-label', `Select ${combo.name}`);
+      swatch.addEventListener('click', () => showColorInfo(combo));
+      
+      const label = document.createElement('span');
+      label.className = 'swatch-label';
+      label.textContent = combo.short;
+      label.style.color = combo.lightness > 50 ? '#000' : '#fff';
+      label.style.textShadow = combo.lightness > 50 
+        ? '0 1px 2px rgba(255,255,255,0.8)' 
+        : '0 1px 2px rgba(0,0,0,0.8)';
+      
+      swatch.appendChild(label);
+      swatchGrid.appendChild(swatch);
+    });
+
+    // Show color info
+    function showColorInfo(combo) {
+      const infoDiv = document.getElementById('selected-color-info');
+      infoDiv.style.display = 'block';
+      infoDiv.className = 'selected-color';
+      
+      infoDiv.innerHTML = `
+        <div class="selected-color-header">
+          <div>
+            <h3 class="selected-color-title">${combo.name}</h3>
+            <p class="selected-color-code">${combo.short}</p>
+          </div>
+          <div class="selected-color-swatch" style="background-color: ${combo.hsl}"></div>
+        </div>
+        <div class="selected-color-details">
+          <div class="detail-item">
+            <span class="detail-label">Relative:</span>
+            <span class="detail-value">${combo.relative}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Absolute:</span>
+            <span class="detail-value">${combo.absolute}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Lightness:</span>
+            <span class="detail-value">${combo.lightness}%</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">HSL:</span>
+            <span class="detail-value">${combo.hsl}</span>
+          </div>
+          <div class="detail-item" style="grid-column: 1 / -1;">
+            <span class="detail-label">Typical Use:</span>
+            <span class="detail-value">${combo.use}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.getAttribute('aria-controls');
+        
+        tabButtons.forEach(btn => {
+          btn.setAttribute('aria-selected', 'false');
+        });
+        
+        tabPanels.forEach(panel => {
+          panel.setAttribute('aria-hidden', 'true');
+        });
+        
+        button.setAttribute('aria-selected', 'true');
+        document.getElementById(targetId).setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    // Keyboard navigation for tabs
+    let currentTabIndex = 0;
+    const tabList = document.querySelector('nav[role="tablist"]');
+    
+    tabList.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        
+        if (e.key === 'ArrowRight') {
+          currentTabIndex = (currentTabIndex + 1) % tabButtons.length;
+        } else {
+          currentTabIndex = (currentTabIndex - 1 + tabButtons.length) % tabButtons.length;
+        }
+        
+        tabButtons[currentTabIndex].focus();
+        tabButtons[currentTabIndex].click();
+      }
+    });
+  </script>
+</body>
+</html>

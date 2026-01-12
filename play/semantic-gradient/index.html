@@ -366,6 +366,7 @@
       font-size: 0.875rem;
       overflow-x: auto;
       margin-bottom: var(--spacing-md);
+      white-space: pre;
     }
 
     .code-comment {
@@ -568,8 +569,7 @@
         <section>
           <h3>Implementation Examples</h3>
           
-          <div class="code-block">
-<span class="code-comment">/* CSS Custom Properties */</span>
+          <div class="code-block"><span class="code-comment">/* CSS Custom Properties */</span>
 --color-lightest-paper: hsl(220, 15%, 95%);
 --color-dim-tone: hsl(220, 15%, 50%);
 --color-darkest-black: hsl(220, 15%, 5%);
@@ -583,8 +583,7 @@
   color: var(--color-darkest-black);
 }</div>
 
-          <div class="code-block">
-<span class="code-comment">// JavaScript Object</span>
+          <div class="code-block"><span class="code-comment">// JavaScript Object</span>
 const colors = {
   lightestPaper: 'hsl(220, 15%, 95%)',
   dimTone: 'hsl(220, 15%, 50%)',
@@ -594,8 +593,7 @@ const colors = {
 <span class="code-comment">// Usage</span>
 element.style.backgroundColor = colors.lightestPaper;</div>
 
-          <div class="code-block">
-<span class="code-comment">/* Tailwind Config */</span>
+          <div class="code-block"><span class="code-comment">/* Tailwind Config */</span>
 module.exports = {
   theme: {
     extend: {
@@ -611,7 +609,7 @@ module.exports = {
       </section>
 
       <section id="theory-panel" class="tab-panel prose" role="tabpanel" aria-labelledby="theory-tab" aria-hidden="true">
-        <h2>System Theory & Design Principles</h2>
+        <h2>System Theory &amp; Design Principles</h2>
         
         <section>
           <h3>Conceptual Foundation</h3>
@@ -644,8 +642,7 @@ module.exports = {
           <h3>Mathematical Model</h3>
           <div class="callout callout-blue">
             <p class="callout-content">The system can be modeled as:</p>
-            <div class="code-block" style="margin-top: 0.5rem;">
-L = f(A, R)
+            <div class="code-block" style="margin-top: 0.5rem;">L = f(A, R)
 
 where:
   L = final lightness value
@@ -664,4 +661,84 @@ where:
               <div class="advantage-number advantage-number-1">1</div>
               <div>
                 <h4>Contextual Flexibility</h4>
-                <p style="font-size: 0.875rem; color: var(--co
+                <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+                  Designers can think in either relative terms ("I need something slightly darker") or absolute terms ("I need a shade-level color")
+                </p>
+              </div>
+            </div>
+            
+            <div class="advantage-item">
+              <div class="advantage-number advantage-number-2">2</div>
+              <div>
+                <h4>Semantic Clarity</h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+                  Names communicate both position and intention, making code more readable: "dimTone" is immediately understandable as a middle-range color
+                </p>
+              </div>
+            </div>
+            
+            <div class="advantage-item">
+              <div class="advantage-number advantage-number-3">3</div>
+              <div>
+                <h4>Systematic Exploration</h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+                  The grid structure encourages discovering relationships between colors and exploring neighboring options systematically
+                </p>
+              </div>
+            </div>
+            
+            <div class="advantage-item">
+              <div class="advantage-number advantage-number-4">4</div>
+              <div>
+                <h4>Extensibility</h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+                  The system can extend to multiple hues while maintaining the same lightness structure, creating consistent relationships across color families
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Alternative Interpretations</h3>
+          <p>The dual-gradient system can be understood through different lenses:</p>
+          
+          <div class="border-accent border-blue">
+            <h4>As a Material Metaphor</h4>
+            <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+              The absolute scale (Paper, Tint, Wash, etc.) references traditional art materials and techniques, while the relative scale adjusts the "application" of those materials
+            </p>
+          </div>
+          
+          <div class="border-accent border-green">
+            <h4>As Perceptual States</h4>
+            <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+              Each combination represents a distinct perceptual state with both objective position (absolute) and subjective context (relative)
+            </p>
+          </div>
+          
+          <div class="border-accent border-purple">
+            <h4>As Functional Roles</h4>
+            <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+              Combinations map to UI roles: backgrounds, surfaces, borders, text, emphasis levels, creating a systematic approach to color application
+            </p>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const relativeLightness = ['Lightest', 'Lighter', 'Light', 'Dim', 'Dark', 'Darker', 'Darkest'];
+    const absoluteLightness = ['Paper', 'Tint', 'Wash', 'Tone', 'Shade', 'Ink', 'Black'];
+
+    function getLightnessValue(relIdx, absIdx) {
+      const absBase = 95 - (absIdx * 15);
+      const relAdjust = (3 - relIdx) * 5;
+      return Math.max(5, Math.min(95, absBase + relAdjust));
+    }
+
+    function getCombinationUse(relIdx, absIdx) {
+      const uses = [
+        ['Brightest highlights', 'Subtle accents', 'Light backgrounds', 'Neutral backgrounds', 'Text on light', 'Strong text', 'Maximum contrast'],
+        ['Bright highlights', 'Soft accents', 'Canvas areas', 'Light content', '

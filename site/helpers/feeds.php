@@ -14,35 +14,83 @@ function generateSectionFeed(string $section, string $format)
     $sections = $config['sections'] ?? [];
     $defaults = $config['defaults'] ?? [];
 
-    // Validate section
-    if (!isset($sections[$section]) || !page($section)) {
+    // Validate section exists in config
+    if (!isset($sections[$section])) {
         return false;
     }
 
     $sectionConfig = $sections[$section];
     $snippetFormat = $format === 'feed' ? 'json' : $format;
 
-    $options = array_merge($defaults, [
-        'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
-        'description' => $sectionConfig['description'] ?? 'Latest ' . $section,
-        'link' => $section,
-        'snippet' => 'feed/' . $snippetFormat,
-        'feedurl' => site()->url() . '/' . $section . '/' . $format,
-        'modified' => time(),
-        'item' => function($page) use ($section) {
-            return generateFeedItem($page, $section);
+    // Check if this is a combined feed or single section
+    if (isset($sectionConfig['sections']) && is_array($sectionConfig['sections'])) {
+        // Combined feed - collect from multiple sections
+        $items = new Pages();
+        foreach ($sectionConfig['sections'] as $subSection) {
+            $subSectionPage = page($subSection);
+            if ($subSectionPage) {
+                $children = $subSectionPage->children()->listed();
+                if ($children->count() > 0) {
+                    $items = $items->add($children);
+                }
+            }
         }
-    ]);
 
-    $limit = $sectionConfig['limit'] ?? 20;
+        if ($items->count() === 0) {
+            return feed(fn() => new Pages(), array_merge($defaults, [
+                'title' => site()->title() . ' - ' . ucfirst($section),
+                'description' => $sectionConfig['description'] ?? 'Latest ' . $section,
+                'link' => $section,
+                'snippet' => 'feed/' . $snippetFormat,
+                'feedurl' => site()->url() . '/' . $section . '/' . $format,
+                'modified' => time(),
+            ]));
+        }
 
-    $pages = page($section)->children()->listed();
-    if ($pages->count() === 0) {
-        // Return empty feed if no pages
-        return feed(fn() => new Pages(), $options);
+        $options = array_merge($defaults, [
+            'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+            'description' => $sectionConfig['description'] ?? 'Latest ' . $section,
+            'link' => $section,
+            'snippet' => 'feed/' . $snippetFormat,
+            'feedurl' => site()->url() . '/' . $section . '/' . $format,
+            'modified' => time(),
+            'item' => function($page) {
+                $parent = $page->parent();
+                $parentSection = $parent ? $parent->slug() : 'unknown';
+                return generateFeedItem($page, $parentSection);
+            }
+        ]);
+
+        $limit = $sectionConfig['limit'] ?? 20;
+        return feed(fn() => $items->sortBy('date', 'desc')->limit($limit), $options);
+
+    } else {
+        // Single section feed
+        if (!page($section)) {
+            return false;
+        }
+
+        $options = array_merge($defaults, [
+            'title' => site()->title() . ' - ' . ucfirst($section) . ' ' . strtoupper($snippetFormat),
+            'description' => $sectionConfig['description'] ?? 'Latest ' . $section,
+            'link' => $section,
+            'snippet' => 'feed/' . $snippetFormat,
+            'feedurl' => site()->url() . '/' . $section . '/' . $format,
+            'modified' => time(),
+            'item' => function($page) use ($section) {
+                return generateFeedItem($page, $section);
+            }
+        ]);
+
+        $limit = $sectionConfig['limit'] ?? 20;
+
+        $pages = page($section)->children()->listed();
+        if ($pages->count() === 0) {
+            return feed(fn() => new Pages(), $options);
+        }
+
+        return feed(fn() => $pages->flip()->limit($limit), $options);
     }
-
-    return feed(fn() => $pages->flip()->limit($limit), $options);
 }
 
 function generateMainFeed(string $format)
@@ -50,18 +98,22 @@ function generateMainFeed(string $format)
     $configPath = kirby()->root('config') . '/feeds.php';
 
     if (!file_exists($configPath)) {
-        // Fallback if config doesn't exist
         return false;
     }
 
     $config = require $configPath;
-    $sections = array_keys($config['sections'] ?? []);
+    $sections = $config['sections'] ?? [];
     $defaults = $config['defaults'] ?? [];
 
-    // Collect entries from all sections
+    // Collect all actual page sections (not combined feeds)
     $items = new Pages();
-    foreach ($sections as $section) {
-        $sectionPage = page($section);
+    foreach ($sections as $sectionKey => $sectionConfig) {
+        // Skip combined feeds in the main feed to avoid duplicates
+        if (isset($sectionConfig['sections'])) {
+            continue;
+        }
+
+        $sectionPage = page($sectionKey);
         if ($sectionPage) {
             $children = $sectionPage->children()->listed();
             if ($children->count() > 0) {
@@ -87,7 +139,6 @@ function generateMainFeed(string $format)
     ]);
 
     if ($items->count() === 0) {
-        // Return empty feed if no items
         return feed(fn() => new Pages(), $options);
     }
 
@@ -96,7 +147,6 @@ function generateMainFeed(string $format)
 
 function generateFeedItem($page, string $section): array
 {
-    // Safety checks
     if (!$page || !is_object($page)) {
         return [];
     }
@@ -109,19 +159,16 @@ function generateFeedItem($page, string $section): array
             : date('r', $page->modified()),
     ];
 
-    // Add description if text field exists
     if ($page->text()->exists()) {
         $item['description'] = $page->text()->kirbytext()->value();
     }
 
-    // Add GUID (use website URL for links section if it exists)
     if ($section === 'links' && $page->website()->exists() && $page->website()->isNotEmpty()) {
         $item['guid'] = $page->website()->value();
     } else {
         $item['guid'] = $page->url();
     }
 
-    // Add categories/tags if they exist
     if ($page->tags()->exists() && $page->tags()->isNotEmpty()) {
         $tags = $page->tags()->split();
         if (is_array($tags) && count($tags) > 0) {

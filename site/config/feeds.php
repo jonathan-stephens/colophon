@@ -21,17 +21,17 @@ return [
             'limit' => 20,
         ],
         'essays' => [
-            'description' => 'Stuff I have written, by Jonathan Stephens',
+            'description' => "More personal, opinionated, and in-depth writings by Jonathan Stephens",
             'limit' => 20,
         ],
         // Combined Content Types
         'garden' => [
-            'description' => 'All writings from my digital garden - journal entries and articles',
+            'description' => "All writings I'm growing in my digital garden",
             'limit' => 30,
             'sections' => ['journal', 'articles', 'essays'], // Combine multiple sections
         ],
         'soil' => [
-            'description' => 'All writings from my digital garden - journal entries and articles',
+            'description' => "Things I'm researching, reading, learning-from, and chewing-on.",
             'limit' => 30,
             'sections' => ['links', 'library'], // Combine multiple sections
         ],

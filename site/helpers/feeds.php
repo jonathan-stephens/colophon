@@ -186,3 +186,122 @@ function generateFeedItem($page, string $section): array
 
     return $item;
 }
+function generateTagFeed(string $tag, string $format, ?string $section = null)
+{
+    $configPath = kirby()->root('config') . '/feeds.php';
+
+    if (!file_exists($configPath)) {
+        return false;
+    }
+
+    $config = require $configPath;
+    $sections = $config['sections'] ?? [];
+    $defaults = $config['defaults'] ?? [];
+
+    $snippetFormat = $format === 'feed' ? 'json' : $format;
+
+    // Normalize tag for comparison
+    $searchTag = strtolower(trim($tag));
+
+    // Collect items with this tag
+    $items = new Pages();
+
+    if ($section) {
+        // Tag feed for specific section
+        if (!isset($sections[$section])) {
+            return false;
+        }
+
+        $sectionConfig = $sections[$section];
+
+        // Check if combined feed or single section
+        if (isset($sectionConfig['sections']) && is_array($sectionConfig['sections'])) {
+            // Combined feed - search in all subsections
+            foreach ($sectionConfig['sections'] as $subSection) {
+                $subSectionPage = page($subSection);
+                if ($subSectionPage) {
+                    $filtered = filterByTag($subSectionPage->children()->listed(), $searchTag);
+                    if ($filtered->count() > 0) {
+                        $items = $items->add($filtered);
+                    }
+                }
+            }
+        } else {
+            // Single section
+            $sectionPage = page($section);
+            if (!$sectionPage) {
+                return false;
+            }
+            $items = filterByTag($sectionPage->children()->listed(), $searchTag);
+        }
+
+        $title = site()->title() . ' - ' . ucfirst($section) . ' tagged "' . $tag . '"';
+        $description = ucfirst($section) . ' entries tagged with "' . $tag . '"';
+        $link = $section . '/tags/' . $tag;
+        $feedurl = site()->url() . '/' . $section . '/tags/' . $tag . '/' . $format;
+
+    } else {
+        // Tag feed across all content
+        foreach ($sections as $sectionKey => $sectionConfig) {
+            // Skip combined feeds to avoid duplicates
+            if (isset($sectionConfig['sections'])) {
+                continue;
+            }
+
+            $sectionPage = page($sectionKey);
+            if ($sectionPage) {
+                $filtered = filterByTag($sectionPage->children()->listed(), $searchTag);
+                if ($filtered->count() > 0) {
+                    $items = $items->add($filtered);
+                }
+            }
+        }
+
+        $title = site()->title() . ' - Everything tagged "' . $tag . '"';
+        $description = 'All content tagged with "' . $tag . '"';
+        $link = 'tags/' . $tag;
+        $feedurl = site()->url() . '/tags/' . $tag . '/' . $format;
+    }
+
+    $options = array_merge($defaults, [
+        'title' => $title . ' ' . strtoupper($snippetFormat),
+        'description' => $description,
+        'link' => $link,
+        'snippet' => 'feed/' . $snippetFormat,
+        'feedurl' => $feedurl,
+        'modified' => time(),
+        'item' => function($page) {
+            $parent = $page->parent();
+            $pageSection = $parent ? $parent->slug() : 'unknown';
+            return generateFeedItem($page, $pageSection);
+        }
+    ]);
+
+    if ($items->count() === 0) {
+        return feed(fn() => new Pages(), $options);
+    }
+
+    return feed(fn() => $items->sortBy('date', 'desc')->limit(50), $options);
+}
+
+function filterByTag($pages, string $searchTag)
+{
+    return $pages->filter(function($page) use ($searchTag) {
+        if (!$page->tags()->exists() || $page->tags()->isEmpty()) {
+            return false;
+        }
+
+        $pageTags = $page->tags()->split();
+        if (!is_array($pageTags)) {
+            return false;
+        }
+
+        foreach ($pageTags as $pageTag) {
+            if (strtolower(trim($pageTag)) === $searchTag) {
+                return true;
+            }
+        }
+
+        return false;
+    });
+}

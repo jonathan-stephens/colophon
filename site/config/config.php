@@ -110,6 +110,30 @@ return [
             }
         ],
 
+        // Tag-based feeds for specific sections: /journal/tags/design/rss, /links/tags/css/feed
+        [
+            'pattern' => '(:any)/tags/(:any)/(rss|feed)',
+            'method' => 'GET',
+            'action'  => function ($section, $tag, $format) {
+                $filename = $section . '-' . $tag . '.' . $format;
+                header('Content-Disposition: inline; filename="' . $filename . '"');
+
+                return generateTagFeed($tag, $format, $section);
+            }
+        ],
+
+        // Tag-based feeds across all content: /tags/design/rss, /tags/css/feed
+        [
+            'pattern' => 'tags/(:any)/(rss|feed)',
+            'method' => 'GET',
+            'action'  => function ($tag, $format) {
+                $filename = 'tags-' . $tag . '.' . $format;
+                header('Content-Disposition: inline; filename="' . $filename . '"');
+
+                return generateTagFeed($tag, $format);
+            }
+        ],
+
         // Main feeds: /rss, /feed
         [
             'pattern' => '(rss|feed)',
@@ -124,7 +148,7 @@ return [
             }
         ],
 
-        // Tags handling route
+        // Tags handling route (keep your existing one)
         [
             'pattern' => 'tags/(:any)',
             'action'  => function ($tag) {

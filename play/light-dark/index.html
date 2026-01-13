@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Color CSS light-dark() System Demo</title>
+  <style>
+    /* === MULTI-COLOR THEME DEFINITIONS === */
+    
+    :root {
+      color-scheme: light dark;
+      
+      /* Ocean theme as default - Brand: Cobalt Blue */
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      /* Neutral: Muted Navy */
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      /* Accent: Robin's Egg */
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
+    }
+    
+    body[data-theme="ocean"] {
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
+    }
+
+    body[data-theme="forest"] {
+      --brand-lightest: #f0fdf4;
+      --brand-lighter: #dcfce7;
+      --brand-light: #86efac;
+      --brand-mid: #22c55e;
+      --brand-dark: #16a34a;
+      --brand-darker: #15803d;
+      --brand-darkest: #14532d;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #f7fee7;
+      --accent-lighter: #ecfccb;
+      --accent-light: #d9f99d;
+      --accent-mid: #a3e635;
+      --accent-dark: #84cc16;
+      --accent-darker: #65a30d;
+      --accent-darkest: #3f6212;
+    }
+
+    body[data-theme="sunset"] {
+      --brand-lightest: #fff7ed;
+      --brand-lighter: #ffedd5;
+      --brand-light: #fdba74;
+      --brand-mid: #f97316;
+      --brand-dark: #ea580c;
+      --brand-darker: #c2410c;
+      --brand-darkest: #7c2d12;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #fdf2f8;
+      --accent-lighter: #fce7f3;
+      --accent-light: #f9a8d4;
+      --accent-mid: #ec4899;
+      --accent-dark: #db2777;
+      --accent-darker: #be185d;
+      --accent-darkest: #831843;
+    }
+
+    body[data-theme="lavender"] {
+      --brand-lightest: #faf5ff;
+      --brand-lighter: #f3e8ff;
+      --brand-light: #d8b4fe;
+      --brand-mid: #a855f7;
+      --brand-dark: #9333ea;
+      --brand-darker: #7e22ce;
+      --brand-darkest: #581c87;
+      
+      --neutral-lightest: #f9fafb;
+      --neutral-lighter: #e5e7eb;
+      --neutral-light: #9ca3af;
+      --neutral-mid: #6b7280;
+      --neutral-dark: #4b5563;
+      --neutral-darker: #374151;
+      --neutral-darkest: #1f2937;
+      
+      --accent-lightest: #eef2ff;
+      --accent-lighter: #e0e7ff;
+      --accent-light: #a5b4fc;
+      --accent-mid: #6366f1;
+      --accent-dark: #4f46e5;
+      --accent-darker: #4338ca;
+      --accent-darkest: #312e81;
+    }
+
+    body[data-theme="slate"] {
+      --brand-lightest: #f8fafc;
+      --brand-lighter: #e2e8f0;
+      --brand-light: #94a3b8;
+      --brand-mid: #64748b;
+      --brand-dark: #475569;
+      --brand-darker: #334155;
+      --brand-darkest: #0f172a;
+      
+      --neutral-lightest: #f9fafb;
+      --neutral-lighter: #e5e7eb;
+      --neutral-light: #9ca3af;
+      --neutral-mid: #6b7280;
+      --neutral-dark: #4b5563;
+      --neutral-darker: #374151;
+      --neutral-darkest: #111827;
+      
+      --accent-lightest: #f0fdfa;
+      --accent-lighter: #ccfbf1;
+      --accent-light: #5eead4;
+      --accent-mid: #14b8a6;
+      --accent-dark: #0d9488;
+      --accent-darker: #0f766e;
+      --accent-darkest: #134e4a;
+    }
+
+    /* === SEMANTIC COLOR MAPPINGS === */
+    
+    body {
+      --bg-page: light-dark(var(--neutral-lightest), var(--neutral-darkest));
+      --bg-subtle: light-dark(var(--neutral-lighter), var(--neutral-darker));
+      --bg-surface: light-dark(#ffffff, #0a0f1a);
+      --bg-muted: light-dark(var(--neutral-light), var(--neutral-dark));
+      
+      --text-primary: light-dark(var(--neutral-darkest), var(--neutral-lightest));
+      --text-secondary: light-dark(var(--neutral-darker), var(--neutral-lighter));
+      --text-tertiary: light-dark(var(--neutral-dark), var(--neutral-light));
+      
+      --interactive-brand: var(--brand-mid);
+      --interactive-brand-hover: light-dark(var(--brand-dark), var(--brand-light));
+      --interactive-brand-active: light-dark(var(--brand-darker), var(--brand-lighter));
+      --bg-brand-subtle: light-dark(var(--brand-lightest), var(--brand-darkest));
+      --text-on-brand: #ffffff;
+      
+      --interactive-accent: var(--accent-mid);
+      --interactive-accent-hover: light-dark(var(--accent-dark), var(--accent-light));
+      --bg-accent-subtle: light-dark(var(--accent-lightest), var(--accent-darkest));
+      --text-accent: light-dark(var(--accent-dark), var(--accent-light));
+      
+      --border-subtle: light-dark(var(--neutral-lighter), var(--neutral-darker));
+      --border-default: light-dark(var(--neutral-light), var(--neutral-dark));
+      --border-strong: light-dark(var(--neutral-mid), var(--neutral-mid));
+      
+      --shadow-sm: light-dark(0 1px 2px 0 rgb(0 0 0 / 0.05), 0 1px 2px 0 rgb(0 0 0 / 0.3));
+      --shadow-md: light-dark(0 4px 6px -1px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.4));
+    }
+
+    /* === BASE STYLES === */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-default);
+      padding: 2rem 0;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border-default);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    code {
+      background: var(--bg-muted);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875em;
+    }
+
+    pre {
+      background: var(--bg-subtle);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: var(--text-primary);
+    }
+
+    /* === CONTROLS === */
+    
+    .controls {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-subtle);
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    select, .mode-toggle {
+      padding: 0.625rem 1rem;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-default);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    select:hover, select:focus {
+      border-color: var(--interactive-brand);
+      outline: none;
+    }
+
+    .mode-toggle {
+      background: var(--interactive-brand);
+      color: var(--text-on-brand);
+      border-color: var(--interactive-brand);
+      font-weight: 600;
+    }
+
+    .mode-toggle:hover {
+      background: var(--interactive-brand-hover);
+      border-color: var(--interactive-brand-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* === COLOR SCALES === */
+    
+    .color-scales {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scale-group {
+      background: var(--bg-surface);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .scale-group h4 {
+      margin: 0 0 1rem 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .color-scale {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+
+    .color-swatch {
+      aspect-ratio: 1;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .swatch-brand-lightest { background: var(--brand-lightest); color: var(--brand-darkest); }
+    .swatch-brand-lighter { background: var(--brand-lighter); color: var(--brand-darkest); }
+    .swatch-brand-light { background: var(--brand-light); color: var(--brand-darkest); }
+    .swatch-brand-mid { background: var(--brand-mid); color: white; }
+    .swatch-brand-dark { background: var(--brand-dark); color: white; }
+    .swatch-brand-darker { background: var(--brand-darker); color: white; }
+    .swatch-brand-darkest { background: var(--brand-darkest); color: white; }
+
+    .swatch-neutral-lightest { background: var(--neutral-lightest); color: var(--neutral-darkest); }
+    .swatch-neutral-lighter { background: var(--neutral-lighter); color: var(--neutral-darkest); }
+    .swatch-neutral-light { background: var(--neutral-light); color: var(--neutral-darkest); }
+    .swatch-neutral-mid { background: var(--neutral-mid); color: white; }
+    .swatch-neutral-dark { background: var(--neutral-dark); color: white; }
+    .swatch-neutral-darker { background: var(--neutral-darker); color: white; }
+    .swatch-neutral-darkest { background: var(--neutral-darkest); color: white; }
+
+    .swatch-accent-lightest { background: var(--accent-lightest); color: var(--accent-darkest); }
+    .swatch-accent-lighter { background: var(--accent-lighter); color: var(--accent-darkest); }
+    .swatch-accent-light { background: var(--accent-light); color: var(--accent-darkest); }
+    .swatch-accent-mid { background: var(--accent-mid); color: white; }
+    .swatch-accent-dark { background: var(--accent-dark); color: white; }
+    .swatch-accent-darker { background: var(--accent-darker); color: white; }
+    .swatch-accent-darkest { background: var(--accent-darkest); color: white; }
+
+    /* === DEMO COMPONENTS === */
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--interactive-brand);
+      color: var(--text-on-brand);
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--interactive-brand-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border-default);
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--interactive-brand);
+      color: var(--interactive-brand);
+    }
+
+    .btn-accent {
+      background: var(--interactive-accent);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-accent:hover {
+      background: var(--interactive-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-card {
+      background: var(--bg-accent-subtle);
+      border: 2px solid var(--interactive-accent);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .info-card h4 {
+      color: var(--text-accent);
+      margin: 0 0 0.5rem 0;
+      font-size: 1.125rem;
+    }
+
+    .info-card p {
+      margin: 0;
+    }
+
+    .brand-highlight {
+      background: var(--bg-brand-subtle);
+      border-left: 4px solid var(--interactive-brand);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0.375rem;
+    }
+
+    .brand-highlight p {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .color-scale {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body data-theme="ocean">
+  <header>
+    <div class="container">
+      <h1>Multi-Color CSS light-dark() System</h1>
+      <p class="subtitle">Brand, Neutral, and Accent color scales per theme</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="controls">
+      <div class="control-group">
+        <label for="theme-select">Color Theme</label>
+        <select id="theme-select">
+          <option value="ocean">Ocean</option>
+          <option value="forest">Forest</option>
+          <option value="sunset">Sunset</option>
+          <option value="lavender">Lavender</option>
+          <option value="slate">Slate</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="mode-toggle">Color Scheme</label>
+        <button id="mode-toggle" class="mode-toggle">Toggle Dark Mode</button>
+      </div>
+    </div>
+
+    <section>
+      <h2>Current Color Scales</h2>
+      <p>Each theme defines three color scales with distinct purposes:</p>
+      
+      <div class="color-scales">
+        <div class="scale-group">
+          <h4>🎨 Brand Colors — Primary interactive elements</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-brand-lightest">Lightest</div>
+            <div class="color-swatch swatch-brand-lighter">Lighter</div>
+            <div class="color-swatch swatch-brand-light">Light</div>
+            <div class="color-swatch swatch-brand-mid">Mid</div>
+            <div class="color-swatch swatch-brand-dark">Dark</div>
+            <div class="color-swatch swatch-brand-darker">Darker</div>
+            <div class="color-swatch swatch-brand-darkest">Darkest</div>
+          </div>
+        </div>
+
+        <div class="scale-group">
+          <h4>⚪ Neutral Colors — Backgrounds, text, borders</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-neutral-lightest">Lightest</div>
+            <div class="color-swatch swatch-neutral-lighter">Lighter</div>
+            <div class="color-swatch swatch-neutral-light">Light</div>
+            <div class="color-swatch swatch-neutral-mid">Mid</div>
+            <div class="color-swatch swatch-neutral-dark">Dark</div>
+            <div class="color-swatch swatch-neutral-darker">Darker</div>
+            <div class="color-swatch swatch-neutral-darkest">Darkest</div>
+          </div>
+        </div>
+
+        <div class="scale-group">
+          <h4>✨ Accent Colors — Secondary actions, highlights</h4>
+          <div class="color-scale">
+            <div class="color-swatch swatch-accent-lightest">Lightest</div>
+            <div class="color-swatch swatch-accent-lighter">Lighter</div>
+            <div class="color-swatch swatch-accent-light">Light</div>
+            <div class="color-swatch swatch-accent-mid">Mid</div>
+            <div class="color-swatch swatch-accent-dark">Dark</div>
+            <div class="color-swatch swatch-accent-darker">Darker</div>
+            <div class="color-swatch swatch-accent-darkest">Darkest</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Overview</h2>
+      <p>This system uses <strong>three complementary color scales per theme</strong>:</p>
+      <ul>
+        <li><strong>Brand colors:</strong> Primary interactive elements (buttons, links, focus states)</li>
+        <li><strong>Neutral colors:</strong> Structural elements (backgrounds, text, borders)</li>
+        <li><strong>Accent colors:</strong> Secondary actions, highlights, and informational elements</li>
+      </ul>
+      
+      <div class="brand-highlight">
+        <p><strong>Try it:</strong> Switch themes and toggle dark mode to see how the three color scales work together harmoniously.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Component Examples</h2>
+      
+      <div class="demo-grid">
+        <article class="card">
+          <h3>Multi-Color Actions</h3>
+          <p>Brand for primary, Neutral for secondary, and Accent for highlights.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Brand</button>
+            <button class="btn-secondary">Neutral</button>
+            <button class="btn-accent">Accent</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Visual Hierarchy</h3>
+          <p>The three scales create clear hierarchy across all themes and modes.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Get Started</button>
+            <button class="btn-accent">Learn More</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Theme Independent</h3>
+          <p>Components use semantic variables, not specific colors.</p>
+          <div class="card-footer">
+            <button class="btn-primary">Save</button>
+            <button class="btn-secondary">Cancel</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="info-card">
+        <h4>Accent-Styled Info Card</h4>
+        <p>This uses accent colors for background and border, making it visually distinct.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>How It Works</h2>
+      
+      <h3>Step 1: Define Three Color Scales</h3>
+      <pre><code>body[data-theme="ocean"] {
+  /* Brand: Cobalt Blue */
+  --brand-lightest: #eff6ff;
+  --brand-mid: #3b82f6;
+  --brand-darkest: #172554;
+  
+  /* Neutral: Muted Navy */
+  --neutral-lightest: #f8fafc;
+  --neutral-mid: #64748b;
+  --neutral-darkest: #1e293b;
+  
+  /* Accent: Robin's Egg */
+  --accent-lightest: #ecfeff;
+  --accent-mid: #06b6d4;
+  --accent-darkest: #164e63;
+}</code></pre>
+
+      <h3>Step 2: Create Semantic Mappings</h3>
+      <pre><code>body {
+  color-scheme: light dark;
+  
+  /* Neutral for structure */
+  --bg-page: light-dark(
+    var(--neutral-lightest), 
+    var(--neutral-darkest)
+  );
+  
+  /* Brand for interactions */
+  --interactive-brand: var(--brand-mid);
+  --interactive-brand-hover: light-dark(
+    var(--brand-dark), 
+    var(--brand-light)
+  );
+  
+  /* Accent for highlights */
+  --interactive-accent: var(--accent-mid);
+}</code></pre>
+
+      <h3>Step 3: Use Semantic Variables</h3>
+      <pre><code>.btn-primary {
+  background: var(--interactive-brand);
+}
+
+.btn-accent {
+  background: var(--interactive-accent);
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Theme Combinations</h2>
+      <ul>
+        <li><strong>Ocean:</strong> Cobalt Blue + Muted Navy + Robin's Egg</li>
+        <li><strong>Forest:</strong> Forest Green + Warm Gray + Sage</li>
+        <li><strong>Sunset:</strong> Vibrant Orange + Warm Stone + Pink</li>
+        <li><strong>Lavender:</strong> Purple + Cool Gray + Indigo</li>
+        <li><strong>Slate:</strong> Blue Gray + True Gray + Teal</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Key Benefits</h2>
+      
+      <h3>Clear Visual Hierarchy</h3>
+      <p>Brand draws attention to primary actions, Accent highlights secondary information, and Neutral provides structure.</p>
+
+      <h3>Semantic Clarity</h3>
+      <p>Variables describe purpose (<code>--interactive-brand</code>) not appearance (<code>--color-blue</code>).</p>
+
+      <h3>Maintainability</h3>
+      <p>Change themes by swapping a single attribute. Add new themes without touching component CSS.</p>
+
+      <h3>Accessibility</h3>
+      <p>Respects OS-level dark mode preference. Consistent contrast ratios across themes.</p>
+    </section>
+
+    <section>
+      <h2>Browser Support</h2>
+      <p>The <code>light-dark()</code> function is supported in Chrome/Edge 123+, Firefox 120+, and Safari 17.5+.</p>
+    </section>
+  </main>
+
+  <script>
+    const themeSelect = document.getElementById('theme-select');
+    const modeToggle = document.getElementById('mode-toggle');
+    
+    themeSelect.addEventListener('change', (e) => {
+      document.body.setAttribute('data-theme', e.target.value);
+    });
+    
+    modeToggle.addEventListener('click', () => {
+      const current = document.documentElement.style.colorScheme;
+      const newScheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.style.colorScheme = newScheme;
+      modeToggle.textContent = newScheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    });
+    
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    modeToggle.textContent = prefersDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!document.documentElement.style.colorScheme) {
+        modeToggle.textContent = e.matches ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+      }
+    });
+    
+    const demoButtons = document.querySelectorAll('.card button');
+    demoButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const originalText = e.target.textContent;
+        e.target.textContent = 'Clicked! ✓';
+        e.target.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+          e.target.textContent = originalText;
+          e.target.style.transform = '';
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>

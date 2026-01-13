@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradients & Opacity - Color System Extension</title>
+  <style>
+    /* === BASE COLOR SCALES === */
+    
+    :root {
+      color-scheme: light dark;
+      
+      /* Brand: Cobalt Blue */
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      /* Neutral: Slate */
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      /* Accent: Cyan */
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
+    }
+    
+    body[data-theme="ocean"] {
+      --brand-lightest: #eff6ff;
+      --brand-lighter: #dbeafe;
+      --brand-light: #93c5fd;
+      --brand-mid: #3b82f6;
+      --brand-dark: #1d4ed8;
+      --brand-darker: #1e40af;
+      --brand-darkest: #172554;
+      
+      --neutral-lightest: #f8fafc;
+      --neutral-lighter: #e2e8f0;
+      --neutral-light: #94a3b8;
+      --neutral-mid: #64748b;
+      --neutral-dark: #475569;
+      --neutral-darker: #334155;
+      --neutral-darkest: #1e293b;
+      
+      --accent-lightest: #ecfeff;
+      --accent-lighter: #cffafe;
+      --accent-light: #67e8f9;
+      --accent-mid: #06b6d4;
+      --accent-dark: #0891b2;
+      --accent-darker: #0e7490;
+      --accent-darkest: #164e63;
+    }
+
+    body[data-theme="sunset"] {
+      --brand-lightest: #fff7ed;
+      --brand-lighter: #ffedd5;
+      --brand-light: #fdba74;
+      --brand-mid: #f97316;
+      --brand-dark: #ea580c;
+      --brand-darker: #c2410c;
+      --brand-darkest: #7c2d12;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #fdf2f8;
+      --accent-lighter: #fce7f3;
+      --accent-light: #f9a8d4;
+      --accent-mid: #ec4899;
+      --accent-dark: #db2777;
+      --accent-darker: #be185d;
+      --accent-darkest: #831843;
+    }
+
+    body[data-theme="forest"] {
+      --brand-lightest: #f0fdf4;
+      --brand-lighter: #dcfce7;
+      --brand-light: #86efac;
+      --brand-mid: #22c55e;
+      --brand-dark: #16a34a;
+      --brand-darker: #15803d;
+      --brand-darkest: #14532d;
+      
+      --neutral-lightest: #fafaf9;
+      --neutral-lighter: #e7e5e4;
+      --neutral-light: #a8a29e;
+      --neutral-mid: #78716c;
+      --neutral-dark: #57534e;
+      --neutral-darker: #44403c;
+      --neutral-darkest: #292524;
+      
+      --accent-lightest: #f7fee7;
+      --accent-lighter: #ecfccb;
+      --accent-light: #d9f99d;
+      --accent-mid: #a3e635;
+      --accent-dark: #84cc16;
+      --accent-darker: #65a30d;
+      --accent-darkest: #3f6212;
+    }
+
+    /* === OPACITY VARIANTS === */
+    /* Convert hex colors to RGB for opacity control */
+    
+    body {
+      /* Brand RGB values (extracted from hex) */
+      --brand-rgb-lightest: light-dark(239 246 255, 23 37 84);
+      --brand-rgb-lighter: light-dark(219 226 254, 30 64 175);
+      --brand-rgb-light: light-dark(147 197 253, 29 78 216);
+      --brand-rgb-mid: light-dark(59 130 246, 59 130 246);
+      --brand-rgb-dark: light-dark(29 78 216, 147 197 253);
+      --brand-rgb-darker: light-dark(30 64 175, 219 226 254);
+      --brand-rgb-darkest: light-dark(23 37 84, 239 246 255);
+      
+      /* Neutral RGB values */
+      --neutral-rgb-lightest: light-dark(248 250 252, 30 41 59);
+      --neutral-rgb-lighter: light-dark(226 232 240, 51 65 85);
+      --neutral-rgb-light: light-dark(148 163 184, 71 85 105);
+      --neutral-rgb-mid: light-dark(100 116 139, 100 116 139);
+      --neutral-rgb-dark: light-dark(71 85 105, 148 163 184);
+      --neutral-rgb-darker: light-dark(51 65 85, 226 232 240);
+      --neutral-rgb-darkest: light-dark(30 41 59, 248 250 252);
+      
+      /* Accent RGB values */
+      --accent-rgb-lightest: light-dark(236 254 255, 22 78 99);
+      --accent-rgb-lighter: light-dark(207 250 254, 14 116 144);
+      --accent-rgb-light: light-dark(103 232 249, 8 145 178);
+      --accent-rgb-mid: light-dark(6 182 212, 6 182 212);
+      --accent-rgb-dark: light-dark(8 145 178, 103 232 249);
+      --accent-rgb-darker: light-dark(14 116 144, 207 250 254);
+      --accent-rgb-darkest: light-dark(22 78 99, 236 254 255);
+      
+      /* Opacity scale (10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%) */
+      --opacity-10: 0.1;
+      --opacity-20: 0.2;
+      --opacity-30: 0.3;
+      --opacity-40: 0.4;
+      --opacity-50: 0.5;
+      --opacity-60: 0.6;
+      --opacity-70: 0.7;
+      --opacity-80: 0.8;
+      --opacity-90: 0.9;
+      
+      /* Semantic opacity variants - Brand */
+      --brand-alpha-10: rgb(var(--brand-rgb-mid) / var(--opacity-10));
+      --brand-alpha-20: rgb(var(--brand-rgb-mid) / var(--opacity-20));
+      --brand-alpha-30: rgb(var(--brand-rgb-mid) / var(--opacity-30));
+      --brand-alpha-40: rgb(var(--brand-rgb-mid) / var(--opacity-40));
+      --brand-alpha-50: rgb(var(--brand-rgb-mid) / var(--opacity-50));
+      --brand-alpha-60: rgb(var(--brand-rgb-mid) / var(--opacity-60));
+      --brand-alpha-70: rgb(var(--brand-rgb-mid) / var(--opacity-70));
+      --brand-alpha-80: rgb(var(--brand-rgb-mid) / var(--opacity-80));
+      --brand-alpha-90: rgb(var(--brand-rgb-mid) / var(--opacity-90));
+      
+      /* Semantic opacity variants - Accent */
+      --accent-alpha-10: rgb(var(--accent-rgb-mid) / var(--opacity-10));
+      --accent-alpha-20: rgb(var(--accent-rgb-mid) / var(--opacity-20));
+      --accent-alpha-30: rgb(var(--accent-rgb-mid) / var(--opacity-30));
+      --accent-alpha-40: rgb(var(--accent-rgb-mid) / var(--opacity-40));
+      --accent-alpha-50: rgb(var(--accent-rgb-mid) / var(--opacity-50));
+      
+      /* Semantic opacity variants - Neutral (for overlays, disabled states) */
+      --neutral-alpha-10: rgb(var(--neutral-rgb-darkest) / var(--opacity-10));
+      --neutral-alpha-20: rgb(var(--neutral-rgb-darkest) / var(--opacity-20));
+      --neutral-alpha-30: rgb(var(--neutral-rgb-darkest) / var(--opacity-30));
+      --neutral-alpha-50: rgb(var(--neutral-rgb-darkest) / var(--opacity-50));
+      --neutral-alpha-70: rgb(var(--neutral-rgb-darkest) / var(--opacity-70));
+      --neutral-alpha-90: rgb(var(--neutral-rgb-darkest) / var(--opacity-90));
+    }
+
+    /* === GRADIENT DEFINITIONS === */
+    
+    body {
+      /* Linear gradients - Brand */
+      --gradient-brand-vertical: linear-gradient(
+        to bottom,
+        var(--brand-light),
+        var(--brand-dark)
+      );
+      --gradient-brand-horizontal: linear-gradient(
+        to right,
+        var(--brand-light),
+        var(--brand-dark)
+      );
+      --gradient-brand-diagonal: linear-gradient(
+        135deg,
+        var(--brand-light),
+        var(--brand-dark)
+      );
+      
+      /* Linear gradients - Accent */
+      --gradient-accent-vertical: linear-gradient(
+        to bottom,
+        var(--accent-light),
+        var(--accent-dark)
+      );
+      --gradient-accent-diagonal: linear-gradient(
+        135deg,
+        var(--accent-light),
+        var(--accent-dark)
+      );
+      
+      /* Multi-stop gradients - Brand to Accent */
+      --gradient-brand-accent: linear-gradient(
+        135deg,
+        var(--brand-mid),
+        var(--accent-mid)
+      );
+      --gradient-brand-accent-subtle: linear-gradient(
+        135deg,
+        var(--brand-lighter),
+        var(--accent-lighter)
+      );
+      
+      /* Radial gradients */
+      --gradient-brand-radial: radial-gradient(
+        circle at center,
+        var(--brand-light),
+        var(--brand-dark)
+      );
+      --gradient-accent-radial: radial-gradient(
+        circle at top right,
+        var(--accent-lighter),
+        var(--accent-darker)
+      );
+      
+      /* Mesh/complex gradients */
+      --gradient-mesh: linear-gradient(
+        135deg,
+        var(--brand-lighter) 0%,
+        var(--accent-lighter) 50%,
+        var(--brand-lighter) 100%
+      );
+      
+      /* Overlay gradients (with opacity) */
+      --gradient-overlay-dark: linear-gradient(
+        to bottom,
+        var(--neutral-alpha-10),
+        var(--neutral-alpha-90)
+      );
+      --gradient-overlay-top: linear-gradient(
+        to bottom,
+        var(--neutral-alpha-50),
+        transparent
+      );
+      
+      /* Shimmer/shine effect */
+      --gradient-shimmer: linear-gradient(
+        90deg,
+        transparent,
+        var(--brand-alpha-20),
+        transparent
+      );
+    }
+
+    /* === SEMANTIC MAPPINGS === */
+    
+    body {
+      --bg-page: light-dark(var(--neutral-lightest), var(--neutral-darkest));
+      --bg-surface: light-dark(#ffffff, #0f172a);
+      --text-primary: light-dark(var(--neutral-darkest), var(--neutral-lightest));
+      --text-secondary: light-dark(var(--neutral-darker), var(--neutral-lighter));
+      --border-default: light-dark(var(--neutral-light), var(--neutral-dark));
+      --interactive-brand: var(--brand-mid);
+      --interactive-brand-hover: light-dark(var(--brand-dark), var(--brand-light));
+    }
+
+    /* === BASE STYLES === */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-default);
+      padding: 2rem 0;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border-default);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    code {
+      background: var(--brand-alpha-10);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875em;
+    }
+
+    pre {
+      background: var(--bg-surface);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--border-default);
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    /* === CONTROLS === */
+    
+    .controls {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-surface);
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-default);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    select, button {
+      padding: 0.625rem 1rem;
+      border-radius: 0.375rem;
+      border: 2px solid var(--border-default);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button {
+      background: var(--interactive-brand);
+      color: white;
+      border-color: var(--interactive-brand);
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: var(--interactive-brand-hover);
+      border-color: var(--interactive-brand-hover);
+    }
+
+    /* === OPACITY DEMOS === */
+    
+    .opacity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .opacity-swatch {
+      aspect-ratio: 1;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-default);
+      font-size: 0.875rem;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .opacity-swatch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(45deg, var(--neutral-light) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--neutral-light) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--neutral-light) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--neutral-light) 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      z-index: 0;
+    }
+
+    .opacity-swatch-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .opacity-label {
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    /* === GRADIENT DEMOS === */
+    
+    .gradient-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .gradient-card {
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      background: var(--bg-surface);
+    }
+
+    .gradient-preview {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.125rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .gradient-info {
+      padding: 1rem;
+    }
+
+    .gradient-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .gradient-info p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Gradient examples */
+    .grad-brand-vertical { background: var(--gradient-brand-vertical); }
+    .grad-brand-horizontal { background: var(--gradient-brand-horizontal); }
+    .grad-brand-diagonal { background: var(--gradient-brand-diagonal); }
+    .grad-accent-vertical { background: var(--gradient-accent-vertical); }
+    .grad-accent-diagonal { background: var(--gradient-accent-diagonal); }
+    .grad-brand-accent { background: var(--gradient-brand-accent); }
+    .grad-brand-radial { background: var(--gradient-brand-radial); }
+    .grad-mesh { background: var(--gradient-mesh); }
+
+    /* === PRACTICAL EXAMPLES === */
+    
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .example-card {
+      background: var(--bg-surface);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+    }
+
+    /* Hero with gradient overlay */
+    .hero-example {
+      height: 300px;
+      background: var(--gradient-brand-diagonal);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .hero-example::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-overlay-dark);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-content h3 {
+      margin: 0 0 1rem 0;
+      font-size: 2rem;
+      color: white;
+    }
+
+    .hero-content p {
+      margin: 0 0 1.5rem 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-btn {
+      background: white;
+      color: var(--brand-mid);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Glass card with alpha background */
+    .glass-card {
+      background: var(--brand-alpha-10);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--brand-alpha-20);
+      border-radius: 1rem;
+      padding: 2rem;
+    }
+
+    .glass-card h4 {
+      margin: 0 0 1rem 0;
+      color: var(--text-primary);
+    }
+
+    /* Badge with alpha */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .badge-brand {
+      background: var(--brand-alpha-20);
+      color: var(--brand-dark);
+    }
+
+    .badge-accent {
+      background: var(--accent-alpha-20);
+      color: var(--accent-dark);
+    }
+
+    /* Loading shimmer */
+    .shimmer-box {
+      height: 100px;
+      background: var(--bg-surface);
+      border-radius: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shimmer-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-shimmer);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Overlay example */
+    .overlay-example {
+      position: relative;
+      height: 200px;
+      background: var(--gradient-brand-horizontal);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .overlay-example::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-overlay-top);
+      border-radius: 0.5rem;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
+
+    .overlay-content h4 {
+      margin: 0 0 0.5rem 0;
+      color: white;
+    }
+
+    .overlay-content p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Table with alpha rows */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-surface);
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    thead {
+      background: var(--brand-alpha-10);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    tbody tr:hover {
+      background: var(--brand-alpha-10);
+    }
+
+    /* Info boxes */
+    .info-box {
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-box-brand {
+      background: var(--brand-alpha-10);
+      border-left: 4px solid var(--brand-mid);
+    }
+
+    .info-box-accent {
+      background: var(--accent-alpha-10);
+      border-left: 4px solid var(--accent-mid);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .opacity-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      }
+
+      .gradient-grid, .examples-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-theme="ocean">
+  <header>
+    <div class="container">
+      <h1>Gradients & Opacity Variants</h1>
+      <p style="color: var(--text-secondary); font-size: 1.125rem;">
+        Extending the color system with adaptive gradients and opacity scales
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="controls">
+      <div class="control-group">
+        <label for="theme-select">Theme</label>
+        <select id="theme-select">
+          <option value="ocean">Ocean</option>
+          <option value="sunset">Sunset</option>
+          <option value="forest">Forest</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Mode</label>
+        <button id="mode-toggle">Toggle Dark Mode</button>
+      </div>
+    </div>
+
+    <section>
+      <h2>Opacity Variants</h2>
+      <p>
+        Opacity variants allow you to create layered effects, overlays, and subtle backgrounds while maintaining theme consistency. Each color scale has pre-defined alpha values at 10%, 20%, 30%, 40%, and 50% opacity.
+      </p>
+
+      <h3>Brand Color Opacity Scale</h3>
+      <div class="opacity-grid">
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--accent-alpha-10);">
+            <span>10%</span>
+          </div>
+          <div class="opacity-label">accent-alpha-10</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--accent-alpha-20);">
+            <span>20%</span>
+          </div>
+          <div class="opacity-label">accent-alpha-20</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--accent-alpha-30);">
+            <span>30%</span>
+          </div>
+          <div class="opacity-label">accent-alpha-30</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--accent-alpha-40);">
+            <span>40%</span>
+          </div>
+          <div class="opacity-label">accent-alpha-40</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--accent-alpha-50);">
+            <span>50%</span>
+          </div>
+          <div class="opacity-label">accent-alpha-50</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Gradient Library</h2>
+      <p>
+        Pre-defined gradients that automatically adapt to theme changes and light/dark mode. All gradients use semantic color variables, ensuring consistency across your design system.
+      </p>
+
+      <div class="gradient-grid">
+        <div class="gradient-card">
+          <div class="gradient-preview grad-brand-vertical">
+            Brand Vertical
+          </div>
+          <div class="gradient-info">
+            <h4>Brand Vertical</h4>
+            <p><code>--gradient-brand-vertical</code></p>
+            <p>Top to bottom, light to dark</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-brand-horizontal">
+            Brand Horizontal
+          </div>
+          <div class="gradient-info">
+            <h4>Brand Horizontal</h4>
+            <p><code>--gradient-brand-horizontal</code></p>
+            <p>Left to right, light to dark</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-brand-diagonal">
+            Brand Diagonal
+          </div>
+          <div class="gradient-info">
+            <h4>Brand Diagonal</h4>
+            <p><code>--gradient-brand-diagonal</code></p>
+            <p>135° angle, dynamic flow</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-accent-vertical">
+            Accent Vertical
+          </div>
+          <div class="gradient-info">
+            <h4>Accent Vertical</h4>
+            <p><code>--gradient-accent-vertical</code></p>
+            <p>Accent colors, top to bottom</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-accent-diagonal">
+            Accent Diagonal
+          </div>
+          <div class="gradient-info">
+            <h4>Accent Diagonal</h4>
+            <p><code>--gradient-accent-diagonal</code></p>
+            <p>Accent colors, diagonal flow</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-brand-accent">
+            Brand to Accent
+          </div>
+          <div class="gradient-info">
+            <h4>Brand to Accent</h4>
+            <p><code>--gradient-brand-accent</code></p>
+            <p>Combines both color scales</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-brand-radial">
+            Brand Radial
+          </div>
+          <div class="gradient-info">
+            <h4>Brand Radial</h4>
+            <p><code>--gradient-brand-radial</code></p>
+            <p>Radiating from center</p>
+          </div>
+        </div>
+
+        <div class="gradient-card">
+          <div class="gradient-preview grad-mesh">
+            Mesh Gradient
+          </div>
+          <div class="gradient-info">
+            <h4>Mesh Gradient</h4>
+            <p><code>--gradient-mesh</code></p>
+            <p>Multi-stop, complex blend</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Practical Examples</h2>
+      <p>Real-world use cases demonstrating gradients and opacity in action.</p>
+
+      <h3>Hero Section with Gradient Overlay</h3>
+      <div class="hero-example">
+        <div class="hero-content">
+          <h3>Welcome to Your App</h3>
+          <p>Beautiful gradients that adapt to any theme</p>
+          <button class="hero-btn">Get Started</button>
+        </div>
+      </div>
+
+      <pre><code>/* Hero with gradient background + dark overlay */
+.hero {
+  background: var(--gradient-brand-diagonal);
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-overlay-dark);
+}</code></pre>
+
+      <h3>Glassmorphism Cards</h3>
+      <div class="examples-grid">
+        <div class="glass-card">
+          <h4>Glass Effect Card</h4>
+          <p>Uses <code>brand-alpha-10</code> with backdrop blur for a modern frosted glass effect.</p>
+          <div style="margin-top: 1rem;">
+            <span class="badge badge-brand">New</span>
+            <span class="badge badge-accent">Featured</span>
+          </div>
+        </div>
+
+        <div class="glass-card" style="background: var(--accent-alpha-10); border-color: var(--accent-alpha-20);">
+          <h4>Accent Glass Card</h4>
+          <p>Same effect using accent colors for visual variety and hierarchy.</p>
+          <div style="margin-top: 1rem;">
+            <span class="badge badge-accent">Premium</span>
+          </div>
+        </div>
+      </div>
+
+      <pre><code>/* Glass card styling */
+.glass-card {
+  background: var(--brand-alpha-10);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--brand-alpha-20);
+}</code></pre>
+
+      <h3>Content Overlay</h3>
+      <div class="overlay-example">
+        <div class="overlay-content">
+          <h4>Image with Text Overlay</h4>
+          <p>Gradient ensures text readability over any background</p>
+        </div>
+      </div>
+
+      <pre><code>/* Overlay gradient for readability */
+.overlay::before {
+  background: var(--gradient-overlay-top);
+  /* Fades from semi-transparent to transparent */
+}</code></pre>
+
+      <h3>Loading Shimmer Effect</h3>
+      <div class="shimmer-box"></div>
+      <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+        The shimmer animation uses <code>--gradient-shimmer</code> with brand alpha colors
+      </p>
+
+      <pre><code>/* Shimmer loading effect */
+.shimmer::before {
+  background: var(--gradient-shimmer);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}</code></pre>
+
+      <h3>Interactive Table</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Status</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gradient System</td>
+            <td><span class="badge badge-brand">Complete</span></td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Opacity Variants</td>
+            <td><span class="badge badge-brand">Complete</span></td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Dark Mode Support</td>
+            <td><span class="badge badge-accent">Active</span></td>
+            <td>Medium</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <pre><code>/* Table hover with alpha background */
+tbody tr:hover {
+  background: var(--brand-alpha-10);
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Implementation Guide</h2>
+
+      <h3>Setting Up Opacity Variants</h3>
+      <p>Convert your hex colors to RGB format to enable opacity control:</p>
+
+      <pre><code>body {
+  /* Extract RGB values from hex colors */
+  --brand-rgb-mid: 59 130 246;
+  
+  /* Create opacity variants */
+  --brand-alpha-10: rgb(var(--brand-rgb-mid) / 0.1);
+  --brand-alpha-20: rgb(var(--brand-rgb-mid) / 0.2);
+  --brand-alpha-30: rgb(var(--brand-rgb-mid) / 0.3);
+  /* ... and so on */
+}</code></pre>
+
+      <div class="info-box info-box-accent">
+        <h4 style="margin: 0 0 0.5rem 0;">💡 Pro Tip</h4>
+        <p style="margin: 0;">
+          Use <code>light-dark()</code> with RGB values to ensure opacity variants adapt correctly in dark mode:
+        </p>
+        <pre style="margin-top: 0.5rem;"><code>--brand-rgb-mid: light-dark(59 130 246, 147 197 253);</code></pre>
+      </div>
+
+      <h3>Defining Semantic Gradients</h3>
+      <p>Create reusable gradient variables that reference your color scales:</p>
+
+      <pre><code>body {
+  /* Linear gradients */
+  --gradient-brand-diagonal: linear-gradient(
+    135deg,
+    var(--brand-light),
+    var(--brand-dark)
+  );
+  
+  /* Radial gradients */
+  --gradient-brand-radial: radial-gradient(
+    circle at center,
+    var(--brand-light),
+    var(--brand-dark)
+  );
+  
+  /* Multi-color gradients */
+  --gradient-brand-accent: linear-gradient(
+    135deg,
+    var(--brand-mid),
+    var(--accent-mid)
+  );
+  
+  /* Overlay gradients with opacity */
+  --gradient-overlay-dark: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0.1),
+    rgb(0 0 0 / 0.9)
+  );
+}</code></pre>
+
+      <h3>Usage Best Practices</h3>
+      <ul>
+        <li><strong>Opacity for Layers:</strong> Use 10-30% for subtle backgrounds, 50% for overlays, 70-90% for modal backdrops</li>
+        <li><strong>Gradients for Emphasis:</strong> Reserve gradients for hero sections, CTAs, and premium features</li>
+        <li><strong>Performance:</strong> Limit complex gradients on frequently repainting elements</li>
+        <li><strong>Accessibility:</strong> Ensure text over gradients maintains sufficient contrast (WCAG AA minimum 4.5:1)</li>
+        <li><strong>Consistency:</strong> Use pre-defined gradient variables instead of ad-hoc gradients</li>
+      </ul>
+
+      <h3>Common Use Cases</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <div class="info-box info-box-brand">
+          <h4 style="margin: 0 0 0.5rem 0;">Hover States</h4>
+          <p style="margin: 0; font-size: 0.875rem;">
+            <code>background: var(--brand-alpha-10);</code><br>
+            Subtle feedback on interactive elements
+          </p>
+        </div>
+        <div class="info-box info-box-brand">
+          <h4 style="margin: 0 0 0.5rem 0;">Selected Items</h4>
+          <p style="margin: 0; font-size: 0.875rem;">
+            <code>background: var(--brand-alpha-20);</code><br>
+            Show selection in lists and tables
+          </p>
+        </div>
+        <div class="info-box info-box-brand">
+          <h4 style="margin: 0 0 0.5rem 0;">Disabled States</h4>
+          <p style="margin: 0; font-size: 0.875rem;">
+            <code>opacity: var(--opacity-40);</code><br>
+            Indicate unavailable actions
+          </p>
+        </div>
+        <div class="info-box info-box-brand">
+          <h4 style="margin: 0 0 0.5rem 0;">Modal Backdrops</h4>
+          <p style="margin: 0; font-size: 0.875rem;">
+            <code>background: var(--neutral-alpha-70);</code><br>
+            Focus attention on modal content
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Gradient Patterns Library</h2>
+      <p>Advanced gradient combinations for specific design needs:</p>
+
+      <pre><code>/* Animated gradient (CSS custom properties + animations) */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    270deg,
+    var(--brand-light),
+    var(--accent-light),
+    var(--brand-dark)
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Subtle background pattern */
+.pattern-gradient {
+  background: 
+    linear-gradient(135deg, var(--brand-alpha-10) 25%, transparent 25%),
+    linear-gradient(225deg, var(--brand-alpha-10) 25%, transparent 25%),
+    linear-gradient(45deg, var(--brand-alpha-10) 25%, transparent 25%),
+    linear-gradient(315deg, var(--brand-alpha-10) 25%, var(--bg-surface) 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat;
+}
+
+/* Spotlight effect */
+.spotlight {
+  background: 
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--brand-alpha-30),
+      transparent 50%
+    ),
+    var(--bg-surface);
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Browser Support & Fallbacks</h2>
+      <p>
+        RGB with alpha channel syntax is widely supported. For maximum compatibility:
+      </p>
+
+      <pre><code>/* Fallback pattern */
+.element {
+  /* Fallback for older browsers */
+  background: var(--brand-light);
+  
+  /* Modern browsers with alpha support */
+  background: var(--brand-alpha-20);
+}
+
+/* Gradient fallbacks */
+.hero {
+  background: var(--brand-mid); /* Solid fallback */
+  background: var(--gradient-brand-diagonal); /* Gradient */
+}</code></pre>
+
+      <div class="info-box info-box-accent">
+        <h4 style="margin: 0 0 0.5rem 0;">✨ Future Enhancement</h4>
+        <p style="margin: 0;">
+          Consider using <code>color-mix()</code> for even more flexible opacity control once browser support improves:
+        </p>
+        <pre style="margin-top: 0.5rem;"><code>background: color-mix(in srgb, var(--brand-mid) 20%, transparent);</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeSelect = document.getElementById('theme-select');
+    const modeToggle = document.getElementById('mode-toggle');
+    
+    themeSelect.addEventListener('change', (e) => {
+      document.body.setAttribute('data-theme', e.target.value);
+    });
+    
+    modeToggle.addEventListener('click', () => {
+      const current = document.documentElement.style.colorScheme;
+      const newScheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.style.colorScheme = newScheme;
+      modeToggle.textContent = newScheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    });
+    
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    modeToggle.textContent = prefersDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+  </script>
+</body>
+</html>
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-10);">
+            <span>10%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-10</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-20);">
+            <span>20%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-20</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-30);">
+            <span>30%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-30</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-40);">
+            <span>40%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-40</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-50);">
+            <span>50%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-50</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-60);">
+            <span>60%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-60</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-70);">
+            <span style="color: white;">70%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-70</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-80);">
+            <span style="color: white;">80%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-80</div>
+        </div>
+        <div class="opacity-swatch">
+          <div class="opacity-swatch-content" style="background: var(--brand-alpha-90);">
+            <span style="color: white;">90%</span>
+          </div>
+          <div class="opacity-label">brand-alpha-90</div>
+        </div>
+      </div>
+
+      <div class="info-box info-box-brand">
+        <h4 style="margin: 0 0 0.5rem 0;">Usage Pattern</h4>
+        <p style="margin: 0;">
+          <code>background: var(--brand-alpha-20);</code> — Perfect for subtle highlights, hover states, and selected items.
+        </p>
+      </div>
+
+      <h3>Accent Color Opacity Scale</h3>
+      <div class="opacity-grid">
+        <div class="opacity-swatch">

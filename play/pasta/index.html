@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Pasta Calculator</title>
+  <title>Pasta Portion Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -14,6 +14,10 @@
       max-width: 42rem;
     }
 
+    h1 {
+      margin-bottom: 1rem;
+    }
+
     fieldset {
       margin-bottom: 1.5rem;
       border: 1px solid #ccc;
@@ -22,11 +26,17 @@
 
     legend {
       font-weight: 600;
+      padding: 0 0.25rem;
     }
 
     label {
       display: block;
       margin: 0.25rem 0;
+    }
+
+    select,
+    input[type="number"] {
+      margin-top: 0.25rem;
     }
 
     output {
@@ -35,12 +45,16 @@
       font-weight: 600;
       margin-top: 0.5rem;
     }
+
+    small {
+      color: #555;
+    }
   </style>
 </head>
 
 <body>
   <main>
-    <h1>Pasta Calculator</h1>
+    <h1>Pasta Portion Calculator</h1>
 
     <form id="pasta-form">
       <!-- Pasta shape -->
@@ -48,14 +62,18 @@
         <legend>Pasta shape</legend>
         <label>
           <select name="shape" required>
-            <option value="long">Spaghetti / Linguine</option>
-            <option value="short">Penne / Fusilli</option>
-            <option value="stuffed">Ravioli / Tortellini</option>
+            <option value="long">Long (spaghetti, linguine)</option>
+            <option value="short">Short (penne, fusilli)</option>
+            <option value="small">Small (orzo, ditalini)</option>
+            <option value="flat">Flat (farfalle)</option>
+            <option value="tubular">Large tubular (paccheri)</option>
+            <option value="sheet">Sheets (lasagne)</option>
+            <option value="stuffed">Stuffed (ravioli, tortellini)</option>
           </select>
         </label>
       </fieldset>
 
-      <!-- Pasta type -->
+      <!-- Grain type -->
       <fieldset>
         <legend>Pasta type</legend>
         <label>
@@ -68,12 +86,12 @@
         </label>
       </fieldset>
 
-      <!-- Serving context -->
+      <!-- Meal context -->
       <fieldset>
-        <legend>Serving size</legend>
+        <legend>Serving context</legend>
         <label>
           <input type="radio" name="meal" value="side" />
-          Side dish
+          Side / contorno
         </label>
         <label>
           <input type="radio" name="meal" value="main" checked />
@@ -85,7 +103,7 @@
         </label>
       </fieldset>
 
-      <!-- People -->
+      <!-- Number of people -->
       <fieldset>
         <legend>Number of people</legend>
         <label>
@@ -102,11 +120,9 @@
 
       <!-- Result -->
       <fieldset>
-        <legend>Result</legend>
-        <output id="result" aria-live="polite">
-          —
-        </output>
-        <small>Dry pasta amount</small>
+        <legend>Dry pasta required</legend>
+        <output id="result" aria-live="polite">—</output>
+        <small>Metric is primary; imperial shown for reference.</small>
       </fieldset>
     </form>
   </main>
@@ -115,22 +131,39 @@
     const form = document.getElementById("pasta-form");
     const output = document.getElementById("result");
 
+    /* 
+      European dry pasta portion baselines (grams per person)
+      Based on Italian / EU culinary norms
+    */
     const BASE_GRAMS = {
-      side: 60,
-      main: 100,
-      salad: 80
+      side: 55,
+      main: 95,
+      salad: 75
     };
 
+    /*
+      Shape density multipliers
+      Reflect perceived portion & plate coverage
+    */
     const SHAPE_MULTIPLIER = {
-      long: 1,
+      long: 1.0,
       short: 1.05,
-      stuffed: 0.8
+      small: 1.15,
+      flat: 1.0,
+      tubular: 0.9,
+      sheet: 0.85,
+      stuffed: 0.75
     };
 
+    /*
+      Grain adjustment (dry weight)
+    */
     const GRAIN_MULTIPLIER = {
-      normal: 1,
+      normal: 1.0,
       whole: 1.1
     };
+
+    const GRAMS_TO_OUNCES = 0.035274;
 
     function calculatePasta(formData) {
       const people = Number(formData.get("people"));
@@ -138,19 +171,20 @@
       const shape = formData.get("shape");
       const grain = formData.get("grain");
 
-      const base =
+      const gramsPerPerson =
         BASE_GRAMS[meal] *
         SHAPE_MULTIPLIER[shape] *
         GRAIN_MULTIPLIER[grain];
 
-      return Math.round(base * people);
+      return Math.round(gramsPerPerson * people);
     }
 
     function update() {
       const formData = new FormData(form);
       const grams = calculatePasta(formData);
+      const ounces = grams * GRAMS_TO_OUNCES;
 
-      output.textContent = `${grams} g`;
+      output.textContent = `${grams} g (${ounces.toFixed(1)} oz)`;
     }
 
     form.addEventListener("input", update);

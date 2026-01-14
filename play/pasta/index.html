@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pasta Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    /* Minimal structural styling only */
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      padding: 1rem;
+      max-width: 42rem;
+    }
+
+    fieldset {
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+
+    legend {
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      margin: 0.25rem 0;
+    }
+
+    output {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Pasta Calculator</h1>
+
+    <form id="pasta-form">
+      <!-- Pasta shape -->
+      <fieldset>
+        <legend>Pasta shape</legend>
+        <label>
+          <select name="shape" required>
+            <option value="long">Spaghetti / Linguine</option>
+            <option value="short">Penne / Fusilli</option>
+            <option value="stuffed">Ravioli / Tortellini</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <!-- Pasta type -->
+      <fieldset>
+        <legend>Pasta type</legend>
+        <label>
+          <input type="radio" name="grain" value="normal" checked />
+          Regular
+        </label>
+        <label>
+          <input type="radio" name="grain" value="whole" />
+          Whole wheat / whole grain
+        </label>
+      </fieldset>
+
+      <!-- Serving context -->
+      <fieldset>
+        <legend>Serving size</legend>
+        <label>
+          <input type="radio" name="meal" value="side" />
+          Side dish
+        </label>
+        <label>
+          <input type="radio" name="meal" value="main" checked />
+          Main dish
+        </label>
+        <label>
+          <input type="radio" name="meal" value="salad" />
+          Pasta salad
+        </label>
+      </fieldset>
+
+      <!-- People -->
+      <fieldset>
+        <legend>Number of people</legend>
+        <label>
+          <input
+            type="number"
+            name="people"
+            min="1"
+            step="1"
+            value="2"
+            required
+          />
+        </label>
+      </fieldset>
+
+      <!-- Result -->
+      <fieldset>
+        <legend>Result</legend>
+        <output id="result" aria-live="polite">
+          —
+        </output>
+        <small>Dry pasta amount</small>
+      </fieldset>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById("pasta-form");
+    const output = document.getElementById("result");
+
+    const BASE_GRAMS = {
+      side: 60,
+      main: 100,
+      salad: 80
+    };
+
+    const SHAPE_MULTIPLIER = {
+      long: 1,
+      short: 1.05,
+      stuffed: 0.8
+    };
+
+    const GRAIN_MULTIPLIER = {
+      normal: 1,
+      whole: 1.1
+    };
+
+    function calculatePasta(formData) {
+      const people = Number(formData.get("people"));
+      const meal = formData.get("meal");
+      const shape = formData.get("shape");
+      const grain = formData.get("grain");
+
+      const base =
+        BASE_GRAMS[meal] *
+        SHAPE_MULTIPLIER[shape] *
+        GRAIN_MULTIPLIER[grain];
+
+      return Math.round(base * people);
+    }
+
+    function update() {
+      const formData = new FormData(form);
+      const grams = calculatePasta(formData);
+
+      output.textContent = `${grams} g`;
+    }
+
+    form.addEventListener("input", update);
+
+    // Initial calculation
+    update();
+  </script>
+</body>
+</html>

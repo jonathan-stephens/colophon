@@ -57,12 +57,25 @@
     <h1>Pasta Portion Calculator</h1>
 
     <form id="pasta-form">
+      <!-- Pasta format -->
+      <fieldset>
+        <legend>Pasta format</legend>
+        <label>
+          <input type="radio" name="format" value="dry" checked />
+          Dry pasta
+        </label>
+        <label>
+          <input type="radio" name="format" value="fresh" />
+          Fresh pasta
+        </label>
+      </fieldset>
+
       <!-- Pasta shape -->
       <fieldset>
         <legend>Pasta shape</legend>
         <label>
           <select name="shape" required>
-            <option value="long">Long (spaghetti, linguine)</option>
+            <option value="long">Long (spaghetti, tagliatelle)</option>
             <option value="short">Short (penne, fusilli)</option>
             <option value="small">Small (orzo, ditalini)</option>
             <option value="flat">Flat (farfalle)</option>
@@ -73,7 +86,7 @@
         </label>
       </fieldset>
 
-      <!-- Grain type -->
+      <!-- Grain -->
       <fieldset>
         <legend>Pasta type</legend>
         <label>
@@ -103,7 +116,7 @@
         </label>
       </fieldset>
 
-      <!-- Number of people -->
+      <!-- People -->
       <fieldset>
         <legend>Number of people</legend>
         <label>
@@ -120,9 +133,9 @@
 
       <!-- Result -->
       <fieldset>
-        <legend>Dry pasta required</legend>
+        <legend>Pasta required</legend>
         <output id="result" aria-live="polite">—</output>
-        <small>Metric is primary; imperial shown for reference.</small>
+        <small id="weight-note"></small>
       </fieldset>
     </form>
   </main>
@@ -130,51 +143,74 @@
   <script>
     const form = document.getElementById("pasta-form");
     const output = document.getElementById("result");
-
-    /* 
-      European dry pasta portion baselines (grams per person)
-      Based on Italian / EU culinary norms
-    */
-    const BASE_GRAMS = {
-      side: 55,
-      main: 95,
-      salad: 75
-    };
-
-    /*
-      Shape density multipliers
-      Reflect perceived portion & plate coverage
-    */
-    const SHAPE_MULTIPLIER = {
-      long: 1.0,
-      short: 1.05,
-      small: 1.15,
-      flat: 1.0,
-      tubular: 0.9,
-      sheet: 0.85,
-      stuffed: 0.75
-    };
-
-    /*
-      Grain adjustment (dry weight)
-    */
-    const GRAIN_MULTIPLIER = {
-      normal: 1.0,
-      whole: 1.1
-    };
+    const note = document.getElementById("weight-note");
 
     const GRAMS_TO_OUNCES = 0.035274;
 
+    /*
+      Pasta data model
+      ----------------
+      Base portions are grams per person.
+      Dry = dry weight
+      Fresh = fresh weight
+    */
+    const PASTA_MODEL = {
+      dry: {
+        base: {
+          side: 55,
+          main: 95,
+          salad: 75
+        },
+        grainMultiplier: {
+          normal: 1.0,
+          whole: 1.1
+        },
+        shapeMultiplier: {
+          long: 1.0,
+          short: 1.05,
+          small: 1.15,
+          flat: 1.0,
+          tubular: 0.9,
+          sheet: 0.85,
+          stuffed: 0.75
+        }
+      },
+
+      fresh: {
+        base: {
+          side: 90,
+          main: 120,
+          salad: 100
+        },
+        grainMultiplier: {
+          normal: 1.0,
+          whole: 1.05
+        },
+        shapeMultiplier: {
+          long: 1.0,
+          short: 1.0,
+          small: 1.1,
+          flat: 1.0,
+          tubular: 0.95,
+          sheet: 0.9,
+          stuffed: 0.85
+        }
+      }
+    };
+
     function calculatePasta(formData) {
-      const people = Number(formData.get("people"));
-      const meal = formData.get("meal");
+      const format = formData.get("format");
       const shape = formData.get("shape");
       const grain = formData.get("grain");
+      const meal = formData.get("meal");
+      const people = Number(formData.get("people"));
+
+      const model = PASTA_MODEL[format];
 
       const gramsPerPerson =
-        BASE_GRAMS[meal] *
-        SHAPE_MULTIPLIER[shape] *
-        GRAIN_MULTIPLIER[grain];
+        model.base[meal] *
+        model.shapeMultiplier[shape] *
+        model.grainMultiplier[grain];
 
       return Math.round(gramsPerPerson * people);
     }
@@ -183,13 +219,18 @@
       const formData = new FormData(form);
       const grams = calculatePasta(formData);
       const ounces = grams * GRAMS_TO_OUNCES;
+      const format = formData.get("format");
 
       output.textContent = `${grams} g (${ounces.toFixed(1)} oz)`;
+      note.textContent =
+        format === "dry"
+          ? "Dry weight (before cooking)"
+          : "Fresh weight";
     }
 
     form.addEventListener("input", update);
 
-    // Initial calculation
+    // Initial render
     update();
   </script>
 </body>

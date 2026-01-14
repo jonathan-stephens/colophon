@@ -32,21 +32,6 @@ body > footer{
       fill: var(--color-prominent);
     }
 
-    .feeds{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: repeat(2, auto);
-      grid-template-areas:
-      "header header"
-      "description list";
-      align-content:first baseline;
-      column-gap:var(--flow-5);
-
-      header{grid-area: header;}
-      .description{grid-area:description;align-self:start;}
-      ul{grid-area:list; flex-flow:column;}
-
-    }
     a{
       color:var(--color-prominent);
       text-decoration-color: var(--color-prominent);
@@ -95,9 +80,13 @@ body > footer{
   .subscribe {
     font-size:var(--small);
 
-    h2{
+    h3{
       font-size:var(--hed-quaternary);
       color:var(--color-prominent);
+    }
+    .wrapper{
+      display:flex;
+      flex-flow:column;
     }
   }
   .socials .wrapper{
@@ -121,20 +110,63 @@ body > footer{
 
     li{padding:0;}
   }
+  .embeddable-buttondown-form{
+    display:flex;
+    flex-flow:column;
+    gap: var(--flow-5);
+    width:100%;
+
+    input{
+      background:var(--background-secondary);
+      color: var(--color-distinct);
+      width: 100%;
+      height:var(--flow-8);
+
+      &:hover{
+        border-color:var(--border-color-prominent);
+      }
+      &::placeholder{
+        color:var(--color-distinct);
+      }
+      &:active, &:focus{
+        background:var(--background-primary);
+      }
+    }
+    button{
+      mix-blend-mode: normal;
+      height:100%;
+      width:clamp(100px, 150px, 300px);
+      margin-block-start:0;
+      align-self:start;
+      --button-border-color: var(--background-quaternary);
+      --button-border-width:var(--border-thin);
+    }
+  }
 
 @media (min-width: 50em) {
     .subscribe .wrapper{
-      display:grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: auto;
-      grid-gap: calc(2*var(--gutter));
-    }
-    .subscribe .feeds{
-      display:flex!important;
+      text-align:center;
+      display:flex;
       flex-flow:column;
+      justify-content: center;
+      align-content:center;
 
-      ul{
-        margin-block-start:var(--flow-5);
+      .description, .browse{
+        align-self:center;
+        max-width:var(--measure);
+      }
+    }
+    .embeddable-buttondown-form{
+      display:flex;
+      gap: var(--flow-5);
+      align-self:center;
+      align-items:center;
+
+      input{
+        max-width:50%;
+      }
+      button{
+        align-self: center;
       }
     }
 }

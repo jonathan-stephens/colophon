@@ -43,35 +43,6 @@ textarea{
   }
 }
 
-
-footer .embeddable-buttondown-form{
-  display:grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--flow-5);
-
-  input{
-    background:var(--background-secondary);
-    color: var(--color-distinct);
-
-    &:hover{
-      border-color:var(--border-color-prominent);
-    }
-    &::placeholder{
-      color:var(--color-distinct);
-    }
-    &:active, &:focus{
-      background:var(--background-primary);
-    }
-  }
-  button{
-    mix-blend-mode: normal;
-    height:100%;
-    --button-bg:red;
-    --button-border-color: var(--background-quaternary);
-    --button-border-width:var(--border-thin);
-  }
-}
-
 .field{
   display: flex;
   flex-direction: column;

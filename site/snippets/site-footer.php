@@ -64,19 +64,16 @@
       </section>
     <section class="subscribe">
       <div class="wrapper">
-        <div class="newsletter">
           <header>
             <span class="with-icon">
               <?= asset('assets/svg/icons/bullhorn.svg')->read() ?>
-              <h2 id="newsletter">
+              <h3 id="newsletter">
                 Newsletter: <em>Craft & Practice</em>
-              </h2>
+              </h3>
             </span>
           </header>
-          <div class="description">
-            <p>Every fortnight or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
-            <p>Feel free to <a href="https://buttondown.com/jonathanstephens/archive/">browse the archives</a>...before subscribing ( • ᴗ - ).</p>
-          </div>
+          <p class="description">Every fortnight or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
+          <p class="browse">Feel free to <a href="https://buttondown.com/jonathanstephens/archive/">browse the archives</a>...before subscribing ( • ᴗ - ).</p>
 
           <form
             action="https://buttondown.com/api/emails/embed-subscribe/jonathanstephens"
@@ -88,34 +85,9 @@
             <input type="email" name="email" id="bd-email" aria-label="Email Address" placeholder="Email Address" />
 
             <button type="submit" data-element="submit" class="button">
-              <span>Subscribe to my newsletter</span>
+              <span>Subscribe</span>
             </button>
           </form>
-        </div>
-        <div class="feeds">
-          <?php $feedItems = $site->footer_feeds()->toStructure(); ?>
-          <?php if ($feedItems->isNotEmpty()): ?>
-            <header>
-              <span class="with-icon">
-                <?= asset('assets/svg/icons/rss.svg')->read() ?>
-                <h2>Feeds</h2>
-              </span>
-            </header>
-            <div class="description">
-              <p>Get my latest content in your favorite RSS reader. <a href="https://aboutfeeds.com/">What is RSS?</a></p>
-            </div>
-            <ul role="list">
-              <?php foreach ($feedItems as $feedItem): ?>
-                <li>
-                  <strong><?= $feedItem->title() ?>:</strong>
-                  <span> <?= $feedItem->description() ?></span>
-                  <a href="<?= $feedItem->flavorRSS()->toUrl() ?>">RSS</a> |
-                  <a href="<?= $feedItem->flavorJSON()->toUrl() ?>">JSON</a>
-                </li>
-              <?php endforeach ?>
-            </ul>
-          <?php endif ?>
-        </div>
       </div>
     </section>
     <?php $socialLinks = $site->footer_social()->toStructure(); ?>

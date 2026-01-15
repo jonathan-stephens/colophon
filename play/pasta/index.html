@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pasta Portion Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    /* Minimal structural styling only */
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      padding: 1rem;
+      max-width: 42rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    fieldset {
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+
+    legend {
+      font-weight: 600;
+      padding: 0 0.25rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.25rem 0;
+    }
+
+    select,
+    input[type="number"] {
+      margin-top: 0.25rem;
+    }
+
+    output {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    small {
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Pasta Portion Calculator</h1>
+
+    <form id="pasta-form">
+      <!-- Pasta format -->
+      <fieldset>
+        <legend>Pasta format</legend>
+        <label>
+          <input type="radio" name="format" value="dry" checked />
+          Dry pasta
+        </label>
+        <label>
+          <input type="radio" name="format" value="fresh" />
+          Fresh pasta
+        </label>
+      </fieldset>
+
+      <!-- Pasta shape -->
+      <fieldset>
+        <legend>Pasta shape</legend>
+        <label>
+          <select name="shape" required>
+            <option value="long">Long (spaghetti, tagliatelle)</option>
+            <option value="short">Short (penne, fusilli)</option>
+            <option value="small">Small (orzo, ditalini)</option>
+            <option value="flat">Flat (farfalle)</option>
+            <option value="tubular">Large tubular (paccheri)</option>
+            <option value="sheet">Sheets (lasagne)</option>
+            <option value="stuffed">Stuffed (ravioli, tortellini)</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <!-- Grain -->
+      <fieldset>
+        <legend>Pasta type</legend>
+        <label>
+          <input type="radio" name="grain" value="normal" checked />
+          Regular
+        </label>
+        <label>
+          <input type="radio" name="grain" value="whole" />
+          Whole wheat / whole grain
+        </label>
+      </fieldset>
+
+      <!-- Meal context -->
+      <fieldset>
+        <legend>Serving context</legend>
+        <label>
+          <input type="radio" name="meal" value="side" />
+          Side / contorno
+        </label>
+        <label>
+          <input type="radio" name="meal" value="main" checked />
+          Main dish
+        </label>
+        <label>
+          <input type="radio" name="meal" value="salad" />
+          Pasta salad
+        </label>
+      </fieldset>
+
+      <!-- People -->
+      <fieldset>
+        <legend>Number of people</legend>
+        <label>
+          <input
+            type="number"
+            name="people"
+            min="1"
+            step="1"
+            value="2"
+            required
+          />
+        </label>
+      </fieldset>
+
+      <!-- Result -->
+      <fieldset>
+        <legend>Pasta required</legend>
+        <output id="result" aria-live="polite">—</output>
+        <small id="weight-note"></small>
+      </fieldset>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById("pasta-form");
+    const output = document.getElementById("result");
+    const note = document.getElementById("weight-note");
+
+    const GRAMS_TO_OUNCES = 0.035274;
+
+    /*
+      Pasta data model
+      ----------------
+      Base portions are grams per person.
+      Dry = dry weight
+      Fresh = fresh weight
+    */
+    const PASTA_MODEL = {
+      dry: {
+        base: {
+          side: 55,
+          main: 95,
+          salad: 75
+        },
+        grainMultiplier: {
+          normal: 1.0,
+          whole: 1.1
+        },
+        shapeMultiplier: {
+          long: 1.0,
+          short: 1.05,
+          small: 1.15,
+          flat: 1.0,
+          tubular: 0.9,
+          sheet: 0.85,
+          stuffed: 0.75
+        }
+      },
+
+      fresh: {
+        base: {
+          side: 90,
+          main: 120,
+          salad: 100
+        },
+        grainMultiplier: {
+          normal: 1.0,
+          whole: 1.05
+        },
+        shapeMultiplier: {
+          long: 1.0,
+          short: 1.0,
+          small: 1.1,
+          flat: 1.0,
+          tubular: 0.95,
+          sheet: 0.9,
+          stuffed: 0.85
+        }
+      }
+    };
+
+    function calculatePasta(formData) {
+      const format = formData.get("format");
+      const shape = formData.get("shape");
+      const grain = formData.get("grain");
+      const meal = formData.get("meal");
+      const people = Number(formData.get("people"));
+
+      const model = PASTA_MODEL[format];
+
+      const gramsPerPerson =
+        model.base[meal] *
+        model.shapeMultiplier[shape] *
+        model.grainMultiplier[grain];
+
+      return Math.round(gramsPerPerson * people);
+    }
+
+    function update() {
+      const formData = new FormData(form);
+      const grams = calculatePasta(formData);
+      const ounces = grams * GRAMS_TO_OUNCES;
+      const format = formData.get("format");
+
+      output.textContent = `${grams} g (${ounces.toFixed(1)} oz)`;
+      note.textContent =
+        format === "dry"
+          ? "Dry weight (before cooking)"
+          : "Fresh weight";
+    }
+
+    form.addEventListener("input", update);
+
+    // Initial render
+    update();
+  </script>
+</body>
+</html>

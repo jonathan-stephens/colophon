@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moses Harris Color Wheel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+    body.dark { background: #1a1a1a; color: #e0e0e0; }
+    body.light { background: #f5f5f5; color: #1a1a1a; }
+    .container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 350px 1fr; gap: 30px; align-items: start; }
+    .palette-manager { border-radius: 12px; padding: 24px; position: sticky; top: 20px; transition: background 0.3s; }
+    body.dark .palette-manager { background: #252525; }
+    body.light .palette-manager { background: #fff; border: 1px solid #ddd; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    body.dark h1 { color: #fff; }
+    body.light h1 { color: #1a1a1a; }
+    .subtitle { font-size: 14px; margin-bottom: 24px; }
+    body.dark .subtitle { color: #999; }
+    body.light .subtitle { color: #666; }
+    .color-input-section { margin-bottom: 24px; }
+    .input-group { display: flex; gap: 8px; margin-bottom: 12px; }
+    input[type="text"] { flex: 1; padding: 10px 12px; border: 1px solid; border-radius: 6px; font-size: 14px; font-family: Monaco, monospace; transition: all 0.3s; }
+    body.dark input[type="text"] { background: #1a1a1a; border-color: #404040; color: #e0e0e0; }
+    body.light input[type="text"] { background: #fff; border-color: #ccc; color: #1a1a1a; }
+    input[type="text"]:focus { outline: none; border-color: #4a9eff; }
+    button { padding: 10px 16px; background: #4a9eff; border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 14px; }
+    button:hover { background: #3a8eef; }
+    button:active { transform: scale(0.98); }
+    button.secondary { background: #404040; }
+    button.secondary:hover { background: #505050; }
+    body.light button.secondary { background: #ddd; color: #1a1a1a; }
+    body.light button.secondary:hover { background: #ccc; }
+    .format-hint { font-size: 12px; margin-top: 6px; }
+    body.dark .format-hint { color: #888; }
+    body.light .format-hint { color: #666; }
+    .color-list { margin-bottom: 24px; }
+    .color-list h2 { font-size: 16px; margin-bottom: 12px; }
+    body.dark .color-list h2 { color: #ccc; }
+    body.light .color-list h2 { color: #333; }
+    .color-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid; transition: all 0.3s; }
+    body.dark .color-item { background: #1a1a1a; border-color: #333; }
+    body.light .color-item { background: #fff; border-color: #ddd; }
+    .color-swatch { width: 40px; height: 40px; border-radius: 6px; border: 2px solid #404040; flex-shrink: 0; }
+    .color-info { flex: 1; min-width: 0; }
+    .color-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+    body.dark .color-name { color: #fff; }
+    body.light .color-name { color: #1a1a1a; }
+    .color-value { font-size: 11px; font-family: Monaco, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    body.dark .color-value { color: #888; }
+    body.light .color-value { color: #666; }
+    .color-controls { display: flex; gap: 4px; }
+    .icon-btn { border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    body.dark .icon-btn { background: #333; color: #aaa; }
+    body.light .icon-btn { background: #e5e5e5; color: #666; }
+    .icon-btn:hover { color: #fff; }
+    body.dark .icon-btn:hover { background: #444; }
+    body.light .icon-btn:hover { background: #ccc; }
+    .empty-state { text-align: center; padding: 32px 16px; font-size: 14px; }
+    body.dark .empty-state { color: #666; }
+    body.light .empty-state { color: #999; }
+    .wheel-container { border-radius: 12px; padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 600px; position: relative; transition: background 0.3s; background: transparent !important; border: none !important; }
+    canvas { max-width: 100%; height: auto; border-radius: 8px; cursor: crosshair; }
+    .export-section { display: flex; gap: 8px; margin-bottom: 16px; }
+    .export-section button { flex: 1; }
+    .theme-toggle { width: 100%; }
+    .tooltip { position: absolute; background: rgba(0,0,0,0.9); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; pointer-events: none; z-index: 1000; display: none; font-family: Monaco, monospace; }
+    @media (max-width: 1024px) {
+      .container { grid-template-columns: 1fr; }
+      .palette-manager { position: relative; top: 0; }
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="palette-manager">
+      <h1>Moses Harris Color Wheel</h1>
+      <p class="subtitle">Add three primary colors to generate the wheel</p>
+      <div class="color-input-section">
+        <div class="input-group">
+          <input type="text" id="colorInput" placeholder="Enter color (hex, rgb, hsl, oklch...)" aria-label="Color input">
+          <button onclick="addColor()">Add</button>
+        </div>
+        <div class="format-hint">Examples: #ff0000, rgb(255, 0, 0), hsl(0, 100%, 50%)</div>
+      </div>
+
+      <div class="color-input-section">
+        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Opacity Steps: <span id="opacityStepsValue">10</span></label>
+        <input type="range" id="opacitySteps" min="3" max="20" value="10" style="width: 100%;" oninput="updateOpacitySteps(this.value)">
+        <div class="format-hint">Number of concentric rings (3-20)</div>
+      </div>
+
+      <div class="color-input-section">
+        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Opacity Scale</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <div>
+            <label style="font-size: 12px; display: block; margin-bottom: 4px;">Min: <span id="minOpValue">10</span>%</label>
+            <input type="range" id="minOpacity" min="0" max="100" value="10" style="width: 100%;" oninput="updateOpacityScale()">
+          </div>
+          <div>
+            <label style="font-size: 12px; display: block; margin-bottom: 4px;">Max: <span id="maxOpValue">100</span>%</label>
+            <input type="range" id="maxOpacity" min="0" max="100" value="100" style="width: 100%;" oninput="updateOpacityScale()">
+          </div>
+        </div>
+        <div>
+          <label style="font-size: 12px; display: block; margin-bottom: 4px;">Curve: <span id="curveValue">1.0</span> (<span id="curveType">linear</span>)</label>
+          <input type="range" id="opacityCurve" min="0.25" max="4" step="0.25" value="1" style="width: 100%;" oninput="updateOpacityScale()">
+        </div>
+        <div class="format-hint">Min/max opacity range and curve (0.25=ease-out, 1=linear, 4=ease-in)</div>
+      </div>
+
+      <div class="color-input-section">
+        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Background Colors</label>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" id="darkBg" placeholder="Dark mode bg" value="#1a1a1a" style="width: 100%;">
+          <input type="text" id="lightBg" placeholder="Light mode bg" value="#f5f5f5" style="width: 100%;">
+        </div>
+        <button class="secondary" style="width: 100%; margin-top: 8px;" onclick="updateBackgrounds()">Apply Backgrounds</button>
+        <div class="format-hint">Set custom background colors for dark/light modes</div>
+      </div>
+      <div class="color-list">
+        <h2>Primary Colors (<span id="colorCount">0</span>/3)</h2>
+        <div id="colorListContainer"></div>
+      </div>
+      <div class="export-section">
+        <button class="secondary" onclick="exportImage()">Export PNG</button>
+        <button class="secondary" onclick="exportPalette()">Copy All Colors</button>
+      </div>
+      <button class="secondary theme-toggle" onclick="toggleTheme()">Toggle Light/Dark Mode</button>
+    </div>
+    <div class="wheel-container">
+      <canvas id="wheelCanvas" width="800" height="800"></canvas>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+  </div>
+  <script>
+    // Color class with parsing and manipulation
+    class ColorClass {
+      constructor(r, g, b, a = 1) { this.r = r; this.g = g; this.b = b; this.a = a; }
+      static parse(s) {
+        s = s.trim().toLowerCase();
+        if (s.startsWith('#')) return this.parseHex(s);
+        if (s.startsWith('rgb')) return this.parseRGB(s);
+        if (s.startsWith('hsl')) return this.parseHSL(s);
+        if (s.startsWith('oklch')) return this.parseOKLCH(s);
+        throw new Error('Unsupported color format');
+      }
+      static parseHex(h) {
+        h = h.slice(1);
+        if (h.length === 3) h = h.split('').map(c => c + c).join('');
+        return new ColorClass(parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16), h.length===8?parseInt(h.slice(6,8),16)/255:1);
+      }
+      static parseRGB(s) {
+        const m = s.match(/rgba?\s*\(\s*([^)]+)\)/);
+        if (!m) throw new Error('Invalid RGB');
+        const p = m[1].split(/[,\s]+/).filter(x=>x);
+        return new ColorClass(parseFloat(p[0]), parseFloat(p[1]), parseFloat(p[2]), p[3]?parseFloat(p[3]):1);
+      }
+      static parseHSL(s) {
+        const m = s.match(/hsla?\s*\(\s*([^)]+)\)/);
+        if (!m) throw new Error('Invalid HSL');
+        const p = m[1].split(/[,\s]+/).filter(x=>x);
+        let h=parseFloat(p[0]), sat=parseFloat(p[1].replace('%',''))/100, l=parseFloat(p[2].replace('%',''))/100;
+        const c=(1-Math.abs(2*l-1))*sat, x=c*(1-Math.abs((h/60)%2-1)), m2=l-c/2;
+        let r,g,b;
+        if(h<60){r=c;g=x;b=0}else if(h<120){r=x;g=c;b=0}else if(h<180){r=0;g=c;b=x}else if(h<240){r=0;g=x;b=c}else if(h<300){r=x;g=0;b=c}else{r=c;g=0;b=x}
+        return new ColorClass(Math.round((r+m2)*255), Math.round((g+m2)*255), Math.round((b+m2)*255), p[3]?parseFloat(p[3]):1);
+      }
+      static parseOKLCH(s) {
+        const m = s.match(/oklch\s*\(\s*([^)]+)\)/);
+        if (!m) throw new Error('Invalid OKLCH');
+        const p = m[1].split(/[,\s]+/).filter(x=>x);
+        const L=parseFloat(p[0]), C=parseFloat(p[1]), H=parseFloat(p[2]);
+        const hRad=H*Math.PI/180, a=C*Math.cos(hRad), b=C*Math.sin(hRad);
+        const l_=L+0.3963377774*a+0.2158037573*b, m_=L-0.1055613458*a-0.0638541728*b, s_=L-0.0894841775*a-1.2914855480*b;
+        const l3=l_**3, m3=m_**3, s3=s_**3;
+        let r=4.0767416621*l3-3.3077115913*m3+0.2309699292*s3, g=-1.2684380046*l3+2.6097574011*m3-0.3413193965*s3, b_=-0.0041960863*l3-0.7034186147*m3+1.7076147010*s3;
+        const toSRGB=v=>{v=Math.max(0,Math.min(1,v));return v<=0.0031308?12.92*v:1.055*v**(1/2.4)-0.055};
+        return new ColorClass(Math.round(toSRGB(r)*255), Math.round(toSRGB(g)*255), Math.round(toSRGB(b_)*255), 1);
+      }
+      toOKLCH() {
+        const toL=v=>{v/=255;return v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4};
+        const r=toL(this.r), g=toL(this.g), b=toL(this.b);
+        const l=0.4122214708*r+0.5363325363*g+0.0514459929*b, m=0.2119034982*r+0.6806995451*g+0.1073969566*b, s=0.0883024619*r+0.2817188376*g+0.6299787005*b;
+        const l_=Math.cbrt(l), m_=Math.cbrt(m), s_=Math.cbrt(s);
+        const L=0.2104542553*l_+0.7936177850*m_-0.0040720468*s_, a=1.9779984951*l_-2.4285922050*m_+0.4505937099*s_, b_=0.0259040371*l_+0.7827717662*m_-0.8086757660*s_;
+        const C=Math.sqrt(a*a+b_*b_); let H=Math.atan2(b_,a)*180/Math.PI;
+        if(H<0)H+=360;
+        return {l:L,c:C,h:H};
+      }
+      static fromOKLCH(l,c,h){return ColorClass.parseOKLCH(`oklch(${l}, ${c}, ${h})`);}
+      static mix(c1,c2,r=0.5) {
+        const a=c1.toOKLCH(), b=c2.toOKLCH();
+        const l=a.l+(b.l-a.l)*r, c=a.c+(b.c-a.c)*r;
+        let h1=a.h, h2=b.h, h;
+        if(Math.abs(h2-h1)>180){if(h2>h1)h1+=360;else h2+=360}
+        h=h1+(h2-h1)*r;
+        if(h>=360)h-=360;if(h<0)h+=360;
+        return ColorClass.fromOKLCH(l,c,h);
+      }
+      clone(){return new ColorClass(this.r,this.g,this.b,this.a);}
+      toHex(){const h=n=>Math.round(n).toString(16).padStart(2,'0');return `#${h(this.r)}${h(this.g)}${h(this.b)}`;}
+      toRGB(){return `rgb(${Math.round(this.r)}, ${Math.round(this.g)}, ${Math.round(this.b)})`;}
+      toRGBA(){return `rgba(${Math.round(this.r)}, ${Math.round(this.g)}, ${Math.round(this.b)}, ${this.a.toFixed(2)})`;}
+      toHSL(){const r=this.r/255,g=this.g/255,b=this.b/255,max=Math.max(r,g,b),min=Math.min(r,g,b),l=(max+min)/2;if(max===min)return `hsl(0, 0%, ${Math.round(l*100)}%)`;const d=max-min,s=l>0.5?d/(2-max-min):d/(max+min);let h;switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}return `hsl(${Math.round(h*360)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;}
+      toOKLCHString(){const o=this.toOKLCH();return `oklch(${o.l.toFixed(2)}, ${o.c.toFixed(2)}, ${o.h.toFixed(0)})`;}
+    }
+
+    let primaryColors = [];
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const tooltip = document.getElementById('tooltip');
+    const CFG = {NUM_RINGS:10, SIZE:800, CX:400, CY:400, MAXR:350, TRISIZE:60, MINOP:0.1, MAXOP:1.0};
+    let customDarkBg = '#1a1a1a';
+    let customLightBg = '#f5f5f5';
+
+    // Store segment data for click/hover detection
+    let segmentData = [];
+
+    function addColor() {
+      const inp = document.getElementById('colorInput');
+      const cs = inp.value.trim();
+      if (primaryColors.length >= 3) { alert('Maximum of 3 primary colors allowed'); return; }
+      if (!cs) { alert('Please enter a color value'); return; }
+      try { primaryColors.push(ColorClass.parse(cs)); inp.value = ''; updateColorList(); drawWheel(); }
+      catch (e) { alert('Invalid color format. Please check your input.'); console.error(e); }
+    }
+
+    function removeColor(i) { primaryColors.splice(i,1); updateColorList(); drawWheel(); }
+    function moveColorUp(i) { if(i===0)return; [primaryColors[i],primaryColors[i-1]]=[primaryColors[i-1],primaryColors[i]]; updateColorList(); drawWheel(); }
+    function moveColorDown(i) { if(i===primaryColors.length-1)return; [primaryColors[i],primaryColors[i+1]]=[primaryColors[i+1],primaryColors[i]]; updateColorList(); drawWheel(); }
+
+    function updateColorList() {
+      const cont = document.getElementById('colorListContainer');
+      const cnt = document.getElementById('colorCount');
+      cnt.textContent = primaryColors.length;
+      if (primaryColors.length === 0) { cont.innerHTML = '<div class="empty-state">No colors added yet</div>'; return; }
+      cont.innerHTML = primaryColors.map((c, i) => {
+        const hex = c.toHex();
+        const lbl = ['Primary 1', 'Primary 2', 'Primary 3'][i];
+        return `<div class="color-item"><div class="color-swatch" style="background-color: ${hex}"></div><div class="color-info"><div class="color-name">${lbl}</div><div class="color-value">${hex}</div></div><div class="color-controls">${i>0?`<button class="icon-btn" onclick="moveColorUp(${i})">↑</button>`:''} ${i<primaryColors.length-1?`<button class="icon-btn" onclick="moveColorDown(${i})">↓</button>`:''} <button class="icon-btn" onclick="removeColor(${i})">×</button></div></div>`;
+      }).join('');
+    }
+
+    function genSecondaries() { if(primaryColors.length!==3)return[]; return [ColorClass.mix(primaryColors[0],primaryColors[1]), ColorClass.mix(primaryColors[1],primaryColors[2]), ColorClass.mix(primaryColors[2],primaryColors[0])]; }
+    function genTertiaries() {
+      if(primaryColors.length!==3)return[];
+      const sec=genSecondaries(), ter=[];
+      for(let i=0;i<3;i++){const ns=i,ps=(i+2)%3; ter.push(ColorClass.mix(primaryColors[i],sec[ps],0.5)); ter.push(ColorClass.mix(primaryColors[i],sec[ns],0.5));}
+      return ter;
+    }
+
+    function genWheelColors() {
+      if(primaryColors.length!==3)return[];
+      const sec=genSecondaries(), ter=genTertiaries();
+      return [primaryColors[0],ter[0],sec[0],ter[1],primaryColors[1],ter[2],sec[1],ter[3],primaryColors[2],ter[4],sec[2],ter[5]];
+    }
+
+    // Get color labels for tooltips
+    function getColorLabel(idx) {
+      const labels = ['P1','T1(P1+S3)','S1(P1+P2)','T2(P2+S1)','P2','T3(P2+S2)','S2(P2+P3)','T4(P3+S2)','P3','T5(P3+S3)','S3(P3+P1)','T6(P1+S3)'];
+      return labels[idx] || `Color ${idx}`;
+    }
+
+    function drawCenterTriangles() {
+      if(primaryColors.length!==3)return;
+      // Draw three separate triangles with proper orientation
+      // Triangle 1: Points up (Primary 1)
+      // Triangle 2: Points down-right (Primary 2)
+      // Triangle 3: Points down-left (Primary 3)
+      ctx.globalCompositeOperation='multiply';
+
+      // Triangle 1 - pointing up
+      ctx.fillStyle=primaryColors[0].toHex();
+      ctx.beginPath();
+      ctx.moveTo(CFG.CX, CFG.CY - CFG.TRISIZE); // top
+      ctx.lineTo(CFG.CX - CFG.TRISIZE*0.866, CFG.CY + CFG.TRISIZE*0.5); // bottom left
+      ctx.lineTo(CFG.CX + CFG.TRISIZE*0.866, CFG.CY + CFG.TRISIZE*0.5); // bottom right
+      ctx.closePath();
+      ctx.fill();
+
+      // Triangle 2 - pointing right
+      ctx.fillStyle=primaryColors[1].toHex();
+      ctx.beginPath();
+      ctx.moveTo(CFG.CX + CFG.TRISIZE, CFG.CY); // right
+      ctx.lineTo(CFG.CX - CFG.TRISIZE*0.5, CFG.CY - CFG.TRISIZE*0.866); // top left
+      ctx.lineTo(CFG.CX - CFG.TRISIZE*0.5, CFG.CY + CFG.TRISIZE*0.866); // bottom left
+      ctx.closePath();
+      ctx.fill();
+
+      // Triangle 3 - pointing left
+      ctx.fillStyle=primaryColors[2].toHex();
+      ctx.beginPath();
+      ctx.moveTo(CFG.CX - CFG.TRISIZE, CFG.CY); // left
+      ctx.lineTo(CFG.CX + CFG.TRISIZE*0.5, CFG.CY - CFG.TRISIZE*0.866); // top right
+      ctx.lineTo(CFG.CX + CFG.TRISIZE*0.5, CFG.CY + CFG.TRISIZE*0.866); // bottom right
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.globalCompositeOperation='source-over';
+    }
+
+    function drawRingSeg(ir,or,sa,ea,c,op,ring,seg) {
+      ctx.beginPath();
+      ctx.arc(CFG.CX,CFG.CY,or,sa,ea);
+      ctx.lineTo(CFG.CX+Math.cos(ea)*ir,CFG.CY+Math.sin(ea)*ir);
+      ctx.arc(CFG.CX,CFG.CY,ir,ea,sa,true);
+      ctx.closePath();
+      const co=c.clone();co.a=op;
+      ctx.fillStyle=co.toRGBA();
+      ctx.fill();
+
+      // Store segment data for interaction
+      segmentData.push({ir,or,sa,ea,color:co,ring,seg,label:getColorLabel(seg)});
+    }
+
+    function drawWheel() {
+      segmentData = [];
+      ctx.clearRect(0,0,CFG.SIZE,CFG.SIZE);
+      if(primaryColors.length<3){
+        ctx.fillStyle=document.body.classList.contains('dark')?'#666':'#999';
+        ctx.font='18px sans-serif';ctx.textAlign='center';
+        ctx.fillText('Add 3 primary colors to generate the wheel',CFG.CX,CFG.CY);
+        return;
+      }
+
+      drawCenterTriangles();
+      const wc=genWheelColors(), ns=wc.length, sr=CFG.TRISIZE*1.5, rw=(CFG.MAXR-sr)/CFG.NUM_RINGS;
+
+      for(let r=0;r<CFG.NUM_RINGS;r++){
+        const ir=sr+(r*rw),or=ir+rw,opf=1-(r/(CFG.NUM_RINGS-1)),op=CFG.MINOP+(opf*(CFG.MAXOP-CFG.MINOP));
+        for(let s=0;s<ns;s++){
+          const sa=(s/ns)*2*Math.PI-Math.PI/2,ea=((s+1)/ns)*2*Math.PI-Math.PI/2;
+          drawRingSeg(ir,or,sa,ea,wc[s],op,r,s);
+        }
+      }
+
+      // Draw labels on outermost ring
+      ctx.fillStyle=document.body.classList.contains('dark')?'#fff':'#000';
+      ctx.font='11px sans-serif';
+      ctx.textAlign='center';
+      for(let s=0;s<ns;s++){
+        const angle=(s/ns)*2*Math.PI+(1/(ns*2))*2*Math.PI-Math.PI/2;
+        const x=CFG.CX+Math.cos(angle)*(CFG.MAXR+20);
+        const y=CFG.CY+Math.sin(angle)*(CFG.MAXR+20);
+        ctx.fillText(getColorLabel(s),x,y);
+      }
+
+      ctx.strokeStyle=document.body.classList.contains('dark')?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)';
+      ctx.lineWidth=1;
+      for(let r=0;r<=CFG.NUM_RINGS;r++){
+        const rad=sr+(r*rw);ctx.beginPath();ctx.arc(CFG.CX,CFG.CY,rad,0,2*Math.PI);ctx.stroke();
+      }
+    }
+
+    function exportImage() {
+      if(primaryColors.length<3){alert('Please add 3 primary colors before exporting');return;}
+      const a=document.createElement('a');a.download='moses-harris-wheel.png';a.href=canvas.toDataURL('image/png');a.click();
+    }
+
+    async function exportPalette() {
+      if(primaryColors.length===0){alert('No colors to export');return;}
+      const wc=genWheelColors();
+      let txt='PRIMARY COLORS:\n';
+      txt+=primaryColors.map((c,i)=>`  Primary ${i+1}: ${c.toHex()} | ${c.toRGB()} | ${c.toHSL()}`).join('\n');
+      txt+='\n\nALL WHEEL COLORS:\n';
+      txt+=wc.map((c,i)=>`  ${getColorLabel(i)}: ${c.toHex()} | ${c.toRGB()}`).join('\n');
+      txt+='\n\nOPACITY LEVELS (10 rings, 100% to 10%):\n';
+      for(let r=0;r<CFG.NUM_RINGS;r++){
+        const opf=1-(r/(CFG.NUM_RINGS-1)),op=CFG.MINOP+(opf*(CFG.MAXOP-CFG.MINOP));
+        txt+=`  Ring ${r+1}: ${Math.round(op*100)}%\n`;
+      }
+      try{await navigator.clipboard.writeText(txt);alert('Full palette copied to clipboard!');}catch(e){console.error(e);alert('Failed to copy');}
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      document.body.classList.toggle('light');
+      applyCurrentBackground();
+      drawWheel();
+    }
+
+    function updateOpacitySteps(val) {
+      CFG.NUM_RINGS = parseInt(val);
+      document.getElementById('opacityStepsValue').textContent = val;
+      drawWheel();
+    }
+
+    function updateOpacityScale() {
+      const minVal = parseInt(document.getElementById('minOpacity').value);
+      const maxVal = parseInt(document.getElementById('maxOpacity').value);
+
+      document.getElementById('minOpValue').textContent = minVal;
+      document.getElementById('maxOpValue').textContent = maxVal;
+
+      CFG.MINOP = minVal / 100;
+      CFG.MAXOP = maxVal / 100;
+      drawWheel();
+    }
+
+    function updateBackgrounds() {
+      const darkInput = document.getElementById('darkBg').value.trim();
+      const lightInput = document.getElementById('lightBg').value.trim();
+
+      try {
+        // Validate colors by trying to parse them
+        if (darkInput) ColorClass.parse(darkInput);
+        if (lightInput) ColorClass.parse(lightInput);
+
+        customDarkBg = darkInput || '#1a1a1a';
+        customLightBg = lightInput || '#f5f5f5';
+        applyCurrentBackground();
+      } catch (e) {
+        alert('Invalid color format for background. Please use valid color values.');
+      }
+    }
+
+    function applyCurrentBackground() {
+      if (document.body.classList.contains('dark')) {
+        document.body.style.backgroundColor = customDarkBg;
+      } else {
+        document.body.style.backgroundColor = customLightBg;
+      }
+    }
+
+    // Canvas interaction
+    canvas.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (CFG.SIZE / rect.width);
+      const y = (e.clientY - rect.top) * (CFG.SIZE / rect.height);
+      const dx = x - CFG.CX, dy = y - CFG.CY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      let angle = Math.atan2(dy, dx);
+
+      let found = null;
+      for(const seg of segmentData) {
+        if(dist >= seg.ir && dist <= seg.or) {
+          let na = angle;
+          if(na < seg.sa) na += 2*Math.PI;
+          if(na >= seg.sa && na <= seg.ea) {
+            found = seg;
+            break;
+          }
+        }
+      }
+
+      if(found) {
+        tooltip.style.display = 'block';
+        tooltip.style.left = e.clientX + 5 + 'px';
+        tooltip.style.top = e.clientY + 5 + 'px';
+        tooltip.innerHTML = `${found.label}<br>${found.color.toHex()}<br>Opacity: ${Math.round(found.color.a*100)}%<br><em>Click to copy</em>`;
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+
+    canvas.addEventListener('click', e => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (CFG.SIZE / rect.width);
+      const y = (e.clientY - rect.top) * (CFG.SIZE / rect.height);
+      const dx = x - CFG.CX, dy = y - CFG.CY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      let angle = Math.atan2(dy, dx);
+
+      for(const seg of segmentData) {
+        if(dist >= seg.ir && dist <= seg.or) {
+          let na = angle;
+          if(na < seg.sa) na += 2*Math.PI;
+          if(na >= seg.sa && na <= seg.ea) {
+            navigator.clipboard.writeText(seg.color.toHex()).then(()=>{
+              alert(`Copied ${seg.label}: ${seg.color.toHex()} (${Math.round(seg.color.a*100)}% opacity)`);
+            });
+            break;
+          }
+        }
+      }
+    });
+
+    document.getElementById('colorInput').addEventListener('keypress',e=>{if(e.key==='Enter')addColor();});
+    applyCurrentBackground();
+    updateColorList();
+    drawWheel();
+  </script>
+</body>
+</html>

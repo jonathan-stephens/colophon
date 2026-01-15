@@ -170,7 +170,7 @@ return [
     'url.sort-param' => 'sort',
     'url.group-param' => 'group',
     'url.theme-param' => 'theme',
-    'url.tag-separator' => '+',
+    'url.tag-separator' => ',',
 
     /**
      * CACHE CONFIGURATION

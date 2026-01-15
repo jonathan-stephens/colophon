@@ -125,7 +125,7 @@ return function ($kirby, $page) {
         },
 
         'getTagUrl' => function($tag) {
-            return url('tags/' . urlencode($tag));
+            return url('tags/' . Helpers::tagsToUrl([$tag]));
         },
 
         'isActiveGroup' => function($groupKey) use ($group) {

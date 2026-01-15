@@ -268,7 +268,6 @@ if (isset($routeDebug)) {
 
     <!-- Sidebar -->
     <aside class="sidebar">
-
         <!-- Combine Tags (Drill Down) -->
         <?php if (!empty($relatedTags) && count($filterTags) === 1): ?>
             <section class="combine-tags">

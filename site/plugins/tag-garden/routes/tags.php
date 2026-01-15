@@ -4,16 +4,21 @@
  * Tag Garden Routes
  *
  * Custom URL routing for tag pages.
+ * - Comma (,) separates tags
+ * - Spaces inside tags are encoded as %20
+ * - + is NOT a tag delimiter
  *
  * Routes:
  * - /tags                    → Tags index (all tags)
- * - /tags/design             → Single tag view
- * - /tags/design+code        → Multiple tags view (AND logic)
+ * /tags/Web%20Development    → Tags of "Web Development"
+ * /tags/Web%20Development,Design -> Posts with two tags, "Web Development and Design"
  * - /tags?sort=planted       → Tags index with sort parameter
  * - /tags/design?sort=length → Single tag with sort parameter
+
  *
  * @version 1.0.0
- */
+
+*/
 
 use TagGarden\Helpers;
 
@@ -38,16 +43,16 @@ return [
             $theme = get('theme');
 
             // Get all tags
-            $tags = kirby()->collection('tags.all');
+            $filterTags = kirby()->collection('tags.all');
 
             // Filter by group if specified
             if ($group) {
-                $tags = kirby()->collection('tags.byGroup', ['group' => $group]);
+                $filterTags = kirby()->collection('tags.byGroup', ['group' => $group]);
             }
 
             // Filter by theme if specified
             if ($theme) {
-                $tags = kirby()->collection('tags.byTheme', ['theme' => $theme]);
+                $filterTags = kirby()->collection('tags.byTheme', ['theme' => $theme]);
             }
 
             // Check if a tags page exists in content
@@ -56,7 +61,7 @@ return [
             if ($tagsPage) {
                 // Use existing tags page
                 return $tagsPage->render([
-                    'tags' => $tags,
+                    'tags' => $filterTags,
                     'sort' => $sort,
                     'group' => $group,
                     'theme' => $theme,
@@ -69,7 +74,7 @@ return [
                     'model' => 'tags',
                     'content' => [
                         'title' => 'Tags',
-                        'tags' => $tags,
+                        'tags' => $filterTags,
                         'sort' => $sort,
                         'group' => $group,
                         'theme' => $theme,
@@ -89,7 +94,7 @@ return [
      * - logic: 'OR' (default) or 'AND' for multiple tags
      */
     [
-        'pattern' => 'tags/(:any)',
+        'pattern' => 'tags/(:all)',
         'action' => function(string $tagString) {
           // DEBG: Build debug output
           $debug = "=== TAG ROUTE DEBUG ===\n";
@@ -120,32 +125,33 @@ return [
             }
 
             // Parse tags from URL
-            $tags = Helpers::urlToTags($tagString);
-            $debug .= "After urlToTags: " . print_r($tags, true) . "\n";
+            $filterTags = Helpers::parseTagsFromUrl($tagString);
 
-            // Sanitize tags
-            $tags = array_map([Helpers::class, 'sanitizeTag'], $tags);
-            $debug .= "After sanitize: " . print_r($tags, true) . "\n";
+            // Preserve ORIGINAL tags for display/URLs (trimmed but not lowercased)
+            $filterTags = array_map('trim', $filterTags);
+            $filterTags = array_filter($filterTags);
 
-            $tags = array_filter($tags);
-            $debug .= "After filter: " . print_r($tags, true) . "\n";
+            // Sanitize tags FOR SEARCHING (lowercased)
+            $tagsForSearch = array_map([Helpers::class, 'sanitizeTag'], $filterTags);
 
-            if (empty($tags)) {
-                // No valid tags, redirect to tags index
+            if (empty($filterTags)) {
                 go('tags');
             }
 
-            // IMPORTANT: Preserve the original tags before they get modified
-            $filterTags = $tags;
             $debug .= "filterTags preserved: " . print_r($filterTags, true) . "\n";
+            $debug .= "tagsForSearch (sanitized): " . print_r($tagsForSearch, true) . "\n";
 
-            // Store debug for template
-            $routeDebug = $debug;
+            // --- CANONICAL URL ENFORCEMENT ---
+            $canonicalPath = Helpers::canonicalTagUrl($filterTags);
+            $currentPath   = trim(kirby()->request()->path()->toString(), '/');
 
-            // Get pages with these tags (use helper directly for case-insensitive matching)
-            $pages = Helpers::getPagesByTags($filterTags, $logic);
-            // Get pages with these tags (use helper directly for case-insensitive matching)
-            $pages = Helpers::getPagesByTags($filterTags, $logic);
+            if ($currentPath !== $canonicalPath) {
+                $debug .= "Redirecting to canonical URL: $canonicalPath\n";
+                return go(url($canonicalPath), 301);
+            }
+
+            // Get pages with SANITIZED tags for case-insensitive matching
+            $pages = Helpers::getPagesByTags($tagsForSearch, $logic);
 
             // DEBUG: Check what getPagesByTags returned
             $debug .= "\n=== GETPAGESBYTAGS DETAILED DEBUG ===\n";
@@ -225,6 +231,12 @@ return [
                                 $combinableTags[$tag] = 0;
                             }
                             $combinableTags[$tag]++;
+                            // ADD THIS DEBUG
+if ($tag === 'Web Design') {
+    $debug .= "Found 'Web Design' tag, testing URL generation:\n";
+    $testUrl = Helpers::tagsToUrl(['tool', 'Web Design']);
+    $debug .= "  tagsToUrl(['tool', 'Web Design']) = " . $testUrl . "\n";
+}
                         }
                     }
                 }
@@ -375,6 +387,7 @@ return [
             $templateData = [
                 // DEBUG DATA
                 'routeDebug' => $debug,
+                'debug'       => $debug,
 
                 // Core data
                 'filterTags' => $filterTags,
@@ -409,12 +422,13 @@ return [
 
                 // Helper functions for templates
                 'getTagUrl' => function($tag) {
-                    return url('tags/' . urlencode($tag));
+                    return '/tags/' . Helpers::tagsToUrl([$tag]);
                 },
 
                 'getCombinedTagUrl' => function($additionalTag) use ($filterTags) {
                     $allTags = array_merge($filterTags, [$additionalTag]);
-                    return url('tags/' . Helpers::tagsToUrl($allTags));
+                    $tagPath = Helpers::tagsToUrl($allTags);
+                    return '/tags/' . $tagPath . '?logic=AND';
                 },
 
                 'isActiveSort' => function($method) use ($sort) {
@@ -455,7 +469,8 @@ return [
                 }
             }
             $debug .= "All tag-garden options found: " . print_r($allOptions, true) . "\n";
-
+            $debug .= "After urlToTags: " . print_r($filterTags, true) . "\n";
+            $debug .= "Raw tag count: " . count($filterTags) . "\n";
             // Render with data
             return $virtualPage->render($templateData);          }
     ],
@@ -467,33 +482,33 @@ return [
      * URL: /api/tags/{tag}
      */
     [
-        'pattern' => 'api/tags/(:any)',
+        'pattern' => 'api/tags/(:all)',
         'action' => function(string $tagString) {
             // Parse tags
-            $tags = Helpers::urlToTags($tagString);
-            $tags = array_map([Helpers::class, 'sanitizeTag'], $tags);
-            $tags = array_filter($tags);
+            $filterTags = Helpers::urlToTags($tagString);
+            $filterTags = array_map([Helpers::class, 'sanitizeTag'], $filterTags);
+            $filterTags = array_filter($filterTags);
 
-            if (empty($tags)) {
+            if (empty($filterTags)) {
                 return Response::json(['error' => 'No valid tags provided'], 400);
             }
 
             // Get pages with these tags
             $pages = kirby()->collection('pages.byTags', [
-                'tags' => $tags,
+                'tags' => $filterTags,
                 'logic' => get('logic', 'OR'),
                 'sort' => get('sort', 'tended'),
             ]);
 
             // Get related tags
             $relatedTags = kirby()->collection('tags.related', [
-                'tag' => $tags[0],
+                'tag' => $filterTags[0],
                 'limit' => 10
             ]);
 
             // Format response
             $data = [
-                'tags' => $tags,
+                'tags' => $filterTags,
                 'count' => $pages->count(),
                 'pages' => $pages->values(function($page) {
                     return [
@@ -521,21 +536,21 @@ return [
     [
         'pattern' => 'api/tags',
         'action' => function() {
-            $tags = kirby()->collection('tags.all', [
+            $filterTags = kirby()->collection('tags.all', [
                 'sortBy' => get('sortBy', 'count'),
                 'direction' => get('direction', 'desc'),
             ]);
 
             // Format response
             $data = [
-                'total' => count($tags),
+                'total' => count($filterTags),
                 'tags' => array_map(function($tag, $count) {
                     return [
                         'tag' => $tag,
                         'count' => $count,
-                        'url' => url('tags/' . urlencode($tag)),
+                        'url' => url('tags/' . Helpers::tagsToUrl([$tag])),
                     ];
-                }, array_keys($tags), $tags),
+                }, array_keys($filterTags), $filterTags),
             ];
 
             return Response::json($data);

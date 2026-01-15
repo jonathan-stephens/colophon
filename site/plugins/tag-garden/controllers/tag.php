@@ -35,37 +35,39 @@ return function ($kirby, $page) {
         return [];
     }
 
-    // Get filter tags from custom page property (set by route)
-    $filterTags = $page->_filterTags ?? [];
+    // Tags passed from route
+    $filterTags = $filterTags ?? [];
 
-    // Ensure it's an array
     if (!is_array($filterTags)) {
         $filterTags = !empty($filterTags) ? [$filterTags] : [];
     }
 
-    // Get query parameters
-    $sort = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
-    $logic = get('logic', 'OR');
+    // Query params
+    $sort        = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
+    $logic       = get('logic', 'OR');
     $groupFilter = get('group');
 
-    // Get filtered pages
+    // Collection
     $pages = $kirby->collection('pages.byTags', [
-        'tags' => $filterTags,
+        'tags'  => $filterTags,
         'logic' => $logic,
-        'sort' => $sort,
+        'sort'  => $sort,
     ]);
 
-    // Apply additional group filter if specified
+    // Optional group filter
     if ($groupFilter) {
         $groupDef = Helpers::getGroupDefinition($groupFilter);
+
         if ($groupDef && isset($groupDef['types'])) {
-            $pages = $pages->filter(function($page) use ($groupDef) {
-                $template = $page->intendedTemplate()->name();
-                return in_array($template, $groupDef['types']);
+            $pages = $pages->filter(function ($page) use ($groupDef) {
+                return in_array(
+                    $page->intendedTemplate()->name(),
+                    $groupDef['types'],
+                    true
+                );
             });
         }
     }
-
     // Group pages by section/template for organized display
     $groupedPages = [];
     foreach ($pages as $p) {
@@ -191,12 +193,12 @@ return function ($kirby, $page) {
 
         // Helper functions for templates
         'getTagUrl' => function($tag) {
-            return url('tags/' . urlencode($tag));
+            return url('tags/' . Helpers::tagsToUrl([$tag]));
         },
 
         'getCombinedTagUrl' => function($additionalTag) use ($filterTags) {
             $allTags = array_merge($filterTags, [$additionalTag]);
-            return url('tags/' . Helpers::tagsToUrl($allTags));
+            return '/tags/' . Helpers::tagsToUrl($allTags) . '?logic=AND';
         },
 
         'isActiveSort' => function($method) use ($sort) {

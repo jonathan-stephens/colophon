@@ -183,25 +183,34 @@ class Helpers {
      * @param array $tags Array of tag strings
      * @return string URL-safe tag string
      */
-    public static function tagsToUrl(array $tags): string {
-        $separator = option('yourusername.tag-garden.url.tag-separator', '+');
-        $tags = array_map('urlencode', $tags);
-        return implode($separator, $tags);
-    }
+     public static function tagsToUrl(array $tags): string
+     {
+         $separator = option('yourusername.tag-garden.url.tag-separator', ',');
 
-    /**
+         return implode(
+             $separator,
+             array_map('rawurlencode', $tags)
+         );
+     }    /**
      * Convert URL-safe tag string to array
      *
      * @param string $tagString URL tag string
      * @return array Array of tag strings
      */
-    public static function urlToTags(string $tagString): array {
-        $separator = option('yourusername.tag-garden.url.tag-separator', '+');
-        $tags = explode($separator, $tagString);
-        return array_map('urldecode', $tags);
-    }
+     public static function urlToTags(string $tagString): array
+     {
+         $separator = option('yourusername.tag-garden.url.tag-separator', ',');
 
-    /**
+         // 1. Split on AND separator
+         $parts = explode($separator, $tagString);
+
+         // 2. Normalize + to space, then decode
+         return array_map(function ($tag) {
+             $tag = str_replace('+', ' ', $tag);
+             return trim(rawurldecode($tag));
+         }, $parts);
+     }
+     /**
      * Get all unique tags from site with usage counts
      *
      * @return array Associative array of tag => count
@@ -225,6 +234,34 @@ class Helpers {
 
         return $tags;
     }
+
+    /**
+ * Parse tag string from URL into normalized tag array
+ *
+ * Examples:
+ *  Web+Development           → ["Web Development"]
+ *  Web%20Development         → ["Web Development"]
+ *  Design,Resource           → ["Design", "Resource"]
+ *  Web+Development,Design    → ["Web Development", "Design"]
+ */
+public static function parseTagsFromUrl(string $tagString): array
+{
+    // Split AND-combined tags
+    $rawTags = explode(',', $tagString);
+
+    return array_values(array_filter(array_map(function ($tag) {
+        // Decode %20 etc.
+        $tag = rawurldecode($tag);
+
+        // Convert + to space
+        $tag = str_replace('+', ' ', $tag);
+
+        // Normalize whitespace
+        $tag = preg_replace('/\s+/', ' ', trim($tag));
+
+        return $tag !== '' ? $tag : null;
+    }, $rawTags)));
+}
 
     /**
      * Get pages filtered by one or more tags (CASE-INSENSITIVE)
@@ -277,6 +314,21 @@ class Helpers {
             });
         }
     }
+    /** Making a canoincal url */
+
+    public static function canonicalTagUrl(array $filterTags): string
+{
+    // Trim + remove empties
+    $tags = array_filter(array_map('trim', $filterTags));
+
+    // Preserve original casing, but normalize order
+    natcasesort($tags);
+
+    // Encode spaces etc, but NOT commas
+    $encoded = array_map('rawurlencode', $tags);
+
+    return 'tags/' . implode(',', $encoded);
+}
     /**
      * Sort pages collection by specified method
      *

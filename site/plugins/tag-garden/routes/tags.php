@@ -10,15 +10,13 @@
  *
  * Routes:
  * - /tags                    → Tags index (all tags)
- * /tags/Web%20Development    → Tags of "Web Development"
- * /tags/Web%20Development,Design -> Posts with two tags, "Web Development and Design"
+ * - /tags/Web%20Development  → Tags of "Web Development"
+ * - /tags/Web%20Development,Design -> Posts with two tags
  * - /tags?sort=planted       → Tags index with sort parameter
  * - /tags/design?sort=length → Single tag with sort parameter
-
  *
  * @version 1.0.0
-
-*/
+ */
 
 use TagGarden\Helpers;
 
@@ -88,7 +86,7 @@ return [
      * Single/Multiple Tag Route
      *
      * Displays content filtered by one or more tags
-     * URL: /tags/{tag} or /tags/{tag}+{tag2}
+     * URL: /tags/{tag} or /tags/{tag},{tag2}
      * Query params:
      * - sort: Sort method
      * - logic: 'OR' (default) or 'AND' for multiple tags
@@ -96,32 +94,17 @@ return [
     [
         'pattern' => 'tags/(:all)',
         'action' => function(string $tagString) {
-          // DEBG: Build debug output
-          $debug = "=== TAG ROUTE DEBUG ===\n";
-          $debug .= "Raw tagString from URL: " . $tagString . "\n";
-
-          // ADD CONFIG CHECK HERE
-          $debug .= "\n=== CONFIG CHECK ===\n";
-          $debug .= "sort.methods config: " . (option('yourusername.tag-garden.sort.methods') ? 'EXISTS' : 'NULL') . "\n";
-          $debug .= "group.definitions config: " . (option('yourusername.tag-garden.group.definitions') ? 'EXISTS' : 'NULL') . "\n";
-          $debug .= "Garden definition direct test: " . print_r(option('yourusername.tag-garden.group.definitions'), true) . "\n";
-
             // Get query parameters
             $sort = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
             $logic = get('logic', 'OR');
-            $groupFilter = get('group'); // Filter by content group
-            $typeFilter = get('type'); // Filter by content type
-            $page = get('page', 1); // Pagination
+            $groupFilter = get('group');
+            $typeFilter = get('type');
+            $page = get('page', 1);
 
             // If type is specified, auto-detect its group
             $autoDetectedGroup = null;
             if ($typeFilter && !$groupFilter) {
                 $autoDetectedGroup = Helpers::getGroupForType($typeFilter);
-            }
-
-            $debug .= "Query params - sort: $sort, group: " . ($groupFilter ?? 'all') . ", type: " . ($typeFilter ?? 'all') . ", page: $page\n";
-            if ($autoDetectedGroup) {
-                $debug .= "Auto-detected group for type '$typeFilter': $autoDetectedGroup\n";
             }
 
             // Parse tags from URL
@@ -138,49 +121,17 @@ return [
                 go('tags');
             }
 
-            $debug .= "filterTags preserved: " . print_r($filterTags, true) . "\n";
-            $debug .= "tagsForSearch (sanitized): " . print_r($tagsForSearch, true) . "\n";
-
-            // --- CANONICAL URL ENFORCEMENT ---
+            // Canonical URL enforcement
             $canonicalPath = Helpers::canonicalTagUrl($filterTags);
             $currentPath   = trim(kirby()->request()->path()->toString(), '/');
 
             if ($currentPath !== $canonicalPath) {
-                $debug .= "Redirecting to canonical URL: $canonicalPath\n";
                 return go(url($canonicalPath), 301);
             }
 
             // Get pages with SANITIZED tags for case-insensitive matching
             $pages = Helpers::getPagesByTags($tagsForSearch, $logic);
 
-            // DEBUG: Check what getPagesByTags returned
-            $debug .= "\n=== GETPAGESBYTAGS DETAILED DEBUG ===\n";
-            $debug .= "Pages returned from getPagesByTags: " . $pages->count() . "\n";
-
-            // Check if ANY pages have tags
-            $allPagesWithTags = kirby()->site()->index()->filterBy('tags', '!=', '');
-            $debug .= "Total pages with tags in entire site: " . $allPagesWithTags->count() . "\n";
-
-            // Show a few sample tags to see the format
-            $sampleCount = 0;
-            foreach ($allPagesWithTags as $p) {
-                if ($sampleCount >= 5) break;
-                $debug .= "  Sample: " . $p->title() . " → tags: [" . $p->tags() . "]\n";
-                $sampleCount++;
-            }
-
-            // Try a manual filter to see if the issue is in Helpers
-            $manualFilter = kirby()->site()->index()->filter(function($page) use ($filterTags) {
-                $pageTags = $page->tags()->split(',');
-                foreach ($pageTags as $tag) {
-                    $tag = trim($tag);
-                    if (mb_strtolower($tag) === mb_strtolower($filterTags[0])) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-            $debug .= "Manual case-insensitive filter found: " . $manualFilter->count() . " pages\n";
             // Apply group filter if specified
             if ($groupFilter) {
                 $groupDef = Helpers::getGroupDefinition($groupFilter);
@@ -189,32 +140,21 @@ return [
                         $template = $page->intendedTemplate()->name();
                         return in_array($template, $groupDef['types']);
                     });
-                    $debug .= "Filtered by group '$groupFilter': " . $pages->count() . " pages\n";
                 }
             }
 
             // Apply type filter if specified
             if ($typeFilter) {
                 $pages = $pages->filterBy('intendedTemplate', $typeFilter);
-                $debug .= "Filtered by type '$typeFilter': " . $pages->count() . " pages\n";
             }
 
             // Apply sorting
             $pages = Helpers::sortPages($pages, $sort);
 
-            $debug .= "Pages found after getPagesByTags: " . $pages->count() . "\n";
-
-            // Calculate pagination FIRST
+            // Calculate pagination
             $perPage = 20;
             $total = $pages->count();
             $pagination = $pages->paginate($perPage, ['page' => $page]);
-
-            $debug .= "\n=== PAGINATION ===\n";
-            $debug .= "Total pages: $total, Per page: $perPage, Current page: $page\n";
-            $debug .= "Paginated count: " . $pagination->count() . "\n";
-            if ($pagination->count() > 0) {
-                $debug .= "First paginated item: " . $pagination->first()->title() . "\n";
-            }
 
             // Get related tags for drilling down
             $relatedTags = [];
@@ -231,12 +171,6 @@ return [
                                 $combinableTags[$tag] = 0;
                             }
                             $combinableTags[$tag]++;
-                            // ADD THIS DEBUG
-if ($tag === 'Web Design') {
-    $debug .= "Found 'Web Design' tag, testing URL generation:\n";
-    $testUrl = Helpers::tagsToUrl(['tool', 'Web Design']);
-    $debug .= "  tagsToUrl(['tool', 'Web Design']) = " . $testUrl . "\n";
-}
                         }
                     }
                 }
@@ -266,33 +200,15 @@ if ($tag === 'Web Design') {
                 );
             }
 
-            // Calculate pagination ONCE - before we need it
-            $perPage = 20;
-            $total = $pages->count();
-            $pagination = $pages->paginate($perPage, ['page' => $page]);
-
-            $debug .= "\n=== PAGINATION ===\n";
-            $debug .= "Total pages: $total, Per page: $perPage, Current page: $page\n";
-            $debug .= "Paginated count: " . $pagination->count() . "\n";
-            if ($pagination->count() > 0) {
-                $debug .= "First paginated item: " . $pagination->first()->title() . "\n";
-            }
-
             // Calculate group stats
-            $debug .= "\n=== GROUP STATS DEBUG ===\n";
-            $debug .= "Pages count before group stats: " . $pages->count() . "\n";
-
             $groupStats = [];
             foreach (['garden', 'soil', 'work', 'about'] as $group) {
                 $groupDef = Helpers::getGroupDefinition($group);
-                $debug .= "Group '$group' definition: " . ($groupDef ? 'EXISTS' : 'NULL') . "\n";
                 if ($groupDef && isset($groupDef['types'])) {
-                    $debug .= "  Types for $group: " . implode(', ', $groupDef['types']) . "\n";
                     $count = $pages->filter(function($p) use ($groupDef) {
                         $template = $p->intendedTemplate()->name();
                         return in_array($template, $groupDef['types']);
                     })->count();
-                    $debug .= "  Count: $count\n";
 
                     if ($count > 0) {
                         $groupStats[$group] = [
@@ -302,22 +218,18 @@ if ($tag === 'Web Design') {
                     }
                 }
             }
-            $debug .= "Final groupStats: " . count($groupStats) . " groups\n";
-            $debug .= "groupStats structure:\n" . print_r($groupStats, true) . "\n";
 
-            // Calculate type stats (for the active group or all groups) - ONLY ONCE
+            // Calculate type stats
             $typeStats = [];
             $typesToShow = [];
 
             if ($groupFilter || $autoDetectedGroup) {
-                // Show types for the active group
                 $activeGroup = $groupFilter ?? $autoDetectedGroup;
                 $groupDef = Helpers::getGroupDefinition($activeGroup);
                 if ($groupDef && isset($groupDef['types'])) {
                     $typesToShow = $groupDef['types'];
                 }
             } else {
-                // Show all types from all groups
                 foreach (['garden', 'soil', 'work', 'about'] as $group) {
                     $groupDef = Helpers::getGroupDefinition($group);
                     if ($groupDef && isset($groupDef['types'])) {
@@ -385,15 +297,11 @@ if ($tag === 'Web Design') {
 
             // Prepare template data
             $templateData = [
-                // DEBUG DATA
-                'routeDebug' => $debug,
-                'debug'       => $debug,
-
                 // Core data
                 'filterTags' => $filterTags,
-                'tagPages' => $pagination,      // NEW unique name
-                'allPages' => $pagination,   // Backup for compatibility
-                'pagination' => $pagination, // For pagination UI
+                'tagPages' => $pagination,
+                'allPages' => $pagination,
+                'pagination' => $pagination,
                 'relatedTags' => $relatedTags,
                 'tagCount' => $total,
                 'total' => $total,
@@ -411,7 +319,7 @@ if ($tag === 'Web Design') {
                 'groupStats' => $groupStats,
                 'typeStats' => $typeStats,
 
-                // Statistics (from all pages)
+                // Statistics
                 'growthStats' => $growthStats,
                 'lengthStats' => $lengthStats,
                 'avgWords' => $avgWords,
@@ -452,27 +360,9 @@ if ($tag === 'Web Design') {
                 },
             ];
 
-            // DEBUG: Check what we're about to pass
-            $debug .= "\n=== TEMPLATE DATA CHECK ===\n";
-            $debug .= "filterTags in templateData: " . print_r($templateData['filterTags'], true) . "\n";
-            $debug .= "pages count in templateData: " . $templateData['tagPages']->count() . "\n";
-            $templateData['routeDebug'] = $debug;
-            $debug .= "\n=== CONFIG CHECK ===\n";
-            $debug .= "sort.methods config: " . (option('yourusername.tag-garden.sort.methods') ? 'EXISTS' : 'NULL') . "\n";
-            $debug .= "group.definitions config: " . (option('yourusername.tag-garden.group.definitions') ? 'EXISTS' : 'NULL') . "\n";
-
-            // Check ALL options with our prefix
-            $allOptions = [];
-            foreach (kirby()->options() as $key => $value) {
-                if (strpos($key, 'yourusername.tag-garden') === 0) {
-                    $allOptions[$key] = is_array($value) ? 'ARRAY' : (is_string($value) ? 'STRING' : gettype($value));
-                }
-            }
-            $debug .= "All tag-garden options found: " . print_r($allOptions, true) . "\n";
-            $debug .= "After urlToTags: " . print_r($filterTags, true) . "\n";
-            $debug .= "Raw tag count: " . count($filterTags) . "\n";
             // Render with data
-            return $virtualPage->render($templateData);          }
+            return $virtualPage->render($templateData);
+        }
     ],
 
     /**

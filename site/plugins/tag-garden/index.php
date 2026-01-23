@@ -420,4 +420,18 @@ Kirby::plugin('yourusername/tag-garden', [
             ? require __DIR__ . '/controllers/tag.php'
             : function() { return []; },
     ],
+
+    /**
+ * ============================================================================
+ * SNIPPETS
+ * ============================================================================
+ *
+ * Register snippet locations
+ */
+'snippets' => [
+    'tag-garden/reading-time' => __DIR__ . '/snippets/reading-time.php',
+    'tag-garden/badge' => __DIR__ . '/snippets/tag-badge.php',
+    'tag-garden/explorer' => __DIR__ . '/snippets/tags-explorer.php',
+    'tag-garden/section' => __DIR__ . '/snippets/tags-section.php',
+],
 ]);

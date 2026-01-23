@@ -19,6 +19,7 @@
  */
 
 snippet('site-header') ?>
+
 <?php
 // Write debug to file instead of output
 if (isset($routeDebug)) {
@@ -217,21 +218,22 @@ if (isset($routeDebug)) {
 
                         <!-- Tags -->
                         <?php if ($item->tags()->isNotEmpty()): ?>
+                          <footer class="meta">
                             <?php $pageTags = $item->tags()->split(',') ?>
-                            <div class="item-tags">
+                            <div class="cluster tags">
                                 <?php foreach ($pageTags as $tag): ?>
                                     <?php $tag = trim($tag) ?>
                                     <?php if (!empty($tag)): ?>
                                         <a href="<?= $getTagUrl($tag) ?>"
                                            rel="tag"
-                                           class="tag-badge p-category <?= in_array(mb_strtolower($tag), array_map('mb_strtolower', $filterTags)) ? 'active' : '' ?>">
+                                           class="button p-category <?= in_array(mb_strtolower($tag), array_map('mb_strtolower', $filterTags)) ? 'active' : '' ?>">
                                             <?= html($tag) ?>
                                         </a>
                                     <?php endif ?>
                                 <?php endforeach ?>
                             </div>
                         <?php endif ?>
-
+                      </footer>
                     </article>
 
                 <?php endforeach ?>

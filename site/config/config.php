@@ -1,6 +1,9 @@
 <?php
+require_once __DIR__ . '/helpers.php';
+
 return [
-  'debug' => false, 
+
+  'debug' => true,
     'panel' => [
         'install' => false,
     ],
@@ -77,6 +80,9 @@ return [
     ],
       // Tag Garden Plugin Extended Configuration
       'yourusername.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php',
+      'pageModels' => [
+    'tag' => 'TagGarden\TagCollection',
+],
 
     'afbora.kirby-minify-html' => [
         'enabled' => true,

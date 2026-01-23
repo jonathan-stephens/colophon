@@ -1,5 +1,6 @@
 title: Links (Container)
 icon: url
+template: links-container
 
 tabs:
   entries:

@@ -5,7 +5,5 @@
       // Format it with leading zeros if desired
       $formattedNumber = sprintf("%03d", $number);
   ?>
-  <?php snippet('post-header') ?>
-  <?php snippet('post-prose') ?>
-  <?php snippet('post-footer') ?>
+  <?php snippet('layout/default') ?>
 <?php snippet('site-footer') ?>

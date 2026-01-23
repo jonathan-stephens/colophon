@@ -1,6 +1,7 @@
 title: Articles (Container)
 type: pages
 icon: draft
+template: default-container
 
 tabs:
   entries:

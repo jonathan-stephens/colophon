@@ -1,5 +1,6 @@
 title: Notes (Container)
 icon: sticky-note
+template: default-container
 
 tabs:
   entries:

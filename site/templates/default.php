@@ -1,11 +1,7 @@
-<?php if($page->isHomePage()): ?>
-  <?php snippet('site-header') ?>
-  <?php snippet('layout/home') ?>
-  <?php snippet('site-footer') ?>
-<?php else: ?>
-  <?php snippet('site-header') ?>
-    <?php snippet('post-header') ?>
-    <?php snippet('post-prose') ?>
-    <?php snippet('post-footer') ?>
-  <?php snippet('site-footer') ?>
-<?php endif ?>
+<?php snippet('site-header') ?>
+  <?php if($page->isHomePage()): ?>
+    <?php snippet('layout/home') ?>
+  <?php else: ?>
+    <?php snippet('layout/default') ?>
+  <?php endif ?>
+<?php snippet('site-footer') ?>

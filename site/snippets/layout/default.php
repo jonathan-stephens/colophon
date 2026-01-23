@@ -1,3 +1,3 @@
-<?php snippet('post-header') ?>
-<?php snippet('post-prose') ?>
-<?php snippet('post-footer') ?>
+<?php snippet('layout/default/header') ?>
+<?php snippet('layout/default/post') ?>
+<?php snippet('layout/default/footer') ?>

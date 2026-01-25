@@ -1,7 +1,6 @@
 title: Default (Container)
 type: pages
 icon: box
-template: default-container
 
 tabs:
   entries:
@@ -11,14 +10,14 @@ tabs:
         headline: Draft Entries
         type: pages
         status: draft
-        templates: [article]
+        template: default
         sortBy: date desc
 
       published:
         headline: Published Entries
         type: pages
         status: published
-        templates: [article]
+        template: default
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"
   extends: tabs/listing

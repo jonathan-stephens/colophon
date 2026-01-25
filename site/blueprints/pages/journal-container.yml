@@ -1,7 +1,6 @@
 title: Journal (Container)
 type: pages
 icon: anchor
-template: default-container
 
 tabs:
   entries:
@@ -11,14 +10,14 @@ tabs:
         headline: Draft Entries
         type: pages
         status: draft
-        templates: [journal]
+        template: journal
         sortBy: date desc
 
       published:
         headline: Published Entries
         type: pages
         status: published
-        templates: [journal]
+        template: journal
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"
   extends: tabs/listing

@@ -1,6 +1,5 @@
 title: Notes (Container)
 icon: sticky-note
-template: default-container
 
 tabs:
   entries:
@@ -10,13 +9,13 @@ tabs:
         headline: Draft Notes
         type: pages
         status: draft
-        templates: [note]
+        template: note
         sortBy: date desc
 
       published:
         headline: Published Notes
         type: pages
         status: published
-        templates: [note]
+        template: note
         sortBy: date desc
         info: "{{ page.category }}"

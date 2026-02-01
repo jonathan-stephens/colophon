@@ -6,5 +6,6 @@ fields:
     options: query
     query: site.index.pluck("tags", ",", true)
     required: true
+  datetime: fields/growth-status
   datetime: fields/datetime
   location: fields/location

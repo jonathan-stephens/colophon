@@ -1,0 +1,7 @@
+title: Locations
+icon: map
+sections:
+  locations:
+    type: pages
+    headline: Locations
+    template: location

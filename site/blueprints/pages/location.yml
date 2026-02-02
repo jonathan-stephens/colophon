@@ -1,0 +1,34 @@
+title: Location
+icon: pin
+
+create:
+  fields:
+    - addressLocality
+    - addressRegion
+    - addressCountry
+  redirect: false
+  status: listed
+
+fields:
+  addressLocality:
+    label: City / Locality
+    type: text
+    required: true
+
+  addressRegion:
+    label: Region / State
+    type: text
+    width: 1/2
+
+  addressCountry:
+    label: Country
+    type: text
+    width: 1/2
+
+  streetAddress:
+    label: Street Address
+    type: text
+
+  postalCode:
+    label: Postal Code
+    type: text

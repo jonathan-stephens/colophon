@@ -45,7 +45,11 @@ tabs:
                 type: textarea
               default_location:
                 label: Default Location
-                type: text
+                type: pages
+                required: true
+                multiple: false
+                query: site.find('locations').children
+                empty: No default location
 
   header:
     label: Navigation

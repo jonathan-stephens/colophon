@@ -100,6 +100,28 @@ return [
     'hooks' => [
         'system.loadPlugins:after' => function () {
             require_once __DIR__ . '/../helpers/feeds.php';
+        },
+        'page.create:after' => function ($page) {
+
+          // Only apply if the page has a location field
+          if (!$page->blueprint()->field('locationAuthored')) {
+            return;
+          }
+
+          // Only apply if location is empty
+          if ($page->location()->isNotEmpty()) {
+            return;
+          }
+
+          $default = site()->default_location()->value();
+
+          if (!$default) {
+            return;
+          }
+
+          $page->update([
+            'locationAuthored' => $default
+          ]);
         }
     ],
     'routes' => [

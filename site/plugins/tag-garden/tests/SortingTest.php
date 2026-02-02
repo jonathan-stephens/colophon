@@ -56,7 +56,7 @@ class SortingTest {
      */
     private function testSortByPlanted() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'planted', 'desc');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'planted', 'desc');
 
             $this->assert(
                 'sortPages handles "planted" method',
@@ -108,7 +108,7 @@ class SortingTest {
      */
     private function testSortByTended() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'tended', 'desc');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'tended', 'desc');
 
             $this->assert(
                 'sortPages handles "tended" method',
@@ -136,7 +136,7 @@ class SortingTest {
      */
     private function testSortByNotable() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'notable');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'notable');
 
             $this->assert(
                 'sortPages handles "notable" method',
@@ -179,7 +179,7 @@ class SortingTest {
      */
     private function testSortByLengthAsc() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'length-asc');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'length-asc');
 
             $this->assert(
                 'sortPages handles "length-asc" method',
@@ -223,7 +223,7 @@ class SortingTest {
      */
     private function testSortByLengthDesc() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'length-desc');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'length-desc');
 
             $this->assert(
                 'sortPages handles "length-desc" method',
@@ -267,7 +267,7 @@ class SortingTest {
      */
     private function testSortByGrowth() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'growth');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'growth');
 
             $this->assert(
                 'sortPages handles "growth" method',
@@ -280,7 +280,7 @@ class SortingTest {
             foreach ($sorted as $page) {
                 if ($page->growth_status()->isNotEmpty()) {
                     $status = $page->growth_status()->value();
-                    $def = \TagGarden\Helpers::getGrowthDefinition($status);
+                    $def = \Yourusername\TagGarden\Helpers::getGrowthDefinition($status);
                     if ($def) {
                         $sortOrders[] = $def['sort-order'];
                     }
@@ -317,7 +317,7 @@ class SortingTest {
      */
     private function testSortByTitle() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
 
             $this->assert(
                 'sortPages handles "title" method',
@@ -356,8 +356,8 @@ class SortingTest {
      */
     private function testSortDirection() {
         try {
-            $asc = \TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
-            $desc = \TagGarden\Helpers::sortPages($this->testPages, 'title', 'desc');
+            $asc = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
+            $desc = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'desc');
 
             $this->assert(
                 'sortPages accepts direction parameter',
@@ -391,7 +391,7 @@ class SortingTest {
      */
     private function testInvalidSortMethod() {
         try {
-            $sorted = \TagGarden\Helpers::sortPages($this->testPages, 'invalid-method');
+            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'invalid-method');
 
             $this->assert(
                 'sortPages handles invalid method gracefully',

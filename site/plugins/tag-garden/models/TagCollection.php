@@ -1,6 +1,6 @@
 <?php
 
-namespace TagGarden;
+namespace Yourusername\TagGarden;
 
 use Kirby\Cms\Page;
 
@@ -12,7 +12,7 @@ use Kirby\Cms\Page;
  *
  * To enable this model, register it in index.php:
  * 'pageModels' => [
- *     'tag' => 'TagGarden\TagCollection',
+ *     'tag' => 'Yourusername\TagGarden\TagCollection',
  * ]
  *
  * @version 1.0.0

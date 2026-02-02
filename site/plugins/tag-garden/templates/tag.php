@@ -153,7 +153,7 @@ if (isset($routeDebug)) {
                   <?php
                         $template = $item->intendedTemplate()->name();
                         $group = $item->contentGroup() ?? 'other';
-                        $groupDef = \TagGarden\Helpers::getGroupDefinition($group);
+                        $groupDef = \Yourusername\TagGarden\Helpers::getGroupDefinition($group);
                     ?>
 
                     <article class="timeline-item h-entry" data-template="<?= $template ?>" data-group="<?= $group ?>">

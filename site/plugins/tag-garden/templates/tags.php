@@ -196,7 +196,7 @@ snippet('site-header') ?>
                                 <?= $item->title()->html() ?>
                             </a>
                             <?php if ($item->growth_status()->isNotEmpty()): ?>
-                                <?php $status = \TagGarden\Helpers::getGrowthDefinition($item->growth_status()->value()) ?>
+                                <?php $status = \Yourusername\TagGarden\Helpers::getGrowthDefinition($item->growth_status()->value()) ?>
                                 <?php if ($status): ?>
                                     <span class="growth-status" title="<?= $status['label'] ?>">
                                         <?= $status['emoji'] ?>

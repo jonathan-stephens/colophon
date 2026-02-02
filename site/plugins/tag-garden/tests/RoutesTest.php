@@ -118,7 +118,7 @@ class RoutesTest {
      */
     private function testCanonicalRedirect() {
         try {
-            use TagGarden\Helpers;
+            use Yourusername\TagGarden\Helpers;
 
             // Test canonical URL generation
             $tags = ['Design', 'Code'];
@@ -155,7 +155,7 @@ class RoutesTest {
             $groups = ['garden', 'soil', 'work', 'about'];
 
             foreach ($groups as $group) {
-                $def = \TagGarden\Helpers::getGroupDefinition($group);
+                $def = \Yourusername\TagGarden\Helpers::getGroupDefinition($group);
                 $this->assert(
                     "Group filter '$group' is defined",
                     $def !== null,

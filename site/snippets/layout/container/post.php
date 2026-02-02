@@ -1,19 +1,27 @@
 <?php
 $layout = $layout ?? 'default';
-
 foreach($articles as $article):
+  $wordCount = $article->text()->words();
+  $lengthCategory = \yourusername\TagGarden\Helpers::getLengthCategory($wordCount);
+
   if ($layout === 'links'): ?>
-    <article class="h-entry">
-      <box-l class="e-content flow">
-        <h2 class="p-name u-bookmark-of hed"><a href="<?= $article->website()->html() ?>"><?= $article->title()->html() ?> (<?= $article->tld()->html() ?>)</a></h2>
-        <?= $article->text()->kirbytext() ?>
-        <div class="meta flow">
+    <article class="h-entry box-l flow">
+      <a href="<?= $article->website()->html() ?>" class="p-name u-bookmark-of">
+        <h2 class="hed">
+          <?= $article->title()->html() ?>
+          <span class="tld">
+            (<?= $article->tld()->html() ?>)
+          </span>
+        </h2>
+      </a>
+      <a rel="bookmark" class="u-url" href="<?= $article->url() ?>">
+        <span class="length-category"><?= $lengthCategory ?> •
           <?php if($article->tags()->isNotEmpty()): ?>
             <?php snippet('/components/tags', ['reference' => $article]) ?>
-          <?php endif ?>
-          <a rel="bookmark" class="u-url" href="<?= $article->url() ?>"><time class="dt-published" datetime="<?= $article->date()->toDate('F j Y') ?><?= $article->time()->toDate('H:i') ?>"><?= $article->time()->toDate('H:i') ?></time></a>
-        </div>
-      </box-l>
+          <?php endif ?>•
+          <?= $wordCount ?> words
+        </span>
+      </a>
     </article>
   <?php else: ?>
     <article class="h-entry">
@@ -34,5 +42,5 @@ foreach($articles as $article):
           <?php endif ?>
       </a>
     </article>
-  <?php endif;
-endforeach ?>
+  <?php endif; ?>
+<?php endforeach ?>

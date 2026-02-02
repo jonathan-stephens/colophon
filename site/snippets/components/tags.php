@@ -1,9 +1,16 @@
+<?php
+$tags = $reference->tags()->split();
+$tagCount = count($tags);
+?>
+
 <?php if ($page->template() == 'project-container'): ?>
   <?php foreach ($reference->tags()->split() as $tag): ?>
     <span rel="tag" class="p-category">
       <?= $tag?>
     </span>
   <?php endforeach ?>
+<?php elseif ($page->template() == 'links-container'): ?>
+  <?= $tagCount ?> tags
 <?php else: ?>
   <p class="tags cluster">
     <span class="with-icon">

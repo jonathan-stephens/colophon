@@ -1,6 +1,6 @@
 <?php
 
-namespace TagGarden;
+namespace Yourusername\TagGarden;
 
 /**
  * Tag Garden Helpers
@@ -8,7 +8,7 @@ namespace TagGarden;
  * Static helper methods for working with tags, content length, growth status,
  * and other plugin functionality throughout Kirby.
  *
- * Usage: TagGarden\Helpers::methodName($args)
+ * Usage: Yourusername\TagGarden\Helpers::methodName($args)
  *
  * @version 1.0.0
  */

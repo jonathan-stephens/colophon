@@ -14,7 +14,7 @@
  * @version 1.0.0
  */
 
-use TagGarden\Helpers;
+use Yourusername\TagGarden\Helpers;
 
 return [
 

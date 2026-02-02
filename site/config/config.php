@@ -5,7 +5,7 @@ return [
 
   'debug' => false,
     'panel' => [
-        'install' => false,
+        'install' => true,
     ],
     'date.timezone' => 'America/New_York',
     'ready' => function ($kirby) {

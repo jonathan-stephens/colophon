@@ -16,6 +16,8 @@
 }
 
 .links .box-l{
+  container-type: inline-size;
+  container-name: links-listing;
   display:grid;
   grid-template-rows:1fr auto;
   grid-template-columns: 1fr;
@@ -161,6 +163,9 @@
     header + div { grid-area: content; }
     footer{ grid-area: footer;}
   }
+}
+
+@media screen and (min-width:42em){
   .links .box-l{
     grid-template-columns:2fr 1fr;
     grid-template-rows:auto;

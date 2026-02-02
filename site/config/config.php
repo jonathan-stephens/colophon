@@ -5,7 +5,7 @@ return [
 
   'debug' => false,
     'panel' => [
-        'install' => true,
+        'install' => false,
     ],
     'date.timezone' => 'America/New_York',
     'ready' => function ($kirby) {
@@ -85,7 +85,13 @@ return [
 ],
 
     'afbora.kirby-minify-html' => [
-        'enabled' => true,
+      'enabled' => function () {
+        if (kirby()->environment() === 'local') {
+          return false;
+        }
+
+        return !kirby()->user();
+      },
         'ignore' => [
             'sitemap',
             'rss'

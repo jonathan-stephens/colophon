@@ -86,10 +86,6 @@ return [
 
     'afbora.kirby-minify-html' => [
       'enabled' => function () {
-        if (kirby()->environment() === 'local') {
-          return false;
-        }
-
         return !kirby()->user();
       },
         'ignore' => [

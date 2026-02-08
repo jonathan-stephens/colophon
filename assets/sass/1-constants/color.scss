@@ -1,35 +1,13 @@
 @use '../0-mixins/palette-generator';
 
 :root{
-  --palette-ink: oklch(12.43% 0.015 47.04 / 100);
+  --palette-ink:oklch(12.43% 0.015 47.04 / 100);
   --palette-ink-raw:12.43% 0.015 47.04;
 
   --palette-paper: oklch(98.18% 0.001 106.42 / 100);
   --palette-paper-raw: 98.18% 0.001 106.42;
 
-  --palette-shade-95:oklch(var(--palette-ink-raw) / .95);
-  --palette-shade-90:oklch(var(--palette-ink-raw) / .9);
-  --palette-shade-80:oklch(var(--palette-ink-raw) / .8);
-  --palette-shade-70:oklch(var(--palette-ink-raw) / .7);
-  --palette-shade-60:oklch(var(--palette-ink-raw) / .6);
-  --palette-shade-50:oklch(var(--palette-ink-raw) / .5);
-  --palette-shade-40:oklch(var(--palette-ink-raw) / .4);
-  --palette-shade-30:oklch(var(--palette-ink-raw) / .3);
-  --palette-shade-20:oklch(var(--palette-ink-raw) / .2);
-  --palette-shade-10:oklch(var(--palette-ink-raw) / .1);
-  --palette-shade-05:oklch(var(--palette-ink-raw) / .05);
-
-  --palette-tint-95:oklch(var(--palette-paper-raw) / .95);
-  --palette-tint-90:oklch(var(--palette-paper-raw) / .9);
-  --palette-tint-80:oklch(var(--palette-paper-raw) / .8);
-  --palette-tint-70:oklch(var(--palette-paper-raw) / .7);
-  --palette-tint-60:oklch(var(--palette-paper-raw) / .6);
-  --palette-tint-50:oklch(var(--palette-paper-raw) / .5);
-  --palette-tint-40:oklch(var(--palette-paper-raw) / .4);
-  --palette-tint-30:oklch(var(--palette-paper-raw) / .3);
-  --palette-tint-20:oklch(var(--palette-paper-raw) / .2);
-  --palette-tint-10:oklch(var(--palette-paper-raw) / .1);
-  --palette-tint-05:oklch(var(--palette-paper-raw) / .05);
+  --palette-ash:oklch(0.569 0.006 356.5);
 
   --palette-ash-100: var(--palette-ink);
   --palette-ash-95: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 5%);
@@ -44,13 +22,4 @@
   --palette-ash-10: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 90%);
   --palette-ash-05: color-mix(in oklch, var(--palette-ink), var(--palette-paper) 95%);
   --palette-ash-00: var(--palette-paper);
-
-  --mono-lightest: 0.9794 0.0093 62.59 /* #FDF7F2 */;
-  --mono-lighter: 0.8384 0.0167 64.63 /* #D2C8BF */;
-  --mono-light: 0.7019 0.0175 64.57 /* #A79D94 */;
-  --mono-mid: 0.5747 0.0183 52.37 /* #82766F */;
-  --mono-dark: 0.4108 0.0169 67.33 /* #514941 */;
-  --mono-darker: 0.2671 0.0175 63.16 /* #2C241D */;
-  --mono-darkest: 0.1237 0.0176 59.29 /* #0B0502 */;
-
 }

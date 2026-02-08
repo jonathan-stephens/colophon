@@ -38,7 +38,7 @@
   --error-color: var(--palette-red-10);
   --success-background: var(--palette-green-50);
   --success-color: var(--palette-green-10);
-  --background-nav-panel: var(--palette-tint-70);
+  --background-nav-panel: oklch(var(--palette-paper-raw) / 65%);
 }
 
 :root[data-theme="dark"] {
@@ -79,7 +79,7 @@
   --error-color: var(--palette-red-60);
   --success-background: var(--palette-green-60);
   --success-color: var(--palette-green-20);
-  --background-nav-panel: var(--palette-shade-70);
+  --background-nav-panel: oklch(var(--palette-ink-raw) / 75%);
 }
 
 html[data-theme='light']{

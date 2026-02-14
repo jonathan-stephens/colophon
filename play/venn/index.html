@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Design Engineering Management - Role Positioning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 3rem;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+        
+        .venn-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+        
+        svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        .circle {
+            fill-opacity: 0.15;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .circle:hover {
+            fill-opacity: 0.25;
+            stroke-width: 3;
+        }
+        
+        .label {
+            font-size: 18px;
+            font-weight: 700;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        
+        .intersection-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-anchor: middle;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .center-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-anchor: middle;
+            fill: #2c3e50;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:nth-child(1) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .info-card:nth-child(2) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .info-card:nth-child(3) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .info-card:nth-child(4) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-card ul {
+            list-style: none;
+        }
+        
+        .info-card li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .info-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+        }
+        
+        .value-prop {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+        
+        .value-prop h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .value-prop p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        
+        .capabilities {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .capabilities h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.6rem;
+        }
+        
+        .capability-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .capability-item {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Design Engineering Management</h1>
+        <p class="subtitle">Cross-disciplinary leadership at the intersection of all four domains</p>
+        
+        <div class="venn-container">
+            <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Define the circles -->
+                <circle class="circle" id="product" cx="320" cy="250" r="180" 
+                        fill="#f093fb" stroke="#f5576c" />
+                <circle class="circle" id="design" cx="480" cy="250" r="180" 
+                        fill="#4facfe" stroke="#00f2fe" />
+                <circle class="circle" id="engineering" cx="320" cy="380" r="180" 
+                        fill="#43e97b" stroke="#38f9d7" />
+                <circle class="circle" id="management" cx="480" cy="380" r="180" 
+                        fill="#fa709a" stroke="#fee140" />
+                
+                <!-- Main circle labels -->
+                <text class="label" x="240" y="170" fill="#f5576c">PRODUCT</text>
+                <text class="label" x="560" y="170" fill="#00f2fe">DESIGN</text>
+                <text class="label" x="240" y="480" fill="#38f9d7">ENGINEERING</text>
+                <text class="label" x="560" y="480" fill="#fee140">MANAGEMENT</text>
+                
+                <!-- Two-way intersection labels -->
+                <text class="intersection-label" x="400" y="200" fill="#c74375">Product Design</text>
+                <text class="intersection-label" x="280" y="315" fill="#72c087">Product Engineering</text>
+                <text class="intersection-label" x="520" y="315" fill="#f98071">Design Engineering</text>
+                <text class="intersection-label" x="400" y="445" fill="#95d168">Engineering Management</text>
+                <text class="intersection-label" x="230" y="390" fill="#e88497">Product Management</text>
+                <text class="intersection-label" x="570" y="240" fill="#fa8c6f">Design Management</text>
+                
+                <!-- Center: The unique positioning -->
+                <circle cx="400" cy="315" r="60" fill="#2c3e50" fill-opacity="0.1" 
+                        stroke="#2c3e50" stroke-width="3" stroke-dasharray="5,5"/>
+                <text class="center-label" x="400" y="305">YOU ARE</text>
+                <text class="center-label" x="400" y="325">HERE</text>
+                <text class="intersection-label" x="400" y="345" fill="#2c3e50">The Full Stack Leader</text>
+            </svg>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🎯 Product</h3>
+                <ul>
+                    <li>Strategy & Vision</li>
+                    <li>Market Research</li>
+                    <li>User Needs</li>
+                    <li>Roadmapping</li>
+                    <li>Prioritization</li>
+                    <li>Metrics & KPIs</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>✨ Design</h3>
+                <ul>
+                    <li>User Experience</li>
+                    <li>Interface Design</li>
+                    <li>Design Systems</li>
+                    <li>Prototyping</li>
+                    <li>Visual Language</li>
+                    <li>Accessibility</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>⚙️ Engineering</h3>
+                <ul>
+                    <li>Architecture</li>
+                    <li>Implementation</li>
+                    <li>Technical Debt</li>
+                    <li>Performance</li>
+                    <li>Scalability</li>
+                    <li>Security</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>🎪 Management</h3>
+                <ul>
+                    <li>Team Leadership</li>
+                    <li>Resource Allocation</li>
+                    <li>Stakeholder Alignment</li>
+                    <li>Process Design</li>
+                    <li>Culture Building</li>
+                    <li>Delivery Excellence</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="value-prop">
+            <h2>The Unique Value Proposition</h2>
+            <p>While most leaders specialize in 2-3 of these domains, I operate at the rare intersection of all four. This means I can translate between product vision and technical architecture, bridge design intent with engineering constraints, and lead teams while staying hands-on with the work. I don't just understand each discipline—I actively work in their overlaps, seeing the system holistically and organizing what's needed to ship great products.</p>
+        </div>
+        
+        <div class="capabilities">
+            <h3>What This Enables</h3>
+            <div class="capability-list">
+                <div class="capability-item">
+                    <strong>End-to-End Ownership:</strong> From strategy to shipped pixels
+                </div>
+                <div class="capability-item">
+                    <strong>Translation Layer:</strong> Bridge communication gaps between disciplines
+                </div>
+                <div class="capability-item">
+                    <strong>Holistic Decision-Making:</strong> Balance trade-offs across all dimensions
+                </div>
+                <div class="capability-item">
+                    <strong>Rapid Iteration:</strong> Move from concept to code without handoff friction
+                </div>
+                <div class="capability-item">
+                    <strong>Team Acceleration:</strong> Unblock teams by working in any discipline
+                </div>
+                <div class="capability-item">
+                    <strong>Strategic Execution:</strong> Align vision with technical reality
+                </div>
+                <div class="capability-item">
+                    <strong>Design-Engineering Synthesis:</strong> Build beautiful, performant products
+                </div>
+                <div class="capability-item">
+                    <strong>Organizational Design:</strong> Structure teams for maximum impact
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

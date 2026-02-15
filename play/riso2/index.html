@@ -8,7 +8,7 @@
 <style>
 
 /* =========================================================
-   RISO.CSS — MVP CORE (INLINE FOR V1)
+   RISO.CSS — MVP CORE (INLINE)
    ========================================================= */
 
 /* ---- Ink Tokens ---- */
@@ -23,11 +23,22 @@
   --riso-default-offset-y: 0px;
 }
 
-/* ---- Base Ink Layer ---- */
+/* ---- Printing Bed ---- */
+
+.riso-stack {
+  position: relative;
+  display: inline-block;
+}
+
+.riso-stack > .riso-ink {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ---- Base Ink Behavior ---- */
 
 .riso-ink {
-  position: absolute;
-  inset: 0;
   mix-blend-mode: multiply;
 
   transform:
@@ -35,16 +46,14 @@
       var(--riso-offset-x, var(--riso-default-offset-x)),
       var(--riso-offset-y, var(--riso-default-offset-y))
     );
-
-  pointer-events: none;
 }
 
 /* ---- Ink Colors ---- */
 
-.riso-ink-sunflower { color: var(--riso-sunflower); fill: var(--riso-sunflower); background: var(--riso-sunflower); }
-.riso-ink-blue { color: var(--riso-blue); fill: var(--riso-blue); background: var(--riso-blue); }
-.riso-ink-fluoro-pink { color: var(--riso-fluoro-pink); fill: var(--riso-fluoro-pink); background: var(--riso-fluoro-pink); }
-.riso-ink-black { color: var(--riso-black); fill: var(--riso-black); background: var(--riso-black); }
+.riso-ink-sunflower { color: var(--riso-sunflower); fill: var(--riso-sunflower); background-color: var(--riso-sunflower); }
+.riso-ink-blue { color: var(--riso-blue); fill: var(--riso-blue); background-color: var(--riso-blue); }
+.riso-ink-fluoro-pink { color: var(--riso-fluoro-pink); fill: var(--riso-fluoro-pink); background-color: var(--riso-fluoro-pink); }
+.riso-ink-black { color: var(--riso-black); fill: var(--riso-black); background-color: var(--riso-black); }
 
 /* ---- Offset Utilities ---- */
 
@@ -68,29 +77,28 @@ body {
   background: #f6f2ea;
   font-family: Helvetica, Arial, sans-serif;
   line-height: 1.4;
+  color: #111;
 }
 
 .page {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 6rem 3rem;
-  position: relative;
+  padding: 5rem 2rem;
 }
 
 .section {
-  position: relative;
   margin-bottom: 8rem;
 }
 
 .hero {
-  font-size: 8vw;
+  font-size: 14vw;
   font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.85;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
 }
 
 .sub {
-  font-size: 2rem;
+  font-size: 1.8rem;
   max-width: 700px;
 }
 
@@ -102,11 +110,11 @@ body {
 }
 
 .label {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 2rem;
-  opacity: 0.6;
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
 }
 
 .demo-box {
@@ -115,11 +123,17 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   margin-bottom: 2rem;
+  display: inline-block;
 }
 
 svg {
   width: 250px;
   height: 250px;
+  display: block;
+}
+
+p {
+  margin-bottom: 1.2rem;
 }
 
 </style>
@@ -132,68 +146,68 @@ svg {
        HERO
        ========================================================= -->
 
-  <div class="section" style="height: 40vh;">
-
-    <div class="riso-ink riso-ink-sunflower hero">
-      RISO.CSS
+  <div class="section">
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-sunflower hero">
+        RISO.CSS
+      </div>
+      <div class="riso-ink riso-ink-blue riso-offset-md hero">
+        RISO.CSS
+      </div>
     </div>
-
-    <div class="riso-ink riso-ink-blue riso-offset-md hero">
-      RISO.CSS
-    </div>
-
   </div>
 
   <!-- =========================================================
        INTRO
        ========================================================= -->
 
-  <div class="section" style="min-height: 220px;">
-
-    <div class="riso-ink riso-ink-black sub">
-      A web-native system for building risograph-inspired
-      graphics using CSS and SVG.
+  <div class="section">
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-black sub">
+        A web-native system for building risograph-inspired
+        graphics using CSS and SVG.
+      </div>
+      <div class="riso-ink riso-ink-fluoro-pink riso-offset-sm sub">
+        A web-native system for building risograph-inspired
+        graphics using CSS and SVG.
+      </div>
     </div>
-
-    <div class="riso-ink riso-ink-fluoro-pink riso-offset-sm sub">
-      A web-native system for building risograph-inspired
-      graphics using CSS and SVG.
-    </div>
-
   </div>
 
   <!-- =========================================================
        ESSAY
        ========================================================= -->
 
-  <div class="section" style="min-height: 300px;">
+  <div class="section">
 
     <div class="label">Essay</div>
 
-    <div class="riso-ink riso-ink-blue">
-      <p>
-        Risograph printing is mechanical. It layers ink drums one at a time.
-        Each color passes through the machine separately.
-        Misregistration is not an error — it is character.
-      </p>
-      <p>
-        riso.css models that behavior in the browser.
-        Each element becomes a printable layer.
-        DOM order becomes ink order.
-      </p>
-    </div>
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-blue">
+        <p>
+          Risograph printing is mechanical. It layers ink drums one at a time.
+          Each color passes through the machine separately.
+          Misregistration is not an error — it is character.
+        </p>
+        <p>
+          riso.css models that behavior in the browser.
+          Each element becomes a printable layer.
+          DOM order becomes ink order.
+        </p>
+      </div>
 
-    <div class="riso-ink riso-ink-sunflower riso-offset-md">
-      <p>
-        Risograph printing is mechanical. It layers ink drums one at a time.
-        Each color passes through the machine separately.
-        Misregistration is not an error — it is character.
-      </p>
-      <p>
-        riso.css models that behavior in the browser.
-        Each element becomes a printable layer.
-        DOM order becomes ink order.
-      </p>
+      <div class="riso-ink riso-ink-sunflower riso-offset-md">
+        <p>
+          Risograph printing is mechanical. It layers ink drums one at a time.
+          Each color passes through the machine separately.
+          Misregistration is not an error — it is character.
+        </p>
+        <p>
+          riso.css models that behavior in the browser.
+          Each element becomes a printable layer.
+          DOM order becomes ink order.
+        </p>
+      </div>
     </div>
 
   </div>
@@ -202,32 +216,36 @@ svg {
        BLOCK POSTER
        ========================================================= -->
 
-  <div class="section" style="height: 250px;">
+  <div class="section">
 
-    <div class="riso-ink riso-ink-fluoro-pink block">
-      PRINT IS A SYSTEM
-    </div>
+    <div class="label">Block Example</div>
 
-    <div class="riso-ink riso-ink-black riso-offset-lg block">
-      PRINT IS A SYSTEM
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-fluoro-pink block">
+        PRINT IS A SYSTEM
+      </div>
+      <div class="riso-ink riso-ink-black riso-offset-lg block">
+        PRINT IS A SYSTEM
+      </div>
     </div>
 
   </div>
 
   <!-- =========================================================
-       UTILITY EXAMPLES
+       UTILITY DEMO
        ========================================================= -->
 
-  <div class="section" style="height: 220px;">
+  <div class="section">
 
     <div class="label">Utility Example</div>
 
-    <div class="riso-ink riso-ink-sunflower demo-box">
-      .riso-ink
-    </div>
-
-    <div class="riso-ink riso-ink-blue riso-offset-sm demo-box">
-      .riso-offset-sm
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-sunflower demo-box">
+        .riso-ink
+      </div>
+      <div class="riso-ink riso-ink-blue riso-offset-sm demo-box">
+        .riso-offset-sm
+      </div>
     </div>
 
   </div>
@@ -236,20 +254,22 @@ svg {
        SVG EXAMPLE
        ========================================================= -->
 
-  <div class="section" style="height: 300px;">
+  <div class="section">
 
     <div class="label">SVG Layering</div>
 
-    <div class="riso-ink riso-ink-blue">
-      <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="80" />
-      </svg>
-    </div>
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-blue">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="80" />
+        </svg>
+      </div>
 
-    <div class="riso-ink riso-ink-fluoro-pink riso-offset-md">
-      <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="80" />
-      </svg>
+      <div class="riso-ink riso-ink-fluoro-pink riso-offset-md">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="80" />
+        </svg>
+      </div>
     </div>
 
   </div>
@@ -258,16 +278,17 @@ svg {
        STAMP MODE
        ========================================================= -->
 
-  <div class="section" style="height: 200px;">
+  <div class="section">
 
     <div class="label">Stamp Mode</div>
 
-    <div class="riso-ink riso-ink-black riso-stamp">
-      imperfect mechanical pressure
-    </div>
-
-    <div class="riso-ink riso-ink-fluoro-pink riso-stamp riso-offset-sm">
-      imperfect mechanical pressure
+    <div class="riso-stack">
+      <div class="riso-ink riso-ink-black riso-stamp">
+        imperfect mechanical pressure
+      </div>
+      <div class="riso-ink riso-ink-fluoro-pink riso-stamp riso-offset-sm">
+        imperfect mechanical pressure
+      </div>
     </div>
 
   </div>

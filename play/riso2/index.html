@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>riso.css v1 — Demo</title>
+  <link rel="stylesheet" href="./riso.css" />
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background: #f8f4ed;
+      margin: 0;
+      padding: 4rem;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 5rem;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-top: 4rem;
+      font-size: 2rem;
+    }
+
+    .big {
+      font-size: 1.5rem;
+    }
+
+    .poster-block {
+      padding: 4rem;
+      font-size: 3rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .demo-box {
+      padding: 2rem;
+      margin: 2rem 0;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- TITLE LAYER -->
+  <div style="position: relative;">
+    <h1 class="riso-ink riso-ink-sunflower">
+      RISOGRAPH
+    </h1>
+
+    <h1 class="riso-ink riso-ink-blue riso-offset-md">
+      RISOGRAPH
+    </h1>
+  </div>
+
+  <!-- SUBTITLE -->
+  <div style="position: relative;">
+    <p class="big riso-ink riso-ink-black">
+      a web-native print system
+    </p>
+
+    <p class="big riso-ink riso-ink-fluoro-pink riso-offset-sm">
+      a web-native print system
+    </p>
+  </div>
+
+  <h2>What Is This?</h2>
+
+  <div style="position: relative;">
+    <p class="riso-ink riso-ink-black">
+      Risograph printing is mechanical, layered, imperfect, and alive.
+      It produces textures, misalignments, grain, and human tension.
+      It is not smooth.
+      It is not digital.
+      It is beautifully wrong.
+    </p>
+
+    <p class="riso-ink riso-ink-blue riso-offset-sm">
+      Risograph printing is mechanical, layered, imperfect, and alive.
+      It produces textures, misalignments, grain, and human tension.
+      It is not smooth.
+      It is not digital.
+      It is beautifully wrong.
+    </p>
+  </div>
+
+  <h2>riso.css</h2>
+
+  <div style="position: relative;">
+    <p class="riso-ink riso-ink-sunflower">
+      riso.css translates that physical logic into web-native tools.
+      Each ink becomes a layer.
+      Each layer can misregister.
+      Each element behaves like a printed sheet.
+    </p>
+
+    <p class="riso-ink riso-ink-fluoro-pink riso-offset-md">
+      riso.css translates that physical logic into web-native tools.
+      Each ink becomes a layer.
+      Each layer can misregister.
+      Each element behaves like a printed sheet.
+    </p>
+  </div>
+
+  <h2>Block Example</h2>
+
+  <div style="position: relative;">
+    <div class="poster-block riso-ink riso-ink-sunflower">
+      PRINT IS A SYSTEM
+    </div>
+
+    <div class="poster-block riso-ink riso-ink-blue riso-offset-lg">
+      PRINT IS A SYSTEM
+    </div>
+  </div>
+
+  <h2>Utility Box Example</h2>
+
+  <div style="position: relative;">
+    <div class="demo-box riso-ink riso-ink-fluoro-pink">
+      misregistration
+    </div>
+
+    <div class="demo-box riso-ink riso-ink-black riso-offset-sm">
+      misregistration
+    </div>
+  </div>
+
+  <h2>SVG Example</h2>
+
+  <div style="position: relative;">
+    <svg class="riso-ink riso-ink-sunflower" width="200" height="200">
+      <circle cx="100" cy="100" r="80" />
+    </svg>
+
+    <svg class="riso-ink riso-ink-blue riso-offset-md" width="200" height="200">
+      <circle cx="100" cy="100" r="80" />
+    </svg>
+  </div>
+
+  <h2>Stamp Mode (Optional)</h2>
+
+  <div style="position: relative;">
+    <p class="riso-ink riso-stamp riso-ink-black">
+      imperfect mechanical pressure
+    </p>
+
+    <p class="riso-ink riso-stamp riso-ink-fluoro-pink riso-offset-sm">
+      imperfect mechanical pressure
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

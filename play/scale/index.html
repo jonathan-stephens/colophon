@@ -37,11 +37,25 @@
           "mode generate"
           "result result"
       }
-      #num{             grid-area: num;}
-      #scale{           grid-area: scale;}
+      #num-group{       grid-area: num;}
+      #scale-group{     grid-area: scale;}
       .toggle-wrapper{  grid-area: mode;}
       button{           grid-area: generate;}
       #result{          grid-area: result;}
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      .input-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
 
       .sr-only {
         position: absolute;
@@ -145,18 +159,14 @@
         pointer-events: none;
       }
       .toggle-label-off {
-        z-index: 1;
-      }
-      .toggle-label-on {
         z-index: 3;
-      }
-      .toggle-label-off {
         left: 12px;
-        color: light-dark(var(--ranma-dark), var(--ranma-light));
+        color: light-dark(white, var(--ranma-darkest));
       }
       .toggle-label-on {
+        z-index: 1;
         right: 12px;
-        color: light-dark(var(--ranma-light), var(--ranma-darkest));
+        color: light-dark(var(--ranma-dark), var(--ranma-light));
         opacity: 0;
       }
       input[type="checkbox"]:checked + .toggle-slider {
@@ -173,6 +183,7 @@
       input[type="checkbox"]:checked + .toggle-slider .toggle-label-on {
         opacity: 1;
         color: white;
+        z-index: 3;
       }
       input[type="checkbox"]:focus-visible + .toggle-slider {
         outline: 2px solid var(--ranma-dark);
@@ -235,6 +246,10 @@
         color: light-dark(var(--ranma-dark), var(--ranma-light));
         opacity: 0.6;
       }
+      .result-row.is-base {
+        background-color: light-dark(var(--ranma-lighter), var(--ranma-darker));
+        font-style: italic;
+      }
     </style>
   </head>
 
@@ -243,18 +258,23 @@
       <h1>Scale Calculator</h1>
     </header>
     <main>
-      <label for="num" class="sr-only">Enter number</label>
-      <input type="number" id="num" placeholder="Enter number" step="any" aria-label="Enter number">
+      <div class="input-group" id="num-group">
+        <label class="input-label" for="num">Base size (px)</label>
+        <input type="number" id="num" placeholder="e.g. 16" step="any" aria-label="Base size in pixels">
+      </div>
 
-      <label for="scale" class="sr-only">Scale factor</label>
-      <input type="number" id="scale" placeholder="Scale" value="1" step="any" aria-label="Scale factor">
+      <div class="input-group" id="scale-group">
+        <label class="input-label" for="scale">Scale ratio</label>
+        <input type="number" id="scale" placeholder="e.g. 1.125" value="1.125" step="any" aria-label="Scale ratio">
+      </div>
 
       <div class="toggle-wrapper">
         <label class="toggle-switch" for="mode">
           <input type="checkbox" id="mode" onchange="updateLabel()" aria-label="Toggle between Scale and Multiply modes">
-          <span class="toggle-slider"></span>
-          <span class="toggle-label-scale">Scale</span>
-          <span class="toggle-label-multiply">Multiply</span>
+          <span class="toggle-slider">
+            <span class="toggle-label-off">Scale</span>
+            <span class="toggle-label-on">Multiply</span>
+          </span>
         </label>
       </div>
 
@@ -271,12 +291,12 @@
         }
         function generate() {
           const n = parseFloat(document.getElementById('num').value);
-          const scale = parseFloat(document.getElementById('scale').value) || 1;
+          const scale = parseFloat(document.getElementById('scale').value) || 1.125;
           const isMultMode = document.getElementById('mode').checked;
           const result = document.getElementById('result');
 
           if (!n) {
-            result.innerHTML = '<p>Please enter a number</p>';
+            result.innerHTML = '<p>Please enter a base size</p>';
             return;
           }
 
@@ -314,10 +334,10 @@
 
             // Base value
             output += `
-              <div class="result-row">
+              <div class="result-row is-base">
                 <span class="result-index">0</span>
                 <span class="result-dot">.</span>
-                <span class="result-value">${n.toFixed(2)}</span>
+                <span class="result-value">${n.toFixed(2)} (base)</span>
               </div>
             `;
 
@@ -327,7 +347,7 @@
               current = current * scale;
               output += `
                 <div class="result-row">
-                  <span class="result-index">${i}</span>
+                  <span class="result-index">+${i}</span>
                   <span class="result-dot">.</span>
                   <span class="result-value">${current.toFixed(2)}</span>
                 </div>

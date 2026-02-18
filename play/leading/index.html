@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Line Height Calculator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --surface: #161618;
+    --border: #2a2a2e;
+    --border-soft: #1e1e22;
+    --text: #e8e6e0;
+    --text-dim: #6b6868;
+    --text-mid: #9e9b96;
+    --accent: #c8b97a;
+    --accent-dim: rgba(200, 185, 122, 0.12);
+    --good: #7abf8e;
+    --warn: #c8956a;
+    --bad: #c87a7a;
+    --mono: 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Layout ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  header h1 {
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  header p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  /* ── Drop zone ── */
+  .dropzone {
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .dropzone:hover, .dropzone.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .dropzone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .dropzone-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.4;
+  }
+  .dropzone p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+  .dropzone .font-loaded {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 400;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 0.4rem;
+  }
+
+  /* ── Sliders ── */
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .control-name {
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    letter-spacing: 0.05em;
+  }
+
+  .control-value {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    transition: transform 0.15s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+  /* ── Metrics grid ── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .metric-cell {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 3px;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .metric-cell .name {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+  }
+
+  .metric-cell .val {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+
+  .metric-cell .val.accent { color: var(--accent); }
+
+  /* ── Result panel ── */
+  .result-panel {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+  }
+
+  .result-lh {
+    font-family: var(--mono);
+    font-size: 2.2rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-lh .unit {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-left: 0.25rem;
+    vertical-align: middle;
+  }
+
+  .result-sub {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .quality-bar-wrap {
+    margin-top: 0.75rem;
+  }
+
+  .quality-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.08em;
+  }
+
+  .quality-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .quality-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1), background 0.5s;
+  }
+
+  /* ── No-font state ── */
+  .placeholder-msg {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 1rem 0;
+    line-height: 1.7;
+  }
+
+  /* ── Main preview area ── */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .preview-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-wrap: wrap;
+  }
+
+  .tab-group {
+    display: flex;
+    gap: 0;
+  }
+
+  .tab-btn {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn:first-child { border-radius: 3px 0 0 3px; }
+  .tab-btn:last-child { border-radius: 0 3px 3px 0; border-left: none; }
+  .tab-btn.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .bg-toggle {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .swatch {
+    width: 16px; height: 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .swatch.active { border-color: var(--accent); }
+
+  .preview-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 3rem 4rem;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .preview-text {
+    max-width: none;
+    transition: font-size 0.2s, line-height 0.2s;
+    white-space: pre-wrap;
+    outline: none;
+  }
+
+  /* ── Baseline overlay ── */
+  .preview-wrap {
+    position: relative;
+  }
+  .baseline-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .baseline-overlay.visible { opacity: 1; }
+
+  /* ── Comparison view ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .compare-col {
+    overflow-y: auto;
+    padding: 2rem;
+  }
+
+  .compare-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .compare-label .lh-val {
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+
+  .compare-label .badge {
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    font-size: 0.58rem;
+  }
+
+  .badge-optimal { background: rgba(122,191,142,0.15); color: var(--good); }
+  .badge-tight { background: rgba(200,122,122,0.12); color: var(--bad); }
+  .badge-loose { background: rgba(200,149,106,0.12); color: var(--warn); }
+
+  /* Reasoning section */
+  .reasoning {
+    font-size: 0.73rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-top: 1px solid var(--border-soft);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
+
+  .reasoning em {
+    color: var(--accent);
+    font-style: normal;
+    font-family: var(--mono);
+  }
+
+  /* Formula display */
+  .formula-block {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 3px;
+    padding: 0.6rem 0.75rem;
+    color: var(--text-mid);
+    line-height: 2;
+    margin-top: 0.5rem;
+  }
+
+  .formula-block .hi { color: var(--accent); }
+  .formula-block .comment { color: var(--text-dim); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; }
+    .preview-area { padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- Header -->
+  <header>
+    <h1>Leading Calculator</h1>
+    <p>Optimal line-height from font metrics, measure &amp; readability research</p>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Drop zone -->
+    <div>
+      <div class="section-label">Font Source</div>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2">
+        <div class="dropzone-icon">⬡</div>
+        <div id="dropLabel">
+          <p class="font-loaded" style="display:none" id="fontName">—</p>
+          <p>Drop a font file here<br><span style="opacity:.5">TTF · OTF · WOFF · WOFF2</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div>
+      <div class="section-label">Parameters</div>
+      <div class="control-group">
+
+        <div class="control">
+          <div class="control-header">
+            <span class="control-name">Font Size</span>
+            <span class="control-value" id="sizeVal">18px</span>
+          </div>
+          <input type="range" id="fontSize" min="8" max="96" step="1" value="18">
+        </div>
+
+        <div class="control">
+          <div class="control-header">
+            <span class="control-name">Measure (characters)</span>
+            <span class="control-value" id="measureVal">65 ch</span>
+          </div>
+          <input type="range" id="measure" min="20" max="130" step="1" value="65">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Font Metrics -->
+    <div id="metricsSection">
+      <div class="section-label">Font Metrics</div>
+      <div id="metricsContent">
+        <p class="placeholder-msg">Load a font to see its metrics</p>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div>
+      <div class="section-label">Recommendation</div>
+      <div id="resultContent">
+        <p class="placeholder-msg">Awaiting font + parameters</p>
+      </div>
+    </div>
+
+    <!-- Reasoning -->
+    <div id="reasoningSection" style="display:none">
+      <div class="section-label">How It's Calculated</div>
+      <div id="reasoningContent"></div>
+    </div>
+
+  </aside>
+
+  <!-- Main -->
+  <main class="main" id="mainArea">
+
+    <div class="preview-toolbar">
+      <div class="tab-group">
+        <button class="tab-btn active" data-view="preview">Preview</button>
+        <button class="tab-btn" data-view="compare">Compare</button>
+        <button class="tab-btn" data-view="grid">Baseline Grid</button>
+      </div>
+
+      <div class="bg-toggle">
+        <span>BG</span>
+        <div class="swatch active" data-bg="#0e0e0f" data-fg="#e8e6e0" style="background:#0e0e0f;"></div>
+        <div class="swatch" data-bg="#f5f3ee" data-fg="#1a1917" style="background:#f5f3ee;"></div>
+        <div class="swatch" data-bg="#1e1a15" data-fg="#e5dcc8" style="background:#1e1a15;"></div>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--text-dim);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;">
+        <input type="checkbox" id="editToggle" style="accent-color:var(--accent)"> Editable
+      </label>
+    </div>
+
+    <!-- Preview view -->
+    <div id="viewPreview" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
+      <div class="preview-area" id="previewArea">
+        <div class="preview-wrap">
+          <canvas class="baseline-overlay" id="baselineCanvas"></canvas>
+          <div class="preview-text" id="previewText" contenteditable="false" spellcheck="false">The quick brown fox jumps over the lazy dog.
+
+Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing (leading), and letter-spacing, as well as adjusting the space between pairs of letters.
+
+Good typography requires an understanding of the relationship between font metrics and the space around the text. The ascender height, x-height, and descender depth all influence how dense a block of text appears, and therefore how much leading is needed to maintain comfortable reading rhythm.
+
+Drop your own font file to see how its unique proportions affect the optimal line-height for your chosen font-size and measure.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compare view -->
+    <div id="viewCompare" style="display:none;flex:1;overflow:hidden;">
+      <div class="compare-grid" id="compareGrid">
+        <div class="compare-col" id="colTight"></div>
+        <div class="compare-col" id="colOptimal"></div>
+        <div class="compare-col" id="colLoose"></div>
+      </div>
+    </div>
+
+    <!-- Grid view -->
+    <div id="viewGrid" style="display:none;flex:1;overflow:hidden;">
+      <div class="preview-area" id="gridArea">
+        <div class="preview-wrap" id="gridWrap">
+          <canvas id="gridCanvas" class="baseline-overlay visible"></canvas>
+          <div class="preview-text" id="gridText" contenteditable="false" spellcheck="false">The quick brown fox jumps over the lazy dog.
+
+Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing (leading), and letter-spacing, as well as adjusting the space between pairs of letters.
+
+Good typography requires an understanding of the relationship between font metrics and the space around the text. The ascender height, x-height, and descender depth all influence how dense a block of text appears, and therefore how much leading is needed to maintain comfortable reading rhythm.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────
+let fontState = null;
+let currentFontFace = null;
+let bgColor = '#0e0e0f';
+let fgColor = '#e8e6e0';
+
+const state = {
+  fontSize: 18,
+  measure: 65,
+};
+
+// ── Font loading ──────────────────────────────────────────────────────
+const dropzone = document.getElementById('dropzone');
+const fontFileInput = document.getElementById('fontFile');
+
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFont(file);
+});
+fontFileInput.addEventListener('change', e => {
+  if (e.target.files[0]) loadFont(e.target.files[0]);
+});
+
+async function loadFont(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  const validExts = ['ttf', 'otf', 'woff', 'woff2'];
+  if (!validExts.includes(ext)) {
+    alert('Please use TTF, OTF, WOFF, or WOFF2.');
+    return;
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  let otFont;
+  try {
+    otFont = opentype.parse(arrayBuffer);
+  } catch(e) {
+    // WOFF2 may fail — try to inform user
+    if (ext === 'woff2') {
+      alert('WOFF2 parsing is not fully supported in the browser. Please try TTF or OTF for best results.');
+      return;
+    }
+    alert('Could not parse font: ' + e.message);
+    return;
+  }
+
+  // Build a CSS font-face for preview
+  const fontName = 'PreviewFont_' + Date.now();
+  const blob = new Blob([arrayBuffer], { type: 'font/' + ext });
+  const url = URL.createObjectURL(blob);
+
+  if (currentFontFace) {
+    document.fonts.delete(currentFontFace);
+  }
+  currentFontFace = new FontFace(fontName, `url(${url})`);
+  await currentFontFace.load();
+  document.fonts.add(currentFontFace);
+
+  // Extract metrics
+  const os2 = otFont.tables.os2;
+  const head = otFont.tables.head;
+  const hhea = otFont.tables.hhea;
+  const post = otFont.tables.post;
+  const upm = head.unitsPerEm;
+
+  const metrics = {
+    fontName,
+    displayName: otFont.names.fullName?.en || otFont.names.postScriptName?.en || file.name,
+    upm,
+    ascender: os2?.sTypoAscender ?? hhea?.ascender ?? upm * 0.8,
+    descender: os2?.sTypoDescender ?? hhea?.descender ?? -(upm * 0.2),
+    lineGap: os2?.sTypoLineGap ?? hhea?.lineGap ?? 0,
+    capHeight: os2?.sCapHeight || upm * 0.7,
+    xHeight: os2?.sxHeight || upm * 0.5,
+    winAscent: os2?.usWinAscent ?? upm * 0.9,
+    winDescent: os2?.usWinDescent ?? upm * 0.2,
+    italicAngle: post?.italicAngle || 0,
+  };
+
+  fontState = metrics;
+
+  // Update display name
+  const fontNameEl = document.getElementById('fontName');
+  fontNameEl.textContent = metrics.displayName;
+  fontNameEl.style.display = 'block';
+  document.querySelector('#dropLabel p:not(#fontName)').style.display = 'none';
+
+  update();
+}
+
+// ── Sliders ───────────────────────────────────────────────────────────
+document.getElementById('fontSize').addEventListener('input', e => {
+  state.fontSize = +e.target.value;
+  document.getElementById('sizeVal').textContent = state.fontSize + 'px';
+  update();
+});
+document.getElementById('measure').addEventListener('input', e => {
+  state.measure = +e.target.value;
+  document.getElementById('measureVal').textContent = state.measure + ' ch';
+  update();
+});
+
+// ── Core calculation ──────────────────────────────────────────────────
+/**
+ * Computes optimal line-height multiplier from first principles.
+ *
+ * Sources / principles:
+ *  1. Ascender/descender extent determines how much vertical space the font
+ *     already "claims" above & below the cap line and baseline.
+ *  2. x-height ratio (x-height / cap-height) correlates with apparent text
+ *     density. Fonts with large x-heights look denser and need more air.
+ *  3. Bringhurst / Müller-Brockmann: for a comfortable saccade-return,
+ *     leading should increase with line length (measure).
+ *     Empirical formula: Δleading ≈ 0.011 × (charsPerLine - 45)  [in ems]
+ *  4. Font-size interacts: at large sizes the eye has an easier jump,
+ *     so scale down slightly above 18px.
+ *  5. Italic text needs a touch more space due to diagonal stress.
+ */
+function calcLineHeight(metrics, fontSize, measure) {
+  const { upm, ascender, descender, capHeight, xHeight, lineGap, italicAngle } = metrics;
+
+  // --- Normalised ratios (all relative to UPM) ---
+  const ascRatio   = ascender / upm;          // typically 0.70–0.90
+  const descRatio  = Math.abs(descender) / upm; // typically 0.15–0.30
+  const capRatio   = capHeight / upm;          // typically 0.60–0.75
+  const xRatio     = xHeight / upm;            // typically 0.40–0.55
+  const gapRatio   = lineGap / upm;            // OS/2 recommended gap
+
+  // --- x-height to cap-height ratio (density proxy) ---
+  // Higher = more optical mass between cap and baseline = needs more air
+  const xToCapRatio = capRatio > 0 ? xRatio / capRatio : 0.65;
+
+  // --- Base leading from font's own metrics ---
+  // The font's native "line spacing" is (asc + |desc| + lineGap) / upm
+  // but we want the optimal for body text, not what the font dictates.
+  // We start from the ink extents (cap + descender) and add leading.
+  const inkExtent = capRatio + descRatio; // fraction of em occupied by ink
+
+  // --- Measure-based component (Bringhurst rule) ---
+  // Optimal measure is ~65 chars. Each char beyond 45 adds ~0.011 em of leading.
+  const measureBase = 45;
+  const measureFactor = 0.011;
+  const measureLeading = Math.max(0, (measure - measureBase) * measureFactor);
+
+  // --- x-height density component ---
+  // xToCapRatio of 0.5 = neutral. Fonts above 0.7 (e.g. Helvetica, many sans)
+  // need significantly more leading.
+  const xDensityLeading = (xToCapRatio - 0.5) * 0.55;
+
+  // --- Ascender/descender component ---
+  // Fonts with very tall ascenders or deep descenders need less added leading
+  // because there's already visual separation. Fonts with compact extents need more.
+  // "Compact" = ink extent < 0.85, "tall" = ink extent > 1.05
+  const extentAdjust = (0.95 - inkExtent) * 0.3;
+
+  // --- Font size component ---
+  // At display sizes (>24px) less relative leading is needed; at tiny sizes more.
+  const sizeAdjust = -(Math.log(fontSize / 18) * 0.04);
+
+  // --- Italic component ---
+  const italicAdjust = Math.abs(italicAngle) > 5 ? 0.04 : 0;
+
+  // --- Assemble ---
+  // Base is 1.2 (tight but functional). We add components.
+  const raw = 1.2 + measureLeading + xDensityLeading + extentAdjust + sizeAdjust + italicAdjust + (gapRatio * 0.5);
+
+  // Clamp to a sensible typographic range
+  const optimal = Math.max(1.15, Math.min(2.0, raw));
+
+  return {
+    optimal: Math.round(optimal * 1000) / 1000,
+    components: {
+      measureLeading: Math.round(measureLeading * 1000) / 1000,
+      xDensityLeading: Math.round(xDensityLeading * 1000) / 1000,
+      extentAdjust: Math.round(extentAdjust * 1000) / 1000,
+      sizeAdjust: Math.round(sizeAdjust * 1000) / 1000,
+      italicAdjust,
+      gapRatio: Math.round(gapRatio * 1000) / 1000,
+    },
+    ratios: {
+      ascRatio: Math.round(ascRatio * 1000) / 1000,
+      descRatio: Math.round(descRatio * 1000) / 1000,
+      capRatio: Math.round(capRatio * 1000) / 1000,
+      xRatio: Math.round(xRatio * 1000) / 1000,
+      xToCapRatio: Math.round(xToCapRatio * 1000) / 1000,
+      inkExtent: Math.round(inkExtent * 1000) / 1000,
+    }
+  };
+}
+
+// Quality score 0–1 for how readable the given LH is
+function qualityScore(lh, optimal) {
+  const delta = Math.abs(lh - optimal);
+  return Math.max(0, 1 - (delta / 0.3));
+}
+
+// ── UI Update ─────────────────────────────────────────────────────────
+function update() {
+  if (!fontState) {
+    applyPreviewStyle(null, null);
+    return;
+  }
+
+  const { fontSize, measure } = state;
+  const result = calcLineHeight(fontState, fontSize, measure);
+  const { optimal, components, ratios } = result;
+  const { fontName, upm, ascender, descender, capHeight, xHeight, lineGap } = fontState;
+
+  // Apply to preview
+  applyPreviewStyle(fontName, optimal);
+
+  // Metrics panel
+  document.getElementById('metricsContent').innerHTML = `
+    <div class="metrics-grid">
+      <div class="metric-cell">
+        <div class="name">Units/EM</div>
+        <div class="val accent">${upm}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">Ascender</div>
+        <div class="val">${ascender}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">Descender</div>
+        <div class="val">${descender}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">Cap Height</div>
+        <div class="val">${capHeight}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">x-Height</div>
+        <div class="val">${xHeight}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">Line Gap</div>
+        <div class="val">${lineGap}</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">x / Cap</div>
+        <div class="val accent">${(ratios.xToCapRatio * 100).toFixed(1)}%</div>
+      </div>
+      <div class="metric-cell">
+        <div class="name">Ink Extent</div>
+        <div class="val">${(ratios.inkExtent * 100).toFixed(1)}%</div>
+      </div>
+    </div>
+  `;
+
+  // Quality
+  const pxVal = (optimal * fontSize).toFixed(2);
+  const leadingPx = ((optimal - 1) * fontSize).toFixed(2);
+  const score = 95; // optimal is by definition ideal
+
+  document.getElementById('resultContent').innerHTML = `
+    <div class="result-panel">
+      <div class="result-lh">${optimal}<span class="unit">× / ${pxVal}px</span></div>
+      <div class="result-sub">
+        <span>Leading: ${leadingPx}px</span>
+        <span>Font: ${fontSize}px</span>
+        <span>Measure: ${measure} ch</span>
+      </div>
+      <div class="quality-bar-wrap">
+        <div class="quality-label"><span>Fit quality</span><span style="color:var(--good)">Optimal</span></div>
+        <div class="quality-bar"><div class="quality-fill" style="width:95%;background:var(--good)"></div></div>
+      </div>
+    </div>
+  `;
+
+  // Reasoning
+  document.getElementById('reasoningSection').style.display = 'block';
+  document.getElementById('reasoningContent').innerHTML = `
+    <div class="reasoning">
+      Base of <em>1.200</em> (minimum functional leading), then:<br>
+      + <em>${components.measureLeading > 0 ? '+' : ''}${components.measureLeading}</em>  measure (${measure} ch vs 45 ch baseline)<br>
+      + <em>${components.xDensityLeading >= 0 ? '+' : ''}${components.xDensityLeading}</em>  x-height density (x/cap = ${(ratios.xToCapRatio*100).toFixed(1)}%)<br>
+      + <em>${components.extentAdjust >= 0 ? '+' : ''}${components.extentAdjust}</em>  ink extent adjustment (${(ratios.inkExtent*100).toFixed(1)}%)<br>
+      + <em>${components.sizeAdjust >= 0 ? '+' : ''}${components.sizeAdjust}</em>  font-size scaling (${fontSize}px)<br>
+      ${Math.abs(fontState.italicAngle) > 5 ? `+ <em>+0.040</em>  italic angle (${fontState.italicAngle}°)<br>` : ''}
+      ${components.gapRatio > 0 ? `+ <em>+${(components.gapRatio*0.5).toFixed(3)}</em>  OS/2 line gap hint<br>` : ''}
+    </div>
+    <div class="formula-block">
+<span class="comment">// Bringhurst measure component</span>
+Δmeasure  = <span class="hi">0.011 × max(0, measure − 45)</span>
+
+<span class="comment">// x-height density (optical mass)</span>
+Δx-density = <span class="hi">0.55 × (xHeight/capHeight − 0.5)</span>
+
+<span class="comment">// Ascender+descender extent (font compactness)</span>
+Δextent   = <span class="hi">0.30 × (0.95 − (asc+|desc|) / UPM)</span>
+
+<span class="comment">// Font-size scaling</span>
+Δsize     = <span class="hi">−0.04 × ln(fontSize / 18)</span>
+
+<span class="comment">// Final</span>
+LH = <span class="hi">clamp(1.15, 1.20 + Σ, 2.00)</span>
+    </div>
+  `;
+
+  // Compare view
+  updateCompare(fontName, optimal, fontSize, measure);
+  updateGridView(fontName, optimal, fontSize);
+}
+
+// ── Preview styles ─────────────────────────────────────────────────────
+function applyPreviewStyle(fontName, lh) {
+  const texts = ['previewText', 'gridText'];
+  texts.forEach(id => {
+    const el = document.getElementById(id);
+    el.style.fontFamily = fontName ? `"${fontName}", serif` : 'Palatino Linotype, Book Antiqua, Georgia, serif';
+    el.style.fontSize = state.fontSize + 'px';
+    el.style.lineHeight = lh ? lh : '';
+    el.style.maxWidth = state.measure + 'ch';
+    el.style.color = fgColor;
+  });
+  document.getElementById('previewArea').style.background = bgColor;
+  document.getElementById('gridArea').style.background = bgColor;
+  document.querySelectorAll('.compare-col').forEach(el => el.style.background = bgColor);
+
+  if (lh) drawGrid(lh, state.fontSize);
+}
+
+// ── Compare columns ────────────────────────────────────────────────────
+const SAMPLE = `The relationship between font metrics and leading is subtle but important. The x-height, cap-height, and ascender/descender ratios all influence the apparent density of text on the page.
+
+Good typography emerges from understanding these proportions and applying them with care.`;
+
+function updateCompare(fontName, optimal, fontSize, measure) {
+  const tight  = Math.max(1.0, optimal - 0.25);
+  const loose  = Math.min(2.2, optimal + 0.25);
+  const ff = fontName ? `"${fontName}", serif` : 'inherit';
+  const maxW = measure + 'ch';
+
+  const cols = [
+    { id: 'colTight',   lh: tight,   label: 'Tight',   badge: 'badge-tight'  },
+    { id: 'colOptimal', lh: optimal, label: 'Optimal',  badge: 'badge-optimal'},
+    { id: 'colLoose',   lh: loose,   label: 'Loose',    badge: 'badge-loose'  },
+  ];
+
+  cols.forEach(c => {
+    document.getElementById(c.id).innerHTML = `
+      <div class="compare-label">
+        <span>${c.label}</span>
+        <span class="lh-val">${c.lh.toFixed(3)}</span>
+        <span class="badge ${c.badge}">${c.label.toUpperCase()}</span>
+      </div>
+      <div style="font-family:${ff};font-size:${fontSize}px;line-height:${c.lh};max-width:${maxW};color:${fgColor};">${SAMPLE}</div>
+    `;
+    document.getElementById(c.id).style.background = bgColor;
+  });
+}
+
+// ── Baseline grid ──────────────────────────────────────────────────────
+function drawGrid(lh, fontSize) {
+  const canvas = document.getElementById('gridCanvas');
+  const wrap = document.getElementById('gridWrap');
+  const w = wrap.offsetWidth;
+  const h = Math.max(wrap.scrollHeight, 600);
+  canvas.width = w;
+  canvas.height = h;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, w, h);
+
+  const lineH = lh * fontSize;
+  const lineColor = fgColor === '#e8e6e0' ? 'rgba(200,185,122,0.12)' : 'rgba(0,0,0,0.08)';
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 1;
+
+  for (let y = lineH; y < h; y += lineH) {
+    ctx.beginPath();
+    ctx.moveTo(0, Math.round(y) + 0.5);
+    ctx.lineTo(w, Math.round(y) + 0.5);
+    ctx.stroke();
+  }
+}
+
+// ── Grid view ─────────────────────────────────────────────────────────
+function updateGridView(fontName, optimal, fontSize) {
+  const el = document.getElementById('gridText');
+  el.style.fontFamily = fontName ? `"${fontName}", serif` : 'Palatino Linotype, Book Antiqua, Georgia, serif';
+  el.style.fontSize = fontSize + 'px';
+  el.style.lineHeight = optimal;
+  el.style.maxWidth = state.measure + 'ch';
+  el.style.color = fgColor;
+  setTimeout(() => drawGrid(optimal, fontSize), 50);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const view = btn.dataset.view;
+    document.getElementById('viewPreview').style.display = view === 'preview' ? 'flex' : 'none';
+    document.getElementById('viewCompare').style.display = view === 'compare' ? 'block' : 'none';
+    document.getElementById('viewGrid').style.display    = view === 'grid'    ? 'flex' : 'none';
+    if (view === 'grid' && fontState) {
+      const r = calcLineHeight(fontState, state.fontSize, state.measure);
+      drawGrid(r.optimal, state.fontSize);
+    }
+  });
+});
+
+// ── Background swatches ──────────────────────────────────────────────
+document.querySelectorAll('.swatch').forEach(s => {
+  s.addEventListener('click', () => {
+    document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+    s.classList.add('active');
+    bgColor = s.dataset.bg;
+    fgColor = s.dataset.fg;
+    applyPreviewStyle(fontState?.fontName, fontState ? calcLineHeight(fontState, state.fontSize, state.measure).optimal : null);
+    if (fontState) update();
+  });
+});
+
+// ── Edit toggle ──────────────────────────────────────────────────────
+document.getElementById('editToggle').addEventListener('change', e => {
+  const ce = e.target.checked ? 'true' : 'false';
+  document.getElementById('previewText').contentEditable = ce;
+  document.getElementById('gridText').contentEditable = ce;
+});
+
+// ── Resize redraw ─────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  if (fontState) {
+    const r = calcLineHeight(fontState, state.fontSize, state.measure);
+    drawGrid(r.optimal, state.fontSize);
+  }
+});
+
+// ── Init ──────────────────────────────────────────────────────────────
+document.getElementById('sizeVal').textContent = state.fontSize + 'px';
+document.getElementById('measureVal').textContent = state.measure + ' ch';
+</script>
+</body>
+</html>

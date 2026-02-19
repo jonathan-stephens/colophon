@@ -2,22 +2,21 @@
 
 namespace Yourusername\TagGarden;
 
+use Kirby\Toolkit\Str;
+
 /**
  * Tag Garden Helpers
  *
- * Static helper methods for working with tags, content length, growth status,
- * and other plugin functionality throughout Kirby.
+ * Simplified helper methods for tag-based content exploration.
  *
- * Usage: Yourusername\TagGarden\Helpers::methodName($args)
- *
- * @version 1.0.0
+ * @version 2.0.0
  */
 class Helpers {
 
     /**
      * Get a growth status definition
      *
-     * @param string $status The status key (seedling, budding, evergreen, wilting)
+     * @param string $status The status key (sown, sprouting, rooting, crowning, evergreen)
      * @return array|null The status definition or null if not found
      */
     public static function getGrowthDefinition(string $status): ?array {
@@ -37,180 +36,24 @@ class Helpers {
     }
 
     /**
-     * Get a theme definition
-     *
-     * @param string $theme The theme key (topic, medium, status, audience)
-     * @return array|null The theme definition or null if not found
-     */
-    public static function getThemeDefinition(string $theme): ?array {
-        $definitions = option('yourusername.tag-garden.theme.definitions', []);
-        return $definitions[$theme] ?? null;
-    }
-    /**
      * Get the group that a content type belongs to
      *
      * @param string $type The content type/template name
      * @return string|null The group name or null if not found
      */
     public static function getGroupForType(string $type): ?string {
-        $groupDefinitions = option('yourusername.tag-garden.group.definitions', []);
+        $groups = option('yourusername.tag-garden.content.groups', []);
 
-        foreach ($groupDefinitions as $groupKey => $groupDef) {
-            if (isset($groupDef['types']) && in_array($type, $groupDef['types'])) {
+        foreach ($groups as $groupKey => $types) {
+            if (in_array($type, $types)) {
                 return $groupKey;
             }
         }
 
         return null;
     }
-    /**
-     * Calculate length category from word count
-     *
-     * Returns a category string based on configured thresholds.
-     *
-     * @param int $wordCount The word count
-     * @return string The length category (quick, short, medium, long, deep)
-     */
-    public static function getLengthCategory(int $wordCount): string {
-        $thresholds = option('yourusername.tag-garden.length.thresholds', [
-            'quick' => 500,
-            'short' => 1500,
-            'medium' => 3000,
-            'long' => 5000,
-        ]);
-
-        if ($wordCount < $thresholds['quick']) return 'quick';
-        if ($wordCount < $thresholds['short']) return 'short';
-        if ($wordCount < $thresholds['medium']) return 'medium';
-        if ($wordCount < $thresholds['long']) return 'long';
-        return 'deep';
-    }
-        /**
-     * Get human-readable label for length category
-     *
-     * @param string $category The length category (quick, short, medium, long, epic)
-     * @return string The human-readable label
-     */
-    public static function getLengthLabel(string $category): string {
-        $labels = option('yourusername.tag-garden.length.labels', []);
-        return $labels[$category] ?? $category;
-    }
 
     /**
-     * Format reading time array into display string
-     *
-     * Takes the array returned by $page->readingTime() and formats it
-     * into a human-readable string with range (e.g., "3-5 min read")
-     *
-     * @param array $timeData Array from $page->readingTime()
-     * @return string Formatted reading time string
-     */
-    public static function formatReadingTime(array $timeData): string {
-        $min = $timeData['minSeconds'];
-        $max = $timeData['maxSeconds'];
-
-        if ($min < 60) {
-            // Display in seconds
-            if ($min === $max) {
-                return $min . ' sec read';
-            }
-            return $max . '&thinsp;–&thinsp;' . $min . ' sec read';
-        } else {
-            // Display in minutes
-            $minMinutes = $timeData['minMinutes'];
-            $maxMinutes = $timeData['maxMinutes'];
-
-            if ($minMinutes === $maxMinutes) {
-                return $minMinutes . ' min read';
-            }
-            return $maxMinutes . '&thinsp;–&thinsp;' . $minMinutes . ' min read';
-        }
-    }
-
-    /**
-     * Get all available sort methods as array
-     *
-     * @return array Associative array of sort keys => labels
-     */
-    public static function getSortMethods(): array {
-        return option('yourusername.tag-garden.sort.methods', []);
-    }
-
-    /**
-     * Calculate font size for tag cloud based on usage count
-     *
-     * Uses min/max font sizes and scales based on min/max usage counts
-     * in the dataset.
-     *
-     * @param int $count Tag usage count
-     * @param int $minCount Minimum count in dataset
-     * @param int $maxCount Maximum count in dataset
-     * @return float Font size in rem units
-     */
-    public static function getTagFontSize(int $count, int $minCount, int $maxCount): float {
-        $minSize = option('yourusername.tag-garden.cloud.font-min', 0.875);
-        $maxSize = option('yourusername.tag-garden.cloud.font-max', 2);
-
-        // Avoid division by zero
-        if ($maxCount === $minCount) {
-            return ($minSize + $maxSize) / 2;
-        }
-
-        // Linear interpolation between min and max
-        $ratio = ($count - $minCount) / ($maxCount - $minCount);
-        return $minSize + ($ratio * ($maxSize - $minSize));
-    }
-
-    /**
-     * Validate and sanitize a tag string
-     *
-     * Trims whitespace, converts to lowercase, and removes invalid characters.
-     *
-     * @param string $tag The tag to sanitize
-     * @return string Sanitized tag
-     */
-    public static function sanitizeTag(string $tag): string {
-        $tag = trim($tag);
-        $tag = mb_strtolower($tag);
-        // Remove any characters that aren't alphanumeric, dash, or space
-        $tag = preg_replace('/[^a-z0-9\s\-]/u', '', $tag);
-        return $tag;
-    }
-
-    /**
-     * Convert array of tags to URL-safe string
-     *
-     * @param array $tags Array of tag strings
-     * @return string URL-safe tag string
-     */
-     public static function tagsToUrl(array $tags): string
-     {
-         $separator = option('yourusername.tag-garden.url.tag-separator', ',');
-
-         return implode(
-             $separator,
-             array_map('rawurlencode', $tags)
-         );
-     }    /**
-     * Convert URL-safe tag string to array
-     *
-     * @param string $tagString URL tag string
-     * @return array Array of tag strings
-     */
-     public static function urlToTags(string $tagString): array
-     {
-         $separator = option('yourusername.tag-garden.url.tag-separator', ',');
-
-         // 1. Split on AND separator
-         $parts = explode($separator, $tagString);
-
-         // 2. Normalize + to space, then decode
-         return array_map(function ($tag) {
-             $tag = str_replace('+', ' ', $tag);
-             return trim(rawurldecode($tag));
-         }, $parts);
-     }
-     /**
      * Get all unique tags from site with usage counts
      *
      * @return array Associative array of tag => count
@@ -236,41 +79,44 @@ class Helpers {
     }
 
     /**
- * Parse tag string from URL into normalized tag array
- *
- * Examples:
- *  Web+Development           → ["Web Development"]
- *  Web%20Development         → ["Web Development"]
- *  Design,Resource           → ["Design", "Resource"]
- *  Web+Development,Design    → ["Web Development", "Design"]
- */
-public static function parseTagsFromUrl(string $tagString): array
-{
-    // Split AND-combined tags
-    $rawTags = explode(',', $tagString);
+     * Parse tag string from URL into normalized tag array
+     *
+     * Handles comma-separated tags with URL encoding.
+     * Examples:
+     *  web-development           → ["web-development"]
+     *  web-development,design    → ["web-development", "design"]
+     *  Web%20Development,Design  → ["web-development", "design"]
+     *
+     * @param string $tagString URL tag string
+     * @return array Normalized tag array
+     */
+    public static function parseTagsFromUrl(string $tagString): array {
+        // Split on comma
+        $rawTags = explode(',', $tagString);
 
-    return array_values(array_filter(array_map(function ($tag) {
-        // Decode %20 etc.
-        $tag = rawurldecode($tag);
+        return array_values(array_filter(array_map(function ($tag) {
+            // Decode URL encoding
+            $tag = rawurldecode($tag);
 
-        // Convert + to space
-        $tag = str_replace('+', ' ', $tag);
+            // Normalize whitespace
+            $tag = preg_replace('/\s+/', ' ', trim($tag));
 
-        // Normalize whitespace
-        $tag = preg_replace('/\s+/', ' ', trim($tag));
+            // Convert to slug for consistency
+            $tag = Str::slug($tag);
 
-        return $tag !== '' ? $tag : null;
-    }, $rawTags)));
-}
+            return $tag !== '' ? $tag : null;
+        }, $rawTags)));
+    }
 
     /**
-     * Get pages filtered by one or more tags (CASE-INSENSITIVE)
+     * Get pages filtered by one or more tags (ALWAYS AND LOGIC)
+     *
+     * Pages must have ALL specified tags to be included.
      *
      * @param array|string $tags Single tag or array of tags
-     * @param string $logic 'AND' or 'OR' - whether pages need all tags or any tag
      * @return \Kirby\Cms\Pages Filtered pages collection
      */
-    public static function getPagesByTags($tags, string $logic = 'OR') {
+    public static function getPagesByTags($tags): \Kirby\Cms\Pages {
         if (is_string($tags)) {
             $tags = [$tags];
         }
@@ -284,56 +130,54 @@ public static function parseTagsFromUrl(string $tagString): array
         // Convert search tags to lowercase for case-insensitive comparison
         $searchTags = array_map('mb_strtolower', $tags);
 
-        if ($logic === 'OR') {
-            // Pages with ANY of the tags (case-insensitive)
-            return site()->index()->filter(function($page) use ($searchTags) {
-                $pageTags = $page->tags()->split(',');
-                foreach ($pageTags as $tag) {
-                    $tag = trim($tag);
-                    if (in_array(mb_strtolower($tag), $searchTags, true)) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        } else {
-            // Pages with ALL of the tags (AND logic, case-insensitive)
-            return site()->index()->filter(function($page) use ($searchTags) {
-                $pageTags = $page->tags()->split(',');
-                $pageTagsLower = array_map(function($tag) {
-                    return mb_strtolower(trim($tag));
-                }, $pageTags);
+        // Pages with ALL of the tags (AND logic)
+        return site()->index()->filter(function($page) use ($searchTags) {
+            $pageTags = $page->tags()->split(',');
+            $pageTagsLower = array_map(function($tag) {
+                return mb_strtolower(trim($tag));
+            }, $pageTags);
 
-                // Check if all search tags are present in page tags
-                foreach ($searchTags as $searchTag) {
-                    if (!in_array($searchTag, $pageTagsLower, true)) {
-                        return false;
-                    }
+            // Check if all search tags are present in page tags
+            foreach ($searchTags as $searchTag) {
+                if (!in_array($searchTag, $pageTagsLower, true)) {
+                    return false;
                 }
-                return true;
-            });
-        }
+            }
+            return true;
+        });
     }
-    /** Making a canoincal url */
 
-    public static function canonicalTagUrl(array $filterTags): string
-{
-    // Trim + remove empties
-    $tags = array_filter(array_map('trim', $filterTags));
+    /**
+     * Generate canonical tag URL with sorted, slugified tags
+     *
+     * Ensures consistent URLs for SEO and caching:
+     * - Tags are slugified (lowercase, hyphens)
+     * - Tags are sorted alphabetically
+     * - Tags are comma-separated
+     *
+     * @param array $filterTags Array of tag names
+     * @return string Canonical URL path (e.g., "tags/design,web-development")
+     */
+    public static function canonicalTagUrl(array $filterTags): string {
+        // Trim and remove empties
+        $tags = array_filter(array_map('trim', $filterTags));
 
-    // Preserve original casing, but normalize order
-    natcasesort($tags);
+        // Slugify each tag
+        $tags = array_map(function($tag) {
+            return Str::slug($tag);
+        }, $tags);
 
-    // Encode spaces etc, but NOT commas
-    $encoded = array_map('rawurlencode', $tags);
+        // Sort alphabetically for consistency
+        sort($tags);
 
-    return 'tags/' . implode(',', $encoded);
-}
+        return 'tags/' . implode(',', $tags);
+    }
+
     /**
      * Sort pages collection by specified method
      *
      * @param \Kirby\Cms\Pages $pages Pages to sort
-     * @param string $method Sort method (planted, tended, notable, length, growth, title)
+     * @param string $method Sort method (planted, tended, growth)
      * @param string $direction Sort direction (asc, desc)
      * @return \Kirby\Cms\Pages Sorted pages collection
      */
@@ -345,29 +189,12 @@ public static function parseTagsFromUrl(string $tagString): array
             case 'tended':
                 return $pages->sortBy('last_tended', $direction);
 
-            case 'notable':
-                // Notable first, then by last_tended
-                return $pages->sortBy('notable', 'desc', 'last_tended', 'desc');
-
-            case 'length-asc':
-                return $pages->sortBy(function($page) {
-                    return $page->wordCount();
-                }, 'asc');
-
-            case 'length-desc':
-                return $pages->sortBy(function($page) {
-                    return $page->wordCount();
-                }, 'desc');
-
             case 'growth':
                 return $pages->sortBy(function($page) {
                     $status = $page->growth_status()->value();
                     $def = self::getGrowthDefinition($status);
                     return $def['sort-order'] ?? 999;
                 }, 'asc');
-
-            case 'title':
-                return $pages->sortBy('title', $direction);
 
             default:
                 return $pages->sortBy('last_tended', 'desc');

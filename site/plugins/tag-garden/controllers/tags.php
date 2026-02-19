@@ -3,22 +3,10 @@
 /**
  * Tags Index Controller
  *
- * Prepares data for the tags index template (tags.php)
- * Shows all tags in a cloud/list view with filtering options
+ * Simplified controller for the tags index page.
+ * Shows all tags with optional filtering by group or growth status.
  *
- * Available template variables:
- * - $tags: Array of tag => count
- * - $sortedTags: Tags sorted for display
- * - $minCount: Minimum tag usage count in dataset
- * - $maxCount: Maximum tag usage count in dataset
- * - $sort: Current sort method
- * - $group: Current group filter (if any)
- * - $theme: Current theme filter (if any)
- * - $groups: Available content groups
- * - $themes: Available tag themes
- * - $sortMethods: Available sort methods
- *
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 use Yourusername\TagGarden\Helpers;
@@ -26,114 +14,87 @@ use Yourusername\TagGarden\Helpers;
 return function ($kirby, $page) {
 
     // Get query parameters
-    $sort = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
-    $group = get('group');
-    $theme = get('theme');
+    $groupFilter = get('group');
+    $growthFilter = get('growth');
 
     // Get tags based on filters
-    if ($group) {
-        $tags = $kirby->collection('tags.byGroup', ['group' => $group]);
-    } elseif ($theme) {
-        $tags = $kirby->collection('tags.byTheme', ['theme' => $theme]);
+    if ($groupFilter) {
+        $tags = $kirby->collection('tags.byGroup', ['group' => $groupFilter]);
+    } elseif ($growthFilter) {
+        $tags = $kirby->collection('tags.byGrowth', ['status' => $growthFilter]);
     } else {
         $tags = $kirby->collection('tags.all');
     }
 
-    // Get tag statistics for cloud sizing
-    $minCount = !empty($tags) ? min($tags) : 0;
-    $maxCount = !empty($tags) ? max($tags) : 0;
-
-    // Sort tags for display
-    $sortedTags = $tags;
-    if (get('tagSort') === 'alpha') {
-        ksort($sortedTags);
+    // Sort tags alphabetically or by count
+    $tagSort = get('tagSort', 'count');
+    if ($tagSort === 'alpha') {
+        ksort($tags);
     } else {
-        // Default: sort by count (descending)
-        arsort($sortedTags);
+        arsort($tags); // By count, descending
     }
 
-    // Get available groups and themes for filtering UI
+    // Get recently tended pages
+    $recentlyTended = $kirby->collection('pages.recentlyTended', ['limit' => 5]);
+
+    // Get recently planted pages
+    $recentlyPlanted = $kirby->collection('pages.recentlyPlanted', ['limit' => 5]);
+
+    // Calculate total pages with tags
+    $totalTaggedPages = $kirby->site()->index()
+        ->filterBy('tags', '!=', '')
+        ->count();
+
+    // Get all available groups for filtering UI
     $groups = [];
-    $groupDefinitions = [
-        'garden' => Helpers::getGroupDefinition('garden'),
-        'soil' => Helpers::getGroupDefinition('soil'),
-        'work' => Helpers::getGroupDefinition('work'),
-        'about' => Helpers::getGroupDefinition('about'),
-    ];
-    foreach ($groupDefinitions as $key => $def) {
+    $groupKeys = array_keys(option('yourusername.tag-garden.content.groups', []));
+    foreach ($groupKeys as $key) {
+        $def = Helpers::getGroupDefinition($key);
         if ($def) {
             $groups[$key] = $def;
         }
     }
 
-    $themes = [];
-    $themeDefinitions = [
-        'topic' => Helpers::getThemeDefinition('topic'),
-        'medium' => Helpers::getThemeDefinition('medium'),
-        'status' => Helpers::getThemeDefinition('status'),
-        'audience' => Helpers::getThemeDefinition('audience'),
-    ];
-    foreach ($themeDefinitions as $key => $def) {
+    // Get all available growth statuses for filtering UI
+    $growthStatuses = [];
+    $statusKeys = option('yourusername.tag-garden.growth.statuses', []);
+    foreach ($statusKeys as $key) {
+        $def = Helpers::getGrowthDefinition($key);
         if ($def) {
-            $themes[$key] = $def;
+            $growthStatuses[$key] = $def;
         }
     }
-
-    // Get sort methods for UI
-    $sortMethods = Helpers::getSortMethods();
-
-    // Get recently tended pages (for sidebar or featured section)
-    $recentlyTended = $kirby->collection('pages.recentlyTended', ['limit' => 5]);
-
-    // Get notable pages (for featured section)
-    $notablePages = $kirby->collection('pages.notable', ['limit' => 5]);
-
-    // Calculate total pages with tags
-    $totalTaggedPages = $kirby->site()->index()->filterBy('tags', '!=', '')->count();
-
-    // Get popular tags for quick navigation
-    $popularTags = $kirby->collection('tags.popular', ['limit' => 10]);
 
     return [
         // Core data
         'tags' => $tags,
-        'sortedTags' => $sortedTags,
-        'minCount' => $minCount,
-        'maxCount' => $maxCount,
         'totalTags' => count($tags),
         'totalTaggedPages' => $totalTaggedPages,
 
         // Current state
-        'sort' => $sort,
-        'group' => $group,
-        'theme' => $theme,
-        'activeFilter' => $group ?? $theme ?? null,
+        'groupFilter' => $groupFilter,
+        'growthFilter' => $growthFilter,
+        'tagSort' => $tagSort,
 
         // UI options
         'groups' => $groups,
-        'themes' => $themes,
-        'sortMethods' => $sortMethods,
+        'growthStatuses' => $growthStatuses,
 
         // Featured content
         'recentlyTended' => $recentlyTended,
-        'notablePages' => $notablePages,
-        'popularTags' => $popularTags,
+        'recentlyPlanted' => $recentlyPlanted,
 
-        // Helper functions for templates
-        'getTagFontSize' => function($count) use ($minCount, $maxCount) {
-            return Helpers::getTagFontSize($count, $minCount, $maxCount);
-        },
-
+        // Helper functions
         'getTagUrl' => function($tag) {
-            return url('tags/' . Helpers::tagsToUrl([$tag]));
+            return url('tags/' . \Kirby\Toolkit\Str::slug($tag));
         },
 
-        'isActiveGroup' => function($groupKey) use ($group) {
-            return $group === $groupKey;
+        'isActiveGroup' => function($groupKey) use ($groupFilter) {
+            return $groupFilter === $groupKey;
         },
 
-        'isActiveTheme' => function($themeKey) use ($theme) {
-            return $theme === $themeKey;
+        'isActiveGrowth' => function($statusKey) use ($growthFilter) {
+            return $growthFilter === $statusKey;
         },
     ];
 };

@@ -1,41 +1,26 @@
 <?php
 
 /**
- * Single Tag Controller
+ * Single/Multiple Tag Controller
  *
- * Prepares data for the single tag template (tag.php)
- * Shows content filtered by one or more tags
+ * Simplified controller for tag filtering pages.
+ * Shows content filtered by one or more tags (always AND logic).
  *
- * Available template variables:
- * - $filterTags: Array of tag(s) being filtered
- * - $pages: Filtered pages collection
- * - $groupedPages: Pages grouped by content type/section
- * - $relatedTags: Related tags with counts
- * - $sort: Current sort method
- * - $logic: Tag filter logic (OR/AND)
- * - $tagCount: Total number of filtered pages
- * - $sortMethods: Available sort methods
- * - $growthStats: Statistics about growth statuses
- * - $lengthStats: Statistics about content length
- *
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 use Yourusername\TagGarden\Helpers;
 
 return function ($kirby, $page) {
 
-    // Check if data was already prepared by route
-    // If the page is a virtual page from the route, it already has all the data
-    // and we should not override it
+    // If this is a virtual page from route, data is already prepared
+    // Just return empty array to let route data through
     $slug = $page->slug();
     if (is_string($slug) && str_starts_with($slug, 'tag-')) {
-        // This is a virtual page from the route, data is already prepared
-        // Just return empty array to let route data through
         return [];
     }
 
-    // Tags passed from route
+    // Fallback for non-route usage
     $filterTags = $filterTags ?? [];
 
     if (!is_array($filterTags)) {
@@ -43,50 +28,30 @@ return function ($kirby, $page) {
     }
 
     // Query params
-    $sort        = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
-    $logic       = get('logic', 'OR');
+    $sort = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
     $groupFilter = get('group');
 
-    // Collection
+    // Get pages with all tags (AND logic)
     $pages = $kirby->collection('pages.byTags', [
-        'tags'  => $filterTags,
-        'logic' => $logic,
-        'sort'  => $sort,
+        'tags' => $filterTags,
+        'sort' => $sort,
     ]);
 
     // Optional group filter
     if ($groupFilter) {
-        $groupDef = Helpers::getGroupDefinition($groupFilter);
+        $groups = option('yourusername.tag-garden.content.groups', []);
+        $types = $groups[$groupFilter] ?? [];
 
-        if ($groupDef && isset($groupDef['types'])) {
-            $pages = $pages->filter(function ($page) use ($groupDef) {
+        if (!empty($types)) {
+            $pages = $pages->filter(function ($page) use ($types) {
                 return in_array(
                     $page->intendedTemplate()->name(),
-                    $groupDef['types'],
+                    $types,
                     true
                 );
             });
         }
     }
-    // Group pages by section/template for organized display
-    $groupedPages = [];
-    foreach ($pages as $p) {
-        $group = $p->contentGroup() ?? 'other';
-        if (!isset($groupedPages[$group])) {
-            $groupedPages[$group] = [];
-        }
-        $groupedPages[$group][] = $p;
-    }
-
-    // Sort the groups in a logical order
-    $groupOrder = ['garden', 'soil', 'work', 'about', 'other'];
-    uksort($groupedPages, function($a, $b) use ($groupOrder) {
-        $posA = array_search($a, $groupOrder);
-        $posB = array_search($b, $groupOrder);
-        $posA = $posA === false ? 999 : $posA;
-        $posB = $posB === false ? 999 : $posB;
-        return $posA - $posB;
-    });
 
     // Get related tags
     $relatedTags = [];
@@ -102,7 +67,18 @@ return function ($kirby, $page) {
             $pageTags = $p->tags()->split(',');
             foreach ($pageTags as $tag) {
                 $tag = trim($tag);
-                if (!empty($tag) && !in_array($tag, $filterTags)) {
+                $tagLower = mb_strtolower($tag);
+
+                // Skip if it's one of the filter tags
+                $isFilterTag = false;
+                foreach ($filterTags as $filterTag) {
+                    if ($tagLower === mb_strtolower($filterTag)) {
+                        $isFilterTag = true;
+                        break;
+                    }
+                }
+
+                if (!empty($tag) && !$isFilterTag) {
                     if (!isset($allRelatedTags[$tag])) {
                         $allRelatedTags[$tag] = 0;
                     }
@@ -111,20 +87,21 @@ return function ($kirby, $page) {
             }
         }
         arsort($allRelatedTags);
-        $relatedTags = array_slice($allRelatedTags, 0,
+        $relatedTags = array_slice(
+            $allRelatedTags,
+            0,
             option('yourusername.tag-garden.related.tag-limit', 10),
             true
         );
     }
 
-    // Calculate statistics about filtered pages
-
-    // Growth status statistics
+    // Calculate growth statistics
     $growthStats = [
-        'seedling' => 0,
-        'budding' => 0,
+        'sown' => 0,
+        'sprouting' => 0,
+        'rooting' => 0,
+        'crowning' => 0,
         'evergreen' => 0,
-        'wilting' => 0,
     ];
     foreach ($pages as $p) {
         $status = $p->growth_status()->value();
@@ -133,39 +110,34 @@ return function ($kirby, $page) {
         }
     }
 
-    // Length statistics
-    $lengthStats = [
-        'quick' => 0,
-        'short' => 0,
-        'medium' => 0,
-        'long' => 0,
-        'deep' => 0,
-    ];
-    $totalWords = 0;
-    foreach ($pages as $p) {
-        $wordCount = $p->wordCount();
-        $totalWords += $wordCount;
-        $category = Helpers::getLengthCategory($wordCount);
-        if (isset($lengthStats[$category])) {
-            $lengthStats[$category]++;
+    // Calculate group statistics
+    $groupStats = [];
+    $groups = option('yourusername.tag-garden.content.groups', []);
+
+    foreach ($groups as $groupKey => $types) {
+        $count = $pages->filter(function($p) use ($types) {
+            $template = $p->intendedTemplate()->name();
+            return in_array($template, $types);
+        })->count();
+
+        if ($count > 0) {
+            $groupDef = Helpers::getGroupDefinition($groupKey);
+            $groupStats[$groupKey] = [
+                'count' => $count,
+                'def' => $groupDef
+            ];
         }
     }
-    $avgWords = $pages->count() > 0 ? round($totalWords / $pages->count()) : 0;
 
-    // Get sort methods for UI
-    $sortMethods = Helpers::getSortMethods();
+    // Get sort methods
+    $sortMethods = option('yourusername.tag-garden.sort.methods', []);
 
     // Get all available groups for filtering UI
-    $groups = [];
-    $groupDefinitions = [
-        'garden' => Helpers::getGroupDefinition('garden'),
-        'soil' => Helpers::getGroupDefinition('soil'),
-        'work' => Helpers::getGroupDefinition('work'),
-        'about' => Helpers::getGroupDefinition('about'),
-    ];
-    foreach ($groupDefinitions as $key => $def) {
+    $allGroups = [];
+    foreach (array_keys($groups) as $key) {
+        $def = Helpers::getGroupDefinition($key);
         if ($def) {
-            $groups[$key] = $def;
+            $allGroups[$key] = $def;
         }
     }
 
@@ -173,50 +145,45 @@ return function ($kirby, $page) {
         // Core data
         'filterTags' => $filterTags,
         'pages' => $pages,
-        'groupedPages' => $groupedPages,
         'relatedTags' => $relatedTags,
         'tagCount' => $pages->count(),
 
         // Current state
         'sort' => $sort,
-        'logic' => $logic,
         'groupFilter' => $groupFilter,
 
         // Statistics
         'growthStats' => $growthStats,
-        'lengthStats' => $lengthStats,
-        'avgWords' => $avgWords,
+        'groupStats' => $groupStats,
 
         // UI options
         'sortMethods' => $sortMethods,
-        'groups' => $groups,
+        'groups' => $allGroups,
 
-        // Helper functions for templates
+        // Helper functions
         'getTagUrl' => function($tag) {
-            return url('tags/' . Helpers::tagsToUrl([$tag]));
+            return url('tags/' . \Kirby\Toolkit\Str::slug($tag));
         },
 
         'getCombinedTagUrl' => function($additionalTag) use ($filterTags) {
             $allTags = array_merge($filterTags, [$additionalTag]);
-            return '/tags/' . Helpers::tagsToUrl($allTags) . '?logic=AND';
+            $slugs = array_map(function($tag) {
+                return \Kirby\Toolkit\Str::slug($tag);
+            }, $allTags);
+            sort($slugs);
+            return url('tags/' . implode(',', $slugs));
         },
 
         'isActiveSort' => function($method) use ($sort) {
             return $sort === $method;
         },
 
+        'isActiveGroup' => function($group) use ($groupFilter) {
+            return $groupFilter === $group;
+        },
+
         'getGrowthDefinition' => function($status) {
             return Helpers::getGrowthDefinition($status);
-        },
-
-        'getLengthLabel' => function($category) {
-            return Helpers::getLengthLabel($category);
-        },
-
-        // Pagination helper (if needed)
-        'getPaginatedPages' => function($limit = 20) use ($pages) {
-            $page = get('page', 1);
-            return $pages->paginate($limit, ['page' => $page]);
         },
     ];
 };

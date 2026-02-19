@@ -29,44 +29,10 @@ return [
     'sort.methods' => [
         'planted' => ['label' => 'Date Planted'],
         'tended' => ['label' => 'Last Tended'],
-        'notable' => ['label' => 'Notable First'],
-        'length-asc' => ['label' => 'Shortest First'],
-        'length-desc' => ['label' => 'Longest First'],
         'growth' => ['label' => 'Growth Status'],
-        'title' => ['label' => 'Alphabetical'],
     ],
     'sort.direction' => 'desc',
-    'growth.sort-order' => ['evergreen', 'budding', 'seedling', 'wilting'],
-
-    /**
-     * TAG THEME CONFIGURATION
-     */
-    'theme.definitions' => [
-        'topic' => [
-            'label' => 'Topic',
-            'color' => '#3b82f6',
-            'description' => 'Subject matter or area of focus',
-            'icon' => '🏷️',
-        ],
-        'medium' => [
-            'label' => 'Medium',
-            'color' => '#8b5cf6',
-            'description' => 'Format or type of content',
-            'icon' => '📝',
-        ],
-        'status' => [
-            'label' => 'Status',
-            'color' => '#10b981',
-            'description' => 'Current state or progress',
-            'icon' => '✓',
-        ],
-        'audience' => [
-            'label' => 'Audience',
-            'color' => '#f59e0b',
-            'description' => 'Intended readers or users',
-            'icon' => '👥',
-        ],
-    ],
+    'growth.sort-order' => ['evergreen', 'crowning', 'rooting', 'sprouting', 'sown'],
 
     /**
      * LENGTH CALCULATION CONFIGURATION
@@ -91,33 +57,40 @@ return [
      * GROWTH STATUS CONFIGURATION
      */
     'growth.definitions' => [
-        'seedling' => [
-            'label' => 'Seedling',
+        'sown' => [
+            'label' => 'Sown',
             'emoji' => '🌱',
             'color' => '#86efac',
-            'description' => 'New ideas, rough notes, early drafts',
-            'sort-order' => 2,
+            'description' => 'A placholder, a seed just planted; showing what sort of content I may want to grow there',
+            'sort-order' => 0,
         ],
-        'budding' => [
-            'label' => 'Budding',
+        'sprouting' => [
+            'label' => 'Sprouting',
             'emoji' => '🌿',
             'color' => '#4ade80',
-            'description' => 'Growing content, being developed and refined',
+            'description' => 'Something is beginning to form, exploring what it may become; not refined, details and definitions may be mission.',
             'sort-order' => 1,
+        ],
+        'rooting' => [
+            'label' => 'Rooting',
+            'emoji' => '🌲',
+            'color' => '#22c55e',
+            'description' => 'Foundations are stabilizing, stronger structures forming, but not all details are completely added or yet to be worked out; content is more resilient &  persistent.',
+            'sort-order' => 2,
+        ],
+        'crowning' => [
+            'label' => 'Crowning',
+            'emoji' => '🍂',
+            'color' => '#fb923c',
+            'description' => 'Mature enough to be published, focused on feasibility; what needs to be adjusted, to avoid content crown shyness?',
+            'sort-order' => 3,
         ],
         'evergreen' => [
             'label' => 'Evergreen',
-            'emoji' => '🌲',
-            'color' => '#22c55e',
-            'description' => 'Mature, well-developed, regularly maintained',
-            'sort-order' => 0,
-        ],
-        'wilting' => [
-            'label' => 'Wilting',
             'emoji' => '🍂',
             'color' => '#fb923c',
-            'description' => 'Outdated or archived, may need revision',
-            'sort-order' => 3,
+            'description' => 'There may be some light edits and occasional pruning needed, but is considered complete, in maintenance mode, and syndicated.',
+            'sort-order' => 4,
         ],
     ],
 
@@ -154,14 +127,6 @@ return [
             'types' => ['strengths', 'skills', 'about', 'now'],
         ],
     ],
-
-    /**
-     * TAG CLOUD CONFIGURATION
-     */
-    'cloud.font-min' => 0.875,
-    'cloud.font-max' => 2,
-    'cloud.min-count' => 1,
-    'cloud.max-tags' => 0,
 
     /**
      * URL & ROUTING CONFIGURATION

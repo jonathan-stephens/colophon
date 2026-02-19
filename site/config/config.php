@@ -3,7 +3,7 @@ require_once __DIR__ . '/helpers.php';
 
 return [
 
-  'debug' => false,
+  'debug' => true,
     'panel' => [
         'install' => false,
     ],
@@ -31,17 +31,21 @@ return [
     'mauricerenck.komments.panel.webmentions' => true,
     'mauricerenck.komments.panel.enabled' => true,
     'jonathanstephens.timekeeper' => [
-        'useClientTime' => true,
-        'allowManualOverride' => true,
-        'cookieDuration' => 60 * 60 * 24
+      'useClientTime' => true,
+      'allowManualOverride' => true,
+      'cookieDuration' => 60 * 60 * 24
+    ],
+    'mauricerenck.ogimage' => [
+      'font.path' => __DIR__ . '/../../assets/fonts/ibm-plex-serif/serif-semibold.woff',
+      'image.template' => __DIR__ . '/../../assets/png/og-image-template.png',
     ],
     'johannschopplich.locked-pages' => [
-        'slug' => 'locked',
-        'title' => 'Protected Page',
-        'error' => [
-            'csrf' => 'The CSRF-Token is not correct.',
-            'password' => 'The password is not correct.',
-        ]
+      'slug' => 'locked',
+      'title' => 'Protected Page',
+      'error' => [
+          'csrf' => 'The CSRF-Token is not correct.',
+          'password' => 'The password is not correct.',
+      ]
     ],
     'moinframe.loop.enabled' => false,
     'timnarr.imagex' => [
@@ -135,7 +139,6 @@ return [
                 // Set custom filename header before generating feed
                 $filename = $section . '.' . $format;
                 header('Content-Disposition: inline; filename="' . $filename . '"');
-
                 return generateSectionFeed($section, $format);
             }
         ],
@@ -147,7 +150,6 @@ return [
             'action'  => function ($section, $tag, $format) {
                 $filename = $section . '-' . $tag . '.' . $format;
                 header('Content-Disposition: inline; filename="' . $filename . '"');
-
                 return generateTagFeed($tag, $format, $section);
             }
         ],
@@ -159,7 +161,6 @@ return [
             'action'  => function ($tag, $format) {
                 $filename = 'tags-' . $tag . '.' . $format;
                 header('Content-Disposition: inline; filename="' . $filename . '"');
-
                 return generateTagFeed($tag, $format);
             }
         ],

@@ -6,7 +6,7 @@ create:
   fields:
     - event_url
     - start
-    - status
+    - attendance_role
     - category
 
 tabs:

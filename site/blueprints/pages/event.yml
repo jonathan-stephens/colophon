@@ -4,7 +4,7 @@ num: date start
 
 create:
   fields:
-    - url
+    - event_url
     - start
     - status
     - category

@@ -1,0 +1,38 @@
+title: Events (Container)
+type: pages
+icon: calendar
+num: 0
+
+tabs:
+  entries:
+    label: Events
+    columns:
+      left:
+        width: 2/3
+        sections:
+          drafts:
+            headline: Draft Events
+            type: pages
+            status: draft
+            templates: [event]
+            sortBy: start desc
+            width: 2/3
+            columns:
+              start: true
+              attendance_role: true
+              category: true
+
+          published:
+            headline: Published Events
+            type: pages
+            status: published
+            templates: [event]
+            sortBy: date desc
+            layout: table
+            columns:
+              start: true
+              attendance_role: true
+              category: true
+
+
+  extends: tabs/listing

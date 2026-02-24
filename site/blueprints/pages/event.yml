@@ -1,0 +1,157 @@
+title: Event
+icon: calendar
+num: date start
+
+create:
+  fields:
+    - url
+    - start
+    - status
+    - category
+
+tabs:
+  # ─────────────────────────────────────────
+  # TAB 1: Event Details
+  # ─────────────────────────────────────────
+  details:
+    label: Event Details
+    icon: info
+
+    columns:
+
+      # ── Main column ──────────────────────
+      main:
+        width: 2/3
+        sections:
+          core_fields:
+            type: fields
+            fields:
+              hed:
+                type: text
+                label: Event Name
+                help: The full name of the event. Maps to **p-name** in h-event.
+                width: 1/1
+              event_url:
+                type: url
+                label: Event URL
+                help: The canonical URL of the event. Maps to **u-url** in h-event.
+                required: true
+                width: 1/3
+              start:
+                type: date
+                label: Start
+                help: Event start date and time. Maps to **dt-start**.
+                time: true
+                required: true
+                display: DD MMMM YYYY HH:mm
+                width: 1/3
+              end:
+                type: date
+                label: End
+                help: Event end date and time. Maps to **dt-end**.
+                time: true
+                display: DD MMMM YYYY HH:mm
+                width: 1/3
+              summary:
+                type: textarea
+                label: Summary
+                help: A short plain-text summary of the event. Maps to **p-summary**.
+                size: medium
+                width: 1/1
+              description:
+                type: textarea
+                size: large
+                label: Description
+                help: Full rich-text description of the event. Maps to **e-description**.
+                inline: false
+                buttons:
+                  - headlines
+                  - bold
+                  - italic
+                  - link
+                  - email
+                  - file
+                  - code
+                  - ul
+                  - ol
+                  - abbr
+                  - cite
+                  - dfn
+                  - ins
+                  - mark
+                  - q
+                  - s
+                  - samp
+                  - smallcaps
+                  - sub
+                  - sup
+                width: 1/1
+
+      # ── Sidebar ──────────────────────────
+      sidebar:
+        width: 1/3
+        sections:
+          meta_fields:
+            type: fields
+            fields:
+              attendance_role:
+                type: select
+                label: My Attendance Role
+                help: How you participated in this event. Maps to **p-status** (custom).
+                required: true
+                options:
+                  attendee: 🎟 Attendee
+                  speaker: 🎤 Speaker
+                  volunteer: 🙋 Volunteer
+                  organizer: 📋 Organizer
+                width: 1/2
+              category:
+                type: tags
+                label: Category
+                help: One or more categories for this event. Maps to **p-category**.
+                separator: ","
+                width: 1/2
+              location_name:
+                type: text
+                label: Venue / Location Name
+                help: Name of the venue or "Online". Maps to **p-location**.
+                placeholder: e.g. Conference Centre, Online
+                width: 1/1
+              location_url:
+                type: url
+                label: Location URL
+                help: A link to the venue or online event platform.
+                placeholder: https://
+                width: 1/1
+
+              location_address:
+                type: textarea
+                label: Address
+                help: Full postal address of the venue if applicable.
+                size: small
+                width: 1/1
+
+  # ─────────────────────────────────────────
+  # TAB 2: Related Content
+  # ─────────────────────────────────────────
+  related:
+    label: Related Content
+    icon: panel-structure
+    columns:
+      main:
+        width: 1/1
+        sections:
+          related_fields:
+            type: fields
+            fields:
+              related:
+                type: pages
+                label: Related Pages
+                help: >
+                  Link any pages on this site related to this event —
+                  write-ups, notes, talks, mentions, etc.
+                multiple: true
+                search: true
+                layout: list
+                info: "{{ page.uri }}"
+                width: 1/1

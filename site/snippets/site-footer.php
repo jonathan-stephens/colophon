@@ -88,7 +88,7 @@
               <span>Subscribe</span>
             </button>
           </form>
-      <p class="description"><a href="https://buttondown.com/refer/jonathanstephens" target="_blank">Now powered by Buttondown</a></p>
+      <small class="description"><a href="https://buttondown.com/refer/jonathanstephens" target="_blank">Now powered by Buttondown</a></small>
       </div>
     </section>
     <?php $socialLinks = $site->footer_social()->toStructure(); ?>

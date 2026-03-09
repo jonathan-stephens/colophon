@@ -1,0 +1,19 @@
+.callout{
+  font-family: var(--font-mono);
+  background: var(--background-tertiary);
+  padding: var(--flow-5);
+  margin-block-end: var(--flow-7);
+  border-radius: var(--radii-square);
+
+  header{
+    display: inline-flex;
+    gap: var(--flow-4);
+    font-size: var(--nutgraf-secondary);
+    font-weight: var(--weight-semibold);
+    align-items: center;
+  }
+  p{
+    font-weight:var(--weight-medium);
+  }
+
+}

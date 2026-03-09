@@ -73,6 +73,7 @@
             </span>
           </header>
           <p class="description">Every fortnight or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>
+          <small class="description"><a href="https://buttondown.com/refer/jonathanstephens" target="_blank">Now powered by Buttondown</a></small>
           <p class="browse">Feel free to <a href="https://buttondown.com/jonathanstephens/archive/">browse the archives</a>...before subscribing ( • ᴗ - ).</p>
 
           <form
@@ -88,7 +89,6 @@
               <span>Subscribe</span>
             </button>
           </form>
-      <small class="description"><a href="https://buttondown.com/refer/jonathanstephens" target="_blank">Now powered by Buttondown</a></small>
       </div>
     </section>
     <?php $socialLinks = $site->footer_social()->toStructure(); ?>

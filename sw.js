@@ -12,6 +12,9 @@ const PRECACHE_URLS = [
 // Only cache responses for these origins/paths
 const CACHE_ALLOWLIST = new Set(["/", "/share"]);
 
+// Kirby CMS paths — bypass the SW entirely for these
+const BYPASS_PREFIXES = ["/panel", "/media", "/site", "/kirby", "/content"];
+
 // =====================================================
 // INSTALL — precache shell assets
 // =====================================================
@@ -94,6 +97,9 @@ self.addEventListener("fetch", (e) => {
   // Parse URL once, after origin check
   const url = new URL(request.url);
 
+  // --- Bypass Kirby CMS paths — let browser handle natively ---
+  if (BYPASS_PREFIXES.some((prefix) => url.pathname.startsWith(prefix))) return;
+
   // --- Share target POST ---
   if (request.method === "POST" && url.pathname === "/share") {
     e.respondWith(
@@ -118,7 +124,7 @@ self.addEventListener("fetch", (e) => {
 
   // --- API calls — network only, no caching ---
   if (url.pathname.startsWith("/api/")) {
-    e.respondWith(fetch(request));
+    e.respondWith(fetch(request).catch(() => new Response("Network error", { status: 503 })));
     return;
   }
 
@@ -135,7 +141,7 @@ self.addEventListener("fetch", (e) => {
   }
 
   // --- Everything else — network only ---
-  e.respondWith(fetch(request));
+  e.respondWith(fetch(request).catch(() => new Response("Network error", { status: 503 })));
 });
 
 // =====================================================

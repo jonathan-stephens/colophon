@@ -3,8 +3,9 @@ fields:
   tags:
     label: Tags
     type: tags
-    options: query
-    query: site.index.pluck("tags", ",", true)
+    options:
+      type: query
+      query: site.cachedTags
     required: true
     width: 2/3
   growthStatus: fields/growthStatus

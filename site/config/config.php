@@ -19,6 +19,14 @@ return [
       'basicAuth' => true,
       'allowInsecure' => false, // Only for local development - set to false in production!
     ],
+    'cache' => [
+      'tags' => [
+          'type' => 'file'
+      ]
+    ],
+    'tags.api.url' => function () {
+      return kirby()->url() . '/api/cached-tags';
+    },
     'mauricerenck.indieConnector.secret' => 'supercalifragilisticexpialidocious',
     'mauricerenck.indieConnector.sqlitePath' => 'content/.sqlite/',
     'mauricerenck.indieConnector.send.url-fields' => [

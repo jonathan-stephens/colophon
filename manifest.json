@@ -2,7 +2,7 @@
   "name": "My Bookmarks",
   "short_name": "Bookmarks",
   "description": "Save and manage your bookmarks",
-  "start_url": "/",
+  "start_url": "/share",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
@@ -18,7 +18,7 @@
       "type": "image/png"
     }
   ],
-  "scope": "/",
+  "scope": "/share",
   "share_target": {
     "action": "/share",
     "method": "POST",

@@ -126,9 +126,9 @@
   <!-- Fathom - beautiful, simple website analytics -->
   <script src="https://cdn.usefathom.com/script.js" data-site="FCIAGYSD" defer></script>
   <!-- / Fathom -->
-  <?= Bnomei\Fingerprint::js('assets/js/theme-picker-min.js');?>
-  <?= Bnomei\Fingerprint::js('assets/js/toc-min.js');?>
-  <?= Bnomei\Fingerprint::js('assets/js/prism-min.js');?>
+  <?= Bnomei\Fingerprint::js('assets/js/theme-picker-min.js'),['defer' => true]);?>
+  <?= Bnomei\Fingerprint::js('assets/js/toc-min.js'),['defer' => true]);?>
+  <?= Bnomei\Fingerprint::js('assets/js/prism-min.js'),['defer' => true]);?>
 
 </body>
 </html>

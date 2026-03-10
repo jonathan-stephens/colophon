@@ -1,17 +1,17 @@
 .site-header {
-  width:100vw;
+  width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-header);
   padding: var(--flow-5);
+  padding-block-end: var(--flow-9);
   background: var(--background-nav-panel);
-  transition: all var(--duration-base) ease;
+  transition: background var(--duration-base) ease;
   -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
   mask-image: linear-gradient(to top, transparent 0%, rgba(89, 89, 89, 1) 55%, black 100%);
-  overflow:visible;
-  padding-block-end:var(--flow-9);
+  overflow: visible;
   transform: translateZ(0);
   backdrop-filter: blur(var(--flow-1));
 }
@@ -22,10 +22,10 @@
   justify-content: space-between;
   align-items: center;
 
-  .buttons{
-    display:flex;
-    flex-flow:row;
-    gap:var(--flow-5);
+  .buttons {
+    display: flex;
+    flex-flow: row;
+    gap: var(--flow-5);
   }
 }
 
@@ -55,7 +55,7 @@
   cursor: pointer;
   display: flex;
   align-items: flex-end;
-  transition: all var(--duration-base) ease;
+  transition: color var(--duration-base) ease, background var(--duration-base) ease;
   font-size: var(--caption);
   justify-content: flex-end;
   padding-inline-start: var(--flow-5);
@@ -71,6 +71,17 @@
   top: 1px;
 }
 
+/* Icon swap — both SVGs live in the DOM, toggled by the button's is-open class */
+#nav-toggle .icon--close { display: none; }
+#nav-toggle .icon--open  { display: block; }
+
+#nav-toggle.is-open .icon--open  { display: none; }
+#nav-toggle.is-open .icon--close { display: block; }
+
+/* =====================================================
+   BRANDMARK
+   ===================================================== */
+
 a:has(.brandmark) {
   display: flex;
   align-content: center;
@@ -81,22 +92,10 @@ a:has(.brandmark) {
   text-decoration: none;
 }
 
-.brandmark .background {
-  fill: var(--background-primary-inverse);
-  opacity: 0.75;
-}
-
-.brandmark .border {
-  fill: var(--background-tertiary-inverse);
-}
-
-.brandmark .letter {
-  fill: var(--background-secondary);
-}
-
-.brandmark .frills {
-  fill: var(--background-quaternary);
-}
+.brandmark .background { fill: var(--background-primary-inverse); opacity: 0.75; }
+.brandmark .border     { fill: var(--background-tertiary-inverse); }
+.brandmark .letter     { fill: var(--background-secondary); }
+.brandmark .frills     { fill: var(--background-quaternary); }
 
 .brandmark:hover,
 .brandmark:focus {
@@ -104,78 +103,62 @@ a:has(.brandmark) {
   .border,
   .letter,
   .frills {
-    transition: all ease-in-out var(--duration-fastest);
+    transition: fill var(--duration-fastest) ease-in-out;
   }
 }
 
 .brandmark:hover .background,
-.brandmark:focus .background {
-  fill: var(--background-tertiary-inverse);
-}
+.brandmark:focus .background { fill: var(--background-tertiary-inverse); }
 
 .brandmark:hover .letter,
-.brandmark:focus .letter {
-  fill: var(--background-primary);
-}
+.brandmark:focus .letter     { fill: var(--background-primary); }
 
 .brandmark:hover .frills,
-.brandmark:focus .frills {
-  fill: var(--background-secondary);
-}
+.brandmark:focus .frills     { fill: var(--background-secondary); }
 
-html[data-theme="dark"] .brandmark .background {
-  fill: var(--background-secondary);
-  opacity: 0.75;
-}
-
-html[data-theme="dark"] .brandmark .border {
-  fill: var(--background-tertiary-inverse);
-}
-
-html[data-theme="dark"] .brandmark .letter {
-  fill: var(--background-secondary-inverse);
-}
-
-html[data-theme="dark"] .brandmark .frills {
-  fill: var(--background-tertiary-inverse);
-}
+html[data-theme="dark"] .brandmark .background { fill: var(--background-secondary); opacity: 0.75; }
+html[data-theme="dark"] .brandmark .border     { fill: var(--background-tertiary-inverse); }
+html[data-theme="dark"] .brandmark .letter     { fill: var(--background-secondary-inverse); }
+html[data-theme="dark"] .brandmark .frills     { fill: var(--background-tertiary-inverse); }
 
 html[data-theme="dark"] .brandmark:hover .border,
-html[data-theme="dark"] .brandmark:focus .border {
-  fill: var(--background-secondary-inverse);
-}
+html[data-theme="dark"] .brandmark:focus .border { fill: var(--background-secondary-inverse); }
 
 html[data-theme="dark"] .brandmark:hover .letter,
-html[data-theme="dark"] .brandmark:focus .letter {
-  fill: var(--background-primary-inverse);
-}
+html[data-theme="dark"] .brandmark:focus .letter { fill: var(--background-primary-inverse); }
 
 html[data-theme="dark"] .brandmark:hover .frills,
-html[data-theme="dark"] .brandmark:focus .frills {
-  fill: var(--background-primary-inverse);
-}
+html[data-theme="dark"] .brandmark:focus .frills { fill: var(--background-primary-inverse); }
+
+/* =====================================================
+   NAV TOGGLE TEXT
+   ===================================================== */
 
 #nav-toggle-text {
   align-items: baseline;
   width: max-content;
 }
 
-#nav-panel, .nav-panel {
+/* =====================================================
+   NAV PANEL — two-class state machine
+   Base:              off-screen, no transition, non-interactive
+   .is-animating:     transition enabled
+   .is-open:          on-screen
+   ===================================================== */
+
+.nav-panel {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0;
   width: 100vw;
-  height: 100vh;
   height: 100dvh;
   background-color: var(--panel-background);
+  /* Default: off-screen, no transitions so there's no flash on page load */
   transform: translateX(100%);
+  pointer-events: none;
   z-index: var(--z-nav-panel);
   overflow: hidden;
   will-change: transform;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
   contain: layout style paint;
   display: flex;
   flex-flow: column;
@@ -184,97 +167,102 @@ html[data-theme="dark"] .brandmark:focus .frills {
   padding-block-start: var(--flow-7);
 }
 
-/* Add transitions only when the panel is ready to animate */
-.nav-panel.transitions-enabled.is-opening {
-  transform: translateX(0);
-  transition: transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              backdrop-filter var(--duration-slower) ease;
+/* Enable transitions only while animating — prevents flash on page load */
+.nav-panel.is-animating {
+  transition: transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.nav-panel.transitions-enabled.is-closing {
-  transform: translateX(100%);
-  transition: transform var(--duration-base) cubic-bezier(0.55, 0.055, 0.675, 0.19),
-    backdrop-filter var(--duration-base) ease;
+/* Opening easing (panel already has is-open at this point) */
+.nav-panel.is-animating.is-open {
+  transition: transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Closing easing (is-open has been removed) */
+.nav-panel.is-animating:not(.is-open) {
+  transition: transform var(--duration-base) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   pointer-events: none;
 }
 
-.nav-panel.open {
+.nav-panel.is-open {
   transform: translateX(0);
+  pointer-events: auto;
 }
 
-.nav-panel.is-collapsed {
-  transform: translateX(100%);
-  pointer-events: none;
-}
-
-/* Add backdrop as a separate layer */
+/* Backdrop as a separate composited layer */
 .nav-panel::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: var(--background-nav-panel);
   backdrop-filter: blur(var(--flow-2));
   opacity: 0;
-  transition: opacity var(--duration-slower) ease;
   z-index: var(--z-backdrop);
+  /* No transition by default */
 }
 
-.nav-panel.transitions-enabled.is-opening::before,
-.nav-panel.open::before {
+.nav-panel.is-animating::before {
+  transition: opacity var(--duration-slower) ease;
+}
+
+.nav-panel.is-animating.is-open::before,
+.nav-panel.is-open::before {
   opacity: 1;
 }
 
-.nav-panel.transitions-enabled.is-closing::before {
+.nav-panel.is-animating:not(.is-open)::before {
   opacity: 0;
   transition: opacity var(--duration-base) ease;
 }
 
-/* NAVIGATION LIST */
-.nav-panel[aria-hidden="true"] .nav-list {
-  transform: translateY(1.5em);
-  opacity: 0;
-}
+/* =====================================================
+   NAV LIST — stagger animations
+   ===================================================== */
 
 .nav-list {
   list-style: none;
   padding: 0;
   margin-block-start: var(--flow-13);
-  max-width:100%;
+  max-width: 100%;
 }
 
 .nav-list li {
   opacity: 0;
   transform: translateY(1.5em);
-  transition: opacity var(--duration-base) ease, transform var(--duration-base) ease;
-  transition-delay: var(--duration-instant);
-  max-inline-size:none;
+  /* No transition by default — avoids animating on page load */
+  max-inline-size: none;
   will-change: opacity, transform;
 }
 
-.nav-panel.is-opening .nav-item,
-.nav-panel.open .nav-item,
-.open .theme-picker {
+/* Items animate in when panel is opening or fully open */
+.nav-panel.is-animating.is-open .nav-item,
+.nav-panel.is-open .nav-item,
+.is-open .theme-picker {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity var(--duration-base) ease, transform var(--duration-base) ease;
   transition-delay: var(--item-delay);
   padding: 0;
 }
 
-.nav-panel.is-closing .nav-item {
+/* Items animate out when closing */
+.nav-panel.is-animating:not(.is-open) .nav-item {
   opacity: 0;
   transform: translateY(1.5em);
+  transition: opacity var(--duration-slower) ease,
+              transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transition-delay: var(--duration-instant);
-  transition: opacity var(--duration-slower) ease, transform var(--duration-slower) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.nav-panel.is-collapsed .nav-item {
+/* Items instantly reset when fully closed — no transition */
+.nav-panel:not(.is-open):not(.is-animating) .nav-item {
   opacity: 0;
   transform: translateY(1.5em);
   transition: none;
 }
+
+/* =====================================================
+   NAV LINKS
+   ===================================================== */
 
 .nav-link[aria-current="page"],
 .nav-link:visited[aria-current="page"] {
@@ -291,38 +279,63 @@ html[data-theme="dark"] .brandmark:focus .frills {
   margin-inline-end: calc(var(--flow-5));
   padding-block: var(--flow-3);
   padding-inline-end: var(--flow-5);
-  transition: all var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: color var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-decoration-color: var(--color-quiet);
-  text-align:right;
-  max-inline-size:none;
+  text-align: right;
+  max-inline-size: none;
 }
 
 .nav-link:hover,
 .nav-link:focus {
   color: var(--color-prominent);
-  background:var(--background-secondary);
+  background: var(--background-secondary);
   outline: none;
   border-radius: var(--radii-square);
   text-decoration-color: var(--color-prominent);
 }
 
+/* =====================================================
+   BODY SCROLL LOCK
+   ===================================================== */
+
+body.nav-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+main {
+  position: relative;
+  z-index: var(--z-main);
+}
+
+.site-header:has(.nav-panel.is-open) .breadcrumb,
+.site-header:has(.nav-panel.is-open) #nav-toggle {
+  backdrop-filter: blur(0px);
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
 @media (max-width: 60em) {
   .panel {
     width: 100vw;
-    height: 100vh;
     height: 100dvh;
     transform: translateX(100%);
     -webkit-overflow-scrolling: touch;
   }
 
-  .nav-panel.is-opening {
-    transform: translateX(0);
+  .nav-panel.is-animating.is-open {
     transition: transform var(--duration-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: auto;
   }
 
-  .nav-panel.is-closing {
-    transform: translateX(100%);
+  .nav-panel.is-animating:not(.is-open) {
     transition: transform var(--duration-faster) cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
 }
@@ -344,24 +357,4 @@ html[data-theme="dark"] .brandmark:focus .frills {
     padding: var(--flow-5);
     padding-block-start: var(--flow-7);
   }
-}
-
-/* Enhanced body scroll prevention */
-body.nav-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  touch-action: none;
-  pointer-events: auto;
-}
-
-/* Ensure main content stability */
-main {
-  position: relative;
-  z-index: var(--z-main);
-}
-
-.site-header:has(.nav-panel.open) .breadcrumb,
-.site-header:has(.nav-panel.open) #nav-toggle {
-  backdrop-filter: blur(0px);
 }

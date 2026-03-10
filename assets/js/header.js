@@ -1,165 +1,113 @@
 class HeaderController {
     constructor() {
-        this.isNavOpen = false;
+        this.isNavOpen      = false;
         this.isTransitioning = false;
-        this.transitionDuration = 300;
 
-        // Get DOM elements
-        this.navToggle = document.getElementById('nav-toggle');
-        this.navPanel = document.getElementById('nav-panel');
-        this.navToggleText = document.getElementById('nav-toggle-text');
-        this.body = document.body;
-
-        // Store SVG icons
-        this.openIcon = null;
-        this.closeIcon = null;
+        this.navToggle  = document.getElementById('nav-toggle');
+        this.navPanel   = document.getElementById('nav-panel');
+        this.toggleText = document.getElementById('nav-toggle-text');
+        this.body       = document.body;
 
         this.init();
     }
 
     init() {
-        this.loadIcons().then(() => {
-            this.setupInitialState();
-            this.bindEvents();
-        });
-    }
-
-    loadIcons() {
-        return Promise.all([
-            fetch('/assets/svg/icons/panel-right---to-open.svg'),
-            fetch('/assets/svg/icons/panel-right---to-close.svg')
-        ])
-        .then(([openResponse, closeResponse]) => {
-            return Promise.all([
-                openResponse.text(),
-                closeResponse.text()
-            ]);
-        })
-        .then(([openIcon, closeIcon]) => {
-            this.openIcon = openIcon;
-            this.closeIcon = closeIcon;
-        })
-        .catch(() => {
-            // Fallback - use existing icon
-            const existingSvg = this.navToggle && this.navToggle.querySelector('svg');
-            this.openIcon = (existingSvg && existingSvg.outerHTML) || '';
-            this.closeIcon = this.openIcon;
-        });
+        this.setupInitialState();
+        this.bindEvents();
     }
 
     setupInitialState() {
+        // Panel starts off-screen; transitions are enabled via CSS once is-animating is added
         if (this.navPanel) {
-            this.navPanel.classList.add('is-collapsed', 'transitions-enabled');
             this.navPanel.setAttribute('aria-hidden', 'true');
         }
     }
 
     bindEvents() {
-        this.navToggle && this.navToggle.addEventListener('click', (e) => {
+        this.navToggle?.addEventListener('click', (e) => {
             e.preventDefault();
             this.toggleNav();
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isNavOpen) {
-                this.closeNav();
-            }
+            if (e.key === 'Escape' && this.isNavOpen) this.closeNav();
         });
+
+        // transitionend for accuracy; fallback guards against cases where
+        // the transition never fires (prefers-reduced-motion, hidden element, etc.)
+        this.navPanel?.addEventListener('transitionend', (e) => {
+            if (e.target !== this.navPanel || e.propertyName !== 'transform') return;
+            this._onTransitionEnd();
+        });
+    }
+
+    _onTransitionEnd() {
+        clearTimeout(this._transitionFallback);
+        this.navPanel.classList.remove('is-animating');
+        this.isTransitioning = false;
+    }
+
+    // Safety valve: if transitionend never fires, unlock after CSS duration + buffer
+    _scheduleTransitionFallback(durationMs) {
+        clearTimeout(this._transitionFallback);
+        this._transitionFallback = setTimeout(() => {
+            if (this.isTransitioning) this._onTransitionEnd();
+        }, durationMs + 50);
     }
 
     toggleNav() {
         if (this.isTransitioning) return;
-
         this.isNavOpen ? this.closeNav() : this.openNav();
     }
 
     openNav() {
-        if (this.isTransitioning) return;
-
-        this.isNavOpen = true;
+        this.isNavOpen       = true;
         this.isTransitioning = true;
+
         this.body.classList.add('nav-open');
 
         if (this.navPanel) {
-            this.navPanel.classList.remove('is-collapsed');
-            this.navPanel.classList.add('is-opening');
+            this.navPanel.classList.add('is-animating');
+            this.navPanel.getBoundingClientRect(); // force reflow so browser sees transition start
+            this.navPanel.classList.add('is-open');
+            this.navPanel.setAttribute('aria-hidden', 'false');
         }
 
-        this.updateNavState();
-        this.scheduleTransitionEnd(() => {
-            if (this.navPanel) {
-                this.navPanel.classList.remove('is-opening');
-                this.navPanel.classList.add('open');
-            }
-        });
+        this.updateToggleState();
+        this._scheduleTransitionFallback(500);
     }
 
     closeNav() {
-        if (!this.isNavOpen || this.isTransitioning) return;
-
-        this.isNavOpen = false;
+        this.isNavOpen       = false;
         this.isTransitioning = true;
+
         this.body.classList.remove('nav-open');
 
         if (this.navPanel) {
-            this.navPanel.classList.remove('is-opening', 'open');
-            this.navPanel.classList.add('is-closing');
+            this.navPanel.classList.add('is-animating');
+            this.navPanel.getBoundingClientRect(); // same reflow requirement as openNav
+            this.navPanel.classList.remove('is-open');
+            this.navPanel.setAttribute('aria-hidden', 'true');
         }
 
-        this.updateNavState();
-        this.scheduleTransitionEnd(() => {
-            if (this.navPanel) {
-                this.navPanel.classList.remove('is-closing');
-                this.navPanel.classList.add('is-collapsed');
-            }
-        });
+        this.updateToggleState();
+        this._scheduleTransitionFallback(400);
     }
 
-    scheduleTransitionEnd(callback) {
-        setTimeout(() => {
-            this.isTransitioning = false;
-            callback();
-        }, this.transitionDuration);
-    }
+    updateToggleState() {
+        if (!this.navToggle) return;
 
-    updateNavState() {
-        if (this.navPanel) {
-            this.navPanel.setAttribute('aria-hidden', (!this.isNavOpen).toString());
-        }
+        this.navToggle.setAttribute('aria-expanded', this.isNavOpen.toString());
+        this.navToggle.classList.toggle('is-open', this.isNavOpen);
 
-        if (this.navToggle) {
-            this.navToggle.setAttribute('aria-expanded', this.isNavOpen.toString());
-            this.navToggle.classList.toggle('is-open', this.isNavOpen);
-        }
-
-        if (this.navToggleText) {
-            this.navToggleText.textContent = this.isNavOpen ? 'Close Menu' : 'Open Menu';
-        }
-
-        this.updateIcon();
-    }
-
-    updateIcon() {
-        if (!this.openIcon || !this.closeIcon) return;
-
-        const svgElement = this.navToggle && this.navToggle.querySelector('svg');
-        if (!svgElement) return;
-
-        const newIconHTML = this.isNavOpen ? this.closeIcon : this.openIcon;
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = newIconHTML;
-        const newSvg = tempDiv.querySelector('svg');
-
-        if (newSvg) {
-            if (svgElement.className.baseVal) {
-                newSvg.setAttribute('class', svgElement.className.baseVal);
-            }
-            svgElement.replaceWith(newSvg);
+        // Icon swap — both SVGs are in the DOM, CSS handles visibility
+        // No DOM creation, no innerHTML parsing
+        if (this.toggleText) {
+            this.toggleText.textContent = this.isNavOpen ? 'Close Menu' : 'Open Menu';
         }
     }
 }
 
-// Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => new HeaderController());
 } else {

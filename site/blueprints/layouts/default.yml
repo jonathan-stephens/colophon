@@ -53,7 +53,7 @@ tabs:
             type: fields
             fields:
               security: fields/locked-pages
-          pages: true
+          pages: 
             type: pages
             status: all
             options:

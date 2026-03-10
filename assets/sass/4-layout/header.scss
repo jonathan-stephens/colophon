@@ -58,7 +58,7 @@
   transition: color var(--duration-base) ease, background var(--duration-base) ease;
   font-size: var(--caption);
   justify-content: flex-end;
-  padding-inline-start: var(--flow-5);
+  padding-inline: var(--flow-5);
 }
 
 .site-header .button #nav-toggle-text em {
@@ -68,7 +68,7 @@
 .site-header .button .icon {
   --button-icon-size: var(--prose);
   fill: var(--color-prominent);
-  top: 1px;
+  top: -1px;
 }
 
 /* Icon swap — both SVGs live in the DOM, toggled by the button's is-open class */

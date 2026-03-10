@@ -82,17 +82,28 @@
   --background-nav-panel: oklch(var(--palette-ink-raw) / 75%);
 }
 
-html[data-theme='light']{
-  background:url('/assets/png/paper-tile.webp') repeat, var(--background-primary);
-  background-size:50%;
-  background-attachment:fixed;
-}
-@media screen and (min-width:50em){
-  html[data-theme='light']{
-    background-size:15%;
-  }
+
+html body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-repeat: repeat;
+    will-change: transform; /* promotes to GPU layer */
+    background-repeat: repeat;
 }
 
-html[data-theme='dark']{
-  background:url('/assets/png/stardust.webp') repeat, var(--background-primary);
+html[data-theme='light'] body::before {
+    background: url('/assets/png/paper-tile.webp'), var(--background-primary);
+    background-size: 50%;
+}
+html[data-theme='dark'] body::before {
+    background: url('/assets/png/stardust.webp'), var(--background-primary);
+    background-size: 50%;
+}
+
+@media screen and (min-width:50em){
+  html[data-theme='light'] body{
+    background-size:15%;
+  }
 }

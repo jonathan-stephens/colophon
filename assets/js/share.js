@@ -3,25 +3,26 @@
 // =====================================================
 
 const CONFIG = {
-    API_ENDPOINTS: {
-        ADD_BOOKMARK: '/api/bookmarks/add',
-        FETCH_METADATA: '/api/bookmarks/fetch-metadata',
-        TAGS: '/api/bookmarks/tags'
+    API: {
+        ADD_BOOKMARK:    '/api/bookmarks/add',
+        FETCH_METADATA:  '/api/bookmarks/fetch-metadata',
+        TAGS:            '/api/bookmarks/tags'
     },
     TAGS: {
-        READ_LATER: 'To Read',
-        MIN_AUTOCOMPLETE_LENGTH: 2,
-        MAX_SUGGESTIONS: 5
+        READ_LATER:             'To Read',
+        MIN_AUTOCOMPLETE_LEN:   2,
+        MAX_SUGGESTIONS:        5,
+        CACHE_KEY:              'bm_tags_cache',
+        CACHE_TTL_MS:           5 * 60 * 1000  // 5 minutes
     },
     TIMEOUTS: {
-        MESSAGE_DISPLAY: 5000,
-        AUTO_FETCH_DELAY: 300,
-        DEBOUNCE_DELAY: 300
+        MESSAGE_MS:  5000,
+        DEBOUNCE_MS: 300
     },
     DB: {
-        NAME: 'BookmarksOfflineDB',
-        VERSION: 1,
-        STORE_NAME: 'pendingBookmarks'
+        NAME:       'BookmarksOfflineDB',
+        VERSION:    1,
+        STORE:      'pendingBookmarks'
     }
 };
 
@@ -30,317 +31,224 @@ const CONFIG = {
 // =====================================================
 
 const AppState = {
-    credentials: null,
-    tags: [],
-    selectedSuggestionIndex: 0,
-    isOnline: navigator.onLine,
-    db: null,
-    elements: {} // Will store cached DOM references
+    credentials:            null,
+    tags:                   [],
+    selectedSuggestionIdx:  0,
+    db:                     null,
+    el:                     {}
 };
 
 // =====================================================
-// UTILITY FUNCTIONS
+// UTILITIES
 // =====================================================
 
-// Debounce function to limit execution frequency
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func(...args), wait);
-    };
+function debounce(fn, wait) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
 }
 
-// Show message to user
-function showMessage(text, type = "info") {
-    if (!AppState.elements.messageDiv) {
-        console.error("Message element not found");
-        return;
-    }
-    AppState.elements.messageDiv.textContent = text;
-    AppState.elements.messageDiv.className = "message " + type;
-    AppState.elements.messageDiv.style.display = "block";
-
-    setTimeout(() => {
-        AppState.elements.messageDiv.style.display = "none";
-    }, CONFIG.TIMEOUTS.MESSAGE_DISPLAY);
+function showMessage(text, type = 'info') {
+    const el = AppState.el.message;
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'message ' + type;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, CONFIG.TIMEOUTS.MESSAGE_MS);
 }
 
-// Extract domain from URL
 function extractDomain(url) {
-    try {
-        const hostname = new URL(url).hostname;
-        return hostname.replace(/^www\./, "");
-    } catch (err) {
-        console.error("Error extracting domain:", err);
-        return "";
-    }
+    try { return new URL(url).hostname.replace(/^www\./, ''); }
+    catch { return ''; }
 }
 
-// Generate slug from URL
 function generateSlug(url) {
     try {
-        const urlObj = new URL(url);
-        const path = urlObj.pathname;
-
-        if (path && path !== '/') {
-            const pathSegments = path.split('/').filter(s => s);
-            let lastSegment = pathSegments[pathSegments.length - 1];
-            lastSegment = lastSegment.replace(/\.(html|htm|php|asp|aspx)$/i, '');
-
-            if (lastSegment) {
-                return lastSegment;
-            }
+        const { pathname, hostname } = new URL(url);
+        if (pathname && pathname !== '/') {
+            const last = pathname.split('/').filter(Boolean).pop();
+            const clean = last?.replace(/\.(html?|php|aspx?)$/i, '');
+            if (clean) return clean;
         }
-
-        const hostname = urlObj.hostname.replace(/^www\./, '');
-        const parts = hostname.split('.');
+        const parts = hostname.replace(/^www\./, '').split('.');
         parts.pop();
         return parts.join('-');
-
-    } catch (err) {
-        console.error("Error generating slug:", err);
-        return "";
-    }
+    } catch { return ''; }
 }
 
 // =====================================================
-// OFFLINE SUPPORT (IndexedDB)
+// OFFLINE SUPPORT (IndexedDB) — lazy init
 // =====================================================
 
-async function initDB() {
+async function getDB() {
+    if (AppState.db) return AppState.db;
+
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open(CONFIG.DB.NAME, CONFIG.DB.VERSION);
-
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => {
-            AppState.db = request.result;
-            resolve(AppState.db);
-        };
-
-        request.onupgradeneeded = (e) => {
-            const database = e.target.result;
-            if (!database.objectStoreNames.contains(CONFIG.DB.STORE_NAME)) {
-                database.createObjectStore(CONFIG.DB.STORE_NAME, {
-                    keyPath: 'id',
-                    autoIncrement: true
-                });
+        const req = indexedDB.open(CONFIG.DB.NAME, CONFIG.DB.VERSION);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => { AppState.db = req.result; resolve(AppState.db); };
+        req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(CONFIG.DB.STORE)) {
+                db.createObjectStore(CONFIG.DB.STORE, { keyPath: 'id', autoIncrement: true });
             }
         };
     });
 }
 
-async function saveToOfflineQueue(bookmarkData) {
-    if (!AppState.db) await initDB();
-
+async function saveToOfflineQueue(data) {
+    const db = await getDB();
     return new Promise((resolve, reject) => {
-        const transaction = AppState.db.transaction([CONFIG.DB.STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(CONFIG.DB.STORE_NAME);
-
-        const data = {
-            ...bookmarkData,
-            timestamp: Date.now(),
-            synced: false
-        };
-
-        const request = store.add(data);
-
-        request.onsuccess = () => {
-            console.log('📦 Saved to offline queue:', data);
-            resolve(request.result);
-        };
-        request.onerror = () => reject(request.error);
+        const tx = db.transaction([CONFIG.DB.STORE], 'readwrite');
+        const req = tx.objectStore(CONFIG.DB.STORE).add({ ...data, timestamp: Date.now(), synced: false });
+        req.onsuccess = () => resolve(req.result);
+        req.onerror  = () => reject(req.error);
     });
 }
 
 async function getPendingBookmarks() {
-    if (!AppState.db) await initDB();
-
+    const db = await getDB();
     return new Promise((resolve, reject) => {
-        const transaction = AppState.db.transaction([CONFIG.DB.STORE_NAME], 'readonly');
-        const store = transaction.objectStore(CONFIG.DB.STORE_NAME);
-        const request = store.getAll();
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
+        const req = db.transaction([CONFIG.DB.STORE], 'readonly').objectStore(CONFIG.DB.STORE).getAll();
+        req.onsuccess = () => resolve(req.result);
+        req.onerror  = () => reject(req.error);
     });
 }
 
 async function removeFromQueue(id) {
-    if (!AppState.db) await initDB();
-
+    const db = await getDB();
     return new Promise((resolve, reject) => {
-        const transaction = AppState.db.transaction([CONFIG.DB.STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(CONFIG.DB.STORE_NAME);
-        const request = store.delete(id);
-
-        request.onsuccess = () => resolve();
-        request.onerror = () => reject(request.error);
+        const req = db.transaction([CONFIG.DB.STORE], 'readwrite').objectStore(CONFIG.DB.STORE).delete(id);
+        req.onsuccess = () => resolve();
+        req.onerror  = () => reject(req.error);
     });
 }
 
 async function syncOfflineBookmarks() {
-    if (!navigator.onLine) {
-        console.log('📡 Still offline, sync postponed');
-        return;
-    }
+    if (!navigator.onLine) return;
 
     const pending = await getPendingBookmarks();
+    if (!pending.length) return;
 
-    if (pending.length === 0) {
-        console.log('✅ No pending bookmarks to sync');
-        return;
-    }
+    const auth = await getAuthCredentials();
+    if (!auth) return;
 
-    console.log(`📤 Syncing ${pending.length} offline bookmarks...`);
+    // Compute auth header once, outside the loop
+    const authHeader = 'Basic ' + btoa(auth.email + ':' + auth.password);
 
+    let synced = 0;
     for (const bookmark of pending) {
         try {
-            const auth = await getAuthCredentials();
-            if (!auth) continue;
-
-            const response = await fetch(CONFIG.API_ENDPOINTS.ADD_BOOKMARK, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password)
-                },
-                body: JSON.stringify(bookmark)
+            const res  = await fetch(CONFIG.API.ADD_BOOKMARK, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': authHeader },
+                body:    JSON.stringify(bookmark)
             });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                await removeFromQueue(bookmark.id);
-                console.log('✅ Synced:', bookmark.title);
-            } else {
-                console.error('❌ Sync failed:', result.message);
-            }
-        } catch (err) {
-            console.error('❌ Sync error:', err);
-        }
+            const json = await res.json();
+            if (json.status === 'success') { await removeFromQueue(bookmark.id); synced++; }
+        } catch { /* individual failure — continue syncing others */ }
     }
 
-    showMessage('✅ Offline bookmarks synced!', 'success');
+    if (synced) showMessage(`✅ ${synced} offline bookmark(s) synced!`, 'success');
 }
 
 // =====================================================
-// TAG MANAGEMENT & NORMALIZATION
+// TAG MANAGEMENT
 // =====================================================
 
-// Normalize tags against existing tags (case-insensitive)
-function normalizeTags(inputTags) {
-    if (!inputTags) return '';
-
-    const tags = inputTags.split(',').map(t => t.trim()).filter(t => t);
-    const normalized = tags.map(tag => {
-        // Find matching tag in AppState.tags (case-insensitive)
-        const existing = AppState.tags.find(t => t.toLowerCase() === tag.toLowerCase());
-        return existing || tag; // Use existing capitalization or keep original
-    });
-
-    return normalized.join(', ');
+function normalizeTags(input) {
+    if (!input) return '';
+    return input
+        .split(',')
+        .map(t => t.trim())
+        .filter(Boolean)
+        .map(tag => AppState.tags.find(t => t.toLowerCase() === tag.toLowerCase()) || tag)
+        .join(', ');
 }
 
-// Load existing tags from the site
 async function loadExistingTags() {
+    // Return cached tags if still fresh
     try {
-        const response = await fetch(CONFIG.API_ENDPOINTS.TAGS);
-        const result = await response.json();
-
-        if (result.status === 'success' && result.data) {
-            AppState.tags = result.data;
-            console.log('📋 Loaded', AppState.tags.length, 'existing tags');
+        const raw = sessionStorage.getItem(CONFIG.TAGS.CACHE_KEY);
+        if (raw) {
+            const { tags, ts } = JSON.parse(raw);
+            if (Date.now() - ts < CONFIG.TAGS.CACHE_TTL_MS) {
+                AppState.tags = tags;
+                return;
+            }
         }
-    } catch (err) {
-        console.error('Failed to load tags:', err);
-    }
+    } catch { /* corrupted cache — fetch fresh */ }
+
+    try {
+        const res  = await fetch(CONFIG.API.TAGS);
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+            AppState.tags = json.data;
+            sessionStorage.setItem(CONFIG.TAGS.CACHE_KEY, JSON.stringify({ tags: json.data, ts: Date.now() }));
+        }
+    } catch { /* non-fatal — autocomplete just won't work */ }
 }
 
-// Get tag suggestions based on input
 function getTagSuggestions(input) {
-    if (!input || input.length < CONFIG.TAGS.MIN_AUTOCOMPLETE_LENGTH) {
-        return [];
-    }
-
-    const lowerInput = input.toLowerCase();
-
-    return AppState.tags
-        .filter(tag => tag.toLowerCase().includes(lowerInput))
-        .slice(0, CONFIG.TAGS.MAX_SUGGESTIONS);
+    if (input.length < CONFIG.TAGS.MIN_AUTOCOMPLETE_LEN) return [];
+    const lower = input.toLowerCase();
+    return AppState.tags.filter(t => t.toLowerCase().includes(lower)).slice(0, CONFIG.TAGS.MAX_SUGGESTIONS);
 }
 
-// Show tag suggestions
-function showTagSuggestions(input, suggestions) {
-    const container = AppState.elements.tagSuggestionsContainer;
+// Diff-based suggestion renderer — reuses existing DOM nodes where possible
+function renderTagSuggestions(input, suggestions) {
+    const container = AppState.el.tagSuggestions;
+    if (!suggestions.length) { container.classList.remove('active'); return; }
 
-    if (suggestions.length === 0) {
-        container.classList.remove('active');
-        return;
-    }
+    const existing = container.querySelectorAll('.tag-suggestion');
+    const escaped  = input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex    = new RegExp(`(${escaped})`, 'gi');
 
-    container.innerHTML = '';
-    container.classList.add('active');
-
-    suggestions.forEach((tag, index) => {
-        const div = document.createElement('div');
-        div.className = 'tag-suggestion';
-        if (index === 0) div.classList.add('selected');
-
-        // Highlight matching text (safely)
-        const regex = new RegExp(`(${input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    // Reuse or create nodes
+    suggestions.forEach((tag, i) => {
+        let div = existing[i];
+        if (!div) {
+            div = document.createElement('div');
+            div.className = 'tag-suggestion';
+            div.addEventListener('click', () => { insertTag(tag); container.classList.remove('active'); });
+            container.appendChild(div);
+        }
+        div.classList.toggle('selected', i === 0);
         div.innerHTML = tag.replace(regex, '<mark>$1</mark>');
-
-        div.addEventListener('click', () => {
-            insertTag(tag);
-            container.classList.remove('active');
-        });
-
-        container.appendChild(div);
+        // Update click handler to current tag value
+        div.onclick = () => { insertTag(tag); container.classList.remove('active'); };
     });
+
+    // Remove leftover nodes
+    for (let i = suggestions.length; i < existing.length; i++) existing[i].remove();
+
+    container.classList.add('active');
+    AppState.selectedSuggestionIdx = 0;
 }
 
-// Insert tag into input
 function insertTag(tag) {
-    const tagsInput = AppState.elements.tagsInput;
-    const currentValue = tagsInput.value.trim();
-
-    let tags = currentValue ? currentValue.split(',').map(t => t.trim()) : [];
-
-    // Remove the incomplete tag (last one)
+    const el   = AppState.el.tags;
+    const tags = el.value.trim() ? el.value.split(',').map(t => t.trim()) : [];
     tags.pop();
-
-    // Add the selected tag (using exact capitalization from AppState.tags)
     tags.push(tag);
-
-    // Update input
-    tagsInput.value = tags.join(', ') + ', ';
-    tagsInput.focus();
+    el.value = tags.join(', ') + ', ';
+    el.focus();
 }
 
-// Update selection in suggestions
-function updateSelection(suggestions, index) {
-    suggestions.forEach((s, i) => {
-        s.classList.toggle('selected', i === index);
-    });
+function updateSuggestionSelection(suggestions, idx) {
+    suggestions.forEach((s, i) => s.classList.toggle('selected', i === idx));
 }
 
-// Debounced tag input handler
 const handleTagInput = debounce((e) => {
-    const value = e.target.value;
+    const tags       = e.target.value.split(',');
+    const current    = tags[tags.length - 1].trim();
+    const container  = AppState.el.tagSuggestions;
 
-    // Get the last tag being typed
-    const tags = value.split(',');
-    const currentTag = tags[tags.length - 1].trim();
-
-    if (currentTag.length >= CONFIG.TAGS.MIN_AUTOCOMPLETE_LENGTH) {
-        const suggestions = getTagSuggestions(currentTag);
-        showTagSuggestions(currentTag, suggestions);
-        AppState.selectedSuggestionIndex = 0;
+    if (current.length >= CONFIG.TAGS.MIN_AUTOCOMPLETE_LEN) {
+        renderTagSuggestions(current, getTagSuggestions(current));
     } else {
-        AppState.elements.tagSuggestionsContainer.classList.remove('active');
+        container.classList.remove('active');
     }
-}, CONFIG.TIMEOUTS.DEBOUNCE_DELAY);
+}, CONFIG.TIMEOUTS.DEBOUNCE_MS);
 
 // =====================================================
 // METADATA FETCHING
@@ -348,62 +256,31 @@ const handleTagInput = debounce((e) => {
 
 async function fetchMetadata(url) {
     if (!url) return;
-
-    showMessage("Fetching metadata...", "info");
-    console.log("📡 Fetching metadata for:", url);
+    showMessage('Fetching metadata...', 'info');
 
     try {
-        const response = await fetch(CONFIG.API_ENDPOINTS.FETCH_METADATA, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ url: url })
+        const res  = await fetch(CONFIG.API.FETCH_METADATA, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ url })
         });
+        const { status, data } = await res.json();
 
-        const result = await response.json();
-        console.log("Metadata response:", result);
+        if (status !== 'success' || !data) { showMessage('Could not fetch metadata', 'info'); return; }
 
-        if (result.status === "success" && result.data) {
-            const data = result.data;
-            let updated = [];
+        const { el } = AppState;
+        const updated = [];
 
-            // Update author (only if empty)
-            if (data.author && AppState.elements.authorInput && !AppState.elements.authorInput.value) {
-                AppState.elements.authorInput.value = data.author;
-                updated.push("author");
-                console.log("✅ Author set:", data.author);
-            }
+        if (data.author && el.author && !el.author.value) { el.author.value = data.author; updated.push('author'); }
+        if (data.tags   && el.tags   && !el.tags.value)   { el.tags.value   = data.tags;   updated.push('tags');   }
+        if (data.title  && el.title  && !el.title.value)  { el.title.value  = data.title;  updated.push('title');  }
 
-            // Update tags (only if empty)
-            if (data.tags && AppState.elements.tagsInput && !AppState.elements.tagsInput.value) {
-                AppState.elements.tagsInput.value = data.tags;
-                updated.push("tags");
-                console.log("✅ Tags set:", data.tags);
-            }
-
-            // Update title (only if empty)
-            if (data.title && AppState.elements.titleInput && !AppState.elements.titleInput.value) {
-                AppState.elements.titleInput.value = data.title;
-                updated.push("title");
-                console.log("✅ Title set:", data.title);
-            }
-
-            if (updated.length > 0) {
-                showMessage(
-                    `Metadata fetched! Updated: ${updated.join(", ")}`,
-                    "success"
-                );
-            } else {
-                showMessage("Metadata fetched (no empty fields to fill)", "info");
-            }
-        } else {
-            showMessage("Could not fetch metadata", "info");
-            console.log("Metadata fetch returned no data");
-        }
+        showMessage(
+            updated.length ? `Metadata fetched! Updated: ${updated.join(', ')}` : 'Metadata fetched (no empty fields to fill)',
+            'success'
+        );
     } catch (err) {
-        console.error("Metadata fetch error:", err);
-        showMessage("Error fetching metadata: " + err.message, "error");
+        showMessage('Error fetching metadata: ' + err.message, 'error');
     }
 }
 
@@ -415,56 +292,36 @@ async function getAuthCredentials() {
     const userEmail = document.body.dataset.userEmail;
 
     if (userEmail) {
-        console.log("✅ User logged in via session:", userEmail);
-
-        if (AppState.credentials && AppState.credentials.email === userEmail) {
-            console.log("Using cached credentials");
-            return AppState.credentials;
-        }
-
-        const password = prompt(
-            `Enter your Kirby password for: ${userEmail}\n\n(This is your panel login password)`
-        );
-
-        if (!password) {
-            return null;
-        }
-
-        AppState.credentials = { email: userEmail, password: password };
+        if (AppState.credentials?.email === userEmail) return AppState.credentials;
+        const password = prompt(`Enter your Kirby password for: ${userEmail}`);
+        if (!password) return null;
+        AppState.credentials = { email: userEmail, password };
         return AppState.credentials;
     }
 
-    console.log("⚠️ No session found - full login required");
+    if (AppState.credentials) return AppState.credentials;
 
-    if (AppState.credentials) {
-        console.log("Using cached credentials from this session");
-        return AppState.credentials;
-    }
-
-    const email = prompt("Enter your Kirby email:\n(Your panel login email)");
+    const email    = prompt('Enter your Kirby email:');
     if (!email) return null;
-
-    const password = prompt("Enter your Kirby password:\n(Your panel login password)");
+    const password = prompt('Enter your Kirby password:');
     if (!password) return null;
 
-    AppState.credentials = { email: email, password: password };
-    console.log("Stored credentials for this session:", email);
-
+    AppState.credentials = { email, password };
     return AppState.credentials;
 }
 
 // =====================================================
-// ONLINE/OFFLINE STATUS
+// ONLINE/OFFLINE
 // =====================================================
 
 function updateOnlineStatus() {
+    const offline = AppState.el.offlineIndicator;
     if (navigator.onLine) {
-        AppState.elements.offlineIndicator.classList.remove('show');
+        offline?.classList.remove('show');
         syncOfflineBookmarks();
     } else {
-        AppState.elements.offlineIndicator.classList.add('show');
+        offline?.classList.add('show');
     }
-    AppState.isOnline = navigator.onLine;
 }
 
 // =====================================================
@@ -473,104 +330,71 @@ function updateOnlineStatus() {
 
 async function handleFormSubmit(e) {
     e.preventDefault();
-    console.log("Form submitted");
 
-    const userEmail = document.body.dataset.userEmail;
-
-    // Normalize tags before submission
-    const normalizedTags = normalizeTags(
-        AppState.elements.tagsInput ? AppState.elements.tagsInput.value : ""
-    );
-
+    const { el } = AppState;
     const bookmarkData = {
-        website: AppState.elements.websiteInput ? AppState.elements.websiteInput.value : "",
-        title: AppState.elements.titleInput ? AppState.elements.titleInput.value : "",
-        tld: AppState.elements.tldInput ? AppState.elements.tldInput.value : "",
-        slug: AppState.elements.slugInput ? AppState.elements.slugInput.value : "",
-        author: AppState.elements.authorInput ? AppState.elements.authorInput.value : "",
-        tags: normalizedTags,
-        text: AppState.elements.textInput ? AppState.elements.textInput.value : ""
+        website: el.website?.value  || '',
+        title:   el.title?.value    || '',
+        tld:     el.tld?.value      || '',
+        slug:    el.slug?.value     || '',
+        author:  el.author?.value   || '',
+        tags:    normalizeTags(el.tags?.value || ''),
+        text:    el.text?.value     || ''
     };
 
-    console.log("Submitting bookmark:", bookmarkData);
-
-    // Handle offline submission
     if (!navigator.onLine) {
-        console.log("📡 Offline - saving to queue");
         try {
             await saveToOfflineQueue(bookmarkData);
-            showMessage("📡 Saved offline! Will sync when you're back online.", "success");
-            AppState.elements.form.reset();
-            return;
+            showMessage('📡 Saved offline! Will sync when back online.', 'success');
+            el.form?.reset();
         } catch (err) {
-            showMessage("Error saving offline: " + err.message, "error");
-            return;
+            showMessage('Error saving offline: ' + err.message, 'error');
         }
+        return;
     }
 
-    // Handle online submission
     try {
-        let response;
-
-        // Try session auth first if logged in
-        if (userEmail) {
-            console.log("Attempting save with session auth...");
-            response = await fetch(CONFIG.API_ENDPOINTS.ADD_BOOKMARK, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: "same-origin",
-                body: JSON.stringify(bookmarkData)
+        // Attempt session auth first
+        if (document.body.dataset.userEmail) {
+            const res  = await fetch(CONFIG.API.ADD_BOOKMARK, {
+                method:      'POST',
+                headers:     { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body:        JSON.stringify(bookmarkData)
             });
-
-            const result = await response.json();
-
-            if (result.status === "success") {
-                console.log("✅ Saved with session auth");
-                showMessage("Bookmark saved successfully!", "success");
-                setTimeout(() => {
-                    window.location.href = "/links";
-                }, 1500);
+            const json = await res.json();
+            if (json.status === 'success') {
+                showMessage('Bookmark saved!', 'success');
+                setTimeout(() => { window.location.href = '/links'; }, 1500);
                 return;
             }
-
-            console.log("Session auth failed, trying Basic auth...");
         }
 
-        // Get credentials for Basic auth
+        // Fall back to Basic auth
         const auth = await getAuthCredentials();
-        if (!auth || !auth.password) {
-            showMessage("Authentication required", "error");
-            return;
-        }
+        if (!auth) { showMessage('Authentication required', 'error'); return; }
 
-        response = await fetch(CONFIG.API_ENDPOINTS.ADD_BOOKMARK, {
-            method: "POST",
+        const res  = await fetch(CONFIG.API.ADD_BOOKMARK, {
+            method:  'POST',
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(auth.email + ":" + auth.password)
+                'Content-Type':  'application/json',
+                'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password)
             },
             body: JSON.stringify(bookmarkData)
         });
+        const json = await res.json();
 
-        const result = await response.json();
-        console.log("Save response:", result);
-
-        if (result.status === "success") {
-            showMessage("Bookmark saved successfully!", "success");
-            setTimeout(() => {
-                window.location.href = "/links";
-            }, 1500);
-        } else if (result.message && result.message.includes("authentication")) {
+        if (json.status === 'success') {
+            showMessage('Bookmark saved!', 'success');
+            setTimeout(() => { window.location.href = '/links'; }, 1500);
+        } else if (json.message?.includes('authentication')) {
             AppState.credentials = null;
-            showMessage("Authentication failed. Please try again.", "error");
+            showMessage('Authentication failed. Please try again.', 'error');
         } else {
-            showMessage(result.message || "Error saving bookmark", "error");
+            showMessage(json.message || 'Error saving bookmark', 'error');
         }
     } catch (err) {
-        console.error("Network error:", err);
-        showMessage("Network error: " + err.message, "error");
+        showMessage('Network error: ' + err.message, 'error');
     }
 }
 
@@ -579,279 +403,142 @@ async function handleFormSubmit(e) {
 // =====================================================
 
 async function handleQuickSave() {
-    console.log("Quick save button clicked");
+    const { el } = AppState;
+    const url = el.website?.value.trim();
+    if (!url) { showMessage('URL is required', 'error'); return; }
 
-    const url = AppState.elements.websiteInput ? AppState.elements.websiteInput.value.trim() : "";
+    if (el.title && !el.title.value)  el.title.value = 'Read Later';
+    if (el.tld   && !el.tld.value)    el.tld.value   = extractDomain(url);
+    if (el.slug  && !el.slug.value)   el.slug.value  = generateSlug(url);
 
-    if (!url) {
-        showMessage("URL is required", "error");
-        return;
-    }
-
-    // Auto-fill title if empty
-    if (AppState.elements.titleInput && !AppState.elements.titleInput.value) {
-        AppState.elements.titleInput.value = "Read Later";
-    }
-
-    // Auto-fill domain if empty
-    if (AppState.elements.tldInput && !AppState.elements.tldInput.value) {
-        const domain = extractDomain(url);
-        if (domain) {
-            AppState.elements.tldInput.value = domain;
-        }
-    }
-
-    // Auto-generate slug if empty
-    if (AppState.elements.slugInput && !AppState.elements.slugInput.value) {
-        const slug = generateSlug(url);
-        if (slug) {
-            AppState.elements.slugInput.value = slug;
-        }
-    }
-
-    // Add or prepend "Read-Later" tag
-    if (AppState.elements.tagsInput) {
-        const currentTags = AppState.elements.tagsInput.value.trim();
-        if (currentTags) {
-            // Prepend Read-Later to existing tags if not already present
-            const tags = currentTags.split(',').map(t => t.trim());
-            const hasReadLater = tags.some(t => t.toLowerCase() === CONFIG.TAGS.READ_LATER.toLowerCase());
-
-            if (!hasReadLater) {
-                AppState.elements.tagsInput.value = CONFIG.TAGS.READ_LATER + ', ' + currentTags;
-            }
+    if (el.tags) {
+        const current = el.tags.value.trim();
+        if (current) {
+            const hasTag = current.split(',').some(t => t.trim().toLowerCase() === CONFIG.TAGS.READ_LATER.toLowerCase());
+            if (!hasTag) el.tags.value = CONFIG.TAGS.READ_LATER + ', ' + current;
         } else {
-            AppState.elements.tagsInput.value = CONFIG.TAGS.READ_LATER;
+            el.tags.value = CONFIG.TAGS.READ_LATER;
         }
     }
 
-    console.log("Quick saving - submitting form");
-    AppState.elements.form.dispatchEvent(new Event('submit'));
+    el.form?.dispatchEvent(new Event('submit'));
 }
 
 // =====================================================
-// KEYBOARD SHORTCUTS
-// =====================================================
-
-function setupKeyboardShortcuts() {
-    document.addEventListener('keydown', (e) => {
-        // Ctrl/Cmd + S: Save bookmark
-        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-            e.preventDefault();
-            console.log('⌨️ Keyboard shortcut: Save (Ctrl+S)');
-            if (AppState.elements.form) {
-                AppState.elements.form.dispatchEvent(new Event('submit'));
-            }
-        }
-
-        // Ctrl/Cmd + Shift + S: Quick Save
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
-            e.preventDefault();
-            console.log('⌨️ Keyboard shortcut: Quick Save (Ctrl+Shift+S)');
-            if (AppState.elements.quickSaveBtn) {
-                handleQuickSave();
-            }
-        }
-
-        // Ctrl/Cmd + M: Fetch Metadata
-        if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
-            e.preventDefault();
-            console.log('⌨️ Keyboard shortcut: Fetch Metadata (Ctrl+M)');
-            const url = AppState.elements.websiteInput ? AppState.elements.websiteInput.value.trim() : "";
-            if (url) {
-                fetchMetadata(url);
-            } else {
-                showMessage("Please enter a URL first", "error");
-            }
-        }
-
-        // Escape: Clear tag suggestions
-        if (e.key === 'Escape' && AppState.elements.tagSuggestionsContainer) {
-            AppState.elements.tagSuggestionsContainer.classList.remove('active');
-        }
-    });
-
-    console.log('⌨️ Keyboard shortcuts enabled:');
-    console.log('  • Ctrl/Cmd + S: Save bookmark');
-    console.log('  • Ctrl/Cmd + Shift + S: Quick Save');
-    console.log('  • Ctrl/Cmd + M: Fetch Metadata');
-    console.log('  • Escape: Close tag suggestions');
-}
-
-// =====================================================
-// EVENT LISTENERS SETUP
+// EVENT LISTENERS
 // =====================================================
 
 function setupEventListeners() {
-    const {
-        websiteInput,
-        tagsInput,
-        fetchMetadataBtn,
-        quickSaveBtn,
-        form,
-        tagSuggestionsContainer
-    } = AppState.elements;
+    const { el } = AppState;
 
-    // URL blur: auto-extract domain and slug
-    if (websiteInput) {
-        websiteInput.addEventListener("blur", () => {
-            const url = websiteInput.value.trim();
-            if (!url) return;
+    el.website?.addEventListener('blur', () => {
+        const url = el.website.value.trim();
+        if (!url) return;
+        if (el.tld  && !el.tld.value)  el.tld.value  = extractDomain(url);
+        if (el.slug && !el.slug.value) el.slug.value  = generateSlug(url);
+    });
 
-            const domain = extractDomain(url);
-            if (domain && AppState.elements.tldInput && !AppState.elements.tldInput.value) {
-                AppState.elements.tldInput.value = domain;
-                console.log("Domain extracted:", domain);
-            }
+    if (el.tags && el.tagSuggestions) {
+        el.tags.addEventListener('input', handleTagInput);
 
-            const slug = generateSlug(url);
-            if (slug && AppState.elements.slugInput && !AppState.elements.slugInput.value) {
-                AppState.elements.slugInput.value = slug;
-                console.log("Slug generated:", slug);
-            }
-        });
-    }
-
-    // Tag autocomplete with debouncing
-    if (tagsInput && tagSuggestionsContainer) {
-        tagsInput.addEventListener('input', handleTagInput);
-
-        tagsInput.addEventListener('keydown', (e) => {
-            const suggestions = tagSuggestionsContainer.querySelectorAll('.tag-suggestion');
-
-            if (!tagSuggestionsContainer.classList.contains('active')) return;
+        el.tags.addEventListener('keydown', (e) => {
+            const container   = el.tagSuggestions;
+            const suggestions = container.querySelectorAll('.tag-suggestion');
+            if (!container.classList.contains('active')) return;
 
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
-                AppState.selectedSuggestionIndex = (AppState.selectedSuggestionIndex + 1) % suggestions.length;
-                updateSelection(suggestions, AppState.selectedSuggestionIndex);
+                AppState.selectedSuggestionIdx = (AppState.selectedSuggestionIdx + 1) % suggestions.length;
+                updateSuggestionSelection(suggestions, AppState.selectedSuggestionIdx);
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
-                AppState.selectedSuggestionIndex = (AppState.selectedSuggestionIndex - 1 + suggestions.length) % suggestions.length;
-                updateSelection(suggestions, AppState.selectedSuggestionIndex);
-            } else if (e.key === 'Enter' && suggestions.length > 0) {
+                AppState.selectedSuggestionIdx = (AppState.selectedSuggestionIdx - 1 + suggestions.length) % suggestions.length;
+                updateSuggestionSelection(suggestions, AppState.selectedSuggestionIdx);
+            } else if (e.key === 'Enter' && suggestions.length) {
                 e.preventDefault();
-                suggestions[AppState.selectedSuggestionIndex].click();
+                suggestions[AppState.selectedSuggestionIdx].click();
             } else if (e.key === 'Escape') {
-                tagSuggestionsContainer.classList.remove('active');
+                container.classList.remove('active');
             }
         });
 
-        // Close suggestions when clicking outside
         document.addEventListener('click', (e) => {
-            if (!tagsInput.contains(e.target) && !tagSuggestionsContainer.contains(e.target)) {
-                tagSuggestionsContainer.classList.remove('active');
+            if (!el.tags.contains(e.target) && !el.tagSuggestions.contains(e.target)) {
+                el.tagSuggestions.classList.remove('active');
             }
         });
     }
 
-    // Fetch metadata button
-    if (fetchMetadataBtn) {
-        fetchMetadataBtn.addEventListener("click", () => {
-            console.log("Fetch metadata button clicked");
-            const url = websiteInput ? websiteInput.value.trim() : "";
-            if (url) {
-                fetchMetadata(url);
-            } else {
-                showMessage("Please enter a URL first", "error");
-            }
-        });
-    }
+    el.fetchMetadataBtn?.addEventListener('click', () => {
+        const url = el.website?.value.trim();
+        url ? fetchMetadata(url) : showMessage('Please enter a URL first', 'error');
+    });
 
-    // Quick save button
-    if (quickSaveBtn) {
-        quickSaveBtn.addEventListener("click", handleQuickSave);
-    }
+    el.quickSaveBtn?.addEventListener('click', handleQuickSave);
+    el.form?.addEventListener('submit', handleFormSubmit);
 
-    // Form submission
-    if (form) {
-        form.addEventListener("submit", handleFormSubmit);
-    }
-
-    // Online/offline status
-    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('online',  updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
+}
 
-    console.log("✅ All event listeners attached successfully");
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        const mod = e.ctrlKey || e.metaKey;
+        if (!mod) return;
+
+        if (e.key === 's' && !e.shiftKey) {
+            e.preventDefault();
+            AppState.el.form?.dispatchEvent(new Event('submit'));
+        } else if (e.key === 'S' && e.shiftKey) {
+            e.preventDefault();
+            handleQuickSave();
+        } else if (e.key === 'm') {
+            e.preventDefault();
+            const url = AppState.el.website?.value.trim();
+            url ? fetchMetadata(url) : showMessage('Please enter a URL first', 'error');
+        } else if (e.key === 'Escape') {
+            AppState.el.tagSuggestions?.classList.remove('active');
+        }
+    });
 }
 
 // =====================================================
 // INITIALIZATION
 // =====================================================
 
-window.addEventListener("DOMContentLoaded", async () => {
-    console.log("✅ share.js loaded");
-
-    // Cache DOM element references
-    AppState.elements = {
-        websiteInput: document.getElementById("website"),
-        tldInput: document.getElementById("tld"),
-        slugInput: document.getElementById("slug"),
-        authorInput: document.getElementById("author"),
-        tagsInput: document.getElementById("tags"),
-        titleInput: document.getElementById("page-title"),
-        textInput: document.getElementById("text"),
-        form: document.getElementById("bookmark-form"),
-        fetchMetadataBtn: document.getElementById("fetch-metadata-btn"),
-        quickSaveBtn: document.getElementById("quick-save-btn"),
-        messageDiv: document.getElementById("message"),
-        offlineIndicator: document.getElementById("offline-indicator"),
-        tagSuggestionsContainer: document.getElementById("tag-suggestions")
+window.addEventListener('DOMContentLoaded', async () => {
+    // Cache DOM references
+    AppState.el = {
+        website:         document.getElementById('website'),
+        tld:             document.getElementById('tld'),
+        slug:            document.getElementById('slug'),
+        author:          document.getElementById('author'),
+        tags:            document.getElementById('tags'),
+        title:           document.getElementById('page-title'),
+        text:            document.getElementById('text'),
+        form:            document.getElementById('bookmark-form'),
+        fetchMetadataBtn:document.getElementById('fetch-metadata-btn'),
+        quickSaveBtn:    document.getElementById('quick-save-btn'),
+        message:         document.getElementById('message'),
+        offlineIndicator:document.getElementById('offline-indicator'),
+        tagSuggestions:  document.getElementById('tag-suggestions')
     };
 
-    console.log("Element check:", {
-        websiteInput: !!AppState.elements.websiteInput,
-        tldInput: !!AppState.elements.tldInput,
-        slugInput: !!AppState.elements.slugInput,
-        authorInput: !!AppState.elements.authorInput,
-        tagsInput: !!AppState.elements.tagsInput,
-        titleInput: !!AppState.elements.titleInput,
-        textInput: !!AppState.elements.textInput,
-        form: !!AppState.elements.form,
-        fetchBtn: !!AppState.elements.fetchMetadataBtn,
-        quickSaveBtn: !!AppState.elements.quickSaveBtn,
-        messageDiv: !!AppState.elements.messageDiv,
-        tagSuggestions: !!AppState.elements.tagSuggestionsContainer
-    });
+    // Parallelize independent async init tasks
+    await Promise.all([
+        loadExistingTags()
+        // IndexedDB is now lazy — no longer initialized here
+    ]);
 
-    // Test indicator (debug mode)
-    const jsTest = document.getElementById("js-test");
-    if (jsTest) {
-        jsTest.textContent = "✅ JavaScript loaded and working!";
-        jsTest.style.background = "#d4edda";
-        jsTest.style.color = "#155724";
-    }
-
-    // Initialize IndexedDB
-    await initDB();
-
-    // Load existing tags for autocomplete
-    await loadExistingTags();
-
-    // Setup all event listeners
     setupEventListeners();
-
-    // Setup keyboard shortcuts
     setupKeyboardShortcuts();
-
-    // Check initial online status
     updateOnlineStatus();
 
-    // Auto-fetch metadata if URL is prefilled
-    setTimeout(() => {
-        if (AppState.elements.websiteInput && AppState.elements.websiteInput.value) {
-            console.log("🌐 Prefilled URL detected:", AppState.elements.websiteInput.value);
-
-            // Trigger blur to extract domain and slug
-            AppState.elements.websiteInput.dispatchEvent(new Event("blur"));
-
-            // Auto-fetch metadata
-            console.log("🔄 Auto-fetching metadata for shared URL...");
-            fetchMetadata(AppState.elements.websiteInput.value);
-        } else {
-            console.log("ℹ️ No prefilled URL found.");
-        }
-    }, CONFIG.TIMEOUTS.AUTO_FETCH_DELAY);
-
-    console.log("🎉 Application initialized successfully");
+    // Auto-fill from URL params — no arbitrary timeout needed,
+    // the service worker handles the POST→GET redirect before this runs
+    const prefilled = AppState.el.website?.value;
+    if (prefilled) {
+        AppState.el.website.dispatchEvent(new Event('blur'));
+        fetchMetadata(prefilled);
+    }
 });

@@ -1,4 +1,4 @@
-const CACHE_NAME = "bookmarks-pwa-v9";
+const CACHE_NAME = "bookmarks-pwa-v10";
 
 // Precache the shell pages AND their core dependencies
 const PRECACHE_URLS = [

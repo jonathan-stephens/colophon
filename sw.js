@@ -2,6 +2,7 @@ const CACHE_NAME = "bookmarks-pwa-v9";
 
 // Precache the shell pages AND their core dependencies
 const PRECACHE_URLS = [
+  "/",
   "/share",
   "/assets/css/main.css",
   "/assets/js/share-min.js",
@@ -9,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 // Only cache responses for these origins/paths
-const CACHE_ALLOWLIST = new Set(["/share"]);
+const CACHE_ALLOWLIST = new Set(["/", "/share"]);
 
 // =====================================================
 // INSTALL — precache shell assets

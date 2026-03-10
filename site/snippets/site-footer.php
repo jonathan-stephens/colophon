@@ -1,5 +1,5 @@
   <?php if ($page->isListed()): ?>
-    <a href="https://brid.gy/publish/bluesky"></a>
+    <a href="https://brid.gy/publish/bluesky" style="display:none;"></a>
   <?php endif ?>
 
   </main>

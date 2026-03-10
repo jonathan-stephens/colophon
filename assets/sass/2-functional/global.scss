@@ -46,8 +46,3 @@ main{
 .logged-in main{
   padding-block-start:calc(var(--admin-bar--height, 1px) + var(--flow-14));
 }
-
-html[data-theme='dark'] body{
-  background:url('/assets/png/stardust.png') repeat, var(--background-primary);
-  background-attachment:fixed;
-}

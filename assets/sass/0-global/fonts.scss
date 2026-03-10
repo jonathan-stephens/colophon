@@ -2,7 +2,7 @@
   font-family: 'IBM Plex Sans';
   font-style: normal;
   font-weight: 1 1000;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-sans/variable-roman.woff2") format('woff2');
   @supports (font-size-adjust: .521){
@@ -28,7 +28,7 @@
   font-weight: 400;
   font-style: normal;
   size-adjust:105%;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-mono/mono-text.woff2") format("woff2");
   @supports (font-size-adjust: .514){
@@ -42,7 +42,7 @@
   font-weight: 500;
   font-style: normal;
   size-adjust:105%;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-mono/mono-medium.woff2") format("woff2");
   @supports (font-size-adjust: .514){
@@ -55,7 +55,7 @@
   font-weight: 700;
   font-style: normal;
   size-adjust:105%;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-mono/mono-semibold.woff2") format("woff2");
   @supports (font-size-adjust: .514){
@@ -68,7 +68,7 @@
   font-weight: 800;
   size-adjust:105%;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-mono/mono-bold.woff2") format("woff2");
   @supports (font-size-adjust: .514){
@@ -80,7 +80,7 @@
   font-family: 'IBM Plex Serif';
   font-weight: 400;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-serif/serif-text.woff2") format("woff2");
   @supports (font-size-adjust: .521){
@@ -93,7 +93,7 @@
   font-family: 'IBM Plex Serif';
   font-weight: 500;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-serif/serif-medium.woff2") format("woff2");
   @supports (font-size-adjust: .521){
@@ -105,7 +105,7 @@
   font-family: 'IBM Plex Serif';
   font-weight: 700;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-serif/serif-semibold.woff2") format("woff2");
   @supports (font-size-adjust: .521){
@@ -117,7 +117,7 @@
   font-family: 'IBM Plex Serif';
   font-weight: 800;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
   src:
     url("../fonts/ibm-plex-serif/serif-bold.woff2") format("woff2");
   @supports (font-size-adjust: .521){

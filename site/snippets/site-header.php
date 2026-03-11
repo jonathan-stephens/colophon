@@ -1,9 +1,8 @@
 <?php snippet('head') ?>
 
 <body class="<?= $page->slug() ?> tmpl-<?= $page->template() ?> <?php if ($kirby->user()): ?>logged-in<?php endif ?>" data-color-mode="system" data-theme="design" data-user-email="<?= $kirby->user()?->email() ?? '' ?>">
-  <a href="#main" class="skip-link visually-hidden">Skip to main content</a>
-
   <header class="site-header" role="banner" <?php if ($kirby->user()): ?>style="top:var(--admin-bar--height)"<?php endif ?>>
+  <a href="#main" class="skip-link visually-hidden">Skip to main content</a>
     <div class="inner">
       <?php snippet('components/breadcrumb') ?>
       <div class="buttons">
@@ -31,18 +30,18 @@
     </div>
   </header>
 
-  <div id="nav-panel" class="panel nav-panel" aria-hidden="true">
+  <div id="nav-panel" class="panel nav-panel">
     <?php $delay = 0; ?>
 
-    <nav role="navigation" aria-label="Main navigation">
-      <ul class="nav-list" role="list">
+    <nav role="navigation" aria-label="Main">
+      <ul class="nav-list">
         <?php foreach ($site->primary_nav()->toStructure() as $menuItem): ?>
           <?php $delay += 0.15; ?>
           <li class="nav-item" role="listitem" style="--item-delay: <?= $delay ?>s;">
             <a
               <?= ($p = $menuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?>
               href="<?= $menuItem->link()->toUrl() ?>"
-              class="nav-link"
+              class="nav-link" tabindex="-1"
             ><?= $menuItem->title()->or($menuItem->link()->html()) ?></a>
           </li>
         <?php endforeach ?>
@@ -50,4 +49,4 @@
     </nav>
   </div>
 
-  <main role="main" <?php if ($page->isHomePage()): ?>style="box-sizing: unset;"<?php endif ?>>
+  <main role="main" id="main" <?php if ($page->isHomePage()): ?>style="box-sizing: unset;"<?php endif ?>>

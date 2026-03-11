@@ -67,9 +67,9 @@
           <header>
             <span class="with-icon">
               <?= asset('assets/svg/icons/bullhorn.svg')->read() ?>
-              <h3 id="newsletter">
+              <h2 id="newsletter">
                 Newsletter: <em>Craft & Practice</em>
-              </h3>
+              </h2>
             </span>
           </header>
           <p class="description">Every fortnight or few, I send out an email newsletter with links and resources gathered in my internet wanderings—from my own work and by other humans on Earth.</p>

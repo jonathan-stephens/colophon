@@ -15,7 +15,7 @@
           <?php if ($aboutMenuItems->isNotEmpty()): ?>
             <div class="about">
               <h2>Info</h2>
-              <nav>
+              <nav role="navigation" aria-label="About me">
                 <ul>
                   <?php foreach ($aboutMenuItems as $amenuItem): ?>
                     <li><a <?= ($p = $amenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $amenuItem->link()->toUrl() ?>"><?= $amenuItem->title()->or($amenuItem->link()->html()) ?></a></li>
@@ -27,7 +27,7 @@
           <?php if ($workMenuItems->isNotEmpty()): ?>
             <div class="labor">
               <h2>Work</h2>
-              <nav>
+              <nav role="navigation" aria-label="My work">
                 <ul>
                   <?php foreach ($workMenuItems as $wmenuItem): ?>
                     <li><a <?= ($p = $wmenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $wmenuItem->link()->toUrl() ?>"><?= $wmenuItem->title()->or($wmenuItem->link()->html()) ?></a></li>
@@ -39,7 +39,7 @@
           <?php if ($gardenMenuItems->isNotEmpty()): ?>
               <div class="garden">
                 <h2>Garden</h2>
-                <nav>
+                <nav role="navigation" aria-label="Digital garden">
                   <ul>
                     <?php foreach ($gardenMenuItems as $gmenuItem): ?>
                       <li><a <?= ($p = $gmenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $gmenuItem->link()->toUrl() ?>"><?= $gmenuItem->title()->or($gmenuItem->link()->html()) ?></a></li>
@@ -51,7 +51,7 @@
             <?php if ($soilMenuItems->isNotEmpty()): ?>
               <div class="soil">
                 <h2>Soil</h2>
-                <nav>
+                <nav role="navigation" aria-label="Garden's soil">
                   <ul>
                     <?php foreach ($soilMenuItems as $smenuItem): ?>
                       <li><a <?= ($p = $smenuItem->link()->toPage()) && $p->isOpen() ? 'aria-current="page"' : '' ?> href="<?= $smenuItem->link()->toUrl() ?>"><?= $smenuItem->title()->or($smenuItem->link()->html()) ?></a></li>

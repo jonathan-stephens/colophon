@@ -142,7 +142,16 @@ body > footer{
       --button-border-width:var(--border-thin);
     }
   }
-
+.final-info .addenda a::after{
+  content:"•";
+  display:inline-flex;
+  padding-inline: var(--flow-3);
+  color:var(--color-prominent);
+  font-weght: var(--weight-bold);
+}
+.final-info .addenda a:last-of-type::after{
+  content:"";
+}
 @media (min-width: 50em) {
     .subscribe .wrapper{
       text-align:center;

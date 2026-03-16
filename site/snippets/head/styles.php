@@ -1,6 +1,6 @@
   <!-- Styles -->
     <link href="<?= Bnomei\Fingerprint::url('/assets/fonts/ibm-plex-sans/variable-roman.woff2');?>" as="font" type="font/woff2" crossorigin>
-    <link href="<?= Bnomei\Fingerprint::url('/assets/fonts/ibm-plex-sans/variable-italic.woff2');?>" as="font" type="font/woff2" crossorigin>
+    <link href="<?= Bnomei\Fingerprint::url('/assets/fonts/ibm-plex-sans/variable-italic.woff2',['defer' => true]);?>" as="font" type="font/woff2" crossorigin>
     <link href="<?= Bnomei\Fingerprint::url('/assets/fonts/ibm-plex-serif/serif-medium.woff2'); ?>" as="font" type="font/woff2" crossorigin>
     <link href="<?= Bnomei\Fingerprint::url('/assets/fonts/ibm-plex-serif/serif-bold.woff2'); ?>" as="font" type="font/woff2" crossorigin>
 

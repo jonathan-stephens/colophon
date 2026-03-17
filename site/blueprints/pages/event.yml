@@ -155,3 +155,42 @@ tabs:
                 layout: list
                 info: "{{ page.uri }}"
                 width: 1/1
+
+  notes: 
+    label: Notes
+    icon: sticky-note
+    columns:
+      main:
+        width: 1/1
+        sections:
+          notes_fields:
+            type: fields
+            fields:
+              notes:
+                type: textarea
+                label: Personal Notes
+                help: >
+                  Private notes about this event. Not visible to anyone but you.
+                size: large
+                width: 1/1
+                buttons:
+                  - headlines
+                  - bold
+                  - italic
+                  - link
+                  - email
+                  - file
+                  - code
+                  - ul
+                  - ol
+                  - abbr
+                  - cite
+                  - dfn
+                  - ins
+                  - mark
+                  - q
+                  - s
+                  - samp
+                  - smallcaps
+                  - sub
+                  - sup

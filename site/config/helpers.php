@@ -233,3 +233,180 @@ function streamCollection($site, $kirby, array $overrides = []): Pages
 
     return new Pages($arr);
 }
+/**
+ * streamApplyFilters()
+ *
+ * Applies active filter selections to a Pages collection.
+ * Empty string or absent key = dimension is unfiltered.
+ *
+ * @param  Pages  $pool
+ * @param  array  $filters  ['type' => 'essay', 'stage' => 'evergreen', 'listed' => 'draft']
+ * @return Pages
+ */
+function streamApplyFilters(Pages $pool, array $filters): Pages
+{
+    if (!empty($filters['type'])) {
+        $type = $filters['type'];
+        $pool = $pool->filter(fn($p) => $p->intendedTemplate()->name() === $type);
+    }
+
+    if (!empty($filters['stage'])) {
+        $stage = $filters['stage'];
+        $pool  = $pool->filter(fn($p) => (string) $p->growthStatus() === $stage);
+    }
+
+    if (!empty($filters['listed'])) {
+        $status = $filters['listed'];
+        $pool   = $pool->filter(fn($p) => $p->status() === $status);
+    }
+
+    return $pool;
+}
+
+/**
+ * streamSort()
+ *
+ * Sorts a stream Pages collection by a named sort key.
+ * Valid keys: tended_desc, tended_asc, date_desc, date_asc
+ * Falls back to tended_desc for unrecognised values.
+ *
+ * @param  Pages  $pool
+ * @param  string $sort
+ * @return Pages
+ */
+function streamSort(Pages $pool, string $sort = 'tended_desc'): Pages
+{
+    $parts = explode('_', $sort, 2);
+    $field = $parts[0] ?? 'tended';
+    $dir   = $parts[1] ?? 'desc';
+
+    if (!in_array($field, ['tended', 'date'], true))    $field = 'tended';
+    if (!in_array($dir,   ['asc',   'desc'], true))     $dir   = 'desc';
+
+    $stamp = function ($page) use ($field) {
+        $f = $field === 'tended' ? $page->tended() : $page->date();
+        return $f->isNotEmpty() ? strtotime($f->value()) : 0;
+    };
+
+    $arr = [];
+    foreach ($pool as $page) {
+        $arr[$page->id()] = $page;
+    }
+
+    uasort($arr, function ($a, $b) use ($stamp, $dir) {
+        $ta = $stamp($a);
+        $tb = $stamp($b);
+        return $dir === 'asc' ? $ta <=> $tb : $tb <=> $ta;
+    });
+
+    return new Pages($arr);
+}
+
+/**
+ * streamFacets()
+ *
+ * Computes faceted counts for every filter dimension.
+ *
+ * "Faceted" means: the count for dimension D reflects the pool with
+ * all OTHER active filters applied — so option counts update as you
+ * filter, always showing what's reachable from the current selection.
+ *
+ * Returns:
+ * [
+ *   'type'   => ['essay' => ['label' => 'Essay',     'count' => 12], ...],
+ *   'stage'  => ['evergreen' => ['label' => 'Evergreen', 'count' => 5], ...],
+ *   'listed' => ['draft' => ['label' => 'draft',      'count' => 3], ...],
+ * ]
+ *
+ * Counts are sorted: highest first, then alphabetically.
+ * Zero-count options are included so the UI can show disabled states.
+ *
+ * USAGE — in stream template:
+ *   $facets = streamFacets($pool, $activeFilters);
+ *
+ * USAGE — in any other template for a scoped facet:
+ *   $pool   = streamCollection(site(), kirby(), ['subtrees' => ['essays']]);
+ *   $facets = streamFacets($pool, []);
+ *
+ * @param  Pages  $pool           Full unfiltered stream collection
+ * @param  array  $activeFilters  Same shape as streamApplyFilters $filters param
+ * @return array
+ */
+function streamFacets(Pages $pool, array $activeFilters): array
+{
+    $dimensions = ['type', 'stage', 'listed'];
+
+    // Collect all possible values per dimension from the full pool first,
+    // so zero-count options appear in the output for disabled states.
+    $allValues = ['type' => [], 'stage' => [], 'listed' => []];
+
+    foreach ($pool as $page) {
+        $t = $page->intendedTemplate()->name();
+        if ($t && !isset($allValues['type'][$t])) {
+            $allValues['type'][$t] = $page->blueprint()->title();
+        }
+
+        $s = (string) $page->growthStatus();
+        if ($s !== '' && !isset($allValues['stage'][$s])) {
+            $allValues['stage'][$s] = $s;
+        }
+
+        $l = $page->status();
+        if ($l && !isset($allValues['listed'][$l])) {
+            $allValues['listed'][$l] = $l;
+        }
+    }
+
+    $facets = [];
+
+    foreach ($dimensions as $dim) {
+        // Apply every active filter except this dimension's own
+        $otherFilters = array_diff_key($activeFilters, [$dim => true]);
+        $subset       = streamApplyFilters($pool, $otherFilters);
+
+        // Count occurrences in the cross-filtered subset
+        $counts = [];
+        foreach ($subset as $page) {
+            switch ($dim) {
+                case 'type':
+                    $val   = $page->intendedTemplate()->name();
+                    $label = $page->blueprint()->title();
+                    break;
+                case 'stage':
+                    $val   = (string) $page->growthStatus();
+                    $label = $val;
+                    break;
+                case 'listed':
+                    $val   = $page->status();
+                    $label = $val;
+                    break;
+                default:
+                    continue 2;
+            }
+
+            if ($val === '') continue;
+
+            if (!isset($counts[$val])) {
+                $counts[$val] = ['label' => $label, 'count' => 0];
+            }
+            $counts[$val]['count']++;
+        }
+
+        // Ensure every known value appears, even at zero
+        foreach ($allValues[$dim] as $val => $label) {
+            if (!isset($counts[$val])) {
+                $counts[$val] = ['label' => $label, 'count' => 0];
+            }
+        }
+
+        // Sort: count desc, then label asc
+        uasort($counts, function ($a, $b) {
+            if ($b['count'] !== $a['count']) return $b['count'] <=> $a['count'];
+            return strcmp((string) $a['label'], (string) $b['label']);
+        });
+
+        $facets[$dim] = $counts;
+    }
+
+    return $facets;
+}

@@ -6,8 +6,8 @@
  * Data attributes are set on each article now so filter
  * logic in later phases can target them without touching this markup.
  */
-$stream     = $kirby->collection('stream');
-$isLoggedIn = $kirby->user() !== null;
+ $stream     = $kirby->collection('stream');
+ $isLoggedIn = $kirby->user() !== null;
 ?>
 <?php snippet('site-header') ?>
 
@@ -56,9 +56,7 @@ $isLoggedIn = $kirby->user() !== null;
       itemtype="https://schema.org/CreativeWork">
 
       <header class="entry-meta">
-
         <span class="entry-type"><?= esc($blueprintTitle) ?></span>
-
         <?php if (!empty($cats)): ?>
           <span class="entry-categories">
             <?php foreach ($cats as $i => $cat): ?>

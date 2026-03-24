@@ -3,7 +3,7 @@ require_once __DIR__ . '/helpers.php';
 
 return [
 
-  'debug' => false,
+  'debug' => true,
     'panel' => [
         'install' => false,
     ],
@@ -47,6 +47,30 @@ return [
             'password' => 'The password is not correct.',
         ]
     ],
+    /*
+    |--------------------------------------------------------------------------
+    | Stream options
+    |--------------------------------------------------------------------------
+    |
+    | subtrees – 'all' crawls the entire site, or pass an array of top-level
+    |             page IDs to limit scope: ['books', 'essays', 'notes']
+    |
+    | minDepth  – pages at this depth or deeper are included.
+    |             Depth 1 = top-level section pages (/books, /essays).
+    |             Depth 2 = their children (/books/my-book) — usually what you want.
+    |
+    | maxDepth  – null = no limit; set an integer to cap how deep the crawl goes.
+    |
+    | exclude   – page IDs that are always omitted regardless of other settings.
+    |
+    */
+    'stream' => [
+        'subtrees' => 'all',
+        'minDepth' => 2,
+        'maxDepth' => null,
+        'exclude'  => ['stream', 'error'],
+    ],
+
     'moinframe.loop.enabled' => false,
     'timnarr.imagex' => [
       'cache' => true,

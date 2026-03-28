@@ -144,6 +144,17 @@ snippet('site-header') ?>
           </div>
 
           <div class="form-group">
+              <label for="contentType">Content Type</label>
+              <input
+                  type="text"
+                  id="content-type"
+                  name="contentType"
+                  placeholder="Podcast, Book, Article, Essay, Font, etc..."
+              >
+              <div id="content-type-suggestions" class="tag-suggestions"></div>
+          </div>
+
+          <div class="form-group">
               <label for="text">Description</label>
               <textarea
                   id="text"

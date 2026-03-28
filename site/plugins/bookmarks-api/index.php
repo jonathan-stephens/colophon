@@ -49,9 +49,59 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
+                        error_log('❌ bookmarks/tags error: ' . $e->getMessage());
                         return [
-                            'status' => 'error',
-                            'message' => $e->getMessage()
+                            'status'  => 'error',
+                            'message' => 'Could not retrieve tags'
+                        ];
+                    }
+                }
+            ],
+
+            // Get all content types used across the site
+            [
+                'pattern' => 'bookmarks/content-types',
+                'method' => 'GET',
+                'auth' => false,
+                'action' => function () {
+                    try {
+                        $kirby = kirby();
+                        $linksPage = page('links');
+
+                        if (!$linksPage) {
+                            return [
+                                'status' => 'error',
+                                'message' => 'Links page not found'
+                            ];
+                        }
+
+                        $allTypes = [];
+
+                        foreach ($linksPage->children()->listed() as $link) {
+                            if ($link->contentType()->isNotEmpty()) {
+                                $types = $link->contentType()->split(',');
+                                foreach ($types as $type) {
+                                    $type = trim($type);
+                                    if (!empty($type)) {
+                                        $allTypes[] = $type;
+                                    }
+                                }
+                            }
+                        }
+
+                        $allTypes = array_unique($allTypes);
+                        sort($allTypes);
+
+                        return [
+                            'status' => 'success',
+                            'data' => array_values($allTypes)
+                        ];
+
+                    } catch (Exception $e) {
+                        error_log('❌ bookmarks/content-types error: ' . $e->getMessage());
+                        return [
+                            'status'  => 'error',
+                            'message' => 'Could not retrieve content types'
                         ];
                     }
                 }
@@ -76,10 +126,22 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
 
                         $url = $data['url'];
 
+                        // Validate URL scheme to prevent SSRF — only allow public HTTP(S)
+                        $parsedUrl = parse_url($url);
+                        if (!in_array($parsedUrl['scheme'] ?? '', ['http', 'https'], true)) {
+                            return [
+                                'status'  => 'error',
+                                'message' => 'Invalid URL: only http and https are allowed'
+                            ];
+                        }
+
                         // Fetch HTML with user agent to avoid blocks
                         $context = stream_context_create([
                             'http' => [
-                                'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\r\n"
+                                'header'          => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\r\n",
+                                'timeout'         => 10,
+                                'follow_location'  => 1,
+                                'max_redirects'   => 5,
                             ]
                         ]);
 
@@ -381,9 +443,10 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                         ];
 
                     } catch (Exception $e) {
+                        error_log('❌ bookmarks/fetch-metadata error: ' . $e->getMessage());
                         return [
-                            'status' => 'error',
-                            'message' => $e->getMessage()
+                            'status'  => 'error',
+                            'message' => 'Could not fetch metadata'
                         ];
                     }
                 }
@@ -481,8 +544,8 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             $domainName = implode('-', $domainParts);
                             $slug = Str::slug($domainName);
                         }
-                        
-                        // Ensure slug is unique by checking if it exists
+
+                        // Fetch links page once — used for slug uniqueness check and createChild
                         $linksPage = page('links');
                         if (!$linksPage) {
                             return [
@@ -500,15 +563,6 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             $counter++;
                         }
 
-                        $linksPage = page('links');
-                        if (!$linksPage) {
-                            return [
-                                'status' => 'error',
-                                'message' => 'Links parent page not found'
-                            ];
-                        }
-
-                        
                         // =====================================================
                         // CAPITALIZE TAGS
                         // =====================================================
@@ -535,18 +589,11 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                             'text' => $data['text'] ?? '',
                             'tags' => $formattedTags,
                             'author' => $data['author'] ?? '',
+                            'contentType' => $data['contentType'] ?? '',
                         ];
 
                         // Impersonate for content creation
                         $kirby->impersonate('kirby');
-
-                        $linksPage = page('links');
-                        if (!$linksPage) {
-                            return [
-                                'status' => 'error',
-                                'message' => 'Links parent page not found'
-                            ];
-                        }
 
                         $bookmark = $linksPage->createChild([
                             'slug' => $slug,
@@ -571,8 +618,8 @@ Kirby::plugin('jonathan-stephens/bookmarks-api', [
                     } catch (Exception $e) {
                         error_log('❌ Bookmark error: ' . $e->getMessage());
                         return [
-                            'status' => 'error',
-                            'message' => $e->getMessage()
+                            'status'  => 'error',
+                            'message' => 'Could not save bookmark'
                         ];
                     }
                 }

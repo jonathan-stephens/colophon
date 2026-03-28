@@ -6,13 +6,20 @@ const CONFIG = {
     API: {
         ADD_BOOKMARK:    '/api/bookmarks/add',
         FETCH_METADATA:  '/api/bookmarks/fetch-metadata',
-        TAGS:            '/api/bookmarks/tags'
+        TAGS:            '/api/bookmarks/tags',
+        CONTENT_TYPES:   '/api/bookmarks/content-types'
     },
     TAGS: {
         READ_LATER:             'To Read',
         MIN_AUTOCOMPLETE_LEN:   2,
         MAX_SUGGESTIONS:        5,
         CACHE_KEY:              'bm_tags_cache',
+        CACHE_TTL_MS:           5 * 60 * 1000  // 5 minutes
+    },
+    CONTENT_TYPES: {
+        MIN_AUTOCOMPLETE_LEN:   1,
+        MAX_SUGGESTIONS:        8,
+        CACHE_KEY:              'bm_content_types_cache',
         CACHE_TTL_MS:           5 * 60 * 1000  // 5 minutes
     },
     TIMEOUTS: {
@@ -31,11 +38,13 @@ const CONFIG = {
 // =====================================================
 
 const AppState = {
-    credentials:            null,
-    tags:                   [],
-    selectedSuggestionIdx:  0,
-    db:                     null,
-    el:                     {}
+    credentials:                    null,
+    tags:                           [],
+    contentTypes:                   [],
+    selectedSuggestionIdx:          0,
+    selectedContentTypeSuggIdx:     0,
+    db:                             null,
+    el:                             {}
 };
 
 // =====================================================
@@ -45,6 +54,12 @@ const AppState = {
 function debounce(fn, wait) {
     let t;
     return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+}
+
+// btoa throws on non-Latin-1 characters (accented chars, emoji passwords, etc.)
+// encodeURIComponent → unescape round-trip converts to a safe Latin-1 byte string first
+function safeBasicAuth(email, password) {
+    return 'Basic ' + btoa(unescape(encodeURIComponent(email + ':' + password)));
 }
 
 function showMessage(text, type = 'info') {
@@ -133,7 +148,7 @@ async function syncOfflineBookmarks() {
     if (!auth) return;
 
     // Compute auth header once, outside the loop
-    const authHeader = 'Basic ' + btoa(auth.email + ':' + auth.password);
+    const authHeader = safeBasicAuth(auth.email, auth.password);
 
     let synced = 0;
     for (const bookmark of pending) {
@@ -209,12 +224,11 @@ function renderTagSuggestions(input, suggestions) {
         if (!div) {
             div = document.createElement('div');
             div.className = 'tag-suggestion';
-            div.addEventListener('click', () => { insertTag(tag); container.classList.remove('active'); });
             container.appendChild(div);
         }
         div.classList.toggle('selected', i === 0);
         div.innerHTML = tag.replace(regex, '<mark>$1</mark>');
-        // Update click handler to current tag value
+        // Reset onclick each render so it always holds the current tag value
         div.onclick = () => { insertTag(tag); container.classList.remove('active'); };
     });
 
@@ -245,6 +259,83 @@ const handleTagInput = debounce((e) => {
 
     if (current.length >= CONFIG.TAGS.MIN_AUTOCOMPLETE_LEN) {
         renderTagSuggestions(current, getTagSuggestions(current));
+    } else {
+        container.classList.remove('active');
+    }
+}, CONFIG.TIMEOUTS.DEBOUNCE_MS);
+
+// =====================================================
+// CONTENT TYPE MANAGEMENT
+// =====================================================
+
+async function loadExistingContentTypes() {
+    try {
+        const raw = sessionStorage.getItem(CONFIG.CONTENT_TYPES.CACHE_KEY);
+        if (raw) {
+            const { types, ts } = JSON.parse(raw);
+            if (Date.now() - ts < CONFIG.CONTENT_TYPES.CACHE_TTL_MS) {
+                AppState.contentTypes = types;
+                return;
+            }
+        }
+    } catch { /* corrupted cache — fetch fresh */ }
+
+    try {
+        const res  = await fetch(CONFIG.API.CONTENT_TYPES);
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+            AppState.contentTypes = json.data;
+            sessionStorage.setItem(CONFIG.CONTENT_TYPES.CACHE_KEY, JSON.stringify({ types: json.data, ts: Date.now() }));
+        }
+    } catch { /* non-fatal — autocomplete just won't work */ }
+}
+
+function getContentTypeSuggestions(input) {
+    if (input.length < CONFIG.CONTENT_TYPES.MIN_AUTOCOMPLETE_LEN) return [];
+    const lower = input.toLowerCase();
+    return AppState.contentTypes.filter(t => t.toLowerCase().includes(lower)).slice(0, CONFIG.CONTENT_TYPES.MAX_SUGGESTIONS);
+}
+
+// Single-value renderer — selecting a suggestion replaces the whole field value
+function renderContentTypeSuggestions(input, suggestions) {
+    const container = AppState.el.contentTypeSuggestions;
+    if (!container) return;
+    if (!suggestions.length) { container.classList.remove('active'); return; }
+
+    const existing = container.querySelectorAll('.tag-suggestion');
+    const escaped  = input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex    = new RegExp(`(${escaped})`, 'gi');
+
+    suggestions.forEach((type, i) => {
+        let div = existing[i];
+        if (!div) {
+            div = document.createElement('div');
+            div.className = 'tag-suggestion';
+            container.appendChild(div);
+        }
+        div.classList.toggle('selected', i === 0);
+        div.innerHTML = type.replace(regex, '<mark>$1</mark>');
+        div.onclick = () => {
+            AppState.el.contentType.value = type;
+            container.classList.remove('active');
+            AppState.el.contentType.focus();
+        };
+    });
+
+    // Remove leftover nodes
+    for (let i = suggestions.length; i < existing.length; i++) existing[i].remove();
+
+    container.classList.add('active');
+    AppState.selectedContentTypeSuggIdx = 0;
+}
+
+const handleContentTypeInput = debounce((e) => {
+    const input     = e.target.value.trim();
+    const container = AppState.el.contentTypeSuggestions;
+    if (!container) return;
+
+    if (input.length >= CONFIG.CONTENT_TYPES.MIN_AUTOCOMPLETE_LEN) {
+        renderContentTypeSuggestions(input, getContentTypeSuggestions(input));
     } else {
         container.classList.remove('active');
     }
@@ -333,13 +424,14 @@ async function handleFormSubmit(e) {
 
     const { el } = AppState;
     const bookmarkData = {
-        website: el.website?.value  || '',
-        title:   el.title?.value    || '',
-        tld:     el.tld?.value      || '',
-        slug:    el.slug?.value     || '',
-        author:  el.author?.value   || '',
-        tags:    normalizeTags(el.tags?.value || ''),
-        text:    el.text?.value     || ''
+        website:     el.website?.value     || '',
+        title:       el.title?.value       || '',
+        tld:         el.tld?.value         || '',
+        slug:        el.slug?.value        || '',
+        author:      el.author?.value      || '',
+        tags:        normalizeTags(el.tags?.value || ''),
+        contentType: el.contentType?.value || '',
+        text:        el.text?.value        || ''
     };
 
     if (!navigator.onLine) {
@@ -378,7 +470,7 @@ async function handleFormSubmit(e) {
             method:  'POST',
             headers: {
                 'Content-Type':  'application/json',
-                'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password)
+                'Authorization': safeBasicAuth(auth.email, auth.password)
             },
             body: JSON.stringify(bookmarkData)
         });
@@ -461,13 +553,44 @@ function setupEventListeners() {
                 container.classList.remove('active');
             }
         });
+    }
 
-        document.addEventListener('click', (e) => {
-            if (!el.tags.contains(e.target) && !el.tagSuggestions.contains(e.target)) {
-                el.tagSuggestions.classList.remove('active');
+    if (el.contentType && el.contentTypeSuggestions) {
+        el.contentType.addEventListener('input', handleContentTypeInput);
+
+        el.contentType.addEventListener('keydown', (e) => {
+            const container   = el.contentTypeSuggestions;
+            const suggestions = container.querySelectorAll('.tag-suggestion');
+            if (!container.classList.contains('active')) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                AppState.selectedContentTypeSuggIdx = (AppState.selectedContentTypeSuggIdx + 1) % suggestions.length;
+                suggestions.forEach((s, i) => s.classList.toggle('selected', i === AppState.selectedContentTypeSuggIdx));
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                AppState.selectedContentTypeSuggIdx = (AppState.selectedContentTypeSuggIdx - 1 + suggestions.length) % suggestions.length;
+                suggestions.forEach((s, i) => s.classList.toggle('selected', i === AppState.selectedContentTypeSuggIdx));
+            } else if (e.key === 'Enter' && suggestions.length) {
+                e.preventDefault();
+                suggestions[AppState.selectedContentTypeSuggIdx].click();
+            } else if (e.key === 'Escape') {
+                container.classList.remove('active');
             }
         });
     }
+
+    // Single document-level click handler dismisses all suggestion dropdowns
+    document.addEventListener('click', (e) => {
+        if (el.tags && el.tagSuggestions &&
+            !el.tags.contains(e.target) && !el.tagSuggestions.contains(e.target)) {
+            el.tagSuggestions.classList.remove('active');
+        }
+        if (el.contentType && el.contentTypeSuggestions &&
+            !el.contentType.contains(e.target) && !el.contentTypeSuggestions.contains(e.target)) {
+            el.contentTypeSuggestions.classList.remove('active');
+        }
+    });
 
     el.fetchMetadataBtn?.addEventListener('click', () => {
         const url = el.website?.value.trim();
@@ -498,6 +621,7 @@ function setupKeyboardShortcuts() {
             url ? fetchMetadata(url) : showMessage('Please enter a URL first', 'error');
         } else if (e.key === 'Escape') {
             AppState.el.tagSuggestions?.classList.remove('active');
+            AppState.el.contentTypeSuggestions?.classList.remove('active');
         }
     });
 }
@@ -509,24 +633,27 @@ function setupKeyboardShortcuts() {
 window.addEventListener('DOMContentLoaded', async () => {
     // Cache DOM references
     AppState.el = {
-        website:         document.getElementById('website'),
-        tld:             document.getElementById('tld'),
-        slug:            document.getElementById('slug'),
-        author:          document.getElementById('author'),
-        tags:            document.getElementById('tags'),
-        title:           document.getElementById('page-title'),
-        text:            document.getElementById('text'),
-        form:            document.getElementById('bookmark-form'),
-        fetchMetadataBtn:document.getElementById('fetch-metadata-btn'),
-        quickSaveBtn:    document.getElementById('quick-save-btn'),
-        message:         document.getElementById('message'),
-        offlineIndicator:document.getElementById('offline-indicator'),
-        tagSuggestions:  document.getElementById('tag-suggestions')
+        website:              document.getElementById('website'),
+        tld:                  document.getElementById('tld'),
+        slug:                 document.getElementById('slug'),
+        author:               document.getElementById('author'),
+        tags:                 document.getElementById('tags'),
+        title:                document.getElementById('page-title'),
+        text:                 document.getElementById('text'),
+        contentType:          document.getElementById('content-type'),
+        contentTypeSuggestions: document.getElementById('content-type-suggestions'),
+        form:                 document.getElementById('bookmark-form'),
+        fetchMetadataBtn:     document.getElementById('fetch-metadata-btn'),
+        quickSaveBtn:         document.getElementById('quick-save-btn'),
+        message:              document.getElementById('message'),
+        offlineIndicator:     document.getElementById('offline-indicator'),
+        tagSuggestions:       document.getElementById('tag-suggestions')
     };
 
     // Parallelize independent async init tasks
     await Promise.all([
-        loadExistingTags()
+        loadExistingTags(),
+        loadExistingContentTypes()
         // IndexedDB is now lazy — no longer initialized here
     ]);
 

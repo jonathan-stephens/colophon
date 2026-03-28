@@ -1,0 +1,176 @@
+
+<style>
+  .qw { max-width: 560px; margin: 0 auto; padding: 0.5rem 0; }
+  .ql { font-size: 11px; color: var(--color-text-tertiary); }
+  #qc { position:relative; cursor:crosshair; border:0.5px solid var(--color-border-primary); width:100%; aspect-ratio:1; overflow:hidden; }
+  .qq { position:absolute; width:50%; height:50%; }
+  .qq-tl { top:0; left:0; background:#FAEEDA; }
+  .qq-tr { top:0; right:0; background:#FAECE7; }
+  .qq-bl { bottom:0; left:0; background:#F1EFE8; }
+  .qq-br { bottom:0; right:0; background:#EEEDFE; }
+  .ax { position:absolute; background:var(--color-border-secondary); }
+  .ax-h { top:50%; left:0; right:0; height:0.5px; }
+  .ax-v { left:50%; top:0; bottom:0; width:0.5px; }
+  .qlbl { position:absolute; font-size:12px; font-weight:500; pointer-events:none; line-height:1.4; }
+  .qlbl.tl { top:10px; left:10px; color:#BA7517; }
+  .qlbl.tr { top:10px; right:10px; text-align:right; color:#993C1D; }
+  .qlbl.bl { bottom:10px; left:10px; color:#5F5E5A; }
+  .qlbl.br { bottom:10px; right:10px; text-align:right; color:#534AB7; }
+  #qpin { display:none; position:absolute; width:12px; height:12px; border-radius:50%; background:var(--color-text-primary); transform:translate(-50%,-50%); pointer-events:none; box-shadow:0 0 0 2px var(--color-background-primary),0 0 0 3.5px var(--color-text-primary); z-index:10; }
+  #qdesc { margin-top:10px; padding:12px 14px; background:var(--color-background-secondary); border-radius:var(--border-radius-md); font-size:13px; color:var(--color-text-secondary); line-height:1.6; min-height:56px; }
+  .qwords { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .qword { font-size:11px; padding:2px 8px; background:var(--color-background-primary); border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); color:var(--color-text-secondary); }
+  .qbtns { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .corridor-svg { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+  @media (prefers-color-scheme: dark) {
+    .qq-tl { background:#412402; }
+    .qq-tr { background:#4A1B0C; }
+    .qq-bl { background:#2C2C2A; }
+    .qq-br { background:#26215C; }
+    .qlbl.tl { color:#FAC775; }
+    .qlbl.tr { color:#F5C4B3; }
+    .qlbl.bl { color:#B4B2A9; }
+    .qlbl.br { color:#CECBF6; }
+  }
+</style>
+<div class="qw">
+  <div style="text-align:center; padding-left:60px;" class="ql">over-stimulated ↑</div>
+  <div style="display:flex; align-items:stretch;">
+    <div style="display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end; width:60px; padding-right:8px; padding-top:2px; padding-bottom:2px;">
+      <span class="ql">saturated</span>
+      <span class="ql">charged</span>
+      <span class="ql">attuned</span>
+      <span class="ql">quiet</span>
+      <span class="ql">silent</span>
+    </div>
+    <div style="flex:1; min-width:0;">
+      <div id="qc" onclick="qClick(event)">
+        <div class="qq qq-tl"></div>
+        <div class="qq qq-tr"></div>
+        <div class="qq qq-bl"></div>
+        <div class="qq qq-br"></div>
+
+        <!-- Flow corridor SVG overlay -->
+        <svg class="corridor-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cg" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#085041" stop-opacity="0.18"/>
+              <stop offset="40%" stop-color="#1D9E75" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#5DCAA5" stop-opacity="0.18"/>
+            </linearGradient>
+          </defs>
+          <!-- Corridor: a widening diagonal band from (underwhelmed, understimulated) to (overwhelmed, overstimulated)
+               In chart space: x=whelm left→right, y=stimulation top=over, bottom=under
+               Flow runs from bottom-left (low both) through center to top-right (high both)
+               The band widens as intensity increases — narrow at the quiet low end, wider at the high end -->
+          <polygon
+            points="2,98  18,98  98,18  98,2  82,2  2,82"
+            fill="url(#cg)"
+          />
+          <!-- Center spine -->
+          <line x1="3" y1="97" x2="97" y2="3" stroke="#1D9E75" stroke-width="0.4" stroke-dasharray="2 2" stroke-opacity="0.5"/>
+          <!-- Corridor edge lines -->
+          <line x1="2" y1="82" x2="82" y2="2"  stroke="#1D9E75" stroke-width="0.3" stroke-opacity="0.35"/>
+          <line x1="18" y1="98" x2="98" y2="18" stroke="#1D9E75" stroke-width="0.3" stroke-opacity="0.35"/>
+          <!-- Anchor labels along the spine -->
+          <!-- Low intensity zone label ~20% along -->
+          <!-- High intensity zone label ~80% along -->
+        </svg>
+
+        <div class="ax ax-h"></div>
+        <div class="ax ax-v"></div>
+
+        <!-- Flow anchor dots along the corridor spine -->
+        <div style="position:absolute;left:18%;top:78%;transform:translate(-50%,-50%);pointer-events:none;">
+          <div style="width:48px;height:48px;border-radius:50%;border:0.5px solid #1D9E75;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0F6E56;text-align:center;line-height:1.3;">quiet<br>flow</div>
+        </div>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;">
+          <div style="width:56px;height:56px;border-radius:50%;border:0.5px solid #1D9E75;background:#9FE1CB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#085041;text-align:center;line-height:1.3;">balanced<br>flow</div>
+        </div>
+        <div style="position:absolute;left:82%;top:22%;transform:translate(-50%,-50%);pointer-events:none;">
+          <div style="width:66px;height:66px;border-radius:50%;border:0.5px solid #1D9E75;background:#5DCAA5;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#04342C;text-align:center;line-height:1.3;">peak<br>flow</div>
+        </div>
+
+        <div class="qlbl tl">The Scramble<br><span style="font-size:10px;font-weight:400;opacity:0.7">noise without signal</span></div>
+        <div class="qlbl tr">The Flood<br><span style="font-size:10px;font-weight:400;opacity:0.7">everything at once</span></div>
+        <div class="qlbl bl">The Void<br><span style="font-size:10px;font-weight:400;opacity:0.7">nothing happening</span></div>
+        <div class="qlbl br">The Grind<br><span style="font-size:10px;font-weight:400;opacity:0.7">high load, low joy</span></div>
+        <div id="qpin"></div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; padding-left:60px; margin-top:2px;" class="ql">↓ under-stimulated</div>
+  <div style="display:flex; justify-content:space-between; padding-left:60px; margin-top:4px;">
+    <span class="ql">invisible</span><span class="ql">coasting</span><span class="ql">calibrated</span><span class="ql">stretched</span><span class="ql">capsized</span>
+  </div>
+  <div style="display:flex; justify-content:space-between; padding-left:60px; margin-top:3px;" class="ql">
+    <span>← under-whelmed</span><span>over-whelmed →</span>
+  </div>
+  <div id="qdesc">Click anywhere on the chart to explore a state.</div>
+</div>
+<script>
+const QD = {
+  tl: { name:'The Scramble', desc:'High stimulation, low demand. Restless and scattered — lots of noise, nothing meaningful to sink into. Doom-scrolling, fragmented attention, half-presence across too many things at once.', words:['restless','distracted','buzzy','hollow','agitated'] },
+  tr: { name:'The Flood', desc:'Demands are extreme and inputs are saturated. No bandwidth to prioritize. Everything exceeds capacity simultaneously. Classic burnout — the system is completely overwhelmed.', words:['frantic','panicked','flooded','burning out','chaotic'] },
+  bl: { name:'The Void', desc:'Neither challenged nor stimulated. Flat, quiet, checked out. Both axes are below threshold. Disengagement and numbness settle in over time.', words:['bored','numb','flat','invisible','adrift'] },
+  br: { name:'The Grind', desc:'High demands, low stimulation or reward. Taxing and tedious — the load is real but nothing about it is alive. Depleting without purpose.', words:['drained','trapped','depleted','joyless','grinding'] }
+};
+
+function distToLine(px, py) {
+  // Line from (0,1) to (1,0) in normalized 0-1 coords: x + y = 1 → diagonal
+  // Flow corridor is along x = 1 - y (i.e., whelm increases as stimulation increases)
+  // In chart coords: x = whelm (0=under, 1=over), y = stimulation (0=over, 1=under)
+  // Flow spine: x + (1-y) = 1 → x = y (when y is "distance from top")
+  // Actually flow is: high whelm + high stimulation (top-right) to low both (bottom-left)
+  // So spine: x ≈ 1 - y_norm where y_norm=0 is top
+  // Distance from point to line x - (1-y) = 0, i.e. x + y - 1 = 0 (using y from top)
+  return Math.abs(px + py - 1) / Math.sqrt(2);
+}
+
+function corridorWidth(px, py) {
+  // Intensity along spine: 0 at bottom-left corner, 1 at top-right
+  const t = (px + (1 - py)) / 2; // 0=low intensity, 1=high intensity
+  // Corridor half-width scales from 0.06 at low end to 0.13 at high end
+  return 0.06 + t * 0.07;
+}
+
+function qClick(e) {
+  const el = document.getElementById('qc');
+  const r = el.getBoundingClientRect();
+  const x = Math.max(0.01, Math.min(0.99, (e.clientX - r.left) / r.width));
+  const y = Math.max(0.01, Math.min(0.99, (e.clientY - r.top) / r.height));
+  const pin = document.getElementById('qpin');
+  pin.style.display = 'block';
+  pin.style.left = (x * 100) + '%';
+  pin.style.top = (y * 100) + '%';
+
+  const desc = document.getElementById('qdesc');
+  const d = distToLine(x, y);
+  const w = corridorWidth(x, y);
+  const t = (x + (1 - y)) / 2;
+
+  if (d < w) {
+    let flowName, flowDesc;
+    if (t < 0.33) {
+      flowName = 'Quiet flow';
+      flowDesc = 'Low intensity, both axes in sync. Reading deeply, a gentle walk, a simple task done well. Calm and present — not electric, but genuinely alive to what\'s happening.';
+    } else if (t < 0.67) {
+      flowName = 'Balanced flow';
+      flowDesc = 'The classic flow state. Challenge and stimulation are matched to capacity. Effort feels purposeful, attention narrows, time warps. This is where most deep work and creative output happens.';
+    } else {
+      flowName = 'Peak flow';
+      flowDesc = 'High intensity on both axes, but still in sync. Athletic performance, a difficult live presentation, emergency problem-solving done well. Electric and consuming — can\'t be sustained for long, but extraordinary while it lasts.';
+    }
+    const edgeDist = Math.max(0, 1 - d / w);
+    const centerStr = edgeDist > 0.6 ? ' (well within the corridor)' : ' (near the edge)';
+    desc.innerHTML = `<strong style="color:var(--color-text-success)">${flowName}</strong><span style="font-size:11px;color:var(--color-text-tertiary);margin-left:6px">intensity ${Math.round(t*100)}%${centerStr}</span><br><span style="font-size:12px">${flowDesc}</span>`;
+    return;
+  }
+
+  const q = (y < 0.5 ? (x < 0.5 ? 'tl' : 'tr') : (x < 0.5 ? 'bl' : 'br'));
+  const qd = QD[q];
+  const xw = ['invisible','coasting','calibrated','stretched','capsized'][Math.min(4, Math.floor(x*5))];
+  const yw = ['saturated','charged','attuned','quiet','silent'][Math.min(4, Math.floor(y*5))];
+  desc.innerHTML = `<strong style="color:var(--color-text-danger)">${qd.name}</strong><span style="font-size:11px;color:var(--color-text-tertiary);margin-left:6px">${yw} · ${xw}</span><br><span style="font-size:12px">${qd.desc}</span><div class="qwords">${qd.words.map(w=>`<span class="qword">${w}</span>`).join('')}</div>`;
+}
+</script>

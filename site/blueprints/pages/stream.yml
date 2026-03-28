@@ -1,0 +1,16 @@
+title: Stream
+icon: "↗"
+
+fields:
+  hed:
+    label: Heading
+    type: text
+    placeholder: Stream
+    width: 1/2
+
+  dek:
+    label: Subheading
+    type: textarea
+    buttons: false
+    rows: 2
+    width: 1/2

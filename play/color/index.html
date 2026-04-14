@@ -4722,6 +4722,551 @@
       return { init, renderList, renderMatrix };
     })();
 
+
+    /* ============================================================
+       17. EXPORT MODULE
+       Pure functions: project → CSS / CSV / SVG strings.
+       All return strings. No DOM, no side effects.
+       ============================================================ */
+    const ExportModule = (() => {
+
+      /* ---- CSS custom properties ---- */
+      function generateCSS(project) {
+        return PaletteModule.generateCSS(project);
+      }
+
+      /* ---- Contrast pairs CSV ---- */
+      function generateContrastCSV(project, contrastMap, filters) {
+        var activeFilters = filters || { AAA: true, AA: true, AA18: true, DNP: true };
+        var colors        = PaletteModule.getAllColors(project);
+
+        var rows = [
+          ['foreground_name','foreground_slug','foreground_hex',
+           'background_name','background_slug','background_hex',
+           'ratio','level'].join(',')
+        ];
+
+        var pairs = Object.values(contrastMap)
+          .filter(function(e) { return activeFilters[e.level]; })
+          .sort(function(a, b) { return b.ratio - a.ratio; });
+
+        pairs.forEach(function(entry) {
+          var fg = colors.find(function(c) { return c.id === entry.fgId; });
+          var bg = colors.find(function(c) { return c.id === entry.bgId; });
+          if (!fg || !bg) return;
+          var fgHex = ColorConverter.oklchToHex(fg.oklch);
+          var bgHex = ColorConverter.oklchToHex(bg.oklch);
+          function q(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; }
+          rows.push([
+            q(fg.name), q(fg.slug), q(fgHex),
+            q(bg.name), q(bg.slug), q(bgHex),
+            entry.ratio.toFixed(2), q(entry.level)
+          ].join(','));
+        });
+
+        return rows.join('\n');
+      }
+
+      /* ---- Swatches SVG ---- */
+      function generateSwatchSVG(project) {
+        var families = project.hueFamilies;
+        if (!families.length) return '<svg xmlns="http://www.w3.org/2000/svg"></svg>';
+
+        var swatchW  = 64;
+        var swatchH  = 64;
+        var textH    = 36;
+        var gapX     = 8;
+        var gapY     = 16;
+        var padX     = 16;
+        var padY     = 16;
+        var cols     = PALETTE_SLOTS.length;
+        var rowH     = swatchH + textH + gapY;
+        var colW     = swatchW + gapX;
+        var totalW   = padX * 2 + cols * colW - gapX;
+
+        var svgRows  = [];
+        var y        = padY;
+
+        families.forEach(function(family) {
+          // Family label
+          svgRows.push('<text x="' + padX + '" y="' + (y + 12) + '"'
+            + ' font-family="sans-serif" font-size="11" font-weight="600"'
+            + ' fill="#555">' + escXML(family.name) + '</text>');
+          y += 20;
+
+          // Swatches row
+          PALETTE_SLOTS.forEach(function(slot, i) {
+            var color = family.colors[slot];
+            var x     = padX + i * colW;
+            var hex   = color ? ColorConverter.oklchToHex(color.oklch) : '#e5e5e5';
+            var name  = color ? (color.name || slot) : slot;
+            var oklch = color
+              ? ('oklch(' + color.oklch.l.toFixed(2) + ' '
+                 + color.oklch.c.toFixed(3) + ' '
+                 + color.oklch.h.toFixed(1) + ')')
+              : '';
+
+            svgRows.push(
+              '<rect x="' + x + '" y="' + y + '"'
+              + ' width="' + swatchW + '" height="' + swatchH + '"'
+              + ' rx="4" fill="' + hex + '"'
+              + ' stroke="#00000018" stroke-width="1"/>'
+              + '<text x="' + (x + swatchW / 2) + '" y="' + (y + swatchH + 12) + '"'
+              + ' text-anchor="middle" font-family="sans-serif"'
+              + ' font-size="8" font-weight="600" fill="#333">'
+              + escXML(name) + '</text>'
+              + '<text x="' + (x + swatchW / 2) + '" y="' + (y + swatchH + 22) + '"'
+              + ' text-anchor="middle" font-family="monospace"'
+              + ' font-size="7" fill="#666">' + hex + '</text>'
+              + (oklch
+                ? '<text x="' + (x + swatchW / 2) + '" y="' + (y + swatchH + 32) + '"'
+                  + ' text-anchor="middle" font-family="monospace"'
+                  + ' font-size="6" fill="#999">' + escXML(oklch) + '</text>'
+                : '')
+            );
+          });
+
+          y += rowH;
+        });
+
+        var totalH = y + padY;
+
+        return '<svg xmlns="http://www.w3.org/2000/svg"'
+          + ' viewBox="0 0 ' + totalW + ' ' + totalH + '"'
+          + ' width="' + totalW + '" height="' + totalH + '">'
+          + '<rect width="' + totalW + '" height="' + totalH + '" fill="#fff"/>'
+          + svgRows.join('')
+          + '</svg>';
+      }
+
+      /* ---- XML/SVG escape ---- */
+      function escXML(str) {
+        return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      }
+
+      /* ---- Download helper ---- */
+      function download(content, filename, mimeType) {
+        var blob = new Blob([content], { type: mimeType });
+        var url  = URL.createObjectURL(blob);
+        var a    = document.createElement('a');
+        a.href     = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 10000);
+      }
+
+      /* ---- Safe project name for filenames ---- */
+      function safeFilename(project) {
+        return (project.name || 'untitled')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '') || 'palette';
+      }
+
+      return {
+        generateCSS,
+        generateContrastCSV,
+        generateSwatchSVG,
+        download,
+        safeFilename,
+      };
+    })();
+
+
+    /* ============================================================
+       18. ARCHIVE UI
+       Preview and export panel. Snapshots.
+       ============================================================ */
+    const ArchiveUI = (() => {
+
+      /* ---- Render the swatch grid in the archive panel ---- */
+      function renderSwatchGrid(project) {
+        var el = document.getElementById('archive-swatch-grid');
+        if (!el) return;
+
+        var families = project.hueFamilies;
+        if (!families.length) {
+          el.innerHTML = '<p class="text-sm text-subtle">No colors yet.</p>';
+          return;
+        }
+
+        var html = families.map(function(family) {
+          var cards = PALETTE_SLOTS.map(function(slot) {
+            var color = family.colors[slot];
+            if (!color) return '';
+            var hex  = ColorConverter.oklchToHex(color.oklch);
+            return '<div class="swatch-card">'
+              + '<div class="swatch-card__color"'
+              + ' style="background-color:' + hex + ';"'
+              + ' aria-label="' + (color.name || slot) + ', ' + hex + '"></div>'
+              + '<div class="swatch-card__name">' + (color.name || slot) + '</div>'
+              + '<div class="swatch-card__hex">' + hex + '</div>'
+              + '</div>';
+          }).join('');
+
+          if (!cards) return '';
+
+          return '<div class="swatch-grid__family">'
+            + '<div class="swatch-grid__family-name">' + family.name + '</div>'
+            + '<div class="swatch-grid__row">' + cards + '</div>'
+            + '</div>';
+        }).join('');
+
+        el.innerHTML = html || '<p class="text-sm text-subtle">No colors yet.</p>';
+      }
+
+      /* ---- Render contrast pairs table in archive panel ---- */
+      function renderContrastPairs(project, contrastMap, filters) {
+        var el = document.getElementById('archive-contrast-pairs');
+        if (!el) return;
+
+        var colors = PaletteModule.getAllColors(project);
+        if (!colors.length) {
+          el.innerHTML = '<p class="text-sm text-subtle">No contrast pairs yet.</p>';
+          return;
+        }
+
+        var activeFilters = filters || { AAA: true, AA: true, AA18: true, DNP: false };
+
+        var pairs = Object.values(contrastMap)
+          .filter(function(e) { return activeFilters[e.level]; })
+          .sort(function(a, b) { return b.ratio - a.ratio; });
+
+        if (!pairs.length) {
+          el.innerHTML = '<p class="text-sm text-subtle">No pairs match the selected levels.</p>';
+          return;
+        }
+
+        // Group by level
+        var grouped = { AAA: [], AA: [], AA18: [], DNP: [] };
+        pairs.forEach(function(entry) { grouped[entry.level].push(entry); });
+
+        var html = '';
+        ['AAA','AA','AA18','DNP'].forEach(function(level) {
+          if (!activeFilters[level] || !grouped[level].length) return;
+          html += '<div style="margin-bottom:var(--space-4);">'
+            + '<div class="contrast-list__section-title">'
+            + '<span class="badge badge--' + level.toLowerCase() + '">' + level + '</span>'
+            + '&nbsp;' + grouped[level].length + ' pairs'
+            + '</div>'
+            + '<div style="display:flex;flex-direction:column;gap:var(--space-2);margin-top:var(--space-2);">';
+
+          grouped[level].forEach(function(entry) {
+            var fg = colors.find(function(c) { return c.id === entry.fgId; });
+            var bg = colors.find(function(c) { return c.id === entry.bgId; });
+            if (!fg || !bg) return;
+            var fgHex = ColorConverter.oklchToHex(fg.oklch);
+            var bgHex = ColorConverter.oklchToHex(bg.oklch);
+            html += '<div class="contrast-list__row"'
+              + ' style="background-color:' + bgHex + ';">'
+              + '<div class="swatch swatch--xs"'
+              + ' style="background-color:' + fgHex + ';" aria-hidden="true"></div>'
+              + '<span class="text-sm" style="color:' + fgHex + ';font-weight:500;">'
+              + (fg.name || fg.paletteSlot) + '</span>'
+              + '<span class="text-xs" style="color:' + fgHex + ';opacity:0.7;">on</span>'
+              + '<span class="text-sm" style="color:' + fgHex + ';">'
+              + (bg.name || bg.paletteSlot) + '</span>'
+              + '<span class="contrast-list__ratio" style="color:' + fgHex + ';">'
+              + entry.ratio.toFixed(1) + ':1</span>'
+              + '</div>';
+          });
+
+          html += '</div></div>';
+        });
+
+        el.innerHTML = html;
+      }
+
+      /* ---- Archive filter state ---- */
+      var _archiveFilters = { AAA: true, AA: true, AA18: true, DNP: false };
+
+      /* ---- Render CSS block in archive panel ---- */
+      function renderCSSBlock(project) {
+        var el = document.getElementById('archive-css-output');
+        if (!el) return;
+        var colors = PaletteModule.getAllColors(project);
+        el.textContent = colors.length
+          ? ExportModule.generateCSS(project)
+          : '/* No colors yet */';
+      }
+
+      /* ---- Render snapshot list ---- */
+      function renderSnapshots(project) {
+        var el = document.getElementById('snapshot-list');
+        if (!el) return;
+
+        if (!project.snapshots || !project.snapshots.length) {
+          el.innerHTML = '<p class="text-sm text-subtle">No snapshots yet.</p>';
+          return;
+        }
+
+        // Current state hash for "current" indicator
+        var currentHash = simpleHash(JSON.stringify({
+          families: project.hueFamilies,
+          anchors:  project.anchors,
+        }));
+
+        el.innerHTML = project.snapshots.slice().reverse().map(function(snap) {
+          var isCurrent = snap.hash === currentHash;
+          var date      = new Date(snap.timestamp);
+          var dateStr   = date.toLocaleDateString(undefined, {
+            month: 'short', day: 'numeric', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          });
+
+          return '<div class="snapshot-item">'
+            + '<div class="snapshot-item__label">'
+            + (snap.label || 'Snapshot')
+            + (isCurrent
+              ? ' <span class="badge badge--aaa" style="font-size:var(--text-2xs);">current</span>'
+              : '')
+            + '</div>'
+            + '<span class="snapshot-item__time">' + dateStr + '</span>'
+            + '<button class="btn btn--secondary btn--sm"'
+            + ' data-download-snapshot="' + snap.id + '"'
+            + ' type="button" aria-label="Download snapshot ' + (snap.label || dateStr) + '">'
+            + 'Download CSS'
+            + '</button>'
+            + '</div>';
+        }).join('');
+
+        // Wire download buttons
+        el.querySelectorAll('[data-download-snapshot]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var snapId = btn.dataset.downloadSnapshot;
+            var snap   = project.snapshots.find(function(s) { return s.id === snapId; });
+            if (!snap || !snap.css) {
+              Toast.show('No CSS saved with this snapshot');
+              return;
+            }
+            ExportModule.download(snap.css, ExportModule.safeFilename(project) + '-' + snap.id + '.css', 'text/css');
+            Toast.show('Snapshot downloaded');
+          });
+        });
+      }
+
+      /* ---- Simple string hash for state comparison ---- */
+      function simpleHash(str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return String(hash);
+      }
+
+      /* ---- Full render of archive panel ---- */
+      function render() {
+        var project     = AppState.getProject();
+        var contrastMap = AppState.getContrastMap();
+        renderSwatchGrid(project);
+        renderContrastPairs(project, contrastMap, _archiveFilters);
+        renderCSSBlock(project);
+        renderSnapshots(project);
+      }
+
+      /* ---- Wire export buttons ---- */
+      function wireExports() {
+        // Export CSS
+        var cssBtn = document.getElementById('btn-export-css');
+        if (cssBtn) {
+          cssBtn.addEventListener('click', function() {
+            var project = AppState.getProject();
+            var css     = ExportModule.generateCSS(project);
+            ExportModule.download(
+              css,
+              ExportModule.safeFilename(project) + '.css',
+              'text/css'
+            );
+            Toast.show('CSS exported');
+          });
+        }
+
+        // Export CSV
+        var csvBtn = document.getElementById('btn-export-csv');
+        if (csvBtn) {
+          csvBtn.addEventListener('click', function() {
+            var project     = AppState.getProject();
+            var contrastMap = AppState.getContrastMap();
+            var csv         = ExportModule.generateContrastCSV(project, contrastMap, _archiveFilters);
+            ExportModule.download(
+              csv,
+              ExportModule.safeFilename(project) + '-contrast-pairs.csv',
+              'text/csv'
+            );
+            Toast.show('CSV exported');
+          });
+        }
+
+        // Export SVG
+        var svgBtn = document.getElementById('btn-export-svg');
+        if (svgBtn) {
+          svgBtn.addEventListener('click', function() {
+            var project = AppState.getProject();
+            var svg     = ExportModule.generateSwatchSVG(project);
+            ExportModule.download(
+              svg,
+              ExportModule.safeFilename(project) + '-swatches.svg',
+              'image/svg+xml'
+            );
+            Toast.show('SVG exported');
+          });
+        }
+
+        // Copy CSS from archive panel
+        var archiveCopyBtn = document.getElementById('btn-archive-copy-css');
+        if (archiveCopyBtn) {
+          archiveCopyBtn.addEventListener('click', function() {
+            var project = AppState.getProject();
+            copyToClipboard(ExportModule.generateCSS(project), 'CSS copied');
+          });
+        }
+      }
+
+      /* ---- Wire archive contrast filters ---- */
+      function wireArchiveFilters() {
+        document.querySelectorAll('[data-archive-filter]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var level = btn.dataset.archiveFilter.toUpperCase();
+            if (level === 'AA18') level = 'AA18';
+            _archiveFilters[level] = !_archiveFilters[level];
+            btn.setAttribute('aria-pressed', _archiveFilters[level] ? 'true' : 'false');
+            var project     = AppState.getProject();
+            var contrastMap = AppState.getContrastMap();
+            renderContrastPairs(project, contrastMap, _archiveFilters);
+          });
+        });
+      }
+
+      /* ---- Wire snapshot save ---- */
+      function wireSnapshots() {
+        var saveBtn   = document.getElementById('btn-save-snapshot');
+        var labelInput = document.getElementById('snapshot-label');
+        if (!saveBtn) return;
+
+        saveBtn.addEventListener('click', function() {
+          var project = AppState.getProject();
+          var label   = labelInput ? labelInput.value.trim() : '';
+          var css     = ExportModule.generateCSS(project);
+          var hash    = simpleHash(JSON.stringify({
+            families: project.hueFamilies,
+            anchors:  project.anchors,
+          }));
+
+          var snap = {
+            id:        ColorUtils.generateId(),
+            timestamp: new Date().toISOString(),
+            label:     label || null,
+            hash:      hash,
+            css:       css,
+          };
+
+          AppState.updateProject(function(p) {
+            if (!p.snapshots) p.snapshots = [];
+            p.snapshots.push(snap);
+            return p;
+          });
+
+          if (labelInput) labelInput.value = '';
+          Toast.show('Snapshot saved');
+        });
+      }
+
+      /* ---- Wire project save/load/new ---- */
+      function wireProjectActions() {
+        // Download project JSON
+        var downloadBtn = document.getElementById('btn-download-project');
+        if (downloadBtn) {
+          downloadBtn.addEventListener('click', function() {
+            var project  = AppState.getProject();
+            var json     = StorageModule.serialize(project);
+            var filename = ExportModule.safeFilename(project) + '.json';
+            ExportModule.download(json, filename, 'application/json');
+            Toast.show('Project downloaded');
+          });
+        }
+
+        // Upload project JSON
+        var uploadBtn   = document.getElementById('btn-upload-project');
+        var uploadInput = document.getElementById('input-upload-project');
+        if (uploadBtn && uploadInput) {
+          uploadBtn.addEventListener('click', function() { uploadInput.click(); });
+          uploadInput.addEventListener('change', function() {
+            var file = uploadInput.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              var result = StorageModule.deserialize(e.target.result);
+              if (!result.ok) {
+                Toast.show('Invalid project file: ' + result.error);
+                return;
+              }
+              AppState.loadProject(result.project);
+              Toast.show('Project loaded: ' + (result.project.name || 'Untitled'));
+            };
+            reader.readAsText(file);
+            uploadInput.value = '';
+          });
+        }
+
+        // New project
+        var newBtn = document.getElementById('btn-new-project');
+        if (newBtn) {
+          newBtn.addEventListener('click', function() {
+            if (!confirm('Start a new project? Unsaved changes will be lost.')) return;
+            StorageModule.clearStorage();
+            var fresh = ColorUtils.createDefaultProject();
+            AppState.loadProject(fresh);
+            Toast.show('New project started');
+          });
+        }
+
+        // Editable project name in header
+        var nameEl = document.getElementById('project-name');
+        if (nameEl) {
+          nameEl.setAttribute('contenteditable', 'true');
+          nameEl.setAttribute('role', 'textbox');
+          nameEl.setAttribute('aria-label', 'Project name');
+          nameEl.setAttribute('spellcheck', 'false');
+          nameEl.addEventListener('blur', function() {
+            var newName = nameEl.textContent.trim() || 'Untitled Project';
+            nameEl.textContent = newName;
+            AppState.updateProject(function(p) {
+              p.name = newName;
+              return p;
+            });
+          });
+          nameEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); nameEl.blur(); }
+            if (e.key === 'Escape') { nameEl.blur(); }
+          });
+        }
+      }
+
+      function init() {
+        wireExports();
+        wireArchiveFilters();
+        wireSnapshots();
+        wireProjectActions();
+
+        EventBus.on('palette:changed',  function() { render(); });
+        EventBus.on('project:loaded',   function() { render(); });
+        EventBus.on('contrast:updated', function() {
+          var project     = AppState.getProject();
+          var contrastMap = AppState.getContrastMap();
+          renderContrastPairs(project, contrastMap, _archiveFilters);
+        });
+
+        render();
+      }
+
+      return { init, render };
+    })();
+
     /* ============================================================
        INIT — load stored project or default
        (Full UI wiring happens in subsequent build steps)
@@ -4815,6 +5360,7 @@
       StagingUI.init();
       PaletteBuilderUI.init();
       ContrastAuditorUI.init();
+      ArchiveUI.init();
 
     })();
 

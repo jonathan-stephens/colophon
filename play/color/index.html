@@ -1,0 +1,4824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Workspace</title>
+  <meta name="description" content="A professional color workspace for building accessible color systems using modern color science and the native web platform." />
+  <link rel="canonical" href="" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Color Workspace" />
+  <meta property="og:description" content="Build, test, audit, and document accessible color systems." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Color Workspace" />
+  <meta name="twitter:description" content="Build, test, audit, and document accessible color systems." />
+
+  <style>
+    /* ============================================================
+       LAYER ORDER — explicit cascade control
+       ============================================================ */
+    @layer base, components, utilities;
+
+
+    /* ============================================================
+       DESIGN TOKENS
+       All numeric values live here. Nothing hardcoded in rules.
+       ============================================================ */
+    :root {
+      /* ----------------------------------------------------------
+         Typographic scale — 1.125 ratio (Major Second)
+         base: 1rem
+         ---------------------------------------------------------- */
+      --text-2xs:  0.702rem;   /* base ÷ 1.125³ */
+      --text-xs:   0.790rem;   /* base ÷ 1.125² */
+      --text-sm:   0.889rem;   /* base ÷ 1.125  */
+      --text-base: 1rem;
+      --text-md:   1.125rem;   /* base × 1.125  */
+      --text-lg:   1.266rem;   /* base × 1.125² */
+      --text-xl:   1.424rem;   /* base × 1.125³ */
+      --text-2xl:  1.602rem;   /* base × 1.125⁴ */
+      --text-3xl:  1.802rem;   /* base × 1.125⁵ */
+      --text-4xl:  2.027rem;   /* base × 1.125⁶ */
+
+      /* ----------------------------------------------------------
+         Spacing scale — derived from typographic base
+         ---------------------------------------------------------- */
+      --space-1:  0.25rem;
+      --space-2:  0.5rem;
+      --space-3:  0.75rem;
+      --space-4:  1rem;
+      --space-5:  1.25rem;
+      --space-6:  1.5rem;
+      --space-8:  2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+
+      /* ----------------------------------------------------------
+         Layout dimensions
+         ---------------------------------------------------------- */
+      --staging-width:      300px;
+      --header-height:      52px;
+      --tab-bar-height:     44px;
+      --swatch-size:        64px;
+      --swatch-size-sm:     44px;
+      --swatch-size-xs:     32px;
+      --matrix-cell-size:   88px;
+      --input-height:       36px;
+      --input-height-sm:    28px;
+      --border-radius:      3px;
+      --border-radius-md:   6px;
+      --border-radius-lg:   10px;
+      --border-width:       1px;
+
+      /* ----------------------------------------------------------
+         Transitions
+         ---------------------------------------------------------- */
+      --transition-fast:    100ms ease;
+      --transition-base:    180ms ease;
+      --transition-slow:    300ms ease;
+
+      /* ----------------------------------------------------------
+         Z-index scale
+         ---------------------------------------------------------- */
+      --z-base:     1;
+      --z-raised:   10;
+      --z-overlay:  100;
+      --z-modal:    200;
+      --z-toast:    300;
+
+      /* ----------------------------------------------------------
+         WCAG level badge colors
+         Chosen to pass AA against --badge-text in both themes.
+         ---------------------------------------------------------- */
+      --badge-aaa-bg:   oklch(0.38 0.13 145);
+      --badge-aa-bg:    oklch(0.38 0.14 255);
+      --badge-aa18-bg:  oklch(0.48 0.14 75);
+      --badge-dnp-bg:   oklch(0.45 0.16 25);
+      --badge-text:     oklch(0.98 0 0);
+
+      /* ----------------------------------------------------------
+         UI color palette — all via light-dark() for OS theming.
+         Using OKLCH for perceptual consistency.
+
+         Light theme values → Dark theme values
+         ---------------------------------------------------------- */
+
+      /* Backgrounds */
+      --color-bg:           light-dark(oklch(0.985 0 0),     oklch(0.13 0 0));
+      --color-surface:      light-dark(oklch(0.96 0 0),      oklch(0.17 0 0));
+      --color-surface-2:    light-dark(oklch(0.935 0 0),     oklch(0.21 0 0));
+      --color-surface-3:    light-dark(oklch(0.91 0 0),      oklch(0.25 0 0));
+
+      /* Borders */
+      --color-border:       light-dark(oklch(0.87 0 0),      oklch(0.30 0 0));
+      --color-border-subtle:light-dark(oklch(0.92 0 0),      oklch(0.25 0 0));
+
+      /* Text */
+      --color-text:         light-dark(oklch(0.16 0 0),      oklch(0.92 0 0));
+      --color-text-subtle:  light-dark(oklch(0.45 0 0),      oklch(0.60 0 0));
+      --color-text-faint:   light-dark(oklch(0.62 0 0),      oklch(0.44 0 0));
+
+      /* Accent — used for focus, active tab, buttons */
+      --color-accent:       light-dark(oklch(0.48 0.17 255), oklch(0.68 0.17 255));
+      --color-accent-text:  light-dark(oklch(0.99 0 0),      oklch(0.10 0 0));
+      --color-accent-subtle:light-dark(
+        color-mix(in oklch, oklch(0.48 0.17 255) 12%, oklch(0.985 0 0)),
+        color-mix(in oklch, oklch(0.68 0.17 255) 12%, oklch(0.13 0 0))
+      );
+
+      /* Danger — destructive actions */
+      --color-danger:       light-dark(oklch(0.50 0.18 25),  oklch(0.68 0.18 25));
+      --color-danger-text:  light-dark(oklch(0.99 0 0),      oklch(0.10 0 0));
+
+      /* Swatch placeholder */
+      --color-swatch-empty: light-dark(oklch(0.93 0 0),      oklch(0.22 0 0));
+
+      /* Code / monospace surfaces */
+      --color-code-bg:      light-dark(oklch(0.94 0 0),      oklch(0.16 0 0));
+
+      /* ----------------------------------------------------------
+         Color scheme — honors OS preference
+         ---------------------------------------------------------- */
+      color-scheme: light dark;
+    }
+
+
+    /* ============================================================
+       @layer base — reset, typography, form elements
+       ============================================================ */
+    @layer base {
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-family: sans-serif;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-size-adjust: none;
+      }
+
+      body {
+        min-height: 100dvh;
+      }
+
+      /* Focus — never remove, only restyle */
+      :focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+        border-radius: var(--border-radius);
+      }
+
+      /* Inherit font in all form elements */
+      button, input, select, textarea, optgroup {
+        font: inherit;
+        color: inherit;
+      }
+
+      /* Remove default button styles */
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        line-height: inherit;
+      }
+
+      /* Remove list styling when role=list is used */
+      [role="list"] {
+        list-style: none;
+      }
+
+      /* Smooth scroll */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+
+      /* Headings */
+      h1, h2, h3, h4, h5, h6 {
+        line-height: 1.2;
+        font-weight: 600;
+      }
+
+      h1 { font-size: var(--text-2xl); }
+      h2 { font-size: var(--text-xl);  }
+      h3 { font-size: var(--text-lg);  }
+      h4 { font-size: var(--text-md);  }
+      h5 { font-size: var(--text-base);}
+      h6 { font-size: var(--text-sm);  }
+
+      /* Links */
+      a {
+        color: var(--color-accent);
+        text-decoration-skip-ink: auto;
+      }
+
+      /* Code */
+      code, pre, kbd, samp {
+        font-family: ui-monospace, monospace;
+        font-size: var(--text-sm);
+      }
+
+      pre {
+        white-space: pre;
+        overflow-x: auto;
+      }
+
+      /* Images */
+      img, svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* Tables */
+      table {
+        border-collapse: collapse;
+      }
+
+      /* Output element */
+      output {
+        font-variant-numeric: tabular-nums;
+      }
+
+    } /* end @layer base */
+
+
+    /* ============================================================
+       @layer components
+       ============================================================ */
+    @layer components {
+
+      /* ----------------------------------------------------------
+         WORKSPACE SHELL
+         ---------------------------------------------------------- */
+
+      .workspace {
+        display: grid;
+        grid-template-rows: var(--header-height) 1fr;
+        grid-template-columns: 1fr var(--staging-width);
+        grid-template-areas:
+          "header  header"
+          "main    staging";
+        min-height: 100dvh;
+      }
+
+      /* ----------------------------------------------------------
+         HEADER
+         ---------------------------------------------------------- */
+
+      .workspace__header {
+        grid-area: header;
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: 0 var(--space-6);
+        background-color: var(--color-surface);
+        border-bottom: var(--border-width) solid var(--color-border);
+        position: sticky;
+        top: 0;
+        z-index: var(--z-raised);
+      }
+
+      .workspace__name {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .workspace__actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        flex-shrink: 0;
+      }
+
+      /* ----------------------------------------------------------
+         MAIN — contains tab bar + function panels
+         ---------------------------------------------------------- */
+
+      .workspace__main {
+        grid-area: main;
+        display: grid;
+        grid-template-rows: var(--tab-bar-height) 1fr;
+        overflow: hidden;
+        min-height: 0;
+      }
+
+      /* ----------------------------------------------------------
+         STAGING AREA
+         ---------------------------------------------------------- */
+
+      .workspace__staging {
+        grid-area: staging;
+        border-left: var(--border-width) solid var(--color-border);
+        background-color: var(--color-surface);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ----------------------------------------------------------
+         TAB NAVIGATION
+         ---------------------------------------------------------- */
+
+      .tab-bar {
+        display: flex;
+        align-items: stretch;
+        background-color: var(--color-surface);
+        border-bottom: var(--border-width) solid var(--color-border);
+        padding: 0 var(--space-4);
+        gap: var(--space-1);
+      }
+
+      .tab-bar__tab {
+        display: flex;
+        align-items: center;
+        padding: 0 var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-subtle);
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px; /* overlap the tab-bar bottom border */
+        transition: color var(--transition-fast), border-color var(--transition-fast);
+        white-space: nowrap;
+        cursor: pointer;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        height: 100%;
+      }
+
+      .tab-bar__tab:hover {
+        color: var(--color-text);
+      }
+
+      .tab-bar__tab[aria-selected="true"] {
+        color: var(--color-accent);
+        border-bottom-color: var(--color-accent);
+      }
+
+      /* ----------------------------------------------------------
+         FUNCTION PANELS
+         ---------------------------------------------------------- */
+
+      .function-panels {
+        overflow: hidden;
+        position: relative;
+        min-height: 0;
+      }
+
+      .function-panel {
+        display: none;
+        height: 100%;
+        overflow-y: auto;
+        padding: var(--space-6);
+      }
+
+      .function-panel[aria-hidden="false"] {
+        display: block;
+      }
+
+      .function-panel__title {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        margin-bottom: var(--space-6);
+        color: var(--color-text);
+      }
+
+      /* ----------------------------------------------------------
+         BUTTONS
+         ---------------------------------------------------------- */
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        height: var(--input-height);
+        padding: 0 var(--space-4);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        border-radius: var(--border-radius);
+        transition: background-color var(--transition-fast), color var(--transition-fast);
+        white-space: nowrap;
+        cursor: pointer;
+        border: var(--border-width) solid transparent;
+        line-height: 1;
+      }
+
+      .btn--primary {
+        background-color: var(--color-accent);
+        color: var(--color-accent-text);
+        border-color: var(--color-accent);
+      }
+
+      .btn--primary:hover {
+        background-color: color-mix(in oklch, var(--color-accent) 85%, oklch(0 0 0));
+        border-color: color-mix(in oklch, var(--color-accent) 85%, oklch(0 0 0));
+      }
+
+      .btn--secondary {
+        background-color: var(--color-surface-2);
+        color: var(--color-text);
+        border-color: var(--color-border);
+      }
+
+      .btn--secondary:hover {
+        background-color: var(--color-surface-3);
+      }
+
+      .btn--ghost {
+        background-color: transparent;
+        color: var(--color-text-subtle);
+        border-color: transparent;
+      }
+
+      .btn--ghost:hover {
+        background-color: var(--color-surface-2);
+        color: var(--color-text);
+      }
+
+      .btn--danger {
+        background-color: transparent;
+        color: var(--color-danger);
+        border-color: transparent;
+      }
+
+      .btn--danger:hover {
+        background-color: color-mix(in oklch, var(--color-danger) 10%, transparent);
+      }
+
+      .btn--sm {
+        height: var(--input-height-sm);
+        padding: 0 var(--space-3);
+        font-size: var(--text-xs);
+      }
+
+      .btn:disabled,
+      .btn[aria-disabled="true"] {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      /* ----------------------------------------------------------
+         FORM INPUTS
+         ---------------------------------------------------------- */
+
+      .input {
+        height: var(--input-height);
+        padding: 0 var(--space-3);
+        background-color: var(--color-bg);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        transition: border-color var(--transition-fast);
+        width: 100%;
+      }
+
+      .input:focus-visible {
+        border-color: var(--color-accent);
+        outline: none;
+      }
+
+      .input--sm {
+        height: var(--input-height-sm);
+        font-size: var(--text-xs);
+        padding: 0 var(--space-2);
+      }
+
+      .input--mono {
+        font-family: ui-monospace, monospace;
+        font-size: var(--text-sm);
+        letter-spacing: 0.02em;
+      }
+
+      /* Color picker — native input[type=color] */
+      .input-color-picker {
+        appearance: none;
+        width: var(--input-height);
+        height: var(--input-height);
+        padding: var(--space-1);
+        background-color: var(--color-bg);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .input-color-picker::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+
+      .input-color-picker::-webkit-color-swatch {
+        border: none;
+        border-radius: calc(var(--border-radius) - 1px);
+      }
+
+      .input-color-picker::-moz-color-swatch {
+        border: none;
+        border-radius: calc(var(--border-radius) - 1px);
+      }
+
+      /* Select */
+      .select {
+        height: var(--input-height);
+        padding: 0 var(--space-3);
+        background-color: var(--color-bg);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        cursor: pointer;
+        appearance: auto;
+      }
+
+      .select:focus-visible {
+        border-color: var(--color-accent);
+        outline: none;
+      }
+
+      /* Range input */
+      .range {
+        appearance: none;
+        width: 100%;
+        height: 4px;
+        background-color: var(--color-border);
+        border-radius: 2px;
+        cursor: pointer;
+        accent-color: var(--color-accent);
+      }
+
+      .range::-webkit-slider-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: var(--color-accent);
+        border: 2px solid var(--color-bg);
+        box-shadow: 0 0 0 1px var(--color-accent);
+        cursor: grab;
+      }
+
+      .range::-webkit-slider-thumb:active {
+        cursor: grabbing;
+      }
+
+      .range::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: var(--color-accent);
+        border: 2px solid var(--color-bg);
+        box-shadow: 0 0 0 1px var(--color-accent);
+        cursor: grab;
+      }
+
+      /* Label */
+      .label {
+        font-size: var(--text-xs);
+        font-weight: 500;
+        color: var(--color-text-subtle);
+        display: block;
+        margin-bottom: var(--space-1);
+      }
+
+      /* Form field group */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+      }
+
+      /* Inline label + output row */
+      .field--inline {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+      }
+
+      .field--inline .label {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      /* ----------------------------------------------------------
+         WCAG BADGES
+         ---------------------------------------------------------- */
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 var(--space-2);
+        height: 20px;
+        border-radius: var(--border-radius);
+        font-size: var(--text-2xs);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        line-height: 1;
+        white-space: nowrap;
+        color: var(--badge-text);
+      }
+
+      .badge--aaa  { background-color: var(--badge-aaa-bg); }
+      .badge--aa   { background-color: var(--badge-aa-bg);  }
+      .badge--aa18 { background-color: var(--badge-aa18-bg);}
+      .badge--dnp  { background-color: var(--badge-dnp-bg); }
+
+      /* ----------------------------------------------------------
+         SWATCHES
+         ---------------------------------------------------------- */
+
+      .swatch {
+        width: var(--swatch-size);
+        height: var(--swatch-size);
+        border-radius: var(--border-radius-md);
+        border: var(--border-width) solid color-mix(in oklch, currentColor 15%, transparent);
+        cursor: pointer;
+        position: relative;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        flex-shrink: 0;
+      }
+
+      .swatch:hover {
+        transform: scale(1.06);
+        box-shadow: 0 4px 12px color-mix(in oklch, currentColor 25%, transparent);
+        z-index: var(--z-raised);
+      }
+
+      .swatch--sm {
+        width: var(--swatch-size-sm);
+        height: var(--swatch-size-sm);
+      }
+
+      .swatch--xs {
+        width: var(--swatch-size-xs);
+        height: var(--swatch-size-xs);
+        border-radius: var(--border-radius);
+      }
+
+      .swatch--empty {
+        background-color: var(--color-swatch-empty);
+        border-style: dashed;
+        border-color: var(--color-border);
+        cursor: pointer;
+      }
+
+      .swatch--empty::after {
+        content: '+';
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--text-lg);
+        color: var(--color-text-faint);
+      }
+
+      .swatch__ambient {
+        position: absolute;
+        bottom: var(--space-1);
+        right: var(--space-1);
+      }
+
+      /* ----------------------------------------------------------
+         CONTRAST INDICATOR (ambient)
+         ---------------------------------------------------------- */
+
+      .contrast-indicator {
+        display: flex;
+        gap: var(--space-1);
+        align-items: center;
+      }
+
+      .contrast-indicator__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .contrast-indicator__dot--aaa  { background-color: var(--badge-aaa-bg); }
+      .contrast-indicator__dot--aa   { background-color: var(--badge-aa-bg);  }
+      .contrast-indicator__dot--aa18 { background-color: var(--badge-aa18-bg);}
+      .contrast-indicator__dot--dnp  { background-color: var(--badge-dnp-bg); }
+
+      /* ----------------------------------------------------------
+         CODE BLOCK
+         ---------------------------------------------------------- */
+
+      .code-block {
+        background-color: var(--color-code-bg);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-md);
+        padding: var(--space-4);
+        overflow-x: auto;
+        font-family: ui-monospace, monospace;
+        font-size: var(--text-xs);
+        line-height: 1.7;
+        color: var(--color-text);
+        tab-size: 2;
+      }
+
+      /* ----------------------------------------------------------
+         SECTION PANELS (collapsible)
+         ---------------------------------------------------------- */
+
+      .panel {
+        background-color: var(--color-surface);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      }
+
+      .panel__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-4);
+        border-bottom: var(--border-width) solid var(--color-border);
+        background-color: var(--color-surface-2);
+      }
+
+      .panel__title {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .panel__body {
+        padding: var(--space-4);
+      }
+
+      /* ----------------------------------------------------------
+         STAGING AREA
+         ---------------------------------------------------------- */
+
+      .staging {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .staging__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-4);
+        border-bottom: var(--border-width) solid var(--color-border);
+        background-color: var(--color-surface-2);
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        z-index: var(--z-base);
+      }
+
+      .staging__title {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .staging__count {
+        font-size: var(--text-xs);
+        color: var(--color-text-faint);
+        background-color: var(--color-surface-3);
+        padding: 0 var(--space-2);
+        border-radius: 10px;
+        line-height: 1.8;
+      }
+
+      .staging__list {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .staging__empty {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-8);
+        text-align: center;
+        color: var(--color-text-faint);
+        font-size: var(--text-sm);
+      }
+
+      .staging-card {
+        background-color: var(--color-bg);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      }
+
+      .staging-card__preview {
+        height: 48px;
+        width: 100%;
+        display: block;
+      }
+
+      .staging-card__body {
+        padding: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .staging-card__name {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .staging-card__meta {
+        font-size: var(--text-2xs);
+        color: var(--color-text-faint);
+        font-family: ui-monospace, monospace;
+      }
+
+      .staging-card__recipe {
+        font-size: var(--text-2xs);
+        color: var(--color-text-subtle);
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+      }
+
+      .staging-card__actions {
+        display: flex;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        border-top: var(--border-width) solid var(--color-border-subtle);
+        background-color: var(--color-surface);
+      }
+
+      /* ----------------------------------------------------------
+         MIXER FUNCTION
+         ---------------------------------------------------------- */
+
+      .mixer__inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+
+      .mixer__color-input {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .mixer__color-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .mixer__sliders {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .mixer__controls {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+        flex-wrap: wrap;
+      }
+
+      .mixer__palettes {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .mixer__row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .mixer__row-label {
+        font-size: var(--text-xs);
+        font-weight: 500;
+        color: var(--color-text-subtle);
+        width: 80px;
+        flex-shrink: 0;
+        cursor: pointer;
+        padding: var(--space-2) var(--space-3);
+        background-color: var(--color-surface-2);
+        border-radius: var(--border-radius);
+        border: var(--border-width) solid var(--color-border);
+        text-align: center;
+        transition: background-color var(--transition-fast);
+      }
+
+      .mixer__row-label:hover {
+        background-color: var(--color-surface-3);
+      }
+
+      .mixer__swatches {
+        display: flex;
+        gap: var(--space-2);
+        flex: 1;
+        flex-wrap: wrap;
+      }
+
+      .mixer__row-actions {
+        display: flex;
+        gap: var(--space-1);
+        flex-shrink: 0;
+      }
+
+      .mixer__actions {
+        display: flex;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+        padding-top: var(--space-6);
+        border-top: var(--border-width) solid var(--color-border);
+      }
+
+      /* ----------------------------------------------------------
+         PALETTE BUILDER FUNCTION
+         ---------------------------------------------------------- */
+
+      .palette-builder__toolbar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-6);
+        flex-wrap: wrap;
+      }
+
+      .palette-builder__anchors {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin-left: auto;
+        flex-wrap: wrap;
+      }
+
+      .anchor-config {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .anchor-config__label {
+        font-size: var(--text-xs);
+        color: var(--color-text-subtle);
+        white-space: nowrap;
+      }
+
+      .palette-builder__families {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+      }
+
+      .hue-family {
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      }
+
+      .hue-family__header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        background-color: var(--color-surface-2);
+        border-bottom: var(--border-width) solid var(--color-border);
+      }
+
+      .hue-family__name {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        flex: 1;
+      }
+
+      .hue-family__swatches {
+        display: flex;
+        padding: var(--space-4);
+        gap: var(--space-2);
+        overflow-x: auto;
+      }
+
+      .slot-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-2);
+        flex-shrink: 0;
+      }
+
+      .slot-label {
+        font-size: var(--text-2xs);
+        color: var(--color-text-faint);
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .slot-editor {
+        border-top: var(--border-width) solid var(--color-border);
+        padding: var(--space-6);
+        background-color: var(--color-bg);
+        display: none;
+      }
+
+      .slot-editor[aria-hidden="false"] {
+        display: block;
+      }
+
+      .slot-editor__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+      }
+
+      .slot-editor__values {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--space-2) var(--space-4);
+        font-size: var(--text-xs);
+      }
+
+      .slot-editor__value-label {
+        color: var(--color-text-subtle);
+        font-family: ui-monospace, monospace;
+        white-space: nowrap;
+        align-self: center;
+      }
+
+      .slot-editor__value {
+        color: var(--color-text);
+        font-family: ui-monospace, monospace;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        align-self: center;
+      }
+
+      .css-property-display {
+        font-size: var(--text-xs);
+        font-family: ui-monospace, monospace;
+        color: var(--color-accent);
+        background-color: var(--color-accent-subtle);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--border-radius);
+        display: inline-block;
+      }
+
+      /* ----------------------------------------------------------
+         CONTRAST AUDITOR FUNCTION
+         ---------------------------------------------------------- */
+
+      .contrast-auditor__config {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-6);
+        margin-bottom: var(--space-6);
+        flex-wrap: wrap;
+      }
+
+      .background-refs {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+
+      .background-ref {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .background-ref__label {
+        font-size: var(--text-xs);
+        color: var(--color-text-subtle);
+        width: 36px;
+        flex-shrink: 0;
+      }
+
+      .contrast-filters {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+
+      .contrast-filter-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 var(--space-3);
+        height: 28px;
+        border-radius: var(--border-radius);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        cursor: pointer;
+        border: var(--border-width) solid transparent;
+        transition: opacity var(--transition-fast);
+        color: var(--badge-text);
+      }
+
+      .contrast-filter-btn--aaa  { background-color: var(--badge-aaa-bg); }
+      .contrast-filter-btn--aa   { background-color: var(--badge-aa-bg);  }
+      .contrast-filter-btn--aa18 { background-color: var(--badge-aa18-bg);}
+      .contrast-filter-btn--dnp  { background-color: var(--badge-dnp-bg); }
+
+      .contrast-filter-btn[aria-pressed="false"] {
+        opacity: 0.35;
+      }
+
+      .contrast-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .contrast-list__section-title {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-text-subtle);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: var(--space-2) 0;
+        border-bottom: var(--border-width) solid var(--color-border);
+        margin-bottom: var(--space-2);
+        margin-top: var(--space-4);
+      }
+
+      .contrast-list__row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--border-radius);
+        background-color: var(--color-surface);
+      }
+
+      .contrast-list__ratio {
+        font-size: var(--text-sm);
+        font-family: ui-monospace, monospace;
+        color: var(--color-text-subtle);
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      /* CONTRAST MATRIX — full-screen overlay */
+      .contrast-matrix-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: var(--color-bg);
+        z-index: var(--z-modal);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .contrast-matrix-overlay[aria-hidden="false"] {
+        display: flex;
+      }
+
+      .contrast-matrix-overlay__header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-3) var(--space-6);
+        border-bottom: var(--border-width) solid var(--color-border);
+        background-color: var(--color-surface);
+        flex-shrink: 0;
+      }
+
+      .contrast-matrix-overlay__body {
+        flex: 1;
+        overflow: auto;
+        padding: var(--space-4);
+      }
+
+      .contrast-matrix {
+        border-collapse: collapse;
+        font-size: var(--text-xs);
+      }
+
+      .contrast-matrix th,
+      .contrast-matrix td {
+        min-width: var(--matrix-cell-size);
+        width: var(--matrix-cell-size);
+        height: var(--matrix-cell-size);
+        padding: var(--space-2);
+        border: var(--border-width) solid var(--color-border);
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      .contrast-matrix__header-cell {
+        background-color: var(--color-surface-2);
+        font-size: var(--text-2xs);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .contrast-matrix__cell {
+        position: relative;
+        cursor: default;
+      }
+
+      .contrast-matrix__cell--self {
+        background-color: var(--color-surface-3);
+      }
+
+      .contrast-matrix__sample {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-1);
+        height: 100%;
+      }
+
+      .contrast-matrix__sample-text {
+        font-size: var(--text-md);
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .contrast-matrix__ratio {
+        font-size: var(--text-2xs);
+        font-family: ui-monospace, monospace;
+        opacity: 0.75;
+      }
+
+      /* ----------------------------------------------------------
+         ARCHIVE FUNCTION
+         ---------------------------------------------------------- */
+
+      .archive__header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+        flex-wrap: wrap;
+      }
+
+      .archive__project-name {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-text);
+        flex: 1;
+      }
+
+      .archive__export-actions {
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+
+      .archive__sections {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+      }
+
+      .swatch-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .swatch-grid__family {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .swatch-grid__family-name {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-text-subtle);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .swatch-grid__row {
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+
+      .swatch-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+        width: var(--swatch-size);
+      }
+
+      .swatch-card__color {
+        width: var(--swatch-size);
+        height: var(--swatch-size);
+        border-radius: var(--border-radius-md);
+        border: var(--border-width) solid var(--color-border-subtle);
+        flex-shrink: 0;
+      }
+
+      .swatch-card__name {
+        font-size: var(--text-2xs);
+        font-weight: 600;
+        color: var(--color-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .swatch-card__hex {
+        font-size: var(--text-2xs);
+        font-family: ui-monospace, monospace;
+        color: var(--color-text-faint);
+        white-space: nowrap;
+      }
+
+      .snapshot-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .snapshot-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        background-color: var(--color-surface);
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-md);
+      }
+
+      .snapshot-item__label {
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        flex: 1;
+      }
+
+      .snapshot-item__time {
+        font-size: var(--text-xs);
+        color: var(--color-text-faint);
+        font-family: ui-monospace, monospace;
+      }
+
+      /* ----------------------------------------------------------
+         TOAST
+         ---------------------------------------------------------- */
+
+      .toast {
+        position: fixed;
+        bottom: var(--space-6);
+        left: 50%;
+        translate: -50% 0;
+        background-color: var(--color-text);
+        color: var(--color-bg);
+        padding: var(--space-3) var(--space-5);
+        border-radius: var(--border-radius-md);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        z-index: var(--z-toast);
+        max-width: calc(100vw - var(--space-8));
+        text-align: center;
+        opacity: 0;
+        translate: -50% var(--space-4);
+        transition:
+          opacity var(--transition-base),
+          translate var(--transition-base);
+        pointer-events: none;
+      }
+
+      .toast[aria-hidden="false"] {
+        opacity: 1;
+        translate: -50% 0;
+      }
+
+      /* ----------------------------------------------------------
+         DIVIDER
+         ---------------------------------------------------------- */
+
+      .divider {
+        border: none;
+        border-top: var(--border-width) solid var(--color-border);
+        margin: var(--space-4) 0;
+      }
+
+
+      /* ----------------------------------------------------------
+         RESPONSIVE — mobile-first adjustments
+         Breakpoint: 768px
+         Below: single column, staging as fifth tab
+         Above: sidebar layout, staging tab hidden
+         ---------------------------------------------------------- */
+
+      /* On desktop: hide the staging tab, show the sidebar */
+      @media (min-width: 768px) {
+        #tab-staging {
+          display: none;
+        }
+
+        #panel-staging {
+          display: none !important; /* always hidden as a panel on desktop */
+        }
+      }
+
+      /* On mobile: hide the sidebar, show staging as a tab */
+      @media (max-width: 767px) {
+
+        /* Collapse to single column — no sidebar */
+        .workspace {
+          grid-template-columns: 1fr;
+          grid-template-rows: var(--header-height) 1fr;
+          grid-template-areas:
+            "header"
+            "main";
+        }
+
+        .workspace__staging {
+          display: none; /* sidebar hidden — staging lives as a tab instead */
+        }
+
+        /* Tab bar — horizontally scrollable, no wrapping */
+        .tab-bar {
+          overflow-x: auto;
+          overflow-y: hidden;
+          scrollbar-width: none; /* Firefox */
+          -webkit-overflow-scrolling: touch;
+          gap: 0;
+          padding: 0 var(--space-2);
+        }
+
+        .tab-bar::-webkit-scrollbar {
+          display: none;
+        }
+
+        .tab-bar__tab {
+          padding: 0 var(--space-3);
+          font-size: var(--text-xs);
+          flex-shrink: 0;
+          min-width: 44px;        /* touch target */
+          min-height: 44px;
+        }
+
+        /* Function panels — full width, comfortable padding */
+        .function-panel {
+          padding: var(--space-4);
+        }
+
+        /* Header — tighter on mobile */
+        .workspace__header {
+          padding: 0 var(--space-4);
+          gap: var(--space-3);
+        }
+
+        .workspace__name {
+          font-size: var(--text-xs);
+        }
+
+        /* Mixer — stack color inputs vertically */
+        .mixer__inputs {
+          grid-template-columns: 1fr;
+          gap: var(--space-4);
+        }
+
+        .mixer__controls {
+          flex-direction: column;
+          align-items: stretch;
+          gap: var(--space-3);
+        }
+
+        .mixer__controls .field {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: var(--space-3);
+        }
+
+        .mixer__controls .label {
+          margin-bottom: 0;
+          flex-shrink: 0;
+        }
+
+        .mixer__row {
+          flex-wrap: wrap;
+          gap: var(--space-2);
+        }
+
+        .mixer__row-label {
+          width: auto;
+          flex: 1;
+        }
+
+        .mixer__row-actions {
+          width: 100%;
+          justify-content: flex-end;
+        }
+
+        .mixer__actions {
+          flex-direction: column;
+        }
+
+        /* Palette builder — stack toolbar vertically */
+        .palette-builder__toolbar {
+          flex-direction: column;
+          align-items: stretch;
+          gap: var(--space-4);
+        }
+
+        .palette-builder__anchors {
+          margin-left: 0;
+          gap: var(--space-3);
+        }
+
+        /* Hue family swatches — scroll horizontally */
+        .hue-family__swatches {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding-bottom: var(--space-2);
+        }
+
+        .hue-family__swatches::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Slot editor — single column */
+        .slot-editor__grid {
+          grid-template-columns: 1fr;
+          gap: var(--space-4);
+        }
+
+        /* Contrast auditor — stack config */
+        .contrast-auditor__config {
+          flex-direction: column;
+          gap: var(--space-4);
+        }
+
+        .contrast-auditor__config > button {
+          margin-left: 0;
+          align-self: stretch;
+        }
+
+        /* Archive — stack header */
+        .archive__header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: var(--space-3);
+        }
+
+        .archive__export-actions {
+          justify-content: stretch;
+        }
+
+        .archive__export-actions .btn {
+          flex: 1;
+        }
+
+        /* Swatch grid — smaller swatches on mobile */
+        .swatch-grid__row {
+          gap: var(--space-1);
+        }
+
+        .swatch-card {
+          width: var(--swatch-size-sm);
+        }
+
+        .swatch-card__color {
+          width: var(--swatch-size-sm);
+          height: var(--swatch-size-sm);
+        }
+
+        /* Contrast matrix overlay — full screen, scrollable */
+        .contrast-matrix-overlay__body {
+          padding: var(--space-2);
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .contrast-matrix-overlay__header {
+          padding: var(--space-3) var(--space-4);
+          flex-wrap: wrap;
+          gap: var(--space-3);
+        }
+
+        /* Staging panel (mobile tab view) */
+        .staging {
+          padding: 0;
+        }
+
+        .staging__header {
+          position: static; /* not sticky when inside a scrollable panel */
+        }
+
+        /* Touch targets — all interactive elements min 44×44px */
+        .btn {
+          min-height: 44px;
+          padding: 0 var(--space-4);
+        }
+
+        .btn--sm {
+          min-height: 36px; /* slightly relaxed for sm in tight spaces */
+        }
+
+        .input,
+        .select {
+          min-height: 44px;
+        }
+
+        .input--sm {
+          min-height: 36px;
+        }
+
+        .input-color-picker {
+          width: 44px;
+          height: 44px;
+        }
+
+        .swatch {
+          min-width: 44px;
+          min-height: 44px;
+        }
+
+        .contrast-filter-btn {
+          min-height: 36px;
+          min-width: 44px;
+        }
+
+        /* Toast — full width on mobile */
+        .toast {
+          left: var(--space-4);
+          right: var(--space-4);
+          bottom: var(--space-4);
+          translate: none;
+          max-width: none;
+        }
+
+        .toast[aria-hidden="false"] {
+          translate: none;
+        }
+
+      } /* end mobile media query */
+
+    } /* end @layer components */
+
+
+    /* ============================================================
+       @layer utilities
+       ============================================================ */
+    @layer utilities {
+
+      /* Screen-reader only — visually hidden but accessible */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Truncate text */
+      .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Flex utilities */
+      .flex         { display: flex; }
+      .flex-col     { display: flex; flex-direction: column; }
+      .flex-wrap    { flex-wrap: wrap; }
+      .items-center { align-items: center; }
+      .items-start  { align-items: flex-start; }
+      .justify-between { justify-content: space-between; }
+      .flex-1       { flex: 1; }
+      .flex-shrink-0 { flex-shrink: 0; }
+
+      /* Gap utilities */
+      .gap-1  { gap: var(--space-1); }
+      .gap-2  { gap: var(--space-2); }
+      .gap-3  { gap: var(--space-3); }
+      .gap-4  { gap: var(--space-4); }
+      .gap-6  { gap: var(--space-6); }
+
+      /* Text utilities */
+      .text-xs     { font-size: var(--text-xs); }
+      .text-sm     { font-size: var(--text-sm); }
+      .text-base   { font-size: var(--text-base); }
+      .text-subtle { color: var(--color-text-subtle); }
+      .text-faint  { color: var(--color-text-faint); }
+      .font-mono   { font-family: ui-monospace, monospace; }
+      .font-medium { font-weight: 500; }
+      .font-bold   { font-weight: 700; }
+
+      /* Spacing */
+      .mb-2 { margin-bottom: var(--space-2); }
+      .mb-4 { margin-bottom: var(--space-4); }
+      .mb-6 { margin-bottom: var(--space-6); }
+      .mt-4 { margin-top: var(--space-4); }
+
+    } /* end @layer utilities */
+
+  </style>
+</head>
+
+<body>
+
+  <div class="workspace">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="workspace__header" role="banner">
+      <h1 class="workspace__name" id="project-name">Untitled Project</h1>
+      <div class="workspace__actions" role="toolbar" aria-label="Project actions">
+        <button class="btn btn--ghost btn--sm" id="btn-new-project"
+                type="button" aria-label="New project">
+          New
+        </button>
+        <button class="btn btn--ghost btn--sm" id="btn-upload-project"
+                type="button" aria-label="Open project from file">
+          Open
+        </button>
+        <button class="btn btn--secondary btn--sm" id="btn-download-project"
+                type="button" aria-label="Download project as JSON">
+          Download
+        </button>
+        <!-- Hidden file input for upload -->
+        <input type="file" id="input-upload-project" accept=".json"
+               class="sr-only" aria-hidden="true" tabindex="-1" />
+      </div>
+    </header>
+
+    <!-- ============================================================
+         MAIN (tab bar + function panels)
+         ============================================================ -->
+    <div class="workspace__main" role="main">
+
+      <!-- TAB BAR -->
+      <nav class="tab-bar" aria-label="Functions" role="tablist">
+        <button class="tab-bar__tab"
+                role="tab"
+                id="tab-mixer"
+                aria-selected="true"
+                aria-controls="panel-mixer"
+                type="button">
+          Mixer
+        </button>
+        <button class="tab-bar__tab"
+                role="tab"
+                id="tab-palette"
+                aria-selected="false"
+                aria-controls="panel-palette"
+                type="button">
+          Palette
+        </button>
+        <button class="tab-bar__tab"
+                role="tab"
+                id="tab-contrast"
+                aria-selected="false"
+                aria-controls="panel-contrast"
+                type="button">
+          Contrast
+        </button>
+        <button class="tab-bar__tab"
+                role="tab"
+                id="tab-archive"
+                aria-selected="false"
+                aria-controls="panel-archive"
+                type="button">
+          Archive
+        </button>
+        <!-- Staging tab — visible on mobile only (hidden via CSS on desktop) -->
+        <button class="tab-bar__tab"
+                role="tab"
+                id="tab-staging"
+                aria-selected="false"
+                aria-controls="panel-staging"
+                type="button">
+          Staging
+          <span id="tab-staging-count"
+                aria-label="staged colors"
+                style="
+                  margin-left: var(--space-1);
+                  background-color: var(--color-surface-3);
+                  border-radius: 10px;
+                  padding: 0 var(--space-2);
+                  font-size: var(--text-2xs);
+                  line-height: 1.8;
+                  color: var(--color-text-subtle);
+                  display: inline-block;
+                ">0</span>
+        </button>
+      </nav>
+
+      <!-- FUNCTION PANELS -->
+      <div class="function-panels">
+
+        <!-- ── MIXER ─────────────────────────────────────────── -->
+        <section class="function-panel"
+                 id="panel-mixer"
+                 role="tabpanel"
+                 aria-labelledby="tab-mixer"
+                 aria-hidden="false">
+
+          <h2 class="function-panel__title">Mixer</h2>
+
+          <!-- Color inputs -->
+          <div class="mixer__inputs">
+            <!-- Color A -->
+            <div class="mixer__color-input">
+              <div class="mixer__color-header">
+                <input class="input-color-picker"
+                       type="color"
+                       id="mixer-color-a-picker"
+                       value="#3b82f6"
+                       aria-label="Color A picker" />
+                <input class="input input--mono"
+                       type="text"
+                       id="mixer-color-a-hex"
+                       value="#3b82f6"
+                       maxlength="7"
+                       autocomplete="off"
+                       spellcheck="false"
+                       aria-label="Color A hex value"
+                       pattern="^#[0-9A-Fa-f]{6}$" />
+              </div>
+              <div class="mixer__sliders" aria-label="Color A OKLCH values">
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-a-l">L</label>
+                    <output class="text-xs font-mono" id="mixer-a-l-value" for="mixer-a-l">0.546</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-a-l"
+                         min="0" max="1" step="0.001" value="0.546"
+                         aria-label="Color A lightness"
+                         aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.546" />
+                </div>
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-a-c">C</label>
+                    <output class="text-xs font-mono" id="mixer-a-c-value" for="mixer-a-c">0.199</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-a-c"
+                         min="0" max="0.4" step="0.001" value="0.199"
+                         aria-label="Color A chroma"
+                         aria-valuemin="0" aria-valuemax="0.4" aria-valuenow="0.199" />
+                </div>
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-a-h">H</label>
+                    <output class="text-xs font-mono" id="mixer-a-h-value" for="mixer-a-h">264.1°</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-a-h"
+                         min="0" max="360" step="0.1" value="264.1"
+                         aria-label="Color A hue"
+                         aria-valuemin="0" aria-valuemax="360" aria-valuenow="264.1" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Color B -->
+            <div class="mixer__color-input">
+              <div class="mixer__color-header">
+                <input class="input-color-picker"
+                       type="color"
+                       id="mixer-color-b-picker"
+                       value="#ef4444"
+                       aria-label="Color B picker" />
+                <input class="input input--mono"
+                       type="text"
+                       id="mixer-color-b-hex"
+                       value="#ef4444"
+                       maxlength="7"
+                       autocomplete="off"
+                       spellcheck="false"
+                       aria-label="Color B hex value"
+                       pattern="^#[0-9A-Fa-f]{6}$" />
+              </div>
+              <div class="mixer__sliders" aria-label="Color B OKLCH values">
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-b-l">L</label>
+                    <output class="text-xs font-mono" id="mixer-b-l-value" for="mixer-b-l">0.577</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-b-l"
+                         min="0" max="1" step="0.001" value="0.577"
+                         aria-label="Color B lightness"
+                         aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.577" />
+                </div>
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-b-c">C</label>
+                    <output class="text-xs font-mono" id="mixer-b-c-value" for="mixer-b-c">0.219</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-b-c"
+                         min="0" max="0.4" step="0.001" value="0.219"
+                         aria-label="Color B chroma"
+                         aria-valuemin="0" aria-valuemax="0.4" aria-valuenow="0.219" />
+                </div>
+                <div class="field">
+                  <div class="field--inline">
+                    <label class="label" for="mixer-b-h">H</label>
+                    <output class="text-xs font-mono" id="mixer-b-h-value" for="mixer-b-h">27.3°</output>
+                  </div>
+                  <input class="range" type="range"
+                         id="mixer-b-h"
+                         min="0" max="360" step="0.1" value="27.3"
+                         aria-label="Color B hue"
+                         aria-valuemin="0" aria-valuemax="360" aria-valuenow="27.3" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="mixer__controls">
+            <div class="field">
+              <label class="label" for="mixer-space">Color space</label>
+              <select class="select" id="mixer-space" aria-label="Interpolation color space">
+                <optgroup label="Polar">
+                  <option value="hsl">HSL</option>
+                  <option value="hwb">HWB</option>
+                  <option value="lch">LCH</option>
+                  <option value="oklch" selected>OKLCH</option>
+                </optgroup>
+                <optgroup label="Rectangular">
+                  <option value="srgb">sRGB</option>
+                  <option value="srgb-linear">sRGB Linear</option>
+                  <option value="display-p3">Display P3</option>
+                  <option value="a98-rgb">A98 RGB</option>
+                  <option value="prophoto-rgb">ProPhoto RGB</option>
+                  <option value="rec2020">REC2020</option>
+                  <option value="lab">LAB</option>
+                  <option value="oklab">OKLAB</option>
+                  <option value="xyz">XYZ</option>
+                  <option value="xyz-d50">XYZ D50</option>
+                  <option value="xyz-d65">XYZ D65</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="mixer-steps">Steps</label>
+              <select class="select" id="mixer-steps" aria-label="Number of palette steps">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7" selected>7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Generated palette rows -->
+          <div class="mixer__palettes" id="mixer-palettes" aria-label="Generated palettes" aria-live="polite">
+            <!-- Rows rendered by JS -->
+            <p class="text-sm text-subtle">Palettes will appear here once colorjs.io loads.</p>
+          </div>
+
+          <!-- Actions -->
+          <div class="mixer__actions">
+            <button class="btn btn--secondary" id="btn-mixer-copy-all" type="button">
+              Copy all CSS variables
+            </button>
+          </div>
+
+        </section>
+
+
+        <!-- ── PALETTE BUILDER ───────────────────────────────── -->
+        <section class="function-panel"
+                 id="panel-palette"
+                 role="tabpanel"
+                 aria-labelledby="tab-palette"
+                 aria-hidden="true">
+
+          <h2 class="function-panel__title">Palette</h2>
+
+          <!-- Toolbar -->
+          <div class="palette-builder__toolbar">
+            <button class="btn btn--secondary" id="btn-add-family" type="button">
+              + Add family
+            </button>
+            <div class="palette-builder__anchors">
+              <div class="anchor-config">
+                <span class="anchor-config__label">Paper</span>
+                <input class="input-color-picker" type="color"
+                       id="anchor-paper" value="#ffffff"
+                       aria-label="Paper anchor color (white)" />
+                <input class="input input--mono input--sm"
+                       type="text" id="anchor-paper-hex"
+                       value="#ffffff" maxlength="7"
+                       aria-label="Paper anchor hex value" />
+              </div>
+              <div class="anchor-config">
+                <span class="anchor-config__label">Ink</span>
+                <input class="input-color-picker" type="color"
+                       id="anchor-ink" value="#000000"
+                       aria-label="Ink anchor color (black)" />
+                <input class="input input--mono input--sm"
+                       type="text" id="anchor-ink-hex"
+                       value="#000000" maxlength="7"
+                       aria-label="Ink anchor hex value" />
+              </div>
+              <div class="field" style="flex-direction: row; align-items: center; gap: var(--space-2);">
+                <input type="checkbox" id="anchor-shared" checked
+                       aria-label="Shared anchors across all families" />
+                <label class="label" for="anchor-shared" style="margin:0">Shared</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hue families -->
+          <div class="palette-builder__families" id="palette-families" aria-label="Hue families">
+            <!-- Families rendered by JS -->
+            <p class="text-sm text-subtle" id="palette-empty-state">
+              Add a family to start building your palette.
+            </p>
+          </div>
+
+          <!-- CSS preview -->
+          <details style="margin-top: var(--space-8);">
+            <summary class="btn btn--ghost" style="display: inline-flex; cursor: pointer;">
+              CSS custom properties
+            </summary>
+            <div style="margin-top: var(--space-3); position: relative;">
+              <pre class="code-block" id="palette-css-output" aria-label="Generated CSS custom properties">/* No colors yet */</pre>
+              <button class="btn btn--secondary btn--sm"
+                      id="btn-copy-css-preview"
+                      type="button"
+                      style="position: absolute; top: var(--space-2); right: var(--space-2);">
+                Copy
+              </button>
+            </div>
+          </details>
+
+        </section>
+
+
+        <!-- ── CONTRAST AUDITOR ──────────────────────────────── -->
+        <section class="function-panel"
+                 id="panel-contrast"
+                 role="tabpanel"
+                 aria-labelledby="tab-contrast"
+                 aria-hidden="true">
+
+          <h2 class="function-panel__title">Contrast</h2>
+
+          <!-- Config row -->
+          <div class="contrast-auditor__config">
+
+            <!-- Background references -->
+            <fieldset style="border: none; padding: 0;">
+              <legend class="label" style="margin-bottom: var(--space-2);">Background references</legend>
+              <div class="background-refs">
+                <div class="background-ref">
+                  <span class="background-ref__label">Light</span>
+                  <select class="select" id="contrast-bg-light"
+                          aria-label="Light mode background color">
+                    <option value="">— None —</option>
+                  </select>
+                </div>
+                <div class="background-ref">
+                  <span class="background-ref__label">Dark</span>
+                  <select class="select" id="contrast-bg-dark"
+                          aria-label="Dark mode background color">
+                    <option value="">— None —</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- WCAG filters -->
+            <fieldset style="border: none; padding: 0;">
+              <legend class="label" style="margin-bottom: var(--space-2);">Show levels</legend>
+              <div class="contrast-filters" role="group" aria-label="WCAG level filters">
+                <button class="contrast-filter-btn contrast-filter-btn--aaa"
+                        type="button" role="checkbox"
+                        aria-pressed="true" aria-label="Show AAA contrast pairs">
+                  AAA
+                </button>
+                <button class="contrast-filter-btn contrast-filter-btn--aa"
+                        type="button" role="checkbox"
+                        aria-pressed="true" aria-label="Show AA contrast pairs">
+                  AA
+                </button>
+                <button class="contrast-filter-btn contrast-filter-btn--aa18"
+                        type="button" role="checkbox"
+                        aria-pressed="true" aria-label="Show AA18 contrast pairs">
+                  AA18
+                </button>
+                <button class="contrast-filter-btn contrast-filter-btn--dnp"
+                        type="button" role="checkbox"
+                        aria-pressed="true" aria-label="Show failing contrast pairs">
+                  DNP
+                </button>
+              </div>
+            </fieldset>
+
+            <!-- Full-screen button -->
+            <button class="btn btn--secondary"
+                    id="btn-open-matrix"
+                    type="button"
+                    aria-haspopup="dialog"
+                    style="margin-left: auto; align-self: flex-end;">
+              Full matrix ↗
+            </button>
+
+          </div>
+
+          <!-- Contrast list -->
+          <div class="contrast-list" id="contrast-list" aria-live="polite" aria-label="Contrast results">
+            <p class="text-sm text-subtle">Add colors to the palette to see contrast ratios.</p>
+          </div>
+
+        </section>
+
+
+        <!-- ── ARCHIVE ───────────────────────────────────────── -->
+        <section class="function-panel"
+                 id="panel-archive"
+                 role="tabpanel"
+                 aria-labelledby="tab-archive"
+                 aria-hidden="true">
+
+          <h2 class="function-panel__title">Archive</h2>
+
+          <!-- Archive header -->
+          <div class="archive__header">
+            <p class="archive__project-name" id="archive-project-name">Untitled Project</p>
+            <div class="archive__export-actions">
+              <button class="btn btn--secondary" id="btn-export-css" type="button">
+                Export CSS
+              </button>
+              <button class="btn btn--secondary" id="btn-export-csv" type="button">
+                Export CSV
+              </button>
+              <button class="btn btn--secondary" id="btn-export-svg" type="button">
+                Export SVG
+              </button>
+            </div>
+          </div>
+
+          <!-- Archive body -->
+          <div class="archive__sections">
+
+            <!-- Swatch grid -->
+            <div class="panel">
+              <div class="panel__header">
+                <h3 class="panel__title">Color system</h3>
+              </div>
+              <div class="panel__body">
+                <div class="swatch-grid" id="archive-swatch-grid" aria-label="Color system swatches">
+                  <p class="text-sm text-subtle">No colors yet.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contrast pairs -->
+            <div class="panel">
+              <div class="panel__header">
+                <div class="flex items-center gap-2">
+                  <h3 class="panel__title">Contrast pairs</h3>
+                  <div class="contrast-filters" role="group" aria-label="Archive contrast level filters">
+                    <button class="contrast-filter-btn contrast-filter-btn--aaa"
+                            type="button" role="checkbox"
+                            aria-pressed="true" data-archive-filter="aaa">AAA</button>
+                    <button class="contrast-filter-btn contrast-filter-btn--aa"
+                            type="button" role="checkbox"
+                            aria-pressed="true" data-archive-filter="aa">AA</button>
+                    <button class="contrast-filter-btn contrast-filter-btn--aa18"
+                            type="button" role="checkbox"
+                            aria-pressed="true" data-archive-filter="aa18">AA18</button>
+                    <button class="contrast-filter-btn contrast-filter-btn--dnp"
+                            type="button" role="checkbox"
+                            aria-pressed="false" data-archive-filter="dnp">DNP</button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel__body">
+                <div id="archive-contrast-pairs" aria-live="polite">
+                  <p class="text-sm text-subtle">No contrast pairs yet.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- CSS properties -->
+            <div class="panel">
+              <div class="panel__header">
+                <h3 class="panel__title">CSS custom properties</h3>
+                <button class="btn btn--ghost btn--sm"
+                        id="btn-archive-copy-css" type="button">
+                  Copy
+                </button>
+              </div>
+              <div class="panel__body">
+                <pre class="code-block" id="archive-css-output">/* No colors yet */</pre>
+              </div>
+            </div>
+
+            <!-- Snapshots -->
+            <div class="panel">
+              <div class="panel__header">
+                <h3 class="panel__title">Snapshots</h3>
+              </div>
+              <div class="panel__body">
+                <div class="flex items-center gap-3 mb-4">
+                  <input class="input" type="text"
+                         id="snapshot-label"
+                         placeholder="Version label (optional)"
+                         aria-label="Snapshot version label"
+                         style="max-width: 280px;" />
+                  <button class="btn btn--secondary"
+                          id="btn-save-snapshot" type="button">
+                    Save snapshot
+                  </button>
+                </div>
+                <div class="snapshot-list" id="snapshot-list" aria-live="polite">
+                  <p class="text-sm text-subtle">No snapshots yet.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- 25002500 STAGING (mobile fifth tab) 250025002500250025002500250025002500250025002500250025002500250025002500250025002500 -->
+        <section class="function-panel"
+                 id="panel-staging"
+                 role="tabpanel"
+                 aria-labelledby="tab-staging"
+                 aria-hidden="true"
+                 style="padding: 0;">
+          <div class="staging">
+            <div class="staging__header">
+              <h2 class="staging__title">Staging</h2>
+              <span class="staging__count"
+                    id="staging-count-mobile"
+                    aria-live="polite"
+                    aria-label="0 colors staged">0</span>
+            </div>
+            <div class="staging__list"
+                 id="staging-list-mobile"
+                 role="list"
+                 aria-label="Staged colors">
+            </div>
+            <div class="staging__empty"
+                 id="staging-empty-mobile"
+                 aria-hidden="false">
+              <span aria-hidden="true" style="font-size: var(--text-2xl);">29c1</span>
+              <p>Colors pushed from the Mixer appear here.</p>
+              <p class="text-xs text-faint" style="margin-top: var(--space-2);">
+                Switch to Mixer to generate and push colors.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- end .function-panels -->
+    </div><!-- end .workspace__main -->
+
+
+    <!-- ============================================================
+         STAGING AREA
+         ============================================================ -->
+    <aside class="workspace__staging" aria-label="Staging area">
+      <div class="staging">
+
+        <div class="staging__header">
+          <h2 class="staging__title">Staging</h2>
+          <span class="staging__count" id="staging-count" aria-live="polite"
+                aria-label="0 colors staged">0</span>
+        </div>
+
+        <div class="staging__list" id="staging-list" role="list"
+             aria-label="Staged colors">
+        </div>
+
+        <div class="staging__empty" id="staging-empty" aria-hidden="false">
+          <span aria-hidden="true" style="font-size: var(--text-2xl);">⬡</span>
+          <p>Colors pushed from the Mixer appear here.</p>
+        </div>
+
+      </div>
+    </aside>
+
+  </div><!-- end .workspace -->
+
+
+  <!-- ============================================================
+       CONTRAST MATRIX OVERLAY (full-screen)
+       ============================================================ -->
+  <div class="contrast-matrix-overlay"
+       id="contrast-matrix-overlay"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Full contrast matrix"
+       aria-hidden="true">
+
+    <div class="contrast-matrix-overlay__header">
+      <button class="btn btn--ghost btn--sm"
+              id="btn-close-matrix" type="button"
+              aria-label="Close contrast matrix">
+        ← Back
+      </button>
+      <div class="contrast-filters" role="group" aria-label="Matrix WCAG level filters">
+        <button class="contrast-filter-btn contrast-filter-btn--aaa"
+                type="button" role="checkbox"
+                aria-pressed="true" data-matrix-filter="aaa">AAA</button>
+        <button class="contrast-filter-btn contrast-filter-btn--aa"
+                type="button" role="checkbox"
+                aria-pressed="true" data-matrix-filter="aa">AA</button>
+        <button class="contrast-filter-btn contrast-filter-btn--aa18"
+                type="button" role="checkbox"
+                aria-pressed="true" data-matrix-filter="aa18">AA18</button>
+        <button class="contrast-filter-btn contrast-filter-btn--dnp"
+                type="button" role="checkbox"
+                aria-pressed="true" data-matrix-filter="dnp">DNP</button>
+      </div>
+    </div>
+
+    <div class="contrast-matrix-overlay__body">
+      <table class="contrast-matrix"
+             id="contrast-matrix-table"
+             aria-label="Color contrast matrix">
+        <caption class="sr-only">
+          Contrast ratios between all palette colors.
+          Each cell shows the contrast ratio and WCAG level
+          when the row color is used as foreground and the column color as background.
+        </caption>
+        <!-- Rendered by JS -->
+      </table>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       TOAST — ARIA live region
+       ============================================================ -->
+  <div class="toast"
+       id="toast"
+       role="status"
+       aria-live="polite"
+       aria-atomic="true"
+       aria-hidden="true">
+  </div>
+
+
+  <!-- ============================================================
+       EXTERNAL DEPENDENCY
+       ============================================================ -->
+  <script src="https://colorjs.io/dist/color.global.js"></script>
+
+
+  <!-- ============================================================
+       APPLICATION — all JS inline below
+       ============================================================ -->
+  <script>
+    /**
+     * Color Workspace — Stage 1
+     * All modules declared in dependency order.
+     * No framework. No build step. Vanilla JS (ES2022+).
+     *
+     * Module order:
+     *   1. Constants
+     *   2. ColorConverter  — color space math via colorjs.io
+     *   3. ContrastModule  — luminance, ratio, WCAG levels
+     *   4. ColorUtils      — slugs, CSS props, object creation
+     *   5. EventBus        — pub/sub
+     *   6. AppState        — single source of truth
+     *   7. StorageModule   — localStorage + serialize/deserialize
+     *   (Steps 7–16: subsequent build steps)
+     */
+
+    'use strict';
+
+    /* ============================================================
+       1. CONSTANTS
+       ============================================================ */
+    const PALETTE_SLOTS = [
+      'paper', 'lightest', 'lighter', 'light',
+      'mid',
+      'dark', 'darker', 'darkest', 'ink'
+    ];
+
+    const POLAR_SPACES = new Set(['hsl', 'hwb', 'lch', 'oklch']);
+
+    const HUE_METHODS = ['shorter', 'longer', 'increasing', 'decreasing'];
+
+    const WCAG_LEVELS = {
+      AAA:  { min: 7,   label: 'AAA',  cls: 'aaa'  },
+      AA:   { min: 4.5, label: 'AA',   cls: 'aa'   },
+      AA18: { min: 3,   label: 'AA18', cls: 'aa18' },
+      DNP:  { min: 0,   label: 'DNP',  cls: 'dnp'  },
+    };
+
+    const SCHEMA_VERSION = '1.0.0';
+
+    const STORAGE_KEY = 'color-workspace-v1';
+
+
+    /* ============================================================
+       2. COLOR CONVERTER
+       Wraps colorjs.io. All conversion goes through here.
+       OKLCH is the canonical target.
+       ============================================================ */
+    const ColorConverter = (() => {
+
+      /**
+       * Returns true if colorjs.io loaded successfully.
+       */
+      function isAvailable() {
+        return typeof Color !== 'undefined';
+      }
+
+      /**
+       * hex → { l, c, h }
+       * Returns null if conversion fails.
+       */
+      function hexToOklch(hex) {
+        if (!hex || !isAvailable()) return null;
+        try {
+          const c = new Color(hex).to('oklch');
+          return {
+            l: clamp(c.l ?? 0, 0, 1),
+            c: clamp(c.c ?? 0, 0, 0.5),
+            h: normalizeHue(c.h ?? 0),
+          };
+        } catch {
+          return null;
+        }
+      }
+
+      /**
+       * { l, c, h } → "#rrggbb" (always 6-char, lowercase)
+       * Returns '#000000' if conversion fails.
+       */
+      function oklchToHex(oklch) {
+        if (!oklch || !isAvailable()) return '#000000';
+        try {
+          const c   = new Color('oklch', [oklch.l, oklch.c, oklch.h]);
+          const raw = c.to('srgb').toString({ format: 'hex' });
+          return expandHex(raw);
+        } catch {
+          return '#000000';
+        }
+      }
+
+      /**
+       * Expand shorthand hex to full 6-char form.
+       * "#rgb"  → "#rrggbb"
+       * "#rrggbb" → unchanged
+       * Anything else → "#000000"
+       */
+      function expandHex(hex) {
+        if (!hex || typeof hex !== 'string') return '#000000';
+        const h = hex.trim().toLowerCase();
+        if (/^#[0-9a-f]{6}$/.test(h)) return h;
+        if (/^#[0-9a-f]{3}$/.test(h)) {
+          return '#' + h[1]+h[1] + h[2]+h[2] + h[3]+h[3];
+        }
+        // 4-char or 8-char (with alpha) — strip alpha, take first 6
+        if (/^#[0-9a-f]{8}$/.test(h)) return h.slice(0, 7);
+        if (/^#[0-9a-f]{4}$/.test(h)) {
+          return '#' + h[1]+h[1] + h[2]+h[2] + h[3]+h[3];
+        }
+        return '#000000';
+      }
+
+      /**
+       * { l, c, h } → { hex, rgba, hsla, oklab }
+       * All derived representations from a canonical OKLCH value.
+       */
+      function oklchToAllSpaces(oklch) {
+        if (!oklch || !isAvailable()) {
+          return { hex: '#000000', rgba: 'rgba(0,0,0,1)', hsla: 'hsl(0 0% 0%)', oklab: 'oklab(0 0 0)' };
+        }
+        try {
+          const base = new Color('oklch', [oklch.l, oklch.c, oklch.h]);
+          const srgb   = base.to('srgb');
+          const hsl    = base.to('hsl');
+          const oklab  = base.to('oklab');
+
+          const r = clamp(Math.round((srgb.r ?? 0) * 255), 0, 255);
+          const g = clamp(Math.round((srgb.g ?? 0) * 255), 0, 255);
+          const b = clamp(Math.round((srgb.b ?? 0) * 255), 0, 255);
+
+          return {
+            hex:   expandHex(base.to('srgb').toString({ format: 'hex' })),
+            rgba:  `rgba(${r}, ${g}, ${b}, 1)`,
+            hsla:  `hsl(${fmt(hsl.h ?? 0, 1)} ${fmt((hsl.s ?? 0) * 100, 1)}% ${fmt((hsl.l ?? 0) * 100, 1)}%)`,
+            oklab: `oklab(${fmt(oklab.l ?? 0, 4)} ${fmt(oklab.a ?? 0, 4)} ${fmt(oklab.b ?? 0, 4)})`,
+          };
+        } catch {
+          return { hex: '#000000', rgba: 'rgba(0,0,0,1)', hsla: 'hsl(0 0% 0%)', oklab: 'oklab(0 0 0)' };
+        }
+      }
+
+      /**
+       * Interpolate between two OKLCH colors.
+       * Returns an array of { l, c, h } values (length = steps).
+       * For polar spaces, applies the given hue interpolation method.
+       * For rectangular spaces, hueMethod is ignored.
+       */
+      function interpolate(oklchA, oklchB, steps, space, hueMethod) {
+        if (!isAvailable()) return [];
+        try {
+          const colorA = new Color('oklch', [oklchA.l, oklchA.c, oklchA.h]);
+          const colorB = new Color('oklch', [oklchB.l, oklchB.c, oklchB.h]);
+
+          const isPolar = POLAR_SPACES.has(space);
+          const range = colorA.range(colorB, {
+            space: space,
+            hue: isPolar ? (hueMethod ?? 'shorter') : undefined,
+          });
+
+          const result = [];
+          for (let i = 0; i < steps; i++) {
+            const t = steps === 1 ? 0 : i / (steps - 1);
+            const mixed = range(t).to('oklch');
+            result.push({
+              l: clamp(mixed.l ?? 0, 0, 1),
+              c: clamp(mixed.c ?? 0, 0, 0.5),
+              h: normalizeHue(mixed.h ?? 0),
+            });
+          }
+          return result;
+        } catch {
+          return [];
+        }
+      }
+
+      /* Helpers */
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+      }
+
+      function normalizeHue(h) {
+        if (!isFinite(h)) return 0;
+        return ((h % 360) + 360) % 360;
+      }
+
+      function fmt(n, decimals) {
+        return Number(n).toFixed(decimals);
+      }
+
+      return { isAvailable, hexToOklch, oklchToHex, oklchToAllSpaces, interpolate };
+    })();
+
+
+    /* ============================================================
+       3. CONTRAST MODULE
+       WCAG 2.x relative luminance and contrast ratio.
+       ============================================================ */
+    const ContrastModule = (() => {
+
+      /**
+       * OKLCH → relative luminance (WCAG formula)
+       */
+      function relativeLuminance(oklch) {
+        if (!oklch || !ColorConverter.isAvailable()) return 0;
+        try {
+          const srgb = new Color('oklch', [oklch.l, oklch.c, oklch.h]).to('srgb');
+          const toLinear = (c) => {
+            const v = Math.max(0, Math.min(1, c ?? 0));
+            return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+          };
+          const r = toLinear(srgb.r);
+          const g = toLinear(srgb.g);
+          const b = toLinear(srgb.b);
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        } catch {
+          return 0;
+        }
+      }
+
+      /**
+       * Two OKLCH colors → contrast ratio (1–21)
+       */
+      function contrastRatio(oklchA, oklchB) {
+        const l1 = relativeLuminance(oklchA);
+        const l2 = relativeLuminance(oklchB);
+        const lighter = Math.max(l1, l2);
+        const darker  = Math.min(l1, l2);
+        return parseFloat(((lighter + 0.05) / (darker + 0.05)).toFixed(2));
+      }
+
+      /**
+       * Ratio → WCAG level string: 'AAA' | 'AA' | 'AA18' | 'DNP'
+       */
+      function classifyWCAG(ratio) {
+        if (ratio >= 7)   return 'AAA';
+        if (ratio >= 4.5) return 'AA';
+        if (ratio >= 3)   return 'AA18';
+        return 'DNP';
+      }
+
+      /**
+       * Array of color objects → full contrast map
+       * { 'idA:idB': { fgId, bgId, ratio, level } }
+       */
+      function buildContrastMap(colors) {
+        const map = {};
+        for (let i = 0; i < colors.length; i++) {
+          for (let j = 0; j < colors.length; j++) {
+            if (i === j) continue;
+            const a = colors[i];
+            const b = colors[j];
+            if (!a?.oklch || !b?.oklch) continue;
+            const key = `${a.id}:${b.id}`;
+            const ratio = contrastRatio(a.oklch, b.oklch);
+            map[key] = {
+              fgId:  a.id,
+              bgId:  b.id,
+              ratio: ratio,
+              level: classifyWCAG(ratio),
+            };
+          }
+        }
+        return map;
+      }
+
+      return { relativeLuminance, contrastRatio, classifyWCAG, buildContrastMap };
+    })();
+
+
+    /* ============================================================
+       4. COLOR UTILS
+       Slug generation, CSS property strings, object factories.
+       ============================================================ */
+    const ColorUtils = (() => {
+
+      /**
+       * Generate a UUID v4
+       */
+      function generateId() {
+        return crypto.randomUUID
+          ? crypto.randomUUID()
+          : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+              const r = (Math.random() * 16) | 0;
+              return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+            });
+      }
+
+      /**
+       * "Verdant Mid" → "verdant-mid"
+       */
+      function nameToSlug(name) {
+        return (name ?? '')
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '');
+      }
+
+      /**
+       * ("verdant", "mid") → "--verdant-mid"
+       */
+      function toCSSProperty(familySlug, slot) {
+        return `--${familySlug}-${slot}`;
+      }
+
+      /**
+       * OKLCH object → CSS oklch() string
+       */
+      function toOklchCSS(oklch) {
+        if (!oklch) return 'oklch(0 0 0)';
+        return `oklch(${fmt(oklch.l, 4)} ${fmt(oklch.c, 4)} ${fmt(oklch.h, 2)})`;
+      }
+
+      /**
+       * Create a full color object from OKLCH.
+       * recipe is null unless provided.
+       */
+      function createColorObject({
+        oklch,
+        name     = 'Color',
+        category = '',
+        slot     = 'mid',
+        familyId = null,
+        recipe   = null,
+      } = {}) {
+        return {
+          id:         generateId(),
+          name:       name,
+          slug:       nameToSlug(name),
+          oklch:      { ...oklch },
+          recipe:     recipe,
+          paletteSlot: slot,
+          hueFamilyId: familyId,
+          category:   category,
+          role: {
+            lightBackground: false,
+            darkBackground:  false,
+          },
+        };
+      }
+
+      /**
+       * Create an empty hue family
+       */
+      function createHueFamily(name = 'Family') {
+        const slots = {};
+        for (const slot of PALETTE_SLOTS) {
+          slots[slot] = null;
+        }
+        return {
+          id:     generateId(),
+          name:   name,
+          slug:   nameToSlug(name),
+          colors: slots,
+        };
+      }
+
+      /**
+       * Create the default empty project
+       */
+      function createDefaultProject() {
+        const now = new Date().toISOString();
+        return {
+          version:     SCHEMA_VERSION,
+          name:        'Untitled Project',
+          createdAt:   now,
+          updatedAt:   now,
+          anchors: {
+            shared: true,
+            paper:  { oklch: { l: 1,   c: 0, h: 0 }, hex: '#ffffff' },
+            ink:    { oklch: { l: 0.0, c: 0, h: 0 }, hex: '#000000' },
+          },
+          backgrounds: {
+            light: null,
+            dark:  null,
+          },
+          hueFamilies:  [],
+          stagingArea:  [],
+          snapshots:    [],
+        };
+      }
+
+      function fmt(n, decimals) {
+        return Number(n ?? 0).toFixed(decimals);
+      }
+
+      return {
+        generateId,
+        nameToSlug,
+        toCSSProperty,
+        toOklchCSS,
+        createColorObject,
+        createHueFamily,
+        createDefaultProject,
+      };
+    })();
+
+
+    /* ============================================================
+       5. EVENT BUS
+       Minimal pub/sub.
+       ============================================================ */
+    const EventBus = (() => {
+      const _listeners = {};
+
+      function on(event, fn) {
+        if (!_listeners[event]) _listeners[event] = [];
+        _listeners[event].push(fn);
+      }
+
+      function off(event, fn) {
+        if (!_listeners[event]) return;
+        _listeners[event] = _listeners[event].filter(f => f !== fn);
+      }
+
+      function emit(event, data) {
+        (_listeners[event] ?? []).forEach(fn => {
+          try { fn(data); } catch (e) { log.err(`EventBus error [${event}]:`, e); }
+        });
+      }
+
+      return { on, off, emit };
+    })();
+
+
+    /* ============================================================
+       6. APP STATE
+       Single source of truth. All reads return clones.
+       All writes go through explicit update functions.
+       ============================================================ */
+    const AppState = (() => {
+      let _project  = ColorUtils.createDefaultProject();
+      let _mixer    = createDefaultMixerState();
+      let _contrast = {};
+      let _active   = 'mixer';
+
+      function createDefaultMixerState() {
+        return {
+          colorA:   { hex: '#3b82f6', oklch: { l: 0.546, c: 0.199, h: 264.1 } },
+          colorB:   { hex: '#ef4444', oklch: { l: 0.577, c: 0.219, h: 27.3  } },
+          space:    'oklch',
+          steps:    7,
+          palettes: {},
+        };
+      }
+
+      return {
+        /* ---- Reads ---- */
+        getProject()      { return structuredClone(_project); },
+        getMixer()        { return structuredClone(_mixer);   },
+        getContrastMap()  { return _contrast; },
+        getActive()       { return _active; },
+
+        /* ---- Project writes ---- */
+        updateProject(updater) {
+          _project = updater(structuredClone(_project));
+          _project.updatedAt = new Date().toISOString();
+          StorageModule.autoSave(_project);
+          EventBus.emit('palette:changed', structuredClone(_project));
+        },
+
+        /* ---- Mixer writes ---- */
+        updateMixer(updater) {
+          _mixer = updater(structuredClone(_mixer));
+          EventBus.emit('mixer:changed', structuredClone(_mixer));
+        },
+
+        /* ---- Contrast map ---- */
+        setContrastMap(map) {
+          _contrast = map;
+          EventBus.emit('contrast:updated', map);
+        },
+
+        /* ---- Navigation ---- */
+        setActive(name) {
+          _active = name;
+          EventBus.emit('function:switched', name);
+        },
+
+        /* ---- Project load ---- */
+        loadProject(project) {
+          _project  = project;
+          _contrast = {};
+          StorageModule.autoSave(_project);
+          EventBus.emit('project:loaded', structuredClone(_project));
+        },
+      };
+    })();
+
+
+    /* ============================================================
+       7. STORAGE MODULE
+       localStorage persistence + serialize/deserialize.
+       ============================================================ */
+    const StorageModule = (() => {
+      let _saveTimer = null;
+
+      function serialize(project) {
+        return JSON.stringify(project, null, 2);
+      }
+
+      function deserialize(json) {
+        try {
+          const data = JSON.parse(json);
+          // Basic schema validation
+          if (!data?.version || !Array.isArray(data?.hueFamilies)) {
+            throw new Error('Invalid project schema');
+          }
+          return { ok: true, project: data };
+        } catch (e) {
+          return { ok: false, error: e.message };
+        }
+      }
+
+      function autoSave(project) {
+        clearTimeout(_saveTimer);
+        _saveTimer = setTimeout(() => {
+          try {
+            localStorage.setItem(STORAGE_KEY, serialize(project));
+          } catch (e) {
+            log.warn('Auto-save failed:', e);
+          }
+        }, 500);
+      }
+
+      function loadFromStorage() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          const { ok, project, error } = deserialize(raw);
+          if (!ok) { log.warn('Stored project invalid:', error); return null; }
+          return project;
+        } catch {
+          return null;
+        }
+      }
+
+      function clearStorage() {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      return { serialize, deserialize, autoSave, loadFromStorage, clearStorage };
+    })();
+
+
+    /* ============================================================
+       SAFE LOGGER — console.log guard for restricted environments
+       ============================================================ */
+    const log = (() => {
+      const c = (typeof console !== 'undefined') ? console : null;
+      return {
+        log:  (...a) => { try { c?.log?.(...a);  } catch(e) {} },
+        warn: (...a) => { try { c?.warn?.(...a); } catch(e) {} },
+        err:  (...a) => { try { c?.error?.(...a);} catch(e) {} },
+      };
+    })();
+
+
+
+    /* ============================================================
+       8. MIXER MODULE
+       Interpolation logic, palette generation, recipe building.
+       ============================================================ */
+    const MixerModule = (() => {
+
+      /**
+       * Generate all palette rows for the current mixer state.
+       * Returns { [method]: ColorObject[] }
+       * For polar spaces: four keys (shorter/longer/increasing/decreasing)
+       * For rectangular: one key ('default')
+       */
+      function generatePalettes(colorAOklch, colorBOklch, space, steps) {
+        const isPolar  = POLAR_SPACES.has(space);
+        const methods  = isPolar ? HUE_METHODS : ['default'];
+        const palettes = {};
+
+        for (const method of methods) {
+          const hueMethod  = isPolar ? method : null;
+          const interpolated = ColorConverter.interpolate(
+            colorAOklch, colorBOklch, steps, space, hueMethod
+          );
+          palettes[method] = interpolated.map((oklch, i) => {
+            const hex = ColorConverter.oklchToHex(oklch);
+            return {
+              oklch,
+              hex,
+              step:       i,
+              method:     method,
+              space:      space,
+              percentage: steps === 1 ? 100 : Math.round((1 - i / (steps - 1)) * 100),
+            };
+          });
+        }
+        return palettes;
+      }
+
+      /**
+       * Build a color-mix() CSS declaration string for a step.
+       */
+      function colorMixCSS(varName, space, hueMethod, hexA, hexB, percentage) {
+        const isPolar = POLAR_SPACES.has(space);
+        const hueStr  = isPolar && hueMethod && hueMethod !== 'default'
+          ? ` ${hueMethod} hue` : '';
+        return `--${varName}: color-mix(in ${space}${hueStr}, ${hexA} ${percentage}%, ${hexB});`;
+      }
+
+      /**
+       * Generate the full :root {} CSS block for one palette row.
+       */
+      function rowToCSS(palettes, method, nameA, nameB, space) {
+        var row = palettes[method];
+        if (!row || !row.length) return '';
+
+        var colorA   = AppState.getMixer().colorA;
+        var colorB   = AppState.getMixer().colorB;
+        var slugA    = ColorUtils.nameToSlug(nameA || 'color-a');
+        var slugB    = ColorUtils.nameToSlug(nameB || 'color-b');
+        var isPolar  = POLAR_SPACES.has(space);
+        var methodStr = isPolar ? method : space;
+
+        var lines = [':root {'];
+        lines.push('  --' + slugA + ': ' + ColorUtils.toOklchCSS(colorA.oklch) + ';');
+        lines.push('  --' + slugB + ': ' + ColorUtils.toOklchCSS(colorB.oklch) + ';');
+        lines.push('');
+
+        row.forEach(function(step, i) {
+          var varName = slugA + '-' + slugB + '-' + methodStr + '-' + (i + 1);
+          var fgVar   = 'var(--' + slugA + ')';
+          var bgVar   = 'var(--' + slugB + ')';
+          lines.push('  ' + colorMixCSS(varName, space, method, fgVar, bgVar, step.percentage));
+        });
+
+        lines.push('}');
+        return lines.join('\n');
+      }
+
+      /**
+       * Generate :root {} CSS for all rows combined.
+       */
+      function allRowsToCSS(palettes, nameA, nameB, space) {
+        var methods  = Object.keys(palettes);
+        var isPolar  = POLAR_SPACES.has(space);
+        var colorA   = AppState.getMixer().colorA;
+        var colorB   = AppState.getMixer().colorB;
+        var slugA    = ColorUtils.nameToSlug(nameA || 'color-a');
+        var slugB    = ColorUtils.nameToSlug(nameB || 'color-b');
+
+        var lines = [':root {'];
+        lines.push('  --' + slugA + ': ' + ColorUtils.toOklchCSS(colorA.oklch) + ';');
+        lines.push('  --' + slugB + ': ' + ColorUtils.toOklchCSS(colorB.oklch) + ';');
+
+        methods.forEach(function(method) {
+          var row       = palettes[method];
+          var methodStr = isPolar ? method : space;
+          lines.push('');
+          lines.push('  /* ' + methodStr + ' */');
+          row.forEach(function(step, i) {
+            var varName = slugA + '-' + slugB + '-' + methodStr + '-' + (i + 1);
+            var fgVar   = 'var(--' + slugA + ')';
+            var bgVar   = 'var(--' + slugB + ')';
+            lines.push('  ' + colorMixCSS(varName, space, method, fgVar, bgVar, step.percentage));
+          });
+        });
+
+        lines.push('}');
+        return lines.join('\n');
+      }
+
+      /**
+       * Build a staged color object from a mixer step.
+       */
+      function buildStagedColor(step, colorAOklch, colorBOklch, space, hueMethod) {
+        return ColorUtils.createColorObject({
+          oklch: step.oklch,
+          name:  `Mixed ${step.step + 1}`,
+          recipe: {
+            colorA:           { oklch: colorAOklch, hex: ColorConverter.oklchToHex(colorAOklch) },
+            colorB:           { oklch: colorBOklch, hex: ColorConverter.oklchToHex(colorBOklch) },
+            space:            space,
+            hueMethod:        hueMethod,
+            percentage:       step.percentage,
+            step:             step.step,
+            editedSinceRecipe: false,
+          },
+        });
+      }
+
+      return { generatePalettes, colorMixCSS, rowToCSS, allRowsToCSS, buildStagedColor };
+    })();
+
+
+    /* ============================================================
+       9. TOAST UTILITY
+       Simple, accessible toast notifications.
+       ============================================================ */
+    const Toast = (() => {
+      let _timer = null;
+      const el   = () => document.getElementById('toast');
+
+      function show(message, duration = 2800) {
+        const t = el();
+        if (!t) return;
+        t.textContent    = message;
+        t.ariaHidden     = 'false';
+        clearTimeout(_timer);
+        _timer = setTimeout(() => hide(), duration);
+      }
+
+      function hide() {
+        const t = el();
+        if (t) t.ariaHidden = 'true';
+      }
+
+      return { show };
+    })();
+
+
+    /* ============================================================
+       10. CLIPBOARD UTILITY
+       Works on file://, http://, and https://.
+       Tries execCommand first (synchronous, works on file://)
+       then falls back to the async Clipboard API.
+       ============================================================ */
+    function copyToClipboard(text, successMessage) {
+      var msg = successMessage || 'Copied';
+
+      // execCommand approach — synchronous, works on file:// http:// https://
+      function execCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      // Try execCommand first — no security warnings, works everywhere
+      if (execCopy()) {
+        Toast.show(msg);
+        return;
+      }
+
+      // Only try async Clipboard API on secure contexts (https:// or localhost)
+      // Avoids the "Unsafe attempt to load URL file://" browser warning
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(function() { Toast.show(msg); })
+          .catch(function() { Toast.show('Copy failed — please copy manually'); });
+      } else {
+        Toast.show('Copy failed — please copy manually');
+      }
+    }
+
+
+    /* ============================================================
+       11. MIXER UI
+       Render functions and event wiring for the Mixer panel.
+       ============================================================ */
+    const MixerUI = (() => {
+
+      /* ---- DOM refs ---- */
+      const refs = () => ({
+        pickerA:     document.getElementById('mixer-color-a-picker'),
+        hexA:        document.getElementById('mixer-color-a-hex'),
+        sliderAL:    document.getElementById('mixer-a-l'),
+        sliderAC:    document.getElementById('mixer-a-c'),
+        sliderAH:    document.getElementById('mixer-a-h'),
+        outputAL:    document.getElementById('mixer-a-l-value'),
+        outputAC:    document.getElementById('mixer-a-c-value'),
+        outputAH:    document.getElementById('mixer-a-h-value'),
+
+        pickerB:     document.getElementById('mixer-color-b-picker'),
+        hexB:        document.getElementById('mixer-color-b-hex'),
+        sliderBL:    document.getElementById('mixer-b-l'),
+        sliderBC:    document.getElementById('mixer-b-c'),
+        sliderBH:    document.getElementById('mixer-b-h'),
+        outputBL:    document.getElementById('mixer-b-l-value'),
+        outputBC:    document.getElementById('mixer-b-c-value'),
+        outputBH:    document.getElementById('mixer-b-h-value'),
+
+        spaceSelect: document.getElementById('mixer-space'),
+        stepsSelect: document.getElementById('mixer-steps'),
+        palettesEl:  document.getElementById('mixer-palettes'),
+        copyAllBtn:  document.getElementById('btn-mixer-copy-all'),
+      });
+
+      /* ---- Sync color A inputs from an OKLCH value ---- */
+      function syncColorAInputs(oklch, hex) {
+        const r = refs();
+        r.pickerA.value      = hex;
+        r.hexA.value         = hex;
+        r.sliderAL.value     = oklch.l;
+        r.sliderAC.value     = oklch.c;
+        r.sliderAH.value     = oklch.h;
+        r.outputAL.value     = Number(oklch.l).toFixed(3);
+        r.outputAC.value     = Number(oklch.c).toFixed(3);
+        r.outputAH.value     = Number(oklch.h).toFixed(1) + '°';
+        r.sliderAL.setAttribute('aria-valuenow', oklch.l);
+        r.sliderAC.setAttribute('aria-valuenow', oklch.c);
+        r.sliderAH.setAttribute('aria-valuenow', oklch.h);
+      }
+
+      /* ---- Sync color B inputs from an OKLCH value ---- */
+      function syncColorBInputs(oklch, hex) {
+        const r = refs();
+        r.pickerB.value      = hex;
+        r.hexB.value         = hex;
+        r.sliderBL.value     = oklch.l;
+        r.sliderBC.value     = oklch.c;
+        r.sliderBH.value     = oklch.h;
+        r.outputBL.value     = Number(oklch.l).toFixed(3);
+        r.outputBC.value     = Number(oklch.c).toFixed(3);
+        r.outputBH.value     = Number(oklch.h).toFixed(1) + '°';
+        r.sliderBL.setAttribute('aria-valuenow', oklch.l);
+        r.sliderBC.setAttribute('aria-valuenow', oklch.c);
+        r.sliderBH.setAttribute('aria-valuenow', oklch.h);
+      }
+
+      /* ---- Render palette rows ---- */
+      function renderPalettes() {
+        const mixer = AppState.getMixer();
+        const r     = refs();
+        if (!r.palettesEl) return;
+
+        const { palettes, colorA, colorB, space } = mixer;
+
+        if (!palettes || Object.keys(palettes).length === 0) {
+          r.palettesEl.innerHTML =
+            '<p class="text-sm text-subtle">Adjust the colors above to generate palettes.</p>';
+          return;
+        }
+
+        const isPolar = POLAR_SPACES.has(space);
+        const html    = Object.entries(palettes).map(([method, steps]) => {
+          const label = isPolar ? method : space;
+
+          const swatchesHtml = steps.map((step, i) => {
+            const lLabel = Number(step.oklch.l).toFixed(2);
+            const cLabel = Number(step.oklch.c).toFixed(2);
+            const hLabel = Number(step.oklch.h).toFixed(0);
+            return `
+              <button
+                class="swatch swatch--sm"
+                style="background-color: ${step.hex};"
+                data-method="${method}"
+                data-step="${i}"
+                aria-label="Step ${i + 1}: ${step.hex} — oklch(${lLabel} ${cLabel} ${hLabel}) — click to push to staging"
+                title="oklch(${lLabel} ${cLabel} ${hLabel})"
+                type="button">
+              </button>`;
+          }).join('');
+
+          return `
+            <div class="mixer__row">
+              <button
+                class="mixer__row-label"
+                data-method="${method}"
+                aria-label="Copy CSS variables for ${label} interpolation"
+                title="Click to copy CSS variables for this row"
+                type="button">
+                ${label}
+              </button>
+              <div class="mixer__swatches" role="list" aria-label="${label} palette">
+                ${swatchesHtml}
+              </div>
+              <div class="mixer__row-actions">
+                <button class="btn btn--ghost btn--sm"
+                        data-push-row="${method}"
+                        type="button"
+                        aria-label="Push all ${label} colors to staging">
+                  Push row
+                </button>
+              </div>
+            </div>`;
+        }).join('');
+
+        r.palettesEl.innerHTML = html;
+
+        // Wire swatch clicks — push single color to staging
+        r.palettesEl.querySelectorAll('.swatch').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const method = btn.dataset.method;
+            const step   = parseInt(btn.dataset.step, 10);
+            const mixer  = AppState.getMixer();
+            const stepData = mixer.palettes[method]?.[step];
+            if (!stepData) return;
+
+            const staged = MixerModule.buildStagedColor(
+              stepData, mixer.colorA.oklch, mixer.colorB.oklch,
+              mixer.space, method === 'default' ? null : method
+            );
+            AppState.updateProject(p => {
+              p.stagingArea.push(staged);
+              return p;
+            });
+            Toast.show(`${stepData.hex} pushed to staging`);
+          });
+        });
+
+        // Wire row label clicks — copy CSS
+        r.palettesEl.querySelectorAll('.mixer__row-label').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const method = btn.dataset.method;
+            const mixer  = AppState.getMixer();
+            const css    = MixerModule.rowToCSS(
+              mixer.palettes, method, 'color-a', 'color-b', mixer.space
+            );
+            copyToClipboard(css, 'Row CSS copied');
+          });
+        });
+
+        // Wire push-row buttons
+        r.palettesEl.querySelectorAll('[data-push-row]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const method = btn.dataset.pushRow;
+            const mixer  = AppState.getMixer();
+            const row    = mixer.palettes[method];
+            if (!row?.length) return;
+
+            const newColors = row.map(step =>
+              MixerModule.buildStagedColor(
+                step, mixer.colorA.oklch, mixer.colorB.oklch,
+                mixer.space, method === 'default' ? null : method
+              )
+            );
+            AppState.updateProject(p => {
+              p.stagingArea.push(...newColors);
+              return p;
+            });
+            Toast.show(`${row.length} colors pushed to staging`);
+          });
+        });
+      }
+
+      /* ---- Trigger palette regeneration ---- */
+      function regenerate() {
+        const mixer = AppState.getMixer();
+        const palettes = MixerModule.generatePalettes(
+          mixer.colorA.oklch,
+          mixer.colorB.oklch,
+          mixer.space,
+          mixer.steps
+        );
+        AppState.updateMixer(m => { m.palettes = palettes; return m; });
+      }
+
+      /* ---- Update color A from any source ---- */
+      function setColorA(oklch) {
+        const hex = ColorConverter.oklchToHex(oklch);
+        AppState.updateMixer(m => {
+          m.colorA = { hex, oklch };
+          return m;
+        });
+        syncColorAInputs(oklch, hex);
+        regenerate();
+      }
+
+      /* ---- Update color B from any source ---- */
+      function setColorB(oklch) {
+        const hex = ColorConverter.oklchToHex(oklch);
+        AppState.updateMixer(m => {
+          m.colorB = { hex, oklch };
+          return m;
+        });
+        syncColorBInputs(oklch, hex);
+        regenerate();
+      }
+
+      /* ---- Wire all inputs ---- */
+      function init() {
+        if (!ColorConverter.isAvailable()) return;
+        const r = refs();
+
+        /* Color A — hex input */
+        r.hexA.addEventListener('input', () => {
+          const val = r.hexA.value.trim();
+          if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+          const oklch = ColorConverter.hexToOklch(val);
+          if (oklch) setColorA(oklch);
+        });
+
+        /* Color A — picker */
+        r.pickerA.addEventListener('input', () => {
+          const oklch = ColorConverter.hexToOklch(r.pickerA.value);
+          if (oklch) setColorA(oklch);
+        });
+
+        /* Color A — L slider */
+        r.sliderAL.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorA({ ...mixer.colorA.oklch, l: parseFloat(r.sliderAL.value) });
+        });
+
+        /* Color A — C slider */
+        r.sliderAC.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorA({ ...mixer.colorA.oklch, c: parseFloat(r.sliderAC.value) });
+        });
+
+        /* Color A — H slider */
+        r.sliderAH.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorA({ ...mixer.colorA.oklch, h: parseFloat(r.sliderAH.value) });
+        });
+
+        /* Color B — hex input */
+        r.hexB.addEventListener('input', () => {
+          const val = r.hexB.value.trim();
+          if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+          const oklch = ColorConverter.hexToOklch(val);
+          if (oklch) setColorB(oklch);
+        });
+
+        /* Color B — picker */
+        r.pickerB.addEventListener('input', () => {
+          const oklch = ColorConverter.hexToOklch(r.pickerB.value);
+          if (oklch) setColorB(oklch);
+        });
+
+        /* Color B — L slider */
+        r.sliderBL.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorB({ ...mixer.colorB.oklch, l: parseFloat(r.sliderBL.value) });
+        });
+
+        /* Color B — C slider */
+        r.sliderBC.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorB({ ...mixer.colorB.oklch, c: parseFloat(r.sliderBC.value) });
+        });
+
+        /* Color B — H slider */
+        r.sliderBH.addEventListener('input', () => {
+          const mixer = AppState.getMixer();
+          setColorB({ ...mixer.colorB.oklch, h: parseFloat(r.sliderBH.value) });
+        });
+
+        /* Color space */
+        r.spaceSelect.addEventListener('change', () => {
+          AppState.updateMixer(m => { m.space = r.spaceSelect.value; return m; });
+          regenerate();
+        });
+
+        /* Steps */
+        r.stepsSelect.addEventListener('change', () => {
+          AppState.updateMixer(m => { m.steps = parseInt(r.stepsSelect.value, 10); return m; });
+          regenerate();
+        });
+
+        /* Copy all CSS variables */
+        r.copyAllBtn?.addEventListener('click', () => {
+          const mixer = AppState.getMixer();
+          const css   = MixerModule.allRowsToCSS(
+            mixer.palettes, 'color-a', 'color-b', mixer.space
+          );
+          copyToClipboard(css, 'All CSS variables copied');
+        });
+
+        /* Listen for mixer state changes → re-render */
+        EventBus.on('mixer:changed', () => renderPalettes());
+
+        /* Initial sync of inputs from loaded state */
+        const mixer = AppState.getMixer();
+        syncColorAInputs(mixer.colorA.oklch, mixer.colorA.hex);
+        syncColorBInputs(mixer.colorB.oklch, mixer.colorB.hex);
+
+        /* Initial generation */
+        regenerate();
+      }
+
+      return { init, renderPalettes, regenerate };
+    })();
+
+
+    /* ============================================================
+       12. STAGING UI
+       Renders the staging area (desktop sidebar + mobile panel).
+       ============================================================ */
+    const StagingUI = (() => {
+
+      function renderStagingArea() {
+        const project   = AppState.getProject();
+        const staged    = project.stagingArea ?? [];
+        const isEmpty   = staged.length === 0;
+
+        // Update counts (desktop + mobile)
+        ['staging-count', 'staging-count-mobile', 'tab-staging-count'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.textContent = staged.length;
+            el.setAttribute('aria-label', `${staged.length} color${staged.length !== 1 ? 's' : ''} staged`);
+          }
+        });
+
+        // Toggle empty states
+        ['staging-empty', 'staging-empty-mobile'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.setAttribute('aria-hidden', isEmpty ? 'false' : 'true');
+        });
+
+        // Render cards into both lists (desktop + mobile)
+        const html = isEmpty ? '' : staged.map((color, i) => {
+          const spaces = ColorConverter.oklchToAllSpaces(color.oklch);
+          const hex    = spaces.hex || ColorConverter.oklchToHex(color.oklch);
+          const fmtOklch = `oklch(${Number(color.oklch.l).toFixed(2)} ${Number(color.oklch.c).toFixed(3)} ${Number(color.oklch.h).toFixed(1)})`;
+          const hasRecipe = !!color.recipe;
+          const recipeHTML = hasRecipe
+            ? `<div class="staging-card__recipe">
+                 <span aria-hidden="true">⟲</span>
+                 Mixed from ${color.recipe.colorA.hex} + ${color.recipe.colorB.hex}
+                 ${color.recipe.editedSinceRecipe
+                   ? '<span style="color: var(--badge-aa18-bg);" title="Edited since mixed"> (edited)</span>'
+                   : ''}
+               </div>`
+            : '';
+
+          // Build family+slot options from current project
+          const familyOptions = project.hueFamilies.map(f =>
+            PALETTE_SLOTS.map(slot => {
+              const taken = !!f.colors[slot];
+              return `<option value="${f.id}:${slot}" ${taken ? 'disabled' : ''}>
+                ${f.name} — ${slot}${taken ? ' (taken)' : ''}
+              </option>`;
+            }).join('')
+          ).join('');
+
+          const hasFamilies = project.hueFamilies.length > 0;
+
+          return `
+            <article class="staging-card" role="listitem"
+                     aria-label="${color.name}, ${hex}">
+              <div class="staging-card__preview"
+                   style="background-color: ${hex};"
+                   aria-hidden="true"></div>
+              <div class="staging-card__body">
+                <div class="staging-card__name">${color.name}</div>
+                <div class="staging-card__meta">${fmtOklch}</div>
+                <div class="staging-card__meta">${hex}</div>
+                ${recipeHTML}
+              </div>
+              <div class="staging-card__actions">
+                ${hasFamilies ? `
+                  <select class="select" style="flex:1; height: var(--input-height-sm); font-size: var(--text-xs);"
+                          aria-label="Assign ${color.name} to a palette slot"
+                          data-assign-index="${i}">
+                    <option value="">Assign to slot…</option>
+                    ${familyOptions}
+                  </select>` : `
+                  <span class="text-xs text-faint" style="flex:1;">
+                    Add a family first
+                  </span>`
+                }
+                <button class="btn btn--danger btn--sm"
+                        data-discard-index="${i}"
+                        type="button"
+                        aria-label="Discard ${color.name}">
+                  ×
+                </button>
+              </div>
+            </article>`;
+        }).join('');
+
+        ['staging-list', 'staging-list-mobile'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = html;
+
+            // Wire discard buttons
+            el.querySelectorAll('[data-discard-index]').forEach(btn => {
+              btn.addEventListener('click', () => {
+                const idx = parseInt(btn.dataset.discardIndex, 10);
+                AppState.updateProject(p => {
+                  p.stagingArea.splice(idx, 1);
+                  return p;
+                });
+              });
+            });
+
+            // Wire assign selects
+            el.querySelectorAll('[data-assign-index]').forEach(sel => {
+              sel.addEventListener('change', () => {
+                const idx = parseInt(sel.dataset.assignIndex, 10);
+                const [familyId, slot] = sel.value.split(':');
+                if (!familyId || !slot) return;
+                AppState.updateProject(p => {
+                  const color    = p.stagingArea[idx];
+                  if (!color) return p;
+                  const family   = p.hueFamilies.find(f => f.id === familyId);
+                  if (!family) return p;
+                  // Commit: assign slot, remove from staging
+                  color.paletteSlot  = slot;
+                  color.hueFamilyId  = familyId;
+                  family.colors[slot] = color;
+                  p.stagingArea.splice(idx, 1);
+                  return p;
+                });
+                Toast.show('Color added to palette');
+              });
+            });
+          }
+        });
+      }
+
+      function init() {
+        EventBus.on('palette:changed', () => renderStagingArea());
+        EventBus.on('project:loaded',  () => renderStagingArea());
+        renderStagingArea();
+      }
+
+      return { init, renderStagingArea };
+    })();
+
+
+    /* ============================================================
+       13. PALETTE MODULE
+       Hue family management, slot operations, CSS generation.
+       ============================================================ */
+    const PaletteModule = (() => {
+
+      /**
+       * Generate full CSS custom properties block from project.
+       */
+      function generateCSS(project) {
+        var lines = [':root {'];
+        project.hueFamilies.forEach(function(family) {
+          lines.push('');
+          lines.push('  /* ' + family.name + ' */');
+          PALETTE_SLOTS.forEach(function(slot) {
+            var color = family.colors[slot];
+            if (!color) return;
+            var prop = '--' + family.slug + '-' + slot;
+            var val  = ColorUtils.toOklchCSS(color.oklch);
+            lines.push('  ' + prop + ': ' + val + ';');
+          });
+        });
+        lines.push('}');
+        return lines.join('\n');
+      }
+
+      /**
+       * Get all filled colors across all families as a flat array.
+       */
+      function getAllColors(project) {
+        var colors = [];
+        project.hueFamilies.forEach(function(family) {
+          PALETTE_SLOTS.forEach(function(slot) {
+            var c = family.colors[slot];
+            if (c) colors.push(c);
+          });
+        });
+        // Also include anchors if shared
+        if (project.anchors.shared) {
+          // paper and ink are represented in the families already
+          // but add them as standalone refs if no family has them
+        }
+        return colors;
+      }
+
+      return { generateCSS, getAllColors };
+    })();
+
+
+    /* ============================================================
+       14. CONTRAST ENGINE (ambient)
+       Debounced contrast map computation. Fires contrast:updated.
+       ============================================================ */
+    const ContrastEngine = (() => {
+      var _timer = null;
+      var DEBOUNCE_MS = 150;
+
+      function schedule(project) {
+        clearTimeout(_timer);
+        _timer = setTimeout(function() {
+          var colors = PaletteModule.getAllColors(project);
+          var map    = ContrastModule.buildContrastMap(colors);
+          AppState.setContrastMap(map);
+        }, DEBOUNCE_MS);
+      }
+
+      // Also compute contrast of a single color against the two backgrounds
+      function againstBackgrounds(oklch, project) {
+        var result = { light: null, dark: null };
+        if (project.backgrounds.light && project.backgrounds.light.oklch) {
+          var ratio = ContrastModule.contrastRatio(oklch, project.backgrounds.light.oklch);
+          result.light = { ratio: ratio, level: ContrastModule.classifyWCAG(ratio) };
+        }
+        if (project.backgrounds.dark && project.backgrounds.dark.oklch) {
+          var ratio = ContrastModule.contrastRatio(oklch, project.backgrounds.dark.oklch);
+          result.dark  = { ratio: ratio, level: ContrastModule.classifyWCAG(ratio) };
+        }
+        return result;
+      }
+
+      return { schedule, againstBackgrounds };
+    })();
+
+
+    /* ============================================================
+       15. PALETTE BUILDER UI
+       Renders families, slot swatches, slot editor, anchor config,
+       CSS preview. Wired to AppState.
+       ============================================================ */
+    const PaletteBuilderUI = (() => {
+
+      var _activeFamilyId = null;
+      var _activeSlot     = null;
+
+      /* ---- Slot label display names ---- */
+      var SLOT_LABELS = {
+        paper:    'Paper',
+        lightest: 'Lightest',
+        lighter:  'Lighter',
+        light:    'Light',
+        mid:      'Mid',
+        dark:     'Dark',
+        darker:   'Darker',
+        darkest:  'Darkest',
+        ink:      'Ink',
+      };
+
+      /* ---- Badge HTML helper ---- */
+      function badgeHTML(level) {
+        if (!level) return '';
+        var cls   = level.toLowerCase();
+        var label = level === 'AA18' ? 'AA18' : level;
+        return '<span class="badge badge--' + cls + '" aria-label="' + label + ' contrast">' + label + '</span>';
+      }
+
+      /* ---- Render a single family row ---- */
+      function renderFamily(family, project) {
+        var contrastMap = AppState.getContrastMap();
+
+        var swatchesHTML = PALETTE_SLOTS.map(function(slot) {
+          var color   = family.colors[slot];
+          var isActive = (_activeFamilyId === family.id && _activeSlot === slot);
+
+          if (color) {
+            var hex      = ColorConverter.oklchToHex(color.oklch);
+            var contrast = ContrastEngine.againstBackgrounds(color.oklch, project);
+            var lightBadge = contrast.light ? badgeHTML(contrast.light.level) : '';
+            var darkBadge  = contrast.dark  ? badgeHTML(contrast.dark.level)  : '';
+            var ambientHTML = (lightBadge || darkBadge)
+              ? '<div class="swatch__ambient" aria-hidden="true">'
+                + (lightBadge || '') + (darkBadge || '')
+                + '</div>'
+              : '';
+
+            return '<div class="slot-container">'
+              + '<button class="swatch' + (isActive ? ' swatch--active' : '') + '"'
+              + ' style="background-color:' + hex + ';"'
+              + ' data-family-id="' + family.id + '"'
+              + ' data-slot="' + slot + '"'
+              + ' type="button"'
+              + ' aria-label="' + (color.name || slot) + ', ' + hex
+                + (isActive ? ', currently editing' : ', click to edit') + '"'
+              + ' aria-pressed="' + (isActive ? 'true' : 'false') + '">'
+              + ambientHTML
+              + '</button>'
+              + '<span class="slot-label">' + SLOT_LABELS[slot] + '</span>'
+              + '</div>';
+          } else {
+            return '<div class="slot-container">'
+              + '<button class="swatch swatch--empty"'
+              + ' data-family-id="' + family.id + '"'
+              + ' data-slot="' + slot + '"'
+              + ' type="button"'
+              + ' aria-label="' + SLOT_LABELS[slot] + ' slot, empty. Click to add color.">'
+              + '</button>'
+              + '<span class="slot-label">' + SLOT_LABELS[slot] + '</span>'
+              + '</div>';
+          }
+        }).join('');
+
+        // Slot editor (inline, only if this family+slot is active)
+        var slotEditorHTML = '';
+        if (_activeFamilyId === family.id && _activeSlot) {
+          slotEditorHTML = renderSlotEditor(family, _activeSlot, project);
+        }
+
+        return '<div class="hue-family" id="family-' + family.id + '">'
+          + '<div class="hue-family__header">'
+          + '<span class="hue-family__name">'
+          + '<input class="input input--sm" type="text"'
+          + ' value="' + escapeAttr(family.name) + '"'
+          + ' aria-label="Family name"'
+          + ' data-rename-family="' + family.id + '"'
+          + ' style="width:140px;" />'
+          + '</span>'
+          + '<button class="btn btn--danger btn--sm"'
+          + ' data-delete-family="' + family.id + '"'
+          + ' type="button"'
+          + ' aria-label="Delete ' + escapeAttr(family.name) + ' family">'
+          + '×'
+          + '</button>'
+          + '</div>'
+          + '<div class="hue-family__swatches" role="list"'
+          + ' aria-label="' + escapeAttr(family.name) + ' palette slots">'
+          + swatchesHTML
+          + '</div>'
+          + '<div class="slot-editor" id="slot-editor-' + family.id + '"'
+          + ' aria-hidden="' + (_activeFamilyId === family.id ? 'false' : 'true') + '">'
+          + slotEditorHTML
+          + '</div>'
+          + '</div>';
+      }
+
+      /* ---- Render slot editor ---- */
+      function renderSlotEditor(family, slot, project) {
+        var color = family.colors[slot];
+        var title = SLOT_LABELS[slot];
+
+        if (!color) {
+          // Empty slot — show a minimal add form
+          return '<div class="slot-editor__empty">'
+            + '<p class="text-sm text-subtle" style="margin-bottom:var(--space-4);">'
+            + 'Adding color to <strong>' + title + '</strong> slot.</p>'
+            + '<div class="flex items-center gap-3">'
+            + '<input class="input-color-picker" type="color"'
+            + ' id="slot-new-picker" value="#808080"'
+            + ' aria-label="Choose color for ' + title + ' slot" />'
+            + '<input class="input input--mono" type="text"'
+            + ' id="slot-new-hex" value="#808080" maxlength="7"'
+            + ' aria-label="Hex value for ' + title + ' slot"'
+            + ' style="width:120px;" />'
+            + '<button class="btn btn--primary" type="button"'
+            + ' data-add-slot="' + slot + '" data-family-id="' + family.id + '">'
+            + 'Add color'
+            + '</button>'
+            + '<button class="btn btn--ghost" type="button"'
+            + ' data-close-editor="true">'
+            + 'Cancel'
+            + '</button>'
+            + '</div>'
+            + '</div>';
+        }
+
+        // Filled slot — full editor
+        var hex    = ColorConverter.oklchToHex(color.oklch);
+        var spaces = ColorConverter.oklchToAllSpaces(color.oklch);
+        var cssProp = '--' + family.slug + '-' + slot;
+        var contrast = ContrastEngine.againstBackgrounds(color.oklch, project);
+        var hasRecipe = !!color.recipe && !color.recipe.editedSinceRecipe;
+
+        var contrastRow = '';
+        if (contrast.light) {
+          contrastRow += '<div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-2);">'
+            + '<span class="text-xs text-subtle">Light BG:</span>'
+            + badgeHTML(contrast.light.level)
+            + '<span class="text-xs font-mono">' + contrast.light.ratio.toFixed(1) + ':1</span>'
+            + '</div>';
+        }
+        if (contrast.dark) {
+          contrastRow += '<div style="display:flex;align-items:center;gap:var(--space-2);margin-top:var(--space-2);">'
+            + '<span class="text-xs text-subtle">Dark BG:</span>'
+            + badgeHTML(contrast.dark.level)
+            + '<span class="text-xs font-mono">' + contrast.dark.ratio.toFixed(1) + ':1</span>'
+            + '</div>';
+        }
+
+        var recipeNote = (color.recipe && color.recipe.editedSinceRecipe)
+          ? '<p class="text-xs" style="color:var(--badge-aa18-bg);margin-top:var(--space-2);">Edited since mixed</p>'
+          : (color.recipe
+            ? '<p class="text-xs text-faint" style="margin-top:var(--space-2);">Mixed from '
+              + color.recipe.colorA.hex + ' + ' + color.recipe.colorB.hex + '</p>'
+            : '');
+
+        return '<div class="slot-editor__grid">'
+
+          // Left column — controls
+          + '<div>'
+          + '<div class="flex items-center gap-2" style="margin-bottom:var(--space-4);">'
+          + '<input class="input-color-picker" type="color"'
+          + ' id="slot-picker" value="' + hex + '"'
+          + ' data-family-id="' + family.id + '" data-slot="' + slot + '"'
+          + ' aria-label="Color picker for ' + title + '" />'
+          + '<input class="input input--mono" type="text"'
+          + ' id="slot-hex" value="' + hex + '" maxlength="7"'
+          + ' data-family-id="' + family.id + '" data-slot="' + slot + '"'
+          + ' aria-label="Hex value" />'
+          + '</div>'
+
+          // OKLCH sliders
+          + '<div style="display:flex;flex-direction:column;gap:var(--space-3);">'
+          + sliderHTML('slot-l', 'L', color.oklch.l.toFixed(3), '0', '1', '0.001',
+              color.oklch.l, family.id, slot)
+          + sliderHTML('slot-c', 'C', color.oklch.c.toFixed(3), '0', '0.4', '0.001',
+              color.oklch.c, family.id, slot)
+          + sliderHTML('slot-h', 'H', color.oklch.h.toFixed(1) + '°', '0', '360', '0.1',
+              color.oklch.h, family.id, slot)
+          + '</div>'
+
+          // Name + category
+          + '<div class="field" style="margin-top:var(--space-4);">'
+          + '<label class="label" for="slot-name">Name</label>'
+          + '<input class="input" type="text" id="slot-name"'
+          + ' value="' + escapeAttr(color.name || '') + '"'
+          + ' data-family-id="' + family.id + '" data-slot="' + slot + '"'
+          + ' data-field="name" aria-label="Color name" />'
+          + '</div>'
+          + '<div class="field" style="margin-top:var(--space-3);">'
+          + '<label class="label" for="slot-category">Category</label>'
+          + '<input class="input" type="text" id="slot-category"'
+          + ' value="' + escapeAttr(color.category || '') + '"'
+          + ' data-family-id="' + family.id + '" data-slot="' + slot + '"'
+          + ' data-field="category"'
+          + ' placeholder="e.g. primary, surface, semantic"'
+          + ' aria-label="Color category" />'
+          + '</div>'
+          + '</div>'
+
+          // Right column — derived values + contrast
+          + '<div>'
+          + '<div class="slot-editor__values">'
+          + '<span class="slot-editor__value-label">CSS</span>'
+          + '<span class="css-property-display">' + cssProp + '</span>'
+          + '<span class="slot-editor__value-label">HEX</span>'
+          + '<span class="slot-editor__value font-mono">' + (spaces.hex || hex) + '</span>'
+          + '<span class="slot-editor__value-label">OKLCH</span>'
+          + '<span class="slot-editor__value font-mono">'
+          + 'oklch(' + color.oklch.l.toFixed(3) + ' '
+          + color.oklch.c.toFixed(3) + ' '
+          + color.oklch.h.toFixed(1) + ')</span>'
+          + '<span class="slot-editor__value-label">RGBA</span>'
+          + '<span class="slot-editor__value font-mono">' + (spaces.rgba || '') + '</span>'
+          + '<span class="slot-editor__value-label">HSLA</span>'
+          + '<span class="slot-editor__value font-mono">' + (spaces.hsla || '') + '</span>'
+          + '<span class="slot-editor__value-label">OKLAB</span>'
+          + '<span class="slot-editor__value font-mono">' + (spaces.oklab || '') + '</span>'
+          + '</div>'
+
+          + contrastRow
+          + recipeNote
+
+          + '<div style="margin-top:var(--space-4);display:flex;gap:var(--space-2);">'
+          + '<button class="btn btn--ghost btn--sm" type="button"'
+          + ' data-close-editor="true">Done</button>'
+          + '<button class="btn btn--danger btn--sm" type="button"'
+          + ' data-clear-slot="' + slot + '" data-family-id="' + family.id + '">'
+          + 'Clear slot</button>'
+          + '</div>'
+          + '</div>'
+
+          + '</div>'; // end slot-editor__grid
+      }
+
+      /* ---- Slider HTML helper ---- */
+      function sliderHTML(id, label, displayVal, min, max, step, value, familyId, slot) {
+        return '<div class="field">'
+          + '<div class="field--inline">'
+          + '<label class="label" for="' + id + '">' + label + '</label>'
+          + '<output class="text-xs font-mono" id="' + id + '-value" for="' + id + '">'
+          + displayVal + '</output>'
+          + '</div>'
+          + '<input class="range" type="range"'
+          + ' id="' + id + '"'
+          + ' min="' + min + '" max="' + max + '" step="' + step + '"'
+          + ' value="' + value + '"'
+          + ' data-family-id="' + familyId + '" data-slot="' + slot + '"'
+          + ' aria-label="' + label + ' for ' + slot + ' slot"'
+          + ' aria-valuemin="' + min + '" aria-valuemax="' + max
+          + '" aria-valuenow="' + value + '" />'
+          + '</div>';
+      }
+
+      /* ---- Escape HTML attribute values ---- */
+      function escapeAttr(str) {
+        return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+          .replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      /* ---- Main render ---- */
+      function render() {
+        var project      = AppState.getProject();
+        var familiesEl   = document.getElementById('palette-families');
+        var emptyState   = document.getElementById('palette-empty-state');
+        var cssOutput    = document.getElementById('palette-css-output');
+        var archiveName  = document.getElementById('archive-project-name');
+        var headerName   = document.getElementById('project-name');
+
+        if (headerName) headerName.textContent = project.name || 'Untitled Project';
+        if (archiveName) archiveName.textContent = project.name || 'Untitled Project';
+
+        if (!familiesEl) return;
+
+        if (!project.hueFamilies.length) {
+          if (emptyState) emptyState.style.display = '';
+          familiesEl.innerHTML = '';
+          if (cssOutput) cssOutput.textContent = '/* No colors yet */';
+          return;
+        }
+
+        if (emptyState) emptyState.style.display = 'none';
+
+        familiesEl.innerHTML = project.hueFamilies
+          .map(function(f) { return renderFamily(f, project); })
+          .join('');
+
+        // Update CSS preview
+        if (cssOutput) {
+          cssOutput.textContent = PaletteModule.generateCSS(project);
+        }
+
+        wireEvents(familiesEl, project);
+      }
+
+      /* ---- Wire events inside the families container ---- */
+      function wireEvents(container, project) {
+
+        // Swatch click → open/close slot editor
+        container.querySelectorAll('[data-slot][data-family-id]').forEach(function(btn) {
+          if (btn.tagName !== 'BUTTON') return;
+          btn.addEventListener('click', function() {
+            var fid  = btn.dataset.familyId;
+            var slot = btn.dataset.slot;
+            // Toggle: clicking active swatch closes editor
+            if (_activeFamilyId === fid && _activeSlot === slot) {
+              _activeFamilyId = null;
+              _activeSlot     = null;
+            } else {
+              _activeFamilyId = fid;
+              _activeSlot     = slot;
+            }
+            render();
+            // Focus first input in newly opened editor
+            setTimeout(function() {
+              var ed = document.getElementById('slot-editor-' + fid);
+              if (ed) {
+                var first = ed.querySelector('input, button');
+                if (first) first.focus();
+              }
+            }, 50);
+          });
+        });
+
+        // Close editor
+        container.querySelectorAll('[data-close-editor]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            _activeFamilyId = null;
+            _activeSlot     = null;
+            render();
+          });
+        });
+
+        // Add color to empty slot
+        container.querySelectorAll('[data-add-slot]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var slot     = btn.dataset.addSlot;
+            var fid      = btn.dataset.familyId;
+            var hexInput = document.getElementById('slot-new-hex');
+            var hex      = hexInput ? hexInput.value : '#808080';
+            var oklch    = ColorConverter.hexToOklch(hex);
+            if (!oklch) return;
+
+            var newColor = ColorUtils.createColorObject({
+              oklch:    oklch,
+              name:     SLOT_LABELS[slot] || slot,
+              slot:     slot,
+              familyId: fid,
+            });
+
+            AppState.updateProject(function(p) {
+              var family = p.hueFamilies.find(function(f) { return f.id === fid; });
+              if (family) family.colors[slot] = newColor;
+              return p;
+            });
+          });
+        });
+
+        // New color picker syncs hex input in empty slot form
+        var newPicker = document.getElementById('slot-new-picker');
+        var newHex    = document.getElementById('slot-new-hex');
+        if (newPicker && newHex) {
+          newPicker.addEventListener('input', function() {
+            newHex.value = newPicker.value;
+          });
+          newHex.addEventListener('input', function() {
+            var val = newHex.value.trim();
+            if (/^#[0-9a-fA-F]{6}$/.test(val)) newPicker.value = val;
+          });
+        }
+
+        // Slot picker (filled slot)
+        var slotPicker = document.getElementById('slot-picker');
+        if (slotPicker) {
+          slotPicker.addEventListener('input', function() {
+            var fid  = slotPicker.dataset.familyId;
+            var slot = slotPicker.dataset.slot;
+            var ok   = ColorConverter.hexToOklch(slotPicker.value);
+            if (!ok) return;
+            updateSlotOklch(fid, slot, ok);
+          });
+        }
+
+        // Slot hex input (filled slot)
+        var slotHex = document.getElementById('slot-hex');
+        if (slotHex) {
+          slotHex.addEventListener('input', function() {
+            var val = slotHex.value.trim();
+            if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+            var fid  = slotHex.dataset.familyId;
+            var slot = slotHex.dataset.slot;
+            var ok   = ColorConverter.hexToOklch(val);
+            if (!ok) return;
+            updateSlotOklch(fid, slot, ok);
+          });
+        }
+
+        // Slot OKLCH sliders
+        ['slot-l', 'slot-c', 'slot-h'].forEach(function(id) {
+          var slider = document.getElementById(id);
+          if (!slider) return;
+          slider.addEventListener('input', function() {
+            var fid      = slider.dataset.familyId;
+            var slot     = slider.dataset.slot;
+            var project  = AppState.getProject();
+            var family   = project.hueFamilies.find(function(f) { return f.id === fid; });
+            if (!family || !family.colors[slot]) return;
+            var current  = Object.assign({}, family.colors[slot].oklch);
+            var component = id.replace('slot-', '');
+            current[component] = parseFloat(slider.value);
+            // Update output display immediately (no re-render, just DOM update)
+            var outputEl = document.getElementById(id + '-value');
+            if (outputEl) {
+              outputEl.value = component === 'h'
+                ? Number(slider.value).toFixed(1) + '°'
+                : Number(slider.value).toFixed(3);
+            }
+            updateSlotOklch(fid, slot, current);
+          });
+        });
+
+        // Name and category fields
+        ['slot-name', 'slot-category'].forEach(function(id) {
+          var input = document.getElementById(id);
+          if (!input) return;
+          input.addEventListener('change', function() {
+            var fid   = input.dataset.familyId;
+            var slot  = input.dataset.slot;
+            var field = input.dataset.field;
+            AppState.updateProject(function(p) {
+              var family = p.hueFamilies.find(function(f) { return f.id === fid; });
+              if (!family || !family.colors[slot]) return p;
+              family.colors[slot][field] = input.value;
+              if (field === 'name') {
+                family.colors[slot].slug = ColorUtils.nameToSlug(input.value);
+              }
+              return p;
+            });
+          });
+        });
+
+        // Clear slot
+        container.querySelectorAll('[data-clear-slot]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var slot = btn.dataset.clearSlot;
+            var fid  = btn.dataset.familyId;
+            if (!confirm('Clear the ' + slot + ' slot?')) return;
+            AppState.updateProject(function(p) {
+              var family = p.hueFamilies.find(function(f) { return f.id === fid; });
+              if (family) family.colors[slot] = null;
+              return p;
+            });
+            _activeFamilyId = null;
+            _activeSlot     = null;
+          });
+        });
+
+        // Rename family
+        container.querySelectorAll('[data-rename-family]').forEach(function(input) {
+          input.addEventListener('change', function() {
+            var fid = input.dataset.renameFamily;
+            AppState.updateProject(function(p) {
+              var family = p.hueFamilies.find(function(f) { return f.id === fid; });
+              if (family) {
+                family.name = input.value;
+                family.slug = ColorUtils.nameToSlug(input.value);
+              }
+              return p;
+            });
+          });
+        });
+
+        // Delete family
+        container.querySelectorAll('[data-delete-family]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var fid    = btn.dataset.deleteFamily;
+            var family = project.hueFamilies.find(function(f) { return f.id === fid; });
+            if (!confirm('Delete ' + (family ? family.name : 'this') + ' family?')) return;
+            if (_activeFamilyId === fid) {
+              _activeFamilyId = null;
+              _activeSlot     = null;
+            }
+            AppState.updateProject(function(p) {
+              p.hueFamilies = p.hueFamilies.filter(function(f) { return f.id !== fid; });
+              return p;
+            });
+          });
+        });
+      }
+
+      /* ---- Update a slot's OKLCH and re-render ---- */
+      function updateSlotOklch(familyId, slot, oklch) {
+        AppState.updateProject(function(p) {
+          var family = p.hueFamilies.find(function(f) { return f.id === familyId; });
+          if (!family || !family.colors[slot]) return p;
+          family.colors[slot].oklch = oklch;
+          if (family.colors[slot].recipe) {
+            family.colors[slot].recipe.editedSinceRecipe = true;
+          }
+          return p;
+        });
+      }
+
+      /* ---- Wire toolbar (add family, anchors, CSS copy) ---- */
+      function wireToolbar() {
+        // Add family
+        var addBtn = document.getElementById('btn-add-family');
+        if (addBtn) {
+          addBtn.addEventListener('click', function() {
+            var family = ColorUtils.createHueFamily('Family ' + (AppState.getProject().hueFamilies.length + 1));
+            AppState.updateProject(function(p) {
+              p.hueFamilies.push(family);
+              return p;
+            });
+          });
+        }
+
+        // Copy CSS preview
+        var copyCssBtn = document.getElementById('btn-copy-css-preview');
+        if (copyCssBtn) {
+          copyCssBtn.addEventListener('click', function() {
+            var project = AppState.getProject();
+            copyToClipboard(PaletteModule.generateCSS(project), 'CSS copied');
+          });
+        }
+
+        // Anchor paper picker
+        var paperPicker = document.getElementById('anchor-paper');
+        var paperHex    = document.getElementById('anchor-paper-hex');
+        if (paperPicker) {
+          paperPicker.addEventListener('input', function() {
+            if (paperHex) paperHex.value = paperPicker.value;
+            var oklch = ColorConverter.hexToOklch(paperPicker.value);
+            if (!oklch) return;
+            AppState.updateProject(function(p) {
+              p.anchors.paper = { oklch: oklch, hex: paperPicker.value };
+              return p;
+            });
+          });
+        }
+        if (paperHex) {
+          paperHex.addEventListener('input', function() {
+            var val = paperHex.value.trim();
+            if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+            if (paperPicker) paperPicker.value = val;
+            var oklch = ColorConverter.hexToOklch(val);
+            if (!oklch) return;
+            AppState.updateProject(function(p) {
+              p.anchors.paper = { oklch: oklch, hex: val };
+              return p;
+            });
+          });
+        }
+
+        // Anchor ink picker
+        var inkPicker = document.getElementById('anchor-ink');
+        var inkHex    = document.getElementById('anchor-ink-hex');
+        if (inkPicker) {
+          inkPicker.addEventListener('input', function() {
+            if (inkHex) inkHex.value = inkPicker.value;
+            var oklch = ColorConverter.hexToOklch(inkPicker.value);
+            if (!oklch) return;
+            AppState.updateProject(function(p) {
+              p.anchors.ink = { oklch: oklch, hex: inkPicker.value };
+              return p;
+            });
+          });
+        }
+        if (inkHex) {
+          inkHex.addEventListener('input', function() {
+            var val = inkHex.value.trim();
+            if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+            if (inkPicker) inkPicker.value = val;
+            var oklch = ColorConverter.hexToOklch(val);
+            if (!oklch) return;
+            AppState.updateProject(function(p) {
+              p.anchors.ink = { oklch: oklch, hex: val };
+              return p;
+            });
+          });
+        }
+
+        // Shared anchor checkbox
+        var sharedCheck = document.getElementById('anchor-shared');
+        if (sharedCheck) {
+          sharedCheck.addEventListener('change', function() {
+            AppState.updateProject(function(p) {
+              p.anchors.shared = sharedCheck.checked;
+              return p;
+            });
+          });
+        }
+      }
+
+      function init() {
+        wireToolbar();
+        EventBus.on('palette:changed',  function(p) {
+          ContrastEngine.schedule(p);
+          render();
+        });
+        EventBus.on('project:loaded',   function() { render(); });
+        EventBus.on('contrast:updated', function() { render(); });
+        render();
+      }
+
+      return { init, render };
+    })();
+
+
+    /* ============================================================
+       16. CONTRAST AUDITOR UI
+       List view, filter toggles, background refs, full matrix.
+       ============================================================ */
+    const ContrastAuditorUI = (() => {
+
+      // Active WCAG level filters — all on by default
+      var _filters = { AAA: true, AA: true, AA18: true, DNP: true };
+
+      // Active matrix filters (separate toggle set for the overlay)
+      var _matrixFilters = { AAA: true, AA: true, AA18: true, DNP: true };
+
+      /* ---- Badge HTML ---- */
+      function badgeHTML(level) {
+        var cls = (level || '').toLowerCase();
+        return '<span class="badge badge--' + cls + '" aria-hidden="true">' + level + '</span>';
+      }
+
+      /* ---- Populate background reference dropdowns ---- */
+      function populateBgDropdowns(project) {
+        var lightSel = document.getElementById('contrast-bg-light');
+        var darkSel  = document.getElementById('contrast-bg-dark');
+        if (!lightSel || !darkSel) return;
+
+        var lightVal = lightSel.value;
+        var darkVal  = darkSel.value;
+
+        var optionsHTML = '<option value="">— None —</option>';
+        project.hueFamilies.forEach(function(family) {
+          PALETTE_SLOTS.forEach(function(slot) {
+            var color = family.colors[slot];
+            if (!color) return;
+            var hex   = ColorConverter.oklchToHex(color.oklch);
+            var label = family.name + ' — ' + (color.name || slot);
+            optionsHTML += '<option value="' + color.id + '"'
+              + ' data-hex="' + hex + '">'
+              + label
+              + '</option>';
+          });
+        });
+
+        lightSel.innerHTML = optionsHTML;
+        darkSel.innerHTML  = optionsHTML;
+
+        // Restore previous selections if they still exist
+        if (lightVal) lightSel.value = lightVal;
+        if (darkVal)  darkSel.value  = darkVal;
+      }
+
+      /* ---- Sync background selections to project state ---- */
+      function syncBackgrounds() {
+        var lightSel = document.getElementById('contrast-bg-light');
+        var darkSel  = document.getElementById('contrast-bg-dark');
+        var project  = AppState.getProject();
+
+        function findColorById(id) {
+          for (var i = 0; i < project.hueFamilies.length; i++) {
+            var family = project.hueFamilies[i];
+            for (var s = 0; s < PALETTE_SLOTS.length; s++) {
+              var slot = PALETTE_SLOTS[s];
+              var c    = family.colors[slot];
+              if (c && c.id === id) return c;
+            }
+          }
+          return null;
+        }
+
+        var lightColor = lightSel ? findColorById(lightSel.value) : null;
+        var darkColor  = darkSel  ? findColorById(darkSel.value)  : null;
+
+        AppState.updateProject(function(p) {
+          p.backgrounds.light = lightColor || null;
+          p.backgrounds.dark  = darkColor  || null;
+          return p;
+        });
+      }
+
+      /* ---- Render the contrast list (default panel view) ---- */
+      function renderList() {
+        var project     = AppState.getProject();
+        var contrastMap = AppState.getContrastMap();
+        var listEl      = document.getElementById('contrast-list');
+        if (!listEl) return;
+
+        populateBgDropdowns(project);
+
+        var allColors = PaletteModule.getAllColors(project);
+        if (!allColors.length) {
+          listEl.innerHTML = '<p class="text-sm text-subtle">Add colors to the palette to see contrast ratios.</p>';
+          return;
+        }
+
+        var hasBgLight = !!project.backgrounds.light;
+        var hasBgDark  = !!project.backgrounds.dark;
+        var sections   = [];
+
+        // Helper: build a row entry
+        function makeRow(fgColor, bgColor) {
+          var key   = fgColor.id + ':' + bgColor.id;
+          var entry = contrastMap[key];
+          if (!entry) return null;
+          if (!_filters[entry.level]) return null;
+
+          var fgHex = ColorConverter.oklchToHex(fgColor.oklch);
+          var bgHex = ColorConverter.oklchToHex(bgColor.oklch);
+
+          return '<div class="contrast-list__row"'
+            + ' style="background-color:' + bgHex + ';">'
+            + '<div class="swatch swatch--xs flex-shrink-0"'
+            + ' style="background-color:' + fgHex + ';" aria-hidden="true"></div>'
+            + '<span class="text-sm" style="color:' + fgHex + ';font-weight:500;">'
+            + (fgColor.name || fgColor.paletteSlot)
+            + '</span>'
+            + '<span class="text-xs" style="color:' + fgHex + ';opacity:0.75;">on</span>'
+            + '<span class="text-sm" style="color:' + fgHex + ';font-weight:500;">'
+            + (bgColor.name || bgColor.paletteSlot)
+            + '</span>'
+            + badgeHTML(entry.level)
+            + '<span class="contrast-list__ratio" style="color:' + fgHex + ';">'
+            + entry.ratio.toFixed(1) + ':1'
+            + '</span>'
+            + '</div>';
+        }
+
+        // Section: against light background
+        if (hasBgLight) {
+          var bgLight = project.backgrounds.light;
+          var lightRows = allColors
+            .filter(function(c) { return c.id !== bgLight.id; })
+            .map(function(c)    { return makeRow(c, bgLight); })
+            .filter(Boolean);
+
+          if (lightRows.length) {
+            sections.push(
+              '<div class="contrast-list__section-title">Against light background</div>'
+              + lightRows.join('')
+            );
+          }
+        }
+
+        // Section: against dark background
+        if (hasBgDark) {
+          var bgDark = project.backgrounds.dark;
+          var darkRows = allColors
+            .filter(function(c) { return c.id !== bgDark.id; })
+            .map(function(c)    { return makeRow(c, bgDark); })
+            .filter(Boolean);
+
+          if (darkRows.length) {
+            sections.push(
+              '<div class="contrast-list__section-title">Against dark background</div>'
+              + darkRows.join('')
+            );
+          }
+        }
+
+        // Section: all pairs (when no backgrounds set, or as supplement)
+        if (!hasBgLight && !hasBgDark) {
+          // Show all passing pairs sorted by ratio descending
+          var allPairs = Object.values(contrastMap)
+            .filter(function(e) { return _filters[e.level]; })
+            .sort(function(a, b) { return b.ratio - a.ratio });
+
+          var pairRows = allPairs.map(function(entry) {
+            var fg = allColors.find(function(c) { return c.id === entry.fgId; });
+            var bg = allColors.find(function(c) { return c.id === entry.bgId; });
+            if (!fg || !bg) return null;
+            return makeRow(fg, bg);
+          }).filter(Boolean);
+
+          if (pairRows.length) {
+            sections.push(
+              '<div class="contrast-list__section-title">All pairs</div>'
+              + pairRows.join('')
+            );
+          } else {
+            sections.push('<p class="text-sm text-subtle">No pairs match the current filters.</p>');
+          }
+        }
+
+        listEl.innerHTML = sections.join('') ||
+          '<p class="text-sm text-subtle">No pairs match the current filters.</p>';
+      }
+
+      /* ---- Render the full-screen contrast matrix ---- */
+      function renderMatrix() {
+        var project     = AppState.getProject();
+        var contrastMap = AppState.getContrastMap();
+        var tableEl     = document.getElementById('contrast-matrix-table');
+        if (!tableEl) return;
+
+        var colors = PaletteModule.getAllColors(project);
+        if (!colors.length) {
+          tableEl.innerHTML = '<caption>No colors in palette yet.</caption>';
+          return;
+        }
+
+        // Build header row
+        var thead = '<thead><tr>'
+          + '<th class="contrast-matrix__header-cell" scope="col" aria-label=""></th>';
+
+        colors.forEach(function(bg) {
+          var bgHex = ColorConverter.oklchToHex(bg.oklch);
+          thead += '<th class="contrast-matrix__header-cell" scope="col"'
+            + ' style="background-color:' + bgHex + ';'
+            + 'color:' + readableOn(bg.oklch) + ';">'
+            + '<span class="text-2xs truncate" style="display:block;max-width:80px;">'
+            + (bg.name || bg.paletteSlot)
+            + '</span>'
+            + '</th>';
+        });
+        thead += '</tr></thead>';
+
+        // Build body rows
+        var tbody = '<tbody>';
+        colors.forEach(function(fg) {
+          var fgHex = ColorConverter.oklchToHex(fg.oklch);
+          tbody += '<tr>'
+            + '<th class="contrast-matrix__header-cell" scope="row"'
+            + ' style="background-color:' + fgHex + ';'
+            + 'color:' + readableOn(fg.oklch) + ';">'
+            + '<span class="text-2xs truncate" style="display:block;max-width:80px;">'
+            + (fg.name || fg.paletteSlot)
+            + '</span>'
+            + '</th>';
+
+          colors.forEach(function(bg) {
+            if (fg.id === bg.id) {
+              tbody += '<td class="contrast-matrix__cell contrast-matrix__cell--self"'
+                + ' aria-label="Same color"></td>';
+              return;
+            }
+
+            var key   = fg.id + ':' + bg.id;
+            var entry = contrastMap[key];
+            var bgHex = ColorConverter.oklchToHex(bg.oklch);
+
+            if (!entry) {
+              tbody += '<td class="contrast-matrix__cell" aria-label="Not computed"></td>';
+              return;
+            }
+
+            var levelCls  = entry.level.toLowerCase();
+            var isFiltered = !_matrixFilters[entry.level];
+            var opacity   = isFiltered ? 'opacity:0.15;' : '';
+
+            tbody += '<td class="contrast-matrix__cell"'
+              + ' style="background-color:' + bgHex + ';' + opacity + '"'
+              + ' aria-label="' + (fg.name || fg.paletteSlot)
+              + ' on ' + (bg.name || bg.paletteSlot)
+              + ': ' + entry.ratio.toFixed(1) + ' to 1, ' + entry.level + '">'
+              + '<div class="contrast-matrix__sample">'
+              + '<span class="contrast-matrix__sample-text"'
+              + ' style="color:' + fgHex + ';">Aa</span>'
+              + '<span class="badge badge--' + levelCls + '">' + entry.level + '</span>'
+              + '<span class="contrast-matrix__ratio"'
+              + ' style="color:' + fgHex + ';">'
+              + entry.ratio.toFixed(1) + '</span>'
+              + '</div>'
+              + '</td>';
+          });
+
+          tbody += '</tr>';
+        });
+        tbody += '</tbody>';
+
+        tableEl.innerHTML = thead + tbody;
+      }
+
+      /* ---- Determine a readable text color (black or white) for a bg ---- */
+      function readableOn(oklch) {
+        var lum = ContrastModule.relativeLuminance(oklch);
+        return lum > 0.179 ? '#000000' : '#ffffff';
+      }
+
+      /* ---- Wire filter toggle buttons ---- */
+      function wireFilters() {
+        // Panel filters
+        document.querySelectorAll('.contrast-filter-btn:not([data-matrix-filter]):not([data-archive-filter])')
+          .forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var level   = btn.textContent.trim();
+              _filters[level] = !_filters[level];
+              btn.setAttribute('aria-pressed', _filters[level] ? 'true' : 'false');
+              renderList();
+            });
+          });
+
+        // Matrix overlay filters
+        document.querySelectorAll('[data-matrix-filter]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var level = btn.dataset.matrixFilter.toUpperCase();
+            if (level === 'AA18') level = 'AA18';
+            _matrixFilters[level] = !_matrixFilters[level];
+            btn.setAttribute('aria-pressed', _matrixFilters[level] ? 'true' : 'false');
+            renderMatrix();
+          });
+        });
+      }
+
+      /* ---- Wire background selects ---- */
+      function wireBgSelects() {
+        ['contrast-bg-light', 'contrast-bg-dark'].forEach(function(id) {
+          var sel = document.getElementById(id);
+          if (!sel) return;
+          sel.addEventListener('change', function() {
+            syncBackgrounds();
+          });
+        });
+      }
+
+      /* ---- Wire full-screen matrix open/close ---- */
+      function wireMatrix() {
+        var overlay   = document.getElementById('contrast-matrix-overlay');
+        var openBtn   = document.getElementById('btn-open-matrix');
+        var closeBtn  = document.getElementById('btn-close-matrix');
+        var previousFocus = null;
+
+        function openMatrix() {
+          if (!overlay) return;
+          previousFocus = document.activeElement;
+          renderMatrix();
+          overlay.setAttribute('aria-hidden', 'false');
+          // Trap focus inside overlay
+          var firstFocusable = overlay.querySelector('button, [tabindex="0"]');
+          if (firstFocusable) firstFocusable.focus();
+          document.addEventListener('keydown', handleOverlayKey);
+        }
+
+        function closeMatrix() {
+          if (!overlay) return;
+          overlay.setAttribute('aria-hidden', 'true');
+          document.removeEventListener('keydown', handleOverlayKey);
+          if (previousFocus) previousFocus.focus();
+        }
+
+        function handleOverlayKey(e) {
+          if (e.key === 'Escape') closeMatrix();
+        }
+
+        if (openBtn)  openBtn.addEventListener('click', openMatrix);
+        if (closeBtn) closeBtn.addEventListener('click', closeMatrix);
+      }
+
+      function init() {
+        wireFilters();
+        wireBgSelects();
+        wireMatrix();
+
+        EventBus.on('palette:changed',  function() {
+          var p = AppState.getProject();
+          populateBgDropdowns(p);
+          renderList();
+        });
+        EventBus.on('project:loaded',   function() {
+          var p = AppState.getProject();
+          populateBgDropdowns(p);
+          renderList();
+        });
+        EventBus.on('contrast:updated', function() { renderList(); });
+
+        renderList();
+      }
+
+      return { init, renderList, renderMatrix };
+    })();
+
+    /* ============================================================
+       INIT — load stored project or default
+       (Full UI wiring happens in subsequent build steps)
+       ============================================================ */
+    (() => {
+      const stored = StorageModule.loadFromStorage();
+      if (stored) {
+        AppState.loadProject(stored);
+        log.log('Project restored from localStorage.');
+      } else {
+        log.log('No stored project. Starting fresh.');
+      }
+
+      // Verify colorjs.io loaded
+      if (!ColorConverter.isAvailable()) {
+        log.warn('colorjs.io did not load. Color conversion unavailable.');
+      } else {
+        log.log('colorjs.io ready. ColorConverter available.');
+        // Quick sanity check
+        const test = ColorConverter.hexToOklch('#4c922f');
+        log.log('Sanity check hexToOklch("#4c922f"):', test);
+      }
+
+      // Tab navigation — responsive-aware
+      // On desktop: staging tab is hidden via CSS; excluded from keyboard nav.
+      // On mobile:  staging tab is the fifth tab, fully interactive.
+      const tabs   = document.querySelectorAll('[role="tab"]');
+      const panels = document.querySelectorAll('[role="tabpanel"]');
+
+      function isMobile() {
+        return window.matchMedia('(max-width: 767px)').matches;
+      }
+
+      // Returns tabs that are currently interactive (excludes hidden staging tab on desktop)
+      function getActiveTabs() {
+        return [...tabs].filter(t => {
+          if (t.id === 'tab-staging' && !isMobile()) return false;
+          return true;
+        });
+      }
+
+      function activateTab(tab) {
+        const activeTabs = getActiveTabs();
+        activeTabs.forEach(t => {
+          const isActive = t === tab;
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          t.tabIndex = isActive ? 0 : -1;
+        });
+        panels.forEach(p => {
+          const isActive = p.id === tab.getAttribute('aria-controls');
+          p.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        });
+        AppState.setActive(tab.id.replace('tab-', ''));
+      }
+
+      // Initialize all tabs
+      tabs.forEach((tab) => {
+        tab.tabIndex = (tab.id === 'tab-mixer') ? 0 : -1;
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (e) => {
+          const tabList = getActiveTabs();
+          const idx     = tabList.indexOf(tab);
+          if (idx < 0) return;
+          let next = -1;
+          if (e.key === 'ArrowRight') next = (idx + 1) % tabList.length;
+          if (e.key === 'ArrowLeft')  next = (idx - 1 + tabList.length) % tabList.length;
+          if (e.key === 'Home')       next = 0;
+          if (e.key === 'End')        next = tabList.length - 1;
+          if (next >= 0) {
+            e.preventDefault();
+            tabList[next].focus();
+            activateTab(tabList[next]);
+          }
+        });
+      });
+
+      // On resize: if staging panel is active and we go to desktop, fall back to mixer
+      window.addEventListener('resize', () => {
+        if (!isMobile()) {
+          const stagingTab = document.getElementById('tab-staging');
+          if (stagingTab?.getAttribute('aria-selected') === 'true') {
+            activateTab(document.getElementById('tab-mixer'));
+          }
+          document.getElementById('panel-staging')
+            ?.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Initialise UI modules
+      MixerUI.init();
+      StagingUI.init();
+      PaletteBuilderUI.init();
+      ContrastAuditorUI.init();
+
+    })();
+
+  </script>
+
+</body>
+</html>

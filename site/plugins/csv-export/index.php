@@ -315,6 +315,8 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         $newsletterKey = match(true) {
                             in_array(strtolower($newsletterName), ['500 words', '500words', '500-words'])
                                 => '500-words',
+                            in_array(strtolower($newsletterName), ['500 characters', '500characters', '500-characters'])
+                                => '500-characters',
                             in_array(strtolower($newsletterName), ['craft & practice', 'craft and practice', 'craft-and-practice'])
                                 => 'craft-and-practice',
                             in_array(strtolower($newsletterName), ['weekly wanders', 'weekly-wanders'])

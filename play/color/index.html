@@ -699,6 +699,29 @@
         color: var(--color-text-faint);
       }
 
+      /* Drag-and-drop states */
+      .swatch--drag-over {
+        outline: 3px solid var(--color-accent);
+        outline-offset: 2px;
+        transform: scale(1.08);
+      }
+
+      .staging-card[draggable="true"] {
+        cursor: grab;
+      }
+
+      .staging-card.dragging {
+        opacity: 0.45;
+        cursor: grabbing;
+      }
+
+      .staging-card__extra-actions {
+        display: flex;
+        gap: var(--space-2);
+        padding: 0 var(--space-3) var(--space-2);
+        flex-wrap: wrap;
+      }
+
       .swatch__ambient {
         position: absolute;
         bottom: var(--space-1);
@@ -1173,6 +1196,26 @@
         gap: var(--space-2);
       }
 
+      /* Side-by-side light/dark columns on wider screens */
+      .contrast-list--columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .contrast-list--columns {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .contrast-list__column {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
       .contrast-list__section-title {
         font-size: var(--text-xs);
         font-weight: 600;
@@ -1200,6 +1243,82 @@
         color: var(--color-text-subtle);
         margin-left: auto;
         white-space: nowrap;
+      }
+
+      /* FAMILY MATRIX DIALOG */
+      .family-matrix-dialog {
+        border: var(--border-width) solid var(--color-border);
+        border-radius: var(--border-radius-lg);
+        padding: 0;
+        background: var(--color-bg);
+        color: var(--color-text);
+        max-width: min(96vw, 900px);
+        width: 96vw;
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .family-matrix-dialog::backdrop {
+        background: oklch(0 0 0 / 0.55);
+        backdrop-filter: blur(2px);
+      }
+      .family-matrix-dialog__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-5);
+        border-bottom: var(--border-width) solid var(--color-border);
+        background: var(--color-surface-2);
+        flex-shrink: 0;
+      }
+      .family-matrix-dialog__title { font-size: var(--text-md); font-weight: 600; }
+      .family-matrix-dialog__body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+        flex: 1;
+        min-height: 0;
+      }
+      @media (max-width: 640px) {
+        .family-matrix-dialog__body { grid-template-columns: 1fr; overflow-y: auto; }
+      }
+      .family-matrix-dialog__sliders {
+        overflow-y: auto;
+        padding: var(--space-4);
+        border-right: var(--border-width) solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .family-matrix-dialog__matrix { overflow: auto; padding: var(--space-4); }
+      .fm-color-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding-bottom: var(--space-3);
+        border-bottom: var(--border-width) solid var(--color-border-subtle);
+      }
+      .fm-color-row__swatch {
+        width: 32px; height: 32px;
+        border-radius: var(--border-radius);
+        flex-shrink: 0;
+        border: 1px solid var(--color-border-subtle);
+      }
+      .fm-color-row__name {
+        font-size: var(--text-xs); font-weight: 600;
+        width: 72px; flex-shrink: 0;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .fm-color-row__sliders { flex: 1; display: flex; flex-direction: column; gap: var(--space-1); }
+      .fm-slider-row { display: flex; align-items: center; gap: var(--space-2); }
+      .fm-slider-label {
+        font-size: var(--text-2xs); color: var(--color-text-subtle);
+        width: 12px; flex-shrink: 0;
+      }
+      .fm-slider-output {
+        font-size: var(--text-2xs); font-family: ui-monospace, monospace;
+        color: var(--color-text-faint); width: 44px; flex-shrink: 0; text-align: right;
       }
 
       /* CONTRAST MATRIX — full-screen overlay */
@@ -2361,6 +2480,29 @@
 
 
   <!-- ============================================================
+       FAMILY MATRIX DIALOG
+       ============================================================ -->
+  <dialog class="family-matrix-dialog"
+          id="family-matrix-dialog"
+          aria-label="Family color matrix"
+          aria-modal="true">
+    <div class="family-matrix-dialog__header">
+      <span class="family-matrix-dialog__title" id="family-matrix-title">Family Matrix</span>
+      <button class="btn btn--ghost btn--sm"
+              id="btn-close-family-matrix"
+              type="button"
+              aria-label="Close family matrix">
+        &#x2715;
+      </button>
+    </div>
+    <div class="family-matrix-dialog__body">
+      <div class="family-matrix-dialog__sliders" id="family-matrix-sliders"></div>
+      <div class="family-matrix-dialog__matrix" id="family-matrix-table-wrap"></div>
+    </div>
+  </dialog>
+
+
+  <!-- ============================================================
        CONTRAST MATRIX OVERLAY (full-screen)
        ============================================================ -->
   <div class="contrast-matrix-overlay"
@@ -2542,6 +2684,19 @@
       }
 
       /**
+       * Accept hex with or without leading #, 3 or 6 chars.
+       * Returns full #rrggbb or null if unparseable.
+       */
+      function normalizeHexInput(raw) {
+        if (!raw || typeof raw !== 'string') return null;
+        var s = raw.trim().replace(/^#+/, ''); // strip leading hashes
+        if (/^[0-9a-fA-F]{3}$/.test(s))  return expandHex('#' + s);
+        if (/^[0-9a-fA-F]{6}$/.test(s))  return '#' + s.toLowerCase();
+        if (/^[0-9a-fA-F]{8}$/.test(s))  return '#' + s.slice(0,6).toLowerCase();
+        return null;
+      }
+
+      /**
        * { l, c, h } → { hex, rgba, hsla, oklab }
        * All derived representations from a canonical OKLCH value.
        */
@@ -2618,7 +2773,7 @@
         return Number(n).toFixed(decimals);
       }
 
-      return { isAvailable, hexToOklch, oklchToHex, oklchToAllSpaces, interpolate };
+      return { isAvailable, hexToOklch, oklchToHex, oklchToAllSpaces, interpolate, normalizeHexInput, expandHex };
     })();
 
 
@@ -3411,8 +3566,8 @@
 
         /* Color A — hex input */
         r.hexA.addEventListener('input', () => {
-          const val = r.hexA.value.trim();
-          if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+          const val = ColorConverter.normalizeHexInput(r.hexA.value);
+          if (!val) return;
           const oklch = ColorConverter.hexToOklch(val);
           if (oklch) setColorA(oklch);
         });
@@ -3443,8 +3598,8 @@
 
         /* Color B — hex input */
         r.hexB.addEventListener('input', () => {
-          const val = r.hexB.value.trim();
-          if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+          const val = ColorConverter.normalizeHexInput(r.hexB.value);
+          if (!val) return;
           const oklch = ColorConverter.hexToOklch(val);
           if (oklch) setColorB(oklch);
         });
@@ -3566,7 +3721,9 @@
 
           return `
             <article class="staging-card" role="listitem"
-                     aria-label="${color.name}, ${hex}">
+                     draggable="true"
+                     data-staged-index="${i}"
+                     aria-label="${color.name}, ${hex}. Drag to a palette slot to assign.">
               <div class="staging-card__preview"
                    style="background-color: ${hex};"
                    aria-hidden="true"></div>
@@ -3583,10 +3740,7 @@
                           data-assign-index="${i}">
                     <option value="">Assign to slot…</option>
                     ${familyOptions}
-                  </select>` : `
-                  <span class="text-xs text-faint" style="flex:1;">
-                    Add a family first
-                  </span>`
+                  </select>` : ``
                 }
                 <button class="btn btn--danger btn--sm"
                         data-discard-index="${i}"
@@ -3594,6 +3748,15 @@
                         aria-label="Discard ${color.name}">
                   ×
                 </button>
+              </div>
+              <div class="staging-card__extra-actions">
+                <button class="btn btn--secondary btn--sm"
+                        data-new-family-from="${i}"
+                        type="button"
+                        title="Create a new family starting from this color">
+                  + New family
+                </button>
+                ${hasFamilies ? '' : '<span class="text-xs text-faint">Add a family or drag to a slot</span>'}
               </div>
             </article>`;
         }).join('');
@@ -3603,6 +3766,18 @@
           if (el) {
             el.innerHTML = html;
 
+            // Wire drag events on cards
+            el.querySelectorAll('[data-staged-index]').forEach(card => {
+              card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', card.dataset.stagedIndex);
+                e.dataTransfer.effectAllowed = 'move';
+                card.classList.add('dragging');
+              });
+              card.addEventListener('dragend', function() {
+                card.classList.remove('dragging');
+              });
+            });
+
             // Wire discard buttons
             el.querySelectorAll('[data-discard-index]').forEach(btn => {
               btn.addEventListener('click', () => {
@@ -3611,6 +3786,28 @@
                   p.stagingArea.splice(idx, 1);
                   return p;
                 });
+              });
+            });
+
+            // Wire "New family from this color"
+            el.querySelectorAll('[data-new-family-from]').forEach(btn => {
+              btn.addEventListener('click', () => {
+                const idx    = parseInt(btn.dataset.newFamilyFrom, 10);
+                const staged = AppState.getProject().stagingArea[idx];
+                if (!staged) return;
+                const family = ColorUtils.createHueFamily(staged.name || 'New Family');
+                AppState.updateProject(p => {
+                  const color = p.stagingArea[idx];
+                  if (!color) return p;
+                  // Place at mid slot by default
+                  color.paletteSlot  = 'mid';
+                  color.hueFamilyId  = family.id;
+                  family.colors['mid'] = color;
+                  p.hueFamilies.push(family);
+                  p.stagingArea.splice(idx, 1);
+                  return p;
+                });
+                Toast.show('New family created from ' + (staged.name || 'color'));
               });
             });
 
@@ -3729,7 +3926,15 @@
         return result;
       }
 
-      return { schedule, againstBackgrounds };
+      // Compute synchronously and return the map (for export fallback)
+      function computeNow(project) {
+        var colors = PaletteModule.getAllColors(project);
+        var map    = ContrastModule.buildContrastMap(colors);
+        AppState.setContrastMap(map);
+        return map;
+      }
+
+      return { schedule, againstBackgrounds, computeNow };
     })();
 
 
@@ -3824,6 +4029,11 @@
           + ' data-rename-family="' + family.id + '"'
           + ' style="width:140px;" />'
           + '</span>'
+                    + '<button class="btn btn--ghost btn--sm"'
+          + ' data-open-family-matrix="' + family.id + '"'
+          + ' type="button"'
+          + ' title="Color matrix for this family"'
+          + ' aria-label="Matrix for ' + escapeAttr(family.name) + '">⋞ Matrix</button>'
           + '<button class="btn btn--danger btn--sm"'
           + ' data-delete-family="' + family.id + '"'
           + ' type="button"'
@@ -3857,7 +4067,9 @@
             + ' id="slot-new-picker" value="#808080"'
             + ' aria-label="Choose color for ' + title + ' slot" />'
             + '<input class="input input--mono" type="text"'
-            + ' id="slot-new-hex" value="#808080" maxlength="7"'
+            + ' id="slot-new-hex" value="" maxlength="9"'
+            + ' placeholder="#rrggbb"'
+            + ' autocomplete="off" spellcheck="false"'
             + ' aria-label="Hex value for ' + title + ' slot"'
             + ' style="width:120px;" />'
             + '<button class="btn btn--primary" type="button"'
@@ -4044,6 +4256,46 @@
       /* ---- Wire events inside the families container ---- */
       function wireEvents(container, project) {
 
+        // Wire drag-drop: slots as drop targets
+        container.querySelectorAll('[data-slot][data-family-id]').forEach(function(btn) {
+          if (btn.tagName !== 'BUTTON') return;
+
+          btn.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            btn.classList.add('swatch--drag-over');
+          });
+
+          btn.addEventListener('dragleave', function() {
+            btn.classList.remove('swatch--drag-over');
+          });
+
+          btn.addEventListener('drop', function(e) {
+            e.preventDefault();
+            btn.classList.remove('swatch--drag-over');
+            var stagedIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+            if (isNaN(stagedIdx)) return;
+            var fid  = btn.dataset.familyId;
+            var slot = btn.dataset.slot;
+            AppState.updateProject(function(p) {
+              var color = p.stagingArea[stagedIdx];
+              if (!color) return p;
+              var family = p.hueFamilies.find(function(f) { return f.id === fid; });
+              if (!family) return p;
+              // Warn if slot is occupied
+              if (family.colors[slot]) {
+                if (!confirm('Replace existing color in ' + slot + ' slot?')) return p;
+              }
+              color.paletteSlot  = slot;
+              color.hueFamilyId  = fid;
+              family.colors[slot] = color;
+              p.stagingArea.splice(stagedIdx, 1);
+              return p;
+            });
+            Toast.show('Color assigned to slot');
+          });
+        });
+
         // Swatch click → open/close slot editor
         container.querySelectorAll('[data-slot][data-family-id]').forEach(function(btn) {
           if (btn.tagName !== 'BUTTON') return;
@@ -4085,7 +4337,8 @@
             var slot     = btn.dataset.addSlot;
             var fid      = btn.dataset.familyId;
             var hexInput = document.getElementById('slot-new-hex');
-            var hex      = hexInput ? hexInput.value : '#808080';
+            var rawVal   = hexInput ? hexInput.value : '#808080';
+            var hex      = ColorConverter.normalizeHexInput(rawVal) || rawVal;
             var oklch    = ColorConverter.hexToOklch(hex);
             if (!oklch) return;
 
@@ -4108,12 +4361,22 @@
         var newPicker = document.getElementById('slot-new-picker');
         var newHex    = document.getElementById('slot-new-hex');
         if (newPicker && newHex) {
+          // Auto-focus the hex input when the empty slot editor opens
+          setTimeout(function() { newHex.focus(); newHex.select(); }, 30);
           newPicker.addEventListener('input', function() {
             newHex.value = newPicker.value;
           });
           newHex.addEventListener('input', function() {
-            var val = newHex.value.trim();
-            if (/^#[0-9a-fA-F]{6}$/.test(val)) newPicker.value = val;
+            var val = ColorConverter.normalizeHexInput(newHex.value);
+            if (val) newPicker.value = val;
+          });
+          // Allow Enter key to submit
+          newHex.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              var addBtn = container.querySelector('[data-add-slot]');
+              if (addBtn) addBtn.click();
+            }
           });
         }
 
@@ -4133,8 +4396,8 @@
         var slotHex = document.getElementById('slot-hex');
         if (slotHex) {
           slotHex.addEventListener('input', function() {
-            var val = slotHex.value.trim();
-            if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+            var val  = ColorConverter.normalizeHexInput(slotHex.value);
+            if (!val) return;
             var fid  = slotHex.dataset.familyId;
             var slot = slotHex.dataset.slot;
             var ok   = ColorConverter.hexToOklch(val);
@@ -4215,6 +4478,16 @@
               }
               return p;
             });
+          });
+        });
+
+        // Open family matrix dialog
+        container.querySelectorAll('[data-open-family-matrix]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var fid    = btn.dataset.openFamilyMatrix;
+            var proj   = AppState.getProject();
+            var family = proj.hueFamilies.find(function(f) { return f.id === fid; });
+            if (family) FamilyMatrixUI.open(family);
           });
         });
 
@@ -4346,7 +4619,7 @@
           ContrastEngine.schedule(p);
           render();
         });
-        EventBus.on('project:loaded',   function() { render(); });
+        EventBus.on('project:loaded',   function(p) { ContrastEngine.computeNow(AppState.getProject()); render(); });
         EventBus.on('contrast:updated', function() { render(); });
         render();
       }
@@ -4535,8 +4808,17 @@
           }
         }
 
-        listEl.innerHTML = sections.join('') ||
-          '<p class="text-sm text-subtle">No pairs match the current filters.</p>';
+        // Use side-by-side columns layout when both backgrounds are set
+        if (hasBgLight && hasBgDark && sections.length === 2) {
+          listEl.className = 'contrast-list contrast-list--columns';
+          listEl.innerHTML =
+            '<div class="contrast-list__column">' + sections[0] + '</div>'
+            + '<div class="contrast-list__column">' + sections[1] + '</div>';
+        } else {
+          listEl.className = 'contrast-list';
+          listEl.innerHTML = sections.join('') ||
+            '<p class="text-sm text-subtle">No pairs match the current filters.</p>';
+        }
       }
 
       /* ---- Render the full-screen contrast matrix ---- */
@@ -5091,8 +5373,14 @@
         if (csvBtn) {
           csvBtn.addEventListener('click', function() {
             var project     = AppState.getProject();
+            // Ensure contrast map is populated — compute synchronously if needed
             var contrastMap = AppState.getContrastMap();
-            var csv         = ExportModule.generateContrastCSV(project, contrastMap, _archiveFilters);
+            if (!contrastMap || !Object.keys(contrastMap).length) {
+              contrastMap = ContrastEngine.computeNow(project);
+            }
+            // Export ALL levels for the CSV (not filtered to panel state)
+            var allFilters = { AAA: true, AA: true, AA18: true, DNP: true };
+            var csv        = ExportModule.generateContrastCSV(project, contrastMap, allFilters);
             ExportModule.download(
               csv,
               ExportModule.safeFilename(project) + '-contrast-pairs.csv',
@@ -5254,7 +5542,7 @@
         wireProjectActions();
 
         EventBus.on('palette:changed',  function() { render(); });
-        EventBus.on('project:loaded',   function() { render(); });
+        EventBus.on('project:loaded',   function(p) { ContrastEngine.computeNow(AppState.getProject()); render(); });
         EventBus.on('contrast:updated', function() {
           var project     = AppState.getProject();
           var contrastMap = AppState.getContrastMap();
@@ -5265,6 +5553,229 @@
       }
 
       return { init, render };
+    })();
+
+
+    /* ============================================================
+       19. FAMILY MATRIX UI
+       Per-family dialog: OKLCH sliders + contrast matrix.
+       Mirrors the original /play/contrast-checker source adapted
+       to the workspace data model.
+       ============================================================ */
+    const FamilyMatrixUI = (() => {
+
+      var _familyId = null;
+
+      /* ---- Open the dialog for a given family ---- */
+      function open(family) {
+        _familyId = family.id;
+        var dialog = document.getElementById('family-matrix-dialog');
+        var title  = document.getElementById('family-matrix-title');
+        if (!dialog) return;
+        if (title) title.textContent = family.name + ' — Matrix';
+        renderSliders(family);
+        renderMatrix(family);
+        dialog.showModal();
+        // Close on backdrop click
+        dialog.addEventListener('click', function onBdClick(e) {
+          if (e.target === dialog) { dialog.close(); dialog.removeEventListener('click', onBdClick); }
+        });
+      }
+
+      /* ---- Render OKLCH sliders for each filled color ---- */
+      function renderSliders(family) {
+        var el = document.getElementById('family-matrix-sliders');
+        if (!el) return;
+
+        var colors = getFilledColors(family);
+        if (!colors.length) {
+          el.innerHTML = '<p class="text-sm text-subtle">No colors in this family yet.</p>';
+          return;
+        }
+
+        el.innerHTML = colors.map(function(item) {
+          var hex = ColorConverter.oklchToHex(item.color.oklch);
+          return '<div class="fm-color-row" data-fm-slot="' + item.slot + '">'
+            + '<div class="fm-color-row__swatch" id="fm-swatch-' + item.slot + '"'
+            + ' style="background-color:' + hex + ';" aria-hidden="true"></div>'
+            + '<div class="fm-color-row__name">' + (item.color.name || item.slot) + '</div>'
+            + '<div class="fm-color-row__sliders">'
+            + fmSlider('fm-l-' + item.slot, 'L', item.color.oklch.l, 0, 1, 0.001, item.slot)
+            + fmSlider('fm-c-' + item.slot, 'C', item.color.oklch.c, 0, 0.4, 0.001, item.slot)
+            + fmSlider('fm-h-' + item.slot, 'H', item.color.oklch.h, 0, 360, 0.1,   item.slot)
+            + '</div>'
+            + '</div>';
+        }).join('');
+
+        // Wire sliders
+        colors.forEach(function(item) {
+          ['l','c','h'].forEach(function(comp) {
+            var slider = document.getElementById('fm-' + comp + '-' + item.slot);
+            var output = document.getElementById('fm-' + comp + '-' + item.slot + '-out');
+            if (!slider) return;
+            slider.addEventListener('input', function() {
+              var val = parseFloat(slider.value);
+              if (output) output.textContent = comp === 'h'
+                ? val.toFixed(1) + 'deg'
+                : val.toFixed(3);
+
+              // Update swatch preview live
+              var proj    = AppState.getProject();
+              var family  = proj.hueFamilies.find(function(f) { return f.id === _familyId; });
+              if (!family || !family.colors[item.slot]) return;
+              var newOklch = Object.assign({}, family.colors[item.slot].oklch);
+              newOklch[comp] = val;
+              var newHex = ColorConverter.oklchToHex(newOklch);
+
+              // Live preview — update swatch
+              var sw = document.getElementById('fm-swatch-' + item.slot);
+              if (sw) sw.style.backgroundColor = newHex;
+
+              // Debounce project write + matrix refresh
+              clearTimeout(slider._fmTimer);
+              slider._fmTimer = setTimeout(function() {
+                AppState.updateProject(function(p) {
+                  var fam = p.hueFamilies.find(function(f) { return f.id === _familyId; });
+                  if (!fam || !fam.colors[item.slot]) return p;
+                  fam.colors[item.slot].oklch = newOklch;
+                  if (fam.colors[item.slot].recipe) {
+                    fam.colors[item.slot].recipe.editedSinceRecipe = true;
+                  }
+                  return p;
+                });
+                // Refresh matrix with updated family
+                var updatedProj   = AppState.getProject();
+                var updatedFamily = updatedProj.hueFamilies.find(function(f) { return f.id === _familyId; });
+                if (updatedFamily) renderMatrix(updatedFamily);
+              }, 120);
+            });
+          });
+        });
+      }
+
+      /* ---- Slider HTML helper ---- */
+      function fmSlider(id, label, value, min, max, step, slot) {
+        var display = label === 'H'
+          ? Number(value).toFixed(1) + 'deg'
+          : Number(value).toFixed(3);
+        return '<div class="fm-slider-row">'
+          + '<span class="fm-slider-label">' + label + '</span>'
+          + '<input class="range" type="range"'
+          + ' id="' + id + '"'
+          + ' min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '"'
+          + ' aria-label="' + label + ' for ' + slot + '" />'
+          + '<span class="fm-slider-output" id="' + id + '-out">' + display + '</span>'
+          + '</div>';
+      }
+
+      /* ---- Render contrast matrix for the family ---- */
+      function renderMatrix(family) {
+        var wrap = document.getElementById('family-matrix-table-wrap');
+        if (!wrap) return;
+
+        var colors = getFilledColors(family);
+        if (!colors.length) {
+          wrap.innerHTML = '<p class="text-sm text-subtle">No colors to compare.</p>';
+          return;
+        }
+
+        // Build an inline contrast map just for this family
+        var colorObjs = colors.map(function(item) { return item.color; });
+        var map       = ContrastModule.buildContrastMap(colorObjs);
+
+        // Header row
+        var thead = '<thead><tr>'
+          + '<th style="min-width:72px;"></th>';
+        colors.forEach(function(item) {
+          var bgHex = ColorConverter.oklchToHex(item.color.oklch);
+          var txtCol = ContrastModule.relativeLuminance(item.color.oklch) > 0.179
+            ? '#000' : '#fff';
+          thead += '<th class="contrast-matrix__header-cell"'
+            + ' style="background-color:' + bgHex + ';color:' + txtCol + ';min-width:80px;">'
+            + '<span style="font-size:var(--text-2xs);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:76px;">'
+            + (item.color.name || item.slot)
+            + '</span></th>';
+        });
+        thead += '</tr></thead>';
+
+        // Body
+        var tbody = '<tbody>';
+        colors.forEach(function(fgItem) {
+          var fgHex = ColorConverter.oklchToHex(fgItem.color.oklch);
+          var fgTxt = ContrastModule.relativeLuminance(fgItem.color.oklch) > 0.179
+            ? '#000' : '#fff';
+          tbody += '<tr>'
+            + '<th class="contrast-matrix__header-cell"'
+            + ' style="background-color:' + fgHex + ';color:' + fgTxt + ';">'
+            + '<span style="font-size:var(--text-2xs);white-space:nowrap;">'
+            + (fgItem.color.name || fgItem.slot)
+            + '</span></th>';
+
+          colors.forEach(function(bgItem) {
+            if (fgItem.slot === bgItem.slot) {
+              tbody += '<td class="contrast-matrix__cell contrast-matrix__cell--self"></td>';
+              return;
+            }
+            var key   = fgItem.color.id + ':' + bgItem.color.id;
+            var entry = map[key];
+            var bgHex = ColorConverter.oklchToHex(bgItem.color.oklch);
+
+            if (!entry) {
+              tbody += '<td class="contrast-matrix__cell"></td>';
+              return;
+            }
+            var lvlCls = entry.level.toLowerCase();
+            tbody += '<td class="contrast-matrix__cell"'
+              + ' style="background-color:' + bgHex + ';"'
+              + ' aria-label="' + (fgItem.color.name || fgItem.slot)
+              + ' on ' + (bgItem.color.name || bgItem.slot)
+              + ': ' + entry.ratio.toFixed(1) + ':1 ' + entry.level + '">'
+              + '<div class="contrast-matrix__sample">'
+              + '<span class="contrast-matrix__sample-text" style="color:' + fgHex + ';">Aa</span>'
+              + '<span class="badge badge--' + lvlCls + '">' + entry.level + '</span>'
+              + '<span class="contrast-matrix__ratio" style="color:' + fgHex + ';">'
+              + entry.ratio.toFixed(1) + '</span>'
+              + '</div></td>';
+          });
+          tbody += '</tr>';
+        });
+        tbody += '</tbody>';
+
+        wrap.innerHTML = '<table class="contrast-matrix" aria-label="'
+          + family.name + ' contrast matrix">'
+          + '<caption class="sr-only">Contrast ratios for ' + family.name + ' colors</caption>'
+          + thead + tbody
+          + '</table>';
+      }
+
+      /* ---- Get filled colors from a family in slot order ---- */
+      function getFilledColors(family) {
+        var result = [];
+        PALETTE_SLOTS.forEach(function(slot) {
+          var c = family.colors[slot];
+          if (c) result.push({ slot: slot, color: c });
+        });
+        return result;
+      }
+
+      /* ---- Wire close button ---- */
+      function init() {
+        var closeBtn = document.getElementById('btn-close-family-matrix');
+        var dialog   = document.getElementById('family-matrix-dialog');
+        if (closeBtn && dialog) {
+          closeBtn.addEventListener('click', function() { dialog.close(); });
+        }
+        // Also update when project changes and dialog is open
+        EventBus.on('palette:changed', function() {
+          var dialog = document.getElementById('family-matrix-dialog');
+          if (!dialog || !dialog.open || !_familyId) return;
+          var proj   = AppState.getProject();
+          var family = proj.hueFamilies.find(function(f) { return f.id === _familyId; });
+          if (family) renderMatrix(family);
+        });
+      }
+
+      return { init, open };
     })();
 
     /* ============================================================
@@ -5359,6 +5870,7 @@
       MixerUI.init();
       StagingUI.init();
       PaletteBuilderUI.init();
+      FamilyMatrixUI.init();
       ContrastAuditorUI.init();
       ArchiveUI.init();
 

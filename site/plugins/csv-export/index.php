@@ -1,4 +1,92 @@
 <?php
+
+// Load Composer dependencies (league/html-to-markdown)
+if(file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Convert a Buttondown HTML email body to KirbyText / Markdown.
+//
+// Handles the specifics of Buttondown's export format:
+//   - <figure>/<figcaption> → Markdown image with caption as alt text
+//   - class="pullquote" blockquotes → standard blockquote
+//   - Empty <p> tags left after template variable stripping
+//   - Inline styles stripped before conversion
+//   - Tables preserved via TableConverter
+// ─────────────────────────────────────────────────────────────────────────────
+function buttondownHtmlToMarkdown(string $html): string {
+
+    // ── Pre-processing ─────────────────────────────────────────────────────
+
+    // 1. Strip inline style attributes — they don't translate to Markdown
+    $html = preg_replace('/\s*style="[^"]*"/i', '', $html);
+
+    // 2. Convert <figure><img ...><figcaption>Caption</figcaption></figure>
+    //    to a clean <img alt="Caption" src="..."> so the converter produces
+    //    ![Caption](src), optionally followed by an italic caption line.
+    $html = preg_replace_callback(
+        '/<figure[^>]*>\s*<img([^>]*)>\s*(?:<figcaption[^>]*>(.*?)<\/figcaption>)?\s*<\/figure>/is',
+        function($matches) {
+            $attrs   = $matches[1];
+            $caption = isset($matches[2]) ? trim(strip_tags($matches[2])) : '';
+
+            preg_match('/src=["\']([^"\']+)["\']/', $attrs, $srcMatch);
+            $src = $srcMatch[1] ?? '';
+            if(empty($src)) return '';
+
+            $altAttr    = $caption ? ' alt="' . htmlspecialchars($caption, ENT_QUOTES) . '"' : '';
+            $captionLine = $caption ? "\n*{$caption}*" : '';
+
+            return "<img src=\"{$src}\"{$altAttr}>{$captionLine}";
+        },
+        $html
+    );
+
+    // 3. Unwrap pullquote blockquotes so they become standard Markdown >
+    $html = preg_replace('/<blockquote[^>]*class="[^"]*pullquote[^"]*"[^>]*>/i', '<blockquote>', $html);
+
+    // 4. Remove empty <p> tags left over after template variable stripping
+    $html = preg_replace('/<p[^>]*>\s*<\/p>/i', '', $html);
+
+    // 5. Normalise <hr> tags to Markdown thematic breaks
+    $html = preg_replace('/<hr\s*\/?>/i', "\n\n---\n\n", $html);
+
+    // ── Convert ────────────────────────────────────────────────────────────
+
+    if(!class_exists('League\HTMLToMarkdown\HtmlConverter')) {
+        // Vendor not installed yet — return plain stripped text as a safe fallback
+        return trim(strip_tags($html));
+    }
+
+    $converter = new League\HTMLToMarkdown\HtmlConverter([
+        'strip_tags'        => false,
+        'remove_nodes'      => 'head script style noscript',
+        'hard_break'        => true,
+        'header_style'      => 'atx',
+        'bold_style'        => '**',
+        'italic_style'      => '*',
+        'list_item_style'   => '-',
+        'preserve_comments' => false,
+    ]);
+
+    // Enable table support (disabled by default in the library)
+    $environment = $converter->getEnvironment();
+    $environment->addConverter(new League\HTMLToMarkdown\Converter\TableConverter());
+
+    $markdown = $converter->convert($html);
+
+    // ── Post-processing ────────────────────────────────────────────────────
+
+    // Collapse 3+ consecutive blank lines to 2
+    $markdown = preg_replace('/\n{3,}/', "\n\n", $markdown);
+
+    // Strip any residual unknown HTML tags the converter left untouched
+    $markdown = preg_replace('/<[^>]+>/', '', $markdown);
+
+    return trim($markdown);
+}
+
 Kirby::plugin('jonathan-stephens/csv-export', [
     'pageMethods' => [
         'toCSV' => function() {
@@ -283,14 +371,28 @@ Kirby::plugin('jonathan-stephens/csv-export', [
 
                         $bodyHtml = '';
                         if($mdFile) {
-                            $raw      = file_get_contents($mdFile->root());
+                            $raw = file_get_contents($mdFile->root());
+
                             // Strip the Buttondown editor-mode HTML comment header
                             $bodyHtml = preg_replace(
                                 '/<!--\s*buttondown-editor-mode:[^-]*-->\s*/i',
                                 '',
                                 $raw
                             );
-                            $bodyHtml = trim($bodyHtml);
+
+                            // Remove Buttondown template variables, e.g. {{ subscribe_form }}
+                            // These are block-level tags that sometimes sit inside <p> tags,
+                            // so we strip the surrounding <p> too when it contains only a variable.
+                            $bodyHtml = preg_replace(
+                                '/<p[^>]*>\s*\{\{[^}]*\}\}\s*<\/p>/i',
+                                '',
+                                $bodyHtml
+                            );
+                            // Catch any remaining bare {{ ... }} not wrapped in a tag
+                            $bodyHtml = preg_replace('/\{\{[^}]*\}\}/', '', $bodyHtml);
+
+                            // Convert HTML to Markdown / KirbyText
+                            $bodyHtml = buttondownHtmlToMarkdown($bodyHtml);
                         } else {
                             $errors[] = "Row $actualRow ($slug): No matching .md file — page created with empty body.";
                         }
@@ -341,6 +443,7 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                             $newsletterPage->createChild([
                                 'slug'     => $slug,
                                 'template' => 'newsletter',
+                                'isDraft'  => false,
                                 'content'  => [
                                     'title'           => $subject,
                                     'hed'             => $subject,

@@ -22,21 +22,30 @@ tabs:
                 max: 72
               text:
                 label: Content
-                type: writer
-                nodes:
-                  - paragraph
-                  - heading
-                  - bulletList
-                  - orderedList
-                  - blockquote
-                  - horizontalRule
-                marks:
+                type: textarea
+                size: large
+                buttons:
+                  - headlines
                   - bold
                   - italic
-                  - underline
-                  - strike
-                  - code
                   - link
+                  - email
+                  - file
+                  - code
+                  - ul
+                  - ol
+                  - table
+                  - abbr
+                  - cite
+                  - dfn
+                  - ins
+                  - mark
+                  - q
+                  - s
+                  - samp
+                  - smallcaps
+                  - sub
+                  - sup
           metadata:
             type: fields
             fields:
@@ -54,10 +63,11 @@ tabs:
                 type: select
                 required: true
                 options:
-                  500-words: 500 Characters
-                  500-words: 500 Words                  
-                  weekly-wanders: Weekly Wanders
+                  500-words: 500 Words
+                  500-characters: 500 Characters
                   craft-and-practice: Craft & Practice
+                  weekly-wanders: Weekly Wanders
+
           syndication:
             type: fields
             label: Syndication

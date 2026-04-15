@@ -1,0 +1,31 @@
+type: group
+fields:
+  buttondown_id:
+    label: Buttondown ID
+    type: text
+    width: 1/2
+    disabled: true
+    help: UUID from Buttondown export
+
+  buttondown_slug:
+    label: Buttondown Slug
+    type: text
+    width: 1/2
+    disabled: true
+
+  buttondown_url:
+    label: Buttondown URL
+    type: url
+    width: 1/1
+
+  substack_id:
+    label: Substack Post ID
+    type: text
+    width: 1/2
+    disabled: true
+    help: Only present on posts originally published via Substack
+
+  substack_url:
+    label: Substack URL
+    type: url
+    width: 1/2

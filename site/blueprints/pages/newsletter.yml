@@ -1,0 +1,65 @@
+title: Newsletter Post
+icon: bullhorn
+
+tabs:
+  content:
+    label: Content
+    icon: grid-full
+    columns:
+      main:
+        width: 2/3
+        sections:
+          content:
+            type: fields
+            fields:
+              hed:
+                type: text
+                label: Header
+                max: 36
+              dek:
+                type: text
+                label: Subtitle
+                max: 72
+              text:
+                label: Content
+                type: writer
+                nodes:
+                  - paragraph
+                  - heading
+                  - bulletList
+                  - orderedList
+                  - blockquote
+                  - horizontalRule
+                marks:
+                  - bold
+                  - italic
+                  - underline
+                  - strike
+                  - code
+                  - link
+          metadata:
+            type: fields
+            fields:
+              metadata: fields/metadata
+
+      sidebar:
+        width: 1/3
+        sections:
+          publication:
+            type: fields
+            label: Publication
+            fields:
+              newsletter:
+                label: Newsletter
+                type: select
+                required: true
+                options:
+                  500-words: 500 Characters
+                  500-words: 500 Words                  
+                  weekly-wanders: Weekly Wanders
+                  craft-and-practice: Craft & Practice
+          syndication:
+            type: fields
+            label: Syndication
+            fields:
+              syndication: fields/syndication

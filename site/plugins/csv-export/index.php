@@ -404,6 +404,11 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         $substackId     = trim($rowData['metadata.substack_post_id'] ?? '');
                         $newsletterName = trim($rowData['Newsletter']                ?? '');
 
+                        // secondary_id is a sequential integer matching original publication
+                        // order across the full archive — used as Kirby's sort number so
+                        // pages are listed in chronological order.
+                        $sortNum = (int) ($rowData['secondary_id'] ?? 0);
+
                         // Normalise to Kirby datetime format (Y-m-d H:i)
                         $datetimeValue = '';
                         if(!empty($publishDate)) {
@@ -438,19 +443,21 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         kirby()->impersonate('kirby', function() use (
                             $newsletterPage, $slug, $subject, $bodyHtml,
                             $datetimeValue, $buttondownId, $buttondownUrl,
-                            $substackId, $substackUrl, $newsletterKey
+                            $substackId, $substackUrl, $newsletterKey, $sortNum
                         ) {
-                            $newsletterPage->createChild([
+                            // Create as draft first, then publish as listed with sort number.
+                            // changeStatus('listed', $n) is the correct way to set both
+                            // published state and chronological order in Kirby.
+                            $newPage = $newsletterPage->createChild([
                                 'slug'     => $slug,
                                 'template' => 'newsletter',
-                                'isDraft'  => false,
                                 'content'  => [
                                     'title'           => $subject,
                                     'hed'             => $subject,
                                     'dek'             => '',
                                     'text'            => $bodyHtml,
                                     'datetime'        => $datetimeValue,
-                                    'growthstatus'    => 'seed',
+                                    'growthstatus'    => 'evergreen',
                                     'tags'            => '',
                                     'newsletter'      => $newsletterKey,
                                     'buttondown_id'   => $buttondownId,
@@ -460,6 +467,14 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                                     'substack_url'    => $substackUrl,
                                 ],
                             ]);
+
+                            // Publish and assign sort position from original secondary_id.
+                            // Falls back to unlisted if secondary_id was missing.
+                            if($sortNum > 0) {
+                                $newPage->changeStatus('listed', $sortNum);
+                            } else {
+                                $newPage->changeStatus('unlisted');
+                            }
                         });
 
                         $created++;

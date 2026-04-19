@@ -427,6 +427,10 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                             default => ''
                         };
 
+                        if(empty($newsletterKey)) {
+                            $errors[] = "Row $actualRow ($slug): Newsletter value "$newsletterName" did not match any known newsletter — field left blank.";
+                        }
+
                         // Canonical Buttondown archive URL
                         $buttondownUrl = 'https://buttondown.com/jonathanstephens/archive/' . $slug;
 
@@ -451,7 +455,7 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                                     'text'            => $bodyHtml,
                                     'datetime'        => $datetimeValue,
                                     'growthstatus'    => 'evergreen',
-                                    'tags'            => '',
+                                    'tags'            => 'newsletter',
                                     'newsletter'      => $newsletterKey,
                                     'buttondown_id'   => $buttondownId,
                                     'buttondown_slug' => $slug,

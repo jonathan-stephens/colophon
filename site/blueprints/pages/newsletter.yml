@@ -1,5 +1,4 @@
 title: Newsletter Post
-icon: bullhorn
 
 tabs:
   content:
@@ -61,7 +60,6 @@ tabs:
               newsletter:
                 label: Newsletter
                 type: select
-                required: true
                 options:
                   500-words: 500 Words
                   500-characters: 500 Characters

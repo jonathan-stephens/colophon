@@ -428,7 +428,7 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         };
 
                         if(empty($newsletterKey)) {
-                            $errors[] = "Row $actualRow ($slug): Newsletter value "$newsletterName" did not match any known newsletter — field left blank.";
+                            $errors[] = 'Row ' . $actualRow . ' (' . $slug . '): Newsletter value [' . $newsletterName . '] did not match — field left blank.';
                         }
 
                         // Canonical Buttondown archive URL

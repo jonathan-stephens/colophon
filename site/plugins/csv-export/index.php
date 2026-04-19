@@ -354,8 +354,9 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                             continue;
                         }
 
-                        // Safe to re-run: skip pages that already exist
-                        if($newsletterPage->find($slug)) {
+                        // Skip pages that already exist in any state — listed, unlisted, or draft.
+                        // childrenAndDrafts() is required; children() alone misses drafts.
+                        if($newsletterPage->childrenAndDrafts()->find($slug)) {
                             $skipped++;
                             continue;
                         }
@@ -404,11 +405,6 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         $substackId     = trim($rowData['metadata.substack_post_id'] ?? '');
                         $newsletterName = trim($rowData['Newsletter']                ?? '');
 
-                        // secondary_id is a sequential integer matching original publication
-                        // order across the full archive — used as Kirby's sort number so
-                        // pages are listed in chronological order.
-                        $sortNum = (int) ($rowData['secondary_id'] ?? 0);
-
                         // Normalise to Kirby datetime format (Y-m-d H:i)
                         $datetimeValue = '';
                         if(!empty($publishDate)) {
@@ -443,11 +439,8 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                         kirby()->impersonate('kirby', function() use (
                             $newsletterPage, $slug, $subject, $bodyHtml,
                             $datetimeValue, $buttondownId, $buttondownUrl,
-                            $substackId, $substackUrl, $newsletterKey, $sortNum
+                            $substackId, $substackUrl, $newsletterKey
                         ) {
-                            // Create as draft first, then publish as listed with sort number.
-                            // changeStatus('listed', $n) is the correct way to set both
-                            // published state and chronological order in Kirby.
                             $newPage = $newsletterPage->createChild([
                                 'slug'     => $slug,
                                 'template' => 'newsletter',
@@ -468,12 +461,17 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                                 ],
                             ]);
 
-                            // Publish and assign sort position from original secondary_id.
-                            // Falls back to unlisted if secondary_id was missing.
-                            if($sortNum > 0) {
-                                $newPage->changeStatus('listed', $sortNum);
-                            } else {
-                                $newPage->changeStatus('unlisted');
+                            // Publish the page without an explicit sort number — passing one
+                            // causes Kirby to renumber all siblings on each call, which throws
+                            // during bulk imports. Kirby auto-assigns incrementing numbers in
+                            // creation order; sort by datetime on the frontend instead.
+                            // If changeStatus fails, delete the draft immediately so no dangling
+                            // pages are left and the import can always be re-run cleanly.
+                            try {
+                                $newPage->changeStatus('listed');
+                            } catch(Throwable $statusErr) {
+                                try { $newPage->delete(true); } catch(Throwable $del) {}
+                                throw new Exception('changeStatus failed (' . $statusErr->getMessage() . ')');
                             }
                         });
 
@@ -501,8 +499,7 @@ Kirby::plugin('jonathan-stephens/csv-export', [
                     }
                 }
 
-                $summaryLine = "Created: $created"
-                    . ($skipped > 0 ? " · Already existed (skipped): $skipped" : '');
+                $summaryLine = "Created: $created · Skipped (already exist): $skipped";
 
                 return importProgressHtml(
                     isDone:          $isDone,

@@ -2,7 +2,6 @@
 $layout = $layout ?? 'default';
 foreach($articles as $article):
   $wordCount = $article->text()->words();
-  $lengthCategory = \yourusername\TagGarden\Helpers::getLengthCategory($wordCount);
 
   if ($layout === 'links'): ?>
     <article class="h-entry box-l flow">

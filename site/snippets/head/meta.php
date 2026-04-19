@@ -18,7 +18,12 @@
     <meta property="og:url" content="https://jonathanstephens.us">
     <meta property="og:title" content="Jonathan Stephens">
     <meta property="og:description" content="Personal site & portfolio of Jonathan Stephens—designer, writer, developer, photographer, and reader...with many piles of many books in many places.">
-    <meta property="og:image" content="<?= $site->url() ?>/assets/png/og-image.webp">
+
+    <meta property="og:image" content="<?= $page->url(); ?>/og-image">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+
     <!-- Meta — Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="jonathanstephens.us">

@@ -1,10 +1,10 @@
-.journal .content, .essays .content{
+.journal .content, .essays .content, .newsletter .content, .articles .content{
   display:flex;
   flex-flow:column;
   gap:var(--flow-2);
 }
 
-.journal .h-entry, .essays .h-entry, .articles .h-entry{
+.journal .h-entry, .essays .h-entry, .articles .h-entry, .newsletter .h-entry{
   --measure: 80ch;
 
   &:focus-within{

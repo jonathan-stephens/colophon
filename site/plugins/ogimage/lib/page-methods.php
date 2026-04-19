@@ -43,16 +43,50 @@ return [
         $titlePosition = option('mauricerenck.ogimage.title.position', [0, 0]);
         $titleCharactersPerLine = option('mauricerenck.ogimage.title.charactersPerLine', 20);
 
+        $hedField = option('mauricerenck.ogimage.hed.field', 'hed');
+
+        $dekEnabled = option('mauricerenck.ogimage.dek.enabled', true);
+        $dekField = option('mauricerenck.ogimage.dek.field', 'dek');
+        $dekPosition = option('mauricerenck.ogimage.dek.position', [0, 100]);
+        $dekCharactersPerLine = option('mauricerenck.ogimage.dek.charactersPerLine', 40);
+        $dekFontSize = option('mauricerenck.ogimage.dek.size', (int) round($fontSize * 0.55));
+        $dekFont = option('mauricerenck.ogimage.dek.font', $font);
+        $dekFontColor = option('mauricerenck.ogimage.dek.color', $fontColor);
+        $dekLineHeight = option('mauricerenck.ogimage.dek.lineheight', $fontLineHeight);
+
         if (is_null($font)) {
             return;
         }
 
         if ($language == 'default') {
-            $title = $this->{$titleField}()->isNotEmpty() ? $this->{$titleField}() : $this->title();
+            if (!is_null($this->{$hedField}()) && $this->{$hedField}()->isNotEmpty()) {
+                $title = $this->{$hedField}();
+            } elseif ($this->{$titleField}()->isNotEmpty()) {
+                $title = $this->{$titleField}();
+            } else {
+                $title = $this->title();
+            }
         } else {
             $translation = $this->translation($language);
             $content = $translation->content();
-            $title = !empty($content[$titleField]) ? $content[$titleField] : $content['title'];
+            if (!empty($content[$hedField])) {
+                $title = $content[$hedField];
+            } elseif (!empty($content[$titleField])) {
+                $title = $content[$titleField];
+            } else {
+                $title = $content['title'];
+            }
+        }
+
+        $dek = null;
+        if ($dekEnabled) {
+            if ($language == 'default') {
+                $dek = $this->{$dekField}()->isNotEmpty() ? (string) $this->{$dekField}() : null;
+            } else {
+                $translation = $this->translation($language);
+                $content = $translation->content();
+                $dek = !empty($content[$dekField]) ? $content[$dekField] : null;
+            }
         }
 
         $canvas = imagecreatetruecolor($imageWidth, $imageHeight);
@@ -127,18 +161,49 @@ return [
         );
 
         // SET TEXT
+        $avoidOrphans = function (array $lines): array {
+            if (count($lines) >= 2) {
+                $last = trim($lines[count($lines) - 1]);
+                if (substr_count($last, ' ') === 0) {
+                    $prev = $lines[count($lines) - 2];
+                    $lastSpace = strrpos($prev, ' ');
+                    if ($lastSpace !== false) {
+                        $lines[count($lines) - 2] = substr($prev, 0, $lastSpace);
+                        $lines[count($lines) - 1] = substr($prev, $lastSpace + 1) . ' ' . $last;
+                    }
+                }
+            }
+            return $lines;
+        };
+
         $imageTitle = wordwrap($title, $titleCharactersPerLine, "\n", true);
-        $lines = explode("\n", $imageTitle);
+        $lines = $avoidOrphans(explode("\n", $imageTitle));
 
         $y = $fontSize;
+        $titleEndY = $titlePosition[1];
         foreach ($lines as $line) {
-            imagettftext($canvas, $fontSize, 0, $titlePosition[0], $titlePosition[1] + $y, $textColor, $font, $line);
-            $y += $fontSize * $fontLineHeight; // Increase the y position for the next line
+            $titleEndY = (int) ($titlePosition[1] + $y);
+            imagettftext($canvas, $fontSize, 0, (int) $titlePosition[0], $titleEndY, $textColor, $font, $line);
+            $y += $fontSize * $fontLineHeight;
+        }
+
+        // SET DEK TEXT
+        if ($dekEnabled && !is_null($dek)) {
+            $dekTextColor = imagecolorallocate($canvas, $dekFontColor[0], $dekFontColor[1], $dekFontColor[2]);
+            $imageDek = wordwrap($dek, $dekCharactersPerLine, "\n", true);
+            $dekLines = $avoidOrphans(explode("\n", $imageDek));
+
+            $dekGap = $dekPosition[1];
+            $dekY = $dekFontSize;
+            foreach ($dekLines as $dekLine) {
+                imagettftext($canvas, $dekFontSize, 0, (int) $dekPosition[0], (int) ($titleEndY + $dekGap + $dekY), $dekTextColor, $dekFont, $dekLine);
+                $dekY += $dekFontSize * $dekLineHeight;
+            }
         }
 
         $tempFile = tempnam(sys_get_temp_dir(), 'png') . '.png';
         imagepng($canvas, $tempFile);
-        
+
         $filename = 'generated-og-image.' . $language . '.png';
 
         kirby()->impersonate('kirby');

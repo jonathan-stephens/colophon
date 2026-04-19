@@ -38,6 +38,17 @@ return [
     'mauricerenck.ogimage' => [
       'font.path' => __DIR__ . '/../../assets/fonts/ibm-plex-serif/serif-semibold.woff',
       'image.template' => __DIR__ . '/../../assets/png/og-image-template.png',
+      "title.position" => [100,325],
+      "title.charactersPerLine" => 25,
+      "font.color" => [251, 248, 239],
+      "font.size" => 75,
+      "font.lineheight" => 1.45,
+      "dek.color" => [167, 166, 162],
+      "dek.size" => 42,
+      "dek.position" => [100,60],
+      "dek.lineheight" => 1.65,
+      "dek.charactersPerLine" => 45,
+      "dek.font" => __DIR__ . '/../../assets/fonts/ibm-plex-sans/IBMPlexSans-Text.woff'
     ],
     'johannschopplich.locked-pages' => [
       'slug' => 'locked',

@@ -3,7 +3,7 @@ require_once __DIR__ . '/helpers.php';
 
 return [
 
-  'debug' => false,
+  'debug' => true,
     'panel' => [
         'install' => false,
     ],

@@ -2,7 +2,6 @@
 $layout = $layout ?? 'default';
 foreach($articles as $article):
   $wordCount = $article->text()->words();
-  $lengthCategory = \Yourusername\TagGarden\Helpers::getLengthCategory($wordCount);
 
   if ($layout === 'links'): ?>
     <article class="h-entry box-l flow">
@@ -15,7 +14,7 @@ foreach($articles as $article):
         </h2>
       </a>
       <a rel="bookmark" class="u-url" href="<?= $article->url() ?>">
-        <span class="length-category"><?= $lengthCategory ?> •
+        <span class="length-category">
           <?php if($article->tags()->isNotEmpty()): ?>
             <?php snippet('/components/tags', ['reference' => $article]) ?>
           <?php endif ?>•

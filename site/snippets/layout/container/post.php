@@ -2,7 +2,6 @@
 $layout = $layout ?? 'default';
 foreach($articles as $article):
   $wordCount = $article->text()->words();
-  foreach($articles as $article):
   $lengthCategory = \Yourusername\TagGarden\Helpers::getLengthCategory($wordCount);
 
   if ($layout === 'links'): ?>

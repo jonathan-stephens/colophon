@@ -19,7 +19,7 @@ tabs:
       published:
         label: Published
         type: pages
-        status: published
+        status: listed
         template: company
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"

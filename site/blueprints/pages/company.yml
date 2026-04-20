@@ -1,57 +1,87 @@
 title: Company
 
-columns:
-  main:
-    width: 2/3
-    sections:
-      fields:
-        type: fields
-        fields:
-          name:
-            label: Company Name
-            type: text
-            width: 1/2
-          location:
-            label: Location
-            type: text
-            width: 1/2
-          style:
-            label: Working Style
-            type: select
+tabs:
+  content:
+    label: Content
+    icon: grid-full
+    columns:
+      main:
+        width: 2/3
+        sections:
+          fields:
+            type: fields
+            fields:
+              name:
+                label: Company Name
+                type: text
+                width: 1/2
+              location:
+                label: Location
+                type: tags
+                options: query
+                query: site.index.pluck("location")
+                width: 1/2
+              companySize:
+                label: Company Size
+                type: tags
+                width: 1/3
+                options: query
+                query: site.index.pluck("companySize", ",", true)
+                max: 1
+              dateFrom:
+                label: Date From
+                type: date
+                width: 1/3
+                step: month
+              dateTo:
+                label: Date to
+                type: date
+                width: 1/3
+                step: month
+              aboutCompany:
+                label: About Company
+                type: textarea
+                size: medium
+                maxlength: 400
+                width: 1/1
+              businessModel:
+                label: Business Model
+                type: tags
+                width: 1/3
+                options: query
+                query: site.index.pluck("businessModel", ",", true)
+              industry:
+                label: Industries
+                type: tags
+                width: 1/3
+                options: query
+                query: site.index.pluck("industry", ",", true)
+              workingModel:
+                label: Work Model
+                type: tags
+                width: 1/3
+                options: query
+                query: site.index.pluck("workingModel", ",", true)
+                max: 1
+      sidebar:
+        width: 1/3
+        sections:
+          logo:
+            label: Company Logo
+            type: files
             width: 1/3
-            options:
-              remote: Remote
-              hybrid: Hybrid
-              office: Office
-          date_start:
-            label: Start Date (yyyy)
-            type: number
-            width: 1/3
-          date_end:
-            label: End Date (yyyy)
-            type: number
-            width: 1/3
-          description:
-            label: Description
-            type: textarea
-            size: medium
-            width: 1/1
-  sidebar:
-    width: 1/3
-    sections:
-      files:
-        label: Logo
-        type: files
-        max: 1
-      pages: true
-        type: pages
-        status: all
-        options:
-          changeTemplate:
-            - default
-            - work
-            - journal
-            - article
-            - essay
-            - link
-            - review
+            multiple: false
+            layout: list
+            query: page.images
+            max: 1
+          files:
+            label: Relevant Files
+            type: files
+          pages:
+            type: pages
+            status: all
+          uploads:
+            type: fields
+            fields:
+              uploads: fields/uploads
+ 

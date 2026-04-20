@@ -14,10 +14,12 @@ tabs:
         status: draft
         type: pages
         template: company
-      listed:
-        label: Public
-        status: listed
-        size: small
-        layout: cards
+        sortBy: date desc
+
+      published:
+        label: Published
+        type: pages
+        status: published
+        template: company
   extends: tabs/listing
           

@@ -1,4 +1,9 @@
 title: Company
+type: page
+icon: building
+
+options:
+  changeSlug: true
 
 tabs:
   content:

@@ -133,7 +133,7 @@ p + time{
 }
 
 p :not(pre)>code, li code, code{
-  font-size: var(--small);
+  font-size: .8em;
   display:inline-flex;
   border-radius:var(--radii-square);
   color:var(--color-distinct);

@@ -1,6 +1,6 @@
 title: Companies
 preset: pages
-icon: �🏢
+icon: building
 
 # Define the form layout with two columns
 # More about columns: https://getkirby.com/docs/guide/blueprints/layout#defining-columns
@@ -11,8 +11,8 @@ tabs:
     sections:
       drafts:
         headline: Drafts
-        status: draft
         type: pages
+        status: draft
         template: company
         sortBy: date desc
 
@@ -21,5 +21,8 @@ tabs:
         type: pages
         status: published
         template: company
+        sortBy: date desc
+        info: "{{ page.date.toDate('Y-m-d') }}"
+
   extends: tabs/listing
           

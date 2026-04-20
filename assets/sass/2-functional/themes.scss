@@ -91,19 +91,6 @@ html body::before {
     background-repeat: repeat;
     will-change: transform; /* promotes to GPU layer */
     background-repeat: repeat;
-}
-
-html[data-theme='light'] body::before {
-    background: url('/assets/png/paper-tile.webp'), var(--background-primary);
-    background-size: 50%;
-}
-html[data-theme='dark'] body::before {
     background: url('/assets/png/stardust.webp'), var(--background-primary);
-    background-size: 50%;
-}
-
-@media screen and (min-width:50em){
-  html[data-theme='light'] body{
-    background-size:15%;
+    background-size: 25%;
   }
-}

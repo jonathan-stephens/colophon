@@ -11,6 +11,7 @@ tabs:
     sections:
       drafts:
         headline: Drafts
+        status: draft
         type: pages
         template: company
       listed:

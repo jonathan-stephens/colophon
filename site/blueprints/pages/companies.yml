@@ -9,18 +9,11 @@ tabs:
   entries:
     label: Companies
     sections:
-      drafts:
-        headline: Drafts
+      entries:
+        headline: All 
         type: pages
         status: draft
-        template: company
-        sortBy: date desc
-
-      published:
-        label: Published
-        type: pages
-        status: listed
-        template: company
+        template: [company]
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"
 

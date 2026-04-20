@@ -12,8 +12,8 @@ tabs:
       entries:
         headline: All 
         type: pages
-        status: draft
-        template: [company]
+        status: all
+        template: company
         sortBy: date desc
         info: "{{ page.date.toDate('Y-m-d') }}"
 

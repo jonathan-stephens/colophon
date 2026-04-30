@@ -103,7 +103,7 @@ return [
                 // Single tag: get related tags from collection
                 $relatedTags = kirby()->collection('tags.related', [
                     'tag' => $filterTags[0],
-                    'limit' => option('jonathanstephens.tag-garden.related.tag-limit', 10)
+                    'limit' => option('jonathanstephens.tag-garden.related.tag-limit', 15)
                 ]);
             } else {
                 // Multiple tags: find tags from the filtered pages
@@ -135,7 +135,7 @@ return [
                 $relatedTags = array_slice(
                     $allRelatedTags,
                     0,
-                    option('jonathanstephens.tag-garden.related.tag-limit', 10),
+                    option('jonathanstephens.tag-garden.related.tag-limit', 15),
                     true
                 );
             }
@@ -198,7 +198,7 @@ return [
             $templateData = [
                 // Core data
                 'filterTags' => $filterTags,
-                'pages' => $pages,
+                'taggedPages' => $pages,
                 'relatedTags' => $relatedTags,
                 'tagCount' => $pages->count(),
 

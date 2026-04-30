@@ -90,16 +90,18 @@ input + button{
 
 select{
   background:var(--background-primary);
-  border-color:var(--border-color-distinct);
+  border: var(--border-fine) solid var(--border-color-subtle);
   border-radius:var(--radii-square);
-  padding:var(--flow-2);
+  color:var(--color-prominent);
+  padding:var(--flow-3);
   outline:none;
+  cursor:pointer;
 }
 
 select:hover, select:active{
-  cursor:pointer;
   background:var(--background-secondary);
-  border-color:var(--border-color-prominent);
+  border-color:var(--border-color-distinct);
+  color:var(--color-emphasis);
 }
 
 body.locked{

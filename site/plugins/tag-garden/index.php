@@ -46,43 +46,6 @@ Kirby::plugin('jonathanstephens/tag-garden', [
 
         // Growth status configuration
         'growth.statuses' => ['sown', 'sprouting', 'rooting', 'crowning', 'evergreen'],
-        'growth.definitions' => [
-            'sown' => [
-                'label' => 'Sown',
-                'emoji' => '🌰',
-                'color' => '#fef3c7',
-                'description' => 'New seeds, initial ideas',
-                'sort-order' => 0,
-            ],
-            'sprouting' => [
-                'label' => 'Sprouting',
-                'emoji' => '🌱',
-                'color' => '#d9f99d',
-                'description' => 'Early growth, developing concepts',
-                'sort-order' => 1,
-            ],
-            'rooting' => [
-                'label' => 'Rooting',
-                'emoji' => '🌿',
-                'color' => '#86efac',
-                'description' => 'Taking hold, establishing connections',
-                'sort-order' => 2,
-            ],
-            'crowning' => [
-                'label' => 'Crowning',
-                'emoji' => '🌳',
-                'color' => '#4ade80',
-                'description' => 'Mature and flourishing',
-                'sort-order' => 3,
-            ],
-            'evergreen' => [
-                'label' => 'Evergreen',
-                'emoji' => '🌲',
-                'color' => '#22c55e',
-                'description' => 'Timeless, well-maintained content',
-                'sort-order' => 4,
-            ],
-        ],
 
         // Content groups configuration
         'content.groups' => [
@@ -90,32 +53,6 @@ Kirby::plugin('jonathanstephens/tag-garden', [
             'soil' => ['library', 'quote', 'link'],
             'work' => ['overview', 'experience', 'projects', 'work'],
             'about' => ['strengths', 'skills', 'about', 'now'],
-        ],
-        'group.definitions' => [
-            'garden' => [
-                'label' => 'Garden',
-                'emoji' => '🌸',
-                'color' => '#ec4899',
-                'description' => 'Writing and long-form content',
-            ],
-            'soil' => [
-                'label' => 'Soil',
-                'emoji' => '📚',
-                'color' => '#8b5cf6',
-                'description' => 'Links, references, and collections',
-            ],
-            'work' => [
-                'label' => 'Work',
-                'emoji' => '💼',
-                'color' => '#3b82f6',
-                'description' => 'Professional projects and experience',
-            ],
-            'about' => [
-                'label' => 'About',
-                'emoji' => '👤',
-                'color' => '#10b981',
-                'description' => 'Personal information and profiles',
-            ],
         ],
 
         // Reading time calculation

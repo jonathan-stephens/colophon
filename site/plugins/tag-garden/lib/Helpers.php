@@ -32,7 +32,14 @@ class Helpers {
      */
     public static function getGroupDefinition(string $group): ?array {
         $definitions = option('jonathanstephens.tag-garden.group.definitions', []);
-        return $definitions[$group] ?? null;
+        $def = $definitions[$group] ?? null;
+
+        // Decode any accidentally-encoded SVG strings
+        if ($def && isset($def['icon'])) {
+            $def['icon'] = html_entity_decode($def['icon'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+
+        return $def;
     }
 
     /**
@@ -143,35 +150,27 @@ public static function getPagesByTags($tags): \Kirby\Cms\Pages {
         return new \Kirby\Cms\Pages([]);
     }
 
-    $searchTags = array_map('mb_strtolower', $tags);
+$searchTags = array_map(fn($t) => Str::slug($t), $tags); // was mb_strtolower
 
-    return site()->index()->filter(function($page) use ($searchTags, $allowedTemplates) {
-        $template = $page->intendedTemplate()->name();
-    
-        if (!in_array($template, $allowedTemplates, true)) {
-            error_log('REJECTED: ' . $template . ' | ' . $page->slug());
+return site()->index()->filter(function($page) use ($searchTags, $allowedTemplates) {
+    if (!in_array($page->intendedTemplate()->name(), $allowedTemplates, true)) {
+        return false;
+    }
+
+    $pageTags = array_map(
+        fn($t) => Str::slug(trim($t)),  // was mb_strtolower
+        $page->tags()->split(',')
+    );
+
+    foreach ($searchTags as $searchTag) {
+        if (!in_array($searchTag, $pageTags, true)) {
             return false;
         }
+    }
 
-        // Reject anything not in a known group
-        if (!in_array($page->intendedTemplate()->name(), $allowedTemplates, true)) {
-            return false;
-        }
+    return true;
+});
 
-        // AND tag logic
-        $pageTags = array_map(
-            fn($t) => mb_strtolower(trim($t)),
-            $page->tags()->split(',')
-        );
-
-        foreach ($searchTags as $searchTag) {
-            if (!in_array($searchTag, $pageTags, true)) {
-                return false;
-            }
-        }
-
-        return true;
-    });
 }
 
 
@@ -228,4 +227,9 @@ public static function getPagesByTags($tags): \Kirby\Cms\Pages {
                 return $pages->sortBy('last_tended', 'desc');
         }
     }
+
+public static function getTemplateIcon(string $template): string {
+    $icons = option('jonathanstephens.tag-garden.template.icons', []);
+    return $icons[$template] ?? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+}
 }

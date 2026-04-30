@@ -1,4 +1,4 @@
-aside:has(.filters){
+:is(section, aside):has(.filters){
   padding-block-end:var(--flow-8);
 
   h2{
@@ -133,3 +133,4 @@ aside:has(.filters){
         transition: none;
     }
 }
+

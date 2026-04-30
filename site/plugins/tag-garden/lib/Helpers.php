@@ -1,6 +1,6 @@
 <?php
 
-namespace Yourusername\TagGarden;
+namespace jonathanstephens\TagGarden;
 
 use Kirby\Toolkit\Str;
 
@@ -20,7 +20,7 @@ class Helpers {
      * @return array|null The status definition or null if not found
      */
     public static function getGrowthDefinition(string $status): ?array {
-        $definitions = option('yourusername.tag-garden.growth.definitions', []);
+        $definitions = option('jonathanstephens.tag-garden.growth.definitions', []);
         return $definitions[$status] ?? null;
     }
 
@@ -31,7 +31,7 @@ class Helpers {
      * @return array|null The group definition or null if not found
      */
     public static function getGroupDefinition(string $group): ?array {
-        $definitions = option('yourusername.tag-garden.group.definitions', []);
+        $definitions = option('jonathanstephens.tag-garden.group.definitions', []);
         return $definitions[$group] ?? null;
     }
 
@@ -42,7 +42,7 @@ class Helpers {
      * @return string|null The group name or null if not found
      */
     public static function getGroupForType(string $type): ?string {
-        $groups = option('yourusername.tag-garden.content.groups', []);
+        $groups = option('jonathanstephens.tag-garden.content.groups', []);
 
         foreach ($groups as $groupKey => $types) {
             if (in_array($type, $types)) {
@@ -116,36 +116,64 @@ class Helpers {
      * @param array|string $tags Single tag or array of tags
      * @return \Kirby\Cms\Pages Filtered pages collection
      */
-    public static function getPagesByTags($tags): \Kirby\Cms\Pages {
-        if (is_string($tags)) {
-            $tags = [$tags];
-        }
-
-        $tags = array_filter(array_map('trim', $tags));
-
-        if (empty($tags)) {
-            return new \Kirby\Cms\Pages([]);
-        }
-
-        // Convert search tags to lowercase for case-insensitive comparison
-        $searchTags = array_map('mb_strtolower', $tags);
-
-        // Pages with ALL of the tags (AND logic)
-        return site()->index()->filter(function($page) use ($searchTags) {
-            $pageTags = $page->tags()->split(',');
-            $pageTagsLower = array_map(function($tag) {
-                return mb_strtolower(trim($tag));
-            }, $pageTags);
-
-            // Check if all search tags are present in page tags
-            foreach ($searchTags as $searchTag) {
-                if (!in_array($searchTag, $pageTagsLower, true)) {
-                    return false;
-                }
-            }
-            return true;
-        });
+public static function getPagesByTags($tags): \Kirby\Cms\Pages {
+    
+    if (is_string($tags)) {
+        $tags = [$tags];
     }
+
+    $tags = array_filter(array_map('trim', $tags));
+
+    if (empty($tags)) {
+        return new \Kirby\Cms\Pages([]);
+    }
+
+    // Build flat allowlist from content.groups
+    $allowedTemplates = [];
+
+    foreach (option('jonathanstephens.tag-garden.content.groups', []) as $types) {
+        $allowedTemplates = array_merge($allowedTemplates, $types);
+    }
+    
+    error_log('allowed: ' . implode(',', $allowedTemplates));
+
+    // If config isn't loaded yet, fail loudly rather than silently show everything
+    if (empty($allowedTemplates)) {
+        error_log('tag-garden: content.groups is empty — check plugin config');
+        return new \Kirby\Cms\Pages([]);
+    }
+
+    $searchTags = array_map('mb_strtolower', $tags);
+
+    return site()->index()->filter(function($page) use ($searchTags, $allowedTemplates) {
+        $template = $page->intendedTemplate()->name();
+    
+        if (!in_array($template, $allowedTemplates, true)) {
+            error_log('REJECTED: ' . $template . ' | ' . $page->slug());
+            return false;
+        }
+
+        // Reject anything not in a known group
+        if (!in_array($page->intendedTemplate()->name(), $allowedTemplates, true)) {
+            return false;
+        }
+
+        // AND tag logic
+        $pageTags = array_map(
+            fn($t) => mb_strtolower(trim($t)),
+            $page->tags()->split(',')
+        );
+
+        foreach ($searchTags as $searchTag) {
+            if (!in_array($searchTag, $pageTags, true)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+}
+
 
     /**
      * Generate canonical tag URL with sorted, slugified tags
@@ -191,7 +219,7 @@ class Helpers {
 
             case 'growth':
                 return $pages->sortBy(function($page) {
-                    $status = $page->growth_status()->value();
+                    $status = $page->Growthstatus()->value();
                     $def = self::getGrowthDefinition($status);
                     return $def['sort-order'] ?? 999;
                 }, 'asc');

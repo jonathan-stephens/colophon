@@ -1,79 +1,94 @@
-div.case-studies{
-  display:flex;
-  flex-flow: row;
-  flex-wrap: wrap;
+div.case-studies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: var(--flow-6);
-  margin-block:var(--flow-7);
+  margin-block: var(--flow-7);
 
-  article{
-    display:flex;
-    flex-flow:column;
-    justify-content:space-around;
-    height:100%;
-    row-gap:var(--flow-2);
+  article {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    height: 100%;
+    row-gap: var(--flow-2);
   }
 }
-.selected-work{max-inline-size:none;}
-.case-study{
-  width:100%;
+
+.selected-work { max-inline-size: none; }
+
+.case-study {
+  position: relative; /* required for stretched link */
+  width: 100%;
+  cursor: pointer;
   transition:
-  border var(--duration-base) ease-in-out,
-  background var(--duration-base) ease-in-out,
-  color var(--duration-slower) ease-in-out;
-  text-decoration: none;
-  &:nth-of-type(4) img{
-    position:relative;
-    top:-5px;
+    border var(--duration-base) ease-in-out,
+    background var(--duration-base) ease-in-out,
+    color var(--duration-slower) ease-in-out;
+
+  .card { padding: 0; } /* max-width removed; grid column sizing owns this now */
+
+  /* Stretched link: the ::after covers the whole card */
+  .hed a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-slower) ease-in-out;
+
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
   }
 
-  .card{max-width: 600px;padding:0;}
-
-  img{
-    border-start-start-radius:var(--radii-square);
-    border-start-end-radius:var(--radii-square);
+  img {
+    border-start-start-radius: var(--radii-square);
+    border-start-end-radius: var(--radii-square);
     aspect-ratio: 16/9;
     max-inline-size: none;
-    mix-blend-mode:normal;
-    background:var(--background-primary);
-    filter:grayscale(.15);
+    mix-blend-mode: normal;
+    background: var(--background-primary);
+    filter: grayscale(.15);
     object-fit: cover;
-    object-position:center;
+    object-position: center;
+    margin: calc(-1*var(--flow-5));
+    margin-block-end: var(--flow-2);
+  }
 
+  .client, .principal {
+    font-weight: var(--weight-medium);
   }
-  .client, .principal{
-    font-weight:var(--weight-medium);
-  }
-  .hed{
-    text-align:center;
-    line-height:var(--leading-fine);
+
+  .hed {
+    text-align: center;
+    line-height: var(--leading-fine);
     color: var(--color-distinct);
-    padding-block-start:var(--flow-3);
+    padding-block-start: var(--flow-3);
   }
-  .dek{
+
+  .dek {
     color: var(--color-nuance);
-    padding-inline:var(--flow-5);
-    font-size:var(--prose);
-    text-align:center;
-    margin-block-end:var(--flow-2);
+    padding-inline: var(--flow-5);
+    font-size: var(--prose);
+    text-align: center;
+    margin-block-end: var(--flow-2);
   }
-  .info{
-    display:flex;
-    margin-inline:var(--flow-5);
-    column-gap:var(--flow-3);
-    row-gap:var(--flow-2);
-    font-size:var(--small);
+
+  .info {
+    display: flex;
+    margin-inline: var(--flow-5);
+    column-gap: var(--flow-3);
+    row-gap: var(--flow-2);
+    font-size: var(--small);
     color: var(--color-subtle);
     border-block-start: 1px dashed var(--border-color-distinct);
-    flex-wrap:wrap;
-
-    justify-content:space-between;
-    padding:0;
-    padding-block-end:var(--flow-5);
-    padding-block-start:var(--flow-4);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0;
+    padding-block-end: var(--flow-5);
+    padding-block-start: var(--flow-4);
   }
 
-
-  .client, .principal, .hed, .dek,.time, img, .info, .icon{
+  .client, .principal, .hed, .dek, .time, img, .info, .icon {
     transition:
       border var(--duration-base) ease-in-out,
       background var(--duration-base) ease-in-out,
@@ -81,33 +96,42 @@ div.case-studies{
       color var(--duration-slower) ease-in-out,
       fill var(--duration-base) ease-in-out;
   }
-  &:hover, &:active{
+
+  /* focus-within catches keyboard nav through the stretched link */
+  &:hover, &:has(:focus-within){
     .client, .principal, .hed, .dek, .time {
-      color:var(--color-emphasis);
+      color: var(--color-emphasis);
     }
-    .info{
-      border-color:var(--border-color-prominent);
+    .info {
+      border-color: var(--border-color-prominent);
     }
-    img{border-block-end-color:var(--color-quiet);mix-blend-mode:luminosity;}
+    img {
+      border-block-end-color: var(--color-quiet);
+      mix-blend-mode: luminosity;
+    }
+  }
+  &:has(a:active) {
+  .client, .principal, .hed, .dek, .time {
+    color: var(--color-emphasis);
+  }
+  .info {
+    border-color: var(--border-color-prominent);
+  }
+  img {
+    border-block-end-color: var(--color-quiet);
+    mix-blend-mode: luminosity;
   }
 }
 
-
-
-@media screen and (min-width: 40.99em) {
-  div:is(.case-studies){
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media screen and (min-width: 60em) {
-  .case-study{
-    img{
+  .case-study {
+    img {
       max-height: var(--flow-15);
     }
-    .dek{
-      font-size:var(--hed-quaternary);
+    .dek {
+      font-size: var(--hed-quaternary);
     }
   }
 }

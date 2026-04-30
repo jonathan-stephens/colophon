@@ -19,7 +19,7 @@
  * @version 1.0.0
  */
 
-use Yourusername\TagGarden\Helpers;
+use jonathanstephens\TagGarden\Helpers;
 
 // Get parameters
 $page = $page ?? null;
@@ -92,8 +92,8 @@ if (!empty($relatedTags)) {
                                         <?= $relatedPage->title()->html() ?>
                                     </span>
 
-                                    <?php if ($relatedPage->growth_status()->isNotEmpty()): ?>
-                                        <?php $status = Helpers::getGrowthDefinition($relatedPage->growth_status()->value()) ?>
+                                    <?php if ($relatedPage->Growthstatus()->isNotEmpty()): ?>
+                                        <?php $status = Helpers::getGrowthDefinition($relatedPage->Growthstatus()->value()) ?>
                                         <?php if ($status): ?>
                                             <span class="related-status" title="<?= $status['label'] ?>">
                                                 <?= $status['emoji'] ?>

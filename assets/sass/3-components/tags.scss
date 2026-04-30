@@ -14,8 +14,9 @@
   --button-border-color:var(--border-color-nuance);
 
   padding-inline: var(--flow-4);
-  padding-block: var(--flow-2);
+  padding-block: var(--flow-3);
   border-radius: var(--radii-circle);
+  border-width:var(--border-fine);
   font-size:var(--small);
   font-family:var(--font-mono);
   position:relative;

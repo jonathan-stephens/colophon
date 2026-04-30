@@ -26,7 +26,7 @@ if (!class_exists('Kirby\\Cms\\App')) {
 require_once __DIR__ . '/lib/Helpers.php';
 
 // Register the plugin
-Kirby::plugin('yourusername/tag-garden', [
+Kirby::plugin('jonathanstephens/tag-garden', [
 
     /**
      * PLUGIN OPTIONS
@@ -143,14 +143,17 @@ Kirby::plugin('yourusername/tag-garden', [
                 ],
 
                 // Growth status
-                'growth_status' => [
-                    'label' => 'Growth Status',
-                    'type' => 'select',
-                    'help' => 'Current state of this content',
-                    'options' => 'query',
-                    'query' => 'kirby.option("yourusername.tag-garden.growth.statuses")',
+                'Growthstatus' => [
+                    'label'   => 'Growth Status',
+                    'type'    => 'select',
                     'default' => 'sown',
-                    'width' => '1/2',
+                    'width'   => '1/2',
+                    'options' => 'query',
+                    'query'   => [
+                        'fetch'  => 'kirby.option("jonathanstephens.tag-garden.growth.definitions")',
+                        'value'  => '{{ arrayItem.key }}',   // stores 'sown', 'sprouting' etc.
+                        'text'   => '{{ arrayItem.value.label }}',
+                    ],
                 ],
 
                 'separator1' => [
@@ -225,8 +228,8 @@ Kirby::plugin('yourusername/tag-garden', [
             $wordCount = $this->wordCount();
 
             // Get reading speeds from config with fallback defaults
-            $minSpeed = option('yourusername.tag-garden.reading.speed.min', 167);
-            $maxSpeed = option('yourusername.tag-garden.reading.speed.max', 285);
+            $minSpeed = option('jonathanstephens.tag-garden.reading.speed.min', 167);
+            $maxSpeed = option('jonathanstephens.tag-garden.reading.speed.max', 285);
 
             // Calculate time in minutes
             $minMinutes = $wordCount / $minSpeed;  // Slow readers
@@ -272,7 +275,7 @@ Kirby::plugin('yourusername/tag-garden', [
          * Get the content group this page belongs to
          */
         'contentGroup' => function() {
-            $groups = option('yourusername.tag-garden.content.groups', []);
+            $groups = option('jonathanstephens.tag-garden.content.groups', []);
             $template = $this->intendedTemplate()->name();
 
             foreach ($groups as $groupName => $contentTypes) {

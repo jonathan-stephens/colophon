@@ -2,18 +2,24 @@
   --kerning-mono-medium: 3%;
 
   --hed-primary:clamp(var(--type-scale-42),1.107rem + 4.048vw,var(--type-scale-76));
-  --hed-secondary:clamp(var(--type-scale-32),0.75rem + 3.333vw,var(--type-scale-60));
-  --hed-tertiary:clamp(var(--type-scale-28),1.571rem + 0.476vw,var(--type-scale-32));
+  --hed-secondary:clamp(var(--type-scale-24),0.964rem + 2.679vw,var(--type-scale-54));
+  --hed-tertiary:clamp(var(--type-scale-20), 1.036rem + 1.071vw,var(--type-scale-32));
   --hed-quaternary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
-  --hed-quinary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
+  --hed-quinary: var(--prose);
 
-  --dek-primary:clamp(var(--type-scale-24),1.143rem + 0.952vw,var(--type-scale-32));
-  --dek-secondary:clamp(var(--type-scale-20),1.071rem + 0.476vw,var(--type-scale-24));
+  --dek-primary:clamp(var(--type-scale-20),1.036rem + 1.071vw,var(--type-scale-32));
+  --dek-secondary:clamp(var(--type-scale-18),0.857rem + 0.714vw,var(--type-scale-24));
+  --dek-tertiary:clamp(var(--type-scale-16),0.821rem + 0.476vw,var(--type-scale-20));
 
   --lede: clamp(var(--type-scale-20), 1.071rem + 0.476vw, var(--type-scale-24));
+  --lede-primary: clamp(var(--type-scale-20), 1.071rem + 0.476vw, var(--type-scale-24));
+  --lede-secondary: clamp(var(--type-scale-18), 1.036rem + 0.238vw, var(--type-scale-20));
+  --lede-tertiary: clamp(var(--type-scale-16), 0.643rem + 0.952vw, var(--type-scale-20));
 
   --nutgraf-primary: clamp(var(--type-scale-20), 1.071rem + 0.476vw, var(--type-scale-24));
   --nutgraf-secondary: clamp(var(--type-scale-18), 0.857rem + 0.714vw, var(--type-scale-24));
+  --nutgraf-tertiary: clamp(var(--type-scale-18), 0.857rem + 0.714vw, var(--type-scale-24));
+  
   --prose:clamp(var(--type-scale-16), 0.8261rem + 0.8696vw, var(--type-scale-20));
   --small: clamp(var(--type-scale-14), 0.786rem + 0.238vw, var(--type-scale-16));
   --caption:clamp(var(--type-scale-12),0.661rem + 0.238vw, var(--type-scale-14));

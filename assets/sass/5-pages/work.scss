@@ -2,7 +2,7 @@ header.work{
   padding-block-end:var(--flow-7);
 
   .dek{
-    font-size:calc(.85*var(--hed-secondary));
+    font-size:var(--hed-secondary);
     line-height: var(--leading-standard);
     color:var(--color-distinct);
     padding-block:var(--flow-6);
@@ -130,5 +130,14 @@ header.work{
     align-items:baseline;
 
     p{justify-self:flex-start;}
+  }
+}
+
+@media (max-width:20em){
+  .work .metrics{
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-areas:
+      ".";
+
   }
 }

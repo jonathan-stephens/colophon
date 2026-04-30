@@ -128,6 +128,7 @@
   <!-- / Fathom -->
   <?= Bnomei\Fingerprint::js('assets/js/theme-picker-min.js',['defer' => true]);?>
   <?= Bnomei\Fingerprint::js('assets/js/prism-min.js',['defer' => true]);?>
+  <?= Bnomei\Fingerprint::js('assets/js/filters-min.js',['defer' => true]);?>
 
 </body>
 </html>

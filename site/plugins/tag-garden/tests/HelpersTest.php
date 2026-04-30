@@ -3,7 +3,7 @@
 /**
  * Helper Class Tests
  *
- * Tests the Yourusername\TagGarden\Helpers static class methods
+ * Tests the jonathanstephens\TagGarden\Helpers static class methods
  * Verifies data retrieval, calculations, and transformations work correctly.
  *
  * Usage: Include in test-runner.php template
@@ -26,9 +26,9 @@ class HelpersTest {
         echo "<h2>🧪 Helper Class Tests</h2>";
 
         // Check if class exists
-        if (!class_exists('Yourusername\TagGarden\Helpers')) {
+        if (!class_exists('jonathanstephens\TagGarden\Helpers')) {
             echo "<p style='color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px;'>";
-            echo "❌ Yourusername\TagGarden\Helpers class not found. Make sure lib/Helpers.php is loaded.";
+            echo "❌ jonathanstephens\TagGarden\Helpers class not found. Make sure lib/Helpers.php is loaded.";
             echo "</p>";
             return false;
         }
@@ -56,7 +56,7 @@ class HelpersTest {
      */
     private function testGetGrowthDefinition() {
         // Test valid status
-        $seedling = \Yourusername\TagGarden\Helpers::getGrowthDefinition('seedling');
+        $seedling = \jonathanstephens\TagGarden\Helpers::getGrowthDefinition('seedling');
         $this->assert(
             'getGrowthDefinition returns array for valid status',
             is_array($seedling),
@@ -78,7 +78,7 @@ class HelpersTest {
         }
 
         // Test invalid status
-        $invalid = \Yourusername\TagGarden\Helpers::getGrowthDefinition('invalid-status');
+        $invalid = \jonathanstephens\TagGarden\Helpers::getGrowthDefinition('invalid-status');
         $this->assert(
             'getGrowthDefinition returns null for invalid status',
             $invalid === null,
@@ -91,7 +91,7 @@ class HelpersTest {
      */
     private function testGetGroupDefinition() {
         // Test valid group
-        $garden = \Yourusername\TagGarden\Helpers::getGroupDefinition('garden');
+        $garden = \jonathanstephens\TagGarden\Helpers::getGroupDefinition('garden');
         $this->assert(
             'getGroupDefinition returns array for valid group',
             is_array($garden),
@@ -109,7 +109,7 @@ class HelpersTest {
         // Test all defined groups
         $groups = ['garden', 'soil', 'work', 'about'];
         foreach ($groups as $group) {
-            $def = \Yourusername\TagGarden\Helpers::getGroupDefinition($group);
+            $def = \jonathanstephens\TagGarden\Helpers::getGroupDefinition($group);
             $this->assert(
                 "Group '{$group}' has definition",
                 $def !== null,
@@ -118,7 +118,7 @@ class HelpersTest {
         }
 
         // Test invalid group
-        $invalid = \Yourusername\TagGarden\Helpers::getGroupDefinition('invalid-group');
+        $invalid = \jonathanstephens\TagGarden\Helpers::getGroupDefinition('invalid-group');
         $this->assert(
             'getGroupDefinition returns null for invalid group',
             $invalid === null,
@@ -131,7 +131,7 @@ class HelpersTest {
      */
     private function testGetThemeDefinition() {
         // Test valid theme
-        $topic = \Yourusername\TagGarden\Helpers::getThemeDefinition('topic');
+        $topic = \jonathanstephens\TagGarden\Helpers::getThemeDefinition('topic');
         $this->assert(
             'getThemeDefinition returns array for valid theme',
             is_array($topic),
@@ -141,7 +141,7 @@ class HelpersTest {
         // Test all defined themes
         $themes = ['topic', 'medium', 'status', 'audience'];
         foreach ($themes as $theme) {
-            $def = \Yourusername\TagGarden\Helpers::getThemeDefinition($theme);
+            $def = \jonathanstephens\TagGarden\Helpers::getThemeDefinition($theme);
             $this->assert(
                 "Theme '{$theme}' has definition",
                 $def !== null,
@@ -164,7 +164,7 @@ class HelpersTest {
         ];
 
         foreach ($tests as $test) {
-            $result = \Yourusername\TagGarden\Helpers::getLengthCategory($test['count']);
+            $result = \jonathanstephens\TagGarden\Helpers::getLengthCategory($test['count']);
             $this->assert(
                 "{$test['count']} words = '{$test['expected']}' category",
                 $result === $test['expected'],
@@ -180,7 +180,7 @@ class HelpersTest {
         $categories = ['quick', 'short', 'medium', 'long', 'epic'];
 
         foreach ($categories as $category) {
-            $label = \Yourusername\TagGarden\Helpers::getLengthLabel($category);
+            $label = \jonathanstephens\TagGarden\Helpers::getLengthLabel($category);
             $this->assert(
                 "Category '{$category}' has label",
                 is_string($label) && !empty($label),
@@ -200,7 +200,7 @@ class HelpersTest {
             'minMinutes' => 1,
             'maxMinutes' => 1,
         ];
-        $result = \Yourusername\TagGarden\Helpers::formatReadingTime($timeData);
+        $result = \jonathanstephens\TagGarden\Helpers::formatReadingTime($timeData);
         $this->assert(
             'Formats same time in seconds correctly',
             strpos($result, '45 sec read') !== false,
@@ -214,7 +214,7 @@ class HelpersTest {
             'minMinutes' => 1,
             'maxMinutes' => 1,
         ];
-        $result = \Yourusername\TagGarden\Helpers::formatReadingTime($timeData);
+        $result = \jonathanstephens\TagGarden\Helpers::formatReadingTime($timeData);
         $this->assert(
             'Formats seconds range correctly',
             strpos($result, 'sec read') !== false && strpos($result, '–') !== false,
@@ -228,7 +228,7 @@ class HelpersTest {
             'minMinutes' => 3,
             'maxMinutes' => 3,
         ];
-        $result = \Yourusername\TagGarden\Helpers::formatReadingTime($timeData);
+        $result = \jonathanstephens\TagGarden\Helpers::formatReadingTime($timeData);
         $this->assert(
             'Formats same time in minutes correctly',
             strpos($result, '3 min read') !== false,
@@ -240,7 +240,7 @@ class HelpersTest {
      * Test: getSortMethods returns array
      */
     private function testGetSortMethods() {
-        $methods = \Yourusername\TagGarden\Helpers::getSortMethods();
+        $methods = \jonathanstephens\TagGarden\Helpers::getSortMethods();
 
         $this->assert(
             'getSortMethods returns array',
@@ -270,9 +270,9 @@ class HelpersTest {
      */
     private function testGetTagFontSize() {
         // Test with range
-        $minSize = \Yourusername\TagGarden\Helpers::getTagFontSize(1, 1, 10);  // Minimum usage
-        $maxSize = \Yourusername\TagGarden\Helpers::getTagFontSize(10, 1, 10); // Maximum usage
-        $midSize = \Yourusername\TagGarden\Helpers::getTagFontSize(5, 1, 10);  // Middle usage
+        $minSize = \jonathanstephens\TagGarden\Helpers::getTagFontSize(1, 1, 10);  // Minimum usage
+        $maxSize = \jonathanstephens\TagGarden\Helpers::getTagFontSize(10, 1, 10); // Maximum usage
+        $midSize = \jonathanstephens\TagGarden\Helpers::getTagFontSize(5, 1, 10);  // Middle usage
 
         $this->assert(
             'Font size for min count is smallest',
@@ -287,7 +287,7 @@ class HelpersTest {
         );
 
         // Test with same count (avoid division by zero)
-        $sameSize = \Yourusername\TagGarden\Helpers::getTagFontSize(5, 5, 5);
+        $sameSize = \jonathanstephens\TagGarden\Helpers::getTagFontSize(5, 5, 5);
         $this->assert(
             'Font size handles same min/max count',
             is_float($sameSize) || is_int($sameSize),
@@ -308,7 +308,7 @@ class HelpersTest {
         ];
 
         foreach ($tests as $test) {
-            $result = \Yourusername\TagGarden\Helpers::sanitizeTag($test['input']);
+            $result = \jonathanstephens\TagGarden\Helpers::sanitizeTag($test['input']);
             $this->assert(
                 "Sanitizes '{$test['input']}' to '{$test['expected']}'",
                 $result === $test['expected'],
@@ -322,7 +322,7 @@ class HelpersTest {
      */
     private function testTagsToUrl() {
         $tags = ['design', 'web', 'tutorial'];
-        $result = \Yourusername\TagGarden\Helpers::tagsToUrl($tags);
+        $result = \jonathanstephens\TagGarden\Helpers::tagsToUrl($tags);
 
         $this->assert(
             'tagsToUrl returns string',
@@ -339,7 +339,7 @@ class HelpersTest {
         );
 
         // Test with single tag
-        $single = \Yourusername\TagGarden\Helpers::tagsToUrl(['design']);
+        $single = \jonathanstephens\TagGarden\Helpers::tagsToUrl(['design']);
         $this->assert(
             'tagsToUrl handles single tag',
             $single === 'design',
@@ -351,9 +351,9 @@ class HelpersTest {
      * Test: urlToTags converts URL string to array
      */
     private function testUrlToTags() {
-        $separator = option('yourusername.tag-garden.url.tag-separator', '+');
+        $separator = option('jonathanstephens.tag-garden.url.tag-separator', '+');
         $urlString = 'design' . $separator . 'web' . $separator . 'tutorial';
-        $result = \Yourusername\TagGarden\Helpers::urlToTags($urlString);
+        $result = \jonathanstephens\TagGarden\Helpers::urlToTags($urlString);
 
         $this->assert(
             'urlToTags returns array',
@@ -368,7 +368,7 @@ class HelpersTest {
         );
 
         // Test with single tag
-        $single = \Yourusername\TagGarden\Helpers::urlToTags('design');
+        $single = \jonathanstephens\TagGarden\Helpers::urlToTags('design');
         $this->assert(
             'urlToTags handles single tag',
             is_array($single) && count($single) === 1,
@@ -380,7 +380,7 @@ class HelpersTest {
      * Test: getAllTags returns tag counts
      */
     private function testGetAllTags() {
-        $tags = \Yourusername\TagGarden\Helpers::getAllTags();
+        $tags = \jonathanstephens\TagGarden\Helpers::getAllTags();
 
         $this->assert(
             'getAllTags returns array',
@@ -403,7 +403,7 @@ class HelpersTest {
      * Test: getPagesByTags filters correctly
      */
     private function testGetPagesByTags() {
-        $pages = \Yourusername\TagGarden\Helpers::getPagesByTags('design');
+        $pages = \jonathanstephens\TagGarden\Helpers::getPagesByTags('design');
 
         $this->assert(
             'getPagesByTags returns Pages collection',
@@ -412,7 +412,7 @@ class HelpersTest {
         );
 
         // Test with array
-        $pagesArray = \Yourusername\TagGarden\Helpers::getPagesByTags(['design', 'web']);
+        $pagesArray = \jonathanstephens\TagGarden\Helpers::getPagesByTags(['design', 'web']);
         $this->assert(
             'getPagesByTags accepts array of tags',
             $pagesArray instanceof \Kirby\Cms\Pages,
@@ -420,7 +420,7 @@ class HelpersTest {
         );
 
         // Test empty input
-        $emptyPages = \Yourusername\TagGarden\Helpers::getPagesByTags([]);
+        $emptyPages = \jonathanstephens\TagGarden\Helpers::getPagesByTags([]);
         $this->assert(
             'getPagesByTags returns empty collection for empty input',
             $emptyPages->count() === 0,
@@ -438,7 +438,7 @@ class HelpersTest {
         $methods = ['planted', 'tended', 'notable', 'length-asc', 'length-desc', 'growth', 'title'];
 
         foreach ($methods as $method) {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($pages, $method);
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($pages, $method);
             $this->assert(
                 "sortPages handles '{$method}' method",
                 $sorted instanceof \Kirby\Cms\Pages,

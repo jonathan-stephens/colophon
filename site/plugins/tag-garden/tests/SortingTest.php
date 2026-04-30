@@ -56,7 +56,7 @@ class SortingTest {
      */
     private function testSortByPlanted() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'planted', 'desc');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'planted', 'desc');
 
             $this->assert(
                 'sortPages handles "planted" method',
@@ -108,7 +108,7 @@ class SortingTest {
      */
     private function testSortByTended() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'tended', 'desc');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'tended', 'desc');
 
             $this->assert(
                 'sortPages handles "tended" method',
@@ -136,7 +136,7 @@ class SortingTest {
      */
     private function testSortByNotable() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'notable');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'notable');
 
             $this->assert(
                 'sortPages handles "notable" method',
@@ -179,7 +179,7 @@ class SortingTest {
      */
     private function testSortByLengthAsc() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'length-asc');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'length-asc');
 
             $this->assert(
                 'sortPages handles "length-asc" method',
@@ -223,7 +223,7 @@ class SortingTest {
      */
     private function testSortByLengthDesc() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'length-desc');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'length-desc');
 
             $this->assert(
                 'sortPages handles "length-desc" method',
@@ -267,7 +267,7 @@ class SortingTest {
      */
     private function testSortByGrowth() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'growth');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'growth');
 
             $this->assert(
                 'sortPages handles "growth" method',
@@ -278,9 +278,9 @@ class SortingTest {
             // Check if pages with growth status are sorted
             $sortOrders = [];
             foreach ($sorted as $page) {
-                if ($page->growth_status()->isNotEmpty()) {
-                    $status = $page->growth_status()->value();
-                    $def = \Yourusername\TagGarden\Helpers::getGrowthDefinition($status);
+                if ($page->Growthstatus()->isNotEmpty()) {
+                    $status = $page->Growthstatus()->value();
+                    $def = \jonathanstephens\TagGarden\Helpers::getGrowthDefinition($status);
                     if ($def) {
                         $sortOrders[] = $def['sort-order'];
                     }
@@ -317,7 +317,7 @@ class SortingTest {
      */
     private function testSortByTitle() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
 
             $this->assert(
                 'sortPages handles "title" method',
@@ -356,8 +356,8 @@ class SortingTest {
      */
     private function testSortDirection() {
         try {
-            $asc = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
-            $desc = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'title', 'desc');
+            $asc = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'title', 'asc');
+            $desc = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'title', 'desc');
 
             $this->assert(
                 'sortPages accepts direction parameter',
@@ -391,7 +391,7 @@ class SortingTest {
      */
     private function testInvalidSortMethod() {
         try {
-            $sorted = \Yourusername\TagGarden\Helpers::sortPages($this->testPages, 'invalid-method');
+            $sorted = \jonathanstephens\TagGarden\Helpers::sortPages($this->testPages, 'invalid-method');
 
             $this->assert(
                 'sortPages handles invalid method gracefully',

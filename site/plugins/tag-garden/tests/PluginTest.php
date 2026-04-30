@@ -42,7 +42,7 @@ class PluginTest {
      * Test: Plugin is loaded
      */
     private function testPluginLoaded() {
-        $plugin = kirby()->plugin('yourusername/tag-garden');
+        $plugin = kirby()->plugin('jonathanstephens/tag-garden');
         $this->assert(
             'Plugin is loaded',
             $plugin !== null,
@@ -62,7 +62,7 @@ class PluginTest {
         ];
 
         foreach ($tests as $option => $expected) {
-            $value = option("yourusername.tag-garden.{$option}");
+            $value = option("jonathanstephens.tag-garden.{$option}");
             $this->assert(
                 "Option '{$option}' is accessible",
                 $value === $expected,
@@ -71,14 +71,14 @@ class PluginTest {
         }
 
         // Test array options
-        $growthStatuses = option('yourusername.tag-garden.growth.statuses');
+        $growthStatuses = option('jonathanstephens.tag-garden.growth.statuses');
         $this->assert(
             'Growth statuses option is array',
             is_array($growthStatuses) && count($growthStatuses) === 4,
             'Should contain 4 growth statuses'
         );
 
-        $contentGroups = option('yourusername.tag-garden.content.groups');
+        $contentGroups = option('jonathanstephens.tag-garden.content.groups');
         $this->assert(
             'Content groups option exists',
             is_array($contentGroups) && isset($contentGroups['garden']),
@@ -100,7 +100,7 @@ class PluginTest {
 
         if ($blueprint) {
             $fields = $blueprint['fields'] ?? [];
-            $expectedFields = ['tags', 'tag_theme', 'growth_status', 'date_planted', 'last_tended', 'notable'];
+            $expectedFields = ['tags', 'tag_theme', 'Growthstatus', 'date_planted', 'last_tended', 'notable'];
 
             foreach ($expectedFields as $field) {
                 $this->assert(

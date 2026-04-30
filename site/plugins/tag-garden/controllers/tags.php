@@ -1,100 +1,72 @@
 <?php
+// site/controllers/tags.php
 
-/**
- * Tags Index Controller
- *
- * Simplified controller for the tags index page.
- * Shows all tags with optional filtering by group or growth status.
- *
- * @version 2.0.0
- */
-
-use Yourusername\TagGarden\Helpers;
+use jonathanstephens\TagGarden\Helpers;
 
 return function ($kirby, $page) {
 
-    // Get query parameters
-    $groupFilter = get('group');
+    $groupFilter  = get('group');
     $growthFilter = get('growth');
+    $tagSort      = get('tagSort', 'count'); // 'count' or 'alpha'
 
-    // Get tags based on filters
+    // --- 1. Fetch tags (pass sort intent into the collection) ---
+    $sortBy    = $tagSort === 'alpha' ? 'alpha' : 'count';
+    $direction = 'desc';
+
     if ($groupFilter) {
-        $tags = $kirby->collection('tags.byGroup', ['group' => $groupFilter]);
+        $tags = $kirby->collection('tags.byGroup', [
+            'group'     => $groupFilter,
+            'sortBy'    => $sortBy,
+            'direction' => $direction,
+        ]);
     } elseif ($growthFilter) {
-        $tags = $kirby->collection('tags.byGrowth', ['status' => $growthFilter]);
+        $tags = $kirby->collection('tags.byGrowth', [
+            'status'    => $growthFilter,
+            'sortBy'    => $sortBy,
+            'direction' => $direction,
+        ]);
     } else {
-        $tags = $kirby->collection('tags.all');
+        $tags = $kirby->collection('tags.all', [
+            'sortBy'    => $sortBy,
+            'direction' => $direction,
+        ]);
     }
 
-    // Sort tags alphabetically or by count
-    $tagSort = get('tagSort', 'count');
-    if ($tagSort === 'alpha') {
-        ksort($tags);
-    } else {
-        arsort($tags); // By count, descending
-    }
-
-    // Get recently tended pages
-    $recentlyTended = $kirby->collection('pages.recentlyTended', ['limit' => 5]);
-
-    // Get recently planted pages
+    // --- 2. Recent content ---
+    $recentlyTended  = $kirby->collection('pages.recentlyTended',  ['limit' => 5]);
     $recentlyPlanted = $kirby->collection('pages.recentlyPlanted', ['limit' => 5]);
 
-    // Calculate total pages with tags
+    // --- 3. Stats ---
     $totalTaggedPages = $kirby->site()->index()
         ->filterBy('tags', '!=', '')
         ->count();
 
-    // Get all available groups for filtering UI
+    // --- 4. UI filter options ---
     $groups = [];
-    $groupKeys = array_keys(option('yourusername.tag-garden.content.groups', []));
-    foreach ($groupKeys as $key) {
+    foreach (array_keys(option('jonathanstephens.tag-garden.content.groups', [])) as $key) {
         $def = Helpers::getGroupDefinition($key);
-        if ($def) {
-            $groups[$key] = $def;
-        }
+        if ($def) $groups[$key] = $def;
     }
 
-    // Get all available growth statuses for filtering UI
     $growthStatuses = [];
-    $statusKeys = option('yourusername.tag-garden.growth.statuses', []);
-    foreach ($statusKeys as $key) {
+    foreach (array_keys(option('jonathanstephens.tag-garden.growth.definitions', [])) as $key) {
         $def = Helpers::getGrowthDefinition($key);
-        if ($def) {
-            $growthStatuses[$key] = $def;
-        }
+        if ($def) $growthStatuses[$key] = $def;
     }
 
     return [
-        // Core data
-        'tags' => $tags,
-        'totalTags' => count($tags),
+        'tags'             => $tags,
+        'totalTags'        => count($tags),
         'totalTaggedPages' => $totalTaggedPages,
-
-        // Current state
-        'groupFilter' => $groupFilter,
-        'growthFilter' => $growthFilter,
-        'tagSort' => $tagSort,
-
-        // UI options
-        'groups' => $groups,
-        'growthStatuses' => $growthStatuses,
-
-        // Featured content
-        'recentlyTended' => $recentlyTended,
-        'recentlyPlanted' => $recentlyPlanted,
-
-        // Helper functions
-        'getTagUrl' => function($tag) {
-            return url('tags/' . \Kirby\Toolkit\Str::slug($tag));
-        },
-
-        'isActiveGroup' => function($groupKey) use ($groupFilter) {
-            return $groupFilter === $groupKey;
-        },
-
-        'isActiveGrowth' => function($statusKey) use ($growthFilter) {
-            return $growthFilter === $statusKey;
-        },
+        'groupFilter'      => $groupFilter,
+        'growthFilter'     => $growthFilter,
+        'tagSort'          => $tagSort,
+        'groups'           => $groups,
+        'growthStatuses'   => $growthStatuses,
+        'recentlyTended'   => $recentlyTended,
+        'recentlyPlanted'  => $recentlyPlanted,
+        'getTagUrl'        => fn($tag) => url('tags/' . \Kirby\Toolkit\Str::slug($tag)),
+        'isActiveGroup'    => fn($key) => $groupFilter === $key,
+        'isActiveGrowth'   => fn($key) => $growthFilter === $key,
     ];
 };

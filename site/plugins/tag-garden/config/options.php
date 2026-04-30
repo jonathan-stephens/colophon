@@ -5,7 +5,7 @@
  *
  * Extended configuration options for the Tag Garden plugin.
  * These are loaded via site/config/config.php with the namespace:
- * 'yourusername.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php'
+ * 'jonathanstephens.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php'
  *
  * Users can override any of these in their site's config.php
  *
@@ -56,6 +56,12 @@ return [
     /**
      * GROWTH STATUS CONFIGURATION
      */
+    'content.groups' => [
+        'garden' => ['journal', 'essay', 'article', 'book'],
+        'soil'   => ['link', 'library', 'quote'],
+        'work'   => ['project', 'experience', 'work'],
+        'about'  => ['strengths', 'skills', 'now'],
+    ],
     'growth.definitions' => [
         'sown' => [
             'label' => 'Sown',
@@ -117,14 +123,14 @@ return [
             'emoji' => '💼',
             'color' => '#3b82f6',
             'description' => 'Professional projects and experience',
-            'types' => ['work-container', 'project', 'experience', 'work'],
+            'types' => ['project', 'experience', 'work'],
         ],
         'about' => [
             'label' => 'About',
             'emoji' => '👤',
             'color' => '#10b981',
             'description' => 'Personal information and profiles',
-            'types' => ['strengths', 'skills', 'about', 'now'],
+            'types' => ['strengths', 'skills', 'now'],
         ],
     ],
 

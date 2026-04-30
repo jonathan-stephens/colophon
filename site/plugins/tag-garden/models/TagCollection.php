@@ -1,6 +1,6 @@
 <?php
 
-namespace Yourusername\TagGarden;
+namespace jonathanstephens\TagGarden;
 
 use Kirby\Cms\Page;
 
@@ -12,7 +12,7 @@ use Kirby\Cms\Page;
  *
  * To enable this model, register it in index.php:
  * 'pageModels' => [
- *     'tag' => 'Yourusername\TagGarden\TagCollection',
+ *     'tag' => 'jonathanstephens\TagGarden\TagCollection',
  * ]
  *
  * @version 1.0.0
@@ -139,7 +139,7 @@ class TagCollection extends Page
 
         foreach ($pages as $page) {
             // Growth status
-            $status = $page->growth_status()->value();
+            $status = $page->Growthstatus()->value();
             if (isset($growthStats[$status])) {
                 $growthStats[$status]++;
             }

@@ -258,7 +258,7 @@ class PageMethodsTest {
 
             // If group is returned, it should be one of the defined groups
             if ($group !== null) {
-                $validGroups = array_keys(option('yourusername.tag-garden.content.groups', []));
+                $validGroups = array_keys(option('jonathanstephens.tag-garden.content.groups', []));
                 $this->assert(
                     'contentGroup() returns valid group name',
                     in_array($group, $validGroups),

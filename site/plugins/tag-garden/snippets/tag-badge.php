@@ -19,7 +19,7 @@
  * @version 1.0.0
  */
 
-use Yourusername\TagGarden\Helpers;
+use jonathanstephens\TagGarden\Helpers;
 
 // Get parameters
 $tag = $tag ?? null;

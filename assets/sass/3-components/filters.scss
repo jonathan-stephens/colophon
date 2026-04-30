@@ -1,0 +1,135 @@
+aside:has(.filters){
+  padding-block-end:var(--flow-8);
+
+  h2{
+    font-size:var(--caption);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    padding-block-end:var(--flow-3);
+  }
+}
+/* ── Filter dropdown wrapper (anchor for popover positioning) ── */
+.filter-dropdown {
+    position: relative;
+    anchor-name: --filter-dropdown; /* future-proofing for CSS Anchor Positioning */
+}
+
+/* ── Trigger button ── */
+.filter-trigger, #tag-sort {
+    display: inline-flex;
+    align-items: center;
+    border: var(--border-fine) solid var(--border-color-subtle);
+    border-radius: var(--radii-square);
+    background: var(--background-primary);
+    color:var(--color-prominent);
+    font-family: var(--font-mono);
+    font-size: var(--caption);
+    cursor: pointer;
+    white-space: nowrap;
+    padding-block: var(--flow-3);
+    padding-inline: var(--flow-3);
+}
+
+.filter-trigger--active {
+    /* style to indicate an active filter is applied — adapt to your theme */
+    font-weight: bold;
+    background:var(--background-secondary);
+    border-color:var(--border-color-distinct);
+    color:var(--color-emphasis);
+}
+
+.filter-trigger__chevron {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* Rotate chevron when popover is open */
+.filter-trigger[aria-expanded="true"] .filter-trigger__chevron {
+    transform: rotate(180deg);
+}
+
+/* ── Popover ── */
+
+/* Fallback hide for browsers without Popover API */
+.filter-popover {
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radii-square);
+    background: var(--background-secondary); /* uses system background color */
+    color: var(--color-distinct);
+    min-width: var(--flow-13);
+    overflow: hidden;
+    /* Positioning — falls back gracefully without Anchor Positioning */
+    inset: unset;
+    margin-block-start: var(--flow-3);
+    padding-block:var(--flow-3);
+    font-family:var(--font-mono);
+
+    & li[role="option"]{
+      padding-block:0;
+    }
+}
+
+/* Native Popover API open state */
+.filter-popover:popover-open {
+    display: block;
+}
+
+/* Fallback JS open state */
+.filter-popover[data-open] {
+    display: block;
+    position: fixed; /* JS fallback positions relative to button via inline styles */
+}
+
+/* Remove default :popover-open backdrop */
+.filter-popover::backdrop {
+    background: transparent;
+}
+
+/* ── Popover options ── */
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--flow-1);
+    padding: var(--flow-3) var(--flow-3);
+    text-decoration: none;
+    color: inherit;
+    font-size:var(--small);
+}
+
+.filter-option:hover,
+.filter-option:focus-visible {
+    background: var(--background-tertiary); /* system highlight — swap for your theme token */
+    outline: none;
+    color:var(--color-prominent);
+}
+
+.filter-option--active,
+.filter-option[aria-current="true"] {
+    font-weight: var(--weight-medium);
+    background:var(--background-tertiary);
+    color:var(--color-emphasis);
+}
+
+.filter-option__emoji {
+    flex-shrink: 0;
+}
+
+/* ── Clear link ── */
+.filter-clear {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.875em;
+    opacity: 0.7;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .filter-trigger__chevron {
+        transition: none;
+    }
+}

@@ -18,7 +18,7 @@
  * @version 2.0.0
  */
 
-use Yourusername\TagGarden\Helpers;
+use jonathanstephens\TagGarden\Helpers;
 use Kirby\Toolkit\Str;
 
 return [
@@ -59,7 +59,7 @@ return [
         'pattern' => 'tags/(:all)',
         'action' => function(string $tagString) {
             // Get query parameters
-            $sort = get('sort', option('yourusername.tag-garden.default.sort', 'tended'));
+            $sort = get('sort', option('jonathanstephens.tag-garden.default.sort', 'tended'));
             $groupFilter = get('group');
 
             // Parse tags from URL
@@ -82,7 +82,7 @@ return [
 
             // Apply group filter if specified
             if ($groupFilter) {
-                $groups = option('yourusername.tag-garden.content.groups', []);
+                $groups = option('jonathanstephens.tag-garden.content.groups', []);
                 $types = $groups[$groupFilter] ?? [];
 
                 if (!empty($types)) {
@@ -103,7 +103,7 @@ return [
                 // Single tag: get related tags from collection
                 $relatedTags = kirby()->collection('tags.related', [
                     'tag' => $filterTags[0],
-                    'limit' => option('yourusername.tag-garden.related.tag-limit', 10)
+                    'limit' => option('jonathanstephens.tag-garden.related.tag-limit', 10)
                 ]);
             } else {
                 // Multiple tags: find tags from the filtered pages
@@ -135,14 +135,14 @@ return [
                 $relatedTags = array_slice(
                     $allRelatedTags,
                     0,
-                    option('yourusername.tag-garden.related.tag-limit', 10),
+                    option('jonathanstephens.tag-garden.related.tag-limit', 10),
                     true
                 );
             }
 
             // Calculate group statistics
             $groupStats = [];
-            $groups = option('yourusername.tag-garden.content.groups', []);
+            $groups = option('jonathanstephens.tag-garden.content.groups', []);
 
             foreach ($groups as $groupKey => $types) {
                 $count = $pages->filter(function($p) use ($types) {
@@ -168,7 +168,7 @@ return [
                 'evergreen' => 0,
             ];
             foreach ($pages as $p) {
-                $status = $p->growth_status()->value();
+                $status = $p->Growthstatus()->value();
                 if (isset($growthStats[$status])) {
                     $growthStats[$status]++;
                 }
@@ -211,7 +211,7 @@ return [
                 'growthStats' => $growthStats,
 
                 // UI options
-                'sortMethods' => option('yourusername.tag-garden.sort.methods', []),
+                'sortMethods' => option('jonathanstephens.tag-garden.sort.methods', []),
                 'groups' => $allGroups,
 
                 // Helper functions for templates

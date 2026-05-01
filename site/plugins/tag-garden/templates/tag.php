@@ -141,8 +141,8 @@ snippet('site-header') ?>
                                 <?php if ($item->Growthstatus()->isNotEmpty()): ?>
                                     <?php $status = $getGrowthDefinition($item->Growthstatus()->value()) ?>
                                     <?php if ($status): ?>
-                                        <span class="growth-status" title="<?= $status['label'] ?>">
-                                            <?= $status['icon'] ?>
+                                        <span class="growth-status with-icon" title="<?= $status['label'] ?>">
+                                            <span class="icon"><?= $status['icon'] ?></span>
                                             <?= $status['label'] ?>
                                         </span>
                                     <?php endif ?>

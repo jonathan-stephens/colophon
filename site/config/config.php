@@ -122,11 +122,10 @@ return [
       ],
     ],
       // Tag Garden Plugin Extended Configuration
-      'yourusername.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php',
-      'pageModels' => [
-    'tag' => 'TagGarden\TagCollection',
-],
-
+    'jonathanstephens.tag-garden' => require __DIR__ . '/../plugins/tag-garden/config/options.php',
+    'pageModels' => [
+        'tag' => 'TagGarden\TagCollection',
+    ],
     'afbora.kirby-minify-html' => [
       'enabled' => function () {
         return !kirby()->user();

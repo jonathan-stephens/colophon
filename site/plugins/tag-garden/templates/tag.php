@@ -125,61 +125,38 @@ snippet('site-header') ?>
 
                     <article class="stream-item h-entry" data-template="<?= $template ?>" data-group="<?= $group ?>">
                         <!-- Link to Content -->
-                        <a href="<?= $item->url() ?>" class="stream-link">
+                        <a href="<?= $item->url() ?>" class="stream-link e-content">
 
-                        <!-- Content Type Badge -->
-                        <!-- Metadata -->
-                        <div class="item-meta">
-                            <div class="content-type-badge with-icon">
-                            <?php if ($groupDef && !empty($groupDef['icon'])): ?>
-                                <span class="content-group-label icon" title="<?= $groupDef['label'] ?? '' ?>">
-                                    <?= $groupDef['icon'] ?>
-                                </span>
-                            <?php endif ?>    
-                                <span class="content-type-label"><?= ucfirst($template) ?></span>                        
-                            </div>
-
-                            <!-- Reading Time -->
-                            <?php if ($item->wordCount() > 0): ?>
-                                <span class="reading-time">
-                                    <?= $item->readingTimeFormatted() ?>
-                                </span>
-                            <?php endif ?>
-
-                            <!-- Growth Status -->
-                            <?php if ($item->Growthstatus()->isNotEmpty()): ?>
-                                <?php $status = $getGrowthDefinition($item->Growthstatus()->value()) ?>
-                                <?php if ($status): ?>
-                                    <span class="meta-separator">·</span>
-                                    <span class="growth-status" title="<?= $status['label'] ?>">
-                                        <?= $status['icon'] ?>
-                                        <?= $status['label'] ?>
+                            <!-- Metadata -->
+                            <div class="item-meta">
+                                <!-- Content Type Badge -->
+                                <div class="content-type-badge with-icon">
+                                    <span class="content-type-icon icon content-type-<?= $template ?>">
+                                        <?= Helpers::getTemplateIcon($template) ?>
                                     </span>
+                                    <p class="content-type-label"><?= ucfirst($template) ?></p>
+                                </div>
+
+                                <!-- Growth Status -->
+                                <?php if ($item->Growthstatus()->isNotEmpty()): ?>
+                                    <?php $status = $getGrowthDefinition($item->Growthstatus()->value()) ?>
+                                    <?php if ($status): ?>
+                                        <span class="growth-status" title="<?= $status['label'] ?>">
+                                            <?= $status['icon'] ?>
+                                            <?= $status['label'] ?>
+                                        </span>
+                                    <?php endif ?>
                                 <?php endif ?>
-                            <?php endif ?>
-
-                            <!-- Last Tended -->
-                            <?php if ($item->last_tended()->isNotEmpty()): ?>
-                                <span class="meta-separator">·</span>
-                                <time class="last-tended dt-updated" datetime="<?= $item->last_tended()->toDate('c') ?>">
-                                    <?= $item->last_tended()->toDate('M j, Y') ?>
-                                </time>
-                            <?php endif ?>
-
-                        </div>
-
-
-                            <!-- Title -->
-                            <h3 class="p-name"><?= $item->title()->html() ?></h3>
-
-                            <!-- Dek (if exists) -->
-                            <?php if ($item->dek()->isNotEmpty()): ?>
-                                <p class="dek"><?= $item->dek()->html() ?></p>
-                            <?php endif ?>
-
+                            </div>
+                            <div class="item-content">
+                                <!-- Title -->
+                                <h3 class="p-name"><?= $item->title()->html() ?></h3>
+                                <!-- Dek (if exists) -->
+                                <?php if ($item->dek()->isNotEmpty()): ?>
+                                    <p class="dek"><?= $item->dek()->html() ?></p>
+                                <?php endif ?>
+                            </div>
                         </a>
-
-
                     </article>
                 <?php endforeach ?>
             </div>

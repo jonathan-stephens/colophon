@@ -1,600 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Line Height Calculator</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
-<style>
-  :root {
-    --bg: #0e0e0f;
-    --surface: #161618;
-    --border: #2a2a2e;
-    --border-soft: #1e1e22;
-    --text: #e8e6e0;
-    --text-dim: #6b6868;
-    --text-mid: #9e9b96;
-    --accent: #c8b97a;
-    --accent-dim: rgba(200, 185, 122, 0.12);
-    --good: #7abf8e;
-    --warn: #c8956a;
-    --bad: #c87a7a;
-    --mono: 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leading Calculator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fafaf9;
+      --surface: #f2f1ef;
+      --border: #dddbd8;
+      --border-dim: #e8e7e4;
+      --text: #1c1b19;
+      --text-mid: #5a5855;
+      --text-dim: #9a9895;
+      --accent: #1a6ef5;
+      --accent-soft: #eef3fe;
+      --good: #1a7a3c;
+      --err: #c0392b;
+      --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+      --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
-    min-height: 100vh;
-    line-height: 1.6;
-  }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110;
+        --surface: #1a1918;
+        --border: #2e2c2a;
+        --border-dim: #242220;
+        --text: #e8e6e2;
+        --text-mid: #9a9793;
+        --text-dim: #5a5855;
+        --accent: #5c9bff;
+        --accent-soft: #131c2e;
+        --good: #4caf6a;
+        --err: #e05c4f;
+      }
+    }
 
-  /* ── Layout ── */
-  .shell {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    grid-template-rows: auto 1fr;
-    min-height: 100vh;
-  }
+    html { font-size: 16px; }
 
-  header {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: baseline;
-    gap: 2rem;
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 0;
+    }
 
-  header h1 {
-    font-size: 1.05rem;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
+    /* ── SR only ── */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
 
-  header p {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    letter-spacing: 0.04em;
-  }
+    /* ── Page header ── */
+    .page-header {
+      padding: 0.875rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
-  /* ── Sidebar ── */
-  .sidebar {
-    border-right: 1px solid var(--border);
-    background: var(--surface);
-    overflow-y: auto;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-  }
+    .page-header h1 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0;
+    }
 
-  /* ── Drop zone ── */
-  .dropzone {
-    border: 1px dashed var(--border);
-    border-radius: 4px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-  }
-  .dropzone:hover, .dropzone.drag-over {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-  .dropzone input[type=file] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-  }
-  .dropzone-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-    opacity: 0.4;
-  }
-  .dropzone p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
-  .dropzone .font-loaded {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-family: var(--mono);
-    font-weight: 400;
-  }
+    .page-header p {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
 
-  /* ── Section label ── */
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border-soft);
-    padding-bottom: 0.4rem;
-  }
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: calc(100vh - 43px);
+    }
 
-  /* ── Sliders ── */
-  .control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-  }
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
 
-  .control {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
+    /* ── Main ── */
+    .main-col {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      overflow-y: auto;
+    }
 
-  .control-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-dim);
+    }
 
-  .control-name {
-    font-size: 0.78rem;
-    color: var(--text-mid);
-    letter-spacing: 0.05em;
-  }
+    /* ── Drop zone ── */
+    .dropzone {
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s, background 0.15s;
+    }
 
-  .control-value {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-  }
+    .dropzone:hover,
+    .dropzone.drag-over,
+    .dropzone:focus-within {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
 
-  input[type=range] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 2px;
-    background: var(--border);
-    border-radius: 1px;
-    outline: none;
-    cursor: pointer;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    transition: transform 0.15s;
-  }
-  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
+    .dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
 
-  /* ── Metrics grid ── */
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-  }
+    .dropzone-prompt {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
 
-  .metric-cell {
-    background: var(--bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 3px;
-    padding: 0.6rem 0.75rem;
-  }
+    .dropzone-prompt strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
 
-  .metric-cell .name {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 0.25rem;
-  }
+    .dropzone-prompt small {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
 
-  .metric-cell .val {
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    color: var(--text);
-  }
+    .font-loaded-name {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      word-break: break-all;
+    }
 
-  .metric-cell .val.accent { color: var(--accent); }
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+    }
 
-  /* ── Result panel ── */
-  .result-panel {
-    background: var(--bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 4px;
-    padding: 1rem 1.25rem;
-  }
+    .metric {
+      background: var(--bg);
+      border: 1px solid var(--border-dim);
+      border-radius: 3px;
+      padding: 0.4rem 0.6rem;
+    }
 
-  .result-lh {
-    font-family: var(--mono);
-    font-size: 2.2rem;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
+    .metric-name {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.1rem;
+    }
 
-  .result-lh .unit {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    margin-left: 0.25rem;
-    vertical-align: middle;
-  }
+    .metric-value {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
 
-  .result-sub {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
-    flex-wrap: wrap;
-  }
+    /* ── Field ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
 
-  .quality-bar-wrap {
-    margin-top: 0.75rem;
-  }
+    .field label {
+      font-size: 0.72rem;
+      color: var(--text-mid);
+    }
 
-  .quality-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    margin-bottom: 0.35rem;
-    letter-spacing: 0.08em;
-  }
+    .field input[type="number"],
+    .field input[type="text"] {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--bg);
+      color: var(--text);
+      width: 100%;
+      transition: border-color 0.15s;
+    }
 
-  .quality-bar {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
 
-  .quality-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.5s cubic-bezier(.4,0,.2,1), background 0.5s;
-  }
+    .settings-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
 
-  /* ── No-font state ── */
-  .placeholder-msg {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    text-align: center;
-    padding: 1rem 0;
-    line-height: 1.7;
-  }
+    /* ── Buttons ── */
+    button {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
 
-  /* ── Main preview area ── */
-  .main {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+    button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
-  .preview-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 0.75rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    flex-wrap: wrap;
-  }
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
 
-  .tab-group {
-    display: flex;
-    gap: 0;
-  }
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
 
-  .tab-btn {
-    padding: 0.35rem 0.85rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .tab-btn:first-child { border-radius: 3px 0 0 3px; }
-  .tab-btn:last-child { border-radius: 0 3px 3px 0; border-left: none; }
-  .tab-btn.active {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
 
-  .bg-toggle {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+    button.primary:hover {
+      opacity: 0.9;
+      color: #fff;
+    }
 
-  .swatch {
-    width: 16px; height: 16px;
-    border-radius: 2px;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: border-color 0.15s;
-  }
-  .swatch.active { border-color: var(--accent); }
+    /* ── Scale controls ── */
+    .scale-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
 
-  .preview-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: 3rem 4rem;
-    transition: background 0.3s, color 0.3s;
-  }
+    .step-count {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
 
-  .preview-text {
-    max-width: none;
-    transition: font-size 0.2s, line-height 0.2s;
-    white-space: pre-wrap;
-    outline: none;
-  }
+    /* ── Scale table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
 
-  /* ── Baseline overlay ── */
-  .preview-wrap {
-    position: relative;
-  }
-  .baseline-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .baseline-overlay.visible { opacity: 1; }
+    .scale-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
 
-  /* ── Comparison view ── */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5px;
-    flex: 1;
-    overflow: hidden;
-  }
+    .scale-table th {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
 
-  .compare-col {
-    overflow-y: auto;
-    padding: 2rem;
-  }
+    .scale-table td {
+      padding: 0.4rem 0.5rem;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--border-dim);
+    }
 
-  .compare-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+    .scale-table tbody tr:last-child td {
+      border-bottom: none;
+    }
 
-  .compare-label .lh-val {
-    font-family: var(--mono);
-    color: var(--accent);
-  }
+    .scale-table tbody tr:hover td {
+      background: var(--surface);
+    }
 
-  .compare-label .badge {
-    padding: 0.1rem 0.4rem;
-    border-radius: 2px;
-    font-size: 0.58rem;
-  }
+    .label-input,
+    .clamp-input {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 0.25rem 0.4rem;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      background: transparent;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
 
-  .badge-optimal { background: rgba(122,191,142,0.15); color: var(--good); }
-  .badge-tight { background: rgba(200,122,122,0.12); color: var(--bad); }
-  .badge-loose { background: rgba(200,149,106,0.12); color: var(--warn); }
+    .label-input { width: 140px; }
 
-  /* Reasoning section */
-  .reasoning {
-    font-size: 0.73rem;
-    color: var(--text-dim);
-    line-height: 1.7;
-    border-top: 1px solid var(--border-soft);
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-  }
+    .label-input:hover,
+    .clamp-input:hover {
+      border-color: var(--border);
+      background: var(--bg);
+    }
 
-  .reasoning em {
-    color: var(--accent);
-    font-style: normal;
-    font-family: var(--mono);
-  }
+    .label-input:focus,
+    .clamp-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--bg);
+    }
 
-  /* Formula display */
-  .formula-block {
-    font-family: var(--mono);
-    font-size: 0.67rem;
-    background: var(--bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 3px;
-    padding: 0.6rem 0.75rem;
-    color: var(--text-mid);
-    line-height: 2;
-    margin-top: 0.5rem;
-  }
+    .lh-output {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
 
-  .formula-block .hi { color: var(--accent); }
-  .formula-block .comment { color: var(--text-dim); }
+    .lh-output.pending {
+      color: var(--text-dim);
+      font-style: italic;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+    }
 
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
-    .shell { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
-    .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; }
-    .preview-area { padding: 2rem; }
-  }
-</style>
+    .lh-output.error {
+      color: var(--err);
+      font-style: italic;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+    }
+
+    .remove-btn {
+      padding: 0.2rem 0.4rem;
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .remove-btn:hover {
+      color: var(--err);
+      border-color: transparent;
+    }
+
+    .copy-row-btn {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      border-color: var(--border-dim);
+    }
+
+    .copy-row-btn:hover { color: var(--accent); }
+    .copy-row-btn.copied { color: var(--good); border-color: var(--good); }
+
+    /* ── Output block ── */
+    .output-block {
+      position: relative;
+    }
+
+    .output-pre {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 2;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 0;
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--text);
+      min-height: 80px;
+    }
+
+    .output-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    /* ── Preview ── */
+    .preview-note {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .preview-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .preview-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .preview-meta {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-meta span { color: var(--accent); }
+
+    .preview-text {
+      outline: none;
+      border-left: 2px solid var(--border-dim);
+      padding-left: 1rem;
+    }
+
+    .preview-text:focus {
+      border-left-color: var(--accent);
+    }
+
+    /* ── Placeholder ── */
+    .placeholder {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 1.5rem;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      font-style: italic;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="shell">
+<header class="page-header">
+  <h1>Leading Calculator</h1>
+  <p>Optimal responsive line-heights from font metrics + fluid type scales</p>
+</header>
 
-  <!-- Header -->
-  <header>
-    <h1>Leading Calculator</h1>
-    <p>Optimal line-height from font metrics, measure &amp; readability research</p>
-  </header>
+<div class="layout">
 
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar" aria-label="Controls">
 
-    <!-- Drop zone -->
-    <div>
-      <div class="section-label">Font Source</div>
-      <div class="dropzone" id="dropzone">
-        <input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2">
-        <div class="dropzone-icon">⬡</div>
-        <div id="dropLabel">
-          <p class="font-loaded" style="display:none" id="fontName">—</p>
-          <p>Drop a font file here<br><span style="opacity:.5">TTF · OTF · WOFF · WOFF2</span></p>
+    <!-- Font -->
+    <section aria-labelledby="lbl-font">
+      <h2 class="section-heading" id="lbl-font">Font</h2>
+      <div
+        class="dropzone"
+        id="dropzone"
+        role="button"
+        tabindex="0"
+        aria-label="Drop font file here or press Enter to browse"
+      >
+        <input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2" aria-label="Choose font file">
+        <div class="dropzone-prompt" id="dropPrompt">
+          <strong>Drop font file or click to browse</strong>
+          <small>TTF · OTF · WOFF · WOFF2</small>
         </div>
+        <p class="font-loaded-name" id="fontLoadedName" hidden aria-live="polite"></p>
       </div>
-    </div>
+    </section>
 
-    <!-- Controls -->
-    <div>
-      <div class="section-label">Parameters</div>
-      <div class="control-group">
+    <!-- Font metrics -->
+    <section id="metricsSection" hidden aria-labelledby="lbl-metrics">
+      <h2 class="section-heading" id="lbl-metrics">Font Metrics</h2>
+      <div class="metrics-grid" id="metricsGrid" role="list" aria-label="Font metrics"></div>
+    </section>
 
-        <div class="control">
-          <div class="control-header">
-            <span class="control-name">Font Size</span>
-            <span class="control-value" id="sizeVal">18px</span>
+    <!-- Settings -->
+    <section aria-labelledby="lbl-settings">
+      <h2 class="section-heading" id="lbl-settings">Settings</h2>
+
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+
+        <fieldset style="border:none;padding:0;margin:0;">
+          <legend style="font-size:0.68rem;color:var(--text-mid);margin-bottom:0.4rem;">Viewport range (px)</legend>
+          <div class="settings-row">
+            <div class="field">
+              <label for="vpMin">Min</label>
+              <input type="number" id="vpMin" value="320" min="200" max="800" step="10" aria-describedby="vpMin-hint">
+              <span id="vpMin-hint" class="sr-only">Minimum viewport width in pixels</span>
+            </div>
+            <div class="field">
+              <label for="vpMax">Max</label>
+              <input type="number" id="vpMax" value="1440" min="800" max="3840" step="10" aria-describedby="vpMax-hint">
+              <span id="vpMax-hint" class="sr-only">Maximum viewport width in pixels</span>
+            </div>
           </div>
-          <input type="range" id="fontSize" min="8" max="96" step="1" value="18">
-        </div>
+        </fieldset>
 
-        <div class="control">
-          <div class="control-header">
-            <span class="control-name">Measure (characters)</span>
-            <span class="control-value" id="measureVal">65 ch</span>
+        <div class="settings-row">
+          <div class="field">
+            <label for="measure">Measure (ch)</label>
+            <input type="number" id="measure" value="65" min="20" max="130" step="1" aria-describedby="measure-hint">
+            <span id="measure-hint" class="sr-only">Line length in characters, affects optimal leading</span>
           </div>
-          <input type="range" id="measure" min="20" max="130" step="1" value="65">
+          <div class="field">
+            <label for="rootSize">Root (px)</label>
+            <input type="number" id="rootSize" value="16" min="10" max="24" step="1" aria-describedby="rootSize-hint">
+            <span id="rootSize-hint" class="sr-only">Root font size for rem conversion</span>
+          </div>
         </div>
 
       </div>
-    </div>
-
-    <!-- Font Metrics -->
-    <div id="metricsSection">
-      <div class="section-label">Font Metrics</div>
-      <div id="metricsContent">
-        <p class="placeholder-msg">Load a font to see its metrics</p>
-      </div>
-    </div>
-
-    <!-- Result -->
-    <div>
-      <div class="section-label">Recommendation</div>
-      <div id="resultContent">
-        <p class="placeholder-msg">Awaiting font + parameters</p>
-      </div>
-    </div>
-
-    <!-- Reasoning -->
-    <div id="reasoningSection" style="display:none">
-      <div class="section-label">How It's Calculated</div>
-      <div id="reasoningContent"></div>
-    </div>
+    </section>
 
   </aside>
 
-  <!-- Main -->
-  <main class="main" id="mainArea">
+  <!-- ── Main ── -->
+  <main class="main-col">
 
-    <div class="preview-toolbar">
-      <div class="tab-group">
-        <button class="tab-btn active" data-view="preview">Preview</button>
-        <button class="tab-btn" data-view="compare">Compare</button>
-        <button class="tab-btn" data-view="grid">Baseline Grid</button>
+    <!-- Scale -->
+    <section aria-labelledby="lbl-scale">
+      <h2 class="section-heading" id="lbl-scale">Type Scale</h2>
+
+      <div class="scale-controls">
+        <button type="button" id="addAbove" aria-label="Add a larger step above the scale">+ Above</button>
+        <button type="button" id="addBelow" aria-label="Add a smaller step below the scale">+ Below</button>
+        <span class="step-count" id="stepCount" aria-live="polite"></span>
       </div>
 
-      <div class="bg-toggle">
-        <span>BG</span>
-        <div class="swatch active" data-bg="#0e0e0f" data-fg="#e8e6e0" style="background:#0e0e0f;"></div>
-        <div class="swatch" data-bg="#f5f3ee" data-fg="#1a1917" style="background:#f5f3ee;"></div>
-        <div class="swatch" data-bg="#1e1a15" data-fg="#e5dcc8" style="background:#1e1a15;"></div>
+      <div class="table-wrap" style="margin-top:0.75rem;">
+        <table class="scale-table" id="scaleTable" aria-label="Type scale steps">
+          <thead>
+            <tr>
+              <th scope="col">CSS Variable</th>
+              <th scope="col">font-size: clamp()</th>
+              <th scope="col">line-height: clamp() <span aria-label="calculated">&rarr;</span></th>
+              <th scope="col"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="scaleBody"></tbody>
+        </table>
       </div>
+    </section>
 
-      <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--text-dim);cursor:pointer;letter-spacing:.08em;text-transform:uppercase;">
-        <input type="checkbox" id="editToggle" style="accent-color:var(--accent)"> Editable
-      </label>
-    </div>
-
-    <!-- Preview view -->
-    <div id="viewPreview" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-      <div class="preview-area" id="previewArea">
-        <div class="preview-wrap">
-          <canvas class="baseline-overlay" id="baselineCanvas"></canvas>
-          <div class="preview-text" id="previewText" contenteditable="false" spellcheck="false">The quick brown fox jumps over the lazy dog.
-
-Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing (leading), and letter-spacing, as well as adjusting the space between pairs of letters.
-
-Good typography requires an understanding of the relationship between font metrics and the space around the text. The ascender height, x-height, and descender depth all influence how dense a block of text appears, and therefore how much leading is needed to maintain comfortable reading rhythm.
-
-Drop your own font file to see how its unique proportions affect the optimal line-height for your chosen font-size and measure.</div>
-        </div>
+    <!-- Output -->
+    <section aria-labelledby="lbl-output">
+      <h2 class="section-heading" id="lbl-output">Output</h2>
+      <div class="output-block">
+        <pre class="output-pre" id="outputPre" aria-live="polite" tabindex="0">Load a font to generate CSS output.</pre>
       </div>
-    </div>
-
-    <!-- Compare view -->
-    <div id="viewCompare" style="display:none;flex:1;overflow:hidden;">
-      <div class="compare-grid" id="compareGrid">
-        <div class="compare-col" id="colTight"></div>
-        <div class="compare-col" id="colOptimal"></div>
-        <div class="compare-col" id="colLoose"></div>
+      <div class="output-actions">
+        <button type="button" id="copyAll" aria-label="Copy all CSS to clipboard">Copy all</button>
       </div>
-    </div>
+    </section>
 
-    <!-- Grid view -->
-    <div id="viewGrid" style="display:none;flex:1;overflow:hidden;">
-      <div class="preview-area" id="gridArea">
-        <div class="preview-wrap" id="gridWrap">
-          <canvas id="gridCanvas" class="baseline-overlay visible"></canvas>
-          <div class="preview-text" id="gridText" contenteditable="false" spellcheck="false">The quick brown fox jumps over the lazy dog.
-
-Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing (leading), and letter-spacing, as well as adjusting the space between pairs of letters.
-
-Good typography requires an understanding of the relationship between font metrics and the space around the text. The ascender height, x-height, and descender depth all influence how dense a block of text appears, and therefore how much leading is needed to maintain comfortable reading rhythm.</div>
-        </div>
-      </div>
-    </div>
+    <!-- Preview -->
+    <section aria-labelledby="lbl-preview">
+      <h2 class="section-heading" id="lbl-preview">Preview</h2>
+      <p class="preview-note" id="previewNote">Load a font to see a live type scale preview. Text is editable.</p>
+      <div class="preview-list" id="previewList" aria-live="polite"></div>
+    </section>
 
   </main>
+
 </div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────────
-let fontState = null;
+// ── State ──────────────────────────────────────────────────────────────────
+let fontState  = null;
+let fontCSSName = null;
 let currentFontFace = null;
-let bgColor = '#0e0e0f';
-let fgColor = '#e8e6e0';
 
-const state = {
-  fontSize: 18,
-  measure: 65,
-};
+const settings = { vpMin: 320, vpMax: 1440, measure: 65, rootSize: 16 };
 
-// ── Font loading ──────────────────────────────────────────────────────
-const dropzone = document.getElementById('dropzone');
+let steps = [
+  { label: '--step-2',  clamp: 'clamp(1.953rem, 3.5vw, 3.052rem)' },
+  { label: '--step-1',  clamp: 'clamp(1.563rem, 2.5vw, 2.441rem)' },
+  { label: '--step-0',  clamp: 'clamp(1rem, 1.5vw, 1.25rem)'      },
+  { label: '--step--1', clamp: 'clamp(0.8rem, 1vw, 0.889rem)'     },
+];
+
+const MAX_STEPS = 21;
+
+// ── Utility ────────────────────────────────────────────────────────────────
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function parseSizeToPx(val, rootPx) {
+  val = val.trim();
+  if (val.endsWith('rem')) return parseFloat(val) * rootPx;
+  if (val.endsWith('em'))  return parseFloat(val) * rootPx;
+  if (val.endsWith('px'))  return parseFloat(val);
+  const n = parseFloat(val);
+  return isNaN(n) ? null : n;
+}
+
+function parseClampStr(str, rootPx) {
+  str = (str || '').trim();
+  const lower = str.toLowerCase();
+  if (!lower.startsWith('clamp(') || !str.endsWith(')')) return null;
+  const inner = str.slice(6, -1);
+  // Split by comma at top level only
+  const parts = [];
+  let depth = 0, cur = '';
+  for (const ch of inner) {
+    if (ch === '(') depth++;
+    else if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) { parts.push(cur.trim()); cur = ''; }
+    else cur += ch;
+  }
+  parts.push(cur.trim());
+  if (parts.length < 3) return null;
+  const minPx = parseSizeToPx(parts[0], rootPx);
+  const maxPx = parseSizeToPx(parts[parts.length - 1], rootPx);
+  if (minPx === null || maxPx === null || isNaN(minPx) || isNaN(maxPx)) return null;
+  return { minPx, maxPx };
+}
+
+function fmt(n, d = 3) { return parseFloat(n.toFixed(d)); }
+
+// ── Core: line-height calculation ──────────────────────────────────────────
+/**
+ * Calculates optimal line-height multiplier from font metrics.
+ *
+ * Factors:
+ *  1. Typographic line gap embedded in the font (OS/2 sTypoLineGap)
+ *  2. x-height density ratio — fonts with tall x-heights appear denser
+ *     and benefit from additional leading (Legge & Bigelow, 2011)
+ *  3. Vertical extent (ascender + descender span) contributes perceived density
+ *  4. Measure (line length): Bringhurst's empirical rule — wider columns
+ *     need more leading for comfortable saccade return
+ *     Δleading ≈ 0.011 × (chars - 45)
+ *  5. Font size: larger text is easier to track; leading scales down
+ *  6. Italic angle: diagonal stress increases apparent density
+ */
+function calcLineHeight(metrics, fontSize, measure) {
+  const { upm, ascender, descender, capHeight, xHeight, lineGap, italicAngle } = metrics;
+
+  const ascRatio  = ascender / upm;
+  const descRatio = Math.abs(descender) / upm;
+  const capRatio  = capHeight / upm;
+  const xRatio    = xHeight / upm;
+  const gapRatio  = lineGap / upm;
+
+  // Base from internal font line gap
+  let lh = 1 + gapRatio;
+
+  // x-height density: normalised to cap height
+  const xDensity = capRatio > 0 ? xRatio / capRatio : 0.68;
+  lh += (xDensity - 0.68) * 0.32;
+
+  // Vertical extent: total glyph reach above + below baseline
+  const extent = ascRatio + descRatio;
+  lh += (extent - 1.0) * 0.22;
+
+  // Measure adjustment (Bringhurst)
+  lh += 0.011 * (measure - 45);
+
+  // Font size: larger type needs less relative leading
+  lh += -0.004 * (fontSize - 18);
+
+  // Italic: diagonal stress needs a touch more air
+  if (Math.abs(italicAngle) > 5) lh += 0.05;
+
+  return Math.max(1.1, Math.min(2.0, lh));
+}
+
+/**
+ * Generates a clamp() line-height value for a fluid type step.
+ *
+ * At vpMin: font is fontClamp.minPx, optimal LH multiplier = lhMin
+ * At vpMax: font is fontClamp.maxPx, optimal LH multiplier = lhMax
+ * Slope interpolates between those two absolute px values across the viewport range.
+ */
+function generateLHClamp(metrics, fontClamp, measure, vpMin, vpMax) {
+  if (!metrics || !fontClamp) return null;
+
+  const { minPx, maxPx } = fontClamp;
+  const lhMin = calcLineHeight(metrics, minPx, measure);
+  const lhMax = calcLineHeight(metrics, maxPx, measure);
+
+  const lhMinPx = minPx * lhMin;
+  const lhMaxPx = maxPx * lhMax;
+
+  const slope     = (lhMaxPx - lhMinPx) / (vpMax - vpMin);
+  const intercept = lhMinPx - slope * vpMin;
+
+  const slopeVw = fmt(slope * 100, 4);
+  const intPx   = fmt(intercept, 3);
+
+  const preferred = intPx >= 0
+    ? `${slopeVw}vw + ${intPx}px`
+    : `${slopeVw}vw - ${Math.abs(intPx)}px`;
+
+  return `clamp(${fmt(lhMinPx, 3)}px, ${preferred}, ${fmt(lhMaxPx, 3)}px)`;
+}
+
+function computeLHForStep(step) {
+  if (!fontState) return null;
+  const parsed = parseClampStr(step.clamp, settings.rootSize);
+  if (!parsed) return null;
+  return generateLHClamp(fontState, parsed, settings.measure, settings.vpMin, settings.vpMax);
+}
+
+// ── Font loading ───────────────────────────────────────────────────────────
+const dropzone      = document.getElementById('dropzone');
 const fontFileInput = document.getElementById('fontFile');
 
 dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
 dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('dragend',   () => dropzone.classList.remove('drag-over'));
 dropzone.addEventListener('drop', e => {
   e.preventDefault();
   dropzone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) loadFont(file);
+  if (e.dataTransfer.files[0]) loadFont(e.dataTransfer.files[0]);
+});
+dropzone.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fontFileInput.click(); }
 });
 fontFileInput.addEventListener('change', e => {
   if (e.target.files[0]) loadFont(e.target.files[0]);
@@ -602,416 +784,361 @@ fontFileInput.addEventListener('change', e => {
 
 async function loadFont(file) {
   const ext = file.name.split('.').pop().toLowerCase();
-  const validExts = ['ttf', 'otf', 'woff', 'woff2'];
-  if (!validExts.includes(ext)) {
-    alert('Please use TTF, OTF, WOFF, or WOFF2.');
+  if (!['ttf','otf','woff','woff2'].includes(ext)) {
+    alert('Please load a TTF, OTF, WOFF, or WOFF2 font file.');
     return;
   }
 
-  const arrayBuffer = await file.arrayBuffer();
+  const buf = await file.arrayBuffer();
   let otFont;
   try {
-    otFont = opentype.parse(arrayBuffer);
-  } catch(e) {
-    // WOFF2 may fail — try to inform user
-    if (ext === 'woff2') {
-      alert('WOFF2 parsing is not fully supported in the browser. Please try TTF or OTF for best results.');
-      return;
-    }
-    alert('Could not parse font: ' + e.message);
+    otFont = opentype.parse(buf);
+  } catch (err) {
+    if (ext === 'woff2') alert('WOFF2 parsing is limited in-browser. Try TTF or OTF for best results.');
+    else alert('Could not parse font: ' + err.message);
     return;
   }
 
-  // Build a CSS font-face for preview
-  const fontName = 'PreviewFont_' + Date.now();
-  const blob = new Blob([arrayBuffer], { type: 'font/' + ext });
-  const url = URL.createObjectURL(blob);
-
-  if (currentFontFace) {
-    document.fonts.delete(currentFontFace);
-  }
-  currentFontFace = new FontFace(fontName, `url(${url})`);
+  // Register CSS font-face for preview
+  fontCSSName = 'PreviewFont_' + Date.now();
+  const blob  = new Blob([buf], { type: 'font/' + ext });
+  const url   = URL.createObjectURL(blob);
+  if (currentFontFace) document.fonts.delete(currentFontFace);
+  currentFontFace = new FontFace(fontCSSName, `url(${url})`);
   await currentFontFace.load();
   document.fonts.add(currentFontFace);
 
-  // Extract metrics
-  const os2 = otFont.tables.os2;
+  // Extract metrics from OS/2, hhea tables
+  const os2  = otFont.tables.os2;
   const head = otFont.tables.head;
   const hhea = otFont.tables.hhea;
   const post = otFont.tables.post;
-  const upm = head.unitsPerEm;
+  const upm  = head.unitsPerEm;
 
-  const metrics = {
-    fontName,
-    displayName: otFont.names.fullName?.en || otFont.names.postScriptName?.en || file.name,
+  fontState = {
+    displayName:  otFont.names.fullName?.en || otFont.names.postScriptName?.en || file.name,
     upm,
-    ascender: os2?.sTypoAscender ?? hhea?.ascender ?? upm * 0.8,
-    descender: os2?.sTypoDescender ?? hhea?.descender ?? -(upm * 0.2),
-    lineGap: os2?.sTypoLineGap ?? hhea?.lineGap ?? 0,
-    capHeight: os2?.sCapHeight || upm * 0.7,
-    xHeight: os2?.sxHeight || upm * 0.5,
-    winAscent: os2?.usWinAscent ?? upm * 0.9,
-    winDescent: os2?.usWinDescent ?? upm * 0.2,
-    italicAngle: post?.italicAngle || 0,
+    ascender:    os2?.sTypoAscender  ?? hhea?.ascender  ?? upm * 0.8,
+    descender:   os2?.sTypoDescender ?? hhea?.descender ?? -(upm * 0.2),
+    lineGap:     os2?.sTypoLineGap   ?? hhea?.lineGap   ?? 0,
+    capHeight:   os2?.sCapHeight     || upm * 0.7,
+    xHeight:     os2?.sxHeight       || upm * 0.5,
+    italicAngle: post?.italicAngle   || 0,
   };
 
-  fontState = metrics;
-
-  // Update display name
-  const fontNameEl = document.getElementById('fontName');
-  fontNameEl.textContent = metrics.displayName;
-  fontNameEl.style.display = 'block';
-  document.querySelector('#dropLabel p:not(#fontName)').style.display = 'none';
-
+  renderMetrics();
   update();
 }
 
-// ── Sliders ───────────────────────────────────────────────────────────
-document.getElementById('fontSize').addEventListener('input', e => {
-  state.fontSize = +e.target.value;
-  document.getElementById('sizeVal').textContent = state.fontSize + 'px';
-  update();
+function renderMetrics() {
+  const m = fontState;
+  const pct = v => (v / m.upm * 100).toFixed(1) + '%';
+
+  // Update drop zone display
+  document.getElementById('dropPrompt').hidden = true;
+  const nameEl = document.getElementById('fontLoadedName');
+  nameEl.hidden = false;
+  nameEl.textContent = m.displayName;
+
+  // Show metrics section
+  document.getElementById('metricsSection').hidden = false;
+
+  const data = [
+    { name: 'UPM',        val: m.upm },
+    { name: 'Ascender',   val: pct(m.ascender)          },
+    { name: 'Descender',  val: pct(Math.abs(m.descender)) },
+    { name: 'Cap Height', val: pct(m.capHeight)          },
+    { name: 'x-Height',   val: pct(m.xHeight)            },
+    { name: 'Line Gap',   val: pct(m.lineGap)            },
+    { name: 'Italic °',   val: m.italicAngle             },
+  ];
+
+  document.getElementById('metricsGrid').innerHTML = data.map(d => `
+    <div class="metric" role="listitem">
+      <span class="metric-name">${d.name}</span>
+      <span class="metric-value">${d.val}</span>
+    </div>
+  `).join('');
+}
+
+// ── Settings bindings ──────────────────────────────────────────────────────
+['vpMin','vpMax','measure','rootSize'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    const val = +e.target.value;
+    if (!isNaN(val)) { settings[id] = val; update(); }
+  });
 });
-document.getElementById('measure').addEventListener('input', e => {
-  state.measure = +e.target.value;
-  document.getElementById('measureVal').textContent = state.measure + ' ch';
-  update();
+
+// ── Scale management ───────────────────────────────────────────────────────
+function labelToNum(label) {
+  const m = (label || '').match(/-(-?\d+)$/);
+  return m ? parseInt(m[1]) : 0;
+}
+
+function numToLabel(n) {
+  if (n === 0)  return '--step-0';
+  if (n > 0)    return `--step-${n}`;
+  return `--step-${n}`; // becomes --step--1, --step--2, etc.
+}
+
+function defaultClampForFontSize(sizePx, rootPx) {
+  // Generate a fluid clamp assuming the given px is the mid-point
+  const minPx = sizePx * 0.85;
+  const maxPx = sizePx * 1.2;
+  const vw    = fmt((maxPx - minPx) / (settings.vpMax - settings.vpMin) * 100, 3);
+  const minR  = fmt(minPx / rootPx, 3);
+  const maxR  = fmt(maxPx / rootPx, 3);
+  return `clamp(${minR}rem, ${vw}vw, ${maxR}rem)`;
+}
+
+function defaultStepForNum(n) {
+  const rootPx = settings.rootSize || 16;
+  const ratio  = 1.25; // major third scale
+  const basePx = rootPx * Math.pow(ratio, n);
+  return { label: numToLabel(n), clamp: defaultClampForFontSize(basePx, rootPx) };
+}
+
+document.getElementById('addAbove').addEventListener('click', () => {
+  if (steps.length >= MAX_STEPS) return;
+  const topNum = labelToNum(steps[0]?.label || '--step-0');
+  steps.unshift(defaultStepForNum(topNum + 1));
+  renderScale(); update();
 });
 
-// ── Core calculation ──────────────────────────────────────────────────
-/**
- * Computes optimal line-height multiplier from first principles.
- *
- * Sources / principles:
- *  1. Ascender/descender extent determines how much vertical space the font
- *     already "claims" above & below the cap line and baseline.
- *  2. x-height ratio (x-height / cap-height) correlates with apparent text
- *     density. Fonts with large x-heights look denser and need more air.
- *  3. Bringhurst / Müller-Brockmann: for a comfortable saccade-return,
- *     leading should increase with line length (measure).
- *     Empirical formula: Δleading ≈ 0.011 × (charsPerLine - 45)  [in ems]
- *  4. Font-size interacts: at large sizes the eye has an easier jump,
- *     so scale down slightly above 18px.
- *  5. Italic text needs a touch more space due to diagonal stress.
- */
-function calcLineHeight(metrics, fontSize, measure) {
-  const { upm, ascender, descender, capHeight, xHeight, lineGap, italicAngle } = metrics;
+document.getElementById('addBelow').addEventListener('click', () => {
+  if (steps.length >= MAX_STEPS) return;
+  const botNum = labelToNum(steps[steps.length - 1]?.label || '--step-0');
+  steps.push(defaultStepForNum(botNum - 1));
+  renderScale(); update();
+});
 
-  // --- Normalised ratios (all relative to UPM) ---
-  const ascRatio   = ascender / upm;          // typically 0.70–0.90
-  const descRatio  = Math.abs(descender) / upm; // typically 0.15–0.30
-  const capRatio   = capHeight / upm;          // typically 0.60–0.75
-  const xRatio     = xHeight / upm;            // typically 0.40–0.55
-  const gapRatio   = lineGap / upm;            // OS/2 recommended gap
-
-  // --- x-height to cap-height ratio (density proxy) ---
-  // Higher = more optical mass between cap and baseline = needs more air
-  const xToCapRatio = capRatio > 0 ? xRatio / capRatio : 0.65;
-
-  // --- Base leading from font's own metrics ---
-  // The font's native "line spacing" is (asc + |desc| + lineGap) / upm
-  // but we want the optimal for body text, not what the font dictates.
-  // We start from the ink extents (cap + descender) and add leading.
-  const inkExtent = capRatio + descRatio; // fraction of em occupied by ink
-
-  // --- Measure-based component (Bringhurst rule) ---
-  // Optimal measure is ~65 chars. Each char beyond 45 adds ~0.011 em of leading.
-  const measureBase = 45;
-  const measureFactor = 0.011;
-  const measureLeading = Math.max(0, (measure - measureBase) * measureFactor);
-
-  // --- x-height density component ---
-  // xToCapRatio of 0.5 = neutral. Fonts above 0.7 (e.g. Helvetica, many sans)
-  // need significantly more leading.
-  const xDensityLeading = (xToCapRatio - 0.5) * 0.55;
-
-  // --- Ascender/descender component ---
-  // Fonts with very tall ascenders or deep descenders need less added leading
-  // because there's already visual separation. Fonts with compact extents need more.
-  // "Compact" = ink extent < 0.85, "tall" = ink extent > 1.05
-  const extentAdjust = (0.95 - inkExtent) * 0.3;
-
-  // --- Font size component ---
-  // At display sizes (>24px) less relative leading is needed; at tiny sizes more.
-  const sizeAdjust = -(Math.log(fontSize / 18) * 0.04);
-
-  // --- Italic component ---
-  const italicAdjust = Math.abs(italicAngle) > 5 ? 0.04 : 0;
-
-  // --- Assemble ---
-  // Base is 1.2 (tight but functional). We add components.
-  const raw = 1.2 + measureLeading + xDensityLeading + extentAdjust + sizeAdjust + italicAdjust + (gapRatio * 0.5);
-
-  // Clamp to a sensible typographic range
-  const optimal = Math.max(1.15, Math.min(2.0, raw));
-
-  return {
-    optimal: Math.round(optimal * 1000) / 1000,
-    components: {
-      measureLeading: Math.round(measureLeading * 1000) / 1000,
-      xDensityLeading: Math.round(xDensityLeading * 1000) / 1000,
-      extentAdjust: Math.round(extentAdjust * 1000) / 1000,
-      sizeAdjust: Math.round(sizeAdjust * 1000) / 1000,
-      italicAdjust,
-      gapRatio: Math.round(gapRatio * 1000) / 1000,
-    },
-    ratios: {
-      ascRatio: Math.round(ascRatio * 1000) / 1000,
-      descRatio: Math.round(descRatio * 1000) / 1000,
-      capRatio: Math.round(capRatio * 1000) / 1000,
-      xRatio: Math.round(xRatio * 1000) / 1000,
-      xToCapRatio: Math.round(xToCapRatio * 1000) / 1000,
-      inkExtent: Math.round(inkExtent * 1000) / 1000,
-    }
-  };
+function removeStep(i) {
+  if (steps.length <= 1) return;
+  steps.splice(i, 1);
+  renderScale(); update();
 }
 
-// Quality score 0–1 for how readable the given LH is
-function qualityScore(lh, optimal) {
-  const delta = Math.abs(lh - optimal);
-  return Math.max(0, 1 - (delta / 0.3));
+function renderScale() {
+  const tbody = document.getElementById('scaleBody');
+  tbody.innerHTML = '';
+
+  steps.forEach((step, i) => {
+    const lh = computeLHForStep(step);
+    const lhClass = !fontState ? 'pending' : (!lh ? 'error' : '');
+    const lhText  = !fontState ? 'load a font' : (!lh ? 'invalid clamp()' : lh);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <input
+          type="text"
+          class="label-input"
+          value="${esc(step.label)}"
+          aria-label="Variable name for step ${i + 1}"
+          data-i="${i}" data-field="label"
+        >
+      </td>
+      <td style="min-width:260px;">
+        <input
+          type="text"
+          class="clamp-input"
+          value="${esc(step.clamp)}"
+          aria-label="Font-size clamp value for step ${i + 1}"
+          placeholder="clamp(min, preferred, max)"
+          data-i="${i}" data-field="clamp"
+        >
+      </td>
+      <td style="min-width:280px;">
+        <span class="lh-output ${lhClass}" id="lhOut-${i}">${esc(lhText)}</span>
+      </td>
+      <td>
+        <div style="display:flex;gap:0.3rem;align-items:center;">
+          <button
+            type="button"
+            class="copy-row-btn"
+            data-i="${i}"
+            aria-label="Copy line-height value for step ${i + 1}"
+          >copy</button>
+          <button
+            type="button"
+            class="remove-btn"
+            data-i="${i}"
+            aria-label="Remove step ${i + 1}"
+            ${steps.length <= 1 ? 'disabled' : ''}
+          >×</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Input events — update step data without re-rendering table
+  tbody.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const i = +e.target.dataset.i;
+      const field = e.target.dataset.field;
+      steps[i][field] = e.target.value;
+      update();
+    });
+  });
+
+  // Copy individual row
+  tbody.querySelectorAll('.copy-row-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const i  = +btn.dataset.i;
+      const lh = computeLHForStep(steps[i]);
+      if (!lh) return;
+      const text = `${steps[i].label}-lh: ${lh};`;
+      await copyText(text, btn);
+    });
+  });
+
+  // Remove step
+  tbody.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => removeStep(+btn.dataset.i));
+  });
+
+  document.getElementById('stepCount').textContent = `${steps.length} / ${MAX_STEPS} steps`;
 }
 
-// ── UI Update ─────────────────────────────────────────────────────────
+// ── Update ─────────────────────────────────────────────────────────────────
 function update() {
+  updateLHColumns();
+  updateOutput();
+  updatePreview();
+}
+
+function updateLHColumns() {
+  steps.forEach((step, i) => {
+    const el = document.getElementById(`lhOut-${i}`);
+    if (!el) return;
+    if (!fontState) {
+      el.textContent = 'load a font';
+      el.className = 'lh-output pending';
+      return;
+    }
+    const lh = computeLHForStep(step);
+    if (lh) {
+      el.textContent = lh;
+      el.className = 'lh-output';
+    } else {
+      el.textContent = 'invalid clamp()';
+      el.className = 'lh-output error';
+    }
+  });
+}
+
+function updateOutput() {
+  const pre = document.getElementById('outputPre');
   if (!fontState) {
-    applyPreviewStyle(null, null);
+    pre.textContent = 'Load a font to generate CSS output.';
     return;
   }
 
-  const { fontSize, measure } = state;
-  const result = calcLineHeight(fontState, fontSize, measure);
-  const { optimal, components, ratios } = result;
-  const { fontName, upm, ascender, descender, capHeight, xHeight, lineGap } = fontState;
-
-  // Apply to preview
-  applyPreviewStyle(fontName, optimal);
-
-  // Metrics panel
-  document.getElementById('metricsContent').innerHTML = `
-    <div class="metrics-grid">
-      <div class="metric-cell">
-        <div class="name">Units/EM</div>
-        <div class="val accent">${upm}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">Ascender</div>
-        <div class="val">${ascender}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">Descender</div>
-        <div class="val">${descender}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">Cap Height</div>
-        <div class="val">${capHeight}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">x-Height</div>
-        <div class="val">${xHeight}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">Line Gap</div>
-        <div class="val">${lineGap}</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">x / Cap</div>
-        <div class="val accent">${(ratios.xToCapRatio * 100).toFixed(1)}%</div>
-      </div>
-      <div class="metric-cell">
-        <div class="name">Ink Extent</div>
-        <div class="val">${(ratios.inkExtent * 100).toFixed(1)}%</div>
-      </div>
-    </div>
-  `;
-
-  // Quality
-  const pxVal = (optimal * fontSize).toFixed(2);
-  const leadingPx = ((optimal - 1) * fontSize).toFixed(2);
-  const score = 95; // optimal is by definition ideal
-
-  document.getElementById('resultContent').innerHTML = `
-    <div class="result-panel">
-      <div class="result-lh">${optimal}<span class="unit">× / ${pxVal}px</span></div>
-      <div class="result-sub">
-        <span>Leading: ${leadingPx}px</span>
-        <span>Font: ${fontSize}px</span>
-        <span>Measure: ${measure} ch</span>
-      </div>
-      <div class="quality-bar-wrap">
-        <div class="quality-label"><span>Fit quality</span><span style="color:var(--good)">Optimal</span></div>
-        <div class="quality-bar"><div class="quality-fill" style="width:95%;background:var(--good)"></div></div>
-      </div>
-    </div>
-  `;
-
-  // Reasoning
-  document.getElementById('reasoningSection').style.display = 'block';
-  document.getElementById('reasoningContent').innerHTML = `
-    <div class="reasoning">
-      Base of <em>1.200</em> (minimum functional leading), then:<br>
-      + <em>${components.measureLeading > 0 ? '+' : ''}${components.measureLeading}</em>  measure (${measure} ch vs 45 ch baseline)<br>
-      + <em>${components.xDensityLeading >= 0 ? '+' : ''}${components.xDensityLeading}</em>  x-height density (x/cap = ${(ratios.xToCapRatio*100).toFixed(1)}%)<br>
-      + <em>${components.extentAdjust >= 0 ? '+' : ''}${components.extentAdjust}</em>  ink extent adjustment (${(ratios.inkExtent*100).toFixed(1)}%)<br>
-      + <em>${components.sizeAdjust >= 0 ? '+' : ''}${components.sizeAdjust}</em>  font-size scaling (${fontSize}px)<br>
-      ${Math.abs(fontState.italicAngle) > 5 ? `+ <em>+0.040</em>  italic angle (${fontState.italicAngle}°)<br>` : ''}
-      ${components.gapRatio > 0 ? `+ <em>+${(components.gapRatio*0.5).toFixed(3)}</em>  OS/2 line gap hint<br>` : ''}
-    </div>
-    <div class="formula-block">
-<span class="comment">// Bringhurst measure component</span>
-Δmeasure  = <span class="hi">0.011 × max(0, measure − 45)</span>
-
-<span class="comment">// x-height density (optical mass)</span>
-Δx-density = <span class="hi">0.55 × (xHeight/capHeight − 0.5)</span>
-
-<span class="comment">// Ascender+descender extent (font compactness)</span>
-Δextent   = <span class="hi">0.30 × (0.95 − (asc+|desc|) / UPM)</span>
-
-<span class="comment">// Font-size scaling</span>
-Δsize     = <span class="hi">−0.04 × ln(fontSize / 18)</span>
-
-<span class="comment">// Final</span>
-LH = <span class="hi">clamp(1.15, 1.20 + Σ, 2.00)</span>
-    </div>
-  `;
-
-  // Compare view
-  updateCompare(fontName, optimal, fontSize, measure);
-  updateGridView(fontName, optimal, fontSize);
-}
-
-// ── Preview styles ─────────────────────────────────────────────────────
-function applyPreviewStyle(fontName, lh) {
-  const texts = ['previewText', 'gridText'];
-  texts.forEach(id => {
-    const el = document.getElementById(id);
-    el.style.fontFamily = fontName ? `"${fontName}", serif` : 'Palatino Linotype, Book Antiqua, Georgia, serif';
-    el.style.fontSize = state.fontSize + 'px';
-    el.style.lineHeight = lh ? lh : '';
-    el.style.maxWidth = state.measure + 'ch';
-    el.style.color = fgColor;
-  });
-  document.getElementById('previewArea').style.background = bgColor;
-  document.getElementById('gridArea').style.background = bgColor;
-  document.querySelectorAll('.compare-col').forEach(el => el.style.background = bgColor);
-
-  if (lh) drawGrid(lh, state.fontSize);
-}
-
-// ── Compare columns ────────────────────────────────────────────────────
-const SAMPLE = `The relationship between font metrics and leading is subtle but important. The x-height, cap-height, and ascender/descender ratios all influence the apparent density of text on the page.
-
-Good typography emerges from understanding these proportions and applying them with care.`;
-
-function updateCompare(fontName, optimal, fontSize, measure) {
-  const tight  = Math.max(1.0, optimal - 0.25);
-  const loose  = Math.min(2.2, optimal + 0.25);
-  const ff = fontName ? `"${fontName}", serif` : 'inherit';
-  const maxW = measure + 'ch';
-
-  const cols = [
-    { id: 'colTight',   lh: tight,   label: 'Tight',   badge: 'badge-tight'  },
-    { id: 'colOptimal', lh: optimal, label: 'Optimal',  badge: 'badge-optimal'},
-    { id: 'colLoose',   lh: loose,   label: 'Loose',    badge: 'badge-loose'  },
+  const lines = [
+    `/* ${fontState.displayName}`,
+    ` * Viewport: ${settings.vpMin}px → ${settings.vpMax}px`,
+    ` * Measure: ${settings.measure}ch  |  Root: ${settings.rootSize}px`,
+    ` */`,
+    '',
   ];
 
-  cols.forEach(c => {
-    document.getElementById(c.id).innerHTML = `
-      <div class="compare-label">
-        <span>${c.label}</span>
-        <span class="lh-val">${c.lh.toFixed(3)}</span>
-        <span class="badge ${c.badge}">${c.label.toUpperCase()}</span>
-      </div>
-      <div style="font-family:${ff};font-size:${fontSize}px;line-height:${c.lh};max-width:${maxW};color:${fgColor};">${SAMPLE}</div>
+  steps.forEach(step => {
+    const lh = computeLHForStep(step);
+    lines.push(`${step.label}: ${step.clamp};`);
+    if (lh) lines.push(`${step.label}-lh: ${lh};`);
+    else    lines.push(`${step.label}-lh: /* invalid input */`);
+    lines.push('');
+  });
+
+  pre.textContent = lines.join('\n').trimEnd();
+}
+
+function updatePreview() {
+  const list = document.getElementById('previewList');
+  const note = document.getElementById('previewNote');
+
+  if (!fontState) {
+    note.hidden = false;
+    list.innerHTML = '';
+    return;
+  }
+
+  note.hidden = true;
+
+  // Preserve existing editable text content per step index
+  const existingTexts = {};
+  list.querySelectorAll('[data-step-i]').forEach(el => {
+    existingTexts[el.dataset.stepI] = el.textContent;
+  });
+
+  list.innerHTML = '';
+
+  const fallbackText = 'The quick brown fox jumps over the lazy dog. Typography is the art and technique of arranging type to make written language legible, readable, and appealing. The ascender height, x-height, and descender depth all shape how a column of text breathes.';
+
+  steps.forEach((step, i) => {
+    const parsed = parseClampStr(step.clamp, settings.rootSize);
+    const lh     = computeLHForStep(step);
+
+    const article = document.createElement('article');
+    article.className = 'preview-item';
+
+    const meta = document.createElement('p');
+    meta.className = 'preview-meta';
+    meta.innerHTML = `
+      <span>${esc(step.label)}</span>
+      <span>${esc(step.clamp)}</span>
+      ${lh ? `<span>${esc(lh)}</span>` : '<em style="color:var(--err)">invalid clamp()</em>'}
     `;
-    document.getElementById(c.id).style.background = bgColor;
+
+    const p = document.createElement('p');
+    p.className    = 'preview-text';
+    p.contentEditable = 'true';
+    p.spellcheck   = false;
+    p.dataset.stepI = i;
+    p.setAttribute('aria-label', `Preview text for ${step.label}`);
+    p.textContent  = existingTexts[i] || fallbackText;
+
+    // Apply font-size directly as the clamp() value — browser resolves it
+    if (parsed) p.style.fontSize = step.clamp;
+    if (lh)     p.style.lineHeight = lh;
+    p.style.fontFamily = `'${fontCSSName}', serif`;
+    p.style.maxWidth   = `${settings.measure}ch`;
+
+    article.append(meta, p);
+    list.appendChild(article);
   });
 }
 
-// ── Baseline grid ──────────────────────────────────────────────────────
-function drawGrid(lh, fontSize) {
-  const canvas = document.getElementById('gridCanvas');
-  const wrap = document.getElementById('gridWrap');
-  const w = wrap.offsetWidth;
-  const h = Math.max(wrap.scrollHeight, 600);
-  canvas.width = w;
-  canvas.height = h;
-  canvas.style.width = w + 'px';
-  canvas.style.height = h + 'px';
-
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, w, h);
-
-  const lineH = lh * fontSize;
-  const lineColor = fgColor === '#e8e6e0' ? 'rgba(200,185,122,0.12)' : 'rgba(0,0,0,0.08)';
-  ctx.strokeStyle = lineColor;
-  ctx.lineWidth = 1;
-
-  for (let y = lineH; y < h; y += lineH) {
-    ctx.beginPath();
-    ctx.moveTo(0, Math.round(y) + 0.5);
-    ctx.lineTo(w, Math.round(y) + 0.5);
-    ctx.stroke();
+// ── Copy ───────────────────────────────────────────────────────────────────
+async function copyText(text, btn) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = Object.assign(document.createElement('textarea'), {
+      value: text, style: 'position:fixed;opacity:0'
+    });
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  if (btn) {
+    const orig = btn.textContent;
+    btn.textContent = 'copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
   }
 }
 
-// ── Grid view ─────────────────────────────────────────────────────────
-function updateGridView(fontName, optimal, fontSize) {
-  const el = document.getElementById('gridText');
-  el.style.fontFamily = fontName ? `"${fontName}", serif` : 'Palatino Linotype, Book Antiqua, Georgia, serif';
-  el.style.fontSize = fontSize + 'px';
-  el.style.lineHeight = optimal;
-  el.style.maxWidth = state.measure + 'ch';
-  el.style.color = fgColor;
-  setTimeout(() => drawGrid(optimal, fontSize), 50);
-}
-
-// ── Tabs ──────────────────────────────────────────────────────────────
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const view = btn.dataset.view;
-    document.getElementById('viewPreview').style.display = view === 'preview' ? 'flex' : 'none';
-    document.getElementById('viewCompare').style.display = view === 'compare' ? 'block' : 'none';
-    document.getElementById('viewGrid').style.display    = view === 'grid'    ? 'flex' : 'none';
-    if (view === 'grid' && fontState) {
-      const r = calcLineHeight(fontState, state.fontSize, state.measure);
-      drawGrid(r.optimal, state.fontSize);
-    }
-  });
+document.getElementById('copyAll').addEventListener('click', async function() {
+  const text = document.getElementById('outputPre').textContent;
+  await copyText(text, this);
 });
 
-// ── Background swatches ──────────────────────────────────────────────
-document.querySelectorAll('.swatch').forEach(s => {
-  s.addEventListener('click', () => {
-    document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
-    s.classList.add('active');
-    bgColor = s.dataset.bg;
-    fgColor = s.dataset.fg;
-    applyPreviewStyle(fontState?.fontName, fontState ? calcLineHeight(fontState, state.fontSize, state.measure).optimal : null);
-    if (fontState) update();
-  });
-});
-
-// ── Edit toggle ──────────────────────────────────────────────────────
-document.getElementById('editToggle').addEventListener('change', e => {
-  const ce = e.target.checked ? 'true' : 'false';
-  document.getElementById('previewText').contentEditable = ce;
-  document.getElementById('gridText').contentEditable = ce;
-});
-
-// ── Resize redraw ─────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-  if (fontState) {
-    const r = calcLineHeight(fontState, state.fontSize, state.measure);
-    drawGrid(r.optimal, state.fontSize);
-  }
-});
-
-// ── Init ──────────────────────────────────────────────────────────────
-document.getElementById('sizeVal').textContent = state.fontSize + 'px';
-document.getElementById('measureVal').textContent = state.measure + ' ch';
+// ── Init ───────────────────────────────────────────────────────────────────
+renderScale();
+update();
 </script>
 </body>
 </html>

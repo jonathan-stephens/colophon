@@ -1,0 +1,57 @@
+# site/blueprints/pages/timeline.yml
+
+title: Timeline
+icon: 📋
+
+options:
+  changeSlug: true
+  changeStatus: true
+  changeTemplate: false
+  delete: true
+  duplicate: false
+
+columns:
+  - width: 2/3
+    sections:
+      entries:
+        type: pages
+        headline: Timeline Entries
+        status: all
+        templates: [timeline-entry]
+        sortBy: date desc
+        columns:
+          date:
+            label: Date
+            type: date
+            value: "{{ page.date }}"
+            width: 1/4
+          description:
+            label: What Happened
+            type: text
+            value: "{{ page.description.excerpt(100) }}"
+            width: 3/4
+
+  - width: 1/3
+    sections:
+      intro_section:
+        type: fields
+        fields:
+          intro:
+            label: Introduction
+            type: textarea
+            size: medium
+            buttons:
+              - bold
+              - italic
+              - link
+
+      settings:
+        type: fields
+        fields:
+          sort_order:
+            label: Sort Order
+            type: select
+            default: desc
+            options:
+              desc: Newest First
+              asc: Oldest First

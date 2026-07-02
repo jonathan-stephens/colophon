@@ -75,7 +75,6 @@ fields:
     multiple: false
     layout: list
     query: page.images
-
   overview:
     label: Overview
     type: textarea
@@ -95,17 +94,17 @@ fields:
     maxlength: 400
     width: 1/2
   endorsements:
-      label: Relevant Endorsements
-      type: pages
-      width: 1/2
-      query: site.find('endorsements').children
-      multiple: true;
-      layout: cards
-      image:
-        cover: true;
-        ratio: 3/2
-      text: "{{ page.title }}"
-      sortable: true
+    label: Relevant Endorsements
+    type: pages
+    width: 1/2
+    query: site.find('endorsements').children
+    multiple: true;
+    layout: cards
+    image:
+      cover: true;
+      ratio: 3/2
+    text: "{{ page.title }}"
+    sortable: true
   mediaArticles:
     width: 1/2
     label: Media Articles

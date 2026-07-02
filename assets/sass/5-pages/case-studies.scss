@@ -1,7 +1,7 @@
 div.case-studies {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-  gap: var(--flow-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--flow-5);
   margin-block: var(--flow-7);
 
   article {

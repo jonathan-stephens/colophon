@@ -1,0 +1,60 @@
+# site/blueprints/pages/timeline-entry.yml
+
+title: Timeline Entry
+status:
+  draft: false
+  listed: true
+
+options:
+  changeSlug: true
+  changeStatus: true
+  changeTemplate: false
+  delete: true
+  duplicate: false
+
+create:
+  title: Create a new entry
+  fields:
+    - date
+
+columns:
+  - width: 2/3
+    sections:
+      content:
+        type: fields
+        fields:
+          description:
+            label: What Happened
+            type: textarea
+            required: true
+            size: large
+            buttons:
+              - bold
+              - italic
+              - link
+
+  - width: 1/3
+    sections:
+      meta:
+        type: fields
+        fields:
+          date:
+            label: Date
+            type: date
+            required: true
+            time: false
+          endDate:
+            label: End Date
+            help: For time-spans like a week
+            type: date
+            required: false
+            time: false
+          hide_date:
+            label: Hide Date Display
+            type: toggle
+            help: Hide the date column for this entry (useful for consecutive events on the same date)
+            default: false
+          uploads:
+            type: fields
+            fields:
+              uploads: uploads

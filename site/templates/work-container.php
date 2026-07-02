@@ -47,11 +47,27 @@
     <h2>Experience</h2>
     <ul>
       <li>
-        <p>Product Design Lead
+        <p>Principal Product Design Lead
+          <span>Persistent Systems</span>
+        </p>
+        <time>
+          2026 – now
+        </time>
+      </li>
+      <li>
+        <p>Co-founder
+          <span>Poet & Scribe</span>
+        </p>
+        <time>
+          2022 – now
+        </time>
+      </li>      
+      <li>
+        <p>Principal Product Design Lead
           <span>Strategi Consulting</span>
         </p>
         <time>
-          2024 – now
+          2024 – 2026
         </time>
       </li>
       <li>
@@ -68,14 +84,6 @@
         </p>
         <time>
           2023
-        </time>
-      </li>
-      <li>
-        <p>Co-founder
-          <span>Poet & Scribe</span>
-        </p>
-        <time>
-          2022 – now
         </time>
       </li>
       <li>
